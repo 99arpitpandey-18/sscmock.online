@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SSC MOCK — Backend Trail Demo</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef3f9;
+    color:#172033;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+    height:64px;
+    background:#071b49;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-box{
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#1687ff,#6c4cff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    box-shadow:0 0 18px rgba(44,139,255,.5);
+}
+
+.logo h2{
+    font-size:20px;
+}
+
+.logo span{
+    color:#48a8ff;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.online{
+    width:9px;
+    height:9px;
+    background:#2cff91;
+    border-radius:50%;
+    box-shadow:0 0 10px #2cff91;
+}
+
+/* =========================
+   SCREENS
+========================= */
+
+.screen{
+    display:none;
+}
+
+.screen.active{
+    display:block;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.auth-wrap{
+    min-height:calc(100vh - 64px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(30,130,255,.12),transparent 30%),
+        radial-gradient(circle at 80% 70%,rgba(100,70,255,.12),transparent 30%),
+        #eef3f9;
+}
+
+.auth-card{
+    width:420px;
+    background:white;
+    border-radius:24px;
+    padding:34px;
+    box-shadow:0 25px 70px rgba(9,31,70,.16);
+    border:1px solid #e4eaf3;
+    animation:cardIn .5s ease;
+}
+
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:translateY(25px) scale(.97);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.auth-logo{
+    width:72px;
+    height:72px;
+    margin:auto;
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:34px;
+    background:linear-gradient(135deg,#0b55c9,#7047e8);
+    color:white;
+    box-shadow:0 12px 30px rgba(45,83,220,.3);
+}
+
+.auth-card h1{
+    text-align:center;
+    margin-top:18px;
+    color:#09265e;
+}
+
+.auth-card .sub{
+    text-align:center;
+    color:#7a8496;
+    margin:8px 0 25px;
+}
+
+.input{
+    margin-bottom:16px;
+}
+
+.input label{
+    display:block;
+    font-weight:700;
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.input input{
+    width:100%;
+    height:46px;
+    border:1px solid #d6ddea;
+    border-radius:10px;
+    padding:0 14px;
+    outline:none;
+    transition:.2s;
+}
+
+.input input:focus{
+    border-color:#287cff;
+    box-shadow:0 0 0 4px rgba(40,124,255,.1);
+}
+
+.primary{
+    width:100%;
+    height:48px;
+    border:0;
+    border-radius:11px;
+    background:linear-gradient(90deg,#0757c9,#6948e8);
+    color:white;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(42,83,210,.3);
+}
+
+.demo-note{
+    margin-top:16px;
+    background:#f3f7ff;
+    border:1px solid #dbe7ff;
+    padding:12px;
+    border-radius:10px;
+    color:#52617a;
+    font-size:13px;
+    text-align:center;
+}
+
+/* =========================
+   EXAM DASHBOARD
+========================= */
+
+.exam-wrap{
+    max-width:1250px;
+    margin:auto;
+    padding:25px;
+}
+
+.exam-head{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 7px 25px rgba(20,45,90,.08);
+    margin-bottom:20px;
+}
+
+.exam-title h1{
+    color:#09265e;
+    font-size:23px;
+}
+
+.exam-title p{
+    color:#7b8595;
+    margin-top:5px;
+}
+
+.timer{
+    min-width:150px;
+    text-align:center;
+    padding:13px 18px;
+    border-radius:12px;
+    background:#fff3f0;
+    color:#d23c26;
+    font-size:22px;
+    font-weight:900;
+}
+
+.exam-grid{
+    display:grid;
+    grid-template-columns:1fr 310px;
+    gap:20px;
+}
+
+.question-panel{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    box-shadow:0 7px 25px rgba(20,45,90,.08);
+}
+
+.question-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.q-number{
+    font-weight:800;
+    color:#0c5ac9;
+}
+
+.language{
+    display:flex;
+    gap:6px;
+}
+
+.language button{
+    border:1px solid #d5dce9;
+    background:white;
+    padding:7px 12px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.language button.active{
+    background:#0a5dcc;
+    color:white;
+}
+
+.question{
+    font-size:20px;
+    font-weight:700;
+    line-height:1.5;
+    margin-bottom:25px;
+}
+
+.options{
+    display:grid;
+    gap:12px;
+}
+
+.option{
+    border:2px solid #e0e5ed;
+    border-radius:12px;
+    padding:15px;
+    cursor:pointer;
+    transition:.2s;
+    background:#fff;
+}
+
+.option:hover{
+    border-color:#3787ed;
+    transform:translateX(3px);
+}
+
+.option.selected{
+    border-color:#1264d5;
+    background:#edf5ff;
+}
+
+.option.correct{
+    border-color:#16a05c;
+    background:#eafbf3;
+}
+
+.option.wrong{
+    border-color:#dc403d;
+    background:#fff0f0;
+}
+
+.bottom-actions{
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+    gap:10px;
+}
+
+.action{
+    border:0;
+    border-radius:9px;
+    padding:12px 20px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.prev{
+    background:#edf1f7;
+}
+
+.review{
+    background:#fff1cf;
+    color:#805d00;
+}
+
+.next{
+    background:#0a5dcc;
+    color:white;
+}
+
+.submit{
+    background:#d93434;
+    color:white;
+}
+
+/* =========================
+   PALETTE
+========================= */
+
+.side{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 7px 25px rgba(20,45,90,.08);
+}
+
+.side h3{
+    color:#09265e;
+    margin-bottom:15px;
+}
+
+.palette{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:9px;
+}
+
+.q-btn{
+    width:42px;
+    height:38px;
+    border-radius:8px;
+    border:1px solid #d7deea;
+    background:#f8fafc;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.q-btn.answered{
+    background:#21a366;
+    color:white;
+    border-color:#21a366;
+}
+
+.q-btn.reviewed{
+    background:#f0a800;
+    color:white;
+    border-color:#f0a800;
+}
+
+.q-btn.current{
+    outline:3px solid rgba(21,103,220,.18);
+    border-color:#1667d7;
+}
+
+.legend{
+    margin-top:20px;
+    font-size:13px;
+    color:#6d7787;
+}
+
+.legend div{
+    margin:8px 0;
+}
+
+.dot{
+    display:inline-block;
+    width:13px;
+    height:13px;
+    border-radius:4px;
+    margin-right:7px;
+    vertical-align:middle;
+}
+
+.green{background:#21a366}
+.yellow{background:#f0a800}
+.gray{background:#f8fafc;border:1px solid #d7deea}
+
+/* =========================
+   RESULT
+========================= */
+
+.result-wrap{
+    max-width:900px;
+    margin:45px auto;
+    padding:20px;
+}
+
+.result-card{
+    background:white;
+    border-radius:22px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 15px 50px rgba(15,40,80,.12);
+}
+
+.result-icon{
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    margin:auto;
+    background:#eafbf3;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:42px;
+}
+
+.result-card h1{
+    margin-top:15px;
+    color:#09265e;
+}
+
+.score{
+    font-size:52px;
+    font-weight:900;
+    color:#075dcc;
+    margin:15px 0;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin:25px 0;
+}
+
+.result-box{
+    background:#f5f8fc;
+    padding:18px 10px;
+    border-radius:12px;
+}
+
+.result-box b{
+    display:block;
+    font-size:23px;
+    color:#09265e;
+    margin-bottom:5px;
+}
+
+.result-box span{
+    color:#778296;
+    font-size:13px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#071b49;
+    color:white;
+    padding:13px 18px;
+    border-radius:10px;
+    opacity:0;
+    transform:translateY(20px);
+    pointer-events:none;
+    transition:.3s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:none;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+    .exam-grid{
+        grid-template-columns:1fr;
+    }
+
+    .side{
+        order:2;
+    }
+
+    .exam-head{
+        gap:15px;
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .result-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .status span{
+        display:none;
+    }
+
+    .exam-wrap{
+        padding:12px;
+    }
+
+    .question-panel,
+    .side{
+        padding:15px;
+    }
+
+    .question{
+        font-size:17px;
+    }
+
+    .bottom-actions{
+        flex-wrap:wrap;
+    }
+
+    .action{
+        flex:1;
+        min-width:100px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="topbar">
+
+    <div class="logo">
+        <div class="logo-box">🎓</div>
+
+        <h2>
+            SSC <span>MOCK</span>
+        </h2>
+    </div>
+
+    <div class="status">
+        <div class="online"></div>
+        <span>Backend Trail Demo</span>
+    </div>
+
+</header>
+
+
+<!-- =========================
+     LOGIN SCREEN
+========================= -->
+
+<section id="loginScreen" class="screen active">
+
+    <div class="auth-wrap">
+
+        <div class="auth-card">
+
+            <div class="auth-logo">
+                🎓
+            </div>
+
+            <h1>
+                SSC MOCK
+            </h1>
+
+            <p class="sub">
+                Secure Mock Test Trail
+            </p>
+
+            <div class="input">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    value="student@sscmock.com"
+                    placeholder="Enter email"
+                >
+
+            </div>
+
+            <div class="input">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    value="123456"
+                    placeholder="Enter password"
+                >
+
+            </div>
+
+            <button
+                class="primary"
+                onclick="login()"
+            >
+                Login & Start Mock →
+            </button>
+
+            <div class="demo-note">
+
+                🧪 TRAIL MODE<br>
+                Real backend ki jagah browser storage use ho raha hai.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     EXAM SCREEN
+========================= -->
+
+<section id="examScreen" class="screen">
+
+    <div class="exam-wrap">
+
+        <div class="exam-head">
+
+            <div class="exam-title">
+
+                <h1>
+                    SSC CGL Tier 1 — Trail Mock
+                </h1>
+
+                <p>
+                    5 Questions • Section: General Intelligence
+                </p>
+
+            </div>
+
+            <div
+                class="timer"
+                id="timer"
+            >
+                05:00
+            </div>
+
+        </div>
+
+
+        <div class="exam-grid">
+
+
+            <!-- QUESTION -->
+
+            <div class="question-panel">
+
+                <div class="question-top">
+
+                    <div
+                        class="q-number"
+                        id="questionNumber"
+                    >
+                        Question 1 of 5
+                    </div>
+
+                    <div class="language">
+
+                        <button
+                            id="enBtn"
+                            class="active"
+                            onclick="setLanguage('en')"
+                        >
+                            English
+                        </button>
+
+                        <button
+                            id="hiBtn"
+                            onclick="setLanguage('hi')"
+                        >
+                            हिन्दी
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="question"
+                    id="questionText"
+                ></div>
+
+
+                <div
+                    class="options"
+                    id="options"
+                ></div>
+
+
+                <div class="bottom-actions">
+
+                    <button
+                        class="action prev"
+                        onclick="previousQuestion()"
+                    >
+                        ← Previous
+                    </button>
+
+                    <button
+                        class="action review"
+                        onclick="toggleReview()"
+                    >
+                        ⭐ Mark Review
+                    </button>
+
+                    <button
+                        class="action next"
+                        onclick="nextQuestion()"
+                    >
+                        Next →
+                    </button>
+
+                    <button
+                        class="action submit"
+                        onclick="submitExam()"
+                    >
+                        Submit
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION PALETTE -->
+
+            <aside class="side">
+
+                <h3>
+                    Question Palette
+                </h3>
+
+                <div
+                    class="palette"
+                    id="palette"
+                ></div>
+
+                <div class="legend">
+
+                    <div>
+                        <span class="dot green"></span>
+                        Answered
+                    </div>
+
+                    <div>
+                        <span class="dot yellow"></span>
+                        Marked for Review
+                    </div>
+
+                    <div>
+                        <span class="dot gray"></span>
+                        Not Answered
+                    </div>
+
+                </div>
+
+                <br>
+
+                <button
+                    class="primary"
+                    onclick="submitExam()"
+                >
+                    Final Submit
+                </button>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     RESULT
+========================= -->
+
+<section id="resultScreen" class="screen">
+
+    <div class="result-wrap">
+
+        <div class="result-card">
+
+            <div class="result-icon">
+                🏆
+            </div>
+
+            <h1>
+                Mock Completed!
+            </h1>
+
+            <div
+                class="score"
+                id="score"
+            >
+                0 / 5
+            </div>
+
+            <p>
+                SSC MOCK Trail Result
+            </p>
+
+            <div class="result-grid">
+
+                <div class="result-box">
+                    <b id="correct">0</b>
+                    <span>Correct</span>
+                </div>
+
+                <div class="result-box">
+                    <b id="wrong">0</b>
+                    <span>Wrong</span>
+                </div>
+
+                <div class="result-box">
+                    <b id="skipped">0</b>
+                    <span>Skipped</span>
+                </div>
+
+                <div class="result-box">
+                    <b id="accuracy">0%</b>
+                    <span>Accuracy</span>
+                </div>
+
+            </div>
+
+            <button
+                class="primary"
+                onclick="restartMock()"
+            >
+                Attempt Again →
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div
+    class="toast"
+    id="toast"
+>
+    Answer saved
+</div>
+
+
+<script>
+
+/* =====================================================
+   TRAIL DATABASE
+   Actual backend mein ye data database se aayega.
+===================================================== */
+
+const questions = [
+
+    {
+        en:"If 2 + 3 = 10 and 3 + 4 = 21, then 4 + 5 = ?",
+        hi:"यदि 2 + 3 = 10 और 3 + 4 = 21 है, तो 4 + 5 = ?",
+        options:{
+            en:["32","36","40","45"],
+            hi:["32","36","40","45"]
+        },
+        answer:2
+    },
+
+    {
+        en:"Find the odd one out.",
+        hi:"विषम संख्या चुनिए।",
+        options:{
+            en:["Apple","Mango","Potato","Banana"],
+            hi:["सेब","आम","आलू","केला"]
+        },
+        answer:2
+    },
+
+    {
+        en:"What comes next: 2, 4, 8, 16, ?",
+        hi:"अगली संख्या क्या होगी: 2, 4, 8, 16, ?",
+        options:{
+            en:["20","24","32","36"],
+            hi:["20","24","32","36"]
+        },
+        answer:2
+    },
+
+    {
+        en:"If CAT is coded as DBU, then DOG is coded as?",
+        hi:"यदि CAT को DBU लिखा जाता है, तो DOG को कैसे लिखा जाएगा?",
+        options:{
+            en:["EPH","EOH","DPH","EPG"],
+            hi:["EPH","EOH","DPH","EPG"]
+        },
+        answer:0
+    },
+
+    {
+        en:"Which number is different from the others?",
+        hi:"निम्न में से कौन-सी संख्या अन्य से भिन्न है?",
+        options:{
+            en:["9","16","25","30"],
+            hi:["9","16","25","30"]
+        },
+        answer:3
+    }
+
+];
+
+
+/* =====================================================
+   TRAIL STATE
+===================================================== */
+
+let currentQuestion = 0;
+
+let selectedAnswers =
+    JSON.parse(
+        localStorage.getItem("ssc_answers")
+    ) || Array(questions.length).fill(null);
+
+let reviewed =
+    JSON.parse(
+        localStorage.getItem("ssc_reviewed")
+    ) || Array(questions.length).fill(false);
+
+let language =
+    localStorage.getItem("ssc_language") || "en";
+
+let seconds = 300;
+
+let timerInterval;
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login(){
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    if(!email){
+
+        alert("Please enter email.");
+
+        return;
+    }
+
+    localStorage.setItem(
+        "ssc_user",
+        email
+    );
+
+    showScreen("examScreen");
+
+    renderQuestion();
+
+    startTimer();
+
+    toast("Login successful • Mock started");
+
+}
+
+
+/* =====================================================
+   SCREEN
+===================================================== */
+
+function showScreen(id){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen=>{
+            screen.classList.remove("active");
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+}
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+function setLanguage(lang){
+
+    language = lang;
+
+    localStorage.setItem(
+        "ssc_language",
+        lang
+    );
+
+    document
+        .getElementById("enBtn")
+        .classList.toggle(
+            "active",
+            lang === "en"
+        );
+
+    document
+        .getElementById("hiBtn")
+        .classList.toggle(
+            "active",
+            lang === "hi"
+        );
+
+    renderQuestion();
+}
+
+
+/* =====================================================
+   RENDER QUESTION
+===================================================== */
+
+function renderQuestion(){
+
+    const q =
+        questions[currentQuestion];
+
+    document
+        .getElementById("questionNumber")
+        .textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document
+        .getElementById("questionText")
+        .textContent =
+        language === "en"
+        ? q.en
+        : q.hi;
+
+    const options =
+        q.options[language];
+
+    const container =
+        document.getElementById("options");
+
+    container.innerHTML = "";
+
+    options.forEach((option,index)=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "option";
+
+        if(
+            selectedAnswers[currentQuestion]
+            === index
+        ){
+            div.classList.add("selected");
+        }
+
+        div.innerHTML =
+            `<b>${String.fromCharCode(65+index)}.</b>
+             &nbsp; ${option}`;
+
+        div.onclick = ()=>{
+            selectAnswer(index);
+        };
+
+        container.appendChild(div);
+
+    });
+
+    renderPalette();
+}
+
+
+/* =====================================================
+   SELECT ANSWER
+===================================================== */
+
+function selectAnswer(index){
+
+    selectedAnswers[currentQuestion] =
+        index;
+
+    localStorage.setItem(
+        "ssc_answers",
+        JSON.stringify(selectedAnswers)
+    );
+
+    renderQuestion();
+
+    toast(
+        `Answer ${String.fromCharCode(65+index)} saved`
+    );
+}
+
+
+/* =====================================================
+   REVIEW
+===================================================== */
+
+function toggleReview(){
+
+    reviewed[currentQuestion] =
+        !reviewed[currentQuestion];
+
+    localStorage.setItem(
+        "ssc_reviewed",
+        JSON.stringify(reviewed)
+    );
+
+    renderPalette();
+
+    toast(
+        reviewed[currentQuestion]
+        ? "Marked for review"
+        : "Review mark removed"
+    );
+}
+
+
+/* =====================================================
+   NEXT
+===================================================== */
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        questions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }else{
+
+        toast("This is the last question");
+
+    }
+}
+
+
+/* =====================================================
+   PREVIOUS
+===================================================== */
+
+function previousQuestion(){
+
+    if(currentQuestion > 0){
+
+        currentQuestion--;
+
+        renderQuestion();
+
+    }
+}
+
+
+/* =====================================================
+   PALETTE
+===================================================== */
+
+function renderPalette(){
+
+    const palette =
+        document.getElementById("palette");
+
+    palette.innerHTML = "";
+
+    questions.forEach((_,index)=>{
+
+        const btn =
+            document.createElement("button");
+
+        btn.className = "q-btn";
+
+        btn.textContent =
+            index + 1;
+
+        if(
+            selectedAnswers[index] !== null
+        ){
+
+            btn.classList.add("answered");
+
+        }
+
+        if(reviewed[index]){
+
+            btn.classList.add("reviewed");
+
+        }
+
+        if(index === currentQuestion){
+
+            btn.classList.add("current");
+
+        }
+
+        btn.onclick = ()=>{
+
+            currentQuestion = index;
+
+            renderQuestion();
+
+        };
+
+        palette.appendChild(btn);
+
+    });
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function startTimer(){
+
+    clearInterval(timerInterval);
+
+    timerInterval =
+        setInterval(()=>{
+
+            seconds--;
+
+            updateTimer();
+
+            if(seconds <= 0){
+
+                clearInterval(
+                    timerInterval
+                );
+
+                toast(
+                    "Time over • Auto submitting..."
+                );
+
+                setTimeout(
+                    submitExam,
+                    700
+                );
+
+            }
+
+        },1000);
+}
+
+
+function updateTimer(){
+
+    const min =
+        Math.floor(seconds / 60)
+        .toString()
+        .padStart(2,"0");
+
+    const sec =
+        (seconds % 60)
+        .toString()
+        .padStart(2,"0");
+
+    document
+        .getElementById("timer")
+        .textContent =
+        `${min}:${sec}`;
+
+    if(seconds <= 30){
+
+        document
+            .getElementById("timer")
+            .style.background =
+            "#ffe0df";
+
+    }
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
+function submitExam(){
+
+    clearInterval(timerInterval);
+
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
+
+    selectedAnswers.forEach(
+        (answer,index)=>{
+
+            if(answer === null){
+
+                skipped++;
+
+            }else if(
+                answer ===
+                questions[index].answer
+            ){
+
+                correct++;
+
+            }else{
+
+                wrong++;
+
+            }
+
+        }
+    );
+
+    const attempted =
+        correct + wrong;
+
+    const accuracy =
+        attempted === 0
+        ? 0
+        : Math.round(
+            (correct / attempted) * 100
+        );
+
+    document
+        .getElementById("score")
+        .textContent =
+        `${correct} / ${questions.length}`;
+
+    document
+        .getElementById("correct")
+        .textContent =
+        correct;
+
+    document
+        .getElementById("wrong")
+        .textContent =
+        wrong;
+
+    document
+        .getElementById("skipped")
+        .textContent =
+        skipped;
+
+    document
+        .getElementById("accuracy")
+        .textContent =
+        `${accuracy}%`;
+
+    localStorage.setItem(
+        "ssc_last_result",
+        JSON.stringify({
+            correct,
+            wrong,
+            skipped,
+            accuracy
+        })
+    );
+
+    showScreen("resultScreen");
+
+}
+
+
+/* =====================================================
+   RESTART
+===================================================== */
+
+function restartMock(){
+
+    currentQuestion = 0;
+
+    seconds = 300;
+
+    selectedAnswers =
+        Array(questions.length).fill(null);
+
+    reviewed =
+        Array(questions.length).fill(false);
+
+    localStorage.removeItem(
+        "ssc_answers"
+    );
+
+    localStorage.removeItem(
+        "ssc_reviewed"
+    );
+
+    showScreen("examScreen");
+
+    renderQuestion();
+
+    startTimer();
+
+    toast("New mock started");
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function toast(message){
+
+    const el =
+        document.getElementById("toast");
+
+    el.textContent =
+        message;
+
+    el.classList.add("show");
+
+    setTimeout(()=>{
+
+        el.classList.remove("show");
+
+    },1600);
+
+}
+
+
+/* =====================================================
+   INITIAL RESTORE
+===================================================== */
+
+function restoreDemo(){
+
+    const user =
+        localStorage.getItem("ssc_user");
+
+    if(user){
+
+        showScreen("examScreen");
+
+        renderQuestion();
+
+        startTimer();
+
+    }
+
+}
+
+
+/* START */
+
+restoreDemo();
+
+</script>
+
+</body>
+</html>

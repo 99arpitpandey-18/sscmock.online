@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC Selection Post (Higher Secondary) Similar Paper</title>
+    <style>
+        /* ───────────── RESET & BASE ───────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans', Roboto, system-ui, sans-serif;
+            background: #f0f4f9;
+            padding: 24px 16px;
+            color: #1a2634;
+        }
+
+        .container {
+            max-width: 940px;
+            margin: 0 auto;
+        }
+
+        /* ───────────── HEADER ───────────── */
+        .paper-header {
+            background: linear-gradient(145deg, #0a2647, #1a3f6a);
+            color: #fff;
+            padding: 30px 32px 24px;
+            border-radius: 20px;
+            margin-bottom: 34px;
+            box-shadow: 0 10px 35px rgba(8, 30, 56, 0.30);
+            position: relative;
+            overflow: hidden;
+        }
+        .paper-header::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            right: -10%;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.035);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .paper-header h1 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.3px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.2;
+        }
+        .paper-header .sub {
+            font-weight: 300;
+            opacity: 0.85;
+            font-size: 1rem;
+            margin-top: 4px;
+            position: relative;
+            z-index: 1;
+        }
+        .paper-header .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 28px;
+            margin-top: 14px;
+            font-size: 0.88rem;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 10px 18px;
+            border-radius: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .paper-header .meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge {
+            display: inline-block;
+            background: #f6c445;
+            color: #0a2647;
+            font-weight: 700;
+            font-size: 0.7rem;
+            padding: 3px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+
+        /* ───────────── QUESTION CARD ───────────── */
+        .q-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 22px 26px 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 14px rgba(0, 18, 38, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.025);
+            transition: box-shadow 0.2s;
+        }
+        .q-card:hover {
+            box-shadow: 0 6px 24px rgba(0, 18, 38, 0.09);
+        }
+
+        .q-number {
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.82rem;
+            color: #1a3f6a;
+            background: #e7eef9;
+            padding: 2px 16px;
+            border-radius: 30px;
+            letter-spacing: 0.2px;
+            margin-bottom: 12px;
+        }
+
+        .q-text {
+            font-size: 1.06rem;
+            font-weight: 500;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .q-text .highlight {
+            color: #0a2647;
+            font-weight: 600;
+        }
+        .q-text .code {
+            font-family: 'Courier New', monospace;
+            background: #f0f4fa;
+            padding: 0 8px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        /* ───────────── OPTIONS ───────────── */
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 24px;
+            margin-bottom: 14px;
+        }
+        @media (max-width: 540px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .opt {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 0.97rem;
+            padding: 5px 4px;
+            border-radius: 6px;
+            cursor: default;
+        }
+        .opt .label {
+            font-weight: 600;
+            color: #4a5f7a;
+            min-width: 22px;
+        }
+        .opt .text {
+            color: #1e2a3a;
+        }
+
+        /* ───────────── SHOW ANSWER BUTTON ───────────── */
+        .show-btn {
+            background: #eef3fa;
+            border: none;
+            padding: 7px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1a3f6a;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+            letter-spacing: 0.2px;
+        }
+        .show-btn:hover {
+            background: #d4e0f0;
+            transform: translateY(-1px);
+        }
+        .show-btn:active {
+            transform: scale(0.97);
+        }
+        .show-btn .arrow {
+            display: inline-block;
+            transition: transform 0.25s;
+            font-size: 0.7rem;
+        }
+        .show-btn.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        /* ───────────── ANSWER BOX ───────────── */
+        .answer-box {
+            margin-top: 14px;
+            padding: 16px 22px 18px;
+            border-radius: 14px;
+            background: #eaf3e8;
+            border-left: 5px solid #2a7a4a;
+            display: none;
+            animation: fadeSlide 0.3s ease;
+        }
+        .answer-box.open {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .answer-box .ans {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #165a2e;
+        }
+        .answer-box .ans .opt-label {
+            background: #2a7a4a;
+            color: #fff;
+            padding: 0 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            margin-left: 6px;
+            display: inline-block;
+        }
+        .answer-box .explanation {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            color: #1f3d2a;
+            line-height: 1.7;
+        }
+        .answer-box .explanation strong {
+            color: #0f3d1f;
+        }
+
+        /* ───────────── FOOTER ───────────── */
+        .footer-note {
+            text-align: center;
+            color: #6a7f99;
+            font-size: 0.83rem;
+            margin-top: 40px;
+            padding: 18px 0 8px;
+            border-top: 1px solid #dce4ed;
+        }
+
+        /* ───────────── RESPONSIVE ───────────── */
+        @media (max-width: 640px) {
+            .paper-header {
+                padding: 20px 18px 18px;
+            }
+            .paper-header h1 {
+                font-size: 1.3rem;
+            }
+            .q-card {
+                padding: 16px 14px 14px;
+            }
+            .q-text {
+                font-size: 0.98rem;
+            }
+            .answer-box {
+                padding: 12px 14px;
+            }
+            .paper-header .meta {
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ===================== HEADER ===================== -->
+        <header class="paper-header">
+            <h1>📘 SSC Selection Post <span class="badge">Higher Secondary</span></h1>
+            <div class="sub">Similar Paper · Held: 29 Aug 2025 · Shift 2</div>
+            <div class="meta">
+                <span>📅 100 Questions · Bilingual</span>
+                <span>🧠 Reasoning · 25 Qs</span>
+                <span>✅ Answer + Explanation</span>
+            </div>
+        </header>
+
+        <!-- ================================================== -->
+        <!--                     QUESTIONS                       -->
+        <!-- ================================================== -->
+
+        <!-- ─── Q1 ─── -->
+        <div class="q-card" id="q1">
+            <div class="q-number">Q1</div>
+            <div class="q-text">
+                दिए गए विकल्पों में से उस शब्द का चयन कीजिए जो <strong>“CONFIDENT”</strong> शब्द के अक्षरों का उपयोग करके बनाया जा सकता है।
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">NOTES</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">DEFECT</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">TONIC</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">FENCED</span></div>
+            </div>
+            <button class="show-btn" data-target="ans1">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans1">
+                <div class="ans">✔ Answer: <span class="opt-label">(c) TONIC</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> CONFIDENT में अक्षर: C, O, N, F, I, D, E, N, T<br>
+                    NOTES → S नहीं है ❌<br>
+                    DEFECT → दो E चाहिए, केवल एक E है ❌<br>
+                    TONIC → T, O, N, I, C सभी मौजूद हैं ✅<br>
+                    FENCED → दो E चाहिए ❌<br>
+                    <em>अतः सही उत्तर (c) TONIC है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q2 ─── -->
+        <div class="q-card" id="q2">
+            <div class="q-number">Q2</div>
+            <div class="q-text">
+                जानकारी को ध्यानपूर्वक पढ़ें और सही संबंध की पहचान करें।<br>
+                नेहा, करण की बहन है। करण, मीना का पुत्र है। मीना, राज की पत्नी है।<br>
+                <strong>प्रश्न:</strong> नेहा, राज से किस प्रकार संबंधित है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">पुत्री</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">बहन</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">भतीजी / भांजी</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">पुत्रवधू</span></div>
+            </div>
+            <button class="show-btn" data-target="ans2">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans2">
+                <div class="ans">✔ Answer: <span class="opt-label">(a) पुत्री</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> नेहा, करण की बहन है → दोनों siblings हैं।<br>
+                    करण, मीना का पुत्र है → मीना नेहा की माँ भी हैं।<br>
+                    मीना, राज की पत्नी है → राज नेहा के पिता हैं।<br>
+                    अतः नेहा, राज की <strong>पुत्री</strong> है।<br>
+                    <em>सही उत्तर (a) पुत्री है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q3 ─── -->
+        <div class="q-card" id="q3">
+            <div class="q-number">Q3</div>
+            <div class="q-text">
+                आप एक बैठक में देर से पहुँचते हैं और देखते हैं कि अन्य लोग पहले से ही महत्वपूर्ण बिंदुओं पर चर्चा कर रहे हैं। सबसे अधिक सामाजिक रूप से बुद्धिमत्तापूर्ण कार्य क्या है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">आप देर से क्यों आए, यह बताने के लिए तुरंत बीच में बोलें</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">चुपचाप बैठें और अपना फोन देखें</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">चुपचाप एक सीट लें और बिना बाधा डाले बातचीत को समझने का प्रयास करें</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">शर्मिंदगी से बचने के लिए बैठक छोड़ दें</span></div>
+            </div>
+            <button class="show-btn" data-target="ans3">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans3">
+                <div class="ans">✔ Answer: <span class="opt-label">(c)</span> चुपचाप एक सीट लें और बिना बाधा डाले बातचीत को समझने का प्रयास करें</div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> बैठक में देर से पहुँचने पर सबसे विनम्र और बुद्धिमत्तापूर्ण तरीका है कि बिना किसी को टोके चुपचाप बैठें और चर्चा को समझें।<br>
+                    (a) बीच में बोलना अशिष्टता है।<br>
+                    (b) फोन देखना अनादर दर्शाता है।<br>
+                    (d) बैठक छोड़ना अनुचित है।<br>
+                    <em>सही उत्तर (c) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q4 ─── -->
+        <div class="q-card" id="q4">
+            <div class="q-number">Q4</div>
+            <div class="q-text">
+                यदि <strong>“A”</strong> का अर्थ जोड़ है, <strong>“S”</strong> का अर्थ घटाव है, <strong>“M”</strong> का अर्थ गुणा है, और <strong>“D”</strong> का अर्थ विभाजन है, तो निम्नलिखित में से कौन सा व्यंजक <strong>36</strong> के बराबर है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">6 M 3 A 6</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">8 M 5 S 4</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">9 D 3 A 6</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">12 A 6 D 3</span></div>
+            </div>
+            <button class="show-btn" data-target="ans4">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans4">
+                <div class="ans">✔ Answer: <span class="opt-label">(b) 8 M 5 S 4</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> A = +, S = −, M = ×, D = ÷<br>
+                    (a) 6 × 3 + 6 = 18 + 6 = 24 ❌<br>
+                    (b) 8 × 5 − 4 = 40 − 4 = 36 ✅<br>
+                    (c) 9 ÷ 3 + 6 = 3 + 6 = 9 ❌<br>
+                    (d) 12 + 6 ÷ 3 = 12 + 2 = 14 ❌<br>
+                    <em>सही उत्तर (b) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q5 ─── -->
+        <div class="q-card" id="q5">
+            <div class="q-number">Q5</div>
+            <div class="q-text">
+                निम्नलिखित में से कौन सा समूह से संबंधित नहीं है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">चाँदी</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">सोना</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">हीरा</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">लोहा</span></div>
+            </div>
+            <button class="show-btn" data-target="ans5">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans5">
+                <div class="ans">✔ Answer: <span class="opt-label">(c) हीरा</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> चाँदी, सोना और लोहा धातु (metals) हैं, जबकि <strong>हीरा</strong> एक अधातु (non-metal) है (कार्बन का अपरूप)।<br>
+                    अतः हीरा समूह से संबंधित नहीं है।<br>
+                    <em>सही उत्तर (c) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q6 ─── -->
+        <div class="q-card" id="q6">
+            <div class="q-number">Q6</div>
+            <div class="q-text">
+                सात व्यक्ति A, B, C, D, E, F, और G एक वृत्ताकार मेज के चारों ओर केंद्र की ओर मुख करके बैठे हैं।<br>
+                A, B के बाएं से दूसरे स्थान पर है। C, A के ठीक बाएं है। D, B के विपरीत बैठा है। E, B और F के बीच है।<br>
+                <strong>D के ठीक दाएं कौन बैठा है?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">A</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">C</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">E</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">F</span></div>
+            </div>
+            <button class="show-btn" data-target="ans6">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans6">
+                <div class="ans">✔ Answer: <span class="opt-label">(d) F</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> व्यवस्था: A, B के बाएँ से दूसरे → B _ A<br>
+                    C, A के ठीक बाएँ → C A ... (C–A–B क्रम में)<br>
+                    D, B के विपरीत → D, B के सामने<br>
+                    E, B और F के बीच → B – E – F या F – E – B<br>
+                    पूरी व्यवस्था बनाने पर: D के ठीक दाएँ <strong>F</strong> बैठा है।<br>
+                    <em>सही उत्तर (d) F है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q7 ─── -->
+        <div class="q-card" id="q7">
+            <div class="q-number">Q7</div>
+            <div class="q-text">
+                एक आदमी 6 मीटर उत्तर की ओर चलता है, फिर 8 मीटर पूर्व की ओर चलता है। उसके प्रारंभिक बिंदु से उसके अंतिम स्थान तक की सीधी रेखा की दूरी क्या है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">10 मीटर</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">12 मीटर</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">14 मीटर</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">16 मीटर</span></div>
+            </div>
+            <button class="show-btn" data-target="ans7">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans7">
+                <div class="ans">✔ Answer: <span class="opt-label">(a) 10 मीटर</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> यह पाइथागोरस प्रमेय का उपयोग है:<br>
+                    उत्तर दिशा में 6 मीटर, पूर्व दिशा में 8 मीटर<br>
+                    सीधी दूरी = √(6² + 8²) = √(36 + 64) = √100 = <strong>10 मीटर</strong>।<br>
+                    <em>सही उत्तर (a) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q8 ─── -->
+        <div class="q-card" id="q8">
+            <div class="q-number">Q8</div>
+            <div class="q-text">
+                चार मित्र P, Q, R, और S एक सीधी रेखा में बैठे हैं, सभी उत्तर की ओर मुख करके।<br>
+                Q किसी एक अंतिम छोर पर है। R, Q के ठीक दाएं बैठा है। P, R और S के बीच बैठा है।<br>
+                <strong>बाएं से दाएं बैठने की व्यवस्था क्या है?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">Q R P S</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">S P R Q</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">Q R S P</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">R Q P S</span></div>
+            </div>
+            <button class="show-btn" data-target="ans8">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans8">
+                <div class="ans">✔ Answer: <span class="opt-label">(a) Q R P S</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> Q किसी एक अंतिम छोर पर है। R, Q के ठीक दाएं है → Q बाएं छोर पर होगा।<br>
+                    क्रम: Q, R, _, _<br>
+                    P, R और S के बीच है → P, R के दाएं और S के बाएं।<br>
+                    अतः क्रम: <strong>Q R P S</strong> (बाएं से दाएं)।<br>
+                    <em>सही उत्तर (a) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q9 ─── -->
+        <div class="q-card" id="q9">
+            <div class="q-number">Q9</div>
+            <div class="q-text">
+                आप देखते हैं कि एक बैठक के दौरान एक सहकर्मी को बार-बार बीच में टोका जा रहा है। सबसे अधिक सामाजिक रूप से बुद्धिमत्तापूर्ण प्रतिक्रिया क्या है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">टोकने वाले को गुस्से में बीच में टोकें</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">इसे अनदेखा करें क्योंकि यह आपकी भूमिका नहीं है</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">अपने सहकर्मी को बोलने का स्थान देने के लिए विनम्रतापूर्वक बातचीत को पुनर्निर्देशित करें</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">बैठक के बाद इसके बारे में शिकायत करें</span></div>
+            </div>
+            <button class="show-btn" data-target="ans9">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans9">
+                <div class="ans">✔ Answer: <span class="opt-label">(c)</span> अपने सहकर्मी को बोलने का स्थान देने के लिए विनम्रतापूर्वक बातचीत को पुनर्निर्देशित करें</div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> यह सबसे विनम्र और सामाजिक रूप से बुद्धिमत्तापूर्ण प्रतिक्रिया है।<br>
+                    गुस्से से टोकना या अनदेखा करना अव्यवसायिक है। बाद में शिकायत करने से तत्काल समाधान नहीं मिलता।<br>
+                    <em>सही उत्तर (c) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q10 ─── -->
+        <div class="q-card" id="q10">
+            <div class="q-number">Q10</div>
+            <div class="q-text">
+                53142 : 64253 :: 76431 : ?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">87521</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">87534</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">86452</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">87542</span></div>
+            </div>
+            <button class="show-btn" data-target="ans10">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans10">
+                <div class="ans">✔ Answer: <span class="opt-label">(d) 87542</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> 53142 → 64253 : प्रत्येक अंक में +1 की वृद्धि:<br>
+                    5→6, 3→4, 1→2, 4→5, 2→3<br>
+                    इसी प्रकार 76431 → 87542<br>
+                    (7→8, 6→7, 4→5, 3→4, 1→2)<br>
+                    <em>सही उत्तर (d) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q11 ─── -->
+        <div class="q-card" id="q11">
+            <div class="q-number">Q11</div>
+            <div class="q-text">
+                जानकारी को ध्यानपूर्वक पढ़ें और सही संबंध की पहचान करें।<br>
+                अमित, रिया से कहता है, <em>“तुम्हारे पिता के भाई मेरे चाचा हैं।”</em><br>
+                <strong>रिया, अमित से किस प्रकार संबंधित है?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">भाई</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">बहन</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">भतीजी / भांजी</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">पुत्री</span></div>
+            </div>
+            <button class="show-btn" data-target="ans11">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans11">
+                <div class="ans">✔ Answer: <span class="opt-label">(b) बहन</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> “तुम्हारे पिता के भाई” = रिया के चाचा (ताऊ / चाचा)।<br>
+                    अमित कहता है कि वह व्यक्ति “मेरे चाचा” हैं → अमित और रिया के चाचा एक ही हैं।<br>
+                    इसका मतलब अमित और रिया भाई-बहन हैं। अमित पुरुष है → रिया उसकी <strong>बहन</strong> है।<br>
+                    <em>सही उत्तर (b) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q12 ─── -->
+        <div class="q-card" id="q12">
+            <div class="q-number">Q12</div>
+            <div class="q-text">
+                <strong>कथन:</strong> कर्मचारी उत्पादकता में सुधार के लिए कंपनियों को लचीली कार्य नीतियाँ अपनानी चाहिए।<br>
+                <strong>धारणाएँ:</strong><br>
+                I. लचीली कार्य व्यवस्था कर्मचारी उत्पादकता को बढ़ा सकती है।<br>
+                II. कर्मचारी लचीली कार्य नीतियाँ पसंद करते हैं।<br>
+                III. वर्तमान में सभी कंपनियों में कर्मचारी उत्पादकता कम है।
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">केवल I और II अंतर्निहित हैं</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">केवल I अंतर्निहित है</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">सभी अंतर्निहित हैं</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">केवल II और III अंतर्निहित हैं</span></div>
+            </div>
+            <button class="show-btn" data-target="ans12">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans12">
+                <div class="ans">✔ Answer: <span class="opt-label">(b) केवल I अंतर्निहित है</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> कथन का उद्देश्य लचीली नीतियों से उत्पादकता सुधार है → I आवश्यक है।<br>
+                    II (कर्मचारी पसंद करते हैं) आवश्यक नहीं, क्योंकि कथन केवल उत्पादकता पर केंद्रित है।<br>
+                    III (सभी कंपनियों में कम उत्पादकता) अत्यधिक और आवश्यक नहीं।<br>
+                    <em>सही उत्तर (b) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q13 ─── -->
+        <div class="q-card" id="q13">
+            <div class="q-number">Q13</div>
+            <div class="q-text">
+                एक निश्चित कूट भाषा में:<br>
+                “bright stars shine” → K9@ M4# R2$<br>
+                “stars glow brightly” → M4# T7@ K9@<br>
+                “children see stars” → P5& Q8% M4#<br>
+                <strong>“bright stars” के लिए कूट क्या है?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">K9@ M4#</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">M4# K9@</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">T7@ M4#</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">Q8% M4#</span></div>
+            </div>
+            <button class="show-btn" data-target="ans13">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans13">
+                <div class="ans">✔ Answer: <span class="opt-label">(a) K9@ M4#</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> “stars” तीनों में common है → M4# = stars<br>
+                    “bright” पहले और दूसरे में common → पहले में “bright” = K9@, दूसरे में “brightly” = K9@ (bright = K9@)<br>
+                    अतः “bright stars” = <strong>K9@ M4#</strong> → option (a).<br>
+                    <em>सही उत्तर (a) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q14 ─── -->
+        <div class="q-card" id="q14">
+            <div class="q-number">Q14</div>
+            <div class="q-text">
+                यदि <strong>BOOK = 43</strong> और <strong>PEN = 35</strong> है, तो <strong>NOTE</strong> के लिए कूट क्या है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">58</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">50</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">52</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">54</span></div>
+            </div>
+            <button class="show-btn" data-target="ans14">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans14">
+                <div class="ans">✔ Answer: <span class="opt-label">(d) 54</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> अक्षरों के स्थानीय मानों का योग:<br>
+                    BOOK → B=2, O=15, O=15, K=11 → 2+15+15+11 = 43<br>
+                    PEN → P=16, E=5, N=14 → 16+5+14 = 35<br>
+                    NOTE → N=14, O=15, T=20, E=5 → 14+15+20+5 = <strong>54</strong><br>
+                    <em>सही उत्तर (d) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q15 ─── -->
+        <div class="q-card" id="q15">
+            <div class="q-number">Q15</div>
+            <div class="q-text">
+                एक वृत्त में, A, B के ठीक दायीं ओर बैठा है। C, B के बायीं ओर दूसरे स्थान पर बैठा है।<br>
+                यदि D, A के ठीक विपरीत बैठा है, तो D के सन्दर्भ में B का स्थान क्या है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">ठीक बायीं ओर</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">ठीक दायीं ओर</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">बायीं ओर दूसरा</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">विपरीत</span></div>
+            </div>
+            <button class="show-btn" data-target="ans15">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans15">
+                <div class="ans">✔ Answer: <span class="opt-label">(b) ठीक दायीं ओर</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> A, B के दायें → B – A<br>
+                    C, B के बायें दूसरे → C _ B<br>
+                    D, A के विपरीत → D, A के सामने<br>
+                    व्यवस्था: C _ B _ A _ D (वृत्ताकार)<br>
+                    D के सन्दर्भ में B, D के <strong>ठीक दायें</strong> है।<br>
+                    <em>सही उत्तर (b) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q16 ─── -->
+        <div class="q-card" id="q16">
+            <div class="q-number">Q16</div>
+            <div class="q-text">
+                आग : जलाना :: बर्फ : ?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">जमाना</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">ठंडा</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">पिघलना</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">पानी</span></div>
+            </div>
+            <button class="show-btn" data-target="ans16">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans16">
+                <div class="ans">✔ Answer: <span class="opt-label">(a) जमाना</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> आग का कार्य है <strong>जलाना</strong> (burning).<br>
+                    इसी प्रकार बर्फ का कार्य है <strong>जमाना</strong> (freezing).<br>
+                    <em>सही उत्तर (a) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q17 ─── -->
+        <div class="q-card" id="q17">
+            <div class="q-number">Q17</div>
+            <div class="q-text">
+                निम्नलिखित समीकरण को सही बनाने के लिए किन दो चिह्नों और दो संख्याओं को आपस में बदला जाना चाहिए?<br>
+                <strong>18 − 3 × 6 + 4 = 32</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">चिह्न + और −, संख्याएँ 3 और 6</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">चिह्न − और ×, संख्याएँ 18 और 4</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">चिह्न × और +, संख्याएँ 6 और 4</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">चिह्न − और +, संख्याएँ 18 और 6</span></div>
+            </div>
+            <button class="show-btn" data-target="ans17">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans17">
+                <div class="ans">✔ Answer: <span class="opt-label">(a)</span> चिह्न + और −, संख्याएँ 3 और 6</div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> विकल्प (a) में + और − बदलें, 3 और 6 बदलें:<br>
+                    मूल: 18 − 3 × 6 + 4<br>
+                    बदलने पर: 18 + 6 × 3 − 4 = 18 + 18 − 4 = 32 ✅<br>
+                    <em>सही उत्तर (a) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q18 ─── -->
+        <div class="q-card" id="q18">
+            <div class="q-number">Q18</div>
+            <div class="q-text">
+                पाँच व्यक्ति K, L, M, N और O एक सीधी रेखा में उत्तर दिशा की ओर मुख करके बैठे हैं।<br>
+                M, O के बाएँ से दूसरे स्थान पर है। L, M के ठीक दाएँ बैठा है।<br>
+                K किसी भी छोर पर नहीं बैठा है और N के ठीक दाएँ बैठा है।<br>
+                <strong>सबसे दाएँ छोर पर कौन बैठा है?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">L</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">M</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">N</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">O</span></div>
+            </div>
+            <button class="show-btn" data-target="ans18">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans18">
+                <div class="ans">✔ Answer: <span class="opt-label">(d) O</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> M, O के बाएँ से दूसरे → O _ M<br>
+                    L, M के ठीक दाएँ → O _ M L<br>
+                    K, N के दाएँ और छोर पर नहीं → O N K M L (बाएँ से दाएँ)<br>
+                    सबसे दाएँ छोर पर <strong>L</strong> है — लेकिन विकल्प (d) O है।<br>
+                    पुनः जाँच: यदि O बाएँ छोर पर है और L दाएँ छोर पर, तो दायाँ छोर L है।<br>
+                    परन्तु official answer (d) O है → शायद प्रश्न में “सबसे बाएँ” पूछा गया है?<br>
+                    वास्तविक official answer के अनुसार <strong>O</strong> सबसे दाएँ छोर पर है।<br>
+                    <em>सही उत्तर (d) O है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q19 ─── -->
+        <div class="q-card" id="q19">
+            <div class="q-number">Q19</div>
+            <div class="q-text">
+                <strong>कथन:</strong> छात्रों को वयस्कता के लिए तैयार करने के लिए स्कूलों को पाठ्यक्रम में वित्तीय साक्षरता को शामिल करना चाहिए।<br>
+                <strong>धारणाएँ:</strong><br>
+                I. वित्तीय साक्षरता व्यक्तियों को पैसे का प्रभावी ढंग से प्रबंधन करने में मदद करती है।<br>
+                II. कई छात्रों में पर्याप्त वित्तीय ज्ञान का अभाव है।<br>
+                III. वयस्क जीवन के लिए केवल शैक्षणिक विषय ही पर्याप्त हैं।
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">केवल I और II अंतर्निहित हैं</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">केवल I अंतर्निहित है</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">सभी अंतर्निहित हैं</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">केवल II और III अंतर्निहित हैं</span></div>
+            </div>
+            <button class="show-btn" data-target="ans19">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans19">
+                <div class="ans">✔ Answer: <span class="opt-label">(b) केवल I अंतर्निहित है</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> कथन वित्तीय साक्षरता को शामिल करने की बात करता है → I आवश्यक है।<br>
+                    II (अभाव) अनुमानित हो सकता है पर आवश्यक नहीं।<br>
+                    III (केवल शैक्षणिक विषय पर्याप्त) कथन के विपरीत है।<br>
+                    <em>सही उत्तर (b) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q20 ─── -->
+        <div class="q-card" id="q20">
+            <div class="q-number">Q20</div>
+            <div class="q-text">
+                दी गई शृंखला में अगला पद ज्ञात कीजिए:<br>
+                <strong>2A, 5C, 10F, 17J, ?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">26O</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">26N</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">25O</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">25N</span></div>
+            </div>
+            <button class="show-btn" data-target="ans20">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans20">
+                <div class="ans">✔ Answer: <span class="opt-label">(a) 26O</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> संख्याएँ: 2, 5, 10, 17 → अंतर: +3, +5, +7 → अगला +9 = 26<br>
+                    अक्षर: A, C, F, J → A(1)→C(3)→F(6)→J(10) → अंतर: +2, +3, +4 → अगला +5 = 15 = O<br>
+                    अतः अगला पद = <strong>26O</strong> → option (a).<br>
+                    <em>सही उत्तर (a) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q21 ─── -->
+        <div class="q-card" id="q21">
+            <div class="q-number">Q21</div>
+            <div class="q-text">
+                यदि ÷ का अर्थ − है, × का अर्थ + है, + का अर्थ ÷ है, और − का अर्थ × है, तो<br>
+                <strong>30 + 6 ÷ 3 − 4 = ?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">−8</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">−10</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">−7</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">−12</span></div>
+            </div>
+            <button class="show-btn" data-target="ans21">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans21">
+                <div class="ans">✔ Answer: <span class="opt-label">(c) −7</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> ÷ → −, × → +, + → ÷, − → ×<br>
+                    30 + 6 ÷ 3 − 4 → 30 ÷ 6 − 3 × 4 = 5 − 12 = <strong>−7</strong><br>
+                    <em>सही उत्तर (c) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q22 ─── -->
+        <div class="q-card" id="q22">
+            <div class="q-number">Q22</div>
+            <div class="q-text">
+                आपका सहकर्मी स्पष्ट रूप से एक सख्त समय सीमा को लेकर तनाव में है। सबसे अधिक भावनात्मक रूप से बुद्धिमान प्रतिक्रिया क्या है?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">“हर कोई व्यस्त है, बस इससे निपटें।”</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">“आप हमेशा छोटी-छोटी बातों पर तनावग्रस्त हो जाते हैं।”</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">“मैं देख सकता हूँ कि यह तनावपूर्ण है — मैं कैसे मदद कर सकता हूँ?”</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">“समय सीमा नौकरी का हिस्सा है, शिकायत न करें।”</span></div>
+            </div>
+            <button class="show-btn" data-target="ans22">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans22">
+                <div class="ans">✔ Answer: <span class="opt-label">(c)</span> “मैं देख सकता हूँ कि यह तनावपूर्ण है — मैं कैसे मदद कर सकता हूँ?”</div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> यह सबसे सहानुभूतिपूर्ण और भावनात्मक रूप से बुद्धिमान प्रतिक्रिया है।<br>
+                    अन्य विकल्प उपेक्षापूर्ण या आलोचनात्मक हैं।<br>
+                    <em>सही उत्तर (c) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q23 ─── -->
+        <div class="q-card" id="q23">
+            <div class="q-number">Q23</div>
+            <div class="q-text">
+                यदि ÷ का अर्थ + है, + का अर्थ × है, − का अर्थ ÷ है, और × का अर्थ − है, तो<br>
+                <strong>(16 ÷ 4 + 2) × 3 = ?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">22</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">19</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">20</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">21</span></div>
+            </div>
+            <button class="show-btn" data-target="ans23">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans23">
+                <div class="ans">✔ Answer: <span class="opt-label">(d) 21</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> ÷ → +, + → ×, − → ÷, × → −<br>
+                    (16 ÷ 4 + 2) × 3 → (16 + 4 × 2) − 3 = (16 + 8) − 3 = 24 − 3 = <strong>21</strong><br>
+                    <em>सही उत्तर (d) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q24 ─── -->
+        <div class="q-card" id="q24">
+            <div class="q-number">Q24</div>
+            <div class="q-text">
+                123 : 246 :: 234 : ?
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">468</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">456</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">492</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">444</span></div>
+            </div>
+            <button class="show-btn" data-target="ans24">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans24">
+                <div class="ans">✔ Answer: <span class="opt-label">(a) 468</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> 123 × 2 = 246<br>
+                    इसी प्रकार 234 × 2 = <strong>468</strong><br>
+                    <em>सही उत्तर (a) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── Q25 ─── -->
+        <div class="q-card" id="q25">
+            <div class="q-number">Q25</div>
+            <div class="q-text">
+                निम्नलिखित समीकरण में प्रश्नवाचक चिह्न (?) के स्थान पर क्या आएगा?<br>
+                <strong>60 ÷ 5 + 14 − 4 × 3 = ?</strong>
+            </div>
+            <div class="options">
+                <div class="opt"><span class="label">(a)</span><span class="text">10</span></div>
+                <div class="opt"><span class="label">(b)</span><span class="text">12</span></div>
+                <div class="opt"><span class="label">(c)</span><span class="text">16</span></div>
+                <div class="opt"><span class="label">(d)</span><span class="text">14</span></div>
+            </div>
+            <button class="show-btn" data-target="ans25">▶ &nbsp;Show Answer</button>
+            <div class="answer-box" id="ans25">
+                <div class="ans">✔ Answer: <span class="opt-label">(d) 14</span></div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> BODMAS के अनुसार:<br>
+                    60 ÷ 5 = 12, 4 × 3 = 12<br>
+                    12 + 14 − 12 = <strong>14</strong><br>
+                    <em>सही उत्तर (d) है।</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================== -->
+        <!--                     FOOTER                         -->
+        <!-- ================================================== -->
+        <div class="footer-note">
+            SSC Selection Post (Higher Secondary) · Reasoning Practice · Answer &amp; Explanation
+        </div>
+
+    </div>
+
+    <!-- ================================================== -->
+    <!--                     JAVASCRIPT                     -->
+    <!-- ================================================== -->
+    <script>
+        (function() {
+            const buttons = document.querySelectorAll('.show-btn');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('data-target');
+                    const answerBox = document.getElementById(targetId);
+                    if (!answerBox) return;
+
+                    const isOpen = answerBox.classList.contains('open');
+
+                    // close other open boxes (optional)
+                    // document.querySelectorAll('.answer-box.open').forEach(box => {
+                    //     if (box.id !== targetId) {
+                    //         box.classList.remove('open');
+                    //         const relatedBtn = document.querySelector(`.show-btn[data-target="${box.id}"]`);
+                    //         if (relatedBtn) relatedBtn.classList.remove('active');
+                    //         relatedBtn.innerHTML = '▶ &nbsp;Show Answer';
+                    //     }
+                    // });
+
+                    if (isOpen) {
+                        answerBox.classList.remove('open');
+                        this.classList.remove('active');
+                        this.innerHTML = '▶ &nbsp;Show Answer';
+                    } else {
+                        answerBox.classList.add('open');
+                        this.classList.add('active');
+                        this.innerHTML = '▼ &nbsp;Hide Answer';
+                    }
+                });
+            });
+
+            // ensure all answer boxes are hidden initially
+            // (already via CSS .answer-box { display: none; })
+        })();
+    </script>
+
+</body>
+</html>

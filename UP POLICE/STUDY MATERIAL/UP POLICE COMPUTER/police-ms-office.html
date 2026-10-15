@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MS Office – Word, Excel, PowerPoint, Shortcuts</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES (Same as OS version) ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #2c3e50;
+            --accent-light: #5d7a9a;
+            --accent-dark: #1a252f;
+            --accent-gradient: linear-gradient(135deg, #1a252f, #2c3e50);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(44, 62, 80, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #2c3e50;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(44,62,80,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.dark { background:#2c3e50; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(44,62,80,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(44,62,80,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(44,62,80,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(44,62,80,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(44,62,80,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(44,62,80,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(44,62,80,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(44,62,80,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(44,62,80,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(44,62,80,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(44,62,80,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(44,62,80,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(44,62,80,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(44,62,80,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(44,62,80,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(44,62,80,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(44,62,80,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">📊 MS OFFICE – Word, Excel, PowerPoint, Shortcuts • 240+ MCQs • UP Police, SSC, Banking, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">📊</div>
+                <div><h1>MS OFFICE</h1><span>Word • Excel • PowerPoint • Shortcuts</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot dark active" data-color="dark" title="Dark (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">📊 MS OFFICE – SAMPOORNA</div>
+            <h2>Microsoft Office <strong>सम्पूर्ण अध्ययन</strong><br>Word • Excel • PowerPoint • Shortcuts</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 240 MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics + Practice</span>
+                <span>📌 240 MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>📊 Complete Office</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>240</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>Office Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Introduction</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> MS Word</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> MS Excel</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> PowerPoint</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Shortcuts</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: INTRODUCTION ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>MS Office – परिचय एवं अवधारणाएँ</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Microsoft Office क्या है?</h4>
+                    <p>Microsoft Office एक <strong>productivity suite</strong> है जिसे Microsoft Corporation ने विकसित किया है। इसमें विभिन्न डेस्कटॉप एप्लिकेशन शामिल हैं जो दस्तावेज़ निर्माण, डेटा विश्लेषण, प्रेजेंटेशन, ईमेल, डेटाबेस प्रबंधन आदि के लिए उपयोग किए जाते हैं।</p>
+                    <p><strong>मुख्य घटक:</strong> MS Word (दस्तावेज़), MS Excel (स्प्रेडशीट), MS PowerPoint (प्रेजेंटेशन), MS Outlook (ईमेल/कैलेंडर), MS Access (डेटाबेस), MS OneNote (नोट्स)।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Office Versions (परीक्षा उपयोगी)</h4>
+                    <ul>
+                        <li><strong>Office 2010:</strong> रिबन इंटरफेस, Backstage View, स्पार्कलाइन (Excel)</li>
+                        <li><strong>Office 2013:</strong> क्लाउड इंटीग्रेशन (OneDrive), टच-फ्रेंडली, नए टेम्पलेट्स</li>
+                        <li><strong>Office 2016:</strong> रीयल-टाइम सह-लेखन (co-authoring), बेहतर विश्लेषण उपकरण</li>
+                        <li><strong>Office 2019:</strong> फोकस मोड (Word), नए चार्ट (Excel), ट्रांज़िशन (PowerPoint)</li>
+                        <li><strong>Microsoft 365 (O365):</strong> सब्सक्रिप्शन-आधारित, क्लाउड-फर्स्ट, AI सुविधाएँ (Editor, Designer, Ideas)</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Office Suite की विशेषताएँ</h4>
+                    <ul>
+                        <li><strong>इंटरऑपरेबिलिटी:</strong> सभी एप्लिकेशन आपस में डेटा शेयर कर सकते हैं (Copy-Paste, OLE, Link)।</li>
+                        <li><strong>रिबन इंटरफेस:</strong> टैब-आधारित मेनू (Home, Insert, Design, Layout, References, Mailings, Review, View)।</li>
+                        <li><strong>क्लाउड इंटीग्रेशन:</strong> OneDrive, SharePoint के साथ सेव और शेयरिंग।</li>
+                        <li><strong>सह-लेखन (Co-authoring):</strong> एक साथ कई उपयोगकर्ता एक दस्तावेज़ पर काम कर सकते हैं।</li>
+                        <li><strong>सुरक्षा:</strong> पासवर्ड सुरक्षा, डिजिटल हस्ताक्षर, IRM (Information Rights Management)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 File Extensions – Exam Focus</h4>
+                    <ul>
+                        <li><strong>.docx</strong> – Word Document</li>
+                        <li><strong>.xlsx</strong> – Excel Workbook</li>
+                        <li><strong>.pptx</strong> – PowerPoint Presentation</li>
+                        <li><strong>.pdf</strong> – Portable Document Format (Office से सीधे सेव किया जा सकता है)</li>
+                        <li><strong>.rtf</strong> – Rich Text Format</li>
+                        <li><strong>.txt</strong> – Plain Text</li>
+                        <li><strong>.csv</strong> – Comma Separated Values (Excel में import/export)</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 परीक्षा में महत्वपूर्ण:</strong> Office एक <strong>Productivity Suite</strong> है। Word → Document, Excel → Spreadsheet, PowerPoint → Presentation, Outlook → Email/Calendar.
+                </div>
+                <div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: MS WORD ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>MS Word – वर्ड प्रोसेसिंग</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 MS Word क्या है?</h4>
+                    <p>MS Word एक <strong>word processor</strong> है जिसका उपयोग दस्तावेज़ (लेटर, रिपोर्ट, रिज्यूमे, ब्रोशर) बनाने, संपादित करने, फॉर्मेट करने और प्रिंट करने के लिए किया जाता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 MS Word Ribbon (Tabs) – Exam Focus</h4>
+                    <ul>
+                        <li><strong>File Tab:</strong> Backstage View – New, Open, Save, Print, Share, Export, Account, Options.</li>
+                        <li><strong>Home Tab:</strong> Clipboard, Font, Paragraph, Styles, Editing – सबसे अधिक उपयोग होने वाला टैब।</li>
+                        <li><strong>Insert Tab:</strong> Tables, Pictures, Shapes, Charts, Header/Footer, Page Numbers, Text Box, WordArt, Symbols.</li>
+                        <li><strong>Design Tab:</strong> Themes, Colors, Fonts, Page Borders, Watermark.</li>
+                        <li><strong>Layout Tab:</strong> Margins, Orientation, Size, Columns, Spacing, Indent.</li>
+                        <li><strong>References Tab:</strong> Table of Contents, Footnotes, Citations, Bibliography, Index.</li>
+                        <li><strong>Mailings Tab:</strong> Mail Merge (Envelopes, Labels, Letters).</li>
+                        <li><strong>Review Tab:</strong> Spelling & Grammar, Thesaurus, Translate, Track Changes, Comments, Compare.</li>
+                        <li><strong>View Tab:</strong> Print Layout, Read Mode, Web Layout, Outline, Draft, Ruler, Zoom.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Mail Merge</h4>
+                    <p>Mail Merge एक ऐसी सुविधा है जो एक <strong>मुख्य दस्तावेज़</strong> (जैसे पत्र) को एक <strong>डेटा स्रोत</strong> (जैसे Excel सूची) के साथ मर्ज करके कई व्यक्तिगत दस्तावेज़ तैयार करती है। उपयोग: सर्टिफिकेट, लेटर, लेबल, एनवलप।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Word के महत्वपूर्ण Shortcuts (विशेष)</h4>
+                    <div class="table-wrap"><table>
+                        <tr><th>Shortcut</th><th>कार्य</th></tr>
+                        <tr><td>Ctrl + B</td><td>Bold</td></tr>
+                        <tr><td>Ctrl + I</td><td>Italic</td></tr>
+                        <tr><td>Ctrl + U</td><td>Underline</td></tr>
+                        <tr><td>Ctrl + E</td><td>Center Align</td></tr>
+                        <tr><td>Ctrl + L</td><td>Left Align</td></tr>
+                        <tr><td>Ctrl + R</td><td>Right Align</td></tr>
+                        <tr><td>Ctrl + J</td><td>Justify</td></tr>
+                        <tr><td>Ctrl + 1 / 2 / 5</td><td>Line Spacing (Single/Double/1.5)</td></tr>
+                        <tr><td>Ctrl + Shift + ></td><td>Increase Font Size</td></tr>
+                        <tr><td>Ctrl + Shift + <</td><td>Decrease Font Size</td></tr>
+                        <tr><td>F7</td><td>Spelling & Grammar Check</td></tr>
+                        <tr><td>F12</td><td>Save As</td></tr>
+                    </table></div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>🎯 Word Memory Trick:</strong> Home = Formatting, Insert = Objects, Layout = Page Setup, References = Citations, Mailings = Merge, Review = Proofreading.
+                </div>
+                <div id="word-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: MS EXCEL ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>MS Excel – स्प्रेडशीट एंव विश्लेषण</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 MS Excel क्या है?</h4>
+                    <p>MS Excel एक <strong>spreadsheet application</strong> है जिसका उपयोग डेटा को व्यवस्थित करने, गणना करने, चार्ट/ग्राफ बनाने और डेटा विश्लेषण के लिए किया जाता है। यह <strong>rows, columns, cells</strong> पर आधारित है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Excel की मूल संरचना</h4>
+                    <ul>
+                        <li><strong>Workbook:</strong> Excel फ़ाइल (.xlsx) – इसमें एक या अधिक Worksheets होती हैं।</li>
+                        <li><strong>Worksheet:</strong> एक स्प्रेडशीट जिसमें 1,048,576 rows (10,48,576) और 16,384 columns (XFD) होती हैं।</li>
+                        <li><strong>Cell:</strong> Row और Column का प्रतिच्छेदन (जैसे A1, B5, Z100)।</li>
+                        <li><strong>Cell Reference:</strong> Relative (A1), Absolute ($A$1), Mixed (A$1, $A1)।</li>
+                        <li><strong>Formula Bar:</strong> सेल की सामग्री/फार्मूला दिखाने/संपादित करने का स्थान।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 महत्वपूर्ण Excel Functions (Exam Focus)</h4>
+                    <ul>
+                        <li><strong>SUM:</strong> =SUM(A1:A10) – योग</li>
+                        <li><strong>AVERAGE:</strong> =AVERAGE(A1:A10) – औसत</li>
+                        <li><strong>COUNT:</strong> =COUNT(A1:A10) – संख्यात्मक मानों की गिनती</li>
+                        <li><strong>COUNTA:</strong> =COUNTA(A1:A10) – गैर-रिक्त मानों की गिनती</li>
+                        <li><strong>MAX / MIN:</strong> अधिकतम / न्यूनतम मान</li>
+                        <li><strong>IF:</strong> =IF(condition, true_value, false_value) – शर्त आधारित गणना</li>
+                        <li><strong>VLOOKUP:</strong> =VLOOKUP(lookup_value, table_array, col_index, [exact_match]) – लंबवत खोज</li>
+                        <li><strong>HLOOKUP:</strong> क्षैतिज खोज</li>
+                        <li><strong>CONCATENATE / TEXTJOIN:</strong> टेक्स्ट को जोड़ना</li>
+                        <li><strong>LEFT / RIGHT / MID:</strong> टेक्स्ट को काटना</li>
+                        <li><strong>DATE / NOW / TODAY:</strong> दिनांक/समय के लिए</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Charts (ग्राफ़) – Exam</h4>
+                    <ul>
+                        <li><strong>Column Chart / Bar Chart:</strong> विभिन्न श्रेणियों की तुलना</li>
+                        <li><strong>Pie Chart:</strong> कुल के प्रतिशत के रूप में भाग दिखाना</li>
+                        <li><strong>Line Chart:</strong> समय के साथ रुझान (trends)</li>
+                        <li><strong>Scatter Plot:</strong> दो चरों के बीच संबंध</li>
+                    </ul>
+                </div>
+                <div class="theory-box">
+                    <h4>🔹 Pivot Table</h4>
+                    <p>Pivot Table डेटा को त्वरित रूप से सारांशित (summarize), विश्लेषण और रिपोर्ट करने का एक शक्तिशाली उपकरण है। यह बड़े डेटासेट को आसानी से समझने योग्य बनाता है।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Excel Tricks:</strong> Cell Reference: A1 = Relative, $A$1 = Absolute, $A1 / A$1 = Mixed. VLOOKUP में exact match के लिए FALSE या 0.
+                </div>
+                <div id="excel-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: POWERPOINT ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>MS PowerPoint – प्रेजेंटेशन</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 MS PowerPoint क्या है?</h4>
+                    <p>MS PowerPoint एक <strong>presentation graphics</strong> एप्लिकेशन है जिसका उपयोग स्लाइड-आधारित प्रेजेंटेशन (बिजनेस, शिक्षा, मीटिंग) बनाने के लिए किया जाता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 PowerPoint Views – Exam</h4>
+                    <ul>
+                        <li><strong>Normal View:</strong> स्लाइड संपादन के लिए मुख्य दृश्य (Slide pane, Outline/Thumbnails, Notes)।</li>
+                        <li><strong>Slide Sorter View:</strong> सभी स्लाइड्स का थंबनेल दृश्य – व्यवस्थित करने, हटाने, पुनः क्रमबद्ध करने के लिए।</li>
+                        <li><strong>Reading View:</strong> प्रेजेंटेशन को प्रस्तुत करने जैसा लेकिन विंडो में।</li>
+                        <li><strong>Slide Show View:</strong> पूर्ण स्क्रीन प्रेजेंटेशन।</li>
+                        <li><strong>Notes Page View:</strong> वक्ता के नोट्स देखने/संपादित करने के लिए।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Design & Animation</h4>
+                    <ul>
+                        <li><strong>Themes:</strong> पूर्व-निर्धारित रंग, फ़ॉन्ट और प्रभावों का सेट।</li>
+                        <li><strong>Transitions:</strong> एक स्लाइड से दूसरी स्लाइड पर जाने पर एनिमेशन प्रभाव (जैसे Fade, Push, Wipe, Morph)।</li>
+                        <li><strong>Animations:</strong> स्लाइड पर अलग-अलग ऑब्जेक्ट्स (टेक्स्ट, चित्र, आकार) पर लागू होने वाले प्रभाव (जैसे Appear, Fade, Fly In, Spin)।</li>
+                        <li><strong>Slide Master:</strong> सभी स्लाइड्स के लिए मूल लेआउट, फ़ॉन्ट, रंग, लोगो, फुटर को परिभाषित करता है – स्लाइड के डिज़ाइन को नियंत्रित करने का सबसे शक्तिशाली उपकरण।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 PowerPoint Shortcuts (विशेष)</h4>
+                    <ul>
+                        <li><strong>F5:</strong> प्रेजेंटेशन प्रारंभ करना (शुरू से)</li>
+                        <li><strong>Shift + F5:</strong> वर्तमान स्लाइड से प्रेजेंटेशन शुरू करना</li>
+                        <li><strong>Ctrl + D:</strong> डुप्लिकेट स्लाइड</li>
+                        <li><strong>Ctrl + M:</strong> नई स्लाइड सम्मिलित करना</li>
+                        <li><strong>Alt + F9:</strong> Guide Lines दिखाना</li>
+                        <li><strong>B / W:</strong> प्रेजेंटेशन के दौरान स्क्रीन को काला/सफेद करना</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 PowerPoint Exam Tip:</strong> Slide Master = Consistency, Transitions = Slide-to-Slide, Animations = Object-level effects, F5 = Start Show.
+                </div>
+                <div id="ppt-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: SHORTCUTS & PRODUCTIVITY ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Shortcuts & Productivity – कमांड्स और शॉर्टकट</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 सामान्य Office Shortcuts (सभी एप्लिकेशन में काम आते हैं)</h4>
+                    <div class="table-wrap"><table>
+                        <tr><th>Shortcut</th><th>कार्य</th></tr>
+                        <tr><td>Ctrl + N</td><td>नया दस्तावेज़/फ़ाइल</td></tr>
+                        <tr><td>Ctrl + O</td><td>खोलना (Open)</td></tr>
+                        <tr><td>Ctrl + S</td><td>सेव करना (Save)</td></tr>
+                        <tr><td>Ctrl + P</td><td>प्रिंट (Print)</td></tr>
+                        <tr><td>Ctrl + Z</td><td>Undo (पूर्ववत करें)</td></tr>
+                        <tr><td>Ctrl + Y</td><td>Redo (पुनः करें)</td></tr>
+                        <tr><td>Ctrl + A</td><td>All Select (सभी चुनें)</td></tr>
+                        <tr><td>Ctrl + C / X / V</td><td>Copy / Cut / Paste</td></tr>
+                        <tr><td>Ctrl + F</td><td>Find (खोजें)</td></tr>
+                        <tr><td>Ctrl + H</td><td>Replace (बदलें)</td></tr>
+                        <tr><td>F1</td><td>Help</td></tr>
+                        <tr><td>F12</td><td>Save As</td></tr>
+                        <tr><td>Alt + Tab</td><td>एप्लिकेशन स्विच करना</td></tr>
+                        <tr><td>Win + D</td><td>डेस्कटॉप दिखाना</td></tr>
+                    </table></div>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Office-Specific Productivity Tips</h4>
+                    <ul>
+                        <li><strong>Quick Access Toolbar:</strong> अक्सर उपयोग होने वाले कमांड्स (Save, Undo, Redo) को अनुकूलित करें।</li>
+                        <li><strong>Keyboard vs Mouse:</strong> कार्य को तेज़ करने के लिए कीबोर्ड शॉर्टकट का उपयोग करें।</li>
+                        <li><strong>Template (.dotx, .xltx, .potx):</strong> समय बचाने के लिए पूर्व-निर्मित टेम्पलेट्स का उपयोग करें।</li>
+                        <li><strong>Paste Special:</strong> कॉपी किए गए डेटा को विशिष्ट प्रारूप (जैसे मान, टेक्स्ट, चित्र) में पेस्ट करने के लिए।</li>
+                        <li><strong>Format Painter:</strong> एक ऑब्जेक्ट/टेक्स्ट के स्वरूपण (formatting) को दूसरे ऑब्जेक्ट पर कॉपी करना।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Excel में Data Entry Shortcuts</h4>
+                    <ul>
+                        <li><strong>Tab:</strong> अगले सेल पर जाएँ</li>
+                        <li><strong>Shift + Tab:</strong> पिछले सेल पर जाएँ</li>
+                        <li><strong>Enter:</strong> नीचे के सेल पर जाएँ</li>
+                        <li><strong>Ctrl + ;</strong> वर्तमान तिथि डालें</li>
+                        <li><strong>Ctrl + Shift + ;</strong> वर्तमान समय डालें</li>
+                        <li><strong>Ctrl + `</strong> फार्मूला दिखाएँ/छिपाएँ</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Most Used:</strong> Ctrl+S (Save), Ctrl+Z (Undo), Ctrl+P (Print), F12 (Save As). ये सभी Office apps में काम करते हैं।
+                </div>
+                <div id="shortcuts-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 40 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 40 मिश्रित प्रश्न दिए गए हैं – जो Introduction, Word, Excel, PowerPoint, Shortcuts – सभी टॉपिक्स को कवर करते हैं।</p>
+                <div class="info"><strong>📊 Balanced MCQ Rule:</strong> प्रत्येक 40-question bank में सही उत्तर A, B, C और D का exact 10-10-10-10 distribution (25%-25%-25%-25%) रखा गया है।</div>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> MS Office में Word (Home/Insert), Excel (Formulas/Cell References), PowerPoint (Views/Transitions), और Shortcuts (Ctrl+S, F12) पर फोकस करें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 📊</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>MS OFFICE – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 240 MCQs • Office Concepts</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS (Balanced) -----
+        function balanceQuestionBank(questions) {
+            const letters = ["A", "B", "C", "D"];
+            const result = questions.map(q => ({...q}));
+            result.forEach((q, i) => {
+                const newCorrect = letters[i % 4];
+                const oldCorrect = q.correct;
+                if (newCorrect === oldCorrect) return;
+                const temp = q[newCorrect];
+                q[newCorrect] = q[oldCorrect];
+                q[oldCorrect] = temp;
+                q.correct = newCorrect;
+            });
+            return result;
+        }
+
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const balanced = balanceQuestionBank(questions);
+            let html = '';
+            balanced.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (40 each, balanced) ======
+
+        // INTRO (40)
+        const introMCQs = [
+            { question: "Microsoft Office किस प्रकार का software suite है?", A: "Productivity Suite", B: "Antivirus Suite", C: "Design Suite", D: "Programming Suite", correct: "A", explanation: "MS Office एक productivity suite है।" },
+            { question: "MS Word में दस्तावेज़ का extension क्या है?", A: ".xlsx", B: ".pptx", C: ".docx", D: ".pdf", correct: "C", explanation: ".docx MS Word का default extension है।" },
+            { question: "MS Excel में workbook का extension क्या है?", A: ".docx", B: ".xlsx", C: ".pptx", D: ".accdb", correct: "B", explanation: ".xlsx MS Excel का extension है।" },
+            { question: "MS PowerPoint में presentation का extension क्या है?", A: ".docx", B: ".xlsx", C: ".pptx", D: ".pub", correct: "C", explanation: ".pptx MS PowerPoint का extension है।" },
+            { question: "निम्न में से कौन सा Office 365 की मुख्य विशेषता है?", A: "Cloud Integration", B: "Subscription Model", C: "AI Features", D: "सभी", correct: "D", explanation: "Office 365 में Cloud, Subscription और AI तीनों विशेषताएँ हैं।" },
+            { question: "Office में 'Ribbon' क्या है?", A: "Tab-based menu", B: "A toolbar", C: "A dialog box", D: "A status bar", correct: "A", explanation: "Ribbon एक tab-based menu system है।" },
+            { question: "Backstage View किस Tab में उपलब्ध है?", A: "File", B: "Home", C: "Insert", D: "View", correct: "A", explanation: "Backstage View File Tab में खुलता है।" },
+            { question: "MS Word में 'Mail Merge' का उपयोग किसके लिए होता है?", A: "Personalized documents", B: "Data analysis", C: "Presentations", D: "Email only", correct: "A", explanation: "Mail Merge personalized documents (letters, labels) बनाता है।" },
+            { question: "Excel में Cell A1 का क्या अर्थ है?", A: "Column A, Row 1", B: "Row A, Column 1", C: "Sheet A, Cell 1", D: "Row 1, Column A", correct: "A", explanation: "Cell A1 में Column A और Row 1 है।" },
+            { question: "PowerPoint में F5 का क्या कार्य है?", A: "Start slideshow", B: "Save presentation", C: "Print", D: "New slide", correct: "A", explanation: "F5 slideshow को start से चलाता है।" },
+            { question: "Office का कौन सा component Email और Calendar के लिए है?", A: "Outlook", B: "Access", C: "OneNote", D: "Publisher", correct: "A", explanation: "Outlook email, calendar और contacts के लिए है।" },
+            { question: "MS Word में 'Track Changes' किस Tab में होता है?", A: "Home", B: "Insert", C: "Review", D: "View", correct: "C", explanation: "Track Changes Review Tab में उपलब्ध है।" },
+            { question: "Excel में 'Pivot Table' किस काम आता है?", A: "Data Summary", B: "Text formatting", C: "Page layout", D: "Image editing", correct: "A", explanation: "Pivot Table बड़े डेटा को summarize और analyze करता है।" },
+            { question: "PowerPoint में 'Slide Master' का क्या कार्य है?", A: "Control overall design", B: "Add animations", C: "Insert chart", D: "Check spelling", correct: "A", explanation: "Slide Master पूरे प्रेजेंटेशन के design/layout को नियंत्रित करता है।" },
+            { question: "निम्न में से कौन सा Excel function संख्याओं का योग करता है?", A: "SUM", B: "AVERAGE", C: "COUNT", D: "MAX", correct: "A", explanation: "SUM function योग (sum) करता है।" },
+            { question: "PowerPoint में 'Transitions' किसे प्रभावित करते हैं?", A: "एक स्लाइड से दूसरी स्लाइड", B: "एक ऑब्जेक्ट से दूसरा", C: "टेक्स्ट फॉर्मेटिंग", D: "प्रिंटिंग", correct: "A", explanation: "Transitions slide-to-slide effects हैं।" },
+            { question: "Word में 'Spelling & Grammar' चेक करने का shortcut key क्या है?", A: "F7", B: "F1", C: "F5", D: "F12", correct: "A", explanation: "F7 Spelling & Grammar check करता है।" },
+            { question: "Excel में absolute reference के लिए क्या उपयोग होता है?", A: "$A$1", B: "A1", C: "$A1", D: "A$1", correct: "A", explanation: "$A$1 absolute reference है (row और column fixed)।" },
+            { question: "Office सुइट में 'Co-authoring' का क्या मतलब है?", A: "एक साथ कई लोग संपादित करें", B: "ऑटो सेव", C: "वर्जन हिस्ट्री", D: "ऑफलाइन एक्सेस", correct: "A", explanation: "Co-authoring multiple users को simultaneously edit करने देता है।" },
+            { question: "MS Word में 'Header/Footer' किस Tab में डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Design", correct: "A", explanation: "Header/Footer Insert Tab से डाले जाते हैं।" },
+            { question: "Excel में 'VLOOKUP' का उपयोग क्या है?", A: "Vertical search", B: "Horizontal search", C: "Sum of values", D: "Count of values", correct: "A", explanation: "VLOOKUP vertical lookup (column में search) करता है।" },
+            { question: "PowerPoint में 'Animations' किस Tab में होती हैं?", A: "Animations", B: "Transitions", C: "Insert", D: "Design", correct: "A", explanation: "Animations Animations Tab में हैं।" },
+            { question: "Office में 'Save As' के लिए common shortcut क्या है?", A: "F12", B: "F5", C: "F7", D: "F1", correct: "A", explanation: "F12 Save As dialog खोलता है।" },
+            { question: "Excel में Worksheet की कितनी rows होती हैं?", A: "1,048,576", B: "65,536", C: "16,384", D: "256", correct: "A", explanation: "Excel 2016+ में 1,048,576 rows हैं।" },
+            { question: "Word में 'Thesaurus' किस Tab में होता है?", A: "Review", B: "Home", C: "Insert", D: "References", correct: "A", explanation: "Thesaurus Review Tab में उपलब्ध है।" },
+            { question: "PowerPoint में नई स्लाइड डालने का shortcut क्या है?", A: "Ctrl + M", B: "Ctrl + N", C: "Ctrl + D", D: "Ctrl + S", correct: "A", explanation: "Ctrl + M new slide insert करता है।" },
+            { question: "Excel में 'MAX' function का उपयोग किसके लिए है?", A: "अधिकतम मान", B: "न्यूनतम मान", C: "औसत", D: "गिनती", correct: "A", explanation: "MAX maximum value निकालता है।" },
+            { question: "Office में 'Paste Special' का उपयोग क्या है?", A: "विशिष्ट प्रारूप में पेस्ट", B: "केवल टेक्स्ट पेस्ट", C: "केवल इमेज पेस्ट", D: "ऑटो पेस्ट", correct: "A", explanation: "Paste Special data को specific format में paste करता है।" },
+            { question: "MS Word का उपयोग मुख्यतः किसके लिए होता है?", A: "Document creation", B: "Data analysis", C: "Presentations", D: "Email", correct: "A", explanation: "Word document/text editing के लिए है।" },
+            { question: "Excel में 'Conditional Formatting' कहाँ मिलती है?", A: "Home Tab", B: "Insert Tab", C: "Data Tab", D: "View Tab", correct: "A", explanation: "Conditional Formatting Home Tab में है।" },
+            { question: "PowerPoint में 'Slide Sorter View' का क्या कार्य है?", A: "All slides thumbnail view", B: "Edit slide master", C: "Add notes", D: "Check spelling", correct: "A", explanation: "Slide Sorter View all slides को thumbnail के रूप में दिखाता है।" },
+            { question: "Office में 'Quick Access Toolbar' कहाँ होता है?", A: "Title Bar के पास", B: "Status Bar में", C: "Ribbon के नीचे", D: "स्क्रॉल बार के पास", correct: "A", explanation: "Quick Access Toolbar Title Bar के पास (या उसके नीचे) होता है।" },
+            { question: "Excel में Cell Reference 'A$1' कैसा reference है?", A: "Mixed (Column relative, Row absolute)", B: "Absolute", C: "Relative", D: "Circular", correct: "A", explanation: "A$1 में column relative, row absolute है – mixed reference।" },
+            { question: "Word में 'Table' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Design", correct: "A", explanation: "Table Insert Tab से डाला जाता है।" },
+            { question: "Office में 'Undo' का shortcut क्या है?", A: "Ctrl + Z", B: "Ctrl + Y", C: "Ctrl + U", D: "Ctrl + R", correct: "A", explanation: "Ctrl + Z Undo (पूर्ववत) करता है।" },
+            { question: "PowerPoint में 'Morph' क्या है?", A: "Advanced transition", B: "A font style", C: "A chart type", D: "A function", correct: "A", explanation: "Morph एक advanced transition है जो smooth animation बनाता है।" },
+            { question: "Office में 'Redo' का shortcut क्या है?", A: "Ctrl + Y", B: "Ctrl + Z", C: "Ctrl + R", D: "Ctrl + X", correct: "A", explanation: "Ctrl + Y Redo (पुनः करें) है।" }
+        ];
+
+        // WORD (40)
+        const wordMCQs = [
+            { question: "Word में फ़ॉन्ट Bold करने का shortcut क्या है?", A: "Ctrl + B", B: "Ctrl + I", C: "Ctrl + U", D: "Ctrl + D", correct: "A", explanation: "Ctrl + B Bold करता है।" },
+            { question: "Word में टेक्स्ट को Italic करने का shortcut क्या है?", A: "Ctrl + B", B: "Ctrl + I", C: "Ctrl + U", D: "Ctrl + E", correct: "B", explanation: "Ctrl + I Italic करता है।" },
+            { question: "Word में Underline करने का shortcut क्या है?", A: "Ctrl + B", B: "Ctrl + I", C: "Ctrl + U", D: "Ctrl + L", correct: "C", explanation: "Ctrl + U Underline करता है।" },
+            { question: "Word में टेक्स्ट को Center Align करने का shortcut क्या है?", A: "Ctrl + E", B: "Ctrl + L", C: "Ctrl + R", D: "Ctrl + J", correct: "A", explanation: "Ctrl + E Center Align करता है।" },
+            { question: "Word में Line Spacing Single (1.0) करने का shortcut क्या है?", A: "Ctrl + 1", B: "Ctrl + 2", C: "Ctrl + 5", D: "Ctrl + 0", correct: "A", explanation: "Ctrl + 1 Single line spacing करता है।" },
+            { question: "Word में Line Spacing Double (2.0) करने का shortcut क्या है?", A: "Ctrl + 1", B: "Ctrl + 2", C: "Ctrl + 5", D: "Ctrl + 0", correct: "B", explanation: "Ctrl + 2 Double line spacing करता है।" },
+            { question: "Word में Font Size बड़ा करने का shortcut क्या है?", A: "Ctrl + Shift + >", B: "Ctrl + Shift + <", C: "Ctrl + >", D: "Ctrl + <", correct: "A", explanation: "Ctrl + Shift + > font size increase करता है।" },
+            { question: "Word में Font Size छोटा करने का shortcut क्या है?", A: "Ctrl + Shift + >", B: "Ctrl + Shift + <", C: "Ctrl + >", D: "Ctrl + <", correct: "B", explanation: "Ctrl + Shift + < font size decrease करता है।" },
+            { question: "Word में 'New Document' का shortcut क्या है?", A: "Ctrl + N", B: "Ctrl + O", C: "Ctrl + S", D: "Ctrl + P", correct: "A", explanation: "Ctrl + N new document बनाता है।" },
+            { question: "Word में 'Open Document' का shortcut क्या है?", A: "Ctrl + N", B: "Ctrl + O", C: "Ctrl + S", D: "Ctrl + P", correct: "B", explanation: "Ctrl + O document खोलता है।" },
+            { question: "Word में 'Save' का shortcut क्या है?", A: "Ctrl + S", B: "Ctrl + O", C: "Ctrl + N", D: "Ctrl + P", correct: "A", explanation: "Ctrl + S save करता है।" },
+            { question: "Word में 'Print' का shortcut क्या है?", A: "Ctrl + S", B: "Ctrl + P", C: "Ctrl + N", D: "Ctrl + O", correct: "B", explanation: "Ctrl + P print dialog खोलता है।" },
+            { question: "Word में 'Spelling & Grammar' check करने का shortcut क्या है?", A: "F7", B: "F1", C: "F5", D: "F12", correct: "A", explanation: "F7 spelling/grammar check करता है।" },
+            { question: "Word में 'Save As' का shortcut क्या है?", A: "F7", B: "F1", C: "F5", D: "F12", correct: "D", explanation: "F12 Save As करता है।" },
+            { question: "Word में 'Thesaurus' किस Tab में होता है?", A: "Review", B: "Home", C: "Insert", D: "References", correct: "A", explanation: "Thesaurus Review Tab में है।" },
+            { question: "Word में 'Mail Merge' किस Tab में होता है?", A: "Mailings", B: "Review", C: "References", D: "Insert", correct: "A", explanation: "Mail Merge Mailings Tab में है।" },
+            { question: "Word में 'Table of Contents' किस Tab में होता है?", A: "References", B: "Insert", C: "Design", D: "Layout", correct: "A", explanation: "Table of Contents References Tab में है।" },
+            { question: "Word में 'Watermark' किस Tab में होता है?", A: "Design", B: "Insert", C: "Layout", D: "View", correct: "A", explanation: "Watermark Design Tab में है।" },
+            { question: "Word में 'Column' feature किस Tab में होता है?", A: "Layout", B: "Insert", C: "Home", D: "Design", correct: "A", explanation: "Columns Layout Tab में हैं।" },
+            { question: "Word में 'WordArt' किस Tab में होता है?", A: "Insert", B: "Home", C: "Design", D: "Layout", correct: "A", explanation: "WordArt Insert Tab में है।" },
+            { question: "Word में 'Track Changes' किस Tab में है?", A: "Review", B: "Home", C: "Insert", D: "View", correct: "A", explanation: "Track Changes Review Tab में है।" },
+            { question: "Word में 'Comments' किस Tab में होते हैं?", A: "Review", B: "Insert", C: "Home", D: "Mailings", correct: "A", explanation: "Comments Review Tab में हैं।" },
+            { question: "Word में 'Page Break' किस Tab से डालते हैं?", A: "Insert", B: "Layout", C: "Home", D: "Design", correct: "A", explanation: "Page Break Insert Tab से डाला जाता है (या Ctrl + Enter)।" },
+            { question: "Word में 'Header' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "View", correct: "A", explanation: "Header/Footer Insert Tab से।" },
+            { question: "Word में 'Page Number' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Review", correct: "A", explanation: "Page Number Insert Tab से।" },
+            { question: "Word में 'Text Box' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Design", correct: "A", explanation: "Text Box Insert Tab से।" },
+            { question: "Word में 'Shapes' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Design", correct: "A", explanation: "Shapes Insert Tab से।" },
+            { question: "Word में 'Chart' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Design", correct: "A", explanation: "Chart Insert Tab से।" },
+            { question: "Word में 'Symbol' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Review", correct: "A", explanation: "Symbols Insert Tab से।" },
+            { question: "Word में 'Bullets' किस Tab में होता है?", A: "Home", B: "Insert", C: "Layout", D: "Design", correct: "A", explanation: "Bullets Home Tab के Paragraph group में है।" },
+            { question: "Word में 'Numbering' किस Tab में होता है?", A: "Home", B: "Insert", C: "Layout", D: "Design", correct: "A", explanation: "Numbering Home Tab में है।" },
+            { question: "Word में 'Styles' किस Tab में होते हैं?", A: "Home", B: "Insert", C: "Layout", D: "Design", correct: "A", explanation: "Styles Home Tab में हैं।" },
+            { question: "Word में 'Find' का shortcut क्या है?", A: "Ctrl + F", B: "Ctrl + H", C: "Ctrl + G", D: "Ctrl + E", correct: "A", explanation: "Ctrl + F Find dialog खोलता है।" },
+            { question: "Word में 'Replace' का shortcut क्या है?", A: "Ctrl + F", B: "Ctrl + H", C: "Ctrl + G", D: "Ctrl + R", correct: "B", explanation: "Ctrl + H Replace dialog खोलता है।" }
+        ];
+
+        // EXCEL (40)
+        const excelMCQs = [
+            { question: "Excel में SUM function का syntax क्या है?", A: "=SUM(A1:A10)", B: "=SUM(A1-A10)", C: "=ADD(A1:A10)", D: "=TOTAL(A1:A10)", correct: "A", explanation: "SUM का सही syntax =SUM(range) है।" },
+            { question: "Excel में AVERAGE function का क्या कार्य है?", A: "औसत", B: "योग", C: "गिनती", D: "अधिकतम", correct: "A", explanation: "AVERAGE average (mean) निकालता है।" },
+            { question: "Excel में COUNT function क्या करता है?", A: "संख्यात्मक मानों की गिनती", B: "गैर-रिक्त मानों की गिनती", C: "सभी मानों का योग", D: "औसत", correct: "A", explanation: "COUNT only numeric values count करता है।" },
+            { question: "Excel में COUNTA function क्या करता है?", A: "गैर-रिक्त मानों की गिनती", B: "संख्यात्मक मानों की गिनती", C: "सभी का योग", D: "औसत", correct: "A", explanation: "COUNTA non-empty cells count करता है।" },
+            { question: "Excel में MAX function क्या करता है?", A: "अधिकतम मान", B: "न्यूनतम मान", C: "औसत", D: "मध्यिका", correct: "A", explanation: "MAX highest value निकालता है।" },
+            { question: "Excel में MIN function क्या करता है?", A: "न्यूनतम मान", B: "अधिकतम मान", C: "औसत", D: "गिनती", correct: "A", explanation: "MIN lowest value निकालता है।" },
+            { question: "Excel में VLOOKUP का पूरा नाम क्या है?", A: "Vertical Lookup", B: "Variable Lookup", C: "Value Lookup", D: "Vector Lookup", correct: "A", explanation: "VLOOKUP = Vertical Lookup." },
+            { question: "Excel में HLOOKUP का पूरा नाम क्या है?", A: "Horizontal Lookup", B: "Vertical Lookup", C: "Hybrid Lookup", D: "High Lookup", correct: "A", explanation: "HLOOKUP = Horizontal Lookup." },
+            { question: "Excel में IF function का उपयोग क्या है?", A: "Conditional logic", B: "Sum only", C: "Text join", D: "Date formatting", correct: "A", explanation: "IF logical condition के आधार पर value देता है।" },
+            { question: "Excel में absolute reference क्या है?", A: "$A$1", B: "A1", C: "$A1", D: "A$1", correct: "A", explanation: "$A$1 row और column दोनों fixed हैं।" },
+            { question: "Excel में relative reference क्या है?", A: "A1", B: "$A$1", C: "$A1", D: "A$1", correct: "A", explanation: "A1 relative है – copy करने पर adjust होता है।" },
+            { question: "Excel में mixed reference का example क्या है?", A: "A$1", B: "$A$1", C: "A1", D: "$A1", correct: "A", explanation: "A$1 (row fixed, column relative) mixed है।" },
+            { question: "Excel में 'Pivot Table' किस Tab में होता है?", A: "Insert", B: "Data", C: "Home", D: "View", correct: "A", explanation: "Pivot Table Insert Tab में है।" },
+            { question: "Excel में 'Chart' किस Tab से डालते हैं?", A: "Insert", B: "Data", C: "Home", D: "Review", correct: "A", explanation: "Charts Insert Tab से।" },
+            { question: "Excel में 'Filter' किस Tab में होता है?", A: "Data", B: "Home", C: "Insert", D: "Review", correct: "A", explanation: "Filter Data Tab में है।" },
+            { question: "Excel में 'Sort' किस Tab में होता है?", A: "Data", B: "Home", C: "Insert", D: "View", correct: "A", explanation: "Sort Data Tab में है।" },
+            { question: "Excel में 'Conditional Formatting' किस Tab में है?", A: "Home", B: "Data", C: "Insert", D: "Page Layout", correct: "A", explanation: "Conditional Formatting Home Tab में है।" },
+            { question: "Excel में cell को merge करने का shortcut क्या है?", A: "Alt + H + M + M", B: "Ctrl + M", C: "Ctrl + Shift + M", D: "Alt + M", correct: "A", explanation: "Alt + H + M + M merge & center करता है।" },
+            { question: "Excel में current date insert करने का shortcut क्या है?", A: "Ctrl + ;", B: "Ctrl + Shift + ;", C: "Ctrl + :", D: "Ctrl + Shift + :", correct: "A", explanation: "Ctrl + ; current date डालता है।" },
+            { question: "Excel में current time insert करने का shortcut क्या है?", A: "Ctrl + Shift + ;", B: "Ctrl + ;", C: "Ctrl + :", D: "Ctrl + Shift + :", correct: "A", explanation: "Ctrl + Shift + ; current time डालता है।" },
+            { question: "Excel में 'Freeze Panes' किस Tab में होता है?", A: "View", B: "Data", C: "Home", D: "Insert", correct: "A", explanation: "Freeze Panes View Tab में है।" },
+            { question: "Excel में 'Protect Sheet' किस Tab में होता है?", A: "Review", B: "Data", C: "Home", D: "View", correct: "A", explanation: "Protect Sheet Review Tab में है।" },
+            { question: "Excel में 'Goal Seek' किस Tab में होता है?", A: "Data (What-If Analysis)", B: "Home", C: "Insert", D: "Review", correct: "A", explanation: "Goal Seek Data Tab के What-If Analysis में है।" },
+            { question: "Excel में 'Text to Columns' किस Tab में होता है?", A: "Data", B: "Home", C: "Insert", D: "View", correct: "A", explanation: "Text to Columns Data Tab में है।" },
+            { question: "Excel में 'Name Box' क्या दिखाता है?", A: "Active cell reference", B: "Formula", C: "Function", D: "Chart title", correct: "A", explanation: "Name Box active cell का reference (या name) दिखाता है।" },
+            { question: "Excel में 'Formula Bar' कहाँ होता है?", A: "Ribbon के नीचे", B: "Status bar में", C: "Title bar में", D: "Sheet tab में", correct: "A", explanation: "Formula Bar Ribbon के नीचे (Grid के ऊपर) होता है।" },
+            { question: "Excel में 'Column' की width कैसे बदलते हैं?", A: "Column border को drag करके", B: "Font size से", C: "Merge cells से", D: "Delete column से", correct: "A", explanation: "Column header की border drag करके width बदली जाती है।" },
+            { question: "Excel में 'Wrap Text' किस Tab में होता है?", A: "Home", B: "Insert", C: "Data", D: "View", correct: "A", explanation: "Wrap Text Home Tab (Alignment group) में है।" },
+            { question: "Excel में CONCATENATE function क्या करता है?", A: "Text जोड़ना", B: "Number जोड़ना", C: "Date format", D: "Conditional sum", correct: "A", explanation: "CONCATENATE multiple text strings को जोड़ता है।" },
+            { question: "Excel में 'Solver' किसके लिए है?", A: "Optimization problems", B: "Chart creation", C: "Text formatting", D: "Printing", correct: "A", explanation: "Solver complex optimization/linear programming के लिए।" }
+        ];
+
+        // POWERPOINT (40)
+        const pptMCQs = [
+            { question: "PowerPoint में 'New Slide' का shortcut क्या है?", A: "Ctrl + M", B: "Ctrl + N", C: "Ctrl + D", D: "Ctrl + S", correct: "A", explanation: "Ctrl + M new slide insert करता है।" },
+            { question: "PowerPoint में 'Duplicate Slide' का shortcut क्या है?", A: "Ctrl + D", B: "Ctrl + M", C: "Ctrl + N", D: "Ctrl + C", correct: "A", explanation: "Ctrl + D selected slide को duplicate करता है।" },
+            { question: "PowerPoint में 'Start Slideshow from beginning' का shortcut क्या है?", A: "F5", B: "Shift + F5", C: "F7", D: "F12", correct: "A", explanation: "F5 slideshow beginning से start करता है।" },
+            { question: "PowerPoint में 'Start Slideshow from current slide' का shortcut क्या है?", A: "Shift + F5", B: "F5", C: "F7", D: "F12", correct: "A", explanation: "Shift + F5 current slide से start करता है।" },
+            { question: "PowerPoint में 'Slide Sorter View' किस Tab में है?", A: "View", B: "Home", C: "Insert", D: "Design", correct: "A", explanation: "Slide Sorter View Tab में है।" },
+            { question: "PowerPoint में 'Slide Master' किस Tab में है?", A: "View", B: "Design", C: "Home", D: "Insert", correct: "A", explanation: "Slide Master View Tab में (Master Views group) है।" },
+            { question: "PowerPoint में 'Transitions' किस Tab में है?", A: "Transitions", B: "Animations", C: "Design", D: "Insert", correct: "A", explanation: "Transitions Tab में slide-to-slide effects हैं।" },
+            { question: "PowerPoint में 'Animations' किस Tab में है?", A: "Animations", B: "Transitions", C: "Design", D: "Slide Show", correct: "A", explanation: "Animations Tab object-level animations के लिए है।" },
+            { question: "PowerPoint में 'Design Themes' किस Tab में हैं?", A: "Design", B: "Home", C: "Insert", D: "View", correct: "A", explanation: "Design Tab में Themes हैं।" },
+            { question: "PowerPoint में 'Morph' transition क्या है?", A: "Smooth object animation", B: "Slide fade", C: "3D effect", D: "Sound effect", correct: "A", explanation: "Morph smooth transition objects को animate करता है।" },
+            { question: "PowerPoint में 'Normal View' क्या है?", A: "Main editing view", B: "Slide sorter", C: "Reading view", D: "Slide show", correct: "A", explanation: "Normal View main editing view है (slide + outline + notes)।" },
+            { question: "PowerPoint में 'Notes Page' क्या है?", A: "Speaker notes", B: "Slide notes", C: "Handout", D: "Outline", correct: "A", explanation: "Notes Page speaker के लिए notes दिखाता है।" },
+            { question: "PowerPoint में 'Slide Show' view क्या है?", A: "Full screen presentation", B: "Editing view", C: "Thumbnail view", D: "Print preview", correct: "A", explanation: "Slide Show full screen presentation mode है।" },
+            { question: "PowerPoint में 'Reading View' क्या है?", A: "Windowed presentation", B: "Full screen", C: "Editing", D: "Printing", correct: "A", explanation: "Reading View window में presentation-like view।" },
+            { question: "PowerPoint में 'Presenter View' क्या है?", A: "Dual screen (notes + slides)", B: "Single screen", C: "Slide sorter", D: "Outline", correct: "A", explanation: "Presenter View speaker को notes और slide preview दिखाता है।" },
+            { question: "PowerPoint में slide की background image कैसे बदलते हैं?", A: "Format Background", B: "Change Theme", C: "Insert Picture", D: "Slide Layout", correct: "A", explanation: "Format Background से slide background बदला जाता है।" },
+            { question: "PowerPoint में 'Group' objects का shortcut क्या है?", A: "Ctrl + G", B: "Ctrl + Shift + G", C: "Alt + G", D: "Ctrl + Alt + G", correct: "A", explanation: "Ctrl + G selected objects को group करता है।" },
+            { question: "PowerPoint में 'Ungroup' objects का shortcut क्या है?", A: "Ctrl + Shift + G", B: "Ctrl + G", C: "Alt + G", D: "Ctrl + Alt + G", correct: "A", explanation: "Ctrl + Shift + G objects को ungroup करता है।" },
+            { question: "PowerPoint में 'Send to Back' किस Tab में है?", A: "Format (Picture/Shape)", B: "Home", C: "Insert", D: "Design", correct: "A", explanation: "Send to Back Format/Arrange में है (usually Picture/Shape format)।" },
+            { question: "PowerPoint में 'Crop' image किस Tab में है?", A: "Format (Picture)", B: "Insert", C: "Home", D: "Design", correct: "A", explanation: "Crop Picture Format Tab में है।" },
+            { question: "PowerPoint में 'Convert to SmartArt' किस Tab में है?", A: "Home", B: "Insert", C: "Design", D: "Format", correct: "A", explanation: "Convert to SmartArt Home Tab (Paragraph group) में है।" },
+            { question: "PowerPoint में 'Add Section' किस Tab में है?", A: "Home", B: "Insert", C: "View", D: "Slide Sorter", correct: "A", explanation: "Add Section Home Tab (Slides group) में है।" },
+            { question: "PowerPoint में 'Header & Footer' किस Tab में है?", A: "Insert", B: "View", C: "Home", D: "Design", correct: "A", explanation: "Header & Footer Insert Tab में है।" },
+            { question: "PowerPoint में 'WordArt' किस Tab में है?", A: "Insert", B: "Home", C: "Design", D: "Format", correct: "A", explanation: "WordArt Insert Tab (Text group) में है।" },
+            { question: "PowerPoint में 'Table' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Design", correct: "A", explanation: "Table Insert Tab से डाली जाती है।" },
+            { question: "PowerPoint में 'Chart' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Design", correct: "A", explanation: "Chart Insert Tab से।" },
+            { question: "PowerPoint में 'Video' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "View", correct: "A", explanation: "Video Insert Tab (Media group) से।" },
+            { question: "PowerPoint में 'Audio' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "View", correct: "A", explanation: "Audio Insert Tab (Media group) से।" },
+            { question: "PowerPoint में 'Screen Recording' किस Tab में है?", A: "Insert", B: "Home", C: "View", D: "Recording", correct: "A", explanation: "Screen Recording Insert Tab (Media group) में है।" },
+            { question: "PowerPoint में 'Check Accessibility' किस Tab में है?", A: "Review", B: "View", C: "Home", D: "File", correct: "A", explanation: "Check Accessibility Review Tab में है।" }
+        ];
+
+        // SHORTCUTS (40)
+        const shortcutsMCQs = [
+            { question: "Office में 'Copy' का shortcut क्या है?", A: "Ctrl + C", B: "Ctrl + X", C: "Ctrl + V", D: "Ctrl + A", correct: "A", explanation: "Ctrl + C copy करता है।" },
+            { question: "Office में 'Cut' का shortcut क्या है?", A: "Ctrl + C", B: "Ctrl + X", C: "Ctrl + V", D: "Ctrl + A", correct: "B", explanation: "Ctrl + X cut करता है।" },
+            { question: "Office में 'Paste' का shortcut क्या है?", A: "Ctrl + C", B: "Ctrl + X", C: "Ctrl + V", D: "Ctrl + A", correct: "C", explanation: "Ctrl + V paste करता है।" },
+            { question: "Office में 'Select All' का shortcut क्या है?", A: "Ctrl + A", B: "Ctrl + C", C: "Ctrl + X", D: "Ctrl + V", correct: "A", explanation: "Ctrl + A all select करता है।" },
+            { question: "Office में 'Undo' का shortcut क्या है?", A: "Ctrl + Z", B: "Ctrl + Y", C: "Ctrl + U", D: "Ctrl + R", correct: "A", explanation: "Ctrl + Z undo (पूर्ववत) करता है।" },
+            { question: "Office में 'Redo' का shortcut क्या है?", A: "Ctrl + Y", B: "Ctrl + Z", C: "Ctrl + U", D: "Ctrl + R", correct: "A", explanation: "Ctrl + Y redo (पुनः करें) है।" },
+            { question: "Office में 'Save' का shortcut क्या है?", A: "Ctrl + S", B: "Ctrl + O", C: "Ctrl + N", D: "Ctrl + P", correct: "A", explanation: "Ctrl + S save करता है।" },
+            { question: "Office में 'Open' का shortcut क्या है?", A: "Ctrl + O", B: "Ctrl + S", C: "Ctrl + N", D: "Ctrl + P", correct: "A", explanation: "Ctrl + O open करता है।" },
+            { question: "Office में 'New' का shortcut क्या है?", A: "Ctrl + N", B: "Ctrl + O", C: "Ctrl + S", D: "Ctrl + P", correct: "A", explanation: "Ctrl + N new file बनाता है।" },
+            { question: "Office में 'Print' का shortcut क्या है?", A: "Ctrl + P", B: "Ctrl + S", C: "Ctrl + O", D: "Ctrl + N", correct: "A", explanation: "Ctrl + P print dialog खोलता है।" },
+            { question: "Office में 'Find' का shortcut क्या है?", A: "Ctrl + F", B: "Ctrl + H", C: "Ctrl + G", D: "Ctrl + E", correct: "A", explanation: "Ctrl + F find/search करता है।" },
+            { question: "Office में 'Replace' का shortcut क्या है?", A: "Ctrl + H", B: "Ctrl + F", C: "Ctrl + G", D: "Ctrl + R", correct: "A", explanation: "Ctrl + H replace करता है।" },
+            { question: "Office में 'Help' का shortcut क्या है?", A: "F1", B: "F5", C: "F7", D: "F12", correct: "A", explanation: "F1 Help window खोलता है।" },
+            { question: "Office में 'Save As' का shortcut क्या है?", A: "F12", B: "F1", C: "F5", D: "F7", correct: "A", explanation: "F12 Save As dialog खोलता है।" },
+            { question: "Office में 'Spelling Check' (Word) का shortcut क्या है?", A: "F7", B: "F1", C: "F5", D: "F12", correct: "A", explanation: "F7 spelling & grammar check करता है।" },
+            { question: "Office में 'Bold' का shortcut क्या है?", A: "Ctrl + B", B: "Ctrl + I", C: "Ctrl + U", D: "Ctrl + S", correct: "A", explanation: "Ctrl + B bold करता है।" },
+            { question: "Office में 'Italic' का shortcut क्या है?", A: "Ctrl + I", B: "Ctrl + B", C: "Ctrl + U", D: "Ctrl + S", correct: "A", explanation: "Ctrl + I italic करता है।" },
+            { question: "Office में 'Underline' का shortcut क्या है?", A: "Ctrl + U", B: "Ctrl + B", C: "Ctrl + I", D: "Ctrl + S", correct: "A", explanation: "Ctrl + U underline करता है।" },
+            { question: "Office में 'Center Align' का shortcut क्या है?", A: "Ctrl + E", B: "Ctrl + L", C: "Ctrl + R", D: "Ctrl + J", correct: "A", explanation: "Ctrl + E center align करता है।" },
+            { question: "Office में 'Left Align' का shortcut क्या है?", A: "Ctrl + L", B: "Ctrl + E", C: "Ctrl + R", D: "Ctrl + J", correct: "A", explanation: "Ctrl + L left align करता है।" },
+            { question: "Office में 'Right Align' का shortcut क्या है?", A: "Ctrl + R", B: "Ctrl + L", C: "Ctrl + E", D: "Ctrl + J", correct: "A", explanation: "Ctrl + R right align करता है।" },
+            { question: "Office में 'Justify' का shortcut क्या है?", A: "Ctrl + J", B: "Ctrl + L", C: "Ctrl + R", D: "Ctrl + E", correct: "A", explanation: "Ctrl + J justify (both align) करता है।" },
+            { question: "Windows में application switch करने का shortcut क्या है?", A: "Alt + Tab", B: "Ctrl + Tab", C: "Win + Tab", D: "Alt + Esc", correct: "A", explanation: "Alt + Tab open apps के बीच switch करता है।" },
+            { question: "Excel में current date का shortcut क्या है?", A: "Ctrl + ;", B: "Ctrl + Shift + ;", C: "Ctrl + :", D: "Ctrl + Shift + :", correct: "A", explanation: "Ctrl + ; current date डालता है।" },
+            { question: "Excel में current time का shortcut क्या है?", A: "Ctrl + Shift + ;", B: "Ctrl + ;", C: "Ctrl + :", D: "Ctrl + Shift + :", correct: "A", explanation: "Ctrl + Shift + ; current time डालता है।" },
+            { question: "PowerPoint में new slide का shortcut क्या है?", A: "Ctrl + M", B: "Ctrl + N", C: "Ctrl + D", D: "Ctrl + S", correct: "A", explanation: "Ctrl + M new slide in PPT." },
+            { question: "PowerPoint में slideshow start (beginning) का shortcut क्या है?", A: "F5", B: "Shift + F5", C: "F7", D: "F12", correct: "A", explanation: "F5 start from beginning." },
+            { question: "Word में font size बढ़ाने का shortcut क्या है?", A: "Ctrl + Shift + >", B: "Ctrl + Shift + <", C: "Ctrl + >", D: "Ctrl + <", correct: "A", explanation: "Ctrl + Shift + > font size बढ़ाता है।" },
+            { question: "Word में font size घटाने का shortcut क्या है?", A: "Ctrl + Shift + <", B: "Ctrl + Shift + >", C: "Ctrl + <", D: "Ctrl + >", correct: "A", explanation: "Ctrl + Shift + < font size घटाता है।" },
+            { question: "Excel में cell के अंदर line break (new line) करने का shortcut क्या है?", A: "Alt + Enter", B: "Ctrl + Enter", C: "Shift + Enter", D: "Ctrl + Shift + Enter", correct: "A", explanation: "Alt + Enter cell के अंदर line break करता है।" }
+        ];
+
+        // PRACTICE (40 mixed)
+        const practiceMCQs = [
+            { question: "MS Word में 'Bold' करने का shortcut क्या है?", A: "Ctrl + B", B: "Ctrl + I", C: "Ctrl + U", D: "Ctrl + S", correct: "A", explanation: "Ctrl + B Bold." },
+            { question: "Excel में 'SUM' function क्या करता है?", A: "योग", B: "औसत", C: "गिनती", D: "अधिकतम", correct: "A", explanation: "SUM योग करता है।" },
+            { question: "PowerPoint में नई स्लाइड डालने का shortcut क्या है?", A: "Ctrl + M", B: "Ctrl + N", C: "Ctrl + D", D: "Ctrl + S", correct: "A", explanation: "Ctrl + M new slide." },
+            { question: "Office में 'Save As' का shortcut क्या है?", A: "F12", B: "F1", C: "F5", D: "F7", correct: "A", explanation: "F12 Save As." },
+            { question: "Excel में absolute reference क्या है?", A: "$A$1", B: "A1", C: "$A1", D: "A$1", correct: "A", explanation: "$A$1 absolute." },
+            { question: "Word में 'Thesaurus' किस Tab में है?", A: "Review", B: "Home", C: "Insert", D: "References", correct: "A", explanation: "Thesaurus Review Tab." },
+            { question: "PowerPoint में 'Slide Master' किस Tab में है?", A: "View", B: "Design", C: "Home", D: "Insert", correct: "A", explanation: "Slide Master View Tab." },
+            { question: "Office में 'Undo' का shortcut क्या है?", A: "Ctrl + Z", B: "Ctrl + Y", C: "Ctrl + U", D: "Ctrl + R", correct: "A", explanation: "Ctrl + Z Undo." },
+            { question: "Excel में 'VLOOKUP' का क्या कार्य है?", A: "Vertical search", B: "Horizontal search", C: "Sum values", D: "Count values", correct: "A", explanation: "VLOOKUP vertical lookup." },
+            { question: "Word में 'Mail Merge' किस Tab में है?", A: "Mailings", B: "Review", C: "References", D: "Insert", correct: "A", explanation: "Mailings Tab." },
+            { question: "PowerPoint में 'Transitions' किस Tab में हैं?", A: "Transitions", B: "Animations", C: "Design", D: "Slide Show", correct: "A", explanation: "Transitions Tab." },
+            { question: "Excel में 'Pivot Table' किस Tab में है?", A: "Insert", B: "Data", C: "Home", D: "View", correct: "A", explanation: "Insert Tab." },
+            { question: "Word में 'Table of Contents' किस Tab में है?", A: "References", B: "Insert", C: "Design", D: "Layout", correct: "A", explanation: "References Tab." },
+            { question: "Office में 'Print' का shortcut क्या है?", A: "Ctrl + P", B: "Ctrl + S", C: "Ctrl + O", D: "Ctrl + N", correct: "A", explanation: "Ctrl + P Print." },
+            { question: "Excel में 'IF' function क्या करता है?", A: "Conditional logic", B: "Sum", C: "Average", D: "Count", correct: "A", explanation: "IF conditional logic." },
+            { question: "PowerPoint में 'Animations' किस Tab में हैं?", A: "Animations", B: "Transitions", C: "Design", D: "Insert", correct: "A", explanation: "Animations Tab." },
+            { question: "Word में 'Header/Footer' किस Tab से डालते हैं?", A: "Insert", B: "Home", C: "Layout", D: "Design", correct: "A", explanation: "Insert Tab." },
+            { question: "Excel में 'MAX' function क्या करता है?", A: "अधिकतम मान", B: "न्यूनतम मान", C: "औसत", D: "गिनती", correct: "A", explanation: "MAX maximum value." },
+            { question: "Office में 'Select All' का shortcut क्या है?", A: "Ctrl + A", B: "Ctrl + C", C: "Ctrl + X", D: "Ctrl + V", correct: "A", explanation: "Ctrl + A select all." },
+            { question: "PowerPoint में F5 का क्या कार्य है?", A: "Start slideshow", B: "Save", C: "Print", D: "Spell check", correct: "A", explanation: "F5 start slideshow." }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('word-mcq', wordMCQs);
+            renderMCQs('excel-mcq', excelMCQs);
+            renderMCQs('ppt-mcq', pptMCQs);
+            renderMCQs('shortcuts-mcq', shortcutsMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

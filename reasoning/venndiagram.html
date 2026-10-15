@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venn Diagram – Deep Explanation (वेन आरेख)</title>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --blue:#2563eb; --dark:#0b1f4b; --navy:#102a68; --bg:#f5f7fb; --white:#ffffff; --text:#172033; --muted:#667085; --border:#e1e6ef; --green:#16a34a; --red:#dc2626; --lightblue:#eef5ff; }
+body{ font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); }
+/* ===== HEADER ===== */
+.header{ background:linear-gradient(135deg,#07183d,#2445a0); color:white; padding:28px 6%; }
+.header-inner{ max-width:1250px; margin:auto; }
+.back-btn{ color:white; text-decoration:none; font-size:15px; font-weight:bold; display:inline-block; margin-bottom:20px; background:rgba(255,255,255,0.1); padding:6px 18px; border-radius:30px; }
+.back-btn:hover{ background:rgba(255,255,255,0.25); }
+.header-content{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.header-icon{ width:76px; height:76px; border-radius:18px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:40px; flex-shrink:0; }
+.header h1{ font-size:34px; margin-bottom:7px; }
+.header p{ font-size:15px; opacity:.85; }
+.lang-toggle{ display:flex; gap:8px; background:rgba(255,255,255,0.15); padding:4px; border-radius:30px; margin-left:auto; }
+.lang-btn{ background:transparent; border:2px solid transparent; color:white; padding:6px 16px; border-radius:30px; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.lang-btn.active{ background:white; color:#0b1f4b; border-color:white; }
+.lang-btn:hover{ background:rgba(255,255,255,0.3); }
+/* ===== CONTAINER ===== */
+.container{ width:92%; max-width:1200px; margin:30px auto; }
+/* ===== HERO ===== */
+.hero{ background:white; border:1px solid var(--border); border-radius:18px; padding:25px; box-shadow:0 8px 25px rgba(15,35,80,.06); }
+.hero h2{ color:var(--dark); margin-bottom:9px; }
+.hero p{ color:var(--muted); line-height:1.6; }
+.hero .description-box{ background:#f4f7ff; border-left:5px solid var(--blue); padding:16px 20px; border-radius:10px; margin-top:12px; color:#1f3a5f; line-height:1.8; }
+.stats{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.stat{ background:var(--lightblue); color:#21438f; border:1px solid #d9e5ff; padding:10px 15px; border-radius:10px; font-weight:bold; font-size:14px; }
+/* ===== CONTROLS ===== */
+.controls{ margin:22px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.search-box{ flex:1; min-width:200px; padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; font-size:14px; outline:none; }
+.search-box:focus{ border-color:var(--blue); }
+select{ padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+.btn{ padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.btn-blue{ background:var(--blue); color:white; }
+.btn-blue:hover{ background:#1d4ed8; }
+.btn-white{ background:white; border:1px solid #ccd3df; color:#26344d; }
+.btn-white:hover{ background:#f0f2f5; }
+.btn-green{ background:var(--green); color:white; }
+.btn-green:hover{ background:#15803d; }
+/* ===== PROGRESS ===== */
+.progress-info{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:var(--muted); font-weight:bold; }
+.progress{ width:100%; height:9px; background:#e5e9f0; border-radius:20px; overflow:hidden; margin-bottom:25px; }
+.progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); transition:.3s; }
+/* ===== QUESTION CARD ===== */
+.question-card{ background:white; border:1px solid var(--border); border-radius:17px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 18px rgba(15,35,80,.05); }
+.question-top{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px 8px; }
+.question-number{ color:var(--blue); font-weight:800; }
+.question-type{ background:#eef2f7; color:#526071; padding:6px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.question-body{ padding:8px 20px 20px; }
+.question-text{ font-size:17px; line-height:1.65; font-weight:650; margin-bottom:16px; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.option{ background:#f8fafc; border:1px solid #dce2eb; border-radius:10px; padding:13px; text-align:left; cursor:pointer; font-size:15px; transition:.2s; }
+.option:hover{ background:#eff6ff; border-color:#2563eb; }
+.option.correct{ background:#ecfdf3; border-color:#22c55e; color:#166534; }
+.option.wrong{ background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+.answer-result{ margin-top:12px; font-weight:bold; }
+.explanation{ display:none; margin-top:15px; padding:18px 20px; background:#f4f7ff; border-left:5px solid #2563eb; border-radius:8px; line-height:1.8; }
+.explanation.show{ display:block; }
+.explanation-title{ color:#17449c; font-weight:bold; margin-bottom:8px; font-size:16px; }
+.footer{ text-align:center; padding:35px 10px; color:#667085; }
+@media(max-width:700px){ .header h1{ font-size:25px; } .header-content{ align-items:flex-start; } .header-icon{ width:60px; height:60px; font-size:30px; } .options{ grid-template-columns:1fr; } .question-text{ font-size:16px; } .container{ width:94%; } .controls{ flex-direction:column; } .controls .btn{ width:100%; text-align:center; } .lang-toggle{ margin-left:0; width:100%; justify-content:center; } }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="header-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="back-btn">← Topics पर वापस जाएँ</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+                <button class="lang-btn" id="langHi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">🔵</div>
+            <div>
+                <h1 id="mainTitle">Venn Diagram (Deep Explanation)</h1>
+                <p id="mainSub">SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="container">
+    <section class="hero">
+        <h2 id="heroTitle">Venn Diagram – Complete SSC Practice</h2>
+        <div id="descriptionBox" class="description-box">
+            <!-- Dynamically filled by JS -->
+        </div>
+        <div class="stats" id="statsRow">
+            <div class="stat" data-lang-en="510+ Questions" data-lang-hi="510+ प्रश्न">510+ Questions</div>
+            <div class="stat" data-lang-en="Basic Venn" data-lang-hi="मूल वेन">Basic Venn</div>
+            <div class="stat" data-lang-en="Counting" data-lang-hi="गणना">Counting</div>
+            <div class="stat" data-lang-en="Logical Relation" data-lang-hi="तार्किक संबंध">Logical Relation</div>
+            <div class="stat" data-lang-en="Detailed Explanation" data-lang-hi="विस्तृत व्याख्या">Detailed Explanation</div>
+        </div>
+    </section>
+
+    <!-- ===== CONTROLS ===== -->
+    <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="Search question...">
+        <select id="filter">
+            <option value="all" data-lang-en="All Questions" data-lang-hi="सभी प्रश्न">All Questions</option>
+            <option value="Counting" data-lang-en="Counting (Numerical)" data-lang-hi="गणना (संख्यात्मक)">Counting (Numerical)</option>
+            <option value="Logical Relation" data-lang-en="Logical Relation" data-lang-hi="तार्किक संबंध">Logical Relation</option>
+        </select>
+        <button class="btn btn-blue" onclick="showAllExplanations()" data-lang-en="Show Explanations" data-lang-hi="सभी व्याख्याएँ दिखाएँ">Show Explanations</button>
+        <button class="btn btn-green" onclick="resetQuiz()" data-lang-en="Reset" data-lang-hi="रीसेट करें">Reset</button>
+    </div>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-info">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <!-- ===== QUESTIONS ===== -->
+    <div id="questionsContainer"></div>
+</main>
+<footer class="footer" data-lang-en="Venn Diagram · SSC Reasoning" data-lang-hi="वेन आरेख · SSC रीजनिंग">Venn Diagram · SSC Reasoning</footer>
+
+<script>
+// ================================================================
+//  LANGUAGE TOGGLE & UI TEXTS
+// ================================================================
+let currentLang = 'en';
+
+const descriptions = {
+    en: `<b>What is a Venn Diagram?</b><br> 
+    A Venn diagram is a visual tool used to represent the logical relationships between different sets. Questions can be numeric (counting) or logical (classifying items). <br><br>
+    <b>📌 Key Formulas (for 2 sets A & B):</b><br>
+    • <b>Total</b> = A + B − Both + Neither<br>
+    • <b>Only A</b> = A − Both<br>
+    • <b>Only B</b> = B − Both<br>
+    • <b>At least one</b> = A + B − Both<br>
+    <b>📌 For logical relationships:</b> Always identify which set is the superset (larger group) and which are subsets.`,
+    
+    hi: `<b>वेन आरेख (Venn Diagram) क्या है?</b><br> 
+    वेन आरेख एक दृश्य उपकरण है जिसका उपयोग विभिन्न समुच्चयों के बीच तार्किक संबंधों को दर्शाने के लिए किया जाता है। प्रश्न संख्यात्मक (गणना) या तार्किक (वस्तुओं का वर्गीकरण) हो सकते हैं। <br><br>
+    <b>📌 महत्वपूर्ण सूत्र (2 समुच्चय A और B के लिए):</b><br>
+    • <b>कुल</b> = A + B − दोनों + कोई नहीं<br>
+    • <b>केवल A</b> = A − दोनों<br>
+    • <b>केवल B</b> = B − दोनों<br>
+    • <b>कम से कम एक</b> = A + B − दोनों<br>
+    <b>📌 तार्किक संबंधों के लिए:</b> हमेशा पहचानें कि कौन-सा समुच्चय बड़ा (superset) है और कौन-से उपसमुच्चय (subsets) हैं।`
+};
+
+function updateUI() {
+    document.querySelectorAll('[data-lang-en]').forEach(el => {
+        const key = el.dataset.langEn;
+        const hi = el.dataset.langHi;
+        if (currentLang === 'en') {
+            if (el.tagName === 'OPTION') el.textContent = key;
+            else el.textContent = key;
+        } else {
+            if (el.tagName === 'OPTION') el.textContent = hi;
+            else el.textContent = hi;
+        }
+    });
+    document.getElementById('mainTitle').textContent = currentLang === 'en' ? 'Venn Diagram (Deep Explanation)' : 'वेन आरेख (गहन व्याख्या)';
+    document.getElementById('mainSub').textContent = currentLang === 'en' ? 'SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions' : 'SSC CGL • CHSL • CPO • MTS | 510+ द्विभाषी प्रश्न';
+    document.getElementById('heroTitle').textContent = currentLang === 'en' ? 'Venn Diagram – Complete SSC Practice' : 'वेन आरेख – पूर्ण SSC अभ्यास';
+    document.getElementById('descriptionBox').innerHTML = descriptions[currentLang];
+    document.getElementById('search').placeholder = currentLang === 'en' ? 'Search question...' : 'प्रश्न खोजें...';
+    document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
+    document.getElementById('langHi').classList.toggle('active', currentLang === 'hi');
+    renderQuestions();
+    updateProgress();
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    updateUI();
+}
+
+// ================================================================
+//  VENN DIAGRAM GENERATOR (DEEP EXPLANATION)
+// ================================================================
+const questions = [];
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// ---- Categories for Logical Relation ----
+const catHierarchy = [
+    { set1: 'Animals', set2: 'Mammals', set3: 'Dogs' },
+    { set1: 'Flowers', set2: 'Roses', set3: 'Red Roses' },
+    { set1: 'Fruits', set2: 'Mangoes', set3: 'Alphonso Mangoes' },
+    { set1: 'Vehicles', set2: 'Cars', set3: 'Electric Cars' },
+    { set1: 'People', set2: 'Women', set3: 'Doctors' },
+    { set1: 'Creatures', set2: 'Birds', set3: 'Sparrows' },
+    { set1: 'Trees', set2: 'Oak Trees', set3: 'Old Oak Trees' },
+    { set1: 'Clothing', set2: 'Shirts', set3: 'Cotton Shirts' },
+    { set1: 'Countries', set2: 'Asian Countries', set3: 'India' },
+    { set1: 'Stars', set2: 'Planets', set3: 'Earth' },
+];
+
+// ---- Generate Counting Questions (Numerical) ----
+function generateCountingQuestion() {
+    const total = Math.floor(Math.random() * 150) + 80; // 80-230
+    const A = Math.floor(Math.random() * (total - 20)) + 30;
+    const B = Math.floor(Math.random() * (total - 20)) + 30;
+    const maxBoth = Math.min(A, B);
+    const minBoth = Math.max(0, A + B - total);
+    let both;
+    if (maxBoth - minBoth < 2) both = minBoth;
+    else both = Math.floor(Math.random() * (maxBoth - minBoth + 1)) + minBoth;
+    const neither = total - (A + B - both);
+    if (neither < 0) return generateCountingQuestion(); // retry if invalid
+
+    // Determine which value to ask
+    const askType = Math.floor(Math.random() * 5);
+    let question_en, question_hi, correct, options, exp_en, exp_hi, type;
+
+    const labels_en = ['Math', 'Science', 'English', 'Hindi', 'Art', 'Music', 'Sports', 'Drama', 'Chess', 'Cricket', 'Reading', 'Travel', 'Cooking', 'Gardening'];
+    const labels_hi = ['गणित', 'विज्ञान', 'अंग्रेजी', 'हिंदी', 'कला', 'संगीत', 'खेल', 'नाटक', 'शतरंज', 'क्रिकेट', 'पढ़ना', 'यात्रा', 'खाना बनाना', 'बागवानी'];
+    const idxA = Math.floor(Math.random() * labels_en.length);
+    let idxB = Math.floor(Math.random() * labels_en.length);
+    while (idxB === idxA) idxB = Math.floor(Math.random() * labels_en.length);
+    const nameA_en = labels_en[idxA];
+    const nameB_en = labels_en[idxB];
+    const nameA_hi = labels_hi[idxA];
+    const nameB_hi = labels_hi[idxB];
+
+    if (askType === 0) {
+        // Ask for Neither
+        correct = neither;
+        question_en = `In a survey of ${total} people, ${A} like ${nameA_en}, ${B} like ${nameB_en}, and ${both} like both. How many like neither ${nameA_en} nor ${nameB_en}?`;
+        question_hi = `${total} लोगों के सर्वेक्षण में, ${A} लोग ${nameA_hi} पसंद करते हैं, ${B} लोग ${nameB_hi} पसंद करते हैं, और ${both} दोनों पसंद करते हैं। कितने लोग ${nameA_hi} या ${nameB_hi} में से कोई भी पसंद नहीं करते?`;
+        exp_en = `🔍 Formula: Total = A + B - Both + Neither<br>Step 1: A + B - Both = ${A} + ${B} - ${both} = ${A+B-both}<br>Step 2: Neither = Total - (A+B-Both) = ${total} - ${A+B-both} = ${correct}<br>✅ Correct answer: ${correct}`;
+        exp_hi = `🔍 सूत्र: कुल = A + B - दोनों + कोई नहीं<br>चरण 1: A + B - दोनों = ${A} + ${B} - ${both} = ${A+B-both}<br>चरण 2: कोई नहीं = कुल - (A+B-दोनों) = ${total} - ${A+B-both} = ${correct}<br>✅ सही उत्तर: ${correct}`;
+        type = 'Counting';
+    } else if (askType === 1) {
+        // Ask for Only A
+        correct = A - both;
+        question_en = `In a survey of ${total} people, ${A} like ${nameA_en}, ${B} like ${nameB_en}, and ${both} like both. How many like ONLY ${nameA_en}?`;
+        question_hi = `${total} लोगों के सर्वेक्षण में, ${A} लोग ${nameA_hi} पसंद करते हैं, ${B} लोग ${nameB_hi} पसंद करते हैं, और ${both} दोनों पसंद करते हैं। कितने लोग केवल ${nameA_hi} पसंद करते हैं?`;
+        exp_en = `🔍 Formula: Only A = A - Both<br>Step 1: Only A = ${A} - ${both} = ${correct}<br>✅ Correct answer: ${correct}`;
+        exp_hi = `🔍 सूत्र: केवल A = A - दोनों<br>चरण 1: केवल A = ${A} - ${both} = ${correct}<br>✅ सही उत्तर: ${correct}`;
+        type = 'Counting';
+    } else if (askType === 2) {
+        // Ask for Only B
+        correct = B - both;
+        question_en = `In a survey of ${total} people, ${A} like ${nameA_en}, ${B} like ${nameB_en}, and ${both} like both. How many like ONLY ${nameB_en}?`;
+        question_hi = `${total} लोगों के सर्वेक्षण में, ${A} लोग ${nameA_hi} पसंद करते हैं, ${B} लोग ${nameB_hi} पसंद करते हैं, और ${both} दोनों पसंद करते हैं। कितने लोग केवल ${nameB_hi} पसंद करते हैं?`;
+        exp_en = `🔍 Formula: Only B = B - Both<br>Step 1: Only B = ${B} - ${both} = ${correct}<br>✅ Correct answer: ${correct}`;
+        exp_hi = `🔍 सूत्र: केवल B = B - दोनों<br>चरण 1: केवल B = ${B} - ${both} = ${correct}<br>✅ सही उत्तर: ${correct}`;
+        type = 'Counting';
+    } else if (askType === 3) {
+        // Ask for At least one (A or B)
+        correct = A + B - both;
+        question_en = `In a survey of ${total} people, ${A} like ${nameA_en}, ${B} like ${nameB_en}, and ${both} like both. How many like at least one of the two?`;
+        question_hi = `${total} लोगों के सर्वेक्षण में, ${A} लोग ${nameA_hi} पसंद करते हैं, ${B} लोग ${nameB_hi} पसंद करते हैं, और ${both} दोनों पसंद करते हैं। कितने लोग कम से कम एक पसंद करते हैं?`;
+        exp_en = `🔍 Formula: At least one = A + B - Both<br>Step 1: = ${A} + ${B} - ${both} = ${correct}<br>✅ Correct answer: ${correct}`;
+        exp_hi = `🔍 सूत्र: कम से कम एक = A + B - दोनों<br>चरण 1: = ${A} + ${B} - ${both} = ${correct}<br>✅ सही उत्तर: ${correct}`;
+        type = 'Counting';
+    } else {
+        // Ask for exactly one (only A + only B)
+        correct = (A - both) + (B - both);
+        question_en = `In a survey of ${total} people, ${A} like ${nameA_en}, ${B} like ${nameB_en}, and ${both} like both. How many like exactly one of the two?`;
+        question_hi = `${total} लोगों के सर्वेक्षण में, ${A} लोग ${nameA_hi} पसंद करते हैं, ${B} लोग ${nameB_hi} पसंद करते हैं, और ${both} दोनों पसंद करते हैं। कितने लोग दोनों में से ठीक एक पसंद करते हैं?`;
+        exp_en = `🔍 Formula: Exactly one = (A - Both) + (B - Both)<br>Step 1: Only A = ${A} - ${both} = ${A-both}, Only B = ${B} - ${both} = ${B-both}<br>Step 2: Exactly one = ${A-both} + ${B-both} = ${correct}<br>✅ Correct answer: ${correct}`;
+        exp_hi = `🔍 सूत्र: ठीक एक = (A - दोनों) + (B - दोनों)<br>चरण 1: केवल A = ${A} - ${both} = ${A-both}, केवल B = ${B} - ${both} = ${B-both}<br>चरण 2: ठीक एक = ${A-both} + ${B-both} = ${correct}<br>✅ सही उत्तर: ${correct}`;
+        type = 'Counting';
+    }
+
+    // Generate distractors
+    let opts = [String(correct)];
+    while (opts.length < 4) {
+        let d = correct + Math.floor(Math.random() * 40) - 20;
+        if (d < 0) d = Math.abs(d) + 5;
+        if (!opts.includes(String(d)) && d !== correct) opts.push(String(d));
+    }
+    shuffle(opts);
+    const ansIdx = opts.indexOf(String(correct));
+
+    return { q_en: question_en, q_hi: question_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: type, exp_en, exp_hi };
+}
+
+// ---- Generate Logical Relation Questions ----
+function generateLogicalQuestion() {
+    const hier = catHierarchy[Math.floor(Math.random() * catHierarchy.length)];
+    const set1 = hier.set1;
+    const set2 = hier.set2;
+    const set3 = hier.set3;
+    
+    // Find Hindi equivalents (using a simple mapping for these specific ones)
+    const map = {
+        'Animals': 'जानवर', 'Mammals': 'स्तनधारी', 'Dogs': 'कुत्ते',
+        'Flowers': 'फूल', 'Roses': 'गुलाब', 'Red Roses': 'लाल गुलाब',
+        'Fruits': 'फल', 'Mangoes': 'आम', 'Alphonso Mangoes': 'हापुस आम',
+        'Vehicles': 'वाहन', 'Cars': 'कारें', 'Electric Cars': 'इलेक्ट्रिक कारें',
+        'People': 'लोग', 'Women': 'महिलाएँ', 'Doctors': 'डॉक्टर',
+        'Creatures': 'प्राणी', 'Birds': 'पक्षी', 'Sparrows': 'गौरैया',
+        'Trees': 'पेड़', 'Oak Trees': 'ओक के पेड़', 'Old Oak Trees': 'पुराने ओक के पेड़',
+        'Clothing': 'पहनावा', 'Shirts': 'शर्ट', 'Cotton Shirts': 'सूती शर्ट',
+        'Countries': 'देश', 'Asian Countries': 'एशियाई देश', 'India': 'भारत',
+        'Stars': 'तारे', 'Planets': 'ग्रह', 'Earth': 'पृथ्वी'
+    };
+    
+    const set1h = map[set1] || set1;
+    const set2h = map[set2] || set2;
+    const set3h = map[set3] || set3;
+
+    // The correct logical relation: set3 ⊂ set2 ⊂ set1
+    // Options: A) set1 ⊃ set2 ⊃ set3, B) set1 ⊂ set2 ⊂ set3, C) all separate, D) set2 ⊃ set1 ⊃ set3
+    const opts_en = [
+        `Correct: ${set1} ⊃ ${set2} ⊃ ${set3}`,
+        `${set1} ⊂ ${set2} ⊂ ${set3}`,
+        `All three are completely separate`,
+        `${set2} ⊃ ${set1} ⊃ ${set3}`
+    ];
+    const opts_hi = [
+        `सही: ${set1h} ⊃ ${set2h} ⊃ ${set3h}`,
+        `${set1h} ⊂ ${set2h} ⊂ ${set3h}`,
+        `तीनों पूरी तरह अलग हैं`,
+        `${set2h} ⊃ ${set1h} ⊃ ${set3h}`
+    ];
+    
+    const ansIdx = 0; // first option is correct
+    
+    const q_en = `Which of the following correctly represents the relationship between ${set1}, ${set2}, and ${set3}?`;
+    const q_hi = `निम्नलिखित में से कौन-सा ${set1h}, ${set2h}, और ${set3h} के बीच संबंध को सही दर्शाता है?`;
+    
+    const exp_en = `🔍 Logical Classification:<br>
+    <b>Step 1:</b> Identify the broadest category. Here, ${set1} is the largest group.<br>
+    <b>Step 2:</b> ${set2} is a subset (sub-category) of ${set1}.<br>
+    <b>Step 3:</b> ${set3} is an even more specific subset of ${set2}.<br>
+    <b>Step 4:</b> Therefore, the correct representation is ${set1} ⊃ ${set2} ⊃ ${set3} (Option A).<br>
+    ✅ <b>Correct answer: Option A.</b>`;
+    
+    const exp_hi = `🔍 तार्किक वर्गीकरण:<br>
+    <b>चरण 1:</b> सबसे बड़ी श्रेणी (category) पहचानें। यहाँ ${set1h} सबसे बड़ा समूह है।<br>
+    <b>चरण 2:</b> ${set2h}, ${set1h} का एक उपसमुच्चय (sub-category) है।<br>
+    <b>चरण 3:</b> ${set3h}, ${set2h} का एक और विशिष्ट उपसमुच्चय है।<br>
+    <b>चरण 4:</b> अतः सही निरूपण है ${set1h} ⊃ ${set2h} ⊃ ${set3h} (विकल्प A)।<br>
+    ✅ <b>सही उत्तर: विकल्प A.</b>`;
+    
+    // Shuffle options
+    let indices = [0, 1, 2, 3];
+    shuffle(indices);
+    let shuffledOptsEn = indices.map(i => opts_en[i]);
+    let shuffledOptsHi = indices.map(i => opts_hi[i]);
+    let newAnsIdx = indices.indexOf(0); // where did the correct one go?
+    
+    return { q_en, q_hi, opts_en: shuffledOptsEn, opts_hi: shuffledOptsHi, answer: newAnsIdx, type: 'Logical Relation', exp_en, exp_hi };
+}
+
+// ---- Generate 510 Questions ----
+while (questions.length < 510) {
+    let q;
+    if (Math.random() < 0.55) {
+        q = generateCountingQuestion();
+    } else {
+        q = generateLogicalQuestion();
+    }
+    const exists = questions.some(ex => ex.q_en === q.q_en && ex.type === q.type);
+    if (!exists) questions.push(q);
+}
+shuffle(questions);
+
+// ================================================================
+//  RENDER ENGINE (EXACT SAME AS PREVIOUS FILES)
+// ================================================================
+const container = document.getElementById('questionsContainer');
+const search = document.getElementById('search');
+const filter = document.getElementById('filter');
+const attemptText = document.getElementById('attemptText');
+const scoreText = document.getElementById('scoreText');
+const progressBar = document.getElementById('progressBar');
+let attempted = new Set();
+let score = 0;
+
+function renderQuestions() {
+    container.innerHTML = '';
+    const keyword = search.value.toLowerCase().trim();
+    const selectedType = filter.value;
+    questions.forEach((q, idx) => {
+        if (selectedType !== 'all' && q.type !== selectedType) return;
+        const qText = currentLang === 'en' ? q.q_en : q.q_hi;
+        const opts = currentLang === 'en' ? q.opts_en : q.opts_hi;
+        const exp = currentLang === 'en' ? q.exp_en : q.exp_hi;
+        let full = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && !full.includes(keyword)) return;
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = 'question-' + idx;
+        let optHTML = '';
+        opts.forEach((opt, oi) => {
+            optHTML += `<button class="option" onclick="checkAnswer(${idx},${oi},this)">(${String.fromCharCode(65+oi)}) ${opt}</button>`;
+        });
+        card.innerHTML = `
+            <div class="question-top">
+                <span class="question-number">Q${idx+1}</span>
+                <span class="question-type">${q.type}</span>
+            </div>
+            <div class="question-body">
+                <div class="question-text">${qText}</div>
+                <div class="options">${optHTML}</div>
+                <div class="answer-result" id="result-${idx}"></div>
+                <div class="explanation" id="explanation-${idx}">
+                    <div class="explanation-title">${currentLang === 'en' ? '💡 Detailed Explanation (Set Logic)' : '💡 विस्तृत व्याख्या (समुच्चय तर्क)'}</div>
+                    ${exp}
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attempted.has(qIdx)) return;
+    attempted.add(qIdx);
+    const q = questions[qIdx];
+    const card = document.getElementById('question-' + qIdx);
+    const btns = card.querySelectorAll('.option');
+    btns.forEach((b, i) => { if (i === q.answer) b.classList.add('correct'); });
+    const res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) { score++; res.innerHTML = currentLang === 'en' ? '✅ Correct Answer!' : '✅ सही उत्तर!'; res.style.color = '#16a34a'; }
+    else { btn.classList.add('wrong'); res.innerHTML = currentLang === 'en' ? '❌ Incorrect. See explanation below.' : '❌ गलत। नीचे व्याख्या देखें।'; res.style.color = '#dc2626'; }
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    attemptText.textContent = `${currentLang === 'en' ? 'Attempted' : 'हल किए'}: ${attempted.size} / ${questions.length}`;
+    scoreText.textContent = `${currentLang === 'en' ? 'Score' : 'स्कोर'}: ${score}`;
+    progressBar.style.width = (attempted.size / questions.length * 100) + '%';
+}
+
+function showAllExplanations() {
+    document.querySelectorAll('.explanation').forEach(e => e.classList.add('show'));
+}
+function resetQuiz() { attempted.clear(); score = 0; renderQuestions(); updateProgress(); window.scrollTo({top:0, behavior:'smooth'}); }
+search.addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+
+// Init
+updateUI();
+</script>
+</body>
+</html>

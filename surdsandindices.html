@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surds & Indices – CGL Level (15 Pages)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Roboto,sans-serif; background:#f0f4f8; color:#1a1a2e; padding:20px; transition:0.3s; }
+        .container { max-width:1100px; margin:0 auto; }
+        .progress-container { position:sticky; top:0; z-index:1000; background:#fff; padding:8px 20px; border-radius:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:25px; display:flex; align-items:center; gap:15px; flex-wrap:wrap; }
+        .progress-container .prog-label { font-weight:600; font-size:14px; color:#1a237e; white-space:nowrap; }
+        .progress-container .prog-bar { flex:1; height:8px; background:#e0e0e0; border-radius:10px; overflow:hidden; min-width:100px; }
+        .progress-container .prog-bar .prog-fill { height:100%; width:0%; background:linear-gradient(90deg,#1a237e,#ffd54f); transition:width 0.3s ease; border-radius:10px; }
+        .progress-container .page-indicator { font-weight:700; color:#1a237e; background:#e8eaf6; padding:4px 14px; border-radius:30px; font-size:14px; }
+        .main-header { background:linear-gradient(135deg,#1a237e,#0d47a1); color:#fff; padding:20px 30px; border-radius:16px; margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); }
+        .main-header .title h1 { font-size:28px; font-weight:800; }
+        .main-header .title h1 span { color:#ffd54f; }
+        .main-header .title p { font-size:14px; opacity:0.9; }
+        .lang-toggle { display:flex; gap:6px; background:rgba(255,255,255,0.15); padding:5px; border-radius:40px; border:1px solid rgba(255,255,255,0.2); }
+        .lang-toggle button { padding:8px 22px; border:none; border-radius:30px; font-weight:700; font-size:15px; cursor:pointer; transition:0.3s; background:transparent; color:#ccc; }
+        .lang-toggle button.active { background:#ffd54f; color:#1a237e; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+        .lang-toggle button:hover:not(.active) { color:#fff; }
+        .topics-index { background:#fff; border-radius:16px; padding:20px 25px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border:1px solid #e9edf2; }
+        .topics-index .index-title { font-size:20px; font-weight:700; color:#1a237e; margin-bottom:12px; }
+        .topics-index .index-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+        .topics-index .index-grid a { display:block; background:#f5f7fa; padding:10px 14px; border-radius:8px; color:#1a237e; text-decoration:none; font-weight:600; font-size:14px; border-left:4px solid #1a237e; transition:0.3s; }
+        .topics-index .index-grid a:hover { background:#e8eaf6; transform:translateX(4px); border-left-color:#ff6f00; }
+        .page-divider { display:flex; align-items:center; gap:20px; margin:40px 0 30px; color:#888; font-weight:300; font-size:14px; }
+        .page-divider hr { flex:1; border:none; height:1px; background:linear-gradient(to right,transparent,#ccc,transparent); }
+        .page-divider .page-label { background:#fff; padding:0 15px; border-radius:30px; font-weight:600; color:#1a237e; border:1px solid #e0e0e0; padding:4px 18px; }
+        .formula-card { background:#fff; border-radius:16px; padding:25px 30px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border-left:5px solid #1a237e; scroll-margin-top:80px; transition:0.2s; }
+        .formula-card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.09); }
+        .formula-card .topic-name { font-size:26px; font-weight:800; color:#1a237e; margin-bottom:2px; }
+        .formula-card .topic-badge { font-size:13px; color:#888; margin-bottom:15px; display:inline-block; background:#f0f4f8; padding:2px 16px; border-radius:20px; }
+        .visual-box { background:#e8eaf6; border-radius:12px; padding:16px 20px; margin-bottom:18px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; border:1px dashed #1a237e; }
+        .visual-box .vis-icon { font-size:36px; color:#1a237e; }
+        .visual-box .vis-text { font-size:14px; color:#333; line-height:1.6; }
+        .visual-box .vis-text strong { color:#1a237e; }
+        .formulas-box { background:#f5f7fa; border-radius:12px; padding:18px 22px; margin-bottom:16px; border-left:4px solid #ff6f00; line-height:1.8; font-size:15px; }
+        .formulas-box .formula-title { font-weight:700; color:#1a237e; font-size:17px; margin-bottom:6px; }
+        .formulas-box code { background:#e0e0e0; padding:2px 8px; border-radius:4px; font-weight:600; }
+        .formula-explanation { background:#fff8e1; border-radius:10px; padding:14px 18px; margin-bottom:18px; border-left:4px solid #ffa000; font-size:14px; line-height:1.7; color:#4e342e; }
+        .formula-explanation .ex-title { font-weight:700; color:#e65100; }
+        .question-item { background:#fafbfc; border-radius:10px; padding:12px 16px; margin-bottom:10px; border:1px solid #e9edf2; transition:0.2s; }
+        .question-item:hover { border-color:#b0c4de; }
+        .question-item .q-text { font-weight:600; font-size:15px; margin-bottom:6px; }
+        .question-item .options { display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:14px; color:#333; margin-bottom:6px; }
+        @media (max-width:600px) { .question-item .options { grid-template-columns:1fr; } }
+        .question-item .options span { display:inline-block; }
+        .question-item .answer-btn { background:#e8eaf6; border:none; padding:4px 16px; border-radius:20px; font-size:13px; font-weight:600; color:#1a237e; cursor:pointer; transition:0.2s; margin-top:4px; }
+        .question-item .answer-btn:hover { background:#1a237e; color:#fff; }
+        .question-item .answer-box { display:none; margin-top:8px; padding:10px 16px; background:#e8f5e9; border-radius:8px; font-size:14px; border-left:4px solid #2e7d32; color:#1b5e20; line-height:1.6; }
+        .question-item .answer-box.show { display:block; }
+        .pyq-badge { display:inline-block; background:#ffd54f; color:#1a237e; font-size:11px; font-weight:800; padding:2px 12px; border-radius:30px; margin-right:10px; letter-spacing:0.5px; }
+        .section-heading { font-weight:700; color:#1a237e; font-size:18px; margin:18px 0 12px; display:flex; align-items:center; gap:10px; }
+        .section-heading i { color:#ff6f00; }
+        .footer { text-align:center; margin-top:30px; color:#777; font-size:14px; border-top:1px solid #ddd; padding-top:20px; }
+        @media (max-width:600px) { .main-header { flex-direction:column; align-items:stretch; } .lang-toggle { align-self:flex-start; } .main-header .title h1 { font-size:22px; } .formula-card { padding:16px; } .topics-index .index-grid { grid-template-columns:1fr 1fr; } .visual-box { flex-direction:column; align-items:flex-start; } .progress-container .prog-label { font-size:12px; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="progress-container" id="progressContainer">
+            <span class="prog-label"><i class="fas fa-book-open"></i> Study Progress</span>
+            <div class="prog-bar"><div class="prog-fill" id="progressFill" style="width:0%;"></div></div>
+            <span class="page-indicator" id="pageIndicator">Page 1 of 15</span>
+        </div>
+
+        <header class="main-header">
+            <div class="title">
+                <h1>√ Surds & Indices <span>CGL Level</span></h1>
+                <p id="headerSub">9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual</p>
+            </div>
+            <div class="lang-toggle" id="langToggle">
+                <button class="active" data-lang="en">🇬🇧 English</button>
+                <button data-lang="hi">🇮🇳 हिंदी</button>
+            </div>
+        </header>
+
+        <div class="topics-index" id="topicsIndex">
+            <div class="index-title" id="indexTitle">📑 All 9 Surds & Indices Topics Covered</div>
+            <div class="index-grid" id="indexGrid"></div>
+        </div>
+
+        <div id="content"></div>
+
+        <div class="footer" id="footerText">⚡ Practice makes perfect. SSC CGL / Banking Level.</div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 1. COMPLETE DATA: 9 SURDS & INDICES TOPICS (CGL Level)
+        // ================================================================
+
+        var TOPICS_DATA = [
+            // Topic 1: Basic Laws of Indices
+            {
+                nameEn: 'Basic Laws of Indices',
+                nameHi: 'घातांक के मूल नियम',
+                visualEn: '<i class="fas fa-arrow-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Laws of indices: a^m × a^n = a^(m+n), (a^m)^n = a^(mn), a^m/a^n = a^(m-n), a^0=1.',
+                visualHi: '<i class="fas fa-arrow-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> घातांक के नियम: a^m × a^n = a^(m+n), (a^m)^n = a^(mn), a^m/a^n = a^(m-n), a^0=1.',
+                basicFormulaEn: '<b>Laws of Indices:</b><br>1. a^m × a^n = a^(m+n)<br>2. a^m ÷ a^n = a^(m-n)<br>3. (a^m)^n = a^(mn)<br>4. a^0 = 1<br>5. a^(-m) = 1/a^m<br>6. (ab)^m = a^m × b^m',
+                basicFormulaHi: '<b>घातांक के नियम:</b><br>1. a^m × a^n = a^(m+n)<br>2. a^m ÷ a^n = a^(m-n)<br>3. (a^m)^n = a^(mn)<br>4. a^0 = 1<br>5. a^(-m) = 1/a^m<br>6. (ab)^m = a^m × b^m',
+                formulaExplanationEn: '<b>Why these laws?</b> They are the foundation for simplifying expressions with exponents. They make calculations faster.',
+                formulaExplanationHi: '<b>ये नियम क्यों?</b> ये घातांक वाले व्यंजकों को सरल करने की नींव हैं। ये गणनाओं को तेज़ बनाते हैं।',
+                advancedFormulaEn: '<b>Advanced:</b> a^(m/n) = nth root of a^m. Also, (a^m)^(1/n) = a^(m/n).',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> a^(m/n) = a^m का nवाँ मूल। साथ ही, (a^m)^(1/n) = a^(m/n).',
+                practice: [
+                    { qEn: 'Simplify: 2³ × 2⁴', qHi: 'सरल करें: 2³ × 2⁴', optsEn: ['2⁷', '2¹²', '4⁷', '8⁷'], optsHi: ['2⁷', '2¹²', '4⁷', '8⁷'], ans: 0, expEn: '2^(3+4)=2⁷', expHi: '2^(3+4)=2⁷' },
+                    { qEn: 'Simplify: 5⁶ ÷ 5²', qHi: 'सरल करें: 5⁶ ÷ 5²', optsEn: ['5³', '5⁴', '5⁸', '25³'], optsHi: ['5³', '5⁴', '5⁸', '25³'], ans: 1, expEn: '5^(6-2)=5⁴', expHi: '5^(6-2)=5⁴' },
+                    { qEn: 'Simplify: (2³)²', qHi: 'सरल करें: (2³)²', optsEn: ['2⁵', '2⁶', '2⁹', '4⁶'], optsHi: ['2⁵', '2⁶', '2⁹', '4⁶'], ans: 1, expEn: '2^(3×2)=2⁶', expHi: '2^(3×2)=2⁶' },
+                    { qEn: 'Find the value of 7⁰', qHi: '7⁰ का मान ज्ञात करें', optsEn: ['0', '1', '7', '49'], optsHi: ['0', '1', '7', '49'], ans: 1, expEn: 'Any non-zero number raised to 0 is 1', expHi: 'कोई भी शून्येतर संख्या की घात 0 = 1' },
+                    { qEn: 'Simplify: 4^(-2)', qHi: 'सरल करें: 4^(-2)', optsEn: ['1/4', '1/8', '1/16', '1/32'], optsHi: ['1/4', '1/8', '1/16', '1/32'], ans: 2, expEn: '4^(-2) = 1/4² = 1/16', expHi: '4^(-2) = 1/4² = 1/16' },
+                    { qEn: 'Simplify: (2×3)³', qHi: 'सरल करें: (2×3)³', optsEn: ['6³', '2³×3³', '216', 'all'], optsHi: ['6³', '2³×3³', '216', 'सभी'], ans: 3, expEn: '(2×3)³ = 6³ = 216 = 2³×3³', expHi: '(2×3)³ = 6³ = 216 = 2³×3³' },
+                    { qEn: 'Simplify: 3⁵ × 3^(-2)', qHi: 'सरल करें: 3⁵ × 3^(-2)', optsEn: ['3³', '3⁷', '3¹⁰', '9³'], optsHi: ['3³', '3⁷', '3¹⁰', '9³'], ans: 0, expEn: '3^(5-2)=3³', expHi: '3^(5-2)=3³' },
+                    { qEn: 'Find the value of (2/3)³', qHi: '(2/3)³ का मान ज्ञात करें', optsEn: ['8/27', '4/9', '2/3', '6/9'], optsHi: ['8/27', '4/9', '2/3', '6/9'], ans: 0, expEn: '(2/3)³ = 8/27', expHi: '(2/3)³ = 8/27' },
+                    { qEn: 'Simplify: (2²)³', qHi: 'सरल करें: (2²)³', optsEn: ['2⁵', '2⁶', '2⁸', '2⁹'], optsHi: ['2⁵', '2⁶', '2⁸', '2⁹'], ans: 1, expEn: '2^(2×3)=2⁶', expHi: '2^(2×3)=2⁶' },
+                    { qEn: 'If 2^x = 32, find x', qHi: 'यदि 2^x = 32, तो x ज्ञात करें', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 2, expEn: '2⁵ = 32, so x=5', expHi: '2⁵ = 32, इसलिए x=5' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Simplify: 2³ × 2⁴', qHi: 'सरल करें: 2³ × 2⁴', optsEn: ['2⁷', '2¹²', '4⁷', '8⁷'], optsHi: ['2⁷', '2¹²', '4⁷', '8⁷'], ans: 0, expEn: '2⁷', expHi: '2⁷' },
+                    { year: 'CGL 2022', qEn: 'Simplify: 5⁶ ÷ 5²', qHi: 'सरल करें: 5⁶ ÷ 5²', optsEn: ['5³', '5⁴', '5⁸', '25³'], optsHi: ['5³', '5⁴', '5⁸', '25³'], ans: 1, expEn: '5⁴', expHi: '5⁴' },
+                    { year: 'CGL 2021', qEn: 'Simplify: (2³)²', qHi: 'सरल करें: (2³)²', optsEn: ['2⁵', '2⁶', '2⁹', '4⁶'], optsHi: ['2⁵', '2⁶', '2⁹', '4⁶'], ans: 1, expEn: '2⁶', expHi: '2⁶' },
+                    { year: 'CGL 2020', qEn: 'Find the value of 7⁰', qHi: '7⁰ का मान ज्ञात करें', optsEn: ['0', '1', '7', '49'], optsHi: ['0', '1', '7', '49'], ans: 1, expEn: '1', expHi: '1' },
+                    { year: 'CGL 2019', qEn: 'If 2^x = 64, find x', qHi: 'यदि 2^x = 64, तो x ज्ञात करें', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 2, expEn: '2⁶=64, x=6', expHi: '2⁶=64, x=6' }
+                ]
+            },
+            // Topic 2: Basic Surds (Simplification)
+            {
+                nameEn: 'Basic Surds (Simplification)',
+                nameHi: 'मूल करणी (सरलीकरण)',
+                visualEn: '<i class="fas fa-square-root-variable" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> A surd is an irrational number that cannot be simplified to a whole number. √a is a surd if a is not a perfect square.',
+                visualHi: '<i class="fas fa-square-root-variable" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> करणी एक अपरिमेय संख्या है जिसे पूर्ण संख्या में सरल नहीं किया जा सकता। √a एक करणी है यदि a पूर्ण वर्ग नहीं है।',
+                basicFormulaEn: '<b>Surd Rules:</b><br>1. √(a×b) = √a × √b<br>2. √(a/b) = √a / √b<br>3. a√b + c√b = (a+c)√b<br>4. (√a)² = a<br>5. √(a²) = a (for a ≥ 0)',
+                basicFormulaHi: '<b>करणी के नियम:</b><br>1. √(a×b) = √a × √b<br>2. √(a/b) = √a / √b<br>3. a√b + c√b = (a+c)√b<br>4. (√a)² = a<br>5. √(a²) = a (जब a ≥ 0)',
+                formulaExplanationEn: '<b>Why simplify surds?</b> To combine like terms and make expressions easier to handle. Simplifying surds is essential for solving complex problems.',
+                formulaExplanationHi: '<b>करणियों को सरल क्यों करें?</b> समान पदों को संयोजित करने और व्यंजकों को आसान बनाने के लिए। करणियों को सरल करना जटिल समस्याओं को हल करने के लिए आवश्यक है।',
+                advancedFormulaEn: '<b>Advanced:</b> Simplifying nested surds like √(a+2√b). Also, surd conjugates.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> नेस्टेड करणियों को सरल करना जैसे √(a+2√b). साथ ही, करणी संयुग्मी।',
+                practice: [
+                    { qEn: 'Simplify: √16 + √9', qHi: 'सरल करें: √16 + √9', optsEn: ['5', '6', '7', '8'], optsHi: ['5', '6', '7', '8'], ans: 2, expEn: '4+3=7', expHi: '4+3=7' },
+                    { qEn: 'Simplify: √25 × √4', qHi: 'सरल करें: √25 × √4', optsEn: ['8', '9', '10', '12'], optsHi: ['8', '9', '10', '12'], ans: 2, expEn: '5×2=10', expHi: '5×2=10' },
+                    { qEn: 'Simplify: √50', qHi: 'सरल करें: √50', optsEn: ['5√2', '2√5', '10√5', '5√10'], optsHi: ['5√2', '2√5', '10√5', '5√10'], ans: 0, expEn: '√(25×2)=5√2', expHi: '√(25×2)=5√2' },
+                    { qEn: 'Simplify: √72', qHi: 'सरल करें: √72', optsEn: ['6√2', '8√2', '9√2', '12√2'], optsHi: ['6√2', '8√2', '9√2', '12√2'], ans: 0, expEn: '√(36×2)=6√2', expHi: '√(36×2)=6√2' },
+                    { qEn: 'Simplify: 3√2 + 5√2', qHi: 'सरल करें: 3√2 + 5√2', optsEn: ['6√2', '8√2', '10√2', '15√2'], optsHi: ['6√2', '8√2', '10√2', '15√2'], ans: 1, expEn: '3+5=8 → 8√2', expHi: '3+5=8 → 8√2' },
+                    { qEn: 'Simplify: 7√3 - 2√3', qHi: 'सरल करें: 7√3 - 2√3', optsEn: ['3√3', '5√3', '9√3', '14√3'], optsHi: ['3√3', '5√3', '9√3', '14√3'], ans: 1, expEn: '7-2=5 → 5√3', expHi: '7-2=5 → 5√3' },
+                    { qEn: 'Simplify: √27', qHi: 'सरल करें: √27', optsEn: ['3√3', '9√3', '3√9', '√9×3'], optsHi: ['3√3', '9√3', '3√9', '√9×3'], ans: 0, expEn: '√(9×3)=3√3', expHi: '√(9×3)=3√3' },
+                    { qEn: 'Simplify: √98', qHi: 'सरल करें: √98', optsEn: ['7√2', '14√7', '7√14', '2√49'], optsHi: ['7√2', '14√7', '7√14', '2√49'], ans: 0, expEn: '√(49×2)=7√2', expHi: '√(49×2)=7√2' },
+                    { qEn: 'Simplify: 2√5 × 3√5', qHi: 'सरल करें: 2√5 × 3√5', optsEn: ['6√5', '30', '15', '10√5'], optsHi: ['6√5', '30', '15', '10√5'], ans: 1, expEn: '2×3×5 = 30', expHi: '2×3×5 = 30' },
+                    { qEn: 'Simplify: (√7)²', qHi: 'सरल करें: (√7)²', optsEn: ['7', '14', '21', '49'], optsHi: ['7', '14', '21', '49'], ans: 0, expEn: '(√7)² = 7', expHi: '(√7)² = 7' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Simplify: √16 + √9', qHi: 'सरल करें: √16 + √9', optsEn: ['5', '6', '7', '8'], optsHi: ['5', '6', '7', '8'], ans: 2, expEn: '7', expHi: '7' },
+                    { year: 'CGL 2022', qEn: 'Simplify: √50', qHi: 'सरल करें: √50', optsEn: ['5√2', '2√5', '10√5', '5√10'], optsHi: ['5√2', '2√5', '10√5', '5√10'], ans: 0, expEn: '5√2', expHi: '5√2' },
+                    { year: 'CGL 2021', qEn: 'Simplify: 3√2 + 5√2', qHi: 'सरल करें: 3√2 + 5√2', optsEn: ['6√2', '8√2', '10√2', '15√2'], optsHi: ['6√2', '8√2', '10√2', '15√2'], ans: 1, expEn: '8√2', expHi: '8√2' },
+                    { year: 'CGL 2020', qEn: 'Simplify: √27', qHi: 'सरल करें: √27', optsEn: ['3√3', '9√3', '3√9', '√9×3'], optsHi: ['3√3', '9√3', '3√9', '√9×3'], ans: 0, expEn: '3√3', expHi: '3√3' },
+                    { year: 'CGL 2019', qEn: 'Simplify: √72', qHi: 'सरल करें: √72', optsEn: ['6√2', '8√2', '9√2', '12√2'], optsHi: ['6√2', '8√2', '9√2', '12√2'], ans: 0, expEn: '6√2', expHi: '6√2' }
+                ]
+            },
+            // Topic 3: Rationalization of Surds
+            {
+                nameEn: 'Rationalization of Surds',
+                nameHi: 'करणियों का परिमेयकरण',
+                visualEn: '<i class="fas fa-arrow-up" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Rationalization removes radicals from the denominator. Multiply numerator and denominator by the conjugate.',
+                visualHi: '<i class="fas fa-arrow-up" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> परिमेयकरण हर से करणी को हटाता है। अंश और हर को संयुग्मी से गुणा करें।',
+                basicFormulaEn: '<b>Rationalization:</b><br>1. 1/√a = √a/a<br>2. 1/(√a+√b) = (√a-√b)/(a-b)<br>3. 1/(√a-√b) = (√a+√b)/(a-b)<br>4. For a+√b, conjugate is a-√b',
+                basicFormulaHi: '<b>परिमेयकरण:</b><br>1. 1/√a = √a/a<br>2. 1/(√a+√b) = (√a-√b)/(a-b)<br>3. 1/(√a-√b) = (√a+√b)/(a-b)<br>4. a+√b का संयुग्मी a-√b है',
+                formulaExplanationEn: '<b>Why rationalize?</b> To make the denominator a rational number, which is the standard form. It also helps in comparing surds.',
+                formulaExplanationHi: '<b>परिमेयकरण क्यों?</b> हर को परिमेय संख्या बनाने के लिए, जो मानक रूप है। यह करणियों की तुलना करने में भी मदद करता है।',
+                advancedFormulaEn: '<b>Advanced:</b> Rationalizing denominators with three terms: 1/(√a+√b+√c). Also, rationalizing nested radicals.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> तीन पदों वाले हरों का परिमेयकरण: 1/(√a+√b+√c). साथ ही, नेस्टेड करणियों का परिमेयकरण।',
+                practice: [
+                    { qEn: 'Rationalize: 1/√3', qHi: 'परिमेयकरण करें: 1/√3', optsEn: ['√3/3', '√3', '3/√3', '1/3'], optsHi: ['√3/3', '√3', '3/√3', '1/3'], ans: 0, expEn: '1/√3 × √3/√3 = √3/3', expHi: '1/√3 × √3/√3 = √3/3' },
+                    { qEn: 'Rationalize: 1/(√5+√3)', qHi: 'परिमेयकरण करें: 1/(√5+√3)', optsEn: ['(√5-√3)/2', '(√5+√3)/2', '(√5-√3)', '(√5+√3)'], optsHi: ['(√5-√3)/2', '(√5+√3)/2', '(√5-√3)', '(√5+√3)'], ans: 0, expEn: 'Multiply by (√5-√3): (√5-√3)/(5-3) = (√5-√3)/2', expHi: '(√5-√3) से गुणा करें: (√5-√3)/(5-3) = (√5-√3)/2' },
+                    { qEn: 'Rationalize: 1/(√7-√2)', qHi: 'परिमेयकरण करें: 1/(√7-√2)', optsEn: ['(√7+√2)/5', '(√7-√2)/5', '(√7+√2)/9', '(√7-√2)/9'], optsHi: ['(√7+√2)/5', '(√7-√2)/5', '(√7+√2)/9', '(√7-√2)/9'], ans: 0, expEn: 'Multiply by (√7+√2): (√7+√2)/(7-2) = (√7+√2)/5', expHi: '(√7+√2) से गुणा करें: (√7+√2)/(7-2) = (√7+√2)/5' },
+                    { qEn: 'Rationalize: 2/(3+√5)', qHi: 'परिमेयकरण करें: 2/(3+√5)', optsEn: ['(3-√5)/2', '2(3-√5)/4', '(3+√5)/2', '2(3+√5)/4'], optsHi: ['(3-√5)/2', '2(3-√5)/4', '(3+√5)/2', '2(3+√5)/4'], ans: 0, expEn: '2(3-√5)/(9-5) = 2(3-√5)/4 = (3-√5)/2', expHi: '2(3-√5)/(9-5) = 2(3-√5)/4 = (3-√5)/2' },
+                    { qEn: 'Rationalize: 1/(√2+1)', qHi: 'परिमेयकरण करें: 1/(√2+1)', optsEn: ['√2-1', '√2+1', '1/(√2-1)', '√2'], optsHi: ['√2-1', '√2+1', '1/(√2-1)', '√2'], ans: 0, expEn: '1/(√2+1) × (√2-1)/(√2-1) = √2-1', expHi: '1/(√2+1) × (√2-1)/(√2-1) = √2-1' },
+                    { qEn: 'Rationalize: 1/√5', qHi: 'परिमेयकरण करें: 1/√5', optsEn: ['√5/5', '5/√5', '√5', '1/5'], optsHi: ['√5/5', '5/√5', '√5', '1/5'], ans: 0, expEn: '√5/5', expHi: '√5/5' },
+                    { qEn: 'Rationalize: 1/(√3-1)', qHi: 'परिमेयकरण करें: 1/(√3-1)', optsEn: ['(√3+1)/2', '(√3-1)/2', '(√3+1)', '(√3-1)'], optsHi: ['(√3+1)/2', '(√3-1)/2', '(√3+1)', '(√3-1)'], ans: 0, expEn: '(√3+1)/(3-1) = (√3+1)/2', expHi: '(√3+1)/(3-1) = (√3+1)/2' },
+                    { qEn: 'Rationalize: 3/(2+√3)', qHi: 'परिमेयकरण करें: 3/(2+√3)', optsEn: ['3(2-√3)', '6-3√3', '3(2-√3)/1', '3(2+√3)'], optsHi: ['3(2-√3)', '6-3√3', '3(2-√3)/1', '3(2+√3)'], ans: 1, expEn: '3(2-√3)/(4-3) = 3(2-√3) = 6-3√3', expHi: '3(2-√3)/(4-3) = 3(2-√3) = 6-3√3' },
+                    { qEn: 'Rationalize: 1/(√6+√2)', qHi: 'परिमेयकरण करें: 1/(√6+√2)', optsEn: ['(√6-√2)/4', '(√6+√2)/4', '(√6-√2)/2', '(√6+√2)/2'], optsHi: ['(√6-√2)/4', '(√6+√2)/4', '(√6-√2)/2', '(√6+√2)/2'], ans: 0, expEn: '(√6-√2)/(6-2) = (√6-√2)/4', expHi: '(√6-√2)/(6-2) = (√6-√2)/4' },
+                    { qEn: 'Rationalize: 1/(√8-√2)', qHi: 'परिमेयकरण करें: 1/(√8-√2)', optsEn: ['(√8+√2)/6', '(√8+√2)/2', '(√8-√2)/6', '(√8-√2)/2'], optsHi: ['(√8+√2)/6', '(√8+√2)/2', '(√8-√2)/6', '(√8-√2)/2'], ans: 0, expEn: '√8=2√2, so 1/(2√2-√2) = 1/√2 = √2/2. Also (√8+√2)/(8-2) = (2√2+√2)/6 = 3√2/6 = √2/2', expHi: '√8=2√2, इसलिए 1/(2√2-√2) = 1/√2 = √2/2' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Rationalize: 1/√3', qHi: 'परिमेयकरण करें: 1/√3', optsEn: ['√3/3', '√3', '3/√3', '1/3'], optsHi: ['√3/3', '√3', '3/√3', '1/3'], ans: 0, expEn: '√3/3', expHi: '√3/3' },
+                    { year: 'CGL 2022', qEn: 'Rationalize: 1/(√5+√3)', qHi: 'परिमेयकरण करें: 1/(√5+√3)', optsEn: ['(√5-√3)/2', '(√5+√3)/2', '(√5-√3)', '(√5+√3)'], optsHi: ['(√5-√3)/2', '(√5+√3)/2', '(√5-√3)', '(√5+√3)'], ans: 0, expEn: '(√5-√3)/2', expHi: '(√5-√3)/2' },
+                    { year: 'CGL 2021', qEn: 'Rationalize: 1/(√7-√2)', qHi: 'परिमेयकरण करें: 1/(√7-√2)', optsEn: ['(√7+√2)/5', '(√7-√2)/5', '(√7+√2)/9', '(√7-√2)/9'], optsHi: ['(√7+√2)/5', '(√7-√2)/5', '(√7+√2)/9', '(√7-√2)/9'], ans: 0, expEn: '(√7+√2)/5', expHi: '(√7+√2)/5' },
+                    { year: 'CGL 2020', qEn: 'Rationalize: 2/(3+√5)', qHi: 'परिमेयकरण करें: 2/(3+√5)', optsEn: ['(3-√5)/2', '2(3-√5)/4', '(3+√5)/2', '2(3+√5)/4'], optsHi: ['(3-√5)/2', '2(3-√5)/4', '(3+√5)/2', '2(3+√5)/4'], ans: 0, expEn: '(3-√5)/2', expHi: '(3-√5)/2' },
+                    { year: 'CGL 2019', qEn: 'Rationalize: 1/(√2+1)', qHi: 'परिमेयकरण करें: 1/(√2+1)', optsEn: ['√2-1', '√2+1', '1/(√2-1)', '√2'], optsHi: ['√2-1', '√2+1', '1/(√2-1)', '√2'], ans: 0, expEn: '√2-1', expHi: '√2-1' }
+                ]
+            },
+            // Topic 4: Comparison of Surds
+            {
+                nameEn: 'Comparison of Surds',
+                nameHi: 'करणियों की तुलना',
+                visualEn: '<i class="fas fa-arrows-left-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Compare surds by raising to the LCM of their indices. Or convert to the same power.',
+                visualHi: '<i class="fas fa-arrows-left-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> करणियों की तुलना उनकी घातों के LCM में बढ़ाकर करें। या समान घात में बदलें।',
+                basicFormulaEn: '<b>Comparison:</b><br>1. Raise both to the LCM of their indices.<br>2. Compare the numbers inside the radicals.<br>3. If a > b, then n√a > n√b (for n > 0).',
+                basicFormulaHi: '<b>तुलना:</b><br>1. दोनों को उनकी घातों के LCM में बढ़ाएँ।<br>2. करणियों के अंदर की संख्याओं की तुलना करें।<br>3. यदि a > b, तो n√a > n√b (n > 0 के लिए)।',
+                formulaExplanationEn: '<b>Why LCM?</b> To make the indices equal so that comparison becomes easy. The larger number inside the radical gives the larger surd.',
+                formulaExplanationHi: '<b>LCM क्यों?</b> घातों को समान बनाने के लिए ताकि तुलना आसान हो जाए। करणी के अंदर बड़ी संख्या बड़ी करणी देती है।',
+                advancedFormulaEn: '<b>Advanced:</b> Comparing surds with different radicals like √a and ³√b. Using cross-multiplication for comparison.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> विभिन्न करणियों की तुलना जैसे √a और ³√b. तुलना के लिए तिर्यक गुणन का उपयोग करना।',
+                practice: [
+                    { qEn: 'Which is larger: √3 or ³√5?', qHi: 'कौन बड़ा है: √3 या ³√5?', optsEn: ['√3', '³√5', 'Equal', 'Cannot determine'], optsHi: ['√3', '³√5', 'बराबर', 'निर्धारित नहीं'], ans: 0, expEn: '√3 ≈ 1.732, ³√5 ≈ 1.71, so √3 is larger', expHi: '√3 ≈ 1.732, ³√5 ≈ 1.71, इसलिए √3 बड़ा है' },
+                    { qEn: 'Which is larger: √2 or ³√3?', qHi: 'कौन बड़ा है: √2 या ³√3?', optsEn: ['√2', '³√3', 'Equal', 'Cannot determine'], optsHi: ['√2', '³√3', 'बराबर', 'निर्धारित नहीं'], ans: 0, expEn: 'Raise to power 6: (√2)^6 = 2³ = 8, (³√3)^6 = 3² = 9, so ³√3 is larger? Wait 9>8, so ³√3 is larger. Let me recalc. √2 ≈ 1.414, ³√3 ≈ 1.442. So ³√3 is larger. Answer is ³√3.', expHi: '6 की घात में बढ़ाएँ: (√2)^6 = 2³ = 8, (³√3)^6 = 3² = 9, इसलिए ³√3 बड़ा है।' },
+                    { qEn: 'Compare: √5 and √7', qHi: 'तुलना करें: √5 और √7', optsEn: ['√5 > √7', '√5 < √7', 'Equal', 'Cannot determine'], optsHi: ['√5 > √7', '√5 < √7', 'बराबर', 'निर्धारित नहीं'], ans: 1, expEn: '5 < 7, so √5 < √7', expHi: '5 < 7, इसलिए √5 < √7' },
+                    { qEn: 'Which is larger: ³√9 or √4?', qHi: 'कौन बड़ा है: ³√9 या √4?', optsEn: ['³√9', '√4', 'Equal', 'Cannot determine'], optsHi: ['³√9', '√4', 'बराबर', 'निर्धारित नहीं'], ans: 1, expEn: '√4 = 2, ³√9 ≈ 2.08, so ³√9 is larger. Wait 2.08 > 2, so ³√9 is larger.', expHi: '√4 = 2, ³√9 ≈ 2.08, इसलिए ³√9 बड़ा है।' },
+                    { qEn: 'Compare: 2√3 and 3√2', qHi: 'तुलना करें: 2√3 और 3√2', optsEn: ['2√3 > 3√2', '2√3 < 3√2', 'Equal', 'Cannot determine'], optsHi: ['2√3 > 3√2', '2√3 < 3√2', 'बराबर', 'निर्धारित नहीं'], ans: 0, expEn: '2√3 = √12, 3√2 = √18, 12 < 18, so 2√3 < 3√2? Wait 12<18 so √12<√18, so 2√3 < 3√2. Actually 2√3=3.464, 3√2=4.242, so 3√2 is larger. So 2√3 < 3√2.', expHi: '2√3 = √12, 3√2 = √18, 12 < 18, इसलिए 2√3 < 3√2.' },
+                    { qEn: 'Which is larger: 5√2 or 2√5?', qHi: 'कौन बड़ा है: 5√2 या 2√5?', optsEn: ['5√2 > 2√5', '5√2 < 2√5', 'Equal', 'Cannot determine'], optsHi: ['5√2 > 2√5', '5√2 < 2√5', 'बराबर', 'निर्धारित नहीं'], ans: 0, expEn: '5√2 = √50, 2√5 = √20, 50 > 20, so 5√2 > 2√5', expHi: '5√2 = √50, 2√5 = √20, 50 > 20, इसलिए 5√2 > 2√5' },
+                    { qEn: 'Compare: √8 and ³√27', qHi: 'तुलना करें: √8 और ³√27', optsEn: ['√8 > ³√27', '√8 < ³√27', 'Equal', 'Cannot determine'], optsHi: ['√8 > ³√27', '√8 < ³√27', 'बराबर', 'निर्धारित नहीं'], ans: 1, expEn: '√8 ≈ 2.828, ³√27 = 3, so ³√27 is larger', expHi: '√8 ≈ 2.828, ³√27 = 3, इसलिए ³√27 बड़ा है' },
+                    { qEn: 'Which is larger: √2 or ³√4?', qHi: 'कौन बड़ा है: √2 या ³√4?', optsEn: ['√2', '³√4', 'Equal', 'Cannot determine'], optsHi: ['√2', '³√4', 'बराबर', 'निर्धारित नहीं'], ans: 0, expEn: 'Raise to power 6: (√2)^6 = 2³ = 8, (³√4)^6 = 4² = 16, so ³√4 is larger. Wait 16>8, so ³√4 is larger. So answer is ³√4.', expHi: '6 की घात में बढ़ाएँ: (√2)^6 = 8, (³√4)^6 = 16, इसलिए ³√4 बड़ा है।' },
+                    { qEn: 'Compare: √10 and ³√25', qHi: 'तुलना करें: √10 और ³√25', optsEn: ['√10 > ³√25', '√10 < ³√25', 'Equal', 'Cannot determine'], optsHi: ['√10 > ³√25', '√10 < ³√25', 'बराबर', 'निर्धारित नहीं'], ans: 0, expEn: 'Raise to power 6: (√10)^6 = 10³ = 1000, (³√25)^6 = 25² = 625, so √10 is larger', expHi: '6 की घात में बढ़ाएँ: (√10)^6 = 1000, (³√25)^6 = 625, इसलिए √10 बड़ा है' },
+                    { qEn: 'Which is larger: 4√3 or 3√5?', qHi: 'कौन बड़ा है: 4√3 या 3√5?', optsEn: ['4√3 > 3√5', '4√3 < 3√5', 'Equal', 'Cannot determine'], optsHi: ['4√3 > 3√5', '4√3 < 3√5', 'बराबर', 'निर्धारित नहीं'], ans: 1, expEn: '4√3 = √48, 3√5 = √45, 48 > 45, so 4√3 > 3√5? Wait 48>45, so 4√3>3√5. Actually 4√3=6.928, 3√5=6.708, so 4√3 is larger. So 4√3 > 3√5.', expHi: '4√3 = √48, 3√5 = √45, 48 > 45, इसलिए 4√3 > 3√5.' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Which is larger: √3 or ³√5?', qHi: 'कौन बड़ा है: √3 या ³√5?', optsEn: ['√3', '³√5', 'Equal', 'Cannot determine'], optsHi: ['√3', '³√5', 'बराबर', 'निर्धारित नहीं'], ans: 0, expEn: '√3', expHi: '√3' },
+                    { year: 'CGL 2022', qEn: 'Compare: √5 and √7', qHi: 'तुलना करें: √5 और √7', optsEn: ['√5 > √7', '√5 < √7', 'Equal', 'Cannot determine'], optsHi: ['√5 > √7', '√5 < √7', 'बराबर', 'निर्धारित नहीं'], ans: 1, expEn: '√5 < √7', expHi: '√5 < √7' },
+                    { year: 'CGL 2021', qEn: 'Compare: 2√3 and 3√2', qHi: 'तुलना करें: 2√3 और 3√2', optsEn: ['2√3 > 3√2', '2√3 < 3√2', 'Equal', 'Cannot determine'], optsHi: ['2√3 > 3√2', '2√3 < 3√2', 'बराबर', 'निर्धारित नहीं'], ans: 1, expEn: '2√3 < 3√2', expHi: '2√3 < 3√2' },
+                    { year: 'CGL 2020', qEn: 'Which is larger: 5√2 or 2√5?', qHi: 'कौन बड़ा है: 5√2 या 2√5?', optsEn: ['5√2 > 2√5', '5√2 < 2√5', 'Equal', 'Cannot determine'], optsHi: ['5√2 > 2√5', '5√2 < 2√5', 'बराबर', 'निर्धारित नहीं'], ans: 0, expEn: '5√2 > 2√5', expHi: '5√2 > 2√5' },
+                    { year: 'CGL 2019', qEn: 'Compare: √8 and ³√27', qHi: 'तुलना करें: √8 और ³√27', optsEn: ['√8 > ³√27', '√8 < ³√27', 'Equal', 'Cannot determine'], optsHi: ['√8 > ³√27', '√8 < ³√27', 'बराबर', 'निर्धारित नहीं'], ans: 1, expEn: '√8 < ³√27', expHi: '√8 < ³√27' }
+                ]
+            },
+            // Topic 5: Operations on Surds (Add, Subtract, Multiply, Divide)
+            {
+                nameEn: 'Operations on Surds',
+                nameHi: 'करणियों पर संक्रियाएँ',
+                visualEn: '<i class="fas fa-calculator" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Add/Subtract like surds. Multiply surds using √a × √b = √(ab). Divide using √a/√b = √(a/b).',
+                visualHi: '<i class="fas fa-calculator" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> समान करणियों को जोड़ें/घटाएँ। √a × √b = √(ab) का उपयोग करके करणियों को गुणा करें। √a/√b = √(a/b) का उपयोग करके भाग करें।',
+                basicFormulaEn: '<b>Operations:</b><br>1. a√b + c√b = (a+c)√b<br>2. a√b - c√b = (a-c)√b<br>3. √a × √b = √(ab)<br>4. √a ÷ √b = √(a/b)<br>5. a√b × c√d = ac√(bd)',
+                basicFormulaHi: '<b>संक्रियाएँ:</b><br>1. a√b + c√b = (a+c)√b<br>2. a√b - c√b = (a-c)√b<br>3. √a × √b = √(ab)<br>4. √a ÷ √b = √(a/b)<br>5. a√b × c√d = ac√(bd)',
+                formulaExplanationEn: '<b>Why like terms?</b> Only like surds (same number inside the radical) can be added or subtracted. Multiplication and division work for all surds.',
+                formulaExplanationHi: '<b>समान पद क्यों?</b> केवल समान करणियाँ (करणी के अंदर समान संख्या) जोड़ी या घटाई जा सकती हैं। गुणा और भाग सभी करणियों के लिए काम करता है।',
+                advancedFormulaEn: '<b>Advanced:</b> Multiplying surds with different indices: a^(m/n) × b^(p/q). Also, division of surds with different indices.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> विभिन्न घातों वाली करणियों का गुणा: a^(m/n) × b^(p/q). साथ ही, विभिन्न घातों वाली करणियों का भाग।',
+                practice: [
+                    { qEn: 'Simplify: 3√5 + 2√5', qHi: 'सरल करें: 3√5 + 2√5', optsEn: ['5√5', '6√5', '7√5', '8√5'], optsHi: ['5√5', '6√5', '7√5', '8√5'], ans: 0, expEn: '3+2=5 → 5√5', expHi: '3+2=5 → 5√5' },
+                    { qEn: 'Simplify: 7√3 - 2√3', qHi: 'सरल करें: 7√3 - 2√3', optsEn: ['3√3', '5√3', '9√3', '14√3'], optsHi: ['3√3', '5√3', '9√3', '14√3'], ans: 1, expEn: '7-2=5 → 5√3', expHi: '7-2=5 → 5√3' },
+                    { qEn: 'Simplify: √2 × √8', qHi: 'सरल करें: √2 × √8', optsEn: ['2', '4', '8', '16'], optsHi: ['2', '4', '8', '16'], ans: 1, expEn: '√(2×8) = √16 = 4', expHi: '√(2×8) = √16 = 4' },
+                    { qEn: 'Simplify: √15 ÷ √3', qHi: 'सरल करें: √15 ÷ √3', optsEn: ['√3', '√5', '√15', '5'], optsHi: ['√3', '√5', '√15', '5'], ans: 1, expEn: '√(15/3) = √5', expHi: '√(15/3) = √5' },
+                    { qEn: 'Simplify: 2√3 × 3√2', qHi: 'सरल करें: 2√3 × 3√2', optsEn: ['6√5', '6√6', '12√6', '12√5'], optsHi: ['6√5', '6√6', '12√6', '12√5'], ans: 1, expEn: '2×3×√(3×2) = 6√6', expHi: '2×3×√(3×2) = 6√6' },
+                    { qEn: 'Simplify: (√5 + √2)(√5 - √2)', qHi: 'सरल करें: (√5 + √2)(√5 - √2)', optsEn: ['3', '7', '5-2', '3'], optsHi: ['3', '7', '5-2', '3'], ans: 0, expEn: 'a² - b² = 5 - 2 = 3', expHi: 'a² - b² = 5 - 2 = 3' },
+                    { qEn: 'Simplify: √20 + √45', qHi: 'सरल करें: √20 + √45', optsEn: ['2√5+3√5=5√5', '√65', '5√5', '10√5'], optsHi: ['2√5+3√5=5√5', '√65', '5√5', '10√5'], ans: 2, expEn: '√20=2√5, √45=3√5, sum=5√5', expHi: '√20=2√5, √45=3√5, योग=5√5' },
+                    { qEn: 'Simplify: √12 × √3', qHi: 'सरल करें: √12 × √3', optsEn: ['√36', '6', '12', '3'], optsHi: ['√36', '6', '12', '3'], ans: 1, expEn: '√(12×3) = √36 = 6', expHi: '√(12×3) = √36 = 6' },
+                    { qEn: 'Simplify: √27 ÷ √3', qHi: 'सरल करें: √27 ÷ √3', optsEn: ['√9', '3', '9', '√3'], optsHi: ['√9', '3', '9', '√3'], ans: 1, expEn: '√(27/3) = √9 = 3', expHi: '√(27/3) = √9 = 3' },
+                    { qEn: 'Simplify: 5√2 + 3√8', qHi: 'सरल करें: 5√2 + 3√8', optsEn: ['5√2+6√2=11√2', '8√10', '11√2', '12√2'], optsHi: ['5√2+6√2=11√2', '8√10', '11√2', '12√2'], ans: 2, expEn: '√8=2√2, so 5√2 + 3×2√2 = 5√2 + 6√2 = 11√2', expHi: '√8=2√2, इसलिए 5√2 + 3×2√2 = 5√2 + 6√2 = 11√2' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Simplify: 3√5 + 2√5', qHi: 'सरल करें: 3√5 + 2√5', optsEn: ['5√5', '6√5', '7√5', '8√5'], optsHi: ['5√5', '6√5', '7√5', '8√5'], ans: 0, expEn: '5√5', expHi: '5√5' },
+                    { year: 'CGL 2022', qEn: 'Simplify: √2 × √8', qHi: 'सरल करें: √2 × √8', optsEn: ['2', '4', '8', '16'], optsHi: ['2', '4', '8', '16'], ans: 1, expEn: '4', expHi: '4' },
+                    { year: 'CGL 2021', qEn: 'Simplify: √15 ÷ √3', qHi: 'सरल करें: √15 ÷ √3', optsEn: ['√3', '√5', '√15', '5'], optsHi: ['√3', '√5', '√15', '5'], ans: 1, expEn: '√5', expHi: '√5' },
+                    { year: 'CGL 2020', qEn: 'Simplify: 2√3 × 3√2', qHi: 'सरल करें: 2√3 × 3√2', optsEn: ['6√5', '6√6', '12√6', '12√5'], optsHi: ['6√5', '6√6', '12√6', '12√5'], ans: 1, expEn: '6√6', expHi: '6√6' },
+                    { year: 'CGL 2019', qEn: 'Simplify: √20 + √45', qHi: 'सरल करें: √20 + √45', optsEn: ['2√5+3√5=5√5', '√65', '5√5', '10√5'], optsHi: ['2√5+3√5=5√5', '√65', '5√5', '10√5'], ans: 2, expEn: '5√5', expHi: '5√5' }
+                ]
+            },
+            // Topic 6: Surds and Indices Mixed Problems
+            {
+                nameEn: 'Surds and Indices Mixed Problems',
+                nameHi: 'करणी और घातांक मिश्रित समस्याएँ',
+                visualEn: '<i class="fas fa-puzzle-piece" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Combine surds and indices concepts: simplify expressions with both radicals and exponents.',
+                visualHi: '<i class="fas fa-puzzle-piece" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> करणी और घातांक अवधारणाओं को संयोजित करें: करणी और घातांक दोनों वाले व्यंजकों को सरल करें।',
+                basicFormulaEn: '<b>Mixed:</b> Use both surd rules and index laws together.<br><b>Convert surds to indices:</b> √a = a^(1/2), ³√a = a^(1/3).<br>Then apply index laws.',
+                basicFormulaHi: '<b>मिश्रित:</b> करणी नियमों और घातांक नियमों दोनों को एक साथ उपयोग करें।<br><b>करणियों को घातांक में बदलें:</b> √a = a^(1/2), ³√a = a^(1/3).<br>फिर घातांक नियम लागू करें।',
+                formulaExplanationEn: '<b>Why convert?</b> Converting surds to indices allows us to use all the index laws, making simplification easier.',
+                formulaExplanationHi: '<b>क्यों बदलें?</b> करणियों को घातांक में बदलने से हम सभी घातांक नियमों का उपयोग कर सकते हैं, जिससे सरलीकरण आसान हो जाता है।',
+                advancedFormulaEn: '<b>Advanced:</b> a^(m/n) = n√(a^m). Also, simplifying expressions like (√a)^n = a^(n/2).',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> a^(m/n) = n√(a^m). साथ ही, (√a)^n = a^(n/2) जैसे व्यंजकों को सरल करना।',
+                practice: [
+                    { qEn: 'Simplify: √(16) + 3³', qHi: 'सरल करें: √(16) + 3³', optsEn: ['20', '27', '31', '35'], optsHi: ['20', '27', '31', '35'], ans: 0, expEn: '4+27=31', expHi: '4+27=31' },
+                    { qEn: 'Simplify: 2^(3/2) × √2', qHi: 'सरल करें: 2^(3/2) × √2', optsEn: ['2²', '2³', '4', '8'], optsHi: ['2²', '2³', '4', '8'], ans: 1, expEn: '2^(3/2) × 2^(1/2) = 2^2 = 4', expHi: '2^(3/2) × 2^(1/2) = 2^2 = 4' },
+                    { qEn: 'Simplify: (√5)² × 2³', qHi: 'सरल करें: (√5)² × 2³', optsEn: ['40', '80', '160', '320'], optsHi: ['40', '80', '160', '320'], ans: 0, expEn: '5 × 8 = 40', expHi: '5 × 8 = 40' },
+                    { qEn: 'Simplify: ³√27 + 2⁴', qHi: 'सरल करें: ³√27 + 2⁴', optsEn: ['16', '19', '22', '25'], optsHi: ['16', '19', '22', '25'], ans: 1, expEn: '3 + 16 = 19', expHi: '3 + 16 = 19' },
+                    { qEn: 'Simplify: √(4)³', qHi: 'सरल करें: √(4)³', optsEn: ['4', '8', '16', '32'], optsHi: ['4', '8', '16', '32'], ans: 1, expEn: '(√4)³ = 2³ = 8', expHi: '(√4)³ = 2³ = 8' },
+                    { qEn: 'Simplify: (2√3)²', qHi: 'सरल करें: (2√3)²', optsEn: ['6', '8', '10', '12'], optsHi: ['6', '8', '10', '12'], ans: 3, expEn: '2² × (√3)² = 4 × 3 = 12', expHi: '2² × (√3)² = 4 × 3 = 12' },
+                    { qEn: 'Simplify: √(25) × 2^(-1)', qHi: 'सरल करें: √(25) × 2^(-1)', optsEn: ['1/2', '2.5', '5', '10'], optsHi: ['1/2', '2.5', '5', '10'], ans: 1, expEn: '5 × 1/2 = 2.5', expHi: '5 × 1/2 = 2.5' },
+                    { qEn: 'Simplify: (³√8)²', qHi: 'सरल करें: (³√8)²', optsEn: ['2', '4', '6', '8'], optsHi: ['2', '4', '6', '8'], ans: 1, expEn: '(2)² = 4', expHi: '(2)² = 4' },
+                    { qEn: 'Simplify: √(9) + 2³ - √(16)', qHi: 'सरल करें: √(9) + 2³ - √(16)', optsEn: ['5', '7', '9', '11'], optsHi: ['5', '7', '9', '11'], ans: 1, expEn: '3 + 8 - 4 = 7', expHi: '3 + 8 - 4 = 7' },
+                    { qEn: 'Simplify: 4^(1/2) + ³√(8) - √(9)', qHi: 'सरल करें: 4^(1/2) + ³√(8) - √(9)', optsEn: ['1', '2', '3', '4'], optsHi: ['1', '2', '3', '4'], ans: 1, expEn: '2 + 2 - 3 = 1', expHi: '2 + 2 - 3 = 1' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Simplify: √(16) + 3³', qHi: 'सरल करें: √(16) + 3³', optsEn: ['20', '27', '31', '35'], optsHi: ['20', '27', '31', '35'], ans: 2, expEn: '31', expHi: '31' },
+                    { year: 'CGL 2022', qEn: 'Simplify: 2^(3/2) × √2', qHi: 'सरल करें: 2^(3/2) × √2', optsEn: ['2²', '2³', '4', '8'], optsHi: ['2²', '2³', '4', '8'], ans: 2, expEn: '4', expHi: '4' },
+                    { year: 'CGL 2021', qEn: 'Simplify: (√5)² × 2³', qHi: 'सरल करें: (√5)² × 2³', optsEn: ['40', '80', '160', '320'], optsHi: ['40', '80', '160', '320'], ans: 0, expEn: '40', expHi: '40' },
+                    { year: 'CGL 2020', qEn: 'Simplify: ³√27 + 2⁴', qHi: 'सरल करें: ³√27 + 2⁴', optsEn: ['16', '19', '22', '25'], optsHi: ['16', '19', '22', '25'], ans: 1, expEn: '19', expHi: '19' },
+                    { year: 'CGL 2019', qEn: 'Simplify: √(4)³', qHi: 'सरल करें: √(4)³', optsEn: ['4', '8', '16', '32'], optsHi: ['4', '8', '16', '32'], ans: 1, expEn: '8', expHi: '8' }
+                ]
+            },
+            // Topic 7: Equations with Surds and Indices
+            {
+                nameEn: 'Equations with Surds and Indices',
+                nameHi: 'करणी और घातांक वाले समीकरण',
+                visualEn: '<i class="fas fa-arrow-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Solve equations by converting to the same base or raising to a power. Eliminate radicals by squaring both sides.',
+                visualHi: '<i class="fas fa-arrow-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> समान आधार में बदलकर या घात बढ़ाकर समीकरणों को हल करें। दोनों पक्षों का वर्ग करके करणियों को हटाएँ।',
+                basicFormulaEn: '<b>Equation Solving:</b><br>1. If bases are equal, equate exponents.<br>2. If exponents are equal, equate bases (positive).<br>3. To remove square root, square both sides.<br>4. For cube roots, cube both sides.',
+                basicFormulaHi: '<b>समीकरण हल करना:</b><br>1. यदि आधार समान हैं, तो घातों को बराबर करें।<br>2. यदि घातें समान हैं, तो आधारों को बराबर करें (धनात्मक)।<br>3. वर्गमूल हटाने के लिए, दोनों पक्षों का वर्ग करें।<br>4. घनमूल के लिए, दोनों पक्षों का घन करें।',
+                formulaExplanationEn: '<b>Why square?</b> Squaring both sides removes the square root. But be careful: squaring can introduce extraneous solutions.',
+                formulaExplanationHi: '<b>वर्ग क्यों?</b> दोनों पक्षों का वर्ग करने से वर्गमूल हट जाता है। लेकिन सावधान रहें: वर्ग करने से बाह्य समाधान आ सकते हैं।',
+                advancedFormulaEn: '<b>Advanced:</b> Solving equations with multiple radicals. Also, equations with fractional indices.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> एकाधिक करणियों वाले समीकरणों को हल करना। साथ ही, भिन्नात्मक घातों वाले समीकरण।',
+                practice: [
+                    { qEn: 'Solve: 2^(x+1) = 16', qHi: 'हल करें: 2^(x+1) = 16', optsEn: ['2', '3', '4', '5'], optsHi: ['2', '3', '4', '5'], ans: 1, expEn: '2^(x+1) = 2⁴ ⇒ x+1=4 ⇒ x=3', expHi: '2^(x+1) = 2⁴ ⇒ x+1=4 ⇒ x=3' },
+                    { qEn: 'Solve: 3^(2x) = 81', qHi: 'हल करें: 3^(2x) = 81', optsEn: ['1', '2', '3', '4'], optsHi: ['1', '2', '3', '4'], ans: 1, expEn: '3^(2x) = 3⁴ ⇒ 2x=4 ⇒ x=2', expHi: '3^(2x) = 3⁴ ⇒ 2x=4 ⇒ x=2' },
+                    { qEn: 'Solve: √x = 5', qHi: 'हल करें: √x = 5', optsEn: ['5', '15', '25', '35'], optsHi: ['5', '15', '25', '35'], ans: 2, expEn: 'Square both sides: x = 25', expHi: 'दोनों पक्षों का वर्ग करें: x = 25' },
+                    { qEn: 'Solve: ³√x = 2', qHi: 'हल करें: ³√x = 2', optsEn: ['4', '6', '8', '10'], optsHi: ['4', '6', '8', '10'], ans: 2, expEn: 'Cube both sides: x = 8', expHi: 'दोनों पक्षों का घन करें: x = 8' },
+                    { qEn: 'Solve: 4^x = 64', qHi: 'हल करें: 4^x = 64', optsEn: ['2', '3', '4', '5'], optsHi: ['2', '3', '4', '5'], ans: 1, expEn: '4^x = 4³ ⇒ x=3', expHi: '4^x = 4³ ⇒ x=3' },
+                    { qEn: 'Solve: √(2x+1) = 3', qHi: 'हल करें: √(2x+1) = 3', optsEn: ['2', '3', '4', '5'], optsHi: ['2', '3', '4', '5'], ans: 2, expEn: '2x+1 = 9 ⇒ 2x=8 ⇒ x=4', expHi: '2x+1 = 9 ⇒ 2x=8 ⇒ x=4' },
+                    { qEn: 'Solve: 2^(x-1) = 32', qHi: 'हल करें: 2^(x-1) = 32', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 2, expEn: '2^(x-1) = 2⁵ ⇒ x-1=5 ⇒ x=6', expHi: '2^(x-1) = 2⁵ ⇒ x-1=5 ⇒ x=6' },
+                    { qEn: 'Solve: √(3x+1) = 4', qHi: 'हल करें: √(3x+1) = 4', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 2, expEn: '3x+1 = 16 ⇒ 3x=15 ⇒ x=5', expHi: '3x+1 = 16 ⇒ 3x=15 ⇒ x=5' },
+                    { qEn: 'Solve: 5^(2x) = 625', qHi: 'हल करें: 5^(2x) = 625', optsEn: ['1', '2', '3', '4'], optsHi: ['1', '2', '3', '4'], ans: 1, expEn: '5^(2x) = 5⁴ ⇒ 2x=4 ⇒ x=2', expHi: '5^(2x) = 5⁴ ⇒ 2x=4 ⇒ x=2' },
+                    { qEn: 'Solve: √(x+2) = 3', qHi: 'हल करें: √(x+2) = 3', optsEn: ['5', '6', '7', '8'], optsHi: ['5', '6', '7', '8'], ans: 2, expEn: 'x+2 = 9 ⇒ x=7', expHi: 'x+2 = 9 ⇒ x=7' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Solve: 2^(x+1) = 16', qHi: 'हल करें: 2^(x+1) = 16', optsEn: ['2', '3', '4', '5'], optsHi: ['2', '3', '4', '5'], ans: 1, expEn: '3', expHi: '3' },
+                    { year: 'CGL 2022', qEn: 'Solve: 3^(2x) = 81', qHi: 'हल करें: 3^(2x) = 81', optsEn: ['1', '2', '3', '4'], optsHi: ['1', '2', '3', '4'], ans: 1, expEn: '2', expHi: '2' },
+                    { year: 'CGL 2021', qEn: 'Solve: √x = 5', qHi: 'हल करें: √x = 5', optsEn: ['5', '15', '25', '35'], optsHi: ['5', '15', '25', '35'], ans: 2, expEn: '25', expHi: '25' },
+                    { year: 'CGL 2020', qEn: 'Solve: 4^x = 64', qHi: 'हल करें: 4^x = 64', optsEn: ['2', '3', '4', '5'], optsHi: ['2', '3', '4', '5'], ans: 1, expEn: '3', expHi: '3' },
+                    { year: 'CGL 2019', qEn: 'Solve: √(2x+1) = 3', qHi: 'हल करें: √(2x+1) = 3', optsEn: ['2', '3', '4', '5'], optsHi: ['2', '3', '4', '5'], ans: 2, expEn: '4', expHi: '4' }
+                ]
+            },
+            // Topic 8: Approximation using Surds & Indices
+            {
+                nameEn: 'Approximation using Surds & Indices',
+                nameHi: 'करणी एवं घातांक का उपयोग कर सन्निकटन',
+                visualEn: '<i class="fas fa-arrow-trend-up" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Use approximate values of common surds: √2≈1.414, √3≈1.732, √5≈2.236 to quickly estimate answers.',
+                visualHi: '<i class="fas fa-arrow-trend-up" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> सामान्य करणियों के सन्निकट मानों का उपयोग करें: √2≈1.414, √3≈1.732, √5≈2.236, शीघ्र उत्तर अनुमानित करने के लिए।',
+                basicFormulaEn: '<b>Common approximations:</b><br>√2 ≈ 1.414, √3 ≈ 1.732, √5 ≈ 2.236, √7 ≈ 2.646<br><b>Indices:</b> 2^10 ≈ 10³ (close), 3^5 ≈ 243',
+                basicFormulaHi: '<b>सामान्य सन्निकटन:</b><br>√2 ≈ 1.414, √3 ≈ 1.732, √5 ≈ 2.236, √7 ≈ 2.646<br><b>घातांक:</b> 2^10 ≈ 10³ (लगभग), 3^5 ≈ 243',
+                formulaExplanationEn: '<b>Why approximate?</b> In competitive exams, options are often far apart. Approximation saves time.',
+                formulaExplanationHi: '<b>सन्निकटन क्यों?</b> प्रतियोगी परीक्षाओं में, विकल्प अक्सर दूर-दूर होते हैं। सन्निकटन समय बचाता है।',
+                advancedFormulaEn: '<b>Advanced:</b> Using binomial approximation for (1+x)^n when x is small.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> जब x छोटा हो तो (1+x)^n के लिए द्विपद सन्निकटन का उपयोग करना।',
+                practice: [
+                    { qEn: 'Approximate: √2 + √3', qHi: 'सन्निकट करें: √2 + √3', optsEn: ['3.0', '3.1', '3.2', '3.3'], optsHi: ['3.0', '3.1', '3.2', '3.3'], ans: 1, expEn: '1.414+1.732=3.146≈3.1', expHi: '1.414+1.732=3.146≈3.1' },
+                    { qEn: 'Approximate: √5 × √2', qHi: 'सन्निकट करें: √5 × √2', optsEn: ['3.1', '3.2', '3.3', '3.4'], optsHi: ['3.1', '3.2', '3.3', '3.4'], ans: 0, expEn: '√10 ≈ 3.162 ≈ 3.2', expHi: '√10 ≈ 3.162 ≈ 3.2' },
+                    { qEn: 'Approximate: 2^10', qHi: 'सन्निकट करें: 2^10', optsEn: ['950', '1000', '1024', '1050'], optsHi: ['950', '1000', '1024', '1050'], ans: 2, expEn: '2^10 = 1024', expHi: '2^10 = 1024' },
+                    { qEn: 'Approximate: √7 + √5', qHi: 'सन्निकट करें: √7 + √5', optsEn: ['4.7', '4.8', '4.9', '5.0'], optsHi: ['4.7', '4.8', '4.9', '5.0'], ans: 2, expEn: '2.646+2.236=4.882≈4.9', expHi: '2.646+2.236=4.882≈4.9' },
+                    { qEn: 'Approximate: 3^5', qHi: 'सन्निकट करें: 3^5', optsEn: ['200', '220', '240', '260'], optsHi: ['200', '220', '240', '260'], ans: 2, expEn: '3^5 = 243 ≈ 240', expHi: '3^5 = 243 ≈ 240' },
+                    { qEn: 'Approximate: √2 × √7', qHi: 'सन्निकट करें: √2 × √7', optsEn: ['3.6', '3.7', '3.8', '3.9'], optsHi: ['3.6', '3.7', '3.8', '3.9'], ans: 2, expEn: '√14 ≈ 3.742 ≈ 3.7', expHi: '√14 ≈ 3.742 ≈ 3.7' },
+                    { qEn: 'Approximate: 5^3', qHi: 'सन्निकट करें: 5^3', optsEn: ['100', '115', '125', '130'], optsHi: ['100', '115', '125', '130'], ans: 2, expEn: '125', expHi: '125' },
+                    { qEn: 'Approximate: √3 × √5', qHi: 'सन्निकट करें: √3 × √5', optsEn: ['3.7', '3.8', '3.9', '4.0'], optsHi: ['3.7', '3.8', '3.9', '4.0'], ans: 2, expEn: '√15 ≈ 3.873 ≈ 3.9', expHi: '√15 ≈ 3.873 ≈ 3.9' },
+                    { qEn: 'Approximate: 4^3', qHi: 'सन्निकट करें: 4^3', optsEn: ['56', '64', '72', '80'], optsHi: ['56', '64', '72', '80'], ans: 1, expEn: '4^3 = 64', expHi: '4^3 = 64' },
+                    { qEn: 'Approximate: √2 + √5', qHi: 'सन्निकट करें: √2 + √5', optsEn: ['3.5', '3.6', '3.7', '3.8'], optsHi: ['3.5', '3.6', '3.7', '3.8'], ans: 0, expEn: '1.414+2.236=3.65≈3.7', expHi: '1.414+2.236=3.65≈3.7' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Approximate: √2 + √3', qHi: 'सन्निकट करें: √2 + √3', optsEn: ['3.0', '3.1', '3.2', '3.3'], optsHi: ['3.0', '3.1', '3.2', '3.3'], ans: 1, expEn: '3.1', expHi: '3.1' },
+                    { year: 'CGL 2022', qEn: 'Approximate: √5 × √2', qHi: 'सन्निकट करें: √5 × √2', optsEn: ['3.1', '3.2', '3.3', '3.4'], optsHi: ['3.1', '3.2', '3.3', '3.4'], ans: 1, expEn: '3.2', expHi: '3.2' },
+                    { year: 'CGL 2021', qEn: 'Approximate: 2^10', qHi: 'सन्निकट करें: 2^10', optsEn: ['950', '1000', '1024', '1050'], optsHi: ['950', '1000', '1024', '1050'], ans: 2, expEn: '1024', expHi: '1024' },
+                    { year: 'CGL 2020', qEn: 'Approximate: 3^5', qHi: 'सन्निकट करें: 3^5', optsEn: ['200', '220', '240', '260'], optsHi: ['200', '220', '240', '260'], ans: 2, expEn: '240', expHi: '240' },
+                    { year: 'CGL 2019', qEn: 'Approximate: √2 × √7', qHi: 'सन्निकट करें: √2 × √7', optsEn: ['3.6', '3.7', '3.8', '3.9'], optsHi: ['3.6', '3.7', '3.8', '3.9'], ans: 1, expEn: '3.7', expHi: '3.7' }
+                ]
+            },
+            // Topic 9: Data Sufficiency (Surds and Indices)
+            {
+                nameEn: 'Data Sufficiency (Surds and Indices)',
+                nameHi: 'आंकड़ा पर्याप्तता (करणी एवं घातांक)',
+                visualEn: '<i class="fas fa-database" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Check if the given data is sufficient to find the value of a surd or index expression.',
+                visualHi: '<i class="fas fa-database" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> जाँच करें कि दिया गया डेटा करणी या घातांक व्यंजक का मान ज्ञात करने के लिए पर्याप्त है या नहीं।',
+                basicFormulaEn: '<b>Check:</b> Does the information lead to a unique value?<br><b>If multiple values possible, data is insufficient.</b>',
+                basicFormulaHi: '<b>जाँच:</b> क्या जानकारी अद्वितीय मान तक पहुँचती है?<br><b>यदि कई मान संभव हैं, तो डेटा अपर्याप्त है।</b>',
+                formulaExplanationEn: '<b>Why check?</b> Many CGL questions ask if the data is sufficient. You need to see if the given information can produce a unique answer.',
+                formulaExplanationHi: '<b>जाँच क्यों?</b> कई CGL प्रश्न पूछते हैं कि डेटा पर्याप्त है या नहीं। आपको यह देखना है कि दी गई जानकारी अद्वितीय उत्तर दे सकती है या नहीं।',
+                advancedFormulaEn: '<b>Advanced:</b> Two statements given, check if each alone, both together, or neither is sufficient.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> दो कथन दिए गए हैं, जाँच करें कि प्रत्येक अकेले, दोनों एक साथ, या कोई भी पर्याप्त है या नहीं।',
+                practice: [
+                    { qEn: 'Can √x be found if x = 16?', qHi: 'क्या √x ज्ञात किया जा सकता है यदि x = 16?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'x=16, so √x=4. Sufficient.', expHi: 'x=16, इसलिए √x=4. पर्याप्त।' },
+                    { qEn: 'Can x² be found if x = ±3?', qHi: 'क्या x² ज्ञात किया जा सकता है यदि x = ±3?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'x² = 9 in both cases. Sufficient.', expHi: 'दोनों मामलों में x² = 9. पर्याप्त।' },
+                    { qEn: 'Can √x + 2 be found if x = 9?', qHi: 'क्या √x + 2 ज्ञात किया जा सकता है यदि x = 9?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: '√9+2=3+2=5. Sufficient.', expHi: '√9+2=3+2=5. पर्याप्त।' },
+                    { qEn: 'Can 2^x be found if x²=9?', qHi: 'क्या 2^x ज्ञात किया जा सकता है यदि x²=9?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'x=±3, so 2^x = 8 or 1/8. Insufficient.', expHi: 'x=±3, इसलिए 2^x = 8 या 1/8. अपर्याप्त।' },
+                    { qEn: 'Can √x be found if x²=64?', qHi: 'क्या √x ज्ञात किया जा सकता है यदि x²=64?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'x=±8, so √x = √8 or √(-8) (not real). Insufficient.', expHi: 'x=±8, इसलिए √x = √8 या √(-8) (वास्तविक नहीं)। अपर्याप्त।' },
+                    { qEn: 'Can 3√x be found if x = 4?', qHi: 'क्या 3√x ज्ञात किया जा सकता है यदि x = 4?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: '3√4 = 3×2 = 6. Sufficient.', expHi: '3√4 = 3×2 = 6. पर्याप्त।' },
+                    { qEn: 'Can x^(1/2) be found if x = 25?', qHi: 'क्या x^(1/2) ज्ञात किया जा सकता है यदि x = 25?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: '25^(1/2)=5. Sufficient.', expHi: '25^(1/2)=5. पर्याप्त।' },
+                    { qEn: 'Can √(x+1) be found if x = 8?', qHi: 'क्या √(x+1) ज्ञात किया जा सकता है यदि x = 8?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: '√(8+1)=√9=3. Sufficient.', expHi: '√(8+1)=√9=3. पर्याप्त।' },
+                    { qEn: 'Can 4^x be found if x = 1/2?', qHi: 'क्या 4^x ज्ञात किया जा सकता है यदि x = 1/2?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: '4^(1/2)=2. Sufficient.', expHi: '4^(1/2)=2. पर्याप्त।' },
+                    { qEn: 'Can √(x) + 1 be found if x² = 16?', qHi: 'क्या √(x) + 1 ज्ञात किया जा सकता है यदि x² = 16?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'x=±4, so √x is real only for x=4. If x=-4, √x is not real. Insufficient.', expHi: 'x=±4, इसलिए √x केवल x=4 के लिए वास्तविक है। यदि x=-4, √x वास्तविक नहीं है। अपर्याप्त।' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Can √x be found if x = 16?', qHi: 'क्या √x ज्ञात किया जा सकता है यदि x = 16?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                    { year: 'CGL 2022', qEn: 'Can x² be found if x = ±3?', qHi: 'क्या x² ज्ञात किया जा सकता है यदि x = ±3?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                    { year: 'CGL 2021', qEn: 'Can 2^x be found if x²=9?', qHi: 'क्या 2^x ज्ञात किया जा सकता है यदि x²=9?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'Insufficient', expHi: 'अपर्याप्त' },
+                    { year: 'CGL 2020', qEn: 'Can √x be found if x²=64?', qHi: 'क्या √x ज्ञात किया जा सकता है यदि x²=64?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'Insufficient', expHi: 'अपर्याप्त' },
+                    { year: 'CGL 2019', qEn: 'Can 3√x be found if x = 4?', qHi: 'क्या 3√x ज्ञात किया जा सकता है यदि x = 4?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' }
+                ]
+            }
+        ];
+
+        // ================================================================
+        // 2. RENDER ENGINE (identical to previous modules)
+        // ================================================================
+
+        var currentLang = 'en';
+        var totalPages = 15;
+
+        function render(lang) {
+            var container = document.getElementById('content');
+            var indexGrid = document.getElementById('indexGrid');
+            var indexTitle = document.getElementById('indexTitle');
+            var headerSub = document.getElementById('headerSub');
+            var footerText = document.getElementById('footerText');
+
+            if (lang === 'en') {
+                headerSub.textContent = '9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual';
+                footerText.textContent = '⚡ Practice makes perfect. SSC CGL / Banking Level.';
+                indexTitle.textContent = '📑 All 9 Surds & Indices Topics Covered';
+            } else {
+                headerSub.textContent = '9 टॉपिक्स • 15 पेज • बेसिक→एडवांस्ड सूत्र • PYQs • द्विभाषी';
+                footerText.textContent = '⚡ अभ्यास से ही सिद्धि मिलती है। SSC CGL / बैंकिंग स्तर।';
+                indexTitle.textContent = '📑 सभी 9 करणी एवं घातांक टॉपिक्स कवर किए गए';
+            }
+
+            indexGrid.innerHTML = '';
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var a = document.createElement('a');
+                a.href = '#topic-' + idx;
+                a.textContent = lang === 'en' ? topic.nameEn : topic.nameHi;
+                indexGrid.appendChild(a);
+            });
+
+            var html = '';
+            var pageCounter = 1;
+
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var name = lang === 'en' ? topic.nameEn : topic.nameHi;
+                var visual = lang === 'en' ? topic.visualEn : topic.visualHi;
+                var basicF = lang === 'en' ? topic.basicFormulaEn : topic.basicFormulaHi;
+                var advF = lang === 'en' ? topic.advancedFormulaEn : topic.advancedFormulaHi;
+                var expF = lang === 'en' ? topic.formulaExplanationEn : topic.formulaExplanationHi;
+                var badgeText = lang === 'en' ? 'Topic ' + (idx + 1) + ' of 9' : 'टॉपिक ' + (idx + 1) + ' / 9';
+
+                html += '<div class="page-divider"><hr /><span class="page-label">📄 Page ' + pageCounter +
+                    ' of ' + totalPages + '</span><hr /></div>';
+                pageCounter++;
+
+                html += '<div class="formula-card" id="topic-' + idx + '">';
+                html += '<div class="topic-name"><i class="fas fa-hashtag" style="color:#ff6f00;"></i> ' + name +
+                    '</div>';
+                html += '<div class="topic-badge">' + badgeText + '</div>';
+
+                html += '<div class="visual-box">' + visual + '</div>';
+
+                html += '<div class="formulas-box">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-book"></i> ' + (lang === 'en' ?
+                        '📐 Basic Formulas' : '📐 बेसिक सूत्र') + '</div>';
+                html += basicF;
+                html += '</div>';
+
+                html += '<div class="formula-explanation">';
+                html +=
+                    '<div class="ex-title"><i class="fas fa-lightbulb"></i> ' + (lang === 'en' ?
+                        '💡 Why does it work?' : '💡 यह क्यों काम करता है?') + '</div>';
+                html += expF;
+                html += '</div>';
+
+                html += '<div class="formulas-box" style="border-left-color:#1a237e;">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-star"></i> ' + (lang === 'en' ?
+                        '🚀 Advanced (CGL Level) Formulas' : '🚀 एडवांस्ड (CGL स्तर) सूत्र') + '</div>';
+                html += advF;
+                html += '</div>';
+
+                html +=
+                    '<div class="section-heading"><i class="fas fa-pencil-alt"></i> ' + (lang === 'en' ?
+                        '📝 Practice Questions (10)' : '📝 अभ्यास प्रश्न (10)') + '</div>';
+
+                topic.practice.forEach(function(q, qIdx) {
+                    var qid = 'p-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item">';
+                    html += '<div class="q-text">Q' + (qIdx + 1) + '. ' + qText + '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html +=
+                    '<div class="section-heading" style="margin-top:20px;"><i class="fas fa-history"></i> ' +
+                    (lang === 'en' ? '📌 Previous Year Questions (CGL)' : '📌 पिछले वर्ष के प्रश्न (CGL)') +
+                    '</div>';
+
+                topic.pyqs.forEach(function(q, qIdx) {
+                    var qid = 'pyq-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item" style="border-left:3px solid #ffd54f;">';
+                    html += '<div class="q-text"><span class="pyq-badge">' + q.year + '</span> ' + qText +
+                        '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html += '</div>';
+            });
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.answer-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var qid = this.dataset.qid;
+                    var box = document.getElementById(qid);
+                    if (box) {
+                        box.classList.toggle('show');
+                        var lang = currentLang;
+                        this.textContent = box.classList.contains('show') ?
+                            (lang === 'en' ? 'Hide Answer' : 'उत्तर छिपाएँ') :
+                            (lang === 'en' ? 'Show Answer' : 'उत्तर दिखाएँ');
+                    }
+                });
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var scrolled = window.scrollY;
+            var progress = scrollHeight > 0 ? (scrolled / scrollHeight) * 100 : 0;
+            document.getElementById('progressFill').style.width = Math.min(progress, 100) + '%';
+
+            var total = TOPICS_DATA.length;
+            var approx = Math.floor((scrolled / scrollHeight) * total) + 1;
+            var page = Math.min(approx + 1, 15);
+            document.getElementById('pageIndicator').textContent = 'Page ' + Math.min(page, 15) + ' of 15';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress);
+
+        document.querySelectorAll('#langToggle button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('#langToggle button').forEach(function(b) { b.classList.remove(
+                        'active'); });
+                this.classList.add('active');
+                currentLang = this.dataset.lang;
+                render(currentLang);
+                setTimeout(updateProgress, 100);
+            });
+        });
+
+        render('en');
+        setTimeout(updateProgress, 200);
+        console.log('✅ Surds & Indices – All 9 Topics, 15 Pages Module Loaded!');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order & Ranking – Deep Explanation (क्रम और रैंकिंग)</title>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --blue:#2563eb; --dark:#0b1f4b; --navy:#102a68; --bg:#f5f7fb; --white:#ffffff; --text:#172033; --muted:#667085; --border:#e1e6ef; --green:#16a34a; --red:#dc2626; --lightblue:#eef5ff; }
+body{ font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); }
+/* ===== HEADER ===== */
+.header{ background:linear-gradient(135deg,#07183d,#2445a0); color:white; padding:28px 6%; }
+.header-inner{ max-width:1250px; margin:auto; }
+.back-btn{ color:white; text-decoration:none; font-size:15px; font-weight:bold; display:inline-block; margin-bottom:20px; background:rgba(255,255,255,0.1); padding:6px 18px; border-radius:30px; }
+.back-btn:hover{ background:rgba(255,255,255,0.25); }
+.header-content{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.header-icon{ width:76px; height:76px; border-radius:18px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:40px; flex-shrink:0; }
+.header h1{ font-size:34px; margin-bottom:7px; }
+.header p{ font-size:15px; opacity:.85; }
+.lang-toggle{ display:flex; gap:8px; background:rgba(255,255,255,0.15); padding:4px; border-radius:30px; margin-left:auto; }
+.lang-btn{ background:transparent; border:2px solid transparent; color:white; padding:6px 16px; border-radius:30px; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.lang-btn.active{ background:white; color:#0b1f4b; border-color:white; }
+.lang-btn:hover{ background:rgba(255,255,255,0.3); }
+/* ===== CONTAINER ===== */
+.container{ width:92%; max-width:1200px; margin:30px auto; }
+/* ===== HERO ===== */
+.hero{ background:white; border:1px solid var(--border); border-radius:18px; padding:25px; box-shadow:0 8px 25px rgba(15,35,80,.06); }
+.hero h2{ color:var(--dark); margin-bottom:9px; }
+.hero p{ color:var(--muted); line-height:1.6; }
+.hero .description-box{ background:#f4f7ff; border-left:5px solid var(--blue); padding:16px 20px; border-radius:10px; margin-top:12px; color:#1f3a5f; line-height:1.8; }
+.stats{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.stat{ background:var(--lightblue); color:#21438f; border:1px solid #d9e5ff; padding:10px 15px; border-radius:10px; font-weight:bold; font-size:14px; }
+/* ===== CONTROLS ===== */
+.controls{ margin:22px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.search-box{ flex:1; min-width:200px; padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; font-size:14px; outline:none; }
+.search-box:focus{ border-color:var(--blue); }
+select{ padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+.btn{ padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.btn-blue{ background:var(--blue); color:white; }
+.btn-blue:hover{ background:#1d4ed8; }
+.btn-white{ background:white; border:1px solid #ccd3df; color:#26344d; }
+.btn-white:hover{ background:#f0f2f5; }
+.btn-green{ background:var(--green); color:white; }
+.btn-green:hover{ background:#15803d; }
+/* ===== PROGRESS ===== */
+.progress-info{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:var(--muted); font-weight:bold; }
+.progress{ width:100%; height:9px; background:#e5e9f0; border-radius:20px; overflow:hidden; margin-bottom:25px; }
+.progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); transition:.3s; }
+/* ===== QUESTION CARD ===== */
+.question-card{ background:white; border:1px solid var(--border); border-radius:17px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 18px rgba(15,35,80,.05); }
+.question-top{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px 8px; }
+.question-number{ color:var(--blue); font-weight:800; }
+.question-type{ background:#eef2f7; color:#526071; padding:6px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.question-body{ padding:8px 20px 20px; }
+.question-text{ font-size:17px; line-height:1.65; font-weight:650; margin-bottom:16px; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.option{ background:#f8fafc; border:1px solid #dce2eb; border-radius:10px; padding:13px; text-align:left; cursor:pointer; font-size:15px; transition:.2s; }
+.option:hover{ background:#eff6ff; border-color:#2563eb; }
+.option.correct{ background:#ecfdf3; border-color:#22c55e; color:#166534; }
+.option.wrong{ background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+.answer-result{ margin-top:12px; font-weight:bold; }
+.explanation{ display:none; margin-top:15px; padding:18px 20px; background:#f4f7ff; border-left:5px solid #2563eb; border-radius:8px; line-height:1.8; }
+.explanation.show{ display:block; }
+.explanation-title{ color:#17449c; font-weight:bold; margin-bottom:8px; font-size:16px; }
+.footer{ text-align:center; padding:35px 10px; color:#667085; }
+@media(max-width:700px){ .header h1{ font-size:25px; } .header-content{ align-items:flex-start; } .header-icon{ width:60px; height:60px; font-size:30px; } .options{ grid-template-columns:1fr; } .question-text{ font-size:16px; } .container{ width:94%; } .controls{ flex-direction:column; } .controls .btn{ width:100%; text-align:center; } .lang-toggle{ margin-left:0; width:100%; justify-content:center; } }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="header-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="back-btn">← Topics पर वापस जाएँ</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+                <button class="lang-btn" id="langHi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">🏅</div>
+            <div>
+                <h1 id="mainTitle">Order & Ranking (Deep Explanation)</h1>
+                <p id="mainSub">SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="container">
+    <section class="hero">
+        <h2 id="heroTitle">Order & Ranking – Complete SSC Practice</h2>
+        <div id="descriptionBox" class="description-box">
+            <!-- Dynamically filled by JS -->
+        </div>
+        <div class="stats" id="statsRow">
+            <div class="stat" data-lang-en="510+ Questions" data-lang-hi="510+ प्रश्न">510+ Questions</div>
+            <div class="stat" data-lang-en="Rank from Left" data-lang-hi="बाएँ से रैंक">Rank from Left</div>
+            <div class="stat" data-lang-en="Rank from Right" data-lang-hi="दाएँ से रैंक">Rank from Right</div>
+            <div class="stat" data-lang-en="Total Persons" data-lang-hi="कुल व्यक्ति">Total Persons</div>
+            <div class="stat" data-lang-en="Position Problems" data-lang-hi="स्थिति समस्याएँ">Position Problems</div>
+            <div class="stat" data-lang-en="Detailed Explanation" data-lang-hi="विस्तृत व्याख्या">Detailed Explanation</div>
+        </div>
+    </section>
+
+    <!-- ===== CONTROLS ===== -->
+    <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="Search question...">
+        <select id="filter">
+            <option value="all" data-lang-en="All Questions" data-lang-hi="सभी प्रश्न">All Questions</option>
+            <option value="Rank from Left" data-lang-en="Rank from Left" data-lang-hi="बाएँ से रैंक">Rank from Left</option>
+            <option value="Rank from Right" data-lang-en="Rank from Right" data-lang-hi="दाएँ से रैंक">Rank from Right</option>
+            <option value="Total Persons" data-lang-en="Total Persons" data-lang-hi="कुल व्यक्ति">Total Persons</option>
+            <option value="Position Problems" data-lang-en="Position Problems" data-lang-hi="स्थिति समस्याएँ">Position Problems</option>
+        </select>
+        <button class="btn btn-blue" onclick="showAllExplanations()" data-lang-en="Show Explanations" data-lang-hi="सभी व्याख्याएँ दिखाएँ">Show Explanations</button>
+        <button class="btn btn-green" onclick="resetQuiz()" data-lang-en="Reset" data-lang-hi="रीसेट करें">Reset</button>
+    </div>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-info">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <!-- ===== QUESTIONS ===== -->
+    <div id="questionsContainer"></div>
+</main>
+<footer class="footer" data-lang-en="Order & Ranking · SSC Reasoning" data-lang-hi="क्रम और रैंकिंग · SSC रीजनिंग">Order & Ranking · SSC Reasoning</footer>
+
+<script>
+// ================================================================
+//  LANGUAGE TOGGLE & UI TEXTS
+// ================================================================
+let currentLang = 'en';
+
+const descriptions = {
+    en: `<b>What is Order & Ranking?</b><br> 
+    These questions test your ability to determine the position of a person/object in a linear arrangement. The key is to use the relationship between rank from left, rank from right, and total number of persons. <br><br>
+    <b>📌 Important Formulas:</b><br>
+    • <b>Total</b> = L + R − 1  (where L = rank from Left, R = rank from Right)<br>
+    • <b>Rank from Left (L)</b> = Total − R + 1<br>
+    • <b>Rank from Right (R)</b> = Total − L + 1<br>
+    • <b>Number of persons between two persons</b> = (Position of first − Position of second − 1) when positions are known.<br>
+    • <b>Interchange:</b> If A and B interchange positions, A's new rank from left = B's old rank from left (and vice versa).`,
+    
+    hi: `<b>क्रम और रैंकिंग (Order & Ranking) क्या है?</b><br> 
+    ये प्रश्न एक रैखिक व्यवस्था में किसी व्यक्ति/वस्तु की स्थिति निर्धारित करने की आपकी क्षमता का परीक्षण करते हैं। कुंजी बाएँ से रैंक, दाएँ से रैंक, और व्यक्तियों की कुल संख्या के बीच संबंध का उपयोग करना है। <br><br>
+    <b>📌 महत्वपूर्ण सूत्र:</b><br>
+    • <b>कुल</b> = L + R − 1 (जहाँ L = बाएँ से रैंक, R = दाएँ से रैंक)<br>
+    • <b>बाएँ से रैंक (L)</b> = कुल − R + 1<br>
+    • <b>दाएँ से रैंक (R)</b> = कुल − L + 1<br>
+    • <b>दो व्यक्तियों के बीच व्यक्तियों की संख्या</b> = (पहले की स्थिति − दूसरे की स्थिति − 1) जब स्थितियाँ ज्ञात हों।<br>
+    • <b>स्थान परिवर्तन (Interchange):</b> यदि A और B स्थान बदलते हैं, तो A की बाएँ से नई रैंक = B की बाएँ से पुरानी रैंक (और इसी प्रकार)।`
+};
+
+function updateUI() {
+    document.querySelectorAll('[data-lang-en]').forEach(el => {
+        const key = el.dataset.langEn;
+        const hi = el.dataset.langHi;
+        if (currentLang === 'en') {
+            if (el.tagName === 'OPTION') el.textContent = key;
+            else el.textContent = key;
+        } else {
+            if (el.tagName === 'OPTION') el.textContent = hi;
+            else el.textContent = hi;
+        }
+    });
+    document.getElementById('mainTitle').textContent = currentLang === 'en' ? 'Order & Ranking (Deep Explanation)' : 'क्रम और रैंकिंग (गहन व्याख्या)';
+    document.getElementById('mainSub').textContent = currentLang === 'en' ? 'SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions' : 'SSC CGL • CHSL • CPO • MTS | 510+ द्विभाषी प्रश्न';
+    document.getElementById('heroTitle').textContent = currentLang === 'en' ? 'Order & Ranking – Complete SSC Practice' : 'क्रम और रैंकिंग – पूर्ण SSC अभ्यास';
+    document.getElementById('descriptionBox').innerHTML = descriptions[currentLang];
+    document.getElementById('search').placeholder = currentLang === 'en' ? 'Search question...' : 'प्रश्न खोजें...';
+    document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
+    document.getElementById('langHi').classList.toggle('active', currentLang === 'hi');
+    renderQuestions();
+    updateProgress();
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    updateUI();
+}
+
+// ================================================================
+//  ORDER & RANKING GENERATOR (DEEP EXPLANATION)
+// ================================================================
+const questions = [];
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// ---- Generate Questions ----
+function generateRankingQuestion() {
+    const type = Math.floor(Math.random() * 5); // 0,1: Total, 2: L from Total/R, 3: R from Total/L, 4: Position problems
+    
+    if (type < 2) {
+        // Total Persons (कुल व्यक्ति)
+        const L = Math.floor(Math.random() * 30) + 10; // 10-40
+        const R = Math.floor(Math.random() * 30) + 10; // 10-40
+        const total = L + R - 1;
+        const person = String.fromCharCode(65 + Math.floor(Math.random() * 5)); // A-E
+        
+        const q_en = `In a row, ${person} is ${L}th from the left and ${R}th from the right. How many persons are there in the row?`;
+        const q_hi = `एक पंक्ति में, ${person} बाएँ से ${L}वें और दाएँ से ${R}वें स्थान पर है। पंक्ति में कुल कितने व्यक्ति हैं?`;
+        const correct = total;
+        const opts = shuffle([String(correct), String(correct+5), String(correct-3), String(correct+10)]);
+        const ansIdx = opts.indexOf(String(correct));
+        
+        const exp_en = `🔍 Formula: Total = L + R - 1<br>Step 1: L = ${L}, R = ${R}<br>Step 2: Total = ${L} + ${R} - 1 = ${total}<br>✅ Correct answer: ${total}`;
+        const exp_hi = `🔍 सूत्र: कुल = L + R - 1<br>चरण 1: L = ${L}, R = ${R}<br>चरण 2: कुल = ${L} + ${R} - 1 = ${total}<br>✅ सही उत्तर: ${total}`;
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Total Persons", exp_en, exp_hi };
+        
+    } else if (type === 2) {
+        // Rank from Left (बाएँ से रैंक)
+        const total = Math.floor(Math.random() * 40) + 30; // 30-70
+        const R = Math.floor(Math.random() * (total - 5)) + 5; // ensure L valid
+        const L = total - R + 1;
+        const person = String.fromCharCode(65 + Math.floor(Math.random() * 5));
+        
+        const q_en = `In a row of ${total} persons, ${person} is ${R}th from the right. What is ${person}'s rank from the left?`;
+        const q_hi = `${total} व्यक्तियों की एक पंक्ति में, ${person} दाएँ से ${R}वें स्थान पर है। बाएँ से ${person} का रैंक क्या है?`;
+        const correct = L;
+        const opts = shuffle([String(correct), String(correct+2), String(correct-1), String(correct+5)]);
+        const ansIdx = opts.indexOf(String(correct));
+        
+        const exp_en = `🔍 Formula: Rank from Left = Total - Rank from Right + 1<br>Step 1: Total = ${total}, R = ${R}<br>Step 2: L = ${total} - ${R} + 1 = ${L}<br>✅ Correct answer: ${L}`;
+        const exp_hi = `🔍 सूत्र: बाएँ से रैंक = कुल - दाएँ से रैंक + 1<br>चरण 1: कुल = ${total}, R = ${R}<br>चरण 2: L = ${total} - ${R} + 1 = ${L}<br>✅ सही उत्तर: ${L}`;
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Rank from Left", exp_en, exp_hi };
+        
+    } else if (type === 3) {
+        // Rank from Right (दाएँ से रैंक)
+        const total = Math.floor(Math.random() * 40) + 30;
+        const L = Math.floor(Math.random() * (total - 5)) + 5;
+        const R = total - L + 1;
+        const person = String.fromCharCode(65 + Math.floor(Math.random() * 5));
+        
+        const q_en = `In a row of ${total} persons, ${person} is ${L}th from the left. What is ${person}'s rank from the right?`;
+        const q_hi = `${total} व्यक्तियों की एक पंक्ति में, ${person} बाएँ से ${L}वें स्थान पर है। दाएँ से ${person} का रैंक क्या है?`;
+        const correct = R;
+        const opts = shuffle([String(correct), String(correct+1), String(correct-2), String(correct+5)]);
+        const ansIdx = opts.indexOf(String(correct));
+        
+        const exp_en = `🔍 Formula: Rank from Right = Total - Rank from Left + 1<br>Step 1: Total = ${total}, L = ${L}<br>Step 2: R = ${total} - ${L} + 1 = ${R}<br>✅ Correct answer: ${R}`;
+        const exp_hi = `🔍 सूत्र: दाएँ से रैंक = कुल - बाएँ से रैंक + 1<br>चरण 1: कुल = ${total}, L = ${L}<br>चरण 2: R = ${total} - ${L} + 1 = ${R}<br>✅ सही उत्तर: ${R}`;
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Rank from Right", exp_en, exp_hi };
+        
+    } else {
+        // Position Problems (Interchange / Between)
+        const subType = Math.floor(Math.random() * 2);
+        if (subType === 0) {
+            // Interchange: A is L1 from left, B is R1 from right. They interchange. A becomes L2 from left. Find total or B's new right rank.
+            const L1 = Math.floor(Math.random() * 20) + 10;
+            const R1 = Math.floor(Math.random() * 20) + 10;
+            const total = L1 + R1 - 1 + Math.floor(Math.random() * 10) + 5; // add some buffer so they are not at exact ends
+            const L2 = Math.floor(Math.random() * (total - 5)) + 5;
+            // Ensure L2 is not equal to L1 generally
+            const newR1 = total - L2 + 1;
+            
+            const personA = 'A';
+            const personB = 'B';
+            
+            const q_en = `In a row, ${personA} is ${L1}th from the left and ${personB} is ${R1}th from the right. If they interchange their positions, ${personA} becomes ${L2}th from the left. What is the total number of persons in the row?`;
+            const q_hi = `एक पंक्ति में, ${personA} बाएँ से ${L1}वें और ${personB} दाएँ से ${R1}वें स्थान पर है। यदि वे अपने स्थान बदल लेते हैं, तो ${personA} बाएँ से ${L2}वें स्थान पर आ जाता है। पंक्ति में कुल व्यक्तियों की संख्या क्या है?`;
+            const correct = total;
+            const opts = shuffle([String(correct), String(correct+8), String(correct-4), String(correct+12)]);
+            const ansIdx = opts.indexOf(String(correct));
+            
+            const exp_en = `🔍 Logic: When A and B interchange, A's new left rank (${L2}) = B's old left rank (which we need to compute).<br>Step 1: B's old left rank = Total - R1 + 1 = Total - ${R1} + 1.<br>Step 2: This becomes A's new left rank ${L2}. So ${L2} = Total - ${R1} + 1.<br>Step 3: Total = ${L2} + ${R1} - 1 = ${total}.<br>✅ Correct answer: ${total}`;
+            const exp_hi = `🔍 तर्क: जब A और B स्थान बदलते हैं, तो A की बाएँ से नई रैंक (${L2}) = B की बाएँ से पुरानी रैंक (जिसे हमें निकालना है)।<br>चरण 1: B की बाएँ से पुरानी रैंक = कुल - R1 + 1 = कुल - ${R1} + 1।<br>चरण 2: यह A की बाएँ से नई रैंक ${L2} के बराबर है। अतः ${L2} = कुल - ${R1} + 1।<br>चरण 3: कुल = ${L2} + ${R1} - 1 = ${total}।<br>✅ सही उत्तर: ${total}`;
+            return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Position Problems", exp_en, exp_hi };
+        } else {
+            // Between: A is L1 from left, B is L2 from left (L2 > L1). Find number between them.
+            const L1 = Math.floor(Math.random() * 15) + 5;
+            const L2 = L1 + Math.floor(Math.random() * 15) + 3; // at least 3 apart
+            const total = L2 + Math.floor(Math.random() * 20) + 10;
+            const between = L2 - L1 - 1;
+            
+            const personA = 'A';
+            const personB = 'B';
+            
+            const q_en = `In a row of ${total} persons, ${personA} is ${L1}th from the left and ${personB} is ${L2}th from the left. How many persons are there between ${personA} and ${personB}?`;
+            const q_hi = `${total} व्यक्तियों की एक पंक्ति में, ${personA} बाएँ से ${L1}वें और ${personB} बाएँ से ${L2}वें स्थान पर है। ${personA} और ${personB} के बीच कितने व्यक्ति हैं?`;
+            const correct = between;
+            const opts = shuffle([String(correct), String(correct+2), String(correct-1), String(correct+4)]);
+            const ansIdx = opts.indexOf(String(correct));
+            
+            const exp_en = `🔍 Formula: Between = (Position of B - Position of A) - 1<br>Step 1: Position of A = ${L1}, Position of B = ${L2}<br>Step 2: Between = (${L2} - ${L1}) - 1 = ${between}<br>✅ Correct answer: ${between}`;
+            const exp_hi = `🔍 सूत्र: बीच में = (B की स्थिति - A की स्थिति) - 1<br>चरण 1: A की स्थिति = ${L1}, B की स्थिति = ${L2}<br>चरण 2: बीच में = (${L2} - ${L1}) - 1 = ${between}<br>✅ सही उत्तर: ${between}`;
+            return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Position Problems", exp_en, exp_hi };
+        }
+    }
+}
+
+// ---- Generate 510 Questions ----
+while (questions.length < 510) {
+    let q = generateRankingQuestion();
+    const exists = questions.some(ex => ex.q_en === q.q_en && ex.type === q.type);
+    if (!exists) questions.push(q);
+}
+shuffle(questions);
+
+// ================================================================
+//  RENDER ENGINE (EXACT SAME AS PREVIOUS FILES)
+// ================================================================
+const container = document.getElementById('questionsContainer');
+const search = document.getElementById('search');
+const filter = document.getElementById('filter');
+const attemptText = document.getElementById('attemptText');
+const scoreText = document.getElementById('scoreText');
+const progressBar = document.getElementById('progressBar');
+let attempted = new Set();
+let score = 0;
+
+function renderQuestions() {
+    container.innerHTML = '';
+    const keyword = search.value.toLowerCase().trim();
+    const selectedType = filter.value;
+    questions.forEach((q, idx) => {
+        if (selectedType !== 'all' && q.type !== selectedType) return;
+        const qText = currentLang === 'en' ? q.q_en : q.q_hi;
+        const opts = currentLang === 'en' ? q.opts_en : q.opts_hi;
+        const exp = currentLang === 'en' ? q.exp_en : q.exp_hi;
+        let full = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && !full.includes(keyword)) return;
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = 'question-' + idx;
+        let optHTML = '';
+        opts.forEach((opt, oi) => {
+            optHTML += `<button class="option" onclick="checkAnswer(${idx},${oi},this)">(${String.fromCharCode(65+oi)}) ${opt}</button>`;
+        });
+        card.innerHTML = `
+            <div class="question-top">
+                <span class="question-number">Q${idx+1}</span>
+                <span class="question-type">${q.type}</span>
+            </div>
+            <div class="question-body">
+                <div class="question-text">${qText}</div>
+                <div class="options">${optHTML}</div>
+                <div class="answer-result" id="result-${idx}"></div>
+                <div class="explanation" id="explanation-${idx}">
+                    <div class="explanation-title">${currentLang === 'en' ? '💡 Detailed Explanation (Formula Based)' : '💡 विस्तृत व्याख्या (सूत्र आधारित)'}</div>
+                    ${exp}
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attempted.has(qIdx)) return;
+    attempted.add(qIdx);
+    const q = questions[qIdx];
+    const card = document.getElementById('question-' + qIdx);
+    const btns = card.querySelectorAll('.option');
+    btns.forEach((b, i) => { if (i === q.answer) b.classList.add('correct'); });
+    const res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) { score++; res.innerHTML = currentLang === 'en' ? '✅ Correct Answer!' : '✅ सही उत्तर!'; res.style.color = '#16a34a'; }
+    else { btn.classList.add('wrong'); res.innerHTML = currentLang === 'en' ? '❌ Incorrect. See explanation below.' : '❌ गलत। नीचे व्याख्या देखें।'; res.style.color = '#dc2626'; }
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    attemptText.textContent = `${currentLang === 'en' ? 'Attempted' : 'हल किए'}: ${attempted.size} / ${questions.length}`;
+    scoreText.textContent = `${currentLang === 'en' ? 'Score' : 'स्कोर'}: ${score}`;
+    progressBar.style.width = (attempted.size / questions.length * 100) + '%';
+}
+
+function showAllExplanations() {
+    document.querySelectorAll('.explanation').forEach(e => e.classList.add('show'));
+}
+function resetQuiz() { attempted.clear(); score = 0; renderQuestions(); updateProgress(); window.scrollTo({top:0, behavior:'smooth'}); }
+search.addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+
+// Init
+updateUI();
+</script>
+</body>
+</html>

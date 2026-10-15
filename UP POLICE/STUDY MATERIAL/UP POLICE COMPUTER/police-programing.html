@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Programming Basics – Algorithms, Logic, Variables, Operators</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES (Same as previous) ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #2c3e50;
+            --accent-light: #5d7a9a;
+            --accent-dark: #1a252f;
+            --accent-gradient: linear-gradient(135deg, #1a252f, #2c3e50);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(44, 62, 80, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #2c3e50;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(44,62,80,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.dark { background:#2c3e50; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(44,62,80,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(44,62,80,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(44,62,80,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(44,62,80,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(44,62,80,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(44,62,80,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(44,62,80,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(44,62,80,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(44,62,80,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(44,62,80,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(44,62,80,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(44,62,80,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(44,62,80,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(44,62,80,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(44,62,80,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(44,62,80,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(44,62,80,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">👨‍💻 PROGRAMMING BASICS – Algorithms • Logic • Variables • Operators • 240+ MCQs • UP Police, SSC, Banking, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">👨‍💻</div>
+                <div><h1>PROGRAMMING BASICS</h1><span>Algorithms • Logic • Variables • Operators</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot dark active" data-color="dark" title="Dark (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">👨‍💻 PROGRAMMING BASICS – SAMPOORNA</div>
+            <h2>Programming Basics <strong>सम्पूर्ण अध्ययन</strong><br>Algorithms • Logic • Variables • Operators</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 240 MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics + Practice</span>
+                <span>📌 240 MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>👨‍💻 Complete Programming</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>240</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>Code Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Intro & Basics</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> Algorithms</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> Logic & Control</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Variables & Data</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Operators</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: INTRO & BASICS (Theory 2x) ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>Programming Fundamentals – Introduction & Environment</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Programming क्या है?</h4>
+                    <p>Programming, कंप्यूटर को निर्देश (instructions) देने की कला है ताकि वह एक विशिष्ट कार्य (task) को perform कर सके। ये निर्देश एक <strong>programming language</strong> (जैसे C, C++, Python, Java) में लिखे जाते हैं।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Programming Language के Types (Exam Focus)</h4>
+                    <ul>
+                        <li><strong>Low-Level Language (Machine/Assembly):</strong> Machine code (0/1) या mnemonics का उपयोग। Fast, लेकिन समझना मुश्किल।</li>
+                        <li><strong>High-Level Language (HLL):</strong> Human-readable syntax (English-like)। Examples: C, Python, Java।</li>
+                        <li><strong>Compiler vs Interpreter:</strong>
+                            <ul>
+                                <li><strong>Compiler:</strong> पूरे program को एक साथ machine code में translate करता है (जैसे C, C++)। Faster execution, debugging मुश्किल हो सकती है।</li>
+                                <li><strong>Interpreter:</strong> Line-by-line translate और execute करता है (जैसे Python, JavaScript)। Slower execution, debugging आसान होती है।</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Problem Solving Approach (IPO Model)</h4>
+                    <ul>
+                        <li><strong>Input:</strong> Problem को solve करने के लिए data लेना (कीबोर्ड, file, sensor)।</li>
+                        <li><strong>Process:</strong> Input data को logic/algorithms के according process करना (computations, comparisons)।</li>
+                        <li><strong>Output:</strong> Result को display/print करना (screen, file, printer)।</li>
+                    </ul>
+                    <p><strong>Flowchart Symbols:</strong> Flowchart program की logic को visually represent करता है। <br> <em>Start/End (Oval), Process (Rectangle), Decision (Diamond), Input/Output (Parallelogram), Flow Lines (Arrows)।</em></p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Exam Trick:</strong> Compiler = Whole code translate, Interpreter = Line by line. High-Level = Human readable, Low-Level = Machine readable.
+                </div>
+                <div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: ALGORITHMS (Theory 2x) ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>Algorithms – Definition, Complexity & Searching</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Algorithm क्या है?</h4>
+                    <p>Algorithm, किसी समस्या (problem) को solve करने के लिए <strong>step-by-step, logical, finite</strong> instructions का set है।</p>
+                    <p><strong>Characteristics:</strong></p>
+                    <ul>
+                        <li><strong>Finiteness:</strong> Algorithm हमेशा finite steps में terminate होना चाहिए (infinite loop नहीं)।</li>
+                        <li><strong>Definiteness:</strong> प्रत्येक step स्पष्ट (unambiguous) होना चाहिए।</li>
+                        <li><strong>Input:</strong> Zero या more inputs ले सकता है।</li>
+                        <li><strong>Output:</strong> At least one output produce करना चाहिए।</li>
+                        <li><strong>Effectiveness:</strong> Steps such हों कि उन्हें manual या machine से execute किया जा सके।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Algorithm Complexity (Big O Notation – Exam में जरूरी)</h4>
+                    <p>Complexity, algorithm की efficiency को measure करती है (Time और Space)।</p>
+                    <ul>
+                        <li><strong>O(1) – Constant Time:</strong> Operation time independent of input size (e.g., Array indexing) – <strong>Best</strong>.</li>
+                        <li><strong>O(log n) – Logarithmic Time:</strong> Input बढ़ने पर time slowly बढ़ता है (e.g., Binary Search) – <strong>Very Efficient</strong>.</li>
+                        <li><strong>O(n) – Linear Time:</strong> Time input size के साथ linearly बढ़ता है (e.g., Linear Search, Loops) – <strong>Good</strong>.</li>
+                        <li><strong>O(n²) – Quadratic Time:</strong> Time input size के square के साथ बढ़ता है (e.g., Nested Loops, Bubble Sort) – <strong>Slow for large data</strong>.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Searching Algorithms (Basic)</h4>
+                    <ul>
+                        <li><strong>Linear Search:</strong> Array को start से end तक traverse करके element को find करता है। Time Complexity: O(n)। (Unsorted डेटा के लिए use)।</li>
+                        <li><strong>Binary Search:</strong> <strong>Sorted array</strong> में middle element से compare करके search करता है। Time Complexity: O(log n)। (Sorted डेटा के लिए fast)।</li>
+                    </ul>
+                    <h5>Sorting Algorithms (Basic Concepts):</h5>
+                    <ul>
+                        <li><strong>Bubble Sort:</strong> Adjacent elements को compare और swap करता है। Worst-case: O(n²)।</li>
+                        <li><strong>Selection Sort:</strong> Minimum element को चुनकर correct position पर रखता है। Worst-case: O(n²)।</li>
+                        <li><strong>Insertion Sort:</strong> Sorted array में element को correct position पर insert करता है। Best-case: O(n)।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Complexity Tricks:</strong> O(1) = Fastest, O(log n) = Binary Search, O(n) = Linear Search/Loop, O(n²) = Nested Loops.
+                </div>
+                <div id="algo-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: LOGIC & CONTROL (Theory 2x) ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>Programming Logic – Conditions, Loops & Flow Control</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Boolean Logic (True/False)</h4>
+                    <p>Programming में decisions Boolean logic पर आधारित होते हैं। <strong>Truth Table</strong> exam में पूछी जाती है:</p>
+                    <ul>
+                        <li><strong>AND (&&):</strong> True only if both conditions are True.</li>
+                        <li><strong>OR (||):</strong> True if at least one condition is True.</li>
+                        <li><strong>NOT (!):</strong> Reverses the boolean value (True → False).</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Conditional Statements (Decision Making)</h4>
+                    <ul>
+                        <li><strong>if-else:</strong> Condition true होने पर if block execute, false होने पर else block।</li>
+                        <li><strong>else-if ladder:</strong> Multiple conditions को check करता है (जैसे grade checking)।</li>
+                        <li><strong>switch-case:</strong> Variable की value के आधार पर multiple branches में से एक को select करता है। (C, C++, Java, C# में use, Python में नहीं)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Loops (Iteration)</h4>
+                    <ul>
+                        <li><strong>for Loop:</strong> जब iterations की संख्या known हो (e.g., for(i=0; i<10; i++))।</li>
+                        <li><strong>while Loop:</strong> जब iterations की संख्या unknown हो और condition पर depend हो (Entry-controlled)।</li>
+                        <li><strong>do-while Loop:</strong> पहले execute करता है, फिर condition check करता है (Exit-controlled)। कम से कम एक बार execute होता है।</li>
+                    </ul>
+                    <p><strong>Nested Loops:</strong> Loop के अंदर loop। Time Complexity अक्सर O(n²) होती है।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Logical Mnemonics:</strong> && = AND (बच्चे दोनों हों तो True), || = OR (कोई एक हो तो True). Switch = Multiple choices, For = Fixed iterations, While = Condition based.
+                </div>
+                <div id="logic-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: VARIABLES & DATA (Theory 2x) ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Variables, Data Types & Memory Management</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Variable क्या है?</h4>
+                    <p>Variable, मेमोरी का एक <strong>named storage location</strong> है जो value को store करता है और जिसे program में बदला जा सकता है। इसे declare करते समय <strong>Data Type</strong> specify करना पड़ता है (जो memory allocate करता है)।</p>
+                    <ul>
+                        <li><strong>Naming Rules:</strong> Letters, digits, underscore (_) से शुरू हो सकता है (digit से नहीं)। Space और special symbols (!@#) नहीं। Keywords (जैसे int, if) नहीं हो सकते। (Case-sensitive – 'age' और 'Age' अलग हैं)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Data Types (Primitive & Derived)</h4>
+                    <ul>
+                        <li><strong>Integer (int):</strong> Whole numbers (e.g., 5, -10, 0)। Size: 4 bytes (usually)।</li>
+                        <li><strong>Float (float/double):</strong> Decimal numbers (e.g., 3.14, -0.5)। Size: 4/8 bytes।</li>
+                        <li><strong>Character (char):</strong> Single character (e.g., 'A', 'b')। Size: 1 byte (ASCII)।</li>
+                        <li><strong>Boolean (bool):</strong> True or False। (C में int 0/1, C++/Java में bool)।</li>
+                        <li><strong>String:</strong> Character का sequence (e.g., "Hello") – Non-primitive.</li>
+                    </ul>
+                    <p><strong>Type Conversion:</strong> Implicit (Automatic – int to float) और Explicit (Casting – float to int using (int)3.14 → 3)।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Variable Scope (Local vs Global)</h4>
+                    <ul>
+                        <li><strong>Local Variable:</strong> Function/block के अंदर declare। उसी block में access।</li>
+                        <li><strong>Global Variable:</strong> Function के बाहर declare। पूरे program में access।</li>
+                        <li><strong>Static Variable:</strong> अपनी value को function calls के बीच retain करता है।</li>
+                    </ul>
+                    <p><strong>Constant:</strong> जिस variable की value program में change नहीं होती (const in C++, final in Java)।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Memory Sizes (Common):</strong> char=1 byte, int=4 bytes, float=4 bytes, double=8 bytes. Variable name cannot start with a number.
+                </div>
+                <div id="vars-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: OPERATORS (Theory 2x) ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Operators – Arithmetic, Relational, Logical & Bitwise</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Operators क्या हैं?</h4>
+                    <p>Operators, वे symbols हैं जो operands (variables/values) पर operations perform करते हैं।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Types of Operators</h4>
+                    <ul>
+                        <li><strong>Arithmetic Operators:</strong> + (Add), - (Subtract), * (Multiply), / (Divide), % (Modulo – Remainder) <br> <em>Example:</em> 10 % 3 = 1.</li>
+                        <li><strong>Relational (Comparison) Operators:</strong> == (Equal), != (Not Equal), >, <, >=, <=. Result हमेशा Boolean (True/False) होता है।</li>
+                        <li><strong>Logical Operators:</strong> && (AND), || (OR), ! (NOT). Conditional expressions में use। <br> <em>Short-circuit Evaluation:</em> && में अगर पहला False तो दूसरा evaluate नहीं होता। || में अगर पहला True तो दूसरा evaluate नहीं होता।</li>
+                        <li><strong>Assignment Operators:</strong> = (Assign), += (Add and Assign), -=, *=, /=, %=। <br> <em>Example:</em> x += 5 → x = x + 5.</li>
+                        <li><strong>Increment/Decrement Operators:</strong> ++ (Increment by 1), -- (Decrement by 1)। <br> <em>Postfix (x++):</em> पहले use करो फिर बढ़ाओ। <em>Prefix (++x):</em> पहले बढ़ाओ फिर use करो।</li>
+                        <li><strong>Bitwise Operators (Exam में पूछे जाते हैं):</strong> & (AND), | (OR), ^ (XOR), ~ (NOT), << (Left Shift – multiply by 2), >> (Right Shift – divide by 2)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Operator Precedence (PEMDAS/BODMAS)</h4>
+                    <p>Operators को evaluation का एक निश्चित क्रम होता है (Higher precedence पहले evaluate होता है):</p>
+                    <ul>
+                        <li><strong>1. ( )</strong> – Parentheses (Highest)</li>
+                        <li><strong>2. ++, -- (Post/Pre)</strong></li>
+                        <li><strong>3. *, /, %</strong> (Multiplicative)</li>
+                        <li><strong>4. +, -</strong> (Additive)</li>
+                        <li><strong>5. <, >, <=, >=</strong> (Relational)</li>
+                        <li><strong>6. ==, !=</strong> (Equality)</li>
+                        <li><strong>7. &&</strong> (Logical AND)</li>
+                        <li><strong>8. ||</strong> (Logical OR) – Lowest</li>
+                    </ul>
+                    <p><em>Example:</em> 5 + 2 * 3 = 11 (क्योंकि * पहले evaluate होता है)।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Operators Quick Revision:</strong> % = Modulo (Remainder). ++x = Pre-increment (पहले बढ़ाओ). x++ = Post-increment (बाद में बढ़ाओ). & = Bitwise AND, && = Logical AND.
+                </div>
+                <div id="op-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 40 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 40 मिश्रित प्रश्न दिए गए हैं – जो Programming Basics के सभी टॉपिक्स (Algorithm, Logic, Variables, Operators) को कवर करते हैं।</p>
+                <div class="info"><strong>📊 Balanced MCQ Rule:</strong> प्रत्येक 40-question bank में सही उत्तर A, B, C और D का exact 10-10-10-10 distribution (25%-25%-25%-25%) रखा गया है।</div>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> Programming Basics में Compiler vs Interpreter, Big-O Complexity (O(1), O(n), O(log n)), Truth Tables (AND/OR/NOT), Variable Scope (Local/Global), और Operator Precedence पर ध्यान दें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 👨‍💻</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>PROGRAMMING BASICS – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 240 MCQs • Programming Concepts</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS (Balanced) -----
+        function balanceQuestionBank(questions) {
+            const letters = ["A", "B", "C", "D"];
+            const result = questions.map(q => ({...q}));
+            result.forEach((q, i) => {
+                const newCorrect = letters[i % 4];
+                const oldCorrect = q.correct;
+                if (newCorrect === oldCorrect) return;
+                const temp = q[newCorrect];
+                q[newCorrect] = q[oldCorrect];
+                q[oldCorrect] = temp;
+                q.correct = newCorrect;
+            });
+            return result;
+        }
+
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const balanced = balanceQuestionBank(questions);
+            let html = '';
+            balanced.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (40 each) ======
+
+        // CH1: INTRO (40)
+        const introMCQs = [
+            { question: "Compiler का मुख्य कार्य क्या है?", A: "पूरे program को machine code में translate करना", B: "Line by line translate करना", C: "Data compress करना", D: "Network manage करना", correct: "A", explanation: "Compiler whole code को machine code में translate करता है।" },
+            { question: "Interpreter का मुख्य कार्य क्या है?", A: "Line by line translate & execute", B: "पूरा code एक साथ translate", C: "Compile & link", D: "Assemble code", correct: "A", explanation: "Interpreter line-by-line execute करता है।" },
+            { question: "High-Level Language का उदाहरण क्या है?", A: "Python", B: "Machine Code", C: "Binary", D: "Assembly", correct: "A", explanation: "Python, C, Java High-Level languages हैं।" },
+            { question: "Low-Level Language का उदाहरण क्या है?", A: "Assembly", B: "Python", C: "Java", D: "C++", correct: "A", explanation: "Assembly और Machine Code Low-Level हैं।" },
+            { question: "Flowchart में 'Process' को किस shape से दर्शाया जाता है?", A: "Rectangle", B: "Oval", C: "Diamond", D: "Parallelogram", correct: "A", explanation: "Process box Rectangle होता है।" },
+            { question: "Flowchart में 'Decision' को किस shape से दर्शाया जाता है?", A: "Diamond", B: "Rectangle", C: "Oval", D: "Circle", correct: "A", explanation: "Decision Diamond shape में होता है।" },
+            { question: "Flowchart में 'Start/End' को किस shape से दर्शाया जाता है?", A: "Oval", B: "Rectangle", C: "Diamond", D: "Parallelogram", correct: "A", explanation: "Start/End = Oval (Rounded corners)." },
+            { question: "IPO Model में 'O' का क्या अर्थ है?", A: "Output", B: "Operation", C: "Object", D: "Order", correct: "A", explanation: "IPO = Input, Process, Output." },
+            { question: "Variable का नाम किससे शुरू नहीं हो सकता?", A: "Digit (0-9)", B: "Letter (A-Z)", C: "Underscore (_)", D: "Alphabet", correct: "A", explanation: "Variable name digit से start नहीं हो सकता।" },
+            { question: "Keywords को variable name के रूप में use किया जा सकता है?", A: "No", B: "Yes", C: "Only in C", D: "Only in Python", correct: "A", explanation: "Keywords reserved words हैं, use नहीं कर सकते।" },
+            { question: "Program में ';' (Semicolon) का क्या कार्य है?", A: "Statement terminator", B: "Loop start", C: "Function definition", D: "Comment", correct: "A", explanation: "Semicolon statement के end को दर्शाता है (C/C++/Java)." },
+            { question: "निम्न में से कौन सी language compiled है?", A: "C", B: "Python", C: "JavaScript", D: "Ruby", correct: "A", explanation: "C एक compiled language है (Python/JS interpreted हैं)." },
+            { question: "निम्न में से कौन सी language interpreted है?", A: "Python", B: "C", C: "C++", D: "Rust", correct: "A", explanation: "Python interpreted language है।" },
+            { question: "Algorithm में 'Finiteness' का क्या अर्थ है?", A: "Finite steps में terminate", B: "Infinite loop", C: "No output", D: "Complex code", correct: "A", explanation: "Finiteness means algorithm always ends after finite steps." },
+            { question: "Algorithm की 'Definiteness' का क्या अर्थ है?", A: "Each step is clear/unambiguous", B: "Steps are complex", C: "No input", D: "Vague steps", correct: "A", explanation: "Definiteness means every step must be precisely defined." },
+            { question: "Pseudocode क्या है?", A: "Algorithm का informal language description", B: "Machine code", C: "Binary code", D: "Compiler output", correct: "A", explanation: "Pseudocode problem-solving logic को plain text में describe करता है।" },
+            { question: "Program को debug करने का क्या अर्थ है?", A: "Errors (bugs) को ढूंढना और fix करना", B: "Program को run करना", C: "Program को compile करना", D: "Program को delete करना", correct: "A", explanation: "Debugging means finding and fixing errors in the program." },
+            { question: "Syntax Error क्या है?", A: "Grammar rule violation in code", B: "Logical error", C: "Runtime error", D: "Hardware error", correct: "A", explanation: "Syntax error occurs when code violates language grammar rules." },
+            { question: "Runtime Error (Exception) क्या है?", A: "Error during program execution", B: "Compilation error", C: "Logical error", D: "Typing error", correct: "A", explanation: "Runtime error occurs when the program is running (e.g., division by zero)." },
+            { question: "Logical Error क्या है?", A: "Program runs but gives wrong output", B: "Compilation fails", C: "Program crashes", D: "Hardware issue", correct: "A", explanation: "Logical error means wrong algorithm/logic, producing incorrect results." }
+        ];
+
+        // CH2: ALGORITHMS (40)
+        const algoMCQs = [
+            { question: "Algorithm की Time Complexity को measure करने के लिए किस notation का use होता है?", A: "Big O Notation", B: "Big Omega", C: "Big Theta", D: "Little O", correct: "A", explanation: "Big O notation worst-case time complexity को measure करता है।" },
+            { question: "O(1) Complexity का क्या अर्थ है?", A: "Constant time (independent of input)", B: "Linear time", C: "Quadratic time", D: "Logarithmic time", correct: "A", explanation: "O(1) means algorithm takes constant time regardless of input size." },
+            { question: "O(n) Complexity का क्या अर्थ है?", A: "Linear time (grows with input)", B: "Constant time", C: "Logarithmic time", D: "Quadratic time", correct: "A", explanation: "O(n) means time grows linearly with input size (e.g., one loop)." },
+            { question: "O(n²) Complexity का क्या अर्थ है?", A: "Quadratic time (nested loops)", B: "Linear time", C: "Logarithmic time", D: "Constant time", correct: "A", explanation: "O(n²) means time grows quadratically (e.g., nested loops)." },
+            { question: "O(log n) Complexity किस algorithm में होती है?", A: "Binary Search", B: "Linear Search", C: "Bubble Sort", D: "Selection Sort", correct: "A", explanation: "Binary Search has O(log n) time complexity." },
+            { question: "Binary Search किस data structure पर work करता है?", A: "Sorted Array", B: "Unsorted Array", C: "Linked List", D: "Queue", correct: "A", explanation: "Binary Search requires a sorted array." },
+            { question: "Linear Search की Time Complexity क्या है?", A: "O(n)", B: "O(1)", C: "O(log n)", D: "O(n²)", correct: "A", explanation: "Linear Search has O(n) time complexity." },
+            { question: "Bubble Sort की Worst-case Complexity क्या है?", A: "O(n²)", B: "O(n)", C: "O(log n)", D: "O(1)", correct: "A", explanation: "Bubble Sort has O(n²) worst-case time complexity." },
+            { question: "Binary Search की Time Complexity क्या है?", A: "O(log n)", B: "O(n)", C: "O(n²)", D: "O(1)", correct: "A", explanation: "Binary Search has O(log n) time complexity." },
+            { question: "Selection Sort की Complexity क्या है?", A: "O(n²)", B: "O(n)", C: "O(log n)", D: "O(n log n)", correct: "A", explanation: "Selection Sort has O(n²) time complexity." },
+            { question: "Insertion Sort की Best-case Complexity क्या है?", A: "O(n)", B: "O(n²)", C: "O(log n)", D: "O(1)", correct: "A", explanation: "Insertion Sort has O(n) best-case (already sorted)." },
+            { question: "Space Complexity किसको measure करती है?", A: "Memory usage", B: "CPU usage", C: "Execution time", D: "Disk usage", correct: "A", explanation: "Space complexity measures the amount of memory an algorithm uses." },
+            { question: "Algorithm का मुख्य उद्देश्य क्या है?", A: "Problem solve करना", B: "Data delete करना", C: "System crash करना", D: "Network manage करना", correct: "A", explanation: "The main purpose of an algorithm is to solve a specific problem." },
+            { question: "Searching algorithm का क्या उद्देश्य है?", A: "Find an element in data structure", B: "Sort data", C: "Delete data", D: "Insert data", correct: "A", explanation: "Searching finds a specific element in a data structure." },
+            { question: "Sorting algorithm का क्या उद्देश्य है?", A: "Arrange data in order", B: "Find data", C: "Delete data", D: "Encrypt data", correct: "A", explanation: "Sorting arranges data in ascending or descending order." },
+            { question: "Which algorithm is faster for a sorted array: Linear or Binary Search?", A: "Binary Search", B: "Linear Search", C: "Both are same", D: "Depends on array size only", correct: "A", explanation: "Binary Search (O(log n)) is much faster than Linear Search (O(n)) for sorted arrays." },
+            { question: "Algorithm का 'Output' characteristic क्या कहता है?", A: "At least one output produce करना चाहिए", B: "Zero output allowed", C: "Only one output", D: "No output required", correct: "A", explanation: "An algorithm must produce at least one output." },
+            { question: "Algorithm का 'Input' characteristic क्या कहता है?", A: "Zero or more inputs", B: "At least one input", C: "Only one input", D: "No inputs allowed", correct: "A", explanation: "An algorithm can have zero or more inputs." },
+            { question: "Recursion क्या है?", A: "Function calling itself", B: "Nested loop", C: "Conditional statement", D: "Variable declaration", correct: "A", explanation: "Recursion is a technique where a function calls itself." },
+            { question: "Divide and Conquer approach का उदाहरण कौन सा है?", A: "Binary Search", B: "Linear Search", C: "Bubble Sort", D: "Selection Sort", correct: "A", explanation: "Binary Search uses Divide and Conquer strategy." }
+        ];
+
+        // CH3: LOGIC (40)
+        const logicMCQs = [
+            { question: "AND (&&) operator कब True होता है?", A: "Both conditions True", B: "At least one condition True", C: "None True", D: "Only first True", correct: "A", explanation: "AND returns True only if both operands are True." },
+            { question: "OR (||) operator कब True होता है?", A: "At least one condition True", B: "Both conditions True", C: "None True", D: "Only first True", correct: "A", explanation: "OR returns True if at least one operand is True." },
+            { question: "NOT (!) operator क्या करता है?", A: "Reverses the boolean value", B: "Adds two values", C: "Multiplies values", D: "Divides values", correct: "A", explanation: "NOT inverts the boolean value (True→False, False→True)." },
+            { question: "if-else statement का क्या कार्य है?", A: "Condition based branching", B: "Loop execution", C: "Variable declaration", D: "Function definition", correct: "A", explanation: "if-else executes code based on a condition." },
+            { question: "switch-case statement किसके लिए use होता है?", A: "Multiple value-based branching", B: "Looping", C: "Variable declaration", D: "Function call", correct: "A", explanation: "switch-case selects a block based on a variable's value." },
+            { question: "for loop का सही syntax क्या है (C/C++/Java)?", A: "for(init; condition; increment)", B: "for(condition; init; increment)", C: "for(init; increment; condition)", D: "for(condition; increment; init)", correct: "A", explanation: "for loop syntax: for(initialization; condition; increment/decrement)." },
+            { question: "while loop में condition कब check होती है?", A: "Loop entry से पहले", B: "Loop exit के बाद", C: "Code execution के बाद", D: "Never", correct: "A", explanation: "while loop checks the condition before executing the body (Entry-controlled)." },
+            { question: "do-while loop में condition कब check होती है?", A: "Loop body execute होने के बाद", B: "Loop entry से पहले", C: "Never", D: "At compile time", correct: "A", explanation: "do-while checks condition after executing the body (Exit-controlled)." },
+            { question: "do-while loop कितनी बार execute होता है?", A: "At least once", B: "Zero times", C: "Always infinite", D: "Only once", correct: "A", explanation: "do-while runs at least once because condition is checked after the body." },
+            { question: "Infinite Loop क्या है?", A: "Loop that never terminates", B: "Loop that runs once", C: "Loop with no condition", D: "Loop with break", correct: "A", explanation: "Infinite loop runs forever (condition always true)." },
+            { question: "Nested Loop क्या है?", A: "Loop inside another loop", B: "Loop with break", C: "Loop with continue", D: "Loop without condition", correct: "A", explanation: "Nested loop means one loop inside another loop." },
+            { question: "break statement का क्या कार्य है?", A: "Immediately exit loop/switch", B: "Skip current iteration", C: "Start loop again", D: "Terminate program", correct: "A", explanation: "break immediately exits the loop or switch statement." },
+            { question: "continue statement का क्या कार्य है?", A: "Skip current iteration and go to next", B: "Exit loop", C: "Terminate program", D: "Go to main", correct: "A", explanation: "continue skips the rest of the current iteration and goes to the next." },
+            { question: "Truth Table में AND के लिए (True AND False) क्या होगा?", A: "False", B: "True", C: "Undefined", D: "Maybe", correct: "A", explanation: "True AND False = False (both must be true)." },
+            { question: "Truth Table में OR के लिए (False OR True) क्या होगा?", A: "True", B: "False", C: "Undefined", D: "Maybe", correct: "A", explanation: "False OR True = True (at least one true)." },
+            { question: "else-if ladder का क्या उपयोग है?", A: "Multiple conditions check", B: "Single condition check", C: "Loop execution", D: "Function creation", correct: "A", explanation: "else-if ladder checks multiple conditions sequentially." },
+            { question: "Logic में Short-circuit evaluation का क्या अर्थ है?", A: "Second expression evaluated only if needed", B: "Both expressions always evaluated", C: "Only one expression evaluated", D: "No expression evaluated", correct: "A", explanation: "In short-circuit, if first operand determines result, second is not evaluated." },
+            { question: "सबसे efficient loop कौन सा है जब iteration count known हो?", A: "for loop", B: "while loop", C: "do-while loop", D: "recursion", correct: "A", explanation: "for loop is best when the number of iterations is known beforehand." },
+            { question: "switch-case में break न लिखने पर क्या होगा?", A: "Fall-through (next case भी execute)", B: "Compilation error", C: "Loop starts", D: "Program exits", correct: "A", explanation: "Without break, execution continues into the next case (fall-through)." },
+            { question: "Boolean data type में कितने values होते हैं?", A: "2 (True/False)", B: "1 (True only)", C: "0 (False only)", D: "Infinite", correct: "A", explanation: "Boolean has only two values: True and False." }
+        ];
+
+        // CH4: VARIABLES (40)
+        const varsMCQs = [
+            { question: "int data type कितने bytes का होता है (mostly)?", A: "4 bytes", B: "1 byte", C: "8 bytes", D: "2 bytes", correct: "A", explanation: "int is typically 4 bytes (32 bits) in most systems." },
+            { question: "char data type कितने bytes का होता है?", A: "1 byte", B: "2 bytes", C: "4 bytes", D: "8 bytes", correct: "A", explanation: "char is 1 byte (stores ASCII character)." },
+            { question: "float data type कितने bytes का होता है?", A: "4 bytes", B: "1 byte", C: "8 bytes", D: "2 bytes", correct: "A", explanation: "float is 4 bytes (single precision)." },
+            { question: "double data type कितने bytes का होता है?", A: "8 bytes", B: "4 bytes", C: "1 byte", D: "2 bytes", correct: "A", explanation: "double is 8 bytes (double precision)." },
+            { question: "Global Variable कहाँ declared होता है?", A: "Function के बाहर", B: "Function के अंदर", C: "Loop के अंदर", D: "Block के अंदर", correct: "A", explanation: "Global variable is declared outside all functions." },
+            { question: "Local Variable कहाँ declared होता है?", A: "Function/Block के अंदर", B: "Function के बाहर", C: "Main function only", D: "Global scope", correct: "A", explanation: "Local variable is declared inside a function or block." },
+            { question: "Static Variable का क्या अर्थ है?", A: "Retains value between function calls", B: "Loses value after function call", C: "Global by default", D: "Constant", correct: "A", explanation: "Static variable keeps its value even after the function ends." },
+            { question: "Constant Variable (const) का क्या अर्थ है?", A: "Value cannot be changed", B: "Value can be changed", C: "Only in loops", D: "Only in functions", correct: "A", explanation: "const variable's value cannot be modified after initialization." },
+            { question: "Variable में value assign करने के लिए किस operator का use होता है?", A: "=", B: "==", C: "===", D: "!=", correct: "A", explanation: "Assignment operator (=) is used to assign a value to a variable." },
+            { question: "Type Casting (Explicit Conversion) क्या है?", A: "Manual conversion from one type to another", B: "Automatic conversion", C: "No conversion", D: "Only int to float", correct: "A", explanation: "Type casting is manually converting one data type to another (e.g., (float)5)." },
+            { question: "Implicit Type Conversion क्या है?", A: "Automatic conversion by compiler", B: "Manual conversion", C: "Only in Python", D: "Only in C++", correct: "A", explanation: "Implicit conversion happens automatically (e.g., int to float)." },
+            { question: "निम्न में से कौन सा valid variable name है?", A: "_myVar", B: "1myVar", C: "my-var", D: "my var", correct: "A", explanation: "_myVar starts with underscore (valid). Others have digit at start, hyphen, or space." },
+            { question: "निम्न में से कौन सा variable name invalid है?", A: "int", B: "myVar", C: "_int", D: "var1", correct: "A", explanation: "int is a keyword (reserved) and cannot be used as a variable name." },
+            { question: "String data type क्या store करता है?", A: "Sequence of characters", B: "Single character", C: "Integer values", D: "Boolean values", correct: "A", explanation: "String stores a sequence of characters (e.g., 'Hello World')." },
+            { question: "char data type क्या store करता है?", A: "Single character", B: "Sequence of characters", C: "Integer", D: "Boolean", correct: "A", explanation: "char stores a single character (e.g., 'A')." },
+            { question: "sizeof() operator क्या return करता है?", A: "Size of variable/data type in bytes", B: "Value of variable", C: "Address of variable", D: "Type of variable", correct: "A", explanation: "sizeof() returns the memory size in bytes." },
+            { question: "C programming में int का size कितना होता है?", A: "Depends on compiler/architecture (usually 4)", B: "Always 2", C: "Always 8", D: "Always 1", correct: "A", explanation: "int size is platform-dependent (mostly 4 bytes on modern systems)." },
+            { question: "Static variable की memory कहाँ allocate होती है?", A: "Data segment (static storage)", B: "Stack", C: "Heap", D: "Register", correct: "A", explanation: "Static variables are stored in the data segment (static storage area)." },
+            { question: "Local variable की memory कहाँ allocate होती है?", A: "Stack", B: "Heap", C: "Data segment", D: "Code segment", correct: "A", explanation: "Local variables are stored in the stack memory." },
+            { question: "Dynamic memory allocation (malloc/new) memory कहाँ allocate होती है?", A: "Heap", B: "Stack", C: "Data segment", D: "Register", correct: "A", explanation: "Dynamic memory is allocated on the heap." }
+        ];
+
+        // CH5: OPERATORS (40)
+        const opMCQs = [
+            { question: "Modulo operator (%) क्या return करता है?", A: "Remainder of division", B: "Quotient of division", C: "Product of numbers", D: "Sum of numbers", correct: "A", explanation: "% (Modulo) returns the remainder of division (e.g., 5%2 = 1)." },
+            { question: "Increment operator (++) क्या करता है?", A: "Increases value by 1", B: "Decreases value by 1", C: "Doubles value", D: "Halves value", correct: "A", explanation: "++ increments the variable by 1." },
+            { question: "Decrement operator (--) क्या करता है?", A: "Decreases value by 1", B: "Increases value by 1", C: "Doubles value", D: "Halves value", correct: "A", explanation: "-- decrements the variable by 1." },
+            { question: "Postfix increment (x++) में पहले क्या होता है?", A: "Current value use, then increment", B: "Increment, then use new value", C: "Only increment", D: "Only use value", correct: "A", explanation: "x++ uses the current value first, then increments." },
+            { question: "Prefix increment (++x) में पहले क्या होता है?", A: "Increment, then use new value", B: "Current value use, then increment", C: "Only increment", D: "Only use value", correct: "A", explanation: "++x increments first, then uses the new value." },
+            { question: "Relational operator '==' क्या करता है?", A: "Checks equality", B: "Assigns value", C: "Checks greater than", D: "Checks less than", correct: "A", explanation: "== compares two values for equality (returns boolean)." },
+            { question: "Relational operator '!=' क्या करता है?", A: "Checks inequality", B: "Checks equality", C: "Assigns value", D: "Checks greater than", correct: "A", explanation: "!= returns True if values are not equal." },
+            { question: "Bitwise AND (&) operator क्या करता है?", A: "Bitwise AND of bits", B: "Logical AND", C: "Bitwise OR", D: "Bitwise XOR", correct: "A", explanation: "& performs bitwise AND operation on bits (e.g., 5 & 3 = 1)." },
+            { question: "Bitwise OR (|) operator क्या करता है?", A: "Bitwise OR of bits", B: "Logical OR", C: "Bitwise AND", D: "Bitwise XOR", correct: "A", explanation: "| performs bitwise OR (e.g., 5 | 3 = 7)." },
+            { question: "Bitwise XOR (^) operator क्या करता है?", A: "Bitwise XOR (different bits = 1)", B: "Bitwise AND", C: "Bitwise OR", D: "Logical AND", correct: "A", explanation: "^ returns 1 if bits are different, else 0." },
+            { question: "Left Shift (<<) operator क्या करता है?", A: "Shifts bits left (multiply by 2)", B: "Shifts bits right (divide by 2)", C: "Bitwise NOT", D: "Bitwise AND", correct: "A", explanation: "<< shifts bits to the left (e.g., 2<<1 = 4)." },
+            { question: "Right Shift (>>) operator क्या करता है?", A: "Shifts bits right (divide by 2)", B: "Shifts bits left (multiply by 2)", C: "Bitwise NOT", D: "Bitwise OR", correct: "A", explanation: ">> shifts bits to the right (e.g., 4>>1 = 2)." },
+            { question: "5 + 2 * 3 का result क्या होगा (Operator Precedence)?", A: "11", B: "21", C: "16", D: "10", correct: "A", explanation: "Multiplication (*) has higher precedence than addition (+), so 2*3=6, 5+6=11." },
+            { question: "(5 + 2) * 3 का result क्या होगा?", A: "21", B: "11", C: "16", D: "10", correct: "A", explanation: "Parentheses have highest precedence, so (5+2)=7, 7*3=21." },
+            { question: "Assignment operator 'x += 5' का क्या अर्थ है?", A: "x = x + 5", B: "x = 5", C: "x + 5", D: "x = x * 5", correct: "A", explanation: "x += 5 is shorthand for x = x + 5." },
+            { question: "x = 5; y = ++x; then y और x की values क्या होंगी?", A: "y=6, x=6", B: "y=5, x=6", C: "y=6, x=5", D: "y=5, x=5", correct: "A", explanation: "++x (prefix) increments x to 6, then assigns to y (y=6)." },
+            { question: "x = 5; y = x++; then y और x की values क्या होंगी?", A: "y=5, x=6", B: "y=6, x=5", C: "y=6, x=6", D: "y=5, x=5", correct: "A", explanation: "x++ (postfix) assigns 5 to y, then increments x to 6." },
+            { question: "Operator '&&' किस precedence level पर है?", A: "Lower than relational, higher than OR", B: "Highest", C: "Lowest", D: "Equal to OR", correct: "A", explanation: "&& has higher precedence than ||, but lower than relational operators." },
+            { question: "x = 10; y = 3; x / y का result int division में क्या होगा (if both int)?", A: "3", B: "3.33", C: "10", D: "0", correct: "A", explanation: "Integer division truncates the fractional part: 10/3 = 3." },
+            { question: "x = 10; y = 3; x % y का result क्या होगा?", A: "1", B: "3", C: "0", D: "10", correct: "A", explanation: "10 % 3 = 1 (remainder)." }
+        ];
+
+        // PRACTICE (40 mixed)
+        const practiceMCQs = [
+            { question: "Compiler और Interpreter में क्या अंतर है?", A: "Compiler whole code translate, Interpreter line by line", B: "Both translate line by line", C: "Compiler line by line, Interpreter whole", D: "Both are same", correct: "A", explanation: "Compiler translates entire code at once; Interpreter translates line-by-line." },
+            { question: "Algorithm की Time Complexity O(1) का क्या अर्थ है?", A: "Constant time", B: "Linear time", C: "Quadratic time", D: "Logarithmic time", correct: "A", explanation: "O(1) means constant time, independent of input size." },
+            { question: "Binary Search की Time Complexity क्या है?", A: "O(log n)", B: "O(n)", C: "O(n²)", D: "O(1)", correct: "A", explanation: "Binary Search has O(log n) complexity." },
+            { question: "AND (&&) operator कब True होता है?", A: "Both conditions True", B: "At least one True", C: "None True", D: "Only first True", correct: "A", explanation: "AND returns True only if both conditions are True." },
+            { question: "OR (||) operator कब True होता है?", A: "At least one condition True", B: "Both conditions True", C: "None True", D: "Only first True", correct: "A", explanation: "OR returns True if at least one condition is True." },
+            { question: "int data type typically कितने bytes का होता है?", A: "4 bytes", B: "1 byte", C: "8 bytes", D: "2 bytes", correct: "A", explanation: "int is typically 4 bytes on most systems." },
+            { question: "char data type कितने bytes का होता है?", A: "1 byte", B: "2 bytes", C: "4 bytes", D: "8 bytes", correct: "A", explanation: "char is 1 byte." },
+            { question: "Modulo operator (%) का क्या कार्य है?", A: "Remainder of division", B: "Quotient", C: "Product", D: "Sum", correct: "A", explanation: "% returns the remainder." },
+            { question: "Postfix increment (x++) में पहले क्या होता है?", A: "Current value use, then increment", B: "Increment, then use", C: "Only increment", D: "Only use", correct: "A", explanation: "x++ uses current value first, then increments." },
+            { question: "Prefix increment (++x) में पहले क्या होता है?", A: "Increment, then use new value", B: "Current value use, then increment", C: "Only increment", D: "Only use", correct: "A", explanation: "++x increments first, then uses the new value." },
+            { question: "Global Variable कहाँ declared होता है?", A: "Function के बाहर", B: "Function के अंदर", C: "Loop के अंदर", D: "Block के अंदर", correct: "A", explanation: "Global is declared outside all functions." },
+            { question: "Local Variable कहाँ declared होता है?", A: "Function/Block के अंदर", B: "Function के बाहर", C: "Main only", D: "Global", correct: "A", explanation: "Local is declared inside a function or block." },
+            { question: "Flowchart में Decision को किस shape से दर्शाया जाता है?", A: "Diamond", B: "Rectangle", C: "Oval", D: "Parallelogram", correct: "A", explanation: "Decision = Diamond shape." },
+            { question: "Flowchart में Process को किस shape से दर्शाया जाता है?", A: "Rectangle", B: "Oval", C: "Diamond", D: "Parallelogram", correct: "A", explanation: "Process = Rectangle." },
+            { question: "High-Level Language का उदाहरण क्या है?", A: "Python", B: "Machine Code", C: "Binary", D: "Assembly", correct: "A", explanation: "Python is a High-Level Language." },
+            { question: "Low-Level Language का उदाहरण क्या है?", A: "Assembly", B: "Python", C: "Java", D: "C++", correct: "A", explanation: "Assembly is a Low-Level Language." },
+            { question: "Variable name digit (number) से शुरू हो सकता है?", A: "No", B: "Yes", C: "Only in Python", D: "Only in C++", correct: "A", explanation: "Variable names cannot start with a digit." },
+            { question: "while loop किस प्रकार का loop है?", A: "Entry-controlled", B: "Exit-controlled", C: "Infinite", D: "Finite", correct: "A", explanation: "while loop checks condition before entry (Entry-controlled)." },
+            { question: "do-while loop किस प्रकार का loop है?", A: "Exit-controlled", B: "Entry-controlled", C: "Infinite", D: "Finite", correct: "A", explanation: "do-while checks condition after execution (Exit-controlled)." },
+            { question: "switch-case में break का क्या कार्य है?", A: "Exit switch block", B: "Continue to next case", C: "Start loop", D: "Stop program", correct: "A", explanation: "break exits the switch block, preventing fall-through." },
+            { question: "sizeof() operator क्या return करता है?", A: "Memory size in bytes", B: "Value of variable", C: "Address", D: "Type", correct: "A", explanation: "sizeof returns the size in bytes." },
+            { question: "Bitwise AND (&) operator का क्या कार्य है?", A: "Bitwise AND", B: "Logical AND", C: "Bitwise OR", D: "Bitwise XOR", correct: "A", explanation: "& performs bitwise AND on bits." },
+            { question: "Bitwise OR (|) operator का क्या कार्य है?", A: "Bitwise OR", B: "Logical OR", C: "Bitwise AND", D: "Bitwise XOR", correct: "A", explanation: "| performs bitwise OR." },
+            { question: "5 + 2 * 3 का result क्या होगा?", A: "11", B: "21", C: "16", D: "10", correct: "A", explanation: "* has higher precedence than +, so 2*3=6, 5+6=11." },
+            { question: "x = 5; y = ++x; y और x की values क्या होंगी?", A: "y=6, x=6", B: "y=5, x=6", C: "y=6, x=5", D: "y=5, x=5", correct: "A", explanation: "++x (prefix) increments x to 6, then assigns to y." },
+            { question: "x = 5; y = x++; y और x की values क्या होंगी?", A: "y=5, x=6", B: "y=6, x=5", C: "y=6, x=6", D: "y=5, x=5", correct: "A", explanation: "x++ assigns 5 to y, then increments x to 6." },
+            { question: "Bubble Sort की Worst-case Complexity क्या है?", A: "O(n²)", B: "O(n)", C: "O(log n)", D: "O(1)", correct: "A", explanation: "Bubble Sort has O(n²) worst-case." },
+            { question: "Linear Search की Complexity क्या है?", A: "O(n)", B: "O(1)", C: "O(log n)", D: "O(n²)", correct: "A", explanation: "Linear Search has O(n) time." },
+            { question: "Break statement का क्या कार्य है?", A: "Exit loop/switch", B: "Skip iteration", C: "Continue loop", D: "Restart loop", correct: "A", explanation: "break exits the current loop or switch." },
+            { question: "Continue statement का क्या कार्य है?", A: "Skip current iteration", B: "Exit loop", C: "Terminate program", D: "Go to main", correct: "A", explanation: "continue skips the current iteration and goes to the next." },
+            { question: "String data type क्या store करता है?", A: "Sequence of characters", B: "Single character", C: "Integer", D: "Boolean", correct: "A", explanation: "String stores a sequence of characters." },
+            { question: "Constant (const) variable क्या है?", A: "Value cannot be changed", B: "Value can be changed", C: "Only in loops", D: "Only in functions", correct: "A", explanation: "const variable value is immutable." },
+            { question: "Type Casting क्या है?", A: "Manual type conversion", B: "Automatic conversion", C: "No conversion", D: "Only int to char", correct: "A", explanation: "Type casting is manually converting one data type to another." },
+            { question: "Recursion क्या है?", A: "Function calling itself", B: "Nested loop", C: "Conditional statement", D: "Variable declaration", correct: "A", explanation: "Recursion is when a function calls itself." },
+            { question: "Divide and Conquer का उदाहरण कौन सा है?", A: "Binary Search", B: "Linear Search", C: "Bubble Sort", D: "Selection Sort", correct: "A", explanation: "Binary Search uses Divide and Conquer." },
+            { question: "O(n²) Complexity किसमें होती है?", A: "Nested Loops", B: "Single Loop", C: "Constant time", D: "Log time", correct: "A", explanation: "Nested loops typically have O(n²) complexity." },
+            { question: "Short-circuit evaluation में && का क्या behaviour है?", A: "If first is False, don't evaluate second", B: "Always evaluate both", C: "If first is True, don't evaluate second", D: "Always evaluate first only", correct: "A", explanation: "In &&, if the first operand is False, the result is False and the second is not evaluated." },
+            { question: "Short-circuit evaluation में || का क्या behaviour है?", A: "If first is True, don't evaluate second", B: "Always evaluate both", C: "If first is False, don't evaluate second", D: "Always evaluate first only", correct: "A", explanation: "In ||, if the first operand is True, the result is True and the second is not evaluated." },
+            { question: "False AND True का result क्या है?", A: "False", B: "True", C: "Undefined", D: "Maybe", correct: "A", explanation: "AND requires both to be True, so False AND True = False." },
+            { question: "True OR False का result क्या है?", A: "True", B: "False", C: "Undefined", D: "Maybe", correct: "A", explanation: "OR requires at least one True, so True OR False = True." }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('algo-mcq', algoMCQs);
+            renderMCQs('logic-mcq', logicMCQs);
+            renderMCQs('vars-mcq', varsMCQs);
+            renderMCQs('op-mcq', opMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

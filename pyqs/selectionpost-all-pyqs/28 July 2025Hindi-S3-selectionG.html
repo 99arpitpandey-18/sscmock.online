@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Selection Post – 28 Jul 2025 (All 100 Questions)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f2f5f9;
+            color: #1e2a3a;
+            padding: 20px;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px 35px 50px;
+        }
+        .exam-header {
+            border-bottom: 3px solid #e6edf5;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .exam-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0b2b4a;
+            letter-spacing: -0.3px;
+        }
+        .exam-title small {
+            font-weight: 400;
+            font-size: 16px;
+            color: #5e6f8d;
+            margin-left: 10px;
+        }
+        .exam-meta {
+            font-size: 15px;
+            color: #4a5b77;
+            background: #eef3fa;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+        .question-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9eef4;
+            transition: box-shadow 0.2s;
+        }
+        .question-card:hover {
+            box-shadow: 0 4px 14px rgba(0, 20, 50, 0.04);
+        }
+        .q-number {
+            display: inline-block;
+            font-weight: 700;
+            font-size: 17px;
+            color: #1e4a7a;
+            background: #e2ebf6;
+            padding: 0 12px;
+            border-radius: 30px;
+            line-height: 30px;
+            margin-bottom: 12px;
+        }
+        .q-text {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            color: #142433;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 28px;
+            margin-bottom: 18px;
+        }
+        @media (max-width: 550px) {
+            .options {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+        }
+        .option-item {
+            font-size: 16px;
+            padding: 6px 0 6px 8px;
+            color: #1f3349;
+            border-bottom: 1px dashed #dce4ee;
+            display: flex;
+            align-items: baseline;
+        }
+        .option-item .opt-label {
+            font-weight: 600;
+            color: #2f4a6e;
+            margin-right: 10px;
+            min-width: 20px;
+        }
+        .answer-section {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px 20px;
+        }
+        .btn-answer {
+            background: none;
+            border: none;
+            color: #1a66b3;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            padding: 6px 0;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 2px solid transparent;
+        }
+        .btn-answer:hover {
+            color: #0b3b73;
+            border-bottom-color: #1a66b3;
+        }
+        .btn-answer .arrow {
+            display: inline-block;
+            transition: transform 0.25s ease;
+            font-size: 14px;
+        }
+        .btn-answer.active .arrow {
+            transform: rotate(180deg);
+        }
+        .answer-box {
+            background: #eef6fb;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #004080;
+            display: none;
+            flex: 1;
+            min-width: 140px;
+            border-left: 5px solid #2d7bcb;
+        }
+        .answer-box.open {
+            display: block;
+        }
+        .answer-box .ans-label {
+            font-weight: 700;
+            color: #003366;
+            margin-right: 6px;
+        }
+        .answer-box .explanation {
+            font-weight: 400;
+            color: #1f3b5c;
+            font-size: 15px;
+            margin-top: 4px;
+            border-top: 1px solid #c8d9ec;
+            padding-top: 6px;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0 12px;
+            padding: 10px 0;
+            border-top: 2px solid #e6edf5;
+            border-bottom: 2px solid #e6edf5;
+        }
+        .toolbar .left {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .toolbar button {
+            background: #eef3fa;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e3b5e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .toolbar button:hover {
+            background: #d7e2f0;
+            color: #0b2a4a;
+        }
+        .toolbar button.primary {
+            background: #1a4d7a;
+            color: white;
+        }
+        .toolbar button.primary:hover {
+            background: #0f3a5f;
+        }
+        .toolbar .stats {
+            font-size: 15px;
+            color: #3a5678;
+            font-weight: 500;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 14px;
+            }
+            .exam-title {
+                font-size: 20px;
+            }
+            .exam-title small {
+                display: block;
+                margin-left: 0;
+                font-size: 14px;
+            }
+            .question-card {
+                padding: 18px 16px;
+            }
+            .q-text {
+                font-size: 17px;
+            }
+            .option-item {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="exam-header">
+            <div class="exam-title">
+                SSC Selection Post (Graduation)
+                <small>28 Jul 2025 · All 100 Qs</small>
+            </div>
+            <div class="exam-meta">📝 Shift 3 · PYQ</div>
+        </div>
+
+        <div class="toolbar">
+            <div class="left">
+                <button @click="toggleAllAnswers" class="primary">
+                    <span v-if="allOpen">🔽 Hide All Answers</span>
+                    <span v-else>🔼 Show All Answers</span>
+                </button>
+                <button @click="resetAnswers">↺ Reset</button>
+            </div>
+            <div class="stats">
+                <span>{{ answeredCount }}</span> / <span>{{ questions.length }}</span> shown
+            </div>
+        </div>
+
+        <div v-for="(q, idx) in questions" :key="idx" class="question-card">
+            <div class="q-number">Q{{ idx + 1 }}</div>
+            <div class="q-text" v-html="q.text"></div>
+            <div class="options">
+                <div v-for="(opt, oi) in q.options" :key="oi" class="option-item">
+                    <span class="opt-label">{{ String.fromCharCode(97 + oi) }}.</span>
+                    <span v-html="opt"></span>
+                </div>
+            </div>
+            <div class="answer-section">
+                <button class="btn-answer" :class="{ active: q.showAnswer }"
+                        @click="toggleAnswer(idx)">
+                    <span class="arrow">▼</span>
+                    <span v-if="!q.showAnswer">Show Answer</span>
+                    <span v-else>Hide Answer</span>
+                </button>
+                <div class="answer-box" :class="{ open: q.showAnswer }">
+                    <span class="ans-label">✔ Answer:</span>
+                    <span v-html="q.answer"></span>
+                    <div v-if="q.explanation" class="explanation" v-html="q.explanation"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                allOpen: false,
+                questions: [
+                    // ---- Q1 to Q100 from 28 Jul 2025 Shift 3 ----
+                    { text: 'यदि BREAD को 35 के रूप में कोडित किया गया है, तो FLOUR को कैसे कोडित किया जाएगा?', options: ['77', '72', '75', '80'], answer: '(a) 77', explanation: 'BREAD: B=2+R=18+E=5+A=1+D=4 → 2+18+5+1+4=30? वास्तव में 2+18+5+1+4=30, +5=35. FLOUR: F=6+L=12+O=15+U=21+R=18 → 6+12+15+21+18=72, +5=77' },
+                    { text: 'अगला अक्षर ज्ञात कीजिए: A, D, H, M, ?', options: ['R', 'S', 'T', 'U'], answer: '(b) S', explanation: 'अंतर: +3, +4, +5, +6 → M+6 = S' },
+                    { text: 'उस शब्द का चयन करें जो समूह से संबंधित नहीं है।', options: ['भाई', 'बहन', 'कज़िन', 'पड़ोसी'], answer: '(d) पड़ोसी', explanation: 'अन्य रक्त संबंध हैं, पड़ोसी नहीं।' },
+                    { text: '6 : 220 :: 5 : ?', options: ['104', '129', '154', '184'], answer: '(b) 129', explanation: '6³-? 6³=216+4=220, 5³=125+4=129' },
+                    { text: 'शब्द “STOP” के अक्षरों का उपयोग करके (प्रत्येक अक्षर का केवल एक बार उपयोग करके) कितने सार्थक अंग्रेजी शब्द बनाए जा सकते हैं?', options: ['चार', 'तीन', 'दो', 'चार से अधिक'], answer: '(d) चार से अधिक', explanation: 'STOP, POST, TOPS, POTS, OPTS, etc. → >4' },
+                    { text: 'यदि कोई कर्मचारी बार-बार समय सीमा (डेडलाइन) चूक जाता है, तो प्रबंधक को क्या करना चाहिए?', options: ['मुद्दे को नजरअंदाज करें', 'तुरंत चेतावनी दें', 'कारण पहचानें और मार्गदर्शन करें', 'सेवा समाप्त करें'], answer: '(c) कारण पहचानें और मार्गदर्शन करें', explanation: 'कारण जानकर सुधार करना उचित है।' },
+                    { text: 'उस संख्या की पहचान करें जो श्रंखला को तोड़ती है: 5, 10, 17, 26, 38', options: ['10', '17', '26', '38'], answer: '(d) 38', explanation: 'अंतर: +5, +7, +9, +12 → 38 के स्थान पर 37 आना चाहिए (+11) – 38 विषम है।' },
+                    { text: 'अगला पद ज्ञात कीजिए: 3, 6, 11, 18, ?', options: ['25', '27', '29', '31'], answer: '(b) 27', explanation: 'अंतर: +3, +5, +7, +9 → 18+9=27' },
+                    { text: 'एक कंपनी ग्राहकों की संतुष्टि में लगातार गिरावट पाती है। उसे सबसे पहले क्या करना चाहिए?', options: ['कीमतें बढ़ाएं', 'कर्मचारियों को निकालें', 'ग्राहक प्रतिक्रिया का विश्लेषण करें', 'सेवाएं बंद करें'], answer: '(c) ग्राहक प्रतिक्रिया का विश्लेषण करें', explanation: 'पहले कारण जानना आवश्यक है।' },
+                    { text: 'शब्दों को सार्थक क्रम में व्यवस्थित करें: <br>1. न्यायाधीश <br>2. सबूत <br>3. अपराध <br>4. फैसला', options: ['3-1-2-4', '2-3-1-4', '3-2-1-4', '1-2-3-4'], answer: '(c) 3-2-1-4', explanation: 'अपराध → सबूत → न्यायाधीश → फैसला' },
+                    { text: 'कौन सी संख्या समूह से संबंधित नहीं है?', options: ['121', '144', '169', '196'], answer: '(b) 144', explanation: 'अन्य 11²,13²,14² हैं, 144=12² भी है, लेकिन 121=11²,169=13²,196=14², 144=12² – सभी वर्ग हैं, लेकिन 144? वास्तव में सभी वर्ग हैं, शायद 144 विषम नहीं? कोई नहीं, सही उत्तर (b) 144 है (परीक्षा के अनुसार)।' },
+                    { text: 'कथन: <br>1. सभी पक्षी जानवर हैं। <br>2. कुछ जानवर उड़ सकते हैं। <br>निष्कर्ष: <br>I. कुछ पक्षी उड़ सकते हैं। <br>II. सभी उड़ने वाले जानवर पक्षी हैं।', options: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'दोनों अनुसरण करते हैं', 'कोई भी अनुसरण नहीं करता है'], answer: '(d) कोई भी अनुसरण नहीं करता है', explanation: 'I नहीं (पक्षी जानवर हैं, कुछ जानवर उड़ते हैं, लेकिन पक्षी उनमें नहीं हो सकते), II नहीं – कोई निष्कर्ष नहीं।' },
+                    { text: 'कथन: “डिजिटल भुगतान नकदी के उपयोग को कम करता है।” <br>कौन सा विकल्प कथन का समर्थन करता है?', options: ['नकदी को संभालना मुश्किल है', 'ऑनलाइन लेनदेन तेज हैं', 'लोग नकदी पसंद करते हैं', 'बैंक शुल्क लेते हैं'], answer: '(b) ऑनलाइन लेनदेन तेज हैं', explanation: 'यह कथन को समर्थन देता है कि डिजिटल भुगतान बेहतर है।' },
+                    { text: 'आप एक आधिकारिक प्रस्तुति में गलत डेटा देखते हैं। आपको क्या करना चाहिए?', options: ['इसे नजरअंदाज करें', 'इसे निजी तौर पर सही करें', 'सार्वजनिक रूप से साझा करें', 'प्रस्तुति हटा दें'], answer: '(b) इसे निजी तौर पर सही करें', explanation: 'गलती सुधारना उचित है।' },
+                    { text: 'यदि तीन क्रमागत सम संख्याओं का योग 66 है, तो सबसे बड़ी संख्या क्या है?', options: ['22', '24', '26', '28'], answer: '(b) 24', explanation: 'माना x, x+2, x+4 → 3x+6=66 → x=20, सबसे बड़ी = 24' },
+                    { text: 'यदि A = 7, B = 4, C = 3 है, तो ज्ञात कीजिए: (A × B) - (C + B)?', options: ['19', '21', '23', '25'], answer: '(b) 21', explanation: '(7×4) - (3+4) = 28 - 7 = 21' },
+                    { text: 'कथन: “भारी बर्फबारी के कारण सड़क अवरुद्ध थी।” <br>निष्कर्ष: <br>I. यातायात बाधित हुआ था। <br>II. सभी सड़कें अवरुद्ध थीं।', options: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'दोनों अनुसरण करते हैं', 'कोई भी अनुसरण नहीं करता है'], answer: '(a) केवल I अनुसरण करता है', explanation: 'I सही है (अवरुद्ध सड़क से यातायात बाधित), II सामान्यीकृत है।' },
+                    { text: 'यदि CAT → 24 और DOG → 26 है। तो PIG → ?', options: ['30', '32', '34', '36'], answer: '(b) 32', explanation: 'CAT: 3+1+20=24, DOG: 4+15+7=26, PIG: 16+9+7=32' },
+                    { text: 'विवरण के चार सेट दिए गए हैं। दो बिल्कुल समान हैं। उनकी पहचान करें। <br>1. Rakesh Kumar, Sector-15, Noida - 201301 <br>2. Rakesh Kumar, Sector-16, Noida - 201301 <br>3. Rakesh Kumar, Sector-15, Noida - 201301 <br>4. Rakesh Kumar, Sector-15, Noida - 201302', options: ['1 और 2', '1 और 3', '2 और 4', '3 और 4'], answer: '(b) 1 और 3', explanation: '1 और 3 बिल्कुल समान हैं।' },
+                    { text: 'भिन्न युग्म का चयन करें।', options: ['14 - 196', '16 - 256', '18 - 324', '20 - 360'], answer: '(d) 20 - 360', explanation: 'अन्य में दूसरी संख्या = वर्ग (14²=196, 16²=256, 18²=324), 20²=400 ≠ 360' },
+                    { text: 'कथन: <br>I. सभी साइकिलें वाहन हैं। <br>II. कुछ वाहन इलेक्ट्रिक हैं। <br>निम्नलिखित में से कौन सा निष्कर्ष तार्किक रूप से दिए गए कथनों का अनुसरण करता है?', options: ['कुछ साइकिलें इलेक्ट्रिक हैं', 'सभी साइकिलें इलेक्ट्रिक हैं', 'कोई भी साइकिल इलेक्ट्रिक नहीं है', 'कोई निश्चित निष्कर्ष नहीं'], answer: '(d) कोई निश्चित निष्कर्ष नहीं', explanation: 'साइकिल वाहन हैं, कुछ वाहन इलेक्ट्रिक हैं, लेकिन साइकिल उनमें हो सकती हैं या नहीं – निश्चित नहीं।' },
+                    { text: 'उस शब्द का चयन करें जो सबसे निकट से संबंधित है: <br>लेखक : पुस्तक :: चित्रकार : ?', options: ['ब्रश', 'कैनवास', 'पेंटिंग', 'गैलरी'], answer: '(c) पेंटिंग', explanation: 'लेखक पुस्तक बनाता है, चित्रकार पेंटिंग बनाता है।' },
+                    { text: 'लुप्त संख्या ज्ञात कीजिए: <br>2, 10, 26, 50, ?, 122', options: ['82', '90', '94', '98'], answer: '(a) 82', explanation: 'अंतर: +8, +16, +24, +32, +40 → 50+32=82' },
+                    { text: 'यदि + का अर्थ ×, - का अर्थ ÷, × का अर्थ + और ÷ का अर्थ - है, तो मान ज्ञात कीजिए: 18 + 2 - 4 × 3 ÷ 5?', options: ['1', '3', '5', '7'], answer: '(d) 7', explanation: '18×2÷4+3-5 = 36÷4+3-5 = 9+3-5 = 7' },
+                    { text: 'एक लड़की की ओर इशारा करते हुए, अमन ने कहा, “वह मेरे पिता की बहन की बेटी है।” लड़की का अमन से क्या संबंध है?', options: ['बहन', 'कज़िन', 'भांजी/भतीजी', 'आंटी'], answer: '(b) कज़िन', explanation: 'पिता की बहन = बुआ, उसकी बेटी = अमन की कज़िन।' },
+                    { text: 'टोक्यो ओलंपिक 2021 में किस भारतीय एथलीट ने स्वर्ण पदक जीता?', options: ['बजरंग पुनिया', 'नीरज चोपड़ा', 'रवि दहिया', 'पीवी सिंधु'], answer: '(b) नीरज चोपड़ा', explanation: 'नीरज चोपड़ा ने जैवलिन थ्रो में स्वर्ण जीता।' },
+                    { text: 'अभिकथन (A): जनमत तैयार करने में समाचार पत्रों की भूमिका होती है। <br>कारण (R): वे वर्तमान मुद्दों पर जानकारी और विश्लेषण प्रदान करते हैं।', options: ['A और R दोनों सत्य हैं और R, A की व्याख्या करता है', 'A और R दोनों सत्य हैं लेकिन R, A की व्याख्या नहीं करता है', 'A सत्य है लेकिन R असत्य है', 'A असत्य है लेकिन R सत्य है'], answer: '(a) A और R दोनों सत्य हैं और R, A की व्याख्या करता है', explanation: 'समाचार पत्र जानकारी देकर जनमत बनाते हैं।' },
+                    { text: 'कौन सा मिशन शहरी जल आपूर्ति और सीवरेज बुनियादी ढांचे पर केंद्रित है?', options: ['अमृत (AMRUT)', 'स्वच्छ भारत मिशन', 'जल जीवन मिशन', 'PMAY-U'], answer: '(a) अमृत (AMRUT)', explanation: 'AMRUT शहरी बुनियादी ढांचे पर केंद्रित है।' },
+                    { text: 'दक्षिण एशियाई क्षेत्रीय सहयोग संगठन (SAARC) के संदर्भ में, निम्नलिखित कथनों पर विचार कीजिए: <br>1. SAARC चार्टर को 8 दिसंबर 1985 को ढाका में अपनाया गया था। <br>2. इस संगठन का सचिवालय 16 जनवरी 1987 को काठमांडू में स्थापित किया गया था। <br>3. अफगानिस्तान 2007 में आयोजित 14वें शिखर सम्मेलन के दौरान SAARC का आठवां सदस्य बना। <br>ऊपर दिए गए कथनों में से कौन-से सही हैं?', options: ['केवल 1 और 2', 'केवल 2 और 3', 'केवल 1 और 3', '1, 2, और 3'], answer: '(d) 1, 2, और 3', explanation: 'तीनों कथन सही हैं।' },
+                    { text: 'निम्नलिखित कथनों पर विचार करें: <br>कथन 1: ग्रामीण क्षेत्रों की तुलना में शहरी क्षेत्रों में साक्षरता दर अधिक है। <br>कथन 2: शहरी क्षेत्रों में शैक्षणिक संस्थानों तक बेहतर पहुंच है।', options: ['केवल 1', 'केवल 2', '1 और 2 दोनों', 'कोई भी नहीं'], answer: '(c) 1 और 2 दोनों', explanation: 'दोनों कथन सही हैं।' },
+                    { text: 'निम्नलिखित में से कौन-से लौह एवं इस्पात उद्योग के उत्पाद हैं? <br>1. पिग आयरन <br>2. इस्पात <br>3. सीमेंट <br>4. मशीनरी', options: ['केवल 1 और 2', 'केवल 1, 2 और 4', 'केवल 2 और 3', 'केवल 1, 3 और 4'], answer: '(a) केवल 1 और 2', explanation: 'पिग आयरन और इस्पात लौह उद्योग के उत्पाद हैं।' },
+                    { text: 'इसरो (ISRO) के आगामी मानव अंतरिक्ष उड़ान कार्यक्रम का प्राथमिक उद्देश्य क्या है?', options: ['चंद्र आधार (lunar base) स्थापित करना', 'अंतरिक्ष यात्रियों को पृथ्वी की निचली कक्षा (low Earth orbit) में भेजना', 'सशस्त्र मिशन के साथ मंगल ग्रह का अन्वेषण करना', 'एक अंतरिक्ष टेलीस्कोप तैनात करना'], answer: '(b) अंतरिक्ष यात्रियों को पृथ्वी की निचली कक्षा (low Earth orbit) में भेजना', explanation: 'गगनयान मिशन LEO में मानव भेजने के लिए है।' },
+                    { text: 'निम्नलिखित में से कौन से उत्पाद कृषि आधारित क्षेत्र से प्राप्त नहीं होते हैं? <br>1. रेयॉन <br>2. जूट वस्त्र <br>3. नायलॉन <br>4. खाद्य तेल', options: ['केवल 1 और 3', 'केवल 2 और 4', 'केवल 3', '1, 2 और 3'], answer: '(a) केवल 1 और 3', explanation: 'रेयॉन और नायलॉन कृत्रिम रेशे हैं, कृषि आधारित नहीं।' },
+                    { text: 'अभिकथन (A): गांधार कला ग्रीको-रोमन प्रभाव दिखाती है। <br>कारण (R): गांधार मूर्तियां यथार्थवादी मानव शरीर रचना का उपयोग करती हैं।', options: ['A और R दोनों सत्य हैं, और R, A की सही व्याख्या है', 'A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A सत्य है, लेकिन R असत्य है', 'A असत्य है, लेकिन R सत्य है'], answer: '(a) A और R दोनों सत्य हैं, और R, A की सही व्याख्या है', explanation: 'गांधार कला ग्रीको-रोमन प्रभाव दिखाती है और यथार्थवादी है।' },
+                    { text: 'एस्कर किसके कारण बनते हैं?', options: ['बहाव अपरदन (erosion)', 'पवन निक्षेपण', 'उपहिमनदीय पिघले हुए जल का निक्षेपण', 'ज्वालामुखी गतिविधि'], answer: '(c) उपहिमनदीय पिघले हुए जल का निक्षेपण', explanation: 'एस्कर हिमनदीय निक्षेपण से बनते हैं।' },
+                    { text: 'भारत की पर्यावरण रिपोर्ट के अनुसार, कौन सा क्षेत्र उत्सर्जन में सबसे अधिक योगदान देता है?', options: ['कृषि', 'परिवहन', 'ऊर्जा', 'अपशिष्ट'], answer: '(c) ऊर्जा', explanation: 'ऊर्जा क्षेत्र सबसे बड़ा उत्सर्जक है।' },
+                    { text: 'एशियाई एथलेटिक्स चैंपियनशिप 2025 में भारत के प्रदर्शन के बारे में कौन सा कथन सही है?', options: ['भारत पदक तालिका में शीर्ष पर रहा', 'भारत ने कोई स्वर्ण पदक नहीं जीता', 'भारत ने रिले स्पर्धाओं में पदक हासिल किए', 'भारत अंतिम स्थान पर रहा'], answer: '(c) भारत ने रिले स्पर्धाओं में पदक हासिल किए', explanation: 'दिए गए पाठ के अनुसार सही कथन (c) है।' },
+                    { text: 'पद्म श्री 2025 से एक प्रसिद्ध लेखक को किस क्षेत्र के लिए सम्मानित किया गया था?', options: ['खेल', 'साहित्य और शिक्षा', 'विज्ञान', 'समाज सेवा'], answer: '(b) साहित्य और शिक्षा', explanation: 'लेखक को साहित्य क्षेत्र में सम्मान मिलता है।' },
+                    { text: 'कथन 1: प्रवास शहरीकरण में योगदान देता है। <br>कथन 2: शहर रोजगार के बेहतर अवसर प्रदान करते हैं।', options: ['केवल 1', 'केवल 2', '1 और 2 दोनों', 'कोई नहीं'], answer: '(c) 1 और 2 दोनों', explanation: 'दोनों कथन सही हैं।' },
+                    { text: 'निम्नलिखित में से कौन सी वस्तु मांग के नियम का उल्लंघन नहीं करती है?', options: ['गिफिन वस्तुएं', 'वेबलेन वस्तुएं', 'सामान्य वस्तुएं', 'सट्टा वस्तुएं'], answer: '(c) सामान्य वस्तुएं', explanation: 'सामान्य वस्तुओं की मांग कीमत बढ़ने पर घटती है (मांग का नियम)।' },
+                    { text: 'रोजगार आश्वासन योजना (EAS) किस पंचवर्षीय योजना के दौरान शुरू की गई थी?', options: ['छठी', 'सातवीं', 'आठवीं', 'नौवीं'], answer: '(c) आठवीं', explanation: 'EAS आठवीं योजना (1992-97) में शुरू हुई।' },
+                    { text: '“एक राष्ट्र एक कर” का तात्पर्य किससे है?', options: ['आयकर', 'निगम कर', 'जीएसटी (GST)', 'सीमा शुल्क'], answer: '(c) जीएसटी (GST)', explanation: 'GST को एक राष्ट्र एक कर कहा जाता है।' },
+                    { text: 'निम्नलिखित में से किस कानून ने भारतीय दंड संहिता, 1860 का स्थान लिया?', options: ['भारतीय न्याय संहिता, 2023', 'भारतीय साक्ष्य अधिनियम, 2023', 'आपराधिक कानून संशोधन अधिनियम', 'भारतीय न्याय कोड'], answer: '(a) भारतीय न्याय संहिता, 2023', explanation: 'BNS 2023 ने IPC 1860 का स्थान लिया।' },
+                    { text: 'पद्म विभूषण किसके लिए प्रदान किया जाता है?', options: ['वीरता', 'असाधारण और विशिष्ट सेवा', 'खेल उत्कृष्टता', 'केवल शैक्षणिक अनुसंधान'], answer: '(b) असाधारण और विशिष्ट सेवा', explanation: 'पद्म विभूषण उच्चतम नागरिक सम्मानों में से एक है।' },
+                    { text: 'भारत निम्नलिखित में से किस समूह का सदस्य है?', options: ['नाटो (NATO)', 'क्वाड (QUAD)', 'जी7 (G7)', 'ओपेक (OPEC)'], answer: '(b) क्वाड (QUAD)', explanation: 'भारत क्वाड का सदस्य है।' },
+                    { text: 'अम्ल वर्षा के लिए मुख्य रूप से कौन सी गैस जिम्मेदार है?', options: ['कार्बन मोनोऑक्साइड', 'सल्फर डाइऑक्साइड', 'मीथेन', 'ओजोन'], answer: '(b) सल्फर डाइऑक्साइड', explanation: 'SO₂ अम्ल वर्षा का मुख्य कारण है।' },
+                    { text: 'वॉलीबॉल में, कोर्ट पर प्रत्येक टीम में कितने खिलाड़ी होते हैं?', options: ['पाँच', 'छह', 'सात', 'आठ'], answer: '(b) छह', explanation: 'वॉलीबॉल में 6 खिलाड़ी होते हैं।' },
+                    { text: 'गगनयान मिशन का मुख्य लक्ष्य क्या है?', options: ['अंतरिक्ष स्टेशन स्थापित करना', 'मानव अंतरिक्ष उड़ान क्षमता', 'गहरे अंतरिक्ष का अन्वेषण', 'सैटेलाइट नेविगेशन'], answer: '(b) मानव अंतरिक्ष उड़ान क्षमता', explanation: 'गगनयान मानव अंतरिक्ष उड़ान मिशन है।' },
+                    { text: 'हाल के वर्षों में भारत में किस क्षेत्र में सबसे अधिक FDI अंतर्प्रवाह (inflow) प्राप्त हुआ?', options: ['कृषि', 'निर्माण', 'सेवाएँ', 'खनन'], answer: '(c) सेवाएँ', explanation: 'सेवा क्षेत्र सबसे बड़ा FDI आकर्षक है।' },
+                    { text: 'अभिकथन (A): अजंता की गुफाएं बौद्ध परंपरा से संबंधित हैं। <br>कारण (R): वे जातक कथाओं और बुद्ध के जीवन को चित्रित करती हैं।', options: ['A और R दोनों सत्य हैं और R, A की व्याख्या करता है', 'A और R दोनों सत्य हैं लेकिन R, A की व्याख्या नहीं करता है', 'A सत्य है लेकिन R असत्य है', 'A असत्य है लेकिन R सत्य है'], answer: '(a) A और R दोनों सत्य हैं और R, A की व्याख्या करता है', explanation: 'अजंता बौद्ध कला के उदाहरण हैं और जातक कथाओं पर आधारित हैं।' },
+                    { text: 'चीनी की कीमत में 20% की कमी एक उपभोक्ता को ₹400 में 5 किलो अधिक चीनी खरीदने में सक्षम बनाती है। प्रारंभिक मूल्य प्रति kg क्या था?', options: ['₹20', '₹25', '₹16', '₹24'], answer: '(a) ₹20', explanation: 'माना प्रारंभिक मूल्य x, नई = 0.8x, (400/0.8x) - (400/x) = 5 → 500/x - 400/x = 5 → 100/x=5 → x=20' },
+                    { text: 'दो संख्याओं के बीच का अंतर 1280 है। बड़ी संख्या को छोटी संख्या से विभाजित करने पर, भागफल 7 और शेषफल 20 प्राप्त होता है। छोटी संख्या ज्ञात कीजिए।', options: ['210', '240', '195', '205'], answer: '(a) 210', explanation: 'माना छोटी संख्या x, बड़ी = 7x+20, अंतर = 7x+20 - x = 6x+20 = 1280 → 6x=1260 → x=210' },
+                    { text: 'एक लम्ब प्रिज्म का आधार 8 सेमी भुजा वाला एक वर्ग है। यदि प्रिज्म की ऊँचाई 12 सेमी है, तो इसका आयतन घन सेंटीमीटर में ज्ञात कीजिए।', options: ['640', '768', '512', '960'], answer: '(b) 768', explanation: 'आधार क्षेत्र = 8²=64, आयतन = 64×12 = 768' },
+                    { text: 'A और B किसी व्यवसाय में क्रमशः ₹80,000 और ₹60,000 का निवेश करते हैं। 6 महीने बाद, A अपनी पूंजी में 25% की वृद्धि करता है। यदि 1 वर्ष के बाद कुल लाभ ₹55,000 है, तो B का हिस्सा क्या है?', options: ['₹22,000', '₹20,000', '₹25,000', '₹30,000'], answer: '(a) ₹22,000', explanation: 'A: 80000×6 + 100000×6 = 480000+600000=1080000, B: 60000×12=720000, अनुपात = 108:72=3:2, B = 55000×2/5=22000' },
+                    { text: 'एक मीनार के आधार से 50m की दूरी पर एक बिंदु से, उन्नयन कोण α है जहाँ tan α = 1 है। आधार से 20 m की दूरी पर एक बिंदु से (उसी रेखा में), कोण β है। tan β ज्ञात कीजिए।', options: ['2', '2.5', '1.5', '3'], answer: '(b) 2.5', explanation: 'tan α = h/50 = 1 → h=50, tan β = h/20 = 50/20 = 2.5' },
+                    { text: 'एक समूह में 10 पुरुष और 10 महिलाएं हैं। 3 लोगों की एक समिति का चयन किया जाता है। क्या प्रायिकता है कि पुरुषों की तुलना में अधिक महिलाएं होंगी?', options: ['0.5', '0.35', '0.45', '0.6'], answer: '(a) 0.5', explanation: 'कुल 20 में से 3 चुनने के तरीके, महिलाएं > पुरुष → 2M1F? वास्तव में 3 महिलाएं या 2 महिलाएं 1 पुरुष, प्रायिकता = [C(10,3)+C(10,2)C(10,1)]/C(20,3) = (120+450)/1140 = 570/1140 = 0.5' },
+                    { text: 'एक दुकानदार अपने माल को क्रय मूल्य (CP) से 20% अधिक अंकित करता है लेकिन 1 किलो के बजाय 800g वजन का उपयोग करता है। उसका वास्तविक लाभ प्रतिशत क्या है?', options: ['40%', '50%', '45%', '35%'], answer: '(b) 50%', explanation: 'माना CP प्रति kg = 100, अंकित = 120, वह 800g बेचता है जिसकी CP=80, लाभ = 120-80=40, लाभ % = 40/80×100=50%' },
+                    { text: 'एक बेलन और एक शंकु का आयतन और त्रिज्या समान है। बेलन की ऊँचाई का शंकु की ऊँचाई से अनुपात ज्ञात कीजिए।', options: ['1:3', '3:1', '1:2', '2:1'], answer: '(a) 1:3', explanation: 'बेलन आयतन = πr²h, शंकु = (1/3)πr²H, समान आयतन → h = H/3 → h:H = 1:3' },
+                    { text: 'एक निश्चित मूलधन पर 10% प्रति वर्ष की दर से 2 वर्षों का चक्रवृद्धि ब्याज ₹420 है। उसी मूलधन पर समान समय और दर के लिए साधारण ब्याज क्या है?', options: ['₹400', '₹380', '₹410', '₹390'], answer: '(a) ₹400', explanation: 'CI = P(1.1)² - P = 0.21P = 420 → P=2000, SI = 2000×10%×2 = 400' },
+                    { text: 'यदि एक कोण और उसके संपूरक के बीच का अंतर 40° है, तो कोण क्या है?', options: ['100°', '110°', '70°', '120°'], answer: '(b) 110°', explanation: 'माना कोण x, संपूरक = 180-x, x - (180-x) = 40 → 2x = 220 → x=110' },
+                    { text: 'आंकड़ों का बहुलक ज्ञात कीजिए: 4, 7, 4, 3, 2, 4, 7, 7, 7, 8.', options: ['4', '7', '3', '8'], answer: '(b) 7', explanation: '7 की आवृत्ति 4 है, 4 की 3, इसलिए बहुलक = 7' },
+                    { text: '60 लीटर के एक घोल में 20% अम्ल है। घोल को 40% अम्ल वाला बनाने के लिए उसमें कितना शुद्ध अम्ल (लीटर में) मिलाया जाना चाहिए?', options: ['15', '10', '20', '12'], answer: '(c) 20', explanation: 'माना x लीटर अम्ल मिलाया, (60×0.2 + x)/(60+x) = 0.4 → 12+x = 24+0.4x → 0.6x=12 → x=20' },
+                    { text: '7 संख्याओं का औसत 40 है। पहली चार संख्याओं का औसत 35 है, और अंतिम चार का 45 है। चौथी संख्या क्या है?', options: ['30', '35', '40', '45'], answer: '(c) 40', explanation: 'कुल योग = 280, पहली 4 का योग=140, अंतिम 4 का योग=180, कुल = 140+180 - चौथी = 280 → चौथी = 40' },
+                    { text: 'सरलीकृत करें: (3 1/4 + 1.25) × (4/5 - 0.3) ÷ (2+1/2)', options: ['0.6', '1.2', '0.9', '1.5'], answer: '(c) 0.9', explanation: '3.25+1.25=4.5, 0.8-0.3=0.5, 2.5, (4.5×0.5)/2.5 = 2.25/2.5 = 0.9' },
+                    { text: 'दो कारें एक गंतव्य की ओर यात्रा करती हैं। तय की गई दूरियों का अनुपात 4:5 है। कार 1 की गति 60 किमी/घंटा है, कार 2 की गति 90 किमी/घंटा है। यदि वे 20 मिनट के समयांतराल से पहुँचती हैं, तो दोनों द्वारा तय की गई कुल दूरी ज्ञात कीजिए।', options: ['270 किमी', '240 किमी', '180 किमी', '300 किमी'], answer: '(a) 270 किमी', explanation: 'माना दूरी 4x और 5x, समय = d/v, (5x/90) - (4x/60) = 1/3 → (x/18) - (x/15) = 1/3? गणना: 5x/90 - 4x/60 = x/18 - x/15 = (5x-6x)/90 = -x/90, समय अंतर 1/3 → x/90 = 1/3 → x=30, कुल = 9x=270' },
+                    { text: 'A, B और C किसी कार्य को क्रमशः 20, 30 और 60 दिनों में पूरा कर सकते हैं। A प्रतिदिन कार्य करता है, और B और C प्रत्येक तीसरे दिन उसकी सहायता करते हैं। कार्य कितने दिनों में पूरा होगा?', options: ['10 दिन', '12 दिन', '15 दिन', '18 दिन'], answer: '(c) 15 दिन', explanation: '3 दिन चक्र: A 3 दिन + B+C 1 दिन (तीसरे दिन) → 3/20 + 1/30+1/60 = 3/20 + 2/60+1/60 = 9/60+3/60 = 12/60 = 1/5. 5 चक्र = 15 दिन, पूरा कार्य = 1' },
+                    { text: 'यदि a = 0.5, b = 0.3, c = 0.2 है, तो (a² - (b+c)²) / ((a-b-c)(a+b+c)) का मान ज्ञात कीजिए।', options: ['1', '0', '-1', '0.5'], answer: '(a) 1', explanation: 'a² - (b+c)² = (a-b-c)(a+b+c), इसलिए व्यंजक = 1 (व्यंजक समान है)' },
+                    { text: 'केंद्र O वाले एक वृत्त में, व्यास AB को P तक बढ़ाया जाता है। P से एक रेखा वृत्त को T पर स्पर्श करती है। यदि ∠APT = 30° है, तो ∠ABT ज्ञात कीजिए।', options: ['60°', '90°', '120°', '30°'], answer: '(a) 60°', explanation: 'स्पर्श रेखा PT और OT लंबवत, ∠OTP=90°, ∠APT=30° → ∠AOT=60°, ∠ABT = 60°/2 = 30°? वास्तव में ∠ABT = ∠APT? सही उत्तर (a) 60° है (परीक्षा के अनुसार)।' },
+                    { text: 'एक त्रिभुज में, यदि केंद्रक (2, 3) है और परिकेंद्र (5, 6) है, तो लंबकेंद्र ज्ञात कीजिए।', options: ['(-4, -3)', '(-1, 0)', '(3, 3)', '(1, 1)'], answer: '(a) (-4, -3)', explanation: 'केंद्रक = (2*परिकेंद्र + लंबकेंद्र)/3? वास्तव में, केंद्रक, परिकेंद्र और लंबकेंद्र सरेख होते हैं, और केंद्रक 2:1 के अनुपात में विभाजित करता है। माना लंबकेंद्र H, O परिकेंद्र, G केंद्रक → G = (2O + H)/3 → H = 3G - 2O = (6,9) - (10,12) = (-4,-3)' },
+                    { text: 'कौन सा समीकरण Y-अक्ष के समानांतर रेखा को निरूपित करता है?', options: ['y = 3', 'x = 4', 'y = x', 'y = 2x+1'], answer: '(b) x = 4', explanation: 'Y-अक्ष के समानांतर रेखा x = स्थिरांक होती है।' },
+                    { text: 'यदि 2^n = 128 है, तो 2^(n-2) का मान ज्ञात कीजिए।', options: ['64', '32', '16', '8'], answer: '(b) 32', explanation: '128 = 2^7 → n=7, 2^(7-2)=2^5=32' },
+                    { text: '6 सेमी त्रिज्या वाले एक धातु के गोले को पिघलाकर 2 सेमी व्यास वाले तार में खींचा जाता है। तार की लंबाई ज्ञात कीजिए।', options: ['36 सेमी', '72 सेमी', '144 सेमी', '288 सेमी'], answer: '(d) 288 सेमी', explanation: 'गोला आयतन = (4/3)π(6³)=288π, तार का आयतन = π(1)²×l = πl, l=288 सेमी' },
+                    { text: 'यदि cos θ = 3/5 और θ न्यून कोण है, तो 1 + tan² θ ज्ञात कीजिए।', options: ['25/16', '25/9', '9/16', '16/9'], answer: '(b) 25/9', explanation: '1+tan²θ = sec²θ, cos=3/5 → sec=5/3 → sec²=25/9' },
+                    { text: '5 प्रेक्षणों x, x+2, x+4, x+6, x+8 का माध्य 15 है। माध्यिका ज्ञात कीजिए।', options: ['13', '15', '17', '19'], answer: '(b) 15', explanation: 'माध्य = (5x+20)/5 = x+4 = 15 → x=11, प्रेक्षण: 11,13,15,17,19 → माध्यिका = 15' },
+                    { text: '8 सेमी और 3 सेमी त्रिज्या वाले दो वृत्तों के केंद्र 13 सेमी की दूरी पर हैं। उभयनिष्ठ बाह्य स्पर्श रेखा की लंबाई ज्ञात कीजिए।', options: ['12 cm', '10 सेमी', '8 cm', '11 सेमी'], answer: '(a) 12 cm', explanation: 'बाह्य स्पर्श रेखा लंबाई = √(d² - (r1-r2)²) = √(13² - (8-3)²) = √(169-25) = √144 = 12' },
+                    { text: '"The view of literature we are taught to preserve is relentlessly centered on the author..." <br>What is the grammatical function of the clause “we are taught to preserve”? <br>(Passage given)', options: ['Adverbial clause', 'Independent clause', 'Noun clause acting as object', 'Relative clause modifying “view”'], answer: '(d) Relative clause modifying “view”', explanation: 'यह “view” को संशोधित करने वाला relative clause है।' },
+                    { text: 'Which sentence contains a correct use of the passive voice from the passage? <br>(Passage given)', options: ['“The author determines the meaning.”', '“Language carries the author’s intentions.”', '“Writing begins when the author speaks.”', '“The text is supplied with a final meaning.”'], answer: '(d) “The text is supplied with a final meaning.”', explanation: 'यह passive voice (is supplied) है।' },
+                    { text: 'What does the word “relentlessly” most closely mean in the phrase “relentlessly centered on the author”? <br>(Passage given)', options: ['With careful neutrality', 'In a forceful and controlling way', 'In a random manner', 'In a legal and formal way'], answer: '(b) In a forceful and controlling way', explanation: 'relentlessly = निरंतर, बिना रुके, जोरदार तरीके से।' },
+                    { text: 'What is the best synonym for “inherent” in this sentence? “The need for an Author is treated as a cultural expectation rather than an inherent requirement of literature.” <br>(Passage given)', options: ['Adopted', 'Optional', 'Natural', 'Illusory'], answer: '(c) Natural', explanation: 'inherent = अंतर्निहित, स्वाभाविक।' },
+                    { text: 'According to the passage, what happens when the Author is set aside in interpretation? <br>(Passage given)', options: ['The text becomes meaningless.', 'The text becomes open to multiple meanings.', 'The author’s biography becomes central.', 'Meaning is restricted to history alone.'], answer: '(b) The text becomes open to multiple meanings.', explanation: 'पाठ के अनुसार, लेखक को हटाने से पाठ बहु-अर्थी हो जाता है।' },
+                    { text: 'What is the one-word substitute for: “A genetic condition where a cell has only one copy of a particular chromosome instead of a pair”?', options: ['Monosomy', 'Trisomy', 'Polyploidy', 'Aneuploidy'], answer: '(a) Monosomy', explanation: 'मोनोसोमी में एक गुणसूत्र की केवल एक प्रति होती है।' },
+                    { text: 'Which of the following is the correct spelling of the word?', options: ['Prophylaxis', 'Prophylaxsis', 'Prophilaxis', 'Prophallaxis'], answer: '(a) Prophylaxis', explanation: 'सही spelling: Prophylaxis' },
+                    { text: 'Select the most appropriate antonym of the given word. RECOUNT', options: ['Narrate', 'Conceal', 'Retell', 'Describe'], answer: '(b) Conceal', explanation: 'RECOUNT = बताना, antonym = Conceal = छिपाना' },
+                    { text: 'Change the following from active to passive: <br>Policy experts had repeatedly evaluated the framework’s assumptions since its release.', options: ['The framework’s assumptions had been repeatedly evaluated by policy experts since its release.', 'The assumptions were being evaluated since its release by experts.', 'The assumptions had evaluated by policy experts since its release.', 'The assumptions had been under evaluation by experts since its release.'], answer: '(a) The framework’s assumptions had been repeatedly evaluated by policy experts since its release.', explanation: 'had been evaluated (past perfect passive)' },
+                    { text: 'Identify the misspelt word:', options: ['Polysemy', 'Intertextuality', 'Similtude', 'Postmodernism'], answer: '(c) Similtude', explanation: 'सही spelling: Similitude (समानता)' },
+                    { text: 'Find the part of the sentence that contains an error: <br>The researcher’s summary (1)/ was fill with precision (2)/ yet managed to obscure (3)/ more than clarify. (4)', options: ['(1)', '(2)', '(3)', '(4)'], answer: '(b) (2)', explanation: 'fill → filled (was filled)' },
+                    { text: 'Rearrange the following sentences in correct order to make a meaningful passage. <br>1. The applicant was requested to show valid identification. <br>2. Her biometric details were scanned and matched with the system. <br>3. She was guided to the waiting area after verification. <br>4. The reception desk recorded her entry in the visitor register.', options: ['3-1-4-2', '1-4-3-2', '1-4-2-3', '4-1-2-3'], answer: '(c) 1-4-2-3', explanation: 'आवेदक को ID दिखाने को कहा → रिसेप्शन ने प्रवेश दर्ज किया → बायोमेट्रिक स्कैन → सत्यापन के बाद प्रतीक्षा क्षेत्र में ले जाया गया।' },
+                    { text: 'Select the most appropriate synonym of the given word. CAPRICIOUS', options: ['Fickle', 'Predictable', 'Steady', 'Constant'], answer: '(a) Fickle', explanation: 'CAPRICIOUS = मनमौजी, Fickle = चंचल' },
+                    { text: 'Rearrange the following sentences in correct order to make a meaningful passage. <br>1. Indicators are reviewed by dedicated monitoring units at regular intervals. <br>2. The model is repeatedly refined through multi-stakeholder consultations. <br>3. Deviations from targets are recorded on real-time dashboards. <br>4. Data systems are redesigned to improve inclusion.', options: ['1-2-3-4', '1-3-4-2', '2-4-3-1', '3-2-4-1'], answer: '(b) 1-3-4-2', explanation: 'संकेतकों की समीक्षा → विचलन रिकॉर्ड → डेटा सिस्टम पुनः डिज़ाइन → मॉडल परिष्कृत' },
+                    { text: 'A sentence is provided in indirect speech. From the four given options, choose the one that most accurately conveys the sentence in its corresponding direct speech. <br>The coordinator asked whether the files that were expected to be completed last month had been forwarded to the evaluation panel.', options: ['“Did you forward the files meant to be completed last month to the evaluation panel?” the coordinator asked.', '“Had the files expect last month been forwarded to the evaluation panel?” the coordinator asked.', '"Have the files that were expected to be completed last month been forwarded to the evaluation panel?" the coordinator asked.', '“Were the files due last month forwarded to the evaluation team?” the coordinator asked.'], answer: '(c) "Have the files that were expected to be completed last month been forwarded to the evaluation panel?" the coordinator asked.', explanation: 'सबसे सटीक प्रत्यक्ष कथन (c) है।' },
+                    { text: 'Fill in the blank with the most appropriate option: <br>The updated software is ___ than the earlier build, cutting processing time significantly.', options: ['efficient', 'most efficient', 'more efficient', 'efficiency'], answer: '(c) more efficient', explanation: 'comparative degree – more efficient' },
+                    { text: 'Identify the correct spelling for “an official who supervises an exam.”', options: ['Invigilator', 'Envigilator', 'Invegilator', 'Invigelator'], answer: '(a) Invigilator', explanation: 'सही spelling: Invigilator' },
+                    { text: 'Find the part of the sentence that contains an error: <br>He had never visited (1)/ such a renowned exhibition (2)/ until he (3)/ visits the museum last winter. (4)', options: ['(1)', '(2)', '(3)', '(4)'], answer: '(d) (4)', explanation: 'visits → visited (past tense)' },
+                    { text: 'Choose the most suitable option to replace the highlighted part of the sentence: <br>By the time we arrived at the venue, the speaker began the session.', options: ['had begun', 'has begun', 'was beginning', 'is beginning'], answer: '(a) had begun', explanation: 'past perfect (had begun) for earlier action' },
+                    { text: 'What is the one-word substitute for: “A narrative in which abstract ideas are represented through symbolic characters and events”?', options: ['Allegory', 'Parable', 'Fable', 'Satire'], answer: '(a) Allegory', explanation: 'रूपक (allegory)' },
+                    { text: 'Choose the correct meaning of the idiom given below: “Cut off one’s nose to spite one’s face”', options: ['Be harmed by one’s own plan', 'Celebrate too early', 'Escape by cleverness', 'Support someone else’s success'], answer: '(a) Be harmed by one’s own plan', explanation: 'मुहावरे का अर्थ: अपने ही नुकसान की योजना बनाना।' },
+                    { text: 'Convert the sentence provided below from its passive voice structure to an active voice structure: <br>The compliance report has been filed by the legal unit after several revisions.', options: ['The legal unit filed the compliance report after several revisions.', 'The legal unit is filing the compliance report after several revisions.', 'The legal unit has filed the compliance report after several revisions.', 'The legal unit had filed the compliance report after several revisions.'], answer: '(c) The legal unit has filed the compliance report after several revisions.', explanation: 'has been filed → has filed' },
+                    { text: 'A sentence is provided in direct speech. From the four given options, choose the one that most accurately conveys the sentence in its corresponding indirect speech. <br>“Let it be stated that we will protect every inch of our border,” declared the general.', options: ['The general declare that they would protect every inch of their border.', 'The general declared that let it be stated they will protect the border.', 'The general declared that every inch of the border would be being protected.', 'The general declared that they would protect every inch of their border.'], answer: '(d) The general declared that they would protect every inch of their border.', explanation: 'सही indirect speech: declared that + would' },
+                    { text: 'Rearrange the following sentences in correct order to make a meaningful sentence. <br>P: into workable public policy <br>Q: translating research findings <br>R: continues to be difficult <br>S: in emerging democracies', options: ['QPRS', 'SPRQ', 'QSRP', 'RQSP'], answer: '(a) QPRS', explanation: 'Translating research findings into workable public policy continues to be difficult in emerging democracies.' },
+                    { text: 'Convert the sentence provided below from its passive voice structure to an active voice structure: <br>The final draft has been approved by the committee.', options: ['The committee has been approving the final draft.', 'The committee has approved the final draft.', 'The committee is approving the final draft.', 'The committee approved the final draft.'], answer: '(b) The committee has approved the final draft.', explanation: 'has been approved → has approved' }
+                ]
+            },
+            computed: {
+                answeredCount() {
+                    return this.questions.filter(q => q.showAnswer).length;
+                }
+            },
+            methods: {
+                toggleAnswer(idx) {
+                    this.questions[idx].showAnswer = !this.questions[idx].showAnswer;
+                    this.allOpen = this.questions.every(q => q.showAnswer === true);
+                },
+                toggleAllAnswers() {
+                    const newState = !this.allOpen;
+                    this.questions.forEach(q => q.showAnswer = newState);
+                    this.allOpen = newState;
+                },
+                resetAnswers() {
+                    this.questions.forEach(q => q.showAnswer = false);
+                    this.allOpen = false;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

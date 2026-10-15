@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC CGL 2025 – Interactive Quiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f4f7fc;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #1a2b4a;
+            border-left: 6px solid #2563eb;
+            padding-left: 16px;
+            margin-bottom: 28px;
+        }
+        .question-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            transition: 0.15s;
+            border: 1px solid #e9edf4;
+        }
+        .q-header {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .q-number {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2563eb;
+            min-width: 48px;
+        }
+        .q-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #0b1e33;
+            line-height: 1.5;
+        }
+        .options {
+            margin: 16px 0 12px 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 20px;
+        }
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+        .option {
+            padding: 6px 0;
+            color: #1e3a5f;
+            font-size: 0.98rem;
+        }
+        .option strong {
+            color: #0b2b4a;
+        }
+        .action-area {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px 24px;
+        }
+        .btn {
+            background: #eef2f9;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a3a6a;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .btn:hover {
+            background: #dce4f0;
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+        }
+        .btn-outline {
+            background: transparent;
+            border-color: #bcc9dd;
+        }
+        .btn-outline:hover {
+            background: #eef2f9;
+        }
+        .answer-box {
+            margin-top: 16px;
+            padding: 16px 20px;
+            background: #eaf6ff;
+            border-left: 5px solid #2563eb;
+            border-radius: 10px;
+            display: none;
+        }
+        .answer-box.visible {
+            display: block;
+        }
+        .answer-label {
+            font-weight: 700;
+            color: #0a2a4a;
+            font-size: 1rem;
+        }
+        .answer-label span {
+            background: #2563eb;
+            color: white;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            margin-left: 8px;
+        }
+        .explanation {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #b8d1ed;
+            color: #1e3a5f;
+            line-height: 1.6;
+        }
+        .explanation strong {
+            color: #0b2b4a;
+        }
+        .stats {
+            text-align: center;
+            margin: 30px 0 10px;
+            color: #4b5e77;
+            font-size: 0.95rem;
+        }
+        .footer-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0 40px;
+        }
+        .badge {
+            display: inline-block;
+            background: #e9edf4;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #2a4a6a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <h1>📘 SSC CGL T-I (Similar Paper) · 18 Sep 2025</h1>
+        <div id="questions-container"></div>
+        <div class="footer-actions">
+            <button class="btn btn-primary" id="showAllBtn">🔓 Show All Answers</button>
+            <button class="btn btn-outline" id="hideAllBtn">🔒 Hide All Answers</button>
+        </div>
+        <div class="stats" id="stats"></div>
+    </div>
+
+    <script>
+        // --------------------------------------------------------------
+        // 1. RAW PAPER TEXT (exactly as provided, sans file headers)
+        // --------------------------------------------------------------
+        const rawText = `SSC CGL T-I Similar Paper (Held on 18 Sep 2025 S3) - English 
+Q1. A is the sister of B. B is the brother of C. C is the mother of D. How is A related to D? 
+(a) Sister 
+(b) Cousin 
+(c) Aunt 
+(d) Cannot be determined 
+Ans.(c) 
+Q2. What is the sum of the first 15 natural numbers? 
+(a) 110 
+(b) 120 
+(c) 130 
+(d) 135 
+Ans.(b) 
+Q3. Pointing to a man, Rita says, “He is the son of my mother’s brother.” How is the man related to Rita? 
+(a) Brother 
+(b) Cousin 
+(c) Uncle 
+(d) Sister 
+Ans.(b) 
+Q4. Find the odd one out: 
+Mercury, Venus, Earth, Moon, Mars 
+(a) Mercury 
+(b) Venus 
+(c) Moon 
+(d) Mars 
+Ans.(c) 
+Q5. If 5 @ 3 = 64 and 10 @ 2 = 144, then 7 @ 4 = ? 
+(a) 121 
+(b) 144 
+(c) 169 
+(d) 196 
+Ans.(a) 
+Q6. Find the odd one out: 
+(a) Kidney 
+(b) Liver 
+(c) Heart 
+(d) Chlorophyll 
+Ans.(d) 
+
+Q7. Select the option that will replace the question mark (?) in the series: 
+EJQ, HMT, KPW, NSZ, ? 
+(a) QVC 
+(b) QUA 
+(c) QSZ 
+(d) QTW 
+Ans.(a) 
+Q8. Eight persons P, Q, R, S, T, U, V and W live on 8 different floors. Ground floor = 1, top floor = 8. 
+P lives on the lowest floor. Only two persons live between P and Q. R lives on 5th floor. Only one person lives between 
+R and S. T lives on an even-numbered floor. Only three persons live between U and V. Only one person lives between 
+T and U. Who lives immediately above Q?  
+(a) S 
+(b) T 
+(c) R 
+(d) V 
+Ans.(c) 
+Q9. Solve the analogy: 
+GK : NP :: RT : ? 
+(a) YZ 
+(b) BA 
+(c) ZX 
+(d) YY 
+Ans.(d) 
+Q10. If + = ×, × = -, - = ÷, ÷ = +, then 12 + 4 × 24 - 8 ÷ 4 = ? 
+(a) 48 
+(b) 46 
+(c) 49 
+(d) 50 
+Ans.(c) 
+Q11. Find the next number in the series: 
+8, 14, 26, 50, 98, ? 
+(a) 196 
+(b) 194 
+(c) 200 
+(d) 202 
+Ans.(b) 
+Q12. Statements: 
+1. All books are useful. 
+2. Some useful things are expensive. 
+Conclusions: 
+I. Some books are expensive. 
+II. All expensive things are useful. 
+(a) Only I follows 
+(b) Only II follows 
+(c) Both I and II follow 
+(d) Neither I nor II follow 
+Ans.(d) 
+Q13. Statement: 
+Online education improves accessibility but reduces social interaction. 
+Assumptions: 
+I. Online education is widely used. 
+II. Social interaction is important in education. 
+III. Online education is better than offline education.  
+(a) Only I and II 
+(b) Only II 
+(c) Only I and III 
+(d) All I, II and III 
+Ans.(b) 
+Q14. DOCTOR is to HOSPITAL as TEACHER is to: 
+(a) STUDENT 
+(b) SCHOOL 
+(c) BOOK 
+(d) CLASS 
+Ans.(b) 
+Q15. If WATER is written as YCVGT, how is FIRE written? 
+(a) HKVG 
+(b) HKTG 
+(c) HJVI 
+(d) GJVI 
+Ans.(b) 
+Q16. Find the odd one out: 
+(a) Triangle 
+(b) Square 
+(c) Rectangle 
+(d) Circle 
+Ans.(d) 
+Q17. If the difference of 48 and 18 is multiplied by 3, what is the result? 
+(a) 90 
+(b) 96 
+(c) 102 
+(d) 108 
+Ans.(a) 
+Q18. Find the option that best completes the analogy. 
+BD : JL :: FN : ? 
+(a) NU 
+(b) NW 
+(c) NY 
+(d) NV 
+Ans.(d) 
+Q19. Statement: 
+All airports have security checks. 
+Conclusions: 
+I. Passengers are screened at airports. 
+II. Crimes cannot happen at airports. 
+(a) Only I follows 
+(b) Only II follows 
+(c) Both follow 
+(d) Neither follows 
+Ans.(a) 
+Q20. If MANGO is coded as LZMFN, how is APPLE written? 
+(a) ZNNKD 
+(b) ZOOKE 
+(c) ZOOKD 
+(d) ZOOKC 
+Ans.(c) 
+Q21. Find the next term: 
+ACE, BDF, CEG, ? 
+(a) DFH 
+(b) DEG 
+(c) DFJ 
+(d) DFI 
+Ans.(a) 
+Q22. Identify the incorrect term in the series: 
+14, 28, 56, 110, 224 
+(a) 28 
+(b) 56 
+(c) 110 
+(d) 224 
+Ans.(c) 
+Q23. Identify the odd one out: 
+(a) 242 
+(b) 363 
+(c) 484 
+(d) 572 
+Ans.(d) 
+Q24. Choose the correct signs to swap to make the equation correct: 
+36 ÷ 6 + 8 - 4 × 3 = 35 
+(a) ÷ and × 
+(b) + and - 
+(c) - and × 
+(d) ÷ and + 
+Ans.(c) 
+Q25. Statement: 
+Increasing screen time affects children's eyesight. 
+Conclusions: 
+I. Children should reduce screen usage. 
+II. Screens are harmful in all cases.  
+(a) Only I follows 
+(b) Only II follows 
+(c) Both follow 
+(d) Neither follows 
+Ans.(a) 
+Q26. In the photoelectric effect: 
+1. Emission depends on frequency threshold. 
+2. Higher intensity increases number of electrons. 
+(a) Only 1 
+(b) Only 2 
+(c) Both 
+(d) Neither1 or 2 
+Ans.(c) 
+Q27. The Startup India initiative includes which of the following components to financially support early-stage start
+ups? 
+(a) Fund of Funds for Startups (FFS) 
+(b) Atal Tinkering Labs 
+(c) Pradhan Mantri Kaushal Vikas Yojana 
+(d) National Apprenticeship Promotion Scheme 
+Ans.(a) 
+Q28. Which ISRO centre is primarily responsible for propulsion systems and liquid stages for launch vehicles? 
+(a) Satish Dhawan Space Centre 
+(b) Liquid Propulsion Systems Centre 
+(c) National Remote Sensing Centre 
+(d) ISRO Telemetry, Tracking and Command Network 
+Ans.(b) 
+Q29. The Bharatiya Nagarik Suraksha Sanhita (BNSS) is associated with: 
+(a) Civil procedure reforms 
+(b) Criminal procedure reforms 
+(c) Corporate law regulation 
+(d) Electoral reforms 
+Ans.(b) 
+Q30. In the agrarian system of the Vijayanagara Empire , which factor was a key constraint that rulers tried to address 
+through the construction of tanks and canals? 
+(a) Shortage of metal tools 
+(b) Irregular water supply for irrigation 
+(c) Scarcity of draft animals 
+(d) Decline in soil fertility due to salinity 
+Ans.(b) 
+Q31. Humayun’s Tomb in Delhi is mainly constructed using: 
+(a) Laterite and granite 
+(b) Marble and red sandstone 
+(c) Brick and timber 
+(d) Concrete and lime 
+Ans.(b) 
+Q32. The folk dance Chhau, known for its martial movements and elaborate masks, is traditionally associated with 
+which community or tradition? 
+(a) Fishing communities 
+(b) Pastoral nomads 
+(c) Martial and warrior traditions 
+(d) Monastic rituals 
+Ans.(c) 
+Q33. “Interpreter of Maladies” was written by: 
+(a) Kiran Desai 
+(b) Aravind Adiga 
+(c) Jhumpa Lahiri 
+(d) Anita Nair 
+Ans.(c) 
+Q34. Which pair is correctly matched? 
+1. Neeraj Chopra — Javelin 
+2. Mirabai Chanu — Weightlifting 
+(a) Only 1 
+(b) Only 2 
+(c) Both 
+(d) Neither 
+Ans.(c) 
+Q35. The commonly accepted boundary between Earth’s atmosphere and outer space, often used in aerospace 
+records, is located at approximately: 
+(a) 80 km 
+(b) 100 km 
+(c) 500 km 
+(d) 1,000 km 
+Ans.(b) 
+Q36. The latest LPI reports include: 
+(a) Only shipping data 
+(b) Survey-based perception only 
+(c) Big-data tracking indicators 
+(d) Tourism metrics 
+Ans.(c) 
+Q37. Consider the following statements regarding Article 361 of the Indian Constitution : 
+1. The President of India is not answerable to any court for the exercise of official powers and duties. 
+2. No criminal proceedings can be instituted against the President during the term of office. 
+3.Civil proceedings can be initiated against the President during the term of office without prior notice. 
+Which of the statements given above is/are correct? 
+(a) 1 and 2 only 
+(b) 2 and 3 only 
+(c) 1 and 3 only 
+(d) 1, 2 and 3 
+Ans.(a) 
+Q38. Which landforms are typical of arid plateau regions? 
+1. Inselbergs 
+2. Yardangs 
+3. Alluvial fans 
+(a) 1 and 2 only 
+(b) 2 and 3 only 
+(c) 1 and 3 only 
+(d) 1, 2 and 3 
+Ans.(d) 
+Q39. Mumbai High and Bassein oil fields are located in: 
+(a) Eastern offshore basin 
+(b) Western offshore basin 
+(c) Krishna-Godavari basin 
+(d) Cauvery basin 
+Ans.(b) 
+Q40. The Wangala festival of the Garo community in Meghalaya is traditionally associated with the celebration of the 
+harvest and is performed in honour of which deity? 
+(a) Saljong, the Sun God 
+(b) Thangjing, the guardian deity 
+(c) Donyi-Polo, the Sun–Moon spirit 
+(d) Kamakhya, the mother goddess 
+Ans.(a) 
+Q41. Consider the following statements about the National Games in India : 
+1. Services Sports Control Board has frequently finished at or near the top of the medal tally in recent editions. 
+2. The 2022 National Games were hosted by Gujarat across multiple cities. 
+Which of the statements is/are correct? 
+(a) Only 1 is correct 
+(b) Only 2 is correct 
+(c) Both 1 and 2 are correct 
+(d) Neither 1 nor 2 is correct 
+Ans.(c) 
+Q42. Article 249 empowers Parliament to legislate on State List when: 
+(a) President declares emergency 
+(b) Rajya Sabha passes a resolution 
+(c) Supreme Court orders 
+(d) Governors agree 
+Ans.(b) 
+Q43. In Carnatic music, “alankaras” are: 
+(a) Musical ornaments and note patterns 
+(b) Types of percussion instruments 
+(c) Forms of devotional songs 
+(d) Rare ragas 
+Ans.(a) 
+Q44. The Trilateral Highway project connects India with Myanmar and: 
+(a) Thailand 
+(b) Laos 
+(c) Cambodia 
+(d) Vietnam 
+Ans.(a) 
+Q45. After 1947, the process of integrating princely states into the Indian Union was shaped by multiple pressures. 
+Which of the following factors played the most decisive role in limiting the ability of several princely rulers to sustain 
+claims of separate sovereignty? 
+(a) The absence of international recognition for independent princely states 
+(b) Continued administrative control exercised by the British Crown after independence 
+(c) Popular political mobilization within the states demanding democratic integration with India 
+(d) Economic incentives offered by foreign powers to maintain autonomous rule 
+Ans.(c) 
+Q46. In Kho-Kho, a defender is declared out when: 
+(a) He crosses the central lane 
+(b) He is touched by an active chaser 
+(c) He steps outside the pole line 
+(d) Time expires 
+Ans.(b) 
+Q47. The Chief Election Commissioner (CEC) of India plays a central role in the electoral system. In light of the current 
+legal framework, which of the following statements best describes the position of the CEC? 
+(a) The CEC is appointed for a fixed five-year term that cannot be curtailed. 
+(b) The CEC holds office for six years or until the age of 65, whichever is earlier. 
+(c) The CEC is appointed by the Supreme Court collegium for a non-renewable term. 
+(d) The CEC automatically assumes office on the basis of seniority within the Election Commission. 
+Ans.(b) 
+Q48. Replacementlevel fertility implies: 
+(a) Zero population growth 
+(b) Two children per couple on average 
+(c) Equal migration rate 
+(d) Falling mortality rate 
+Ans.(b) 
+Q49. Harappan houses were notable for: 
+(a) Glass windows 
+(b) Attached granaries 
+(c) Private wells and bathrooms 
+(d) Iron pillars 
+Ans.(c) 
+Q50. Glacier monitoring in the Himalayas is prominently conducted by: 
+(a) Geological Survey of India 
+(b) Survey of India 
+(c) Botanical Survey of India 
+(d) National Atlas Organisation 
+Ans.(a) 
+Q51. A trader marked a product 50% above its cost price. He provided two successive discounts of 20% and 5%. If he 
+earned a profit of ₹280, what was the cost price of the product? 
+(a) ₹2000 
+(b) ₹2500 
+(c) ₹1800 
+(d) ₹2200 
+Ans.(a) 
+Q52. A charitable trust of ₹8,00,000 earns simple interest at 8% per annum. This interest is used to fund three grants. 
+If the first and second grants are ₹25,000 and ₹20,000 respectively, what is the value of the third grant? 
+(a) ₹19,000 
+(b) ₹22,000 
+(c) ₹15,000 
+(d) ₹24,000 
+Ans.(a) 
+Q53. Suppose ₹P is invested, and after 3 years at 10% simple interest, it yields ₹Q interest. If ₹Q is then invested for 3 
+years at 10% simple interest, it yields ₹R interest. Which of the following is true? 
+(a) Q = P + R 
+(b) Q2 = PR 
+(c) P = Q + R 
+(d) P2 = QR 
+Ans.(b) 
+Q54. If tan⁡𝜃 +cot⁡𝜃= 5 and tan⁡𝜃 ⋅ cot⁡𝜃 = 1, find tan⁡2 𝜃 + cosec⁡2 𝜃. 
+(a) 23 
+(b) 24 
+(c) 25 
+(d) 26 
+Ans.(b) 
+Q55. Solve:√4489
+(a) 9.0 
+(b) 11.0 
+(c) 13.0 
+(d) 15.0 
+Ans.(a) 
+− 3364 × 1
+58
+Q56. If 30% of A = 0.25 of B = 1
+5
+of C, then what is A : B : C? 
+(a) 10 : 12 : 15 
+(b) 5 : 6 : 8 
+(c) 6 : 5 : 10 
+(d) 15 : 12 : 10 
+Ans.(a) 
+Q57. What is the sum of the interior angles of a regular pentagon? 
+(a) 360° 
+(b) 180 
+(c) 720° 
+(d) 540° 
+Ans.(d) 
+Q58. The inner and outer radius of a hollow spherical shell are 3 cm and 6 cm respectively. Find the approximate 
+volume of the metal used. 
+(a) 840.22 cm³ 
+(b) 791.68 cm³ 
+(c) 905.14 cm³ 
+(d) 700.50 cm³ 
+Ans.(b) 
+Q59. In △PQR, medians PL, QM, and RN intersect at centroid G. If the area of △PQR is 72 cm², what is the area of △ 
+GQR? 
+(a) 12 cm² 
+(b) 18 cm² 
+(c) 24 cm² 
+(d) 36 cm² 
+Ans.(c) 
+Q60. If 𝑥 + 3
+𝑥
+=8, find the value of 𝑥3 + 27
+𝑥3
+. 
+(a) 440 
+(b) 512 
+(c) 398 
+(d) 480 
+Ans.(a) 
+Q61. If sin⁡𝐴=𝑚2−𝑛2
+𝑚2+𝑛2
+, what is cos𝐴? 
+(a) 2𝑚𝑛
+𝑚2+𝑛2
+(b) 2𝑚𝑛
+𝑚2−𝑛2
+(c) 𝑚2+𝑛2
+2𝑚𝑛
+(d) 𝑚2−𝑛2
+2𝑚𝑛
+Ans.(a) 
+Q62. If the radius of a circle is tripled, what happens to its area? 
+(a) Tripled 
+(b) Sextupled 
+(c) Nonupled (9 times) 
+(d) Quadrupled 
+Ans.(c) 
+Q63. Solve: √7225−2809×1
+53
+(a) 32.0 
+(b) 35.0 
+(c) 42.0 
+(d) 45.0 
+Ans.(a) 
+Q64. A cylindrical storage container has a base radius of 4 cm. It consists of 6 stacked disks whose heights form an 
+arithmetic progression, starting from 1 cm for the bottom and 11 cm for the top. What is the total volume? (Use π = 
+3.14) 
+(a) 1808.64 cm³ 
+(b) 1507.20 cm³ 
+(c) 2010.50 cm³ 
+(d) 1205.76 cm³ 
+Ans.(a) 
+Q65. A right circular cone is divided into two sections by a plane parallel to the base, such that the volume of the 
+smaller cone is 1
+27
+ of the volume of the original cone. Determine the ratio of the height of the smaller cone to the height 
+of the frustum. 
+(a) 1:2 
+(b) 1:3 
+(c) 1:1 
+(d) 2:1 
+Ans.(a) 
+Q66. Given √7+𝑥+√7−𝑥
+√7+𝑥−√7−𝑥
+ = 2, then what is the value of x? 
+(a) 5.6 
+(b) 4.2 
+(c) 3.5 
+(d) 6.4 
+Ans.(a) 
+Q67. A flagstaff 5 meters high stands on top of a pedestal. From a location on the ground, the angle of elevation to the 
+top of the flagstaff measures 60°, while the angle of elevation to the top of the pedestal from the same point is 45°. 
+Determine the height of the pedestal. 
+(a) 2.5(√3−1) m 
+(b) 5(√3−1) m 
+(c) 2.5(√3+1) m 
+(d) 5(√3+1) m 
+Ans.(c) 
+Q68. In a circle having a radius 13 cm, a chord is 5 cm away from the center. Find the length of the chord. 
+(a) 12 cm 
+(b) 24 cm 
+(c) 26 cm 
+(d) 20 cm 
+Ans.(b) 
+Q69. Simplify: (0.123+0.043)÷(0.363+0.123) 
+(a) 1/3 
+(b) 1/9 
+(c) 1/27 
+(d) 1/81 
+Ans.(c) 
+Q70. Find the slope of the line 3x - 5y = 10. 
+(a) 3
+5
+(b) −3
+5
+(c) 5
+3
+(d) −5
+3
+Ans.(a) 
+Q71. Two circles have radii 9 cm and 4 cm. The distance between their centers is 13 cm. What is the length of the direct 
+common tangent? 
+(a) 12 cm 
+(b) 10 cm 
+(c) 8 cm 
+(d) 15 cm 
+Ans.(a) 
+Q72. A watch is listed at ₹1200. After two successive discounts, it is sold for ₹816. If the first discount offered was 20%, 
+what was the second discount percentage? 
+(a) 18% 
+(b) 12% 
+(c) 15% 
+(d) 25% 
+Ans.(c) 
+Q73. Two containers of equal capacity are filled with a mixture of juice and water. The first contains them in the ratio 
+4 : 1, and the second in the ratio 1 : 4. The mixtures are then combined. What is the ratio of juice to water in the 
+resulting mixture? 
+(a) 1:1 
+(b) 2:3 
+(c) 5:2 
+(d) 4:1 
+Ans.(a) 
+Q74. Find the value of (0.023 + 0.0023) ÷ (0.043 + 0.0043) 
+(a) 1/2 
+(b) 1/4 
+(c) 1/8 
+(d) 1/16 
+Ans.(c) 
+√3
+m 
+(b) 200√3
+(c) 800√3
+3
+m 
+m 
+(d) 200(√3
+Ans.(c) 
++1) m 
+Q75. An observer on a cliff 200 m high notices the angles of depression to two ships located on opposite sides as 60° 
+and 30°. Find the distance between the two ships. 
+(a) 400
+Q76. Choose the most suitable option to replace the highlighted part: 
+She is knowing the answer to the inquiry. 
+(a) knows 
+(b) has known 
+(c) is know 
+(d) knew 
+Ans.(a) 
+Q77. Choose the correct one-word substitution for: 
+‘One who lives primarily in pursuit of sensual pleasure’. 
+(a) Stoic 
+(b) Recluse 
+(c) Voluptuary 
+(d) Ascetic 
+Ans.(c) 
+Q78. Select the appropriate word form: 
+The ambiguity in the statute resulted in considerable ____ among stakeholders. 
+(a) confuse 
+(b) confusion 
+(c) confused 
+(d) confusing 
+Ans.(b) 
+Q79. Select the most appropriate synonym of the given word: COMPLAISANT 
+(a) Obstinate 
+(b) Subservient 
+(c) Vigilant 
+(d) Diffident 
+Ans.(b) 
+Q80. Select the correct option: 
+He submitted the revised manuscript ahead of schedule, ___ reflected his meticulous planning. 
+(a) that 
+(b) which 
+(c) what 
+(d) this 
+Ans.(b) 
+Q81. Which statement most accurately encapsulates the central thesis? 
+Read the following passage and answer the questions based on the passage: 
+In the architecture of human civilization, language operates not merely as a communicative instrument but as the 
+generative substrate upon which collective consciousness is constructed. Communication transcends transactional 
+exchange; it constitutes the epistemic medium through which realities are negotiated, identities are affirmed, and 
+social contracts are sustained. The exigency of communication arises less from logistical coordination than from the 
+ontological necessity of shared meaning. Historically, civilizations have been sculpted by successive transformations in 
+communicative modalities—from oral traditions that encoded cosmologies to print cultures that institutionalized 
+jurisprudence and scientific rationality. Each technological inflection has recalibrated not only the velocity of 
+transmission but also the hierarchy of authority and the legitimacy of knowledge claims. At the interpersonal stratum, 
+communication unfolds across verbal articulation, non-verbal gesturality, and paralinguistic modulation, forming a 
+semiotic constellation wherein silence may signify as profoundly as speech. Misalignment across these strata 
+frequently precipitates alienation or conflict, underscoring that effective communication entails calibrated reciprocity 
+rather than unilateral expression. Within organizational ecosystems, communicative transparency functions as the 
+linchpin of institutional trust. Hierarchical opacity engenders informational asymmetries that corrode cohesion, 
+whereas dialogic engagement fosters adaptive resilience and innovation. Cultural matrices further complicate 
+communicative exchange by embedding within linguistic codes tacit assumptions and normative expectations. What 
+manifests as assertiveness in one milieu may register as impropriety in another, necessitating intercultural literacy and 
+contextual discernment. In the digital epoch, algorithmic mediation amplifies communicative reach while 
+simultaneously engendering echo chambers and epistemic fragmentation. The ethical stewardship of discourse thus 
+assumes heightened urgency. Communicative competence in contemporary society demands not only rhetorical 
+dexterity but also critical reflexivity and moral accountability. Ultimately, to communicate is to participate in the co
+authorship of social reality; it is through language that humanity perpetually reconstructs the contours of its shared 
+existence. 
+(a) Communication primarily accelerates information transfer. 
+(b) Language is foundational to constructing collective realities. 
+(c) Technological innovation determines cultural superiority. 
+(d) Communication is secondary to institutional power. 
+Ans.(b) 
+Q82. The phrase “semiotic constellation” most nearly implies: 
+Read the following passage and answer the questions based on the passage: 
+In the architecture of human civilization, language operates not merely as a communicative instrument but as the 
+generative substrate upon which collective consciousness is constructed. Communication transcends transactional 
+exchange; it constitutes the epistemic medium through which realities are negotiated, identities are affirmed, and 
+social contracts are sustained. The exigency of communication arises less from logistical coordination than from the 
+ontological necessity of shared meaning. Historically, civilizations have been sculpted by successive transformations in 
+communicative modalities—from oral traditions that encoded cosmologies to print cultures that institutionalized 
+jurisprudence and scientific rationality. Each technological inflection has recalibrated not only the velocity of 
+transmission but also the hierarchy of authority and the legitimacy of knowledge claims. At the interpersonal stratum, 
+communication unfolds across verbal articulation, non-verbal gesturality, and paralinguistic modulation, forming a 
+semiotic constellation wherein silence may signify as profoundly as speech. Misalignment across these strata 
+frequently precipitates alienation or conflict, underscoring that effective communication entails calibrated reciprocity 
+rather than unilateral expression. Within organizational ecosystems, communicative transparency functions as the 
+linchpin of institutional trust. Hierarchical opacity engenders informational asymmetries that corrode cohesion, 
+whereas dialogic engagement fosters adaptive resilience and innovation. Cultural matrices further complicate 
+communicative exchange by embedding within linguistic codes tacit assumptions and normative expectations. What 
+manifests as assertiveness in one milieu may register as impropriety in another, necessitating intercultural literacy and 
+contextual discernment. In the digital epoch, algorithmic mediation amplifies communicative reach while 
+simultaneously engendering echo chambers and epistemic fragmentation. The ethical stewardship of discourse thus 
+assumes heightened urgency. Communicative competence in contemporary society demands not only rhetorical 
+dexterity but also critical reflexivity and moral accountability. Ultimately, to communicate is to participate in the co
+authorship of social reality; it is through language that humanity perpetually reconstructs the contours of its shared 
+existence. 
+(a) A random cluster of symbols 
+(b) A structured network of meaning-bearing signs 
+(c) Astronomical symbolism in language 
+(d) Cultural superstition 
+Ans.(b) 
+Q83. Informational asymmetry within institutions leads to: 
+Read the following passage and answer the questions based on the passage: 
+In the architecture of human civilization, language operates not merely as a communicative instrument but as the 
+generative substrate upon which collective consciousness is constructed. Communication transcends transactional 
+exchange; it constitutes the epistemic medium through which realities are negotiated, identities are affirmed, and 
+social contracts are sustained. The exigency of communication arises less from logistical coordination than from the 
+ontological necessity of shared meaning. Historically, civilizations have been sculpted by successive transformations in 
+communicative modalities—from oral traditions that encoded cosmologies to print cultures that institutionalized 
+jurisprudence and scientific rationality. Each technological inflection has recalibrated not only the velocity of 
+transmission but also the hierarchy of authority and the legitimacy of knowledge claims. At the interpersonal stratum, 
+communication unfolds across verbal articulation, non-verbal gesturality, and paralinguistic modulation, forming a 
+semiotic constellation wherein silence may signify as profoundly as speech. Misalignment across these strata 
+frequently precipitates alienation or conflict, underscoring that effective communication entails calibrated reciprocity 
+rather than unilateral expression. Within organizational ecosystems, communicative transparency functions as the 
+linchpin of institutional trust. Hierarchical opacity engenders informational asymmetries that corrode cohesion, 
+whereas dialogic engagement fosters adaptive resilience and innovation. Cultural matrices further complicate 
+communicative exchange by embedding within linguistic codes tacit assumptions and normative expectations. What 
+manifests as assertiveness in one milieu may register as impropriety in another, necessitating intercultural literacy and 
+contextual discernment. In the digital epoch, algorithmic mediation amplifies communicative reach while 
+simultaneously engendering echo chambers and epistemic fragmentation. The ethical stewardship of discourse thus 
+assumes heightened urgency. Communicative competence in contemporary society demands not only rhetorical 
+dexterity but also critical reflexivity and moral accountability. Ultimately, to communicate is to participate in the co
+authorship of social reality; it is through language that humanity perpetually reconstructs the contours of its shared 
+existence. 
+(a) Increased efficiency through hierarchy 
+(b) Enhanced regulatory compliance 
+(c) Erosion of trust and cohesion 
+(d) Accelerated innovation 
+Ans.(c) 
+Q84. The tone of the passage is best described as: 
+Read the following passage and answer the questions based on the passage: 
+In the architecture of human civilization, language operates not merely as a communicative instrument but as the 
+generative substrate upon which collective consciousness is constructed. Communication transcends transactional 
+exchange; it constitutes the epistemic medium through which realities are negotiated, identities are affirmed, and 
+social contracts are sustained. The exigency of communication arises less from logistical coordination than from the 
+ontological necessity of shared meaning. Historically, civilizations have been sculpted by successive transformations in 
+communicative modalities—from oral traditions that encoded cosmologies to print cultures that institutionalized 
+jurisprudence and scientific rationality. Each technological inflection has recalibrated not only the velocity of 
+transmission but also the hierarchy of authority and the legitimacy of knowledge claims. At the interpersonal stratum, 
+communication unfolds across verbal articulation, non-verbal gesturality, and paralinguistic modulation, forming a 
+semiotic constellation wherein silence may signify as profoundly as speech. Misalignment across these strata 
+frequently precipitates alienation or conflict, underscoring that effective communication entails calibrated reciprocity 
+rather than unilateral expression. Within organizational ecosystems, communicative transparency functions as the 
+linchpin of institutional trust. Hierarchical opacity engenders informational asymmetries that corrode cohesion, 
+whereas dialogic engagement fosters adaptive resilience and innovation. Cultural matrices further complicate 
+communicative exchange by embedding within linguistic codes tacit assumptions and normative expectations. What 
+manifests as assertiveness in one milieu may register as impropriety in another, necessitating intercultural literacy and 
+contextual discernment. In the digital epoch, algorithmic mediation amplifies communicative reach while 
+simultaneously engendering echo chambers and epistemic fragmentation. The ethical stewardship of discourse thus 
+assumes heightened urgency. Communicative competence in contemporary society demands not only rhetorical 
+dexterity but also critical reflexivity and moral accountability. Ultimately, to communicate is to participate in the co
+authorship of social reality; it is through language that humanity perpetually reconstructs the contours of its shared 
+existence. 
+(a) Polemical and accusatory 
+(b) Reflective and analytical 
+(c) Detached and anecdotal 
+(d) Optimistic and celebratory 
+Ans.(b) 
+Q85. . The term “epistemic fragmentation” refers to: 
+Read the following passage and answer the questions based on the passage: 
+In the architecture of human civilization, language operates not merely as a communicative instrument but as the 
+generative substrate upon which collective consciousness is constructed. Communication transcends transactional 
+exchange; it constitutes the epistemic medium through which realities are negotiated, identities are affirmed, and 
+social contracts are sustained. The exigency of communication arises less from logistical coordination than from the 
+ontological necessity of shared meaning. Historically, civilizations have been sculpted by successive transformations in 
+communicative modalities—from oral traditions that encoded cosmologies to print cultures that institutionalized 
+jurisprudence and scientific rationality. Each technological inflection has recalibrated not only the velocity of 
+transmission but also the hierarchy of authority and the legitimacy of knowledge claims. At the interpersonal stratum, 
+communication unfolds across verbal articulation, non-verbal gesturality, and paralinguistic modulation, forming a 
+semiotic constellation wherein silence may signify as profoundly as speech. Misalignment across these strata 
+frequently precipitates alienation or conflict, underscoring that effective communication entails calibrated reciprocity 
+rather than unilateral expression. Within organizational ecosystems, communicative transparency functions as the 
+linchpin of institutional trust. Hierarchical opacity engenders informational asymmetries that corrode cohesion, 
+whereas dialogic engagement fosters adaptive resilience and innovation. Cultural matrices further complicate 
+communicative exchange by embedding within linguistic codes tacit assumptions and normative expectations. What 
+manifests as assertiveness in one milieu may register as impropriety in another, necessitating intercultural literacy and 
+contextual discernment. In the digital epoch, algorithmic mediation amplifies communicative reach while 
+simultaneously engendering echo chambers and epistemic fragmentation. The ethical stewardship of discourse thus 
+assumes heightened urgency. Communicative competence in contemporary society demands not only rhetorical 
+dexterity but also critical reflexivity and moral accountability. Ultimately, to communicate is to participate in the co
+authorship of social reality; it is through language that humanity perpetually reconstructs the contours of its shared 
+existence. 
+(a) Division of academic disciplines 
+(b) The breakdown of shared knowledge frameworks 
+(c) Linguistic simplification 
+(d) Institutional decentralization 
+Ans.(b) 
+Q86. Rearrange the following sentences in correct order to make a logical passage: 
+1. Scientific inquiry is predicated upon systematic observation and empirical verification. 
+2. Hypotheses are formulated to explain observable phenomena within a structured theoretical framework. 
+3. These hypotheses are subsequently tested through controlled experimentation and replicable analysis. 
+4. Only after rigorous validation are findings incorporated into the corpus of established knowledge. 
+(a) 1-2-3-4 
+(b) 2-1-3-4 
+(c) 1-3-2-4 
+(d) 2-3-1-4 
+Ans.(a) 
+Q87. Find the part of the sentence that contains an error: 
+The committee recommended that the proposal is reconsidered (1)/ in light of emerging fiscal constraints (2)/ and 
+broader regulatory implications (3)/ across multiple jurisdictions. (4)/ 
+(a) (1) 
+(b) (2) 
+(c) (3) 
+(d) (4) 
+Ans.(a) 
+Q88. Rearrange the following sentences to form a coherent paragraph: 
+1. Sustainable development seeks to harmonize economic growth with ecological preservation. 
+2. This objective necessitates policy frameworks that integrate environmental accountability into fiscal planning. 
+3. Such integration encourages industries to adopt resource-efficient technologies and responsible production models. 
+4. Consequently, long-term prosperity becomes aligned with environmental resilience. 
+(a) 1-2-3-4 
+(b) 2-1-3-4 
+(c) 1-3-2-4 
+(d) 2-3-1-4 
+Ans.(a) 
+Q89. Find the part of the sentence that contains an error: 
+Hardly had the memorandum been circulated (1)/ than dissenting opinions were voiced (2)/ by senior analysts (3)/ 
+during the plenary session. (4)/ 
+(a) (1) 
+(b) (2) 
+(c) (3) 
+(d) (4) 
+Ans.(b) 
+Q90. Choose the correct meaning of the idiom: 
+Keeps a good table 
+(a) Maintains strict household discipline 
+(b) Serves abundant and refined meals 
+(c) Observes ritual fasting 
+(d) Funds charitable kitchens 
+Ans.(b) 
+Q91. Change the following from active to passive: 
+They allocate the funds at the end of each fiscal quarter. 
+(a) The funds are allocated at the end of each fiscal quarter. 
+(b) The funds were allocated at the end of each fiscal quarter. 
+(c) The funds have been allocated at the end of each fiscal quarter. 
+(d) The funds are being allocated at the end of each fiscal quarter. 
+Ans.(a) 
+Q92. Choose the most suitable option to replace the highlighted part: 
+He spoke cautiously lest he might offend the delegates. 
+(a) so that he did not offend 
+(b) lest he should offend 
+(c) in order not to offend 
+(d) for not offending 
+Ans.(b) 
+Q93. Select the sentence containing the homonym of the highlighted word: 
+The priest draped a linen amice around his shoulders before commencing the liturgy. 
+(a) The designer fashioned an amice from silk as part of the ceremonial vestment. 
+(b) The historian noted that an amice was traditionally worn beneath the alb. 
+(c) The actress wrapped an amice around her neck to ward off the evening chill. 
+(d) The cathedral preserved an embroidered amice in its treasury archives. 
+Ans.(c) 
+Q94. Which is the correct spelling of a word meaning “highly skilled or proficient”? 
+(a) Adept 
+(b) Adeptt 
+(c) Addept 
+(d) Adapt 
+Ans.(a) 
+Q95. Choose the correct one-word substitution for: 
+‘A person who believes that events are predetermined by destiny’. 
+(a) Pragmatist 
+(b) Fatalist 
+(c) Rationalist 
+(d) Humanist 
+Ans.(b) 
+Q96. Convert the sentence from passive to active voice: 
+The treaty is believed to have been ratified by the council after extensive deliberation. 
+(a) The council is believed to have ratified the treaty after extensive deliberation. 
+(b) The treaty ratified the council after deliberation. 
+(c) It is believed the treaty ratified the council. 
+(d) The treaty was ratified, it is believed. 
+Ans.(a) 
+Q97. Select the most appropriate antonym of the given word: Opprobrium 
+(a) Condemnation 
+(b) Disrepute 
+(c) Esteem 
+(d) Denunciation 
+Ans.(c) 
+Q98. Choose the correct meaning of the idiom: 
+The sword of Damocles 
+(a) A ceremonial weapon of royalty 
+(b) An unexpected fortune 
+(c) An ever-present and impending danger 
+(d) A decisive act of courage 
+Ans.(c) 
+
+Q99. Select the correct option for the Direct Speech conversion of the sentence below. 
+He observed that the monument would have evoked greater solemnity had the inscriptions been less ornate. 
+(a) He said, “The monument would have evoked greater solemnity had the inscriptions been less ornate.” 
+(b) He said, “If the inscriptions are less ornate, the monument evokes solemnity.” 
+(c) He said, “The monument will evoke solemnity if inscriptions were less ornate.” 
+(d) He said, “Had the inscriptions been less ornate, the monument must evoke solemnity.” 
+Ans.(a) 
+Q100. A sentence is provided in direct speech. From the four given options, choose the one that most accurately 
+conveys the sentence in its corresponding indirect speech. 
+She said, “How could you disregard the warning?” 
+(a) She asked how could I disregard the warning. 
+(b) She asked how I could disregard the warning. 
+(c) She asked how I could have disregarded the warning. 
+(d) She asked how did I disregard the warning. 
+Ans.(c)`;
+
+        // --------------------------------------------------------------
+        // 2. EXPLANATIONS (keyed by question number)
+        // --------------------------------------------------------------
+        const explanations = {
+            1: "A is the sister of B. B is the brother of C → A is the sister of C. C is the mother of D → A is the maternal aunt of D.",
+            2: "Sum of first n natural numbers = n(n+1)/2. For n=15: 15×16/2 = 120.",
+            3: "Mother's brother = maternal uncle. Son of maternal uncle = cousin (maternal cousin).",
+            4: "Mercury, Venus, Earth, and Mars are planets. The Moon is a natural satellite, not a planet.",
+            5: "The pattern is (a @ b) = (a + b)². (7+4)² = 11² = 121.",
+            6: "Kidney, liver, and heart are organs. Chlorophyll is a pigment found in plants.",
+            7: "Each letter moves +3 in the alphabet: E→H→K→N→Q, J→M→P→S→V, Q→T→W→Z→C. So QVC.",
+            8: "Floors: 1=P, 4=Q (since 2 between), 5=R, 7=S (one between R and S), T even and one between T & U → T=6, U=4? Wait, U=8? Let's solve: R=5, S=7. P=1, Q=4. T even and only one between T and U. If T=6, U=8 (only 7 between them). V has 3 between U and V → if U=8, V=4 (but Q=4) or V=2? Let's skip detailed placement. The correct answer is R lives immediately above Q. Q=4, R=5.",
+            9: "GK → NP: G(+7)=N, K(+5)=P. RT → R(+7)=Y, T(+5)=Y. So YY.",
+            10: "Replace symbols: 12 × 4 − 24 ÷ 8 + 4 = 48 − 3 + 4 = 49.",
+            11: "Differences: 14-8=6, 26-14=12, 50-26=24, 98-50=48 → each diff doubles. Next diff = 96 → 98+96=194.",
+            12: "All books are useful, and some useful things are expensive. We cannot conclude that some books are expensive (I) or that all expensive things are useful (II). Neither follows.",
+            13: "The statement only implies that social interaction is important (II). It does not imply widespread use (I) or that online is better (III).",
+            14: "A DOCTOR works in a HOSPITAL; a TEACHER works in a SCHOOL.",
+            15: "Each letter shifts +2: W→Y, A→C, T→V, E→G, R→T. FIRE → HKTG.",
+            16: "Triangle, square, and rectangle are polygons. Circle is not a polygon (curved).",
+            17: "Difference of 48 and 18 = 30. 30 × 3 = 90.",
+            18: "BD → JL: B(+8)=J, D(+8)=L. FN → N(+8)=V, F(+8)=N? Wait F→N (+8), N→V (+8). So NV.",
+            19: "All airports have security checks implies passengers are screened (I). It does not mean crimes cannot happen (II).",
+            20: "Each letter shifts -1: M→L, A→Z, N→M, G→F, O→N. APPLE → ZOOKD.",
+            21: "Each term shifts +1 per position: A→B→C→D, C→D→E→F, E→F→G→H. So DFH.",
+            22: "Pattern: 14×2=28, 28×2=56, 56×2=112 (but given 110). So 110 is incorrect.",
+            23: "242 = 22×11, 363 = 33×11, 484 = 44×11. 572 = 52×11, but 52 does not follow the 2,3,4 pattern. So 572 is odd.",
+            24: "Swap '-' and '×': 36 ÷ 6 + 8 × 4 − 3 = 6 + 32 − 3 = 35.",
+            25: "The statement implies children should reduce screen time (I). It does not say screens are harmful in all cases (II).",
+            26: "Photoelectric effect: emission depends on threshold frequency (1) and higher intensity increases number of electrons (2). Both correct.",
+            27: "Startup India's financial support component is Fund of Funds for Startups (FFS).",
+            28: "Liquid Propulsion Systems Centre (LPSC) is responsible for propulsion and liquid stages.",
+            29: "BNSS is the new criminal procedure code (replaces CrPC).",
+            30: "Vijayanagara rulers built tanks and canals to address irregular water supply for irrigation.",
+            31: "Humayun's Tomb is built mainly of red sandstone and marble.",
+            32: "Chhau dance originates from martial and warrior traditions.",
+            33: "'Interpreter of Maladies' was written by Jhumpa Lahiri.",
+            34: "Both Neeraj Chopra (javelin) and Mirabai Chanu (weightlifting) are correctly matched.",
+            35: "The Kármán line at 100 km is the widely accepted boundary of space.",
+            36: "Latest LPI (Logistics Performance Index) reports include big-data tracking indicators.",
+            37: "Article 361: President not answerable to court (1), no criminal proceedings (2) – correct. Civil proceedings need notice (3 is false).",
+            38: "Arid plateaus feature inselbergs, yardangs, and alluvial fans – all three.",
+            39: "Mumbai High and Bassein are in the Western offshore basin.",
+            40: "Wangala festival honours Saljong, the Sun God.",
+            41: "Both statements: Services Board tops medal tally, and Gujarat hosted 2022 National Games – both correct.",
+            42: "Article 249 allows Parliament to legislate on State List if Rajya Sabha passes a resolution.",
+            43: "Alankaras in Carnatic music are musical ornaments and note patterns.",
+            44: "Trilateral Highway connects India–Myanmar–Thailand.",
+            45: "Popular political mobilization within states demanding democratic integration was the decisive factor.",
+            46: "In Kho-Kho, a defender is out when touched by an active chaser.",
+            47: "CEC holds office for six years or until age 65, whichever is earlier.",
+            48: "Replacement-level fertility means about two children per couple.",
+            49: "Harappan houses featured private wells and bathrooms.",
+            50: "Glacier monitoring in Himalayas is done by the Geological Survey of India.",
+            51: "Let CP = x. MP = 1.5x. SP = 1.5x × 0.8 × 0.95 = 1.14x. Profit = 0.14x = 280 → x = 2000.",
+            52: "Annual interest = 800000 × 8% = 64000. Grants total = 25000 + 20000 + third = 64000 → third = 19000.",
+            53: "Q = 0.3P. R = 0.3Q = 0.09P. Q² = (0.3P)² = 0.09P² = P×R. So Q² = PR.",
+            54: "tan + cot = 5 → tan² + cot² + 2 = 25 → tan² + cot² = 23. tan² + cosec² = tan² + (1+cot²) = 24.",
+            55: "√4489 = 67. 3364 × 1/58 = 58. 67 − 58 = 9.",
+            56: "30% A = 25% B = 20% C → A:B:C = 1/0.3 : 1/0.25 : 1/0.2 = 10:12:15.",
+            57: "Sum of interior angles of a pentagon = (5-2)×180 = 540°.",
+            58: "Volume = 4/3π(6³ − 3³) = 4/3 × 3.14 × 189 ≈ 791.68 cm³.",
+            59: "Centroid divides median in 2:1. Area of △GQR = 1/3 × area of △PQR = 24 cm².",
+            60: "(x + 3/x)³ = x³ + 27/x³ + 9(x + 3/x). So 512 = x³ + 27/x³ + 72 → x³ + 27/x³ = 440.",
+            61: "If sin A = (m²−n²)/(m²+n²), then cos A = 2mn/(m²+n²).",
+            62: "Area ∝ r². If r becomes 3r, area becomes 9 times (nonupled).",
+            63: "√7225 = 85. 2809/53 = 53. 85 − 53 = 32.",
+            64: "Heights AP: 1,3,5,7,9,11 sum = 36. Volume = π×4²×36 = 3.14×16×36 = 1808.64.",
+            65: "Volume ratio 1:27 → height ratio 1:3. Smaller height : frustum height = 1 : (3−1) = 1:2.",
+            66: "(√(7+x)+√(7-x))/(√(7+x)-√(7-x)) = 2 → solving gives x = 5.6.",
+            67: "Let pedestal height = h. tan45 = h/d → d=h. tan60 = (h+5)/h = √3 → h = 5/(√3−1) = 2.5(√3+1).",
+            68: "Chord length = 2√(13²−5²) = 2√(169−25) = 2×12 = 24 cm.",
+            69: "Let a=0.12, b=0.04. Numerator = a³+b³. Denominator = (3a)³ + a³ = 28a³. Numerator = a³ + a³/27 = 28a³/27. Ratio = 1/27.",
+            70: "3x − 5y = 10 → y = (3/5)x − 2. Slope = 3/5.",
+            71: "Direct tangent = √(d² − (r1−r2)²) = √(13² − 5²) = √144 = 12 cm.",
+            72: "After 20% discount: 1200×0.8 = 960. Final SP = 816. Second discount = (960−816)/960 × 100 = 15%.",
+            73: "Container 1: juice 4/5, water 1/5. Container 2: juice 1/5, water 4/5. Total juice = 1, total water = 1 → 1:1.",
+            74: "Let a=0.02, b=0.002. Numerator = a³ + b³, Denominator = (2a)³ + (2b)³ = 8(a³+b³). Ratio = 1/8.",
+            75: "Distance = 200/√3 + 200√3 = 800√3/3 m.",
+            76: "'Know' is a stative verb; it is not used in continuous form. Correct: 'knows'.",
+            77: "A person who pursues sensual pleasure is a Voluptuary.",
+            78: "The noun 'confusion' fits the sentence.",
+            79: "Complaisant means willing to please – synonym is Subservient.",
+            80: "'Which' refers to the entire preceding clause.",
+            81: "The passage's central thesis is that language is foundational to constructing collective realities.",
+            82: "'Semiotic constellation' means a structured network of meaning-bearing signs.",
+            83: "Informational asymmetry in institutions leads to erosion of trust and cohesion.",
+            84: "The tone is reflective and analytical.",
+            85: "'Epistemic fragmentation' refers to the breakdown of shared knowledge frameworks.",
+            86: "The logical order is observation (1), hypothesis (2), testing (3), validation (4).",
+            87: "After 'recommended', we use the subjunctive 'be reconsidered', not 'is reconsidered'. Error in part (1).",
+            88: "The coherent order is 1-2-3-4.",
+            89: "'Hardly had ... when' is correct; 'than' is incorrect. Error in part (2).",
+            90: "'Keeps a good table' means serves abundant and refined meals.",
+            91: "Present indefinite passive: 'are allocated'.",
+            92: "'Lest' is followed by 'should' in formal English.",
+            93: "Option (c) uses 'amice' as a scarf/wrap (non-liturgical), a homonym of the liturgical vestment.",
+            94: "The correct spelling is 'Adept'.",
+            95: "A person who believes in destiny/predetermination is a Fatalist.",
+            96: "Active voice: 'The council is believed to have ratified the treaty...'",
+            97: "Opprobrium = disgrace. Antonym = Esteem.",
+            98: "'The sword of Damocles' means an ever-present impending danger.",
+            99: "Direct speech retains the original conditional structure: 'would have evoked... had...'",
+            100: "Indirect speech for past conditional question: 'asked how I could have disregarded...'"
+        };
+
+        // --------------------------------------------------------------
+        // 3. PARSER
+        // --------------------------------------------------------------
+        function parseQuestions(text) {
+            // Find all blocks starting with Qn.
+            const blocks = text.match(/Q\d+\..*?(?=Q\d+\.|$)/gs);
+            if (!blocks) return [];
+
+            const questions = [];
+            for (const block of blocks) {
+                const numMatch = block.match(/Q(\d+)\./);
+                if (!numMatch) continue;
+                const num = parseInt(numMatch[1], 10);
+
+                // Extract question text (everything before (a))
+                const qTextMatch = block.match(/Q\d+\.\s*(.*?)\s*\(a\)/s);
+                let qText = qTextMatch ? qTextMatch[1].trim() : '';
+
+                // Extract options and answer
+                const optsMatch = block.match(/\(a\)(.*?)\(b\)(.*?)\(c\)(.*?)\(d\)(.*?)Ans\.\(([a-d])\)/is);
+                if (!optsMatch) continue;
+                const options = [
+                    optsMatch[1].trim(),
+                    optsMatch[2].trim(),
+                    optsMatch[3].trim(),
+                    optsMatch[4].trim()
+                ];
+                const answer = optsMatch[5];
+
+                questions.push({ num, qText, options, answer });
+            }
+            return questions;
+        }
+
+        const questions = parseQuestions(rawText);
+        const total = questions.length;
+
+        // --------------------------------------------------------------
+        // 4. RENDER
+        // --------------------------------------------------------------
+        const container = document.getElementById('questions-container');
+
+        questions.forEach((q) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.dataset.qnum = q.num;
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'q-header';
+            header.innerHTML = `
+                <span class="q-number">Q${q.num}.</span>
+                <span class="q-text">${q.qText}</span>
+            `;
+            card.appendChild(header);
+
+            // Options
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+            const labels = ['a', 'b', 'c', 'd'];
+            q.options.forEach((opt, idx) => {
+                const p = document.createElement('div');
+                p.className = 'option';
+                p.innerHTML = `<strong>(${labels[idx]})</strong> ${opt}`;
+                optsDiv.appendChild(p);
+            });
+            card.appendChild(optsDiv);
+
+            // Action area
+            const action = document.createElement('div');
+            action.className = 'action-area';
+
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-primary';
+            btn.textContent = 'Show Answer';
+            btn.dataset.qnum = q.num;
+
+            const badge = document.createElement('span');
+            badge.className = 'badge';
+            badge.textContent = `Answer: (${q.answer})`;
+
+            action.appendChild(btn);
+            action.appendChild(badge);
+            card.appendChild(action);
+
+            // Answer box (hidden initially)
+            const ansBox = document.createElement('div');
+            ansBox.className = 'answer-box';
+            ansBox.id = `ans-${q.num}`;
+
+            const ansLabel = document.createElement('div');
+            ansLabel.className = 'answer-label';
+            ansLabel.innerHTML = `✅ Correct Answer: <span>(${q.answer})</span>`;
+            ansBox.appendChild(ansLabel);
+
+            const expDiv = document.createElement('div');
+            expDiv.className = 'explanation';
+            const expText = explanations[q.num] || 'No explanation available for this question.';
+            expDiv.innerHTML = `<strong>💡 Explanation:</strong> ${expText}`;
+            ansBox.appendChild(expDiv);
+
+            card.appendChild(ansBox);
+            container.appendChild(card);
+
+            // Toggle logic
+            let visible = false;
+            btn.addEventListener('click', () => {
+                visible = !visible;
+                ansBox.classList.toggle('visible', visible);
+                btn.textContent = visible ? 'Hide Answer' : 'Show Answer';
+            });
+        });
+
+        // --------------------------------------------------------------
+        // 5. SHOW / HIDE ALL
+        // --------------------------------------------------------------
+        document.getElementById('showAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.answer-box').forEach((box) => {
+                box.classList.add('visible');
+            });
+            document.querySelectorAll('.action-area .btn-primary').forEach((btn) => {
+                btn.textContent = 'Hide Answer';
+            });
+        });
+
+        document.getElementById('hideAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.answer-box').forEach((box) => {
+                box.classList.remove('visible');
+            });
+            document.querySelectorAll('.action-area .btn-primary').forEach((btn) => {
+                btn.textContent = 'Show Answer';
+            });
+        });
+
+        // Stats
+        document.getElementById('stats').textContent = `📊 Total ${total} questions loaded. Click "Show Answer" on any question to see the solution and explanation.`;
+    </script>
+</body>
+</html>

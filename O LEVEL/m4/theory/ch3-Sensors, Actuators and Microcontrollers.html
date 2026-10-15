@@ -1,0 +1,3990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M4-R5.1 Chapter 3 | Sensors, Actuators & Microcontrollers | NIELIT O Level</title>
+
+<meta name="description"
+content="NIELIT O Level M4-R5.1 Chapter 3 bilingual notes on Sensors, Actuators and Microcontrollers with examples, exam points, MCQs and practical concepts.">
+
+<meta name="keywords"
+content="NIELIT M4 Chapter 3, Sensors Actuators Microcontrollers, M4-R5.1 Notes, IoT Sensors Hindi English, NIELIT IoT Notes">
+
+<style>
+
+/* =========================================================
+   ROOT / THEMES
+========================================================= */
+
+:root{
+
+    --bg:#07111f;
+    --bg2:#0c1728;
+
+    --card:#101e31;
+    --card2:#13253c;
+
+    --primary:#32d9ff;
+    --secondary:#8b5cf6;
+    --accent:#22c55e;
+
+    --text:#edf7ff;
+    --text2:#a9bbcf;
+    --muted:#71859d;
+
+    --border:rgba(255,255,255,.09);
+
+    --heading:#ffffff;
+    --code:#07101c;
+
+    --shadow:rgba(0,0,0,.35);
+}
+
+
+/* CYAN */
+
+body.theme-cyan{
+    --primary:#32d9ff;
+    --secondary:#8b5cf6;
+    --accent:#22c55e;
+}
+
+/* PURPLE */
+
+body.theme-purple{
+    --primary:#b56cff;
+    --secondary:#ff5edb;
+    --accent:#8b5cf6;
+}
+
+/* GREEN */
+
+body.theme-green{
+    --primary:#4ade80;
+    --secondary:#22d3ee;
+    --accent:#a3e635;
+}
+
+/* ORANGE */
+
+body.theme-orange{
+    --primary:#ff9d42;
+    --secondary:#ff5f6d;
+    --accent:#facc15;
+}
+
+/* BLUE */
+
+body.theme-blue{
+    --primary:#60a5fa;
+    --secondary:#38bdf8;
+    --accent:#818cf8;
+}
+
+/* PINK */
+
+body.theme-pink{
+    --primary:#ff6bba;
+    --secondary:#a78bfa;
+    --accent:#fb7185;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+    color:var(--text);
+
+    background:
+
+    radial-gradient(
+        circle at 10% 10%,
+        color-mix(in srgb,var(--primary),transparent 88%),
+        transparent 30%
+    ),
+
+    radial-gradient(
+        circle at 90% 20%,
+        color-mix(in srgb,var(--secondary),transparent 88%),
+        transparent 32%
+    ),
+
+    linear-gradient(
+        135deg,
+        var(--bg),
+        var(--bg2),
+        var(--bg)
+    );
+
+    min-height:100vh;
+
+    line-height:1.7;
+
+    overflow-x:hidden;
+
+    transition:
+        background .5s,
+        color .4s;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            var(--primary) 1px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle,
+            var(--secondary) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        130px 130px,
+        190px 190px;
+
+    background-position:
+        20px 30px,
+        100px 90px;
+
+    opacity:.08;
+
+    z-index:-1;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    backdrop-filter:blur(20px);
+
+    background:rgba(5,12,23,.82);
+
+    border-bottom:
+        1px solid var(--border);
+
+    padding:12px 5%;
+}
+
+.header-inner{
+
+    max-width:1250px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.logo-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.logo{
+
+    width:48px;
+    height:48px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    color:var(--primary);
+
+    font-weight:900;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 88%
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 65%
+        );
+
+    box-shadow:
+        0 0 25px
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 85%
+        );
+}
+
+.brand-title{
+
+    font-size:16px;
+
+    font-weight:800;
+
+    color:var(--heading);
+}
+
+.brand-sub{
+
+    font-size:10px;
+
+    color:var(--muted);
+}
+
+
+/* =========================================================
+   HEADER BUTTONS
+========================================================= */
+
+.header-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.home-btn{
+
+    text-decoration:none;
+
+    color:var(--text);
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.04);
+
+    padding:9px 13px;
+
+    border-radius:10px;
+
+    font-size:11px;
+
+    transition:.3s;
+}
+
+.home-btn:hover{
+
+    color:var(--primary);
+
+    border-color:var(--primary);
+
+    transform:translateY(-2px);
+}
+
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+.theme-panel{
+
+    max-width:1250px;
+
+    margin:18px auto 0;
+
+    padding:10px 5%;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.theme-label{
+
+    font-size:10px;
+
+    color:var(--muted);
+
+    margin-right:5px;
+}
+
+.theme-btn{
+
+    width:24px;
+    height:24px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,255,255,.35);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.theme-btn:hover{
+
+    transform:scale(1.18);
+
+    border-color:white;
+}
+
+.t-cyan{background:#32d9ff;}
+.t-purple{background:#b56cff;}
+.t-green{background:#4ade80;}
+.t-orange{background:#ff9d42;}
+.t-blue{background:#60a5fa;}
+.t-pink{background:#ff6bba;}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+
+    max-width:1250px;
+
+    margin:auto;
+
+    padding:
+        25px 5% 80px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    padding:42px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(18,39,64,.88),
+            rgba(8,20,35,.82)
+        );
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 25px 70px var(--shadow);
+
+    margin-bottom:28px;
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:150px;
+    height:4px;
+
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    box-shadow:
+        0 0 25px var(--primary);
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    right:-130px;
+    top:-130px;
+
+    border-radius:50%;
+
+    background:
+        var(--primary);
+
+    opacity:.07;
+
+    filter:blur(50px);
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.badge{
+
+    display:inline-flex;
+
+    padding:
+        7px 13px;
+
+    border-radius:30px;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    color:var(--primary);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 90%
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 70%
+        );
+
+    margin-bottom:15px;
+}
+
+.hero h1{
+
+    font-size:
+        clamp(28px,4vw,46px);
+
+    line-height:1.15;
+
+    margin-bottom:12px;
+
+    color:var(--heading);
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--heading),
+            var(--primary),
+            var(--secondary)
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-description{
+
+    max-width:850px;
+
+    color:var(--text2);
+
+    font-size:14px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+
+    margin-top:25px;
+}
+
+.stat{
+
+    padding:16px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+}
+
+.stat strong{
+
+    display:block;
+
+    color:var(--primary);
+
+    font-size:22px;
+
+    margin-bottom:3px;
+}
+
+.stat span{
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+
+    margin-top:38px;
+}
+
+.section-head{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:18px;
+}
+
+.section-icon{
+
+    width:40px;
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 90%
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 72%
+        );
+
+    font-size:19px;
+}
+
+.section-head h2{
+
+    font-size:22px;
+
+    color:var(--heading);
+}
+
+.section-head p{
+
+    font-size:11px;
+
+    color:var(--muted);
+
+    margin-top:2px;
+}
+
+
+/* =========================================================
+   CONTENT CARD
+========================================================= */
+
+.card{
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(19,38,61,.82),
+            rgba(9,21,36,.80)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:19px;
+
+    padding:25px;
+
+    margin-bottom:18px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.16);
+
+    transition:.3s;
+}
+
+.card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 60%
+        );
+}
+
+.card h3{
+
+    color:var(--heading);
+
+    font-size:19px;
+
+    margin-bottom:10px;
+}
+
+.card h4{
+
+    color:var(--primary);
+
+    font-size:15px;
+
+    margin:
+        18px 0 8px;
+}
+
+.card p{
+
+    color:var(--text2);
+
+    font-size:13px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   BILINGUAL BOX
+========================================================= */
+
+.bilingual{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:14px;
+
+    margin-top:15px;
+}
+
+.lang-box{
+
+    padding:18px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+}
+
+.lang-title{
+
+    display:inline-block;
+
+    padding:4px 9px;
+
+    border-radius:7px;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    margin-bottom:9px;
+
+    color:var(--primary);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 90%
+        );
+}
+
+.lang-box p{
+
+    color:var(--text2);
+
+    font-size:12px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   EXAM BOX
+========================================================= */
+
+.exam-box{
+
+    margin-top:18px;
+
+    padding:18px;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(
+                in srgb,
+                var(--primary),
+                transparent 91%
+            ),
+            color-mix(
+                in srgb,
+                var(--secondary),
+                transparent 94%
+            )
+        );
+
+    border-left:
+        4px solid var(--primary);
+}
+
+.exam-box strong{
+
+    display:block;
+
+    color:var(--primary);
+
+    font-size:13px;
+
+    margin-bottom:5px;
+}
+
+.exam-box p{
+
+    color:var(--text2);
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   EXAMPLE BOX
+========================================================= */
+
+.example{
+
+    margin-top:16px;
+
+    padding:17px;
+
+    border-radius:13px;
+
+    background:
+        rgba(0,0,0,.20);
+
+    border:
+        1px dashed
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 55%
+        );
+}
+
+.example-title{
+
+    color:var(--accent);
+
+    font-weight:800;
+
+    font-size:12px;
+
+    margin-bottom:6px;
+}
+
+.example p{
+
+    font-size:12px;
+
+    color:var(--text2);
+}
+
+
+/* =========================================================
+   SENSOR GRID
+========================================================= */
+
+.sensor-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:18px;
+}
+
+.sensor-card{
+
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+
+    transition:.3s;
+}
+
+.sensor-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        var(--primary);
+}
+
+.sensor-icon{
+
+    font-size:30px;
+
+    margin-bottom:10px;
+}
+
+.sensor-card h4{
+
+    color:var(--heading);
+
+    margin:0 0 6px;
+
+    font-size:15px;
+}
+
+.sensor-card p{
+
+    color:var(--text2);
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+
+    overflow-x:auto;
+
+    margin-top:15px;
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:650px;
+}
+
+th{
+
+    padding:13px;
+
+    text-align:left;
+
+    font-size:11px;
+
+    color:var(--heading);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary),
+            transparent 86%
+        );
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+td{
+
+    padding:12px;
+
+    color:var(--text2);
+
+    font-size:11px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+tr:hover td{
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:var(--text);
+}
+
+
+/* =========================================================
+   FLOW
+========================================================= */
+
+.flow{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:10px;
+
+    margin-top:20px;
+}
+
+.flow-item{
+
+    position:relative;
+
+    text-align:center;
+
+    padding:18px 10px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+}
+
+.flow-item strong{
+
+    display:block;
+
+    color:var(--primary);
+
+    font-size:12px;
+
+    margin-bottom:5px;
+}
+
+.flow-item span{
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   ACTUATOR CARDS
+========================================================= */
+
+.actuator-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:18px;
+}
+
+.actuator{
+
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+}
+
+.actuator .icon{
+
+    font-size:28px;
+
+    margin-bottom:8px;
+}
+
+.actuator h4{
+
+    margin:0 0 6px;
+
+    color:var(--heading);
+}
+
+.actuator p{
+
+    font-size:11px;
+
+    color:var(--text2);
+}
+
+
+/* =========================================================
+   CODE
+========================================================= */
+
+.code-box{
+
+    margin-top:15px;
+
+    padding:18px;
+
+    border-radius:13px;
+
+    background:var(--code);
+
+    border:
+        1px solid var(--border);
+
+    overflow:auto;
+}
+
+pre{
+
+    color:#d8f7ff;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   MCQ
+========================================================= */
+
+.mcq{
+
+    padding:18px;
+
+    margin-bottom:12px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+}
+
+.question{
+
+    color:var(--heading);
+
+    font-size:13px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.option{
+
+    padding:7px 10px;
+
+    margin:5px 0;
+
+    border-radius:7px;
+
+    color:var(--text2);
+
+    background:
+        rgba(255,255,255,.025);
+
+    font-size:11px;
+}
+
+.answer{
+
+    margin-top:9px;
+
+    color:var(--accent);
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+   REVISION
+========================================================= */
+
+.revision-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:14px;
+}
+
+.revision{
+
+    padding:18px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+}
+
+.revision h4{
+
+    color:var(--primary);
+
+    margin-bottom:8px;
+}
+
+.revision ul{
+
+    list-style:none;
+}
+
+.revision li{
+
+    color:var(--text2);
+
+    font-size:11px;
+
+    padding:5px 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.04);
+}
+
+.revision li::before{
+
+    content:"✓";
+
+    color:var(--accent);
+
+    margin-right:7px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    text-align:center;
+
+    margin-top:50px;
+
+    padding:25px;
+
+    border-top:
+        1px solid var(--border);
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .sensor-grid,
+    .actuator-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .flow{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+}
+
+@media(max-width:650px){
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .home-btn{
+        font-size:9px;
+        padding:7px 9px;
+    }
+
+    .container{
+        padding:
+            15px 4% 60px;
+    }
+
+    .hero{
+        padding:27px 20px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .stats,
+    .bilingual,
+    .sensor-grid,
+    .actuator-grid,
+    .revision-grid,
+    .flow{
+        grid-template-columns:1fr;
+    }
+
+    .theme-panel{
+        justify-content:center;
+    }
+
+    .card{
+        padding:19px;
+    }
+}
+
+</style>
+</head>
+
+
+<body class="theme-cyan">
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            M4
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                M4-R5.1 Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Internet of Things & its Applications
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <a href="index.html" class="home-btn">
+            ← Home
+        </a>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================================================
+     THEME SELECTOR
+========================================================= -->
+
+<div class="theme-panel">
+
+<span class="theme-label">
+    🎨 Theme:
+</span>
+
+<button class="theme-btn t-cyan"
+onclick="setTheme('theme-cyan')"
+title="Cyan Theme"></button>
+
+<button class="theme-btn t-purple"
+onclick="setTheme('theme-purple')"
+title="Purple Theme"></button>
+
+<button class="theme-btn t-green"
+onclick="setTheme('theme-green')"
+title="Green Theme"></button>
+
+<button class="theme-btn t-orange"
+onclick="setTheme('theme-orange')"
+title="Orange Theme"></button>
+
+<button class="theme-btn t-blue"
+onclick="setTheme('theme-blue')"
+title="Blue Theme"></button>
+
+<button class="theme-btn t-pink"
+onclick="setTheme('theme-pink')"
+title="Pink Theme"></button>
+
+</div>
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="badge">
+    ✦ NIELIT O LEVEL • M4-R5.1 • CHAPTER 03
+</div>
+
+<h1>
+    Sensors, Actuators & Microcontrollers
+</h1>
+
+<p class="hero-description">
+
+    <b>English:</b>
+    Understand how IoT devices sense the real world,
+    process information and perform physical actions.
+
+    <br><br>
+
+    <b>हिन्दी:</b>
+    जानिए कि IoT devices वास्तविक दुनिया से information
+    कैसे प्राप्त करते हैं, उसे process करते हैं और फिर
+    physical action कैसे perform करते हैं।
+
+</p>
+
+
+<div class="stats">
+
+<div class="stat">
+<strong>03</strong>
+<span>Chapter Number</span>
+</div>
+
+<div class="stat">
+<strong>IoT</strong>
+<span>Core Topic</span>
+</div>
+
+<div class="stat">
+<strong>2×</strong>
+<span>Examples Focus</span>
+</div>
+
+<div class="stat">
+<strong>Exam</strong>
+<span>Oriented Notes</span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     LEARNING OBJECTIVE
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🎯
+</div>
+
+<div>
+
+<h2>
+Learning Objectives
+</h2>
+
+<p>
+Chapter complete karne ke baad kya aana chahiye?
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇬🇧 ENGLISH
+</div>
+
+<p>
+
+After completing this chapter, you should be able
+to explain sensors, transducers, actuators and
+microcontrollers and understand their role in an
+IoT system.
+
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇮🇳 हिन्दी
+</div>
+
+<p>
+
+इस chapter के बाद आपको sensor, transducer,
+actuator और microcontroller का meaning,
+working तथा IoT में उनका role समझ में आना चाहिए।
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SENSOR INTRODUCTION
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+📡
+</div>
+
+<div>
+
+<h2>
+1. What is a Sensor?
+</h2>
+
+<p>
+Sensor — सबसे important IoT building blocks में से एक
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Sensor क्या होता है?
+</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇬🇧 ENGLISH
+</div>
+
+<p>
+
+A <b>sensor</b> is a device that detects or measures
+a physical quantity from the environment and converts
+it into a usable electrical signal.
+
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇮🇳 हिन्दी
+</div>
+
+<p>
+
+<b>Sensor</b> एक electronic device है जो environment
+में मौजूद किसी physical quantity जैसे temperature,
+light, moisture, pressure आदि को detect या measure
+करता है और उसे electrical signal में बदलता है।
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="example">
+
+<div class="example-title">
+💡 EASY EXAMPLE
+</div>
+
+<p>
+
+Room का temperature 30°C है। Temperature sensor
+इस temperature को detect करता है और controller को
+corresponding signal देता है।
+
+<br><br>
+
+<strong>
+Real World → Sensor → Electrical Signal → Controller
+</strong>
+
+</p>
+
+</div>
+
+
+<div class="exam-box">
+
+<strong>
+🔥 EXAM POINT
+</strong>
+
+<p>
+
+Sensor का basic काम है:
+<b>Physical quantity को sense/measure करके
+electrical signal provide करना.</b>
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SENSOR TYPES
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🌡️
+</div>
+
+<div>
+
+<h2>
+2. Common IoT Sensors
+</h2>
+
+<p>
+Important sensors with real-life examples
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="sensor-grid">
+
+
+<div class="sensor-card">
+
+<div class="sensor-icon">
+🌡️
+</div>
+
+<h4>
+Temperature Sensor
+</h4>
+
+<p>
+
+Temperature को measure करता है।
+
+<br><br>
+
+<b>Example:</b>
+Smart AC, weather station,
+industrial monitoring.
+
+</p>
+
+</div>
+
+
+<div class="sensor-card">
+
+<div class="sensor-icon">
+💡
+</div>
+
+<h4>
+Light Sensor
+</h4>
+
+<p>
+
+Light intensity detect करता है।
+
+<br><br>
+
+<b>Example:</b>
+Automatic street lights,
+automatic brightness.
+
+</p>
+
+</div>
+
+
+<div class="sensor-card">
+
+<div class="sensor-icon">
+💧
+</div>
+
+<h4>
+Moisture Sensor
+</h4>
+
+<p>
+
+Soil या material में moisture
+level detect करता है।
+
+<br><br>
+
+<b>Example:</b>
+Smart irrigation.
+
+</p>
+
+</div>
+
+
+<div class="sensor-card">
+
+<div class="sensor-icon">
+📏
+</div>
+
+<h4>
+Ultrasonic Sensor
+</h4>
+
+<p>
+
+Distance measure करने के लिए
+ultrasonic waves का use करता है।
+
+<br><br>
+
+<b>Example:</b>
+Obstacle detection.
+
+</p>
+
+</div>
+
+
+<div class="sensor-card">
+
+<div class="sensor-icon">
+💨
+</div>
+
+<h4>
+Gas Sensor
+</h4>
+
+<p>
+
+Certain gases की presence या
+concentration detect कर सकता है।
+
+<br><br>
+
+<b>Example:</b>
+Gas leakage monitoring.
+
+</p>
+
+</div>
+
+
+<div class="sensor-card">
+
+<div class="sensor-icon">
+🏃
+</div>
+
+<h4>
+Motion Sensor
+</h4>
+
+<p>
+
+Movement detect करता है।
+
+<br><br>
+
+<b>Example:</b>
+Security lights,
+smart security systems.
+
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SENSOR TABLE
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+📊
+</div>
+
+<div>
+
+<h2>
+3. Sensor Quick Comparison
+</h2>
+
+<p>
+Exam में direct questions के लिए important
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+
+<th>
+Sensor
+</th>
+
+<th>
+Measures / Detects
+</th>
+
+<th>
+Example Application
+</th>
+
+</tr>
+
+
+<tr>
+
+<td>
+Temperature Sensor
+</td>
+
+<td>
+Temperature
+</td>
+
+<td>
+Smart AC / Weather Monitoring
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Light Sensor
+</td>
+
+<td>
+Light Intensity
+</td>
+
+<td>
+Automatic Lighting
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Moisture Sensor
+</td>
+
+<td>
+Moisture Level
+</td>
+
+<td>
+Smart Agriculture
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Ultrasonic Sensor
+</td>
+
+<td>
+Distance
+</td>
+
+<td>
+Obstacle Detection
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Gas Sensor
+</td>
+
+<td>
+Gas Presence / Concentration
+</td>
+
+<td>
+Gas Monitoring
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Motion Sensor
+</td>
+
+<td>
+Movement
+</td>
+
+<td>
+Security System
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TRANSDUCER
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🔄
+</div>
+
+<div>
+
+<h2>
+4. Sensor vs Transducer
+</h2>
+
+<p>
+बहुत important conceptual difference
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Transducer क्या होता है?
+</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇬🇧 ENGLISH
+</div>
+
+<p>
+
+A <b>transducer</b> converts one form of energy
+or physical quantity into another form, generally
+into an electrical signal in measurement systems.
+
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇮🇳 हिन्दी
+</div>
+
+<p>
+
+<b>Transducer</b> एक form की energy या physical
+quantity को दूसरी usable form में convert करता है।
+Measurement systems में electrical output common है।
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="exam-box">
+
+<strong>
+🔥 EXAM POINT
+</strong>
+
+<p>
+
+Exam में Sensor और Transducer को similar context
+में पूछा जा सकता है। याद रखें:
+Sensor का focus <b>sensing/measuring</b> पर है,
+जबकि transducer का focus <b>conversion</b> पर है।
+
+</p>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+
+<th>
+Sensor
+</th>
+
+<th>
+Transducer
+</th>
+
+</tr>
+
+<tr>
+
+<td>
+Physical quantity को detect/measure करता है।
+</td>
+
+<td>
+Energy/quantity को एक form से दूसरी form में convert करता है।
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+IoT sensing में widely used.
+</td>
+
+<td>
+Measurement और control systems में widely used.
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     IOT FLOW
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🔗
+</div>
+
+<div>
+
+<h2>
+5. Sensor in an IoT Process
+</h2>
+
+<p>
+Data real world से application तक कैसे जाता है?
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="flow">
+
+<div class="flow-item">
+
+<strong>01</strong>
+
+<span>
+Physical World
+</span>
+
+</div>
+
+
+<div class="flow-item">
+
+<strong>02</strong>
+
+<span>
+Sensor
+</span>
+
+</div>
+
+
+<div class="flow-item">
+
+<strong>03</strong>
+
+<span>
+Controller
+</span>
+
+</div>
+
+
+<div class="flow-item">
+
+<strong>04</strong>
+
+<span>
+Network
+</span>
+
+</div>
+
+
+<div class="flow-item">
+
+<strong>05</strong>
+
+<span>
+Application
+</span>
+
+</div>
+
+</div>
+
+
+<div class="example">
+
+<div class="example-title">
+🌱 SMART AGRICULTURE EXAMPLE
+</div>
+
+<p>
+
+Soil moisture कम हुआ →
+Moisture sensor इसे detect करेगा →
+Microcontroller data process करेगा →
+System required action decide करेगा →
+Actuator पानी देने वाले system को operate कर सकता है।
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     ACTUATOR
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+⚙️
+</div>
+
+<div>
+
+<h2>
+6. What is an Actuator?
+</h2>
+
+<p>
+Sensor input लेता है, actuator action कराता है
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Actuator क्या होता है?
+</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇬🇧 ENGLISH
+</div>
+
+<p>
+
+An <b>actuator</b> is a device that converts
+a control signal into a physical action or movement.
+
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇮🇳 हिन्दी
+</div>
+
+<p>
+
+<b>Actuator</b> एक ऐसा device है जो controller से
+मिलने वाले control signal को physical action,
+movement या output में बदलता है।
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="exam-box">
+
+<strong>
+🔥 GOLDEN RULE
+</strong>
+
+<p>
+
+<b>Sensor = Sense / Input</b>
+
+<br>
+
+<b>Actuator = Action / Output</b>
+
+</p>
+
+</div>
+
+
+<div class="example">
+
+<div class="example-title">
+💡 EASY EXAMPLE
+</div>
+
+<p>
+
+Temperature sensor बताता है कि temperature high है।
+
+Controller decision लेता है।
+
+Actuator fan/AC related action को operate करने में
+help करता है।
+
+<br><br>
+
+<b>Sense → Process → Act</b>
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     ACTUATORS TYPES
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+⚡
+</div>
+
+<div>
+
+<h2>
+7. Common Actuators
+</h2>
+
+<p>
+Exam + practical दोनों के लिए important
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="actuator-grid">
+
+
+<div class="actuator">
+
+<div class="icon">
+🔄
+</div>
+
+<h4>
+DC Motor
+</h4>
+
+<p>
+
+Electrical energy को rotational mechanical
+motion में convert कर सकता है।
+
+</p>
+
+</div>
+
+
+<div class="actuator">
+
+<div class="icon">
+🎯
+</div>
+
+<h4>
+Servo Motor
+</h4>
+
+<p>
+
+Controlled angular movement के लिए commonly used।
+
+</p>
+
+</div>
+
+
+<div class="actuator">
+
+<div class="icon">
+🔌
+</div>
+
+<h4>
+Relay
+</h4>
+
+<p>
+
+Electrical circuit को control/switch करने के लिए
+used होता है।
+
+</p>
+
+</div>
+
+
+<div class="actuator">
+
+<div class="icon">
+💡
+</div>
+
+<h4>
+LED
+</h4>
+
+<p>
+
+Electrical signal के response में light output
+provide कर सकता है।
+
+</p>
+
+</div>
+
+
+<div class="actuator">
+
+<div class="icon">
+🔊
+</div>
+
+<h4>
+Buzzer
+</h4>
+
+<p>
+
+Electrical signal मिलने पर sound indication
+दे सकता है।
+
+</p>
+
+</div>
+
+
+<div class="actuator">
+
+<div class="icon">
+↕️
+</div>
+
+<h4>
+Stepper Motor
+</h4>
+
+<p>
+
+Motor को controlled steps में move करने के लिए
+use किया जाता है।
+
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     MICROCONTROLLER
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🧠
+</div>
+
+<div>
+
+<h2>
+8. Microcontroller
+</h2>
+
+<p>
+IoT system का processing/control component
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Microcontroller क्या होता है?
+</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇬🇧 ENGLISH
+</div>
+
+<p>
+
+A <b>microcontroller</b> is a compact integrated
+circuit designed to control electronic systems.
+It typically contains a processor, memory and
+input/output interfaces.
+
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇮🇳 हिन्दी
+</div>
+
+<p>
+
+<b>Microcontroller</b> एक compact integrated circuit
+है जिसका उपयोग electronic systems को control करने
+के लिए किया जाता है। इसमें processor, memory और
+input/output interfaces जैसे components होते हैं।
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="exam-box">
+
+<strong>
+🔥 EXAM POINT
+</strong>
+
+<p>
+
+Microcontroller को छोटे electronic system का
+<b>brain/controller</b> समझ सकते हैं। यह input
+लेकर program के according output/control action
+दे सकता है।
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     MICROCONTROLLER BLOCKS
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🧩
+</div>
+
+<div>
+
+<h2>
+9. Basic Blocks of a Microcontroller
+</h2>
+
+<p>
+Important components
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+
+<th>
+Component
+</th>
+
+<th>
+Role
+</th>
+
+<th>
+Easy Meaning
+</th>
+
+</tr>
+
+
+<tr>
+
+<td>
+CPU / Processor
+</td>
+
+<td>
+Instructions execute करता है
+</td>
+
+<td>
+Brain
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Memory
+</td>
+
+<td>
+Program/Data store करता है
+</td>
+
+<td>
+Storage
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+GPIO / I/O
+</td>
+
+<td>
+External devices से interface
+</td>
+
+<td>
+Input / Output connection
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Timer / Counter
+</td>
+
+<td>
+Timing/counting operations
+</td>
+
+<td>
+Time measurement/control
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Communication Interface
+</td>
+
+<td>
+Other devices से communication
+</td>
+
+<td>
+Data exchange
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     ARDUINO
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🔧
+</div>
+
+<div>
+
+<h2>
+10. Arduino & Microcontroller
+</h2>
+
+<p>
+IoT practical में frequently encountered platform
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇬🇧 ENGLISH
+</div>
+
+<p>
+
+Arduino is an open-source electronics platform
+used for prototyping and building interactive
+electronic projects.
+
+The Arduino UNO commonly uses the
+<b>ATmega328P</b> microcontroller.
+
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇮🇳 हिन्दी
+</div>
+
+<p>
+
+Arduino एक open-source electronics platform है
+जिसका उपयोग prototype और electronic projects
+बनाने में किया जाता है।
+
+Arduino UNO में commonly
+<b>ATmega328P</b> microcontroller का उपयोग होता है।
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="exam-box">
+
+<strong>
+🔥 VERY IMPORTANT MCQ FACT
+</strong>
+
+<p>
+
+<b>Arduino UNO → ATmega328P</b>
+
+यह एक frequently tested fact है।
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SENSOR + CONTROLLER + ACTUATOR
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🔄
+</div>
+
+<div>
+
+<h2>
+11. Sensor vs Controller vs Actuator
+</h2>
+
+<p>
+पूरे chapter का सबसे important concept
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+
+<th>
+Device
+</th>
+
+<th>
+Main Job
+</th>
+
+<th>
+Example
+</th>
+
+</tr>
+
+
+<tr>
+
+<td>
+Sensor
+</td>
+
+<td>
+Environment से data लेना
+</td>
+
+<td>
+Temperature Sensor
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Controller
+</td>
+
+<td>
+Data process करके decision लेना
+</td>
+
+<td>
+Microcontroller
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+Actuator
+</td>
+
+<td>
+Physical action करना
+</td>
+
+<td>
+Motor / Relay
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="exam-box">
+
+<strong>
+🧠 MEMORY TRICK
+</strong>
+
+<p>
+
+<b>S → P → A</b>
+
+<br><br>
+
+<b>S</b> = Sense
+
+<br>
+
+<b>P</b> = Process
+
+<br>
+
+<b>A</b> = Act
+
+<br><br>
+
+Sensor → Processor/Controller → Actuator
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     COMPLETE EXAMPLE
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🏠
+</div>
+
+<div>
+
+<h2>
+12. Complete IoT Example
+</h2>
+
+<p>
+Smart Home example से पूरा concept समझें
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+🌡️ Smart Temperature Control
+</h3>
+
+<div class="flow">
+
+<div class="flow-item">
+<strong>01</strong>
+<span>
+Temperature Sensor
+</span>
+</div>
+
+<div class="flow-item">
+<strong>02</strong>
+<span>
+Microcontroller
+</span>
+</div>
+
+<div class="flow-item">
+<strong>03</strong>
+<span>
+Decision
+</span>
+</div>
+
+<div class="flow-item">
+<strong>04</strong>
+<span>
+Actuator
+</span>
+</div>
+
+<div class="flow-item">
+<strong>05</strong>
+<span>
+Fan / System
+</span>
+</div>
+
+</div>
+
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇬🇧 ENGLISH
+</div>
+
+<p>
+
+The temperature sensor measures room temperature.
+The microcontroller processes the sensor data.
+If the temperature crosses a programmed threshold,
+the controller can trigger an actuator to perform
+the required action.
+
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<div class="lang-title">
+🇮🇳 हिन्दी
+</div>
+
+<p>
+
+Temperature sensor room का temperature measure करता है।
+Microcontroller sensor data को process करता है।
+यदि temperature programmed limit से अधिक हो जाता है,
+तो controller actuator को required action के लिए
+trigger कर सकता है।
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     EXAM DIFFERENCES
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+⚖️
+</div>
+
+<div>
+
+<h2>
+13. Important Differences
+</h2>
+
+<p>
+Exam में direct comparison questions
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+
+<th>
+Sensor
+</th>
+
+<th>
+Actuator
+</th>
+
+</tr>
+
+<tr>
+
+<td>
+Input side device
+</td>
+
+<td>
+Output/action side device
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Environment को sense करता है
+</td>
+
+<td>
+Physical action perform करता है
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Physical quantity detect करता है
+</td>
+
+<td>
+Control signal के response में action करता है
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+Example: Temperature Sensor
+</td>
+
+<td>
+Example: Motor
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+<br>
+
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+
+<th>
+Microprocessor
+</th>
+
+<th>
+Microcontroller
+</th>
+
+</tr>
+
+<tr>
+
+<td>
+Generally processing unit focused
+</td>
+
+<td>
+Processor + memory + I/O आदि integrated होते हैं
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+External components की आवश्यकता अधिक हो सकती है
+</td>
+
+<td>
+Embedded control applications के लिए convenient
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+General-purpose processing में common
+</td>
+
+<td>
+Embedded systems/IoT में common
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     EXAM TRAPS
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🚨
+</div>
+
+<div>
+
+<h2>
+14. Exam Traps
+</h2>
+
+<p>
+इन points में students अक्सर confuse होते हैं
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="exam-box">
+
+<strong>
+TRAP 01
+</strong>
+
+<p>
+
+Sensor और actuator को interchange मत करना।
+
+<br>
+
+Sensor = Input / Sense
+
+<br>
+
+Actuator = Output / Action
+
+</p>
+
+</div>
+
+
+<div class="exam-box">
+
+<strong>
+TRAP 02
+</strong>
+
+<p>
+
+Microcontroller केवल “sensor” नहीं है।
+यह system को control/process करने के लिए
+programmed controller की तरह काम करता है।
+
+</p>
+
+</div>
+
+
+<div class="exam-box">
+
+<strong>
+TRAP 03
+</strong>
+
+<p>
+
+Arduino UNO को microcontroller के बराबर
+मत समझिए। Arduino UNO एक development board है,
+जिसमें ATmega328P microcontroller commonly होता है।
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     MCQS
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+🧠
+</div>
+
+<div>
+
+<h2>
+15. Exam-Oriented MCQs
+</h2>
+
+<p>
+Chapter 3 quick practice
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+
+<div class="mcq">
+
+<div class="question">
+1. Which device detects a physical quantity from the environment?
+</div>
+
+<div class="option">
+A. Actuator
+</div>
+
+<div class="option">
+B. Sensor
+</div>
+
+<div class="option">
+C. Router
+</div>
+
+<div class="option">
+D. Monitor
+</div>
+
+<div class="answer">
+✓ Answer: B — Sensor
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+2. Which device converts a control signal into physical action?
+</div>
+
+<div class="option">
+A. Sensor
+</div>
+
+<div class="option">
+B. Actuator
+</div>
+
+<div class="option">
+C. Database
+</div>
+
+<div class="option">
+D. Browser
+</div>
+
+<div class="answer">
+✓ Answer: B — Actuator
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+3. Which sensor is suitable for measuring temperature?
+</div>
+
+<div class="option">
+A. Temperature Sensor
+</div>
+
+<div class="option">
+B. Motion Sensor
+</div>
+
+<div class="option">
+C. Light Sensor
+</div>
+
+<div class="option">
+D. Moisture Sensor
+</div>
+
+<div class="answer">
+✓ Answer: A — Temperature Sensor
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+4. Arduino UNO commonly uses which microcontroller?
+</div>
+
+<div class="option">
+A. ATmega328P
+</div>
+
+<div class="option">
+B. ATmega2560
+</div>
+
+<div class="option">
+C. ARM11
+</div>
+
+<div class="option">
+D. 8051 only
+</div>
+
+<div class="answer">
+✓ Answer: A — ATmega328P
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+5. Which device can be used for obstacle distance detection?
+</div>
+
+<div class="option">
+A. Ultrasonic Sensor
+</div>
+
+<div class="option">
+B. Temperature Sensor
+</div>
+
+<div class="option">
+C. Moisture Sensor
+</div>
+
+<div class="option">
+D. Gas Sensor
+</div>
+
+<div class="answer">
+✓ Answer: A — Ultrasonic Sensor
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+6. What is the correct basic IoT flow?
+</div>
+
+<div class="option">
+A. Actuator → Sensor → Controller
+</div>
+
+<div class="option">
+B. Sensor → Controller → Actuator
+</div>
+
+<div class="option">
+C. Controller → Sensor → Controller
+</div>
+
+<div class="option">
+D. Sensor → Actuator → Sensor
+</div>
+
+<div class="answer">
+✓ Answer: B — Sensor → Controller → Actuator
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+7. Which component executes instructions in a microcontroller?
+</div>
+
+<div class="option">
+A. CPU / Processor
+</div>
+
+<div class="option">
+B. Sensor
+</div>
+
+<div class="option">
+C. Relay
+</div>
+
+<div class="option">
+D. Motor
+</div>
+
+<div class="answer">
+✓ Answer: A — CPU / Processor
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+8. Which device is commonly used to measure soil moisture?
+</div>
+
+<div class="option">
+A. Moisture Sensor
+</div>
+
+<div class="option">
+B. Light Sensor
+</div>
+
+<div class="option">
+C. Gas Sensor
+</div>
+
+<div class="option">
+D. Motion Sensor
+</div>
+
+<div class="answer">
+✓ Answer: A — Moisture Sensor
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+9. Which is an example of an actuator?
+</div>
+
+<div class="option">
+A. Temperature sensor
+</div>
+
+<div class="option">
+B. DC Motor
+</div>
+
+<div class="option">
+C. Light sensor
+</div>
+
+<div class="option">
+D. Moisture sensor
+</div>
+
+<div class="answer">
+✓ Answer: B — DC Motor
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+10. The main purpose of a microcontroller is to:
+</div>
+
+<div class="option">
+A. Only display web pages
+</div>
+
+<div class="option">
+B. Control electronic systems according to programmed instructions
+</div>
+
+<div class="option">
+C. Only store videos
+</div>
+
+<div class="option">
+D. Only provide internet
+</div>
+
+<div class="answer">
+✓ Answer: B
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     QUICK REVISION
+========================================================= -->
+
+<section class="section">
+
+<div class="section-head">
+
+<div class="section-icon">
+⚡
+</div>
+
+<div>
+
+<h2>
+16. One-Minute Revision
+</h2>
+
+<p>
+Exam से पहले यह section जरूर revise करें
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="revision-grid">
+
+
+<div class="revision">
+
+<h4>
+📡 Sensors
+</h4>
+
+<ul>
+
+<li>Physical quantity detect करते हैं</li>
+
+<li>IoT में input provide करते हैं</li>
+
+<li>Temperature sensor</li>
+
+<li>Light sensor</li>
+
+<li>Moisture sensor</li>
+
+<li>Motion sensor</li>
+
+</ul>
+
+</div>
+
+
+<div class="revision">
+
+<h4>
+⚙️ Actuators
+</h4>
+
+<ul>
+
+<li>Physical action perform करते हैं</li>
+
+<li>Output side पर काम करते हैं</li>
+
+<li>DC motor</li>
+
+<li>Servo motor</li>
+
+<li>Relay</li>
+
+<li>Buzzer</li>
+
+</ul>
+
+</div>
+
+
+<div class="revision">
+
+<h4>
+🧠 Microcontroller
+</h4>
+
+<ul>
+
+<li>Electronic system control करता है</li>
+
+<li>Processor + Memory + I/O</li>
+
+<li>Program instructions execute करता है</li>
+
+<li>IoT applications में widely used</li>
+
+<li>Arduino UNO → ATmega328P</li>
+
+</ul>
+
+</div>
+
+
+<div class="revision">
+
+<h4>
+🔥 Golden Formula
+</h4>
+
+<ul>
+
+<li>Sensor = Sense</li>
+
+<li>Controller = Process</li>
+
+<li>Actuator = Act</li>
+
+<li>Input → Processing → Output</li>
+
+<li>IoT = Connected intelligent system</li>
+
+</ul>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL EXAM BOX
+========================================================= -->
+
+<section class="section">
+
+<div class="card">
+
+<div class="exam-box">
+
+<strong>
+🏆 CHAPTER 3 EXAM MASTER POINT
+</strong>
+
+<p>
+
+अगर इस chapter से question आए तो सबसे पहले
+इन concepts को recall करें:
+
+<br><br>
+
+<b>
+Sensor → Physical quantity sense करता है
+<br>
+Actuator → Physical action करता है
+<br>
+Microcontroller → System को control/process करता है
+<br>
+Arduino UNO → ATmega328P
+<br>
+Smart IoT flow → Sensor → Controller → Actuator
+</b>
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+<p>
+M4-R5.1 • Internet of Things and its Applications
+</p>
+
+<p style="margin-top:5px;">
+Chapter 03 • Sensors, Actuators & Microcontrollers
+</p>
+
+<p style="margin-top:5px;">
+Bilingual • Exam Oriented • NIELIT O Level
+</p>
+
+</footer>
+
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+function setTheme(theme){
+
+    document.body.className = theme;
+
+    localStorage.setItem(
+        "m4Theme",
+        theme
+    );
+
+}
+
+
+/* Load saved theme */
+
+const savedTheme =
+    localStorage.getItem("m4Theme");
+
+if(savedTheme){
+
+    document.body.className =
+        savedTheme;
+
+}
+
+</script>
+
+
+</body>
+</html>

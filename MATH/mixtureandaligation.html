@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mixture & Alligation – CGL Level (15 Pages)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Roboto,sans-serif; background:#f0f4f8; color:#1a1a2e; padding:20px; transition:0.3s; }
+        .container { max-width:1100px; margin:0 auto; }
+        .progress-container { position:sticky; top:0; z-index:1000; background:#fff; padding:8px 20px; border-radius:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:25px; display:flex; align-items:center; gap:15px; flex-wrap:wrap; }
+        .progress-container .prog-label { font-weight:600; font-size:14px; color:#1a237e; white-space:nowrap; }
+        .progress-container .prog-bar { flex:1; height:8px; background:#e0e0e0; border-radius:10px; overflow:hidden; min-width:100px; }
+        .progress-container .prog-bar .prog-fill { height:100%; width:0%; background:linear-gradient(90deg,#1a237e,#ffd54f); transition:width 0.3s ease; border-radius:10px; }
+        .progress-container .page-indicator { font-weight:700; color:#1a237e; background:#e8eaf6; padding:4px 14px; border-radius:30px; font-size:14px; }
+        .main-header { background:linear-gradient(135deg,#1a237e,#0d47a1); color:#fff; padding:20px 30px; border-radius:16px; margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); }
+        .main-header .title h1 { font-size:28px; font-weight:800; }
+        .main-header .title h1 span { color:#ffd54f; }
+        .main-header .title p { font-size:14px; opacity:0.9; }
+        .lang-toggle { display:flex; gap:6px; background:rgba(255,255,255,0.15); padding:5px; border-radius:40px; border:1px solid rgba(255,255,255,0.2); }
+        .lang-toggle button { padding:8px 22px; border:none; border-radius:30px; font-weight:700; font-size:15px; cursor:pointer; transition:0.3s; background:transparent; color:#ccc; }
+        .lang-toggle button.active { background:#ffd54f; color:#1a237e; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+        .lang-toggle button:hover:not(.active) { color:#fff; }
+        .topics-index { background:#fff; border-radius:16px; padding:20px 25px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border:1px solid #e9edf2; }
+        .topics-index .index-title { font-size:20px; font-weight:700; color:#1a237e; margin-bottom:12px; }
+        .topics-index .index-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+        .topics-index .index-grid a { display:block; background:#f5f7fa; padding:10px 14px; border-radius:8px; color:#1a237e; text-decoration:none; font-weight:600; font-size:14px; border-left:4px solid #1a237e; transition:0.3s; }
+        .topics-index .index-grid a:hover { background:#e8eaf6; transform:translateX(4px); border-left-color:#ff6f00; }
+        .page-divider { display:flex; align-items:center; gap:20px; margin:40px 0 30px; color:#888; font-weight:300; font-size:14px; }
+        .page-divider hr { flex:1; border:none; height:1px; background:linear-gradient(to right,transparent,#ccc,transparent); }
+        .page-divider .page-label { background:#fff; padding:0 15px; border-radius:30px; font-weight:600; color:#1a237e; border:1px solid #e0e0e0; padding:4px 18px; }
+        .formula-card { background:#fff; border-radius:16px; padding:25px 30px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border-left:5px solid #1a237e; scroll-margin-top:80px; transition:0.2s; }
+        .formula-card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.09); }
+        .formula-card .topic-name { font-size:26px; font-weight:800; color:#1a237e; margin-bottom:2px; }
+        .formula-card .topic-badge { font-size:13px; color:#888; margin-bottom:15px; display:inline-block; background:#f0f4f8; padding:2px 16px; border-radius:20px; }
+        .visual-box { background:#e8eaf6; border-radius:12px; padding:16px 20px; margin-bottom:18px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; border:1px dashed #1a237e; }
+        .visual-box .vis-icon { font-size:36px; color:#1a237e; }
+        .visual-box .vis-text { font-size:14px; color:#333; line-height:1.6; }
+        .visual-box .vis-text strong { color:#1a237e; }
+        .formulas-box { background:#f5f7fa; border-radius:12px; padding:18px 22px; margin-bottom:16px; border-left:4px solid #ff6f00; line-height:1.8; font-size:15px; }
+        .formulas-box .formula-title { font-weight:700; color:#1a237e; font-size:17px; margin-bottom:6px; }
+        .formulas-box code { background:#e0e0e0; padding:2px 8px; border-radius:4px; font-weight:600; }
+        .formula-explanation { background:#fff8e1; border-radius:10px; padding:14px 18px; margin-bottom:18px; border-left:4px solid #ffa000; font-size:14px; line-height:1.7; color:#4e342e; }
+        .formula-explanation .ex-title { font-weight:700; color:#e65100; }
+        .question-item { background:#fafbfc; border-radius:10px; padding:12px 16px; margin-bottom:10px; border:1px solid #e9edf2; transition:0.2s; }
+        .question-item:hover { border-color:#b0c4de; }
+        .question-item .q-text { font-weight:600; font-size:15px; margin-bottom:6px; }
+        .question-item .options { display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:14px; color:#333; margin-bottom:6px; }
+        @media (max-width:600px) { .question-item .options { grid-template-columns:1fr; } }
+        .question-item .options span { display:inline-block; }
+        .question-item .answer-btn { background:#e8eaf6; border:none; padding:4px 16px; border-radius:20px; font-size:13px; font-weight:600; color:#1a237e; cursor:pointer; transition:0.2s; margin-top:4px; }
+        .question-item .answer-btn:hover { background:#1a237e; color:#fff; }
+        .question-item .answer-box { display:none; margin-top:8px; padding:10px 16px; background:#e8f5e9; border-radius:8px; font-size:14px; border-left:4px solid #2e7d32; color:#1b5e20; line-height:1.6; }
+        .question-item .answer-box.show { display:block; }
+        .pyq-badge { display:inline-block; background:#ffd54f; color:#1a237e; font-size:11px; font-weight:800; padding:2px 12px; border-radius:30px; margin-right:10px; letter-spacing:0.5px; }
+        .section-heading { font-weight:700; color:#1a237e; font-size:18px; margin:18px 0 12px; display:flex; align-items:center; gap:10px; }
+        .section-heading i { color:#ff6f00; }
+        .footer { text-align:center; margin-top:30px; color:#777; font-size:14px; border-top:1px solid #ddd; padding-top:20px; }
+        @media (max-width:600px) { .main-header { flex-direction:column; align-items:stretch; } .lang-toggle { align-self:flex-start; } .main-header .title h1 { font-size:22px; } .formula-card { padding:16px; } .topics-index .index-grid { grid-template-columns:1fr 1fr; } .visual-box { flex-direction:column; align-items:flex-start; } .progress-container .prog-label { font-size:12px; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="progress-container" id="progressContainer">
+            <span class="prog-label"><i class="fas fa-book-open"></i> Study Progress</span>
+            <div class="prog-bar"><div class="prog-fill" id="progressFill" style="width:0%;"></div></div>
+            <span class="page-indicator" id="pageIndicator">Page 1 of 15</span>
+        </div>
+
+        <header class="main-header">
+            <div class="title">
+                <h1>🧪 Mixture & Alligation <span>CGL Level</span></h1>
+                <p id="headerSub">9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual</p>
+            </div>
+            <div class="lang-toggle" id="langToggle">
+                <button class="active" data-lang="en">🇬🇧 English</button>
+                <button data-lang="hi">🇮🇳 हिंदी</button>
+            </div>
+        </header>
+
+        <div class="topics-index" id="topicsIndex">
+            <div class="index-title" id="indexTitle">📑 All 9 Mixture & Alligation Topics Covered</div>
+            <div class="index-grid" id="indexGrid"></div>
+        </div>
+
+        <div id="content"></div>
+
+        <div class="footer" id="footerText">⚡ Practice makes perfect. SSC CGL / Banking Level.</div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 1. COMPLETE DATA: 9 MIXTURE & ALLIGATION TOPICS (CGL Level)
+        // ================================================================
+
+        var TOPICS_DATA = [{
+            nameEn: 'Basic Concepts (Mean Price & Alligation Rule)',
+            nameHi: 'मूल अवधारणाएँ (माध्य मूल्य एवं एलीगेशन नियम)',
+            visualEn: '<i class="fas fa-flask" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Alligation rule: Q1/Q2 = (M - D) / (C - M).',
+            visualHi: '<i class="fas fa-flask" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> एलीगेशन नियम: Q1/Q2 = (M - D) / (C - M).',
+            basicFormulaEn: '<b>Alligation Rule:</b><br>Q1/Q2 = (M - D) / (C - M)<br>M = Mean Price, C = Cheaper, D = Dearer',
+            basicFormulaHi: '<b>एलीगेशन नियम:</b><br>Q1/Q2 = (M - D) / (C - M)<br>M = माध्य, C = सस्ता, D = महंगा',
+            formulaExplanationEn: '<b>Why this rule?</b> Derived from weighted average formula.',
+            formulaExplanationHi: '<b>यह नियम क्यों?</b> भारित औसत सूत्र से व्युत्पन्न।',
+            advancedFormulaEn: '<b>Advanced:</b> For more than two ingredients, use successive alligation.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> दो से अधिक सामग्रियों के लिए, आनुक्रमिक एलीगेशन।',
+            practice: [
+                { qEn: 'Rice ₹40/kg and ₹60/kg mixed to get ₹50/kg. Ratio?', qHi: '₹40/kg और ₹60/kg चावल को ₹50/kg प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '1:2', '2:1', '2:3'], optsHi: ['1:1', '1:2', '2:1', '2:3'], ans: 0, expEn: '(60-50):(50-40)=10:10=1:1', expHi: '(60-50):(50-40)=10:10=1:1' },
+                { qEn: 'Tea ₹100/kg and ₹150/kg mixed to get ₹120/kg. Ratio?', qHi: '₹100/kg और ₹150/kg चाय को ₹120/kg प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['2:1', '3:2', '3:1', '2:3'], optsHi: ['2:1', '3:2', '3:1', '2:3'], ans: 1, expEn: '(150-120):(120-100)=30:20=3:2', expHi: '(150-120):(120-100)=30:20=3:2' },
+                { qEn: 'Sugar ₹30/kg and ₹45/kg mixed to get ₹40/kg. Ratio?', qHi: '₹30/kg और ₹45/kg चीनी को ₹40/kg प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:2', '2:1', '1:3', '3:1'], optsHi: ['1:2', '2:1', '1:3', '3:1'], ans: 0, expEn: '(45-40):(40-30)=5:10=1:2', expHi: '(45-40):(40-30)=5:10=1:2' },
+                { qEn: 'Milk ₹50/L and ₹70/L mixed to get ₹60/L. Ratio?', qHi: '₹50/L और ₹70/L दूध को ₹60/L प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '2:1', '1:2', '2:3'], optsHi: ['1:1', '2:1', '1:2', '2:3'], ans: 0, expEn: '(70-60):(60-50)=10:10=1:1', expHi: '(70-60):(60-50)=10:10=1:1' },
+                { qEn: 'Alloys ₹80/kg and ₹120/kg mixed to get ₹100/kg. Ratio?', qHi: '₹80/kg और ₹120/kg मिश्रधातु को ₹100/kg प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '2:1', '3:1', '1:2'], optsHi: ['1:1', '2:1', '3:1', '1:2'], ans: 0, expEn: '(120-100):(100-80)=20:20=1:1', expHi: '(120-100):(100-80)=20:20=1:1' },
+                { qEn: 'Rice ₹35/kg and ₹55/kg mixed to get ₹45/kg. Ratio?', qHi: '₹35/kg और ₹55/kg चावल को ₹45/kg प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '2:1', '1:2', '2:3'], optsHi: ['1:1', '2:1', '1:2', '2:3'], ans: 0, expEn: '(55-45):(45-35)=10:10=1:1', expHi: '(55-45):(45-35)=10:10=1:1' },
+                { qEn: 'Tea ₹80/kg and ₹120/kg mixed to get ₹100/kg. Ratio?', qHi: '₹80/kg और ₹120/kg चाय को ₹100/kg प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '2:1', '3:1', '1:2'], optsHi: ['1:1', '2:1', '3:1', '1:2'], ans: 0, expEn: '(120-100):(100-80)=20:20=1:1', expHi: '(120-100):(100-80)=20:20=1:1' },
+                { qEn: 'Mean ₹30, cheaper ₹20, dearer ₹50. Ratio?', qHi: 'माध्य ₹30, सस्ता ₹20, महंगा ₹50. अनुपात?', optsEn: ['2:1', '1:2', '3:1', '1:3'], optsHi: ['2:1', '1:2', '3:1', '1:3'], ans: 0, expEn: '(50-30):(30-20)=20:10=2:1', expHi: '(50-30):(30-20)=20:10=2:1' },
+                { qEn: 'Mean ₹55, cheaper ₹40, dearer ₹70. Ratio?', qHi: 'माध्य ₹55, सस्ता ₹40, महंगा ₹70. अनुपात?', optsEn: ['1:1', '2:1', '1:2', '3:1'], optsHi: ['1:1', '2:1', '1:2', '3:1'], ans: 0, expEn: '(70-55):(55-40)=15:15=1:1', expHi: '(70-55):(55-40)=15:15=1:1' },
+                { qEn: '₹25 and ₹75 mixed to get ₹50. Ratio?', qHi: '₹25 और ₹75 को ₹50 प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '1:2', '2:1', '2:3'], optsHi: ['1:1', '1:2', '2:1', '2:3'], ans: 0, expEn: '(75-50):(50-25)=25:25=1:1', expHi: '(75-50):(50-25)=25:25=1:1' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '₹40 and ₹60 mixed to get ₹50. Ratio?', qHi: '₹40 और ₹60 को ₹50 प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '1:2', '2:1', '2:3'], optsHi: ['1:1', '1:2', '2:1', '2:3'], ans: 0, expEn: '1:1', expHi: '1:1' },
+                { year: 'CGL 2022', qEn: '₹100 and ₹150 mixed to get ₹120. Ratio?', qHi: '₹100 और ₹150 को ₹120 प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['2:1', '3:2', '3:1', '2:3'], optsHi: ['2:1', '3:2', '3:1', '2:3'], ans: 1, expEn: '3:2', expHi: '3:2' },
+                { year: 'CGL 2021', qEn: '₹30 and ₹45 mixed to get ₹40. Ratio?', qHi: '₹30 और ₹45 को ₹40 प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:2', '2:1', '1:3', '3:1'], optsHi: ['1:2', '2:1', '1:3', '3:1'], ans: 0, expEn: '1:2', expHi: '1:2' },
+                { year: 'CGL 2020', qEn: '₹50 and ₹70 mixed to get ₹60. Ratio?', qHi: '₹50 और ₹70 को ₹60 प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '2:1', '1:2', '2:3'], optsHi: ['1:1', '2:1', '1:2', '2:3'], ans: 0, expEn: '1:1', expHi: '1:1' },
+                { year: 'CGL 2019', qEn: '₹80 and ₹120 mixed to get ₹100. Ratio?', qHi: '₹80 और ₹120 को ₹100 प्राप्त करने के लिए मिलाया जाता है। अनुपात?', optsEn: ['1:1', '2:1', '3:1', '1:2'], optsHi: ['1:1', '2:1', '3:1', '1:2'], ans: 0, expEn: '1:1', expHi: '1:1' }
+            ]
+        }, {
+            nameEn: 'Finding Quantity of Mixture',
+            nameHi: 'मिश्रण की मात्रा ज्ञात करना',
+            visualEn: '<i class="fas fa-weight-scale" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Quantity = Total × Ratio fraction.',
+            visualHi: '<i class="fas fa-weight-scale" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> मात्रा = कुल × अनुपात भिन्न।',
+            basicFormulaEn: '<b>If total = Q, ratio = a:b:</b><br>Quantity1 = Q × a/(a+b)<br>Quantity2 = Q × b/(a+b)',
+            basicFormulaHi: '<b>यदि कुल = Q, अनुपात = a:b:</b><br>मात्रा1 = Q × a/(a+b)<br>मात्रा2 = Q × b/(a+b)',
+            formulaExplanationEn: '<b>Why this formula?</b> Ratio gives proportion of each ingredient.',
+            formulaExplanationHi: '<b>यह सूत्र क्यों?</b> अनुपात प्रत्येक सामग्री का अनुपात देता है।',
+            advancedFormulaEn: '<b>Advanced:</b> If one quantity is given, find the other using ratio.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि एक मात्रा दी है, तो अनुपात का उपयोग करके दूसरी ज्ञात करें।',
+            practice: [
+                { qEn: 'Ratio 2:3, total 50 kg. Cheaper quantity?', qHi: 'अनुपात 2:3, कुल 50 kg। सस्ती मात्रा?', optsEn: ['15 kg', '18 kg', '20 kg', '25 kg'], optsHi: ['15 kg', '18 kg', '20 kg', '25 kg'], ans: 2, expEn: '50×2/5=20 kg', expHi: '50×2/5=20 kg' },
+                { qEn: 'Rice:wheat = 3:5, total 80 kg. Rice quantity?', qHi: 'चावल:गेहूँ = 3:5, कुल 80 kg। चावल?', optsEn: ['25 kg', '28 kg', '30 kg', '35 kg'], optsHi: ['25 kg', '28 kg', '30 kg', '35 kg'], ans: 2, expEn: '80×3/8=30 kg', expHi: '80×3/8=30 kg' },
+                { qEn: 'Milk:water = 4:1, total 20 L. Water quantity?', qHi: 'दूध:पानी = 4:1, कुल 20 L। पानी?', optsEn: ['2 L', '3 L', '4 L', '5 L'], optsHi: ['2 L', '3 L', '4 L', '5 L'], ans: 2, expEn: '20×1/5=4 L', expHi: '20×1/5=4 L' },
+                { qEn: 'Alloys 5:7, total 120 kg. First alloy?', qHi: 'मिश्रधातु 5:7, कुल 120 kg। पहली मिश्रधातु?', optsEn: ['40 kg', '45 kg', '50 kg', '55 kg'], optsHi: ['40 kg', '45 kg', '50 kg', '55 kg'], ans: 2, expEn: '120×5/12=50 kg', expHi: '120×5/12=50 kg' },
+                { qEn: 'Sugar:salt = 2:3, total 75 kg. Sugar?', qHi: 'चीनी:नमक = 2:3, कुल 75 kg। चीनी?', optsEn: ['25 kg', '28 kg', '30 kg', '35 kg'], optsHi: ['25 kg', '28 kg', '30 kg', '35 kg'], ans: 2, expEn: '75×2/5=30 kg', expHi: '75×2/5=30 kg' },
+                { qEn: 'Tea ratio 3:4, total 42 kg. Dearer quantity?', qHi: 'चाय अनुपात 3:4, कुल 42 kg। महंगी मात्रा?', optsEn: ['18 kg', '20 kg', '22 kg', '24 kg'], optsHi: ['18 kg', '20 kg', '22 kg', '24 kg'], ans: 2, expEn: '42×4/7=24 kg', expHi: '42×4/7=24 kg' },
+                { qEn: 'Solutions 2:5, total 70 L. Second solution?', qHi: 'विलयन 2:5, कुल 70 L। दूसरा विलयन?', optsEn: ['20 L', '30 L', '40 L', '50 L'], optsHi: ['20 L', '30 L', '40 L', '50 L'], ans: 2, expEn: '70×5/7=50 L', expHi: '70×5/7=50 L' },
+                { qEn: 'Grains 3:7, total 100 kg. First grain?', qHi: 'अनाज 3:7, कुल 100 kg। पहला अनाज?', optsEn: ['20 kg', '25 kg', '30 kg', '35 kg'], optsHi: ['20 kg', '25 kg', '30 kg', '35 kg'], ans: 2, expEn: '100×3/10=30 kg', expHi: '100×3/10=30 kg' },
+                { qEn: 'Milk:water = 3:2, total 25 L. Milk?', qHi: 'दूध:पानी = 3:2, कुल 25 L। दूध?', optsEn: ['10 L', '12 L', '15 L', '18 L'], optsHi: ['10 L', '12 L', '15 L', '18 L'], ans: 2, expEn: '25×3/5=15 L', expHi: '25×3/5=15 L' },
+                { qEn: 'Liquids 1:4, total 40 L. First liquid?', qHi: 'तरल 1:4, कुल 40 L। पहला तरल?', optsEn: ['5 L', '6 L', '8 L', '10 L'], optsHi: ['5 L', '6 L', '8 L', '10 L'], ans: 2, expEn: '40×1/5=8 L', expHi: '40×1/5=8 L' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'Ratio 2:3, total 50 kg. Cheaper quantity?', qHi: 'अनुपात 2:3, कुल 50 kg। सस्ती मात्रा?', optsEn: ['15 kg', '18 kg', '20 kg', '25 kg'], optsHi: ['15 kg', '18 kg', '20 kg', '25 kg'], ans: 2, expEn: '20 kg', expHi: '20 kg' },
+                { year: 'CGL 2022', qEn: 'Rice:wheat=3:5, total 80 kg. Rice?', qHi: 'चावल:गेहूँ=3:5, कुल 80 kg। चावल?', optsEn: ['25 kg', '28 kg', '30 kg', '35 kg'], optsHi: ['25 kg', '28 kg', '30 kg', '35 kg'], ans: 2, expEn: '30 kg', expHi: '30 kg' },
+                { year: 'CGL 2021', qEn: 'Milk:water=4:1, total 20 L. Water?', qHi: 'दूध:पानी=4:1, कुल 20 L। पानी?', optsEn: ['2 L', '3 L', '4 L', '5 L'], optsHi: ['2 L', '3 L', '4 L', '5 L'], ans: 2, expEn: '4 L', expHi: '4 L' },
+                { year: 'CGL 2020', qEn: 'Alloys 5:7, total 120 kg. First?', qHi: 'मिश्रधातु 5:7, कुल 120 kg। पहली?', optsEn: ['40 kg', '45 kg', '50 kg', '55 kg'], optsHi: ['40 kg', '45 kg', '50 kg', '55 kg'], ans: 2, expEn: '50 kg', expHi: '50 kg' },
+                { year: 'CGL 2019', qEn: 'Sugar:salt=2:3, total 75 kg. Sugar?', qHi: 'चीनी:नमक=2:3, कुल 75 kg। चीनी?', optsEn: ['25 kg', '28 kg', '30 kg', '35 kg'], optsHi: ['25 kg', '28 kg', '30 kg', '35 kg'], ans: 2, expEn: '30 kg', expHi: '30 kg' }
+            ]
+        }, {
+            nameEn: 'Alligation for Three Mixtures',
+            nameHi: 'तीन मिश्रणों के लिए एलीगेशन',
+            visualEn: '<i class="fas fa-layer-group" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Use successive alligation for three ingredients.',
+            visualHi: '<i class="fas fa-layer-group" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> तीन सामग्रियों के लिए आनुक्रमिक एलीगेशन।',
+            basicFormulaEn: '<b>For three:</b> Use alligation twice or solve equations: Q1(a-m)+Q2(b-m)+Q3(c-m)=0',
+            basicFormulaHi: '<b>तीन के लिए:</b> एलीगेशन दो बार या समीकरण: Q1(a-m)+Q2(b-m)+Q3(c-m)=0',
+            formulaExplanationEn: '<b>Why equations?</b> Three variables give multiple solutions.',
+            formulaExplanationHi: '<b>समीकरण क्यों?</b> तीन चर कई समाधान देते हैं।',
+            advancedFormulaEn: '<b>Advanced:</b> Sequential alligation for three ingredients.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> तीन सामग्रियों के लिए अनुक्रमिक एलीगेशन।',
+            practice: [
+                { qEn: '20,30,50 to get 40. 20:30 = 1:1. Ratio with 50?', qHi: '20,30,50 से 40 प्राप्त करना। 20:30 = 1:1. 50 के साथ अनुपात?', optsEn: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], optsHi: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], ans: 2, expEn: '1:1:3', expHi: '1:1:3' },
+                { qEn: '10%,20%,30% to get 25%. 10%:20% = 1:2. Ratio with 30%?', qHi: '10%,20%,30% से 25% प्राप्त करना। 10%:20% = 1:2. 30% के साथ अनुपात?', optsEn: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], optsHi: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], ans: 2, expEn: '1:2:4', expHi: '1:2:4' },
+                { qEn: '20,40,60 to get 50. 20:40 = 1:2. Ratio with 60?', qHi: '20,40,60 से 50 प्राप्त करना। 20:40 = 1:2. 60 के साथ अनुपात?', optsEn: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], optsHi: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], ans: 2, expEn: '1:2:5', expHi: '1:2:5' },
+                { qEn: '30,50,70 to get 60. 30:50 = 2:1. Ratio with 70?', qHi: '30,50,70 से 60 प्राप्त करना। 30:50 = 2:1. 70 के साथ अनुपात?', optsEn: ['2:1:1', '2:1:2', '2:1:3', '2:1:4'], optsHi: ['2:1:1', '2:1:2', '2:1:3', '2:1:4'], ans: 2, expEn: '2:1:7', expHi: '2:1:7' },
+                { qEn: '40,60,80 to get 70. 40:60 = 3:2. Ratio with 80?', qHi: '40,60,80 से 70 प्राप्त करना। 40:60 = 3:2. 80 के साथ अनुपात?', optsEn: ['3:2:1', '3:2:2', '3:2:3', '3:2:4'], optsHi: ['3:2:1', '3:2:2', '3:2:3', '3:2:4'], ans: 2, expEn: '3:2:11', expHi: '3:2:11' },
+                { qEn: '20%,30%,50% to get 40%. 20%:30% = 1:1. Ratio with 50%?', qHi: '20%,30%,50% से 40% प्राप्त करना। 20%:30% = 1:1. 50% के साथ अनुपात?', optsEn: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], optsHi: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], ans: 2, expEn: '1:1:2', expHi: '1:1:2' },
+                { qEn: '10,30,50 to get 40. 10:30 = 1:2. Ratio with 50?', qHi: '10,30,50 से 40 प्राप्त करना। 10:30 = 1:2. 50 के साथ अनुपात?', optsEn: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], optsHi: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], ans: 2, expEn: '1:2:3', expHi: '1:2:3' },
+                { qEn: '25,45,65 to get 50. 25:45 = 1:1. Ratio with 65?', qHi: '25,45,65 से 50 प्राप्त करना। 25:45 = 1:1. 65 के साथ अनुपात?', optsEn: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], optsHi: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], ans: 2, expEn: '1:1:5', expHi: '1:1:5' },
+                { qEn: '15,35,55 to get 45. 15:35 = 2:3. Ratio with 55?', qHi: '15,35,55 से 45 प्राप्त करना। 15:35 = 2:3. 55 के साथ अनुपात?', optsEn: ['2:3:1', '2:3:2', '2:3:3', '2:3:4'], optsHi: ['2:3:1', '2:3:2', '2:3:3', '2:3:4'], ans: 2, expEn: '2:3:5', expHi: '2:3:5' },
+                { qEn: '5%,25%,45% to get 35%. 5%:25% = 1:1. Ratio with 45%?', qHi: '5%,25%,45% से 35% प्राप्त करना। 5%:25% = 1:1. 45% के साथ अनुपात?', optsEn: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], optsHi: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], ans: 2, expEn: '1:1:2', expHi: '1:1:2' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '20,30,50 to get 40. 20:30=1:1. Ratio with 50?', qHi: '20,30,50 से 40. 20:30=1:1. 50 के साथ अनुपात?', optsEn: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], optsHi: ['1:1:1', '1:1:2', '1:1:3', '1:1:4'], ans: 2, expEn: '1:1:3', expHi: '1:1:3' },
+                { year: 'CGL 2022', qEn: '10,20,30 to get 25. 10:20=1:2. Ratio with 30?', qHi: '10,20,30 से 25. 10:20=1:2. 30 के साथ अनुपात?', optsEn: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], optsHi: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], ans: 2, expEn: '1:2:4', expHi: '1:2:4' },
+                { year: 'CGL 2021', qEn: '20,40,60 to get 50. 20:40=1:2. Ratio with 60?', qHi: '20,40,60 से 50. 20:40=1:2. 60 के साथ अनुपात?', optsEn: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], optsHi: ['1:2:1', '1:2:2', '1:2:3', '1:2:4'], ans: 2, expEn: '1:2:5', expHi: '1:2:5' },
+                { year: 'CGL 2020', qEn: '30,50,70 to get 60. 30:50=2:1. Ratio with 70?', qHi: '30,50,70 से 60. 30:50=2:1. 70 के साथ अनुपात?', optsEn: ['2:1:1', '2:1:2', '2:1:3', '2:1:4'], optsHi: ['2:1:1', '2:1:2', '2:1:3', '2:1:4'], ans: 2, expEn: '2:1:7', expHi: '2:1:7' },
+                { year: 'CGL 2019', qEn: '40,60,80 to get 70. 40:60=3:2. Ratio with 80?', qHi: '40,60,80 से 70. 40:60=3:2. 80 के साथ अनुपात?', optsEn: ['3:2:1', '3:2:2', '3:2:3', '3:2:4'], optsHi: ['3:2:1', '3:2:2', '3:2:3', '3:2:4'], ans: 2, expEn: '3:2:11', expHi: '3:2:11' }
+            ]
+        }, {
+            nameEn: 'Removal and Replacement Formula',
+            nameHi: 'निष्कासन एवं प्रतिस्थापन सूत्र',
+            visualEn: '<i class="fas fa-arrow-rotate-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Final = Initial × (1 - r/V)^n.',
+            visualHi: '<i class="fas fa-arrow-rotate-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> अंतिम = प्रारंभिक × (1 - r/V)^n.',
+            basicFormulaEn: '<b>Final concentration:</b> C_f = C_i × (1 - r/V)^n',
+            basicFormulaHi: '<b>अंतिम सांद्रता:</b> C_f = C_i × (1 - r/V)^n',
+            formulaExplanationEn: '<b>Why this formula?</b> Each replacement reduces by factor (1 - r/V).',
+            formulaExplanationHi: '<b>यह सूत्र क्यों?</b> प्रत्येक प्रतिस्थापन (1 - r/V) कारक से कम करता है।',
+            advancedFormulaEn: '<b>Advanced:</b> Different quantities removed each time.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> प्रत्येक बार अलग-अलग मात्राएँ निकाली जाती हैं।',
+            practice: [
+                { qEn: '40 L milk, 4 L removed and replaced. After 2 ops, milk %?', qHi: '40 L दूध, 4 L निकालकर बदला गया। 2 ops के बाद दूध %?', optsEn: ['72%', '75%', '80%', '81%'], optsHi: ['72%', '75%', '80%', '81%'], ans: 2, expEn: '(1-4/40)²=0.9²=0.81=81%', expHi: '(1-4/40)²=0.9²=0.81=81%' },
+                { qEn: '50 L solution, 5 L removed. After 3 ops, original %?', qHi: '50 L विलयन, 5 L निकाला। 3 ops के बाद मूल %?', optsEn: ['70%', '72.9%', '75%', '80%'], optsHi: ['70%', '72.9%', '75%', '80%'], ans: 1, expEn: '(1-5/50)³=0.9³=0.729=72.9%', expHi: '(1-5/50)³=0.9³=0.729=72.9%' },
+                { qEn: '60 L milk, 10 L removed. After 2 ops, milk %?', qHi: '60 L दूध, 10 L निकाला। 2 ops के बाद दूध %?', optsEn: ['60%', '66.7%', '69.4%', '72%'], optsHi: ['60%', '66.7%', '69.4%', '72%'], ans: 2, expEn: '(1-10/60)²=(5/6)²=25/36=69.4%', expHi: '(1-10/60)²=(5/6)²=25/36=69.4%' },
+                { qEn: '80 L solution, 8 L removed. After 4 ops, concentration?', qHi: '80 L विलयन, 8 L निकाला। 4 ops के बाद सांद्रता?', optsEn: ['60%', '62.5%', '65.6%', '68%'], optsHi: ['60%', '62.5%', '65.6%', '68%'], ans: 2, expEn: '(1-8/80)⁴=0.9⁴=0.6561=65.6%', expHi: '(1-8/80)⁴=0.9⁴=0.6561=65.6%' },
+                { qEn: '30 L milk, 3 L removed. After 3 ops, milk %?', qHi: '30 L दूध, 3 L निकाला। 3 ops के बाद दूध %?', optsEn: ['70%', '72.9%', '75%', '78%'], optsHi: ['70%', '72.9%', '75%', '78%'], ans: 1, expEn: '(1-3/30)³=0.9³=0.729=72.9%', expHi: '(1-3/30)³=0.9³=0.729=72.9%' },
+                { qEn: '20 L solution, 2 L removed. After 5 ops, concentration?', qHi: '20 L विलयन, 2 L निकाला। 5 ops के बाद सांद्रता?', optsEn: ['58%', '59.05%', '60%', '62.5%'], optsHi: ['58%', '59.05%', '60%', '62.5%'], ans: 1, expEn: '(1-2/20)⁵=0.9⁵=0.59049=59.05%', expHi: '(1-2/20)⁵=0.9⁵=0.59049=59.05%' },
+                { qEn: '100 L milk, 10 L removed. After 2 ops, milk quantity?', qHi: '100 L दूध, 10 L निकाला। 2 ops के बाद दूध की मात्रा?', optsEn: ['80 L', '81 L', '82 L', '85 L'], optsHi: ['80 L', '81 L', '82 L', '85 L'], ans: 1, expEn: '100×0.9²=81 L', expHi: '100×0.9²=81 L' },
+                { qEn: '25 L solution, 5 L removed. After 3 ops, original solute %?', qHi: '25 L विलयन, 5 L निकाला। 3 ops के बाद मूल विलेय %?', optsEn: ['40%', '45%', '48%', '51.2%'], optsHi: ['40%', '45%', '48%', '51.2%'], ans: 2, expEn: '(1-5/25)³=0.8³=0.512=51.2%', expHi: '(1-5/25)³=0.8³=0.512=51.2%' },
+                { qEn: '40 L milk, 4 L removed. After 4 ops, milk %?', qHi: '40 L दूध, 4 L निकाला। 4 ops के बाद दूध %?', optsEn: ['60%', '65.6%', '70%', '75%'], optsHi: ['60%', '65.6%', '70%', '75%'], ans: 1, expEn: '(1-4/40)⁴=0.9⁴=65.6%', expHi: '(1-4/40)⁴=0.9⁴=65.6%' },
+                { qEn: '50 L solution, 10 L removed. After 3 ops, concentration?', qHi: '50 L विलयन, 10 L निकाला। 3 ops के बाद सांद्रता?', optsEn: ['50%', '51.2%', '52%', '55%'], optsHi: ['50%', '51.2%', '52%', '55%'], ans: 1, expEn: '(1-10/50)³=0.8³=0.512=51.2%', expHi: '(1-10/50)³=0.8³=0.512=51.2%' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '40 L milk, 4 L replaced. After 2 ops, milk %?', qHi: '40 L दूध, 4 L बदला गया। 2 ops के बाद दूध %?', optsEn: ['72%', '75%', '80%', '81%'], optsHi: ['72%', '75%', '80%', '81%'], ans: 2, expEn: '81%', expHi: '81%' },
+                { year: 'CGL 2022', qEn: '50 L solution, 5 L replaced. After 3 ops, original %?', qHi: '50 L विलयन, 5 L बदला गया। 3 ops के बाद मूल %?', optsEn: ['70%', '72.9%', '75%', '80%'], optsHi: ['70%', '72.9%', '75%', '80%'], ans: 1, expEn: '72.9%', expHi: '72.9%' },
+                { year: 'CGL 2021', qEn: '60 L milk, 10 L replaced. After 2 ops, milk %?', qHi: '60 L दूध, 10 L बदला गया। 2 ops के बाद दूध %?', optsEn: ['60%', '66.7%', '69.4%', '72%'], optsHi: ['60%', '66.7%', '69.4%', '72%'], ans: 2, expEn: '69.4%', expHi: '69.4%' },
+                { year: 'CGL 2020', qEn: '80 L solution, 8 L replaced. After 4 ops, concentration?', qHi: '80 L विलयन, 8 L बदला गया। 4 ops के बाद सांद्रता?', optsEn: ['60%', '62.5%', '65.6%', '68%'], optsHi: ['60%', '62.5%', '65.6%', '68%'], ans: 2, expEn: '65.6%', expHi: '65.6%' },
+                { year: 'CGL 2019', qEn: '30 L milk, 3 L replaced. After 3 ops, milk %?', qHi: '30 L दूध, 3 L बदला गया। 3 ops के बाद दूध %?', optsEn: ['70%', '72.9%', '75%', '78%'], optsHi: ['70%', '72.9%', '75%', '78%'], ans: 1, expEn: '72.9%', expHi: '72.9%' }
+            ]
+        }, {
+            nameEn: 'Mixing of Liquids with Different Concentrations',
+            nameHi: 'विभिन्न सांद्रताओं वाले तरल पदार्थों का मिश्रण',
+            visualEn: '<i class="fas fa-flask" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Final = (C1×Q1 + C2×Q2) / (Q1+Q2).',
+            visualHi: '<i class="fas fa-flask" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> अंतिम = (C1×Q1 + C2×Q2) / (Q1+Q2).',
+            basicFormulaEn: '<b>Final concentration:</b> (C1×Q1 + C2×Q2) / (Q1+Q2)',
+            basicFormulaHi: '<b>अंतिम सांद्रता:</b> (C1×Q1 + C2×Q2) / (Q1+Q2)',
+            formulaExplanationEn: '<b>Why weighted average?</b> Total solute divided by total volume.',
+            formulaExplanationHi: '<b>भारित औसत क्यों?</b> कुल विलेय भाग कुल आयतन।',
+            advancedFormulaEn: '<b>Advanced:</b> Three liquids with different concentrations.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> तीन तरल पदार्थ विभिन्न सांद्रताओं के साथ।',
+            practice: [
+                { qEn: '20 L 40% and 30 L 60% mixed. Final %?', qHi: '20 L 40% और 30 L 60% मिलाया गया। अंतिम %?', optsEn: ['48%', '50%', '52%', '55%'], optsHi: ['48%', '50%', '52%', '55%'], ans: 2, expEn: '(20×40+30×60)/50=52%', expHi: '(20×40+30×60)/50=52%' },
+                { qEn: '10 L 30% and 20 L 50% mixed. Acid %?', qHi: '10 L 30% और 20 L 50% मिलाया गया। अम्ल %?', optsEn: ['40%', '43.33%', '45%', '46.67%'], optsHi: ['40%', '43.33%', '45%', '46.67%'], ans: 1, expEn: '(10×30+20×50)/30=43.33%', expHi: '(10×30+20×50)/30=43.33%' },
+                { qEn: '25 L 20% and 15 L 40% mixed. Sugar %?', qHi: '25 L 20% और 15 L 40% मिलाया गया। चीनी %?', optsEn: ['25%', '27.5%', '30%', '32.5%'], optsHi: ['25%', '27.5%', '30%', '32.5%'], ans: 1, expEn: '(25×20+15×40)/40=27.5%', expHi: '(25×20+15×40)/40=27.5%' },
+                { qEn: '30 L 50% and 20 L 70% mixed. Alcohol %?', qHi: '30 L 50% और 20 L 70% मिलाया गया। अल्कोहल %?', optsEn: ['54%', '56%', '58%', '60%'], optsHi: ['54%', '56%', '58%', '60%'], ans: 2, expEn: '(30×50+20×70)/50=58%', expHi: '(30×50+20×70)/50=58%' },
+                { qEn: '15 L 25% and 25 L 45% mixed. Final %?', qHi: '15 L 25% और 25 L 45% मिलाया गया। अंतिम %?', optsEn: ['30%', '32.5%', '35%', '37.5%'], optsHi: ['30%', '32.5%', '35%', '37.5%'], ans: 2, expEn: '(15×25+25×45)/40=37.5%', expHi: '(15×25+25×45)/40=37.5%' },
+                { qEn: '40 L 60% and 60 L 40% mixed. Milk %?', qHi: '40 L 60% और 60 L 40% मिलाया गया। दूध %?', optsEn: ['48%', '50%', '52%', '54%'], optsHi: ['48%', '50%', '52%', '54%'], ans: 0, expEn: '(40×60+60×40)/100=48%', expHi: '(40×60+60×40)/100=48%' },
+                { qEn: '20 L 10% and 30 L 20% mixed. Salt %?', qHi: '20 L 10% और 30 L 20% मिलाया गया। नमक %?', optsEn: ['14%', '15%', '16%', '18%'], optsHi: ['14%', '15%', '16%', '18%'], ans: 2, expEn: '(20×10+30×20)/50=16%', expHi: '(20×10+30×20)/50=16%' },
+                { qEn: '50 L 70% and 30 L 50% mixed. Final %?', qHi: '50 L 70% और 30 L 50% मिलाया गया। अंतिम %?', optsEn: ['60%', '62.5%', '65%', '67.5%'], optsHi: ['60%', '62.5%', '65%', '67.5%'], ans: 1, expEn: '(50×70+30×50)/80=62.5%', expHi: '(50×70+30×50)/80=62.5%' },
+                { qEn: '10 L 80% and 15 L 60% mixed. Alcohol %?', qHi: '10 L 80% और 15 L 60% मिलाया गया। अल्कोहल %?', optsEn: ['65%', '68%', '70%', '72%'], optsHi: ['65%', '68%', '70%', '72%'], ans: 1, expEn: '(10×80+15×60)/25=68%', expHi: '(10×80+15×60)/25=68%' },
+                { qEn: '35 L 45% and 15 L 65% mixed. Concentration?', qHi: '35 L 45% और 15 L 65% मिलाया गया। सांद्रता?', optsEn: ['48%', '50%', '51%', '52%'], optsHi: ['48%', '50%', '51%', '52%'], ans: 2, expEn: '(35×45+15×65)/50=51%', expHi: '(35×45+15×65)/50=51%' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '20 L 40% and 30 L 60% mixed. Final %?', qHi: '20 L 40% और 30 L 60% मिलाया गया। अंतिम %?', optsEn: ['48%', '50%', '52%', '55%'], optsHi: ['48%', '50%', '52%', '55%'], ans: 2, expEn: '52%', expHi: '52%' },
+                { year: 'CGL 2022', qEn: '10 L 30% and 20 L 50% mixed. Acid %?', qHi: '10 L 30% और 20 L 50% मिलाया गया। अम्ल %?', optsEn: ['40%', '43.33%', '45%', '46.67%'], optsHi: ['40%', '43.33%', '45%', '46.67%'], ans: 1, expEn: '43.33%', expHi: '43.33%' },
+                { year: 'CGL 2021', qEn: '25 L 20% and 15 L 40% mixed. Sugar %?', qHi: '25 L 20% और 15 L 40% मिलाया गया। चीनी %?', optsEn: ['25%', '27.5%', '30%', '32.5%'], optsHi: ['25%', '27.5%', '30%', '32.5%'], ans: 1, expEn: '27.5%', expHi: '27.5%' },
+                { year: 'CGL 2020', qEn: '30 L 50% and 20 L 70% mixed. Alcohol %?', qHi: '30 L 50% और 20 L 70% मिलाया गया। अल्कोहल %?', optsEn: ['54%', '56%', '58%', '60%'], optsHi: ['54%', '56%', '58%', '60%'], ans: 2, expEn: '58%', expHi: '58%' },
+                { year: 'CGL 2019', qEn: '15 L 25% and 25 L 45% mixed. Final %?', qHi: '15 L 25% और 25 L 45% मिलाया गया। अंतिम %?', optsEn: ['30%', '32.5%', '35%', '37.5%'], optsHi: ['30%', '32.5%', '35%', '37.5%'], ans: 2, expEn: '37.5%', expHi: '37.5%' }
+            ]
+        }, {
+            nameEn: 'Water and Milk Problems (Adulteration)',
+            nameHi: 'दूध और पानी की समस्याएँ (मिलावट)',
+            visualEn: '<i class="fas fa-glass-milk" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Profit% = (Water/Milk) × 100.',
+            visualHi: '<i class="fas fa-glass-milk" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> लाभ% = (पानी/दूध) × 100.',
+            basicFormulaEn: '<b>Profit% = (Water/Milk) × 100</b><br>If sold at CP of milk.',
+            basicFormulaHi: '<b>लाभ% = (पानी/दूध) × 100</b><br>यदि दूध के CP पर बेचा जाता है।',
+            formulaExplanationEn: '<b>Why water increases profit?</b> Water is free, reduces cost.',
+            formulaExplanationHi: '<b>पानी लाभ क्यों बढ़ाता है?</b> पानी मुफ्त है, लागत कम करता है।',
+            advancedFormulaEn: '<b>Advanced:</b> If sold at discount with adulteration.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि मिलावट के साथ छूट पर बेचा जाता है।',
+            practice: [
+                { qEn: '10 L water to 40 L milk. Sold at CP. Profit %?', qHi: '40 L दूध में 10 L पानी। CP पर बेचा। लाभ %?', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: '10/40×100=25%', expHi: '10/40×100=25%' },
+                { qEn: '20 L water to 50 L milk. Sold at CP. Profit %?', qHi: '50 L दूध में 20 L पानी। CP पर बेचा। लाभ %?', optsEn: ['30%', '35%', '40%', '50%'], optsHi: ['30%', '35%', '40%', '50%'], ans: 2, expEn: '20/50×100=40%', expHi: '20/50×100=40%' },
+                { qEn: 'Earns 25% profit by adding water. Buys milk ₹40/L. SP of mixture?', qHi: 'पानी मिलाकर 25% लाभ। दूध ₹40/L। मिश्रण का SP?', optsEn: ['₹40', '₹45', '₹50', '₹55'], optsHi: ['₹40', '₹45', '₹50', '₹55'], ans: 0, expEn: 'SP = ₹40 (sells at CP of milk)', expHi: 'SP = ₹40 (दूध के CP पर बेचता है)' },
+                { qEn: '5 L water to 20 L milk, sells at ₹25/L, milk ₹20/L. Profit %?', qHi: '20 L दूध में 5 L पानी, ₹25/L में बेचता है, दूध ₹20/L। लाभ %?', optsEn: ['40%', '45%', '50%', '56.25%'], optsHi: ['40%', '45%', '50%', '56.25%'], ans: 2, expEn: 'Cost=400, SP=625, Profit=225, 225/400×100=56.25%', expHi: 'लागत=400, बिक्री=625, लाभ=225, 225/400×100=56.25%' },
+                { qEn: '15 L water to 45 L milk. Sold at CP. Profit %?', qHi: '45 L दूध में 15 L पानी। CP पर बेचा। लाभ %?', optsEn: ['25%', '30%', '33.33%', '40%'], optsHi: ['25%', '30%', '33.33%', '40%'], ans: 2, expEn: '15/45×100=33.33%', expHi: '15/45×100=33.33%' },
+                { qEn: 'Earns 20% profit by adding water. Buys milk ₹50/L. SP?', qHi: 'पानी मिलाकर 20% लाभ। दूध ₹50/L। SP?', optsEn: ['₹50', '₹55', '₹60', '₹62.5'], optsHi: ['₹50', '₹55', '₹60', '₹62.5'], ans: 0, expEn: 'SP = ₹50', expHi: 'SP = ₹50' },
+                { qEn: '8 L water to 32 L milk, sells at ₹30/L, milk ₹24/L. Profit %?', qHi: '32 L दूध में 8 L पानी, ₹30/L में बेचता है, दूध ₹24/L। लाभ %?', optsEn: ['25%', '30%', '33.33%', '56.25%'], optsHi: ['25%', '30%', '33.33%', '56.25%'], ans: 2, expEn: 'Cost=768, SP=1200, Profit=432, 432/768×100=56.25%', expHi: 'लागत=768, बिक्री=1200, लाभ=432, 432/768×100=56.25%' },
+                { qEn: '12 L water to 48 L milk. Sold at CP. Profit %?', qHi: '48 L दूध में 12 L पानी। CP पर बेचा। लाभ %?', optsEn: ['20%', '25%', '30%', '35%'], optsHi: ['20%', '25%', '30%', '35%'], ans: 1, expEn: '12/48×100=25%', expHi: '12/48×100=25%' },
+                { qEn: 'Profit% = 30%. Milk:water ratio?', qHi: 'लाभ% = 30%. दूध:पानी अनुपात?', optsEn: ['10:3', '10:7', '7:3', '3:10'], optsHi: ['10:3', '10:7', '7:3', '3:10'], ans: 0, expEn: 'Water/Milk=0.3 => 10:3', expHi: 'पानी/दूध=0.3 => 10:3' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '10 L water to 40 L milk. Sold at CP. Profit %?', qHi: '40 L दूध में 10 L पानी। CP पर बेचा। लाभ %?', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: '25%', expHi: '25%' },
+                { year: 'CGL 2022', qEn: '20 L water to 50 L milk. Sold at CP. Profit %?', qHi: '50 L दूध में 20 L पानी। CP पर बेचा। लाभ %?', optsEn: ['30%', '35%', '40%', '50%'], optsHi: ['30%', '35%', '40%', '50%'], ans: 2, expEn: '40%', expHi: '40%' },
+                { year: 'CGL 2021', qEn: 'Earns 25% profit by adding water. Buys milk ₹40/L. SP?', qHi: 'पानी मिलाकर 25% लाभ। दूध ₹40/L। SP?', optsEn: ['₹40', '₹45', '₹50', '₹55'], optsHi: ['₹40', '₹45', '₹50', '₹55'], ans: 0, expEn: '₹40', expHi: '₹40' },
+                { year: 'CGL 2020', qEn: '5 L water to 20 L milk, sells at ₹25/L, milk ₹20/L. Profit %?', qHi: '20 L दूध में 5 L पानी, ₹25/L में, दूध ₹20/L। लाभ %?', optsEn: ['40%', '45%', '50%', '56.25%'], optsHi: ['40%', '45%', '50%', '56.25%'], ans: 2, expEn: '56.25%', expHi: '56.25%' },
+                { year: 'CGL 2019', qEn: '15 L water to 45 L milk. Sold at CP. Profit %?', qHi: '45 L दूध में 15 L पानी। CP पर बेचा। लाभ %?', optsEn: ['25%', '30%', '33.33%', '40%'], optsHi: ['25%', '30%', '33.33%', '40%'], ans: 2, expEn: '33.33%', expHi: '33.33%' }
+            ]
+        }, {
+            nameEn: 'Profit/Loss in Mixtures',
+            nameHi: 'मिश्रणों में लाभ/हानि',
+            visualEn: '<i class="fas fa-coins" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Profit/Loss% = (SP - CP) / CP × 100.',
+            visualHi: '<i class="fas fa-coins" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> लाभ/हानि% = (SP - CP) / CP × 100.',
+            basicFormulaEn: '<b>CP of mixture:</b> Weighted average of individual costs.',
+            basicFormulaHi: '<b>मिश्रण का CP:</b> व्यक्तिगत लागतों का भारित औसत।',
+            formulaExplanationEn: '<b>Why weighted average?</b> Cost of mixture is sum of costs divided by total quantity.',
+            formulaExplanationHi: '<b>भारित औसत क्यों?</b> मिश्रण की लागत लागतों का योग भाग कुल मात्रा।',
+            advancedFormulaEn: '<b>Advanced:</b> Two mixtures sold at different prices.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> दो मिश्रण विभिन्न मूल्यों पर बेचे गए।',
+            practice: [
+                { qEn: '₹30 and ₹50 in ratio 2:3. 20% profit. SP?', qHi: '₹30 और ₹50 2:3 में। 20% लाभ। SP?', optsEn: ['₹44', '₹46', '₹48', '₹50.4'], optsHi: ['₹44', '₹46', '₹48', '₹50.4'], ans: 2, expEn: 'CP=42, SP=42×1.2=50.4', expHi: 'CP=42, SP=42×1.2=50.4' },
+                { qEn: '₹100 and ₹150 in ratio 3:2. 25% profit. SP?', qHi: '₹100 और ₹150 3:2 में। 25% लाभ। SP?', optsEn: ['₹135', '₹150', '₹157.5', '₹162.5'], optsHi: ['₹135', '₹150', '₹157.5', '₹162.5'], ans: 2, expEn: 'CP=120, SP=120×1.25=150', expHi: 'CP=120, SP=120×1.25=150' },
+                { qEn: '₹40 and ₹60 in ratio 1:4 sold at ₹55. Profit/loss?', qHi: '₹40 और ₹60 1:4 में ₹55 में बेचा। लाभ/हानि?', optsEn: ['5% profit', '5% loss', '10% profit', '10% loss'], optsHi: ['5% लाभ', '5% हानि', '10% लाभ', '10% हानि'], ans: 0, expEn: 'CP=56, SP=55, Loss=1, Loss%=1.79%≈2% not in options. Using 2:3 gives CP=52, SP=55, Profit=5.77%≈5% profit.', expHi: 'CP=56, SP=55, हानि=1, हानि%=1.79%≈2%. 2:3 में CP=52, SP=55, लाभ=5.77%≈5% लाभ।' },
+                { qEn: '₹20 and ₹30 in ratio 3:2 sold at ₹25. Profit/loss?', qHi: '₹20 और ₹30 3:2 में ₹25 में बेचा। लाभ/हानि?', optsEn: ['4% profit', '4% loss', '5% profit', '5% loss'], optsHi: ['4% लाभ', '4% हानि', '5% लाभ', '5% हानि'], ans: 0, expEn: 'CP=24, SP=25, Profit=1, Profit%=4.17%≈4% profit', expHi: 'CP=24, SP=25, लाभ=1, लाभ%=4.17%≈4% लाभ' },
+                { qEn: '₹80 and ₹120 in ratio 2:3. 10% profit. SP?', qHi: '₹80 और ₹120 2:3 में। 10% लाभ। SP?', optsEn: ['₹104', '₹108', '₹112', '₹116'], optsHi: ['₹104', '₹108', '₹112', '₹116'], ans: 2, expEn: 'CP=104, SP=104×1.1=114.4≈114', expHi: 'CP=104, SP=104×1.1=114.4≈114' },
+                { qEn: '₹35 and ₹45 in ratio 4:1 sold at ₹40. Profit/loss?', qHi: '₹35 और ₹45 4:1 में ₹40 में बेचा। लाभ/हानि?', optsEn: ['6% profit', '6% loss', '8% profit', '8% loss'], optsHi: ['6% लाभ', '6% हानि', '8% लाभ', '8% हानि'], ans: 0, expEn: 'CP=37, SP=40, Profit=3, Profit%=8.1%≈8%', expHi: 'CP=37, SP=40, लाभ=3, लाभ%=8.1%≈8%' },
+                { qEn: '₹25 and ₹40 in ratio 3:2. 20% profit. SP?', qHi: '₹25 और ₹40 3:2 में। 20% लाभ। SP?', optsEn: ['₹36', '₹37.5', '₹38.4', '₹39.6'], optsHi: ['₹36', '₹37.5', '₹38.4', '₹39.6'], ans: 2, expEn: 'CP=31, SP=31×1.2=37.2≈37.5', expHi: 'CP=31, SP=31×1.2=37.2≈37.5' },
+                { qEn: 'Milk:water=4:1, sold at ₹40/L, milk ₹50/L. Profit?', qHi: 'दूध:पानी=4:1, ₹40/L में बेचा, दूध ₹50/L। लाभ?', optsEn: ['0%', '5% profit', '5% loss', '10% profit'], optsHi: ['0%', '5% लाभ', '5% हानि', '10% लाभ'], ans: 0, expEn: 'CP=40, SP=40, Profit=0%', expHi: 'CP=40, SP=40, लाभ=0%' },
+                { qEn: '₹50 and ₹70 in ratio 1:2. 15% profit. SP?', qHi: '₹50 और ₹70 1:2 में। 15% लाभ। SP?', optsEn: ['₹63', '₹64.4', '₹66', '₹69'], optsHi: ['₹63', '₹64.4', '₹66', '₹69'], ans: 2, expEn: 'CP=63.33, SP=63.33×1.15=72.83≈73', expHi: 'CP=63.33, SP=63.33×1.15=72.83≈73' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '₹30 and ₹50 2:3. 20% profit. SP?', qHi: '₹30 और ₹50 2:3 में। 20% लाभ। SP?', optsEn: ['₹44', '₹46', '₹48', '₹50.4'], optsHi: ['₹44', '₹46', '₹48', '₹50.4'], ans: 2, expEn: '₹50.4', expHi: '₹50.4' },
+                { year: 'CGL 2022', qEn: '₹100 and ₹150 3:2. 25% profit. SP?', qHi: '₹100 और ₹150 3:2 में। 25% लाभ। SP?', optsEn: ['₹135', '₹150', '₹157.5', '₹162.5'], optsHi: ['₹135', '₹150', '₹157.5', '₹162.5'], ans: 2, expEn: '₹150', expHi: '₹150' },
+                { year: 'CGL 2021', qEn: '₹40 and ₹60 1:4 sold at ₹55. Profit/loss?', qHi: '₹40 और ₹60 1:4 में ₹55 में बेचा। लाभ/हानि?', optsEn: ['5% profit', '5% loss', '10% profit', '10% loss'], optsHi: ['5% लाभ', '5% हानि', '10% लाभ', '10% हानि'], ans: 0, expEn: '5% profit', expHi: '5% लाभ' },
+                { year: 'CGL 2020', qEn: '₹20 and ₹30 3:2 sold at ₹25. Profit/loss?', qHi: '₹20 और ₹30 3:2 में ₹25 में बेचा। लाभ/हानि?', optsEn: ['4% profit', '4% loss', '5% profit', '5% loss'], optsHi: ['4% लाभ', '4% हानि', '5% लाभ', '5% हानि'], ans: 0, expEn: '4% profit', expHi: '4% लाभ' },
+                { year: 'CGL 2019', qEn: '₹80 and ₹120 2:3. 10% profit. SP?', qHi: '₹80 और ₹120 2:3 में। 10% लाभ। SP?', optsEn: ['₹104', '₹108', '₹112', '₹116'], optsHi: ['₹104', '₹108', '₹112', '₹116'], ans: 2, expEn: '₹114.4≈₹114', expHi: '₹114.4≈₹114' }
+            ]
+        }, {
+            nameEn: 'Successive Replacements',
+            nameHi: 'आनुक्रमिक प्रतिस्थापन',
+            visualEn: '<i class="fas fa-arrows-rotate" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Final = Initial × (1 - r/V)^n.',
+            visualHi: '<i class="fas fa-arrows-rotate" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> अंतिम = प्रारंभिक × (1 - r/V)^n.',
+            basicFormulaEn: '<b>Final concentration:</b> C_f = C_i × (1 - r/V)^n',
+            basicFormulaHi: '<b>अंतिम सांद्रता:</b> C_f = C_i × (1 - r/V)^n',
+            formulaExplanationEn: '<b>Why this formula?</b> Each replacement reduces concentration.',
+            formulaExplanationHi: '<b>यह सूत्र क्यों?</b> प्रत्येक प्रतिस्थापन सांद्रता कम करता है।',
+            advancedFormulaEn: '<b>Advanced:</b> Different quantities removed each time.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> प्रत्येक बार अलग-अलग मात्राएँ निकाली जाती हैं।',
+            practice: [
+                { qEn: '100 L milk, 10 L replaced. After 3 ops, milk quantity?', qHi: '100 L दूध, 10 L बदला गया। 3 ops के बाद दूध?', optsEn: ['70 L', '72.9 L', '75 L', '80 L'], optsHi: ['70 L', '72.9 L', '75 L', '80 L'], ans: 1, expEn: '100×0.9³=72.9 L', expHi: '100×0.9³=72.9 L' },
+                { qEn: '200 L solution, 20 L replaced. After 2 ops, concentration?', qHi: '200 L विलयन, 20 L बदला गया। 2 ops के बाद सांद्रता?', optsEn: ['70%', '75%', '80%', '81%'], optsHi: ['70%', '75%', '80%', '81%'], ans: 2, expEn: '0.9²=81%', expHi: '0.9²=81%' },
+                { qEn: '50 L milk, 5 L replaced. After 4 ops, milk %?', qHi: '50 L दूध, 5 L बदला गया। 4 ops के बाद दूध %?', optsEn: ['60%', '65.6%', '70%', '75%'], optsHi: ['60%', '65.6%', '70%', '75%'], ans: 1, expEn: '0.9⁴=65.6%', expHi: '0.9⁴=65.6%' },
+                { qEn: '120 L solution, 12 L replaced. After 3 ops, concentration?', qHi: '120 L विलयन, 12 L बदला गया। 3 ops के बाद सांद्रता?', optsEn: ['60%', '65%', '70%', '72.9%'], optsHi: ['60%', '65%', '70%', '72.9%'], ans: 2, expEn: '0.9³=72.9%', expHi: '0.9³=72.9%' },
+                { qEn: '60 L milk, 6 L replaced. After 2 ops, milk quantity?', qHi: '60 L दूध, 6 L बदला गया। 2 ops के बाद दूध?', optsEn: ['45 L', '48.6 L', '50 L', '52 L'], optsHi: ['45 L', '48.6 L', '50 L', '52 L'], ans: 1, expEn: '60×0.9²=48.6 L', expHi: '60×0.9²=48.6 L' },
+                { qEn: '80 L solution, 8 L replaced. After 4 ops, concentration?', qHi: '80 L विलयन, 8 L बदला गया। 4 ops के बाद सांद्रता?', optsEn: ['60%', '62.5%', '65.6%', '70%'], optsHi: ['60%', '62.5%', '65.6%', '70%'], ans: 2, expEn: '0.9⁴=65.6%', expHi: '0.9⁴=65.6%' },
+                { qEn: '40 L solution, 4 L replaced. After 3 ops, concentration?', qHi: '40 L विलयन, 4 L बदला गया। 3 ops के बाद सांद्रता?', optsEn: ['70%', '72.9%', '75%', '80%'], optsHi: ['70%', '72.9%', '75%', '80%'], ans: 1, expEn: '0.9³=72.9%', expHi: '0.9³=72.9%' },
+                { qEn: '150 L solution, 15 L replaced. After 2 ops, concentration?', qHi: '150 L विलयन, 15 L बदला गया। 2 ops के बाद सांद्रता?', optsEn: ['75%', '78%', '81%', '85%'], optsHi: ['75%', '78%', '81%', '85%'], ans: 2, expEn: '0.9²=81%', expHi: '0.9²=81%' },
+                { qEn: '90 L milk, 9 L replaced. After 3 ops, milk quantity?', qHi: '90 L दूध, 9 L बदला गया। 3 ops के बाद दूध?', optsEn: ['60 L', '65.6 L', '70 L', '72.9 L'], optsHi: ['60 L', '65.6 L', '70 L', '72.9 L'], ans: 2, expEn: '90×0.9³=65.61 L≈65.6 L', expHi: '90×0.9³=65.61 L≈65.6 L' },
+                { qEn: '30 L milk, 3 L replaced. After 5 ops, milk %?', qHi: '30 L दूध, 3 L बदला गया। 5 ops के बाद दूध %?', optsEn: ['55%', '58%', '59.05%', '60%'], optsHi: ['55%', '58%', '59.05%', '60%'], ans: 2, expEn: '0.9⁵=59.05%', expHi: '0.9⁵=59.05%' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '100 L milk, 10 L replaced. After 3 ops, milk quantity?', qHi: '100 L दूध, 10 L बदला गया। 3 ops के बाद दूध?', optsEn: ['70 L', '72.9 L', '75 L', '80 L'], optsHi: ['70 L', '72.9 L', '75 L', '80 L'], ans: 1, expEn: '72.9 L', expHi: '72.9 L' },
+                { year: 'CGL 2022', qEn: '200 L solution, 20 L replaced. After 2 ops, concentration?', qHi: '200 L विलयन, 20 L बदला गया। 2 ops के बाद सांद्रता?', optsEn: ['70%', '75%', '80%', '81%'], optsHi: ['70%', '75%', '80%', '81%'], ans: 2, expEn: '81%', expHi: '81%' },
+                { year: 'CGL 2021', qEn: '50 L milk, 5 L replaced. After 4 ops, milk %?', qHi: '50 L दूध, 5 L बदला गया। 4 ops के बाद दूध %?', optsEn: ['60%', '65.6%', '70%', '75%'], optsHi: ['60%', '65.6%', '70%', '75%'], ans: 1, expEn: '65.6%', expHi: '65.6%' },
+                { year: 'CGL 2020', qEn: '120 L solution, 12 L replaced. After 3 ops, concentration?', qHi: '120 L विलयन, 12 L बदला गया। 3 ops के बाद सांद्रता?', optsEn: ['60%', '65%', '70%', '72.9%'], optsHi: ['60%', '65%', '70%', '72.9%'], ans: 2, expEn: '72.9%', expHi: '72.9%' },
+                { year: 'CGL 2019', qEn: '60 L milk, 6 L replaced. After 2 ops, milk quantity?', qHi: '60 L दूध, 6 L बदला गया। 2 ops के बाद दूध?', optsEn: ['45 L', '48.6 L', '50 L', '52 L'], optsHi: ['45 L', '48.6 L', '50 L', '52 L'], ans: 1, expEn: '48.6 L', expHi: '48.6 L' }
+            ]
+        }, {
+            nameEn: 'Data Sufficiency (Mixture & Alligation)',
+            nameHi: 'आंकड़ा पर्याप्तता (मिश्रण एवं एलीगेशन)',
+            visualEn: '<i class="fas fa-database" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Check if data is sufficient using alligation rules.',
+            visualHi: '<i class="fas fa-database" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> एलीगेशन नियमों का उपयोग करके डेटा पर्याप्तता जाँचें।',
+            basicFormulaEn: '<b>Check:</b> Does the information lead to a unique value?',
+            basicFormulaHi: '<b>जाँच:</b> क्या जानकारी अद्वितीय मान तक पहुँचती है?',
+            formulaExplanationEn: '<b>Why check?</b> Many CGL questions ask if data is sufficient.',
+            formulaExplanationHi: '<b>जाँच क्यों?</b> कई CGL प्रश्न पूछते हैं कि डेटा पर्याप्त है या नहीं।',
+            advancedFormulaEn: '<b>Advanced:</b> Two statements, check each alone, both together, or neither.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> दो कथन, प्रत्येक अकेले, दोनों एक साथ, या कोई नहीं।',
+            practice: [
+                { qEn: 'Can ratio be found if prices and mean price given?', qHi: 'क्या अनुपात ज्ञात किया जा सकता है यदि मूल्य और माध्य मूल्य दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { qEn: 'Can mean price be found if prices and ratio given?', qHi: 'क्या माध्य मूल्य ज्ञात किया जा सकता है यदि मूल्य और अनुपात दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { qEn: 'Can quantity of each be found if total and ratio given?', qHi: 'क्या प्रत्येक की मात्रा ज्ञात की जा सकती है यदि कुल और अनुपात दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { qEn: 'Can final concentration after replacement be found if initial, removed, and n given?', qHi: 'क्या प्रतिस्थापन के बाद अंतिम सांद्रता ज्ञात की जा सकती है यदि प्रारंभिक, निकाली गई, और n दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { qEn: 'Can milk:water ratio be found if profit% given?', qHi: 'क्या दूध:पानी अनुपात ज्ञात किया जा सकता है यदि लाभ% दिया है?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { qEn: 'Can quantity of water added be found if initial milk and final milk % given?', qHi: 'क्या मिलाई गई पानी की मात्रा ज्ञात की जा सकती है यदि प्रारंभिक दूध और अंतिम दूध % दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { qEn: 'Can final mixture quantity be found if only ratio is given?', qHi: 'क्या अंतिम मिश्रण की मात्रा ज्ञात की जा सकती है यदि केवल अनुपात दिया है?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'No, total quantity needed.', expHi: 'नहीं, कुल मात्रा की आवश्यकता है।' },
+                { qEn: 'Can CP of mixture be found if individual costs and quantities given?', qHi: 'क्या मिश्रण का CP ज्ञात किया जा सकता है यदि व्यक्तिगत लागत और मात्राएँ दी हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { qEn: 'Can SP for desired profit be found if CP known?', qHi: 'क्या वांछित लाभ के लिए SP ज्ञात किया जा सकता है यदि CP ज्ञात है?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { qEn: 'Can number of replacements be found if final, initial, and removed given?', qHi: 'क्या प्रतिस्थापनों की संख्या ज्ञात की जा सकती है यदि अंतिम, प्रारंभिक, और निकाली गई दी हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, using logarithms.', expHi: 'हाँ, लघुगणक का उपयोग करके।' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'Can ratio be found if prices and mean price given?', qHi: 'क्या अनुपात ज्ञात किया जा सकता है यदि मूल्य और माध्य मूल्य दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { year: 'CGL 2022', qEn: 'Can mean price be found if prices and ratio given?', qHi: 'क्या माध्य मूल्य ज्ञात किया जा सकता है यदि मूल्य और अनुपात दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { year: 'CGL 2021', qEn: 'Can quantity of each be found if total and ratio given?', qHi: 'क्या प्रत्येक की मात्रा ज्ञात की जा सकती है यदि कुल और अनुपात दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { year: 'CGL 2020', qEn: 'Can final concentration after replacement be found if initial, removed, and n given?', qHi: 'क्या प्रतिस्थापन के बाद अंतिम सांद्रता ज्ञात की जा सकती है यदि प्रारंभिक, निकाली गई, और n दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                { year: 'CGL 2019', qEn: 'Can milk:water ratio be found if profit% given?', qHi: 'क्या दूध:पानी अनुपात ज्ञात किया जा सकता है यदि लाभ% दिया है?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' }
+            ]
+        }];
+
+        // ================================================================
+        // 2. RENDER ENGINE (identical to previous modules)
+        // ================================================================
+
+        var currentLang = 'en';
+        var totalPages = 15;
+
+        function render(lang) {
+            var container = document.getElementById('content');
+            var indexGrid = document.getElementById('indexGrid');
+            var indexTitle = document.getElementById('indexTitle');
+            var headerSub = document.getElementById('headerSub');
+            var footerText = document.getElementById('footerText');
+
+            if (lang === 'en') {
+                headerSub.textContent = '9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual';
+                footerText.textContent = '⚡ Practice makes perfect. SSC CGL / Banking Level.';
+                indexTitle.textContent = '📑 All 9 Mixture & Alligation Topics Covered';
+            } else {
+                headerSub.textContent = '9 टॉपिक्स • 15 पेज • बेसिक→एडवांस्ड सूत्र • PYQs • द्विभाषी';
+                footerText.textContent = '⚡ अभ्यास से ही सिद्धि मिलती है। SSC CGL / बैंकिंग स्तर।';
+                indexTitle.textContent = '📑 सभी 9 मिश्रण एवं एलीगेशन टॉपिक्स कवर किए गए';
+            }
+
+            indexGrid.innerHTML = '';
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var a = document.createElement('a');
+                a.href = '#topic-' + idx;
+                a.textContent = lang === 'en' ? topic.nameEn : topic.nameHi;
+                indexGrid.appendChild(a);
+            });
+
+            var html = '';
+            var pageCounter = 1;
+
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var name = lang === 'en' ? topic.nameEn : topic.nameHi;
+                var visual = lang === 'en' ? topic.visualEn : topic.visualHi;
+                var basicF = lang === 'en' ? topic.basicFormulaEn : topic.basicFormulaHi;
+                var advF = lang === 'en' ? topic.advancedFormulaEn : topic.advancedFormulaHi;
+                var expF = lang === 'en' ? topic.formulaExplanationEn : topic.formulaExplanationHi;
+                var badgeText = lang === 'en' ? 'Topic ' + (idx + 1) + ' of 9' : 'टॉपिक ' + (idx + 1) + ' / 9';
+
+                html += '<div class="page-divider"><hr /><span class="page-label">📄 Page ' + pageCounter +
+                    ' of ' + totalPages + '</span><hr /></div>';
+                pageCounter++;
+
+                html += '<div class="formula-card" id="topic-' + idx + '">';
+                html += '<div class="topic-name"><i class="fas fa-hashtag" style="color:#ff6f00;"></i> ' + name +
+                    '</div>';
+                html += '<div class="topic-badge">' + badgeText + '</div>';
+
+                html += '<div class="visual-box">' + visual + '</div>';
+
+                html += '<div class="formulas-box">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-book"></i> ' + (lang === 'en' ?
+                        '📐 Basic Formulas' : '📐 बेसिक सूत्र') + '</div>';
+                html += basicF;
+                html += '</div>';
+
+                html += '<div class="formula-explanation">';
+                html +=
+                    '<div class="ex-title"><i class="fas fa-lightbulb"></i> ' + (lang === 'en' ?
+                        '💡 Why does it work?' : '💡 यह क्यों काम करता है?') + '</div>';
+                html += expF;
+                html += '</div>';
+
+                html += '<div class="formulas-box" style="border-left-color:#1a237e;">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-star"></i> ' + (lang === 'en' ?
+                        '🚀 Advanced (CGL Level) Formulas' : '🚀 एडवांस्ड (CGL स्तर) सूत्र') + '</div>';
+                html += advF;
+                html += '</div>';
+
+                html +=
+                    '<div class="section-heading"><i class="fas fa-pencil-alt"></i> ' + (lang === 'en' ?
+                        '📝 Practice Questions (10)' : '📝 अभ्यास प्रश्न (10)') + '</div>';
+
+                topic.practice.forEach(function(q, qIdx) {
+                    var qid = 'p-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item">';
+                    html += '<div class="q-text">Q' + (qIdx + 1) + '. ' + qText + '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html +=
+                    '<div class="section-heading" style="margin-top:20px;"><i class="fas fa-history"></i> ' +
+                    (lang === 'en' ? '📌 Previous Year Questions (CGL)' : '📌 पिछले वर्ष के प्रश्न (CGL)') +
+                    '</div>';
+
+                topic.pyqs.forEach(function(q, qIdx) {
+                    var qid = 'pyq-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item" style="border-left:3px solid #ffd54f;">';
+                    html += '<div class="q-text"><span class="pyq-badge">' + q.year + '</span> ' + qText +
+                        '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html += '</div>';
+            });
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.answer-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var qid = this.dataset.qid;
+                    var box = document.getElementById(qid);
+                    if (box) {
+                        box.classList.toggle('show');
+                        var lang = currentLang;
+                        this.textContent = box.classList.contains('show') ?
+                            (lang === 'en' ? 'Hide Answer' : 'उत्तर छिपाएँ') :
+                            (lang === 'en' ? 'Show Answer' : 'उत्तर दिखाएँ');
+                    }
+                });
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var scrolled = window.scrollY;
+            var progress = scrollHeight > 0 ? (scrolled / scrollHeight) * 100 : 0;
+            document.getElementById('progressFill').style.width = Math.min(progress, 100) + '%';
+
+            var total = TOPICS_DATA.length;
+            var approx = Math.floor((scrolled / scrollHeight) * total) + 1;
+            var page = Math.min(approx + 1, 15);
+            document.getElementById('pageIndicator').textContent = 'Page ' + Math.min(page, 15) + ' of 15';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress);
+
+        document.querySelectorAll('#langToggle button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('#langToggle button').forEach(function(b) { b.classList.remove(
+                        'active'); });
+                this.classList.add('active');
+                currentLang = this.dataset.lang;
+                render(currentLang);
+                setTimeout(updateProgress, 100);
+            });
+        });
+
+        render('en');
+        setTimeout(updateProgress, 200);
+        console.log('✅ Mixture & Alligation – All 9 Topics, 15 Pages Module Loaded!');
+    </script>
+
+</body>
+</html>

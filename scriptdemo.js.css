@@ -1,0 +1,428 @@
+ 
+const mockBtn = document.getElementById("mockBtn");
+const mockMenu = document.getElementById("mockMenu");
+
+mockBtn.addEventListener("click", function(event) {
+
+    event.stopPropagation();
+
+    mockMenu.classList.toggle("show");
+
+});
+
+
+document.addEventListener("click", function(event) {
+
+    if (!event.target.closest(".dropdown")) {
+
+        mockMenu.classList.remove("show");
+
+    }
+
+});
+
+
+// =========================================
+// AI ASK SYSTEM
+// =========================================
+
+async function askAI() {
+
+    const input = document.getElementById("question");
+    const chatBox = document.getElementById("chatBox");
+
+    const question = input.value.trim();
+
+    if (question === "") {
+        return;
+    }
+
+
+    // Student message
+    chatBox.innerHTML += `
+        <div class="user-message">
+            ${question}
+        </div>
+    `;
+
+    input.value = "";
+
+
+    // Loading message
+    chatBox.innerHTML += `
+        <div class="ai-message" id="loading">
+            🤔 Thinking...
+        </div>
+    `;
+
+
+    try {
+
+        const response = await fetch("/api/ask-ai", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                question: question
+            })
+
+        });
+
+
+        const data = await response.json();
+
+        document.getElementById("loading").remove();
+
+
+        chatBox.innerHTML += `
+            <div class="ai-message">
+                ${data.answer}
+            </div>
+        `;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        const loading = document.getElementById("loading");
+
+        if (loading) {
+            loading.remove();
+        }
+
+
+        chatBox.innerHTML += `
+            <div class="ai-message">
+                ❌ Something went wrong. Please try again.
+            </div>
+        `;
+
+    }
+
+}
+
+
+// =========================================
+// LOGIN / REGISTER SYSTEM
+// =========================================
+
+
+// OPEN LOGIN / REGISTER
+
+function openAuth(type) {
+
+    const modal =
+        document.getElementById("authModal");
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const registerForm =
+        document.getElementById("registerForm");
+
+    const title =
+        document.getElementById("authTitle");
+
+    const subtitle =
+        document.getElementById("authSubtitle");
+
+    const icon =
+        document.getElementById("authIcon");
+
+    const bottomText =
+        document.getElementById("authBottomText");
+
+    const switchButton =
+        document.getElementById("authSwitch");
+
+
+    // LOGIN
+
+    if (type === "login") {
+
+        loginForm.style.display = "block";
+
+        registerForm.style.display = "none";
+
+        icon.innerHTML = "🔐";
+
+        title.innerHTML =
+            "Welcome Back";
+
+        subtitle.innerHTML =
+            "Login to continue your SSC preparation";
+
+        bottomText.innerHTML =
+            "Don't have an account?";
+
+        switchButton.innerHTML =
+            "Create Account";
+
+    }
+
+
+    // REGISTER
+
+    else {
+
+        loginForm.style.display = "none";
+
+        registerForm.style.display = "block";
+
+        icon.innerHTML = "🚀";
+
+        title.innerHTML =
+            "Create Account";
+
+        subtitle.innerHTML =
+            "Start your SSC preparation today";
+
+        bottomText.innerHTML =
+            "Already have an account?";
+
+        switchButton.innerHTML =
+            "Login";
+
+    }
+
+
+    // SHOW POPUP
+
+    modal.classList.add("active");
+
+
+    // STOP BACKGROUND SCROLL
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+// =========================================
+// CLOSE POPUP
+// =========================================
+
+function closeAuth() {
+
+    const modal =
+        document.getElementById("authModal");
+
+    modal.classList.remove("active");
+
+    document.body.style.overflow = "";
+
+}
+
+
+// =========================================
+// SWITCH LOGIN / REGISTER
+// =========================================
+
+function switchAuth() {
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const registerForm =
+        document.getElementById("registerForm");
+
+
+    if (loginForm.style.display === "none") {
+
+        // REGISTER → LOGIN
+
+        openAuth("login");
+
+    }
+
+    else {
+
+        // LOGIN → REGISTER
+
+        openAuth("register");
+
+    }
+
+}
+
+
+// =========================================
+// ESC KEY
+// =========================================
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeAuth();
+
+        }
+
+    }
+);
+
+
+// =========================================
+// REGISTER SYSTEM
+// =========================================
+
+document.getElementById("registerForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const inputs =
+            this.querySelectorAll("input");
+
+
+        const name =
+            inputs[0].value;
+
+        const email =
+            inputs[1].value;
+
+        const password =
+            inputs[2].value;
+
+
+        try {
+
+            const response =
+                await fetch("/api/register", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        name: name,
+                        email: email,
+                        password: password
+
+                    })
+
+                });
+
+
+            const data =
+                await response.json();
+
+
+            if (data.success) {
+
+                alert(
+                    "Registration request successful! 🎉"
+                );
+
+            }
+
+            else {
+
+                alert(data.message);
+
+            }
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Backend se connection nahi ho pa raha."
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================
+// LOGIN SYSTEM
+// =========================================
+
+document.getElementById("loginForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const inputs =
+            this.querySelectorAll("input");
+
+
+        const email =
+            inputs[0].value;
+
+        const password =
+            inputs[1].value;
+
+
+        try {
+
+            const response =
+                await fetch("/api/login", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        email: email,
+                        password: password
+
+                    })
+
+                });
+
+
+            const data =
+                await response.json();
+
+
+            if (data.success) {
+
+                alert(
+                    "Login successful! 🎉"
+                );
+
+            }
+
+            else {
+
+                alert(
+                    data.message
+                );
+
+            }
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Backend se connection nahi ho pa raha."
+            );
+
+        }
+
+    }
+);
+ 

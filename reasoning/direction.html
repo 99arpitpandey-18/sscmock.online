@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction & Distance – Deep Explanation (दिशा और दूरी)</title>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --blue:#2563eb; --dark:#0b1f4b; --navy:#102a68; --bg:#f5f7fb; --white:#ffffff; --text:#172033; --muted:#667085; --border:#e1e6ef; --green:#16a34a; --red:#dc2626; --lightblue:#eef5ff; }
+body{ font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); }
+/* ===== HEADER ===== */
+.header{ background:linear-gradient(135deg,#07183d,#2445a0); color:white; padding:28px 6%; }
+.header-inner{ max-width:1250px; margin:auto; }
+.back-btn{ color:white; text-decoration:none; font-size:15px; font-weight:bold; display:inline-block; margin-bottom:20px; background:rgba(255,255,255,0.1); padding:6px 18px; border-radius:30px; }
+.back-btn:hover{ background:rgba(255,255,255,0.25); }
+.header-content{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.header-icon{ width:76px; height:76px; border-radius:18px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:40px; flex-shrink:0; }
+.header h1{ font-size:34px; margin-bottom:7px; }
+.header p{ font-size:15px; opacity:.85; }
+.lang-toggle{ display:flex; gap:8px; background:rgba(255,255,255,0.15); padding:4px; border-radius:30px; margin-left:auto; }
+.lang-btn{ background:transparent; border:2px solid transparent; color:white; padding:6px 16px; border-radius:30px; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.lang-btn.active{ background:white; color:#0b1f4b; border-color:white; }
+.lang-btn:hover{ background:rgba(255,255,255,0.3); }
+/* ===== CONTAINER ===== */
+.container{ width:92%; max-width:1200px; margin:30px auto; }
+/* ===== HERO ===== */
+.hero{ background:white; border:1px solid var(--border); border-radius:18px; padding:25px; box-shadow:0 8px 25px rgba(15,35,80,.06); }
+.hero h2{ color:var(--dark); margin-bottom:9px; }
+.hero p{ color:var(--muted); line-height:1.6; }
+.hero .description-box{ background:#f4f7ff; border-left:5px solid var(--blue); padding:16px 20px; border-radius:10px; margin-top:12px; color:#1f3a5f; line-height:1.8; }
+.stats{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.stat{ background:var(--lightblue); color:#21438f; border:1px solid #d9e5ff; padding:10px 15px; border-radius:10px; font-weight:bold; font-size:14px; }
+/* ===== CONTROLS ===== */
+.controls{ margin:22px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.search-box{ flex:1; min-width:200px; padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; font-size:14px; outline:none; }
+.search-box:focus{ border-color:var(--blue); }
+select{ padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+.btn{ padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.btn-blue{ background:var(--blue); color:white; }
+.btn-blue:hover{ background:#1d4ed8; }
+.btn-white{ background:white; border:1px solid #ccd3df; color:#26344d; }
+.btn-white:hover{ background:#f0f2f5; }
+.btn-green{ background:var(--green); color:white; }
+.btn-green:hover{ background:#15803d; }
+/* ===== PROGRESS ===== */
+.progress-info{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:var(--muted); font-weight:bold; }
+.progress{ width:100%; height:9px; background:#e5e9f0; border-radius:20px; overflow:hidden; margin-bottom:25px; }
+.progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); transition:.3s; }
+/* ===== QUESTION CARD ===== */
+.question-card{ background:white; border:1px solid var(--border); border-radius:17px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 18px rgba(15,35,80,.05); }
+.question-top{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px 8px; }
+.question-number{ color:var(--blue); font-weight:800; }
+.question-type{ background:#eef2f7; color:#526071; padding:6px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.question-body{ padding:8px 20px 20px; }
+.question-text{ font-size:17px; line-height:1.65; font-weight:650; margin-bottom:16px; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.option{ background:#f8fafc; border:1px solid #dce2eb; border-radius:10px; padding:13px; text-align:left; cursor:pointer; font-size:15px; transition:.2s; }
+.option:hover{ background:#eff6ff; border-color:#2563eb; }
+.option.correct{ background:#ecfdf3; border-color:#22c55e; color:#166534; }
+.option.wrong{ background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+.answer-result{ margin-top:12px; font-weight:bold; }
+.explanation{ display:none; margin-top:15px; padding:18px 20px; background:#f4f7ff; border-left:5px solid #2563eb; border-radius:8px; line-height:1.8; }
+.explanation.show{ display:block; }
+.explanation-title{ color:#17449c; font-weight:bold; margin-bottom:8px; font-size:16px; }
+.explanation .step{ margin-top:5px; padding-left:10px; border-left:2px solid #b0c8e8; }
+.footer{ text-align:center; padding:35px 10px; color:#667085; }
+@media(max-width:700px){ .header h1{ font-size:25px; } .header-content{ align-items:flex-start; } .header-icon{ width:60px; height:60px; font-size:30px; } .options{ grid-template-columns:1fr; } .question-text{ font-size:16px; } .container{ width:94%; } .controls{ flex-direction:column; } .controls .btn{ width:100%; text-align:center; } .lang-toggle{ margin-left:0; width:100%; justify-content:center; } }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="header-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="back-btn">← Topics पर वापस जाएँ</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+                <button class="lang-btn" id="langHi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">🧭</div>
+            <div>
+                <h1 id="mainTitle">Direction & Distance (Deep Explanation)</h1>
+                <p id="mainSub">SSC CGL • CHSL • CPO • MTS | 500+ Bilingual Questions</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="container">
+    <section class="hero">
+        <h2 id="heroTitle">Direction & Distance – Complete SSC Practice</h2>
+        <div id="descriptionBox" class="description-box">
+            <!-- Dynamically filled by JS -->
+        </div>
+        <div class="stats" id="statsRow">
+            <div class="stat" data-lang-en="510 Questions" data-lang-hi="510 प्रश्न">510 Questions</div>
+            <div class="stat" data-lang-en="Direction Test" data-lang-hi="दिशा परीक्षण">Direction Test</div>
+            <div class="stat" data-lang-en="Distance Based" data-lang-hi="दूरी आधारित">Distance Based</div>
+            <div class="stat" data-lang-en="Shadow Based" data-lang-hi="छाया आधारित">Shadow Based</div>
+            <div class="stat" data-lang-en="Position Based" data-lang-hi="स्थिति आधारित">Position Based</div>
+            <div class="stat" data-lang-en="Detailed Explanation" data-lang-hi="विस्तृत व्याख्या">Detailed Explanation</div>
+        </div>
+    </section>
+
+    <!-- ===== CONTROLS ===== -->
+    <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="Search question...">
+        <select id="filter">
+            <option value="all" data-lang-en="All Questions" data-lang-hi="सभी प्रश्न">All Questions</option>
+            <option value="Direction & Distance" data-lang-en="Direction & Distance" data-lang-hi="दिशा और दूरी">Direction & Distance</option>
+            <option value="Shadow Based" data-lang-en="Shadow Based" data-lang-hi="छाया आधारित">Shadow Based</option>
+            <option value="Position Based" data-lang-en="Position Based" data-lang-hi="स्थिति आधारित">Position Based</option>
+        </select>
+        <button class="btn btn-blue" onclick="showAllExplanations()" data-lang-en="Show Explanations" data-lang-hi="सभी व्याख्याएँ दिखाएँ">Show Explanations</button>
+        <button class="btn btn-green" onclick="resetQuiz()" data-lang-en="Reset" data-lang-hi="रीसेट करें">Reset</button>
+    </div>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-info">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <!-- ===== QUESTIONS ===== -->
+    <div id="questionsContainer"></div>
+</main>
+<footer class="footer" data-lang-en="Direction & Distance · SSC Reasoning" data-lang-hi="दिशा और दूरी · SSC रीजनिंग">Direction & Distance · SSC Reasoning</footer>
+
+<script>
+// ================================================================
+//  LANGUAGE TOGGLE & UI TEXTS
+// ================================================================
+let currentLang = 'en';
+
+const descriptions = {
+    en: `<b>What is Direction & Distance?</b><br> 
+    These questions test your spatial intelligence. You must track movements (left/right turns) and calculate final facing direction, or compute the shortest distance (displacement) from the starting point using Pythagoras theorem. <br><br>
+    <b>📌 Key Concepts:</b><br>
+    • <b>Left/Right Turns:</b> Turning left from North means facing West; right means East (and so on).<br>
+    • <b>Shadow:</b> In the morning, the sun is in the East, so the shadow falls towards the West. In the evening, the sun is in the West, so the shadow falls towards the East.<br>
+    • <b>Displacement:</b> It is the straight-line distance between start and end point, calculated as √(x² + y²).`,
+    
+    hi: `<b>दिशा और दूरी (Direction & Distance) क्या है?</b><br> 
+    ये प्रश्न आपकी स्थानिक बुद्धि (spatial intelligence) का परीक्षण करते हैं। आपको गतिविधियों (बाएँ/दाएँ मोड़) को ट्रैक करना होता है और अंतिम दिशा या प्रारंभिक बिंदु से न्यूनतम दूरी (विस्थापन) की गणना पाइथागोरस प्रमेय से करनी होती है। <br><br>
+    <b>📌 महत्वपूर्ण अवधारणाएँ:</b><br>
+    • <b>बाएँ/दाएँ मोड़:</b> उत्तर से बाएँ मुड़ने पर पश्चिम, दाएँ मुड़ने पर पूर्व (और इसी प्रकार)।<br>
+    • <b>छाया:</b> सुबह सूर्य पूर्व में होता है, इसलिए छाया पश्चिम में पड़ती है। शाम को सूर्य पश्चिम में, इसलिए छाया पूर्व में।<br>
+    • <b>विस्थापन:</b> यह प्रारंभ और अंतिम बिंदु के बीच की सीधी रेखा की दूरी है, जो √(x² + y²) से निकाली जाती है।`
+};
+
+function updateUI() {
+    document.querySelectorAll('[data-lang-en]').forEach(el => {
+        const key = el.dataset.langEn;
+        const hi = el.dataset.langHi;
+        if (currentLang === 'en') {
+            if (el.tagName === 'OPTION') el.textContent = key;
+            else el.textContent = key;
+        } else {
+            if (el.tagName === 'OPTION') el.textContent = hi;
+            else el.textContent = hi;
+        }
+    });
+    document.getElementById('mainTitle').textContent = currentLang === 'en' ? 'Direction & Distance (Deep Explanation)' : 'दिशा और दूरी (गहन व्याख्या)';
+    document.getElementById('mainSub').textContent = currentLang === 'en' ? 'SSC CGL • CHSL • CPO • MTS | 500+ Bilingual Questions' : 'SSC CGL • CHSL • CPO • MTS | 500+ द्विभाषी प्रश्न';
+    document.getElementById('heroTitle').textContent = currentLang === 'en' ? 'Direction & Distance – Complete SSC Practice' : 'दिशा और दूरी – पूर्ण SSC अभ्यास';
+    document.getElementById('descriptionBox').innerHTML = descriptions[currentLang];
+    document.getElementById('search').placeholder = currentLang === 'en' ? 'Search question...' : 'प्रश्न खोजें...';
+    document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
+    document.getElementById('langHi').classList.toggle('active', currentLang === 'hi');
+    renderQuestions();
+    updateProgress();
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    updateUI();
+}
+
+// ================================================================
+//  QUESTION GENERATOR (DEEP EXPLANATION)
+// ================================================================
+const questions = [];
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+const dirEn = ['North', 'South', 'East', 'West'];
+const dirHi = ['उत्तर', 'दक्षिण', 'पूर्व', 'पश्चिम'];
+const fullDirEn = ['North', 'South', 'East', 'West', 'North-East', 'North-West', 'South-East', 'South-West'];
+const fullDirHi = ['उत्तर', 'दक्षिण', 'पूर्व', 'पश्चिम', 'उत्तर-पूर्व', 'उत्तर-पश्चिम', 'दक्षिण-पूर्व', 'दक्षिण-पश्चिम'];
+
+function generateDirectionQuestion() {
+    const type = Math.random();
+    
+    // ----- TYPE 1: Turn based (Facing Direction) -----
+    if (type < 0.55) {
+        const startIdx = Math.floor(Math.random() * 4);
+        let currentIdx = startIdx;
+        const steps = Math.floor(Math.random() * 4) + 2; // 2 to 5 turns
+        let moves = [];
+        let descEn = [];
+        let descHi = [];
+        let d = startIdx;
+        
+        for (let i = 0; i < steps; i++) {
+            const turn = Math.random() < 0.5 ? 'left' : 'right';
+            let newIdx;
+            if (d === 0) newIdx = turn === 'left' ? 3 : 2;
+            else if (d === 1) newIdx = turn === 'left' ? 2 : 3;
+            else if (d === 2) newIdx = turn === 'left' ? 0 : 1;
+            else if (d === 3) newIdx = turn === 'left' ? 1 : 0;
+            
+            const dist = Math.floor(Math.random() * 8) + 2;
+            moves.push({ from: d, to: newIdx, turn, dist });
+            descEn.push(`${dist}m ${dirEn[d]}`);
+            descHi.push(`${dist}मी ${dirHi[d]}`);
+            if (i < steps - 1) {
+                descEn.push(turn === 'left' ? 'left' : 'right');
+                descHi.push(turn === 'left' ? 'बाएँ' : 'दाएँ');
+            }
+            d = newIdx;
+        }
+        const finalIdx = d;
+        const finalName = dirEn[finalIdx];
+        const finalNameHi = dirHi[finalIdx];
+        
+        const q_en = `A person walks ${descEn.join(', ')}. In which direction is he finally facing?`;
+        const q_hi = `एक व्यक्ति ${descHi.join(', ')} चलता है। अंत में उसका मुँह किस दिशा में है?`;
+        
+        const opts = shuffle([finalName, dirEn[(finalIdx+1)%4], dirEn[(finalIdx+2)%4], dirEn[(finalIdx+3)%4]]);
+        const ansIdx = opts.indexOf(finalName);
+        
+        // Deep Explanation (Step by Step)
+        let expEn = `🔍 Step-by-step tracking of turns:<br>`;
+        let expHi = `🔍 चरण-दर-चरण मोड़ों का ट्रैकिंग:<br>`;
+        let currentDesc = startIdx;
+        for (let i = 0; i < moves.length; i++) {
+            const m = moves[i];
+            const fromName = dirEn[m.from];
+            const toName = dirEn[m.to];
+            const turnName = m.turn === 'left' ? 'Left' : 'Right';
+            const turnNameHi = m.turn === 'left' ? 'बाएँ' : 'दाएँ';
+            expEn += `<b>Step ${i+1}:</b> Facing ${fromName}, take a ${turnName} turn. Now facing ${toName}.<br>`;
+            expHi += `<b>चरण ${i+1}:</b> ${fromName} की ओर मुँह, ${turnNameHi} मुड़े। अब ${toName} की ओर मुँह।<br>`;
+        }
+        expEn += `✅ <b>Final direction after all steps: ${finalName}.</b>`;
+        expHi += `✅ <b>सभी चरणों के बाद अंतिम दिशा: ${finalNameHi}.</b>`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Direction & Distance", exp_en: expEn, exp_hi: expHi };
+    }
+    
+    // ----- TYPE 2: Shadow Based -----
+    else if (type < 0.8) {
+        const time = Math.random() < 0.5 ? 'morning' : 'evening';
+        const faceIdx = Math.floor(Math.random() * 4);
+        let shadowIdx;
+        if (time === 'morning') shadowIdx = 3; // West
+        else shadowIdx = 2; // East (Sun sets in West, shadow East)
+        
+        const q_en = `If a person is facing ${dirEn[faceIdx]} in the ${time}, in which direction will his shadow fall?`;
+        const q_hi = `यदि कोई व्यक्ति ${time === 'morning' ? 'सुबह' : 'शाम'} में ${dirHi[faceIdx]} दिशा में मुँह करके खड़ा है, तो उसकी छाया किस दिशा में पड़ेगी?`;
+        
+        const opts = shuffle([dirEn[shadowIdx], dirEn[(shadowIdx+1)%4], dirEn[(shadowIdx+2)%4], dirEn[(shadowIdx+3)%4]]);
+        const ansIdx = opts.indexOf(dirEn[shadowIdx]);
+        
+        const expEn = `🔍 Shadow Logic:<br>
+        <b>Step 1:</b> In the ${time}, the sun is in the ${time === 'morning' ? 'East' : 'West'}.<br>
+        <b>Step 2:</b> A shadow always falls in the direction opposite to the sun.<br>
+        <b>Step 3:</b> Opposite of ${time === 'morning' ? 'East' : 'West'} is ${dirEn[shadowIdx]}.<br>
+        ✅ <b>Therefore, the shadow falls towards ${dirEn[shadowIdx]}.</b> (The person's facing direction doesn't change the shadow's absolute direction; shadow is always opposite to the sun).`;
+        
+        const expHi = `🔍 छाया का तर्क:<br>
+        <b>चरण 1:</b> ${time === 'morning' ? 'सुबह' : 'शाम'} में सूर्य ${time === 'morning' ? 'पूर्व' : 'पश्चिम'} में होता है।<br>
+        <b>चरण 2:</b> छाया हमेशा सूर्य के विपरीत दिशा में पड़ती है।<br>
+        <b>चरण 3:</b> ${time === 'morning' ? 'पूर्व' : 'पश्चिम'} के विपरीत ${dirHi[shadowIdx]} है।<br>
+        ✅ <b>अतः छाया ${dirHi[shadowIdx]} दिशा में पड़ेगी।</b> (व्यक्ति का मुँह किसी भी दिशा में हो, छाया की दिशा सूर्य के विपरीत ही होती है)।`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Shadow Based", exp_en: expEn, exp_hi: expHi };
+    }
+    
+    // ----- TYPE 3: Position Based (Displacement) -----
+    else {
+        let x = 0, y = 0;
+        let steps = [];
+        let descEn = [];
+        let descHi = [];
+        for (let i = 0; i < 4; i++) {
+            const d = Math.floor(Math.random() * 4);
+            const dist = Math.floor(Math.random() * 10) + 2;
+            if (d === 0) y += dist;
+            else if (d === 1) y -= dist;
+            else if (d === 2) x += dist;
+            else x -= dist;
+            steps.push({d, dist});
+            descEn.push(`${dist}m ${dirEn[d]}`);
+            descHi.push(`${dist}मी ${dirHi[d]}`);
+        }
+        
+        const distTotal = Math.round(Math.sqrt(x*x + y*y));
+        let finalDir = '';
+        let finalDirHi = '';
+        if (x === 0 && y > 0) { finalDir = 'North'; finalDirHi = 'उत्तर'; }
+        else if (x === 0 && y < 0) { finalDir = 'South'; finalDirHi = 'दक्षिण'; }
+        else if (x > 0 && y === 0) { finalDir = 'East'; finalDirHi = 'पूर्व'; }
+        else if (x < 0 && y === 0) { finalDir = 'West'; finalDirHi = 'पश्चिम'; }
+        else if (x > 0 && y > 0) { finalDir = 'North-East'; finalDirHi = 'उत्तर-पूर्व'; }
+        else if (x < 0 && y > 0) { finalDir = 'North-West'; finalDirHi = 'उत्तर-पश्चिम'; }
+        else if (x > 0 && y < 0) { finalDir = 'South-East'; finalDirHi = 'दक्षिण-पूर्व'; }
+        else if (x < 0 && y < 0) { finalDir = 'South-West'; finalDirHi = 'दक्षिण-पश्चिम'; }
+        else { finalDir = 'Start'; finalDirHi = 'प्रारंभ'; }
+        
+        const ans = `${distTotal}m ${finalDir}`;
+        const ansHi = `${distTotal}मी ${finalDirHi}`;
+        const opts = shuffle([ans, `${distTotal+5}m ${finalDir}`, `${distTotal-3}m ${finalDir}`, `${distTotal+10}m North`]);
+        const ansIdx = opts.indexOf(ans);
+        
+        const q_en = `A person walks ${descEn.join(', ')}. What is his displacement (approximate distance & direction) from the start?`;
+        const q_hi = `एक व्यक्ति ${descHi.join(', ')} चलता है। प्रारंभ से उसका विस्थापन (लगभग दूरी और दिशा) क्या है?`;
+        
+        const expEn = `🔍 Calculating Displacement:<br>
+        <b>Step 1:</b> Track North-South and East-West movements separately.<br>
+        Net North-South = ${y} m (${y > 0 ? 'North' : y < 0 ? 'South' : 'Zero'}).<br>
+        Net East-West = ${x} m (${x > 0 ? 'East' : x < 0 ? 'West' : 'Zero'}).<br>
+        <b>Step 2:</b> Displacement = √(${x}² + ${y}²) = √(${x*x + y*y}) = ${distTotal} m.<br>
+        <b>Step 3:</b> Direction is determined by the signs of x and y: ${finalDir}.<br>
+        ✅ <b>Final answer: ${ans}.</b>`;
+        
+        const expHi = `🔍 विस्थापन की गणना:<br>
+        <b>चरण 1:</b> उत्तर-दक्षिण और पूर्व-पश्चिम की गतिविधियों को अलग-अलग ट्रैक करें।<br>
+        कुल उत्तर-दक्षिण = ${y} मी (${y > 0 ? 'उत्तर' : y < 0 ? 'दक्षिण' : 'शून्य'}).<br>
+        कुल पूर्व-पश्चिम = ${x} मी (${x > 0 ? 'पूर्व' : x < 0 ? 'पश्चिम' : 'शून्य'}).<br>
+        <b>चरण 2:</b> विस्थापन = √(${x}² + ${y}²) = √(${x*x + y*y}) = ${distTotal} मी.<br>
+        <b>चरण 3:</b> दिशा x और y के चिह्नों (signs) से निर्धारित होती है: ${finalDirHi}.<br>
+        ✅ <b>अंतिम उत्तर: ${ansHi}.</b>`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Position Based", exp_en: expEn, exp_hi: expHi };
+    }
+}
+
+// Generate 510 unique questions
+while (questions.length < 510) {
+    let q = generateDirectionQuestion();
+    const exists = questions.some(ex => ex.q_en === q.q_en && ex.type === q.type);
+    if (!exists) questions.push(q);
+}
+shuffle(questions);
+
+// ================================================================
+//  RENDER ENGINE
+// ================================================================
+const container = document.getElementById('questionsContainer');
+const search = document.getElementById('search');
+const filter = document.getElementById('filter');
+const attemptText = document.getElementById('attemptText');
+const scoreText = document.getElementById('scoreText');
+const progressBar = document.getElementById('progressBar');
+let attempted = new Set();
+let score = 0;
+
+function renderQuestions() {
+    container.innerHTML = '';
+    const keyword = search.value.toLowerCase().trim();
+    const selectedType = filter.value;
+    questions.forEach((q, idx) => {
+        if (selectedType !== 'all' && q.type !== selectedType) return;
+        const qText = currentLang === 'en' ? q.q_en : q.q_hi;
+        const opts = currentLang === 'en' ? q.opts_en : q.opts_hi;
+        const exp = currentLang === 'en' ? q.exp_en : q.exp_hi;
+        let full = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && !full.includes(keyword)) return;
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = 'question-' + idx;
+        let optHTML = '';
+        opts.forEach((opt, oi) => {
+            optHTML += `<button class="option" onclick="checkAnswer(${idx},${oi},this)">(${String.fromCharCode(65+oi)}) ${opt}</button>`;
+        });
+        card.innerHTML = `
+            <div class="question-top">
+                <span class="question-number">Q${idx+1}</span>
+                <span class="question-type">${q.type}</span>
+            </div>
+            <div class="question-body">
+                <div class="question-text">${qText}</div>
+                <div class="options">${optHTML}</div>
+                <div class="answer-result" id="result-${idx}"></div>
+                <div class="explanation" id="explanation-${idx}">
+                    <div class="explanation-title">${currentLang === 'en' ? '💡 Detailed Explanation (Step-by-Step)' : '💡 विस्तृत व्याख्या (चरण-दर-चरण)'}</div>
+                    ${exp}
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attempted.has(qIdx)) return;
+    attempted.add(qIdx);
+    const q = questions[qIdx];
+    const card = document.getElementById('question-' + qIdx);
+    const btns = card.querySelectorAll('.option');
+    btns.forEach((b, i) => { if (i === q.answer) b.classList.add('correct'); });
+    const res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) { score++; res.innerHTML = currentLang === 'en' ? '✅ Correct Answer!' : '✅ सही उत्तर!'; res.style.color = '#16a34a'; }
+    else { btn.classList.add('wrong'); res.innerHTML = currentLang === 'en' ? '❌ Incorrect. See explanation below.' : '❌ गलत। नीचे व्याख्या देखें।'; res.style.color = '#dc2626'; }
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    attemptText.textContent = `${currentLang === 'en' ? 'Attempted' : 'हल किए'}: ${attempted.size} / ${questions.length}`;
+    scoreText.textContent = `${currentLang === 'en' ? 'Score' : 'स्कोर'}: ${score}`;
+    progressBar.style.width = (attempted.size / questions.length * 100) + '%';
+}
+
+function showAllExplanations() {
+    document.querySelectorAll('.explanation').forEach(e => e.classList.add('show'));
+}
+function resetQuiz() { attempted.clear(); score = 0; renderQuestions(); updateProgress(); window.scrollTo({top:0, behavior:'smooth'}); }
+search.addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+
+// Init
+updateUI();
+</script>
+</body>
+</html>

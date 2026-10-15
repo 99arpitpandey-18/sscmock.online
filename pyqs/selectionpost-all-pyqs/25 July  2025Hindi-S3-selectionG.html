@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Selection Post – 25 Jul 2025 (All 100 Questions)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f2f5f9;
+            color: #1e2a3a;
+            padding: 20px;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px 35px 50px;
+        }
+        .exam-header {
+            border-bottom: 3px solid #e6edf5;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .exam-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0b2b4a;
+            letter-spacing: -0.3px;
+        }
+        .exam-title small {
+            font-weight: 400;
+            font-size: 16px;
+            color: #5e6f8d;
+            margin-left: 10px;
+        }
+        .exam-meta {
+            font-size: 15px;
+            color: #4a5b77;
+            background: #eef3fa;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+        .question-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9eef4;
+            transition: box-shadow 0.2s;
+        }
+        .question-card:hover {
+            box-shadow: 0 4px 14px rgba(0, 20, 50, 0.04);
+        }
+        .q-number {
+            display: inline-block;
+            font-weight: 700;
+            font-size: 17px;
+            color: #1e4a7a;
+            background: #e2ebf6;
+            padding: 0 12px;
+            border-radius: 30px;
+            line-height: 30px;
+            margin-bottom: 12px;
+        }
+        .q-text {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            color: #142433;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 28px;
+            margin-bottom: 18px;
+        }
+        @media (max-width: 550px) {
+            .options {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+        }
+        .option-item {
+            font-size: 16px;
+            padding: 6px 0 6px 8px;
+            color: #1f3349;
+            border-bottom: 1px dashed #dce4ee;
+            display: flex;
+            align-items: baseline;
+        }
+        .option-item .opt-label {
+            font-weight: 600;
+            color: #2f4a6e;
+            margin-right: 10px;
+            min-width: 20px;
+        }
+        .answer-section {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px 20px;
+        }
+        .btn-answer {
+            background: none;
+            border: none;
+            color: #1a66b3;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            padding: 6px 0;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 2px solid transparent;
+        }
+        .btn-answer:hover {
+            color: #0b3b73;
+            border-bottom-color: #1a66b3;
+        }
+        .btn-answer .arrow {
+            display: inline-block;
+            transition: transform 0.25s ease;
+            font-size: 14px;
+        }
+        .btn-answer.active .arrow {
+            transform: rotate(180deg);
+        }
+        .answer-box {
+            background: #eef6fb;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #004080;
+            display: none;
+            flex: 1;
+            min-width: 140px;
+            border-left: 5px solid #2d7bcb;
+        }
+        .answer-box.open {
+            display: block;
+        }
+        .answer-box .ans-label {
+            font-weight: 700;
+            color: #003366;
+            margin-right: 6px;
+        }
+        .answer-box .explanation {
+            font-weight: 400;
+            color: #1f3b5c;
+            font-size: 15px;
+            margin-top: 4px;
+            border-top: 1px solid #c8d9ec;
+            padding-top: 6px;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0 12px;
+            padding: 10px 0;
+            border-top: 2px solid #e6edf5;
+            border-bottom: 2px solid #e6edf5;
+        }
+        .toolbar .left {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .toolbar button {
+            background: #eef3fa;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e3b5e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .toolbar button:hover {
+            background: #d7e2f0;
+            color: #0b2a4a;
+        }
+        .toolbar button.primary {
+            background: #1a4d7a;
+            color: white;
+        }
+        .toolbar button.primary:hover {
+            background: #0f3a5f;
+        }
+        .toolbar .stats {
+            font-size: 15px;
+            color: #3a5678;
+            font-weight: 500;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 14px;
+            }
+            .exam-title {
+                font-size: 20px;
+            }
+            .exam-title small {
+                display: block;
+                margin-left: 0;
+                font-size: 14px;
+            }
+            .question-card {
+                padding: 18px 16px;
+            }
+            .q-text {
+                font-size: 17px;
+            }
+            .option-item {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="exam-header">
+            <div class="exam-title">
+                SSC Selection Post (Graduation)
+                <small>25 Jul 2025 · All 100 Qs</small>
+            </div>
+            <div class="exam-meta">📝 Shift 3 · PYQ</div>
+        </div>
+
+        <div class="toolbar">
+            <div class="left">
+                <button @click="toggleAllAnswers" class="primary">
+                    <span v-if="allOpen">🔽 Hide All Answers</span>
+                    <span v-else>🔼 Show All Answers</span>
+                </button>
+                <button @click="resetAnswers">↺ Reset</button>
+            </div>
+            <div class="stats">
+                <span>{{ answeredCount }}</span> / <span>{{ questions.length }}</span> shown
+            </div>
+        </div>
+
+        <div v-for="(q, idx) in questions" :key="idx" class="question-card">
+            <div class="q-number">Q{{ idx + 1 }}</div>
+            <div class="q-text" v-html="q.text"></div>
+            <div class="options">
+                <div v-for="(opt, oi) in q.options" :key="oi" class="option-item">
+                    <span class="opt-label">{{ String.fromCharCode(97 + oi) }}.</span>
+                    <span v-html="opt"></span>
+                </div>
+            </div>
+            <div class="answer-section">
+                <button class="btn-answer" :class="{ active: q.showAnswer }"
+                        @click="toggleAnswer(idx)">
+                    <span class="arrow">▼</span>
+                    <span v-if="!q.showAnswer">Show Answer</span>
+                    <span v-else>Hide Answer</span>
+                </button>
+                <div class="answer-box" :class="{ open: q.showAnswer }">
+                    <span class="ans-label">✔ Answer:</span>
+                    <span v-html="q.answer"></span>
+                    <div v-if="q.explanation" class="explanation" v-html="q.explanation"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                allOpen: false,
+                questions: [
+                    // ---- Q1 to Q100 from 25 Jul 2025 Shift 3 ----
+                    { text: 'अगला अक्षर ज्ञात कीजिए: D, G, K, P, ?', options: ['U', 'V', 'W', 'T'], answer: '(b) V', explanation: 'अंतर: +3, +4, +5, +6 → P+6 = V' },
+                    { text: 'उस संख्या की पहचान करें जो श्रंखला को तोड़ती है: <br>6, 12, 20, 32, 42', options: ['12', '20', '32', '42'], answer: '(c) 32', explanation: 'अंतर: +6, +8, +12, +10 → 32 के स्थान पर 34 आना चाहिए (अंतर +14?) वास्तव में 6+6=12, +8=20, +12=32, +10=42 → विषम 32' },
+                    { text: 'कंसिस्टेंट हैशिंग का उपयोग करने वाले एक वितरित सिस्टम में, लोड फैक्टर 1.4 है और 10 सर्वर हैं। कुंजियों की अधिकतम संख्या क्या है?', options: ['12', '13', '14', '15'], answer: '(c) 14', explanation: '10 × 1.4 = 14' },
+                    { text: 'एक फर्म तीन महीनों से घटती बिक्री को नोटिस करती है। प्रबंधन को सबसे पहले क्या करना चाहिए?', options: ['कर्मचारियों को कम करें', 'परिचालन बंद करें', 'बाजार के रुझानों का विश्लेषण करें', 'कीमतें बढ़ाएं'], answer: '(c) बाजार के रुझानों का विश्लेषण करें', explanation: 'पहले कारण जानना आवश्यक है।' },
+                    { text: 'उस शब्द का चयन करें जो समूह से संबंधित नहीं है।', options: ['पायलट', 'ड्राइवर', 'नाविक', 'चित्रकार'], answer: '(d) चित्रकार', explanation: 'अन्य वाहन चलाने वाले हैं, चित्रकार कलाकार है।' },
+                    { text: 'यदि TABLE को 40 के रूप में कोडित किया गया है, तो CHAIR को कैसे कोडित किया जाएगा?', options: ['38', '40', '42', '39'], answer: '(d) 39', explanation: 'TABLE: T=20+A=1+B=2+L=12+E=5 → 40. CHAIR: C=3+H=8+A=1+I=9+R=18 → 39' },
+                    { text: 'विषम युग्म का चयन करें।', options: ['4 - 20', '6 - 42', '8 - 72', '9 - 81'], answer: '(d) 9 - 81', explanation: 'अन्य में पहली संख्या × (पहली+1)? 4×5=20, 6×7=42, 8×9=72, 9×9=81 (यह वर्ग है, विषम)' },
+                    { text: 'यदि टीम का कोई सदस्य काम के बोझ से दबा हुआ है, तो एक लीडर को क्या करना चाहिए?', options: ['मुद्दे को नजरअंदाज करें', 'कार्यों को उचित रूप से पुन: आवंटित करें', 'सार्वजनिक रूप से आलोचना करें', 'टीम से हटा दें'], answer: '(b) कार्यों को उचित रूप से पुन: आवंटित करें', explanation: 'समर्थन देना और पुनर्वितरण करना सही है।' },
+                    { text: 'यदि LMN → OPQ और RST → UVW। तो BCD → ?', options: ['DEF', 'CDE', 'EFG', 'DFG'], answer: '(c) EFG', explanation: 'प्रत्येक अक्षर +3 → B→E, C→F, D→G' },
+                    { text: 'चार पता संयोजन दिए गए हैं। दो बिल्कुल समान हैं। उनकी पहचान करें। <br>1. Verma Nagar, Block-B, Jaipur - 302015 <br>2. Verma Nagar, Block-B, Jaipur - 302016 <br>3. Verma Nagar, Block-B, Jaipur - 302015 <br>4. Verma Nagar, Block-C, Jaipur - 302015', options: ['1 और 2', '1 और 3', '2 और 4', '3 और 4'], answer: '(b) 1 और 3', explanation: '1 और 3 बिल्कुल समान हैं।' },
+                    { text: 'यदि A = 5, B = 7, C = 9 है, तो ज्ञात कीजिए: (A × B) + C ÷ A?', options: ['36', '36.8', '38.2', '39'], answer: '(b) 36.8', explanation: '(5×7) + 9÷5 = 35 + 1.8 = 36.8' },
+                    { text: 'एक सहकर्मी अनजाने में गलत जानकारी फैलाता है। आपको क्या करना चाहिए?', options: ['आक्रामक रूप से सामना करें', 'तथ्यों के साथ विनम्रता से सुधारें', 'पूरी तरह से नजरअंदाज करें', 'तुरंत रिपोर्ट करें'], answer: '(b) तथ्यों के साथ विनम्रता से सुधारें', explanation: 'सही जानकारी शांतिपूर्वक देना चाहिए।' },
+                    { text: '"EAST" के अक्षरों का उपयोग करके (प्रत्येक अक्षर का एक बार उपयोग करके) कितने सार्थक शब्द बनाए जा सकते हैं?', options: ['शून्य', 'दो', 'तीन', 'तीन से अधिक'], answer: '(d) तीन से अधिक', explanation: 'EAST, SEAT, EATS, TEAS, etc. → >3' },
+                    { text: 'कथन: "ऑनलाइन शिक्षा तब प्रभावी होती है जब छात्र अनुशासित रहते हैं।" कौन सा विकल्प कथन का समर्थन करता है?', options: ['इंटरनेट की पहुंच व्यापक है', 'अनुशासन सीखने के परिणामों में सुधार करता है', 'शिक्षक ऑफलाइन कक्षाएं पसंद करते हैं', 'ऑनलाइन पाठ्यक्रम सस्ते हैं'], answer: '(b) अनुशासन सीखने के परिणामों में सुधार करता है', explanation: 'यह कथन को सीधे समर्थन देता है।' },
+                    { text: 'समान लंबाई वाली दो ट्रेनें एक खंभे को क्रमशः 12 s और 18 s में पार करती हैं। उनकी गति का अनुपात क्या है?', options: ['2 : 3', '3 : 2', '4 : 3', '3 : 4'], answer: '(b) 3 : 2', explanation: 'गति ∝ 1/समय → 1/12 : 1/18 = 18:12 = 3:2' },
+                    { text: 'लुप्त पद ज्ञात कीजिए: 9, 18, 36, 72, ?', options: ['96', '108', '144', '162'], answer: '(c) 144', explanation: 'प्रत्येक ×2 → 72×2=144' },
+                    { text: 'निम्नलिखित को तार्किक रूप से व्यवस्थित करें: <br>1. परीक्षा <br>2. तैयारी <br>3. परिणाम <br>4. प्रवेश', options: ['2-1-3-4', '1-2-3-4', '2-1-4-3', '1-3-2-4'], answer: '(a) 2-1-3-4', explanation: 'तैयारी → परीक्षा → परिणाम → प्रवेश' },
+                    { text: 'एक लड़के की ओर इशारा करते हुए, मीना ने कहा, "वह मेरी माँ के भाई का बेटा है।" लड़के का मीना से क्या संबंध है?', options: ['भाई', 'कज़िन', 'भांजा/भतीजा', 'अंकल'], answer: '(b) कज़िन', explanation: 'माँ के भाई का बेटा = मीना का कज़िन (cousin)' },
+                    { text: 'यदि @ का अर्थ +, # का अर्थ ×, $ का अर्थ - और % का अर्थ ÷ है, तो मान ज्ञात कीजिए: 60 % 5 # 2 @ 6 $ 4?', options: ['26', '28', '30', '32'], answer: '(a) 26', explanation: '60÷5×2+6-4 = 12×2+6-4 = 24+6-4 = 26' },
+                    { text: 'कथन: <br>1. सभी शिक्षक स्नातक हैं। <br>2. कुछ स्नातक प्रतिभावान हैं। <br>निष्कर्ष: <br>I. कुछ शिक्षक प्रतिभावान हैं <br>II. सभी प्रतिभावान स्नातक हैं', options: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'दोनों अनुसरण करते हैं', 'कोई भी अनुसरण नहीं करता है'], answer: '(d) कोई भी अनुसरण नहीं करता है', explanation: 'I नहीं (कुछ स्नातक प्रतिभावान, लेकिन वे शिक्षक नहीं हो सकते), II नहीं (सभी प्रतिभावान स्नातक नहीं) – कोई निष्कर्ष नहीं।' },
+                    { text: 'कथन: <br>I. सभी टैबलेट इलेक्ट्रॉनिक उपकरण हैं। <br>II. कुछ इलेक्ट्रॉनिक उपकरण पोर्टेबल हैं। <br>निम्नलिखित में से कौन सा निष्कर्ष तार्किक रूप से दिए गए कथनों का अनुसरण करता है?', options: ['कुछ टैबलेट पोर्टेबल हैं', 'सभी टैबलेट पोर्टेबल हैं', 'कोई टैबलेट पोर्टेबल नहीं है', 'कोई निश्चित निष्कर्ष नहीं'], answer: '(d) कोई निश्चित निष्कर्ष नहीं', explanation: 'टैबलेट इलेक्ट्रॉनिक हैं, और कुछ इलेक्ट्रॉनिक पोर्टेबल हैं, लेकिन टैबलेट उनमें हो सकते हैं या नहीं – कोई निश्चित नहीं।' },
+                    { text: 'कथन: "सरकार ने मुद्रास्फीति को नियंत्रित करने के लिए ईंधन की कीमतों में कमी की।" <br>निष्कर्ष: <br>I. मुद्रास्फीति बढ़ रही थी। <br>II. ईंधन की कीमतें मुद्रास्फीति को प्रभावित करती हैं।', options: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'दोनों अनुसरण करते हैं', 'कोई भी अनुसरण नहीं करता है'], answer: '(c) दोनों अनुसरण करते हैं', explanation: 'सरकार ने कमी की → मुद्रास्फीति थी (I), और कीमतों का प्रभाव है (II)।' },
+                    { text: 'पेन : लेखन :: चाकू : ?', options: ['काटना', 'खाना पकाना', 'पेंटिंग', 'मुद्रण'], answer: '(a) काटना', explanation: 'पेन से लिखते हैं, चाकू से काटते हैं।' },
+                    { text: '5 : 25 :: 8 : ?', options: ['48', '56', '64', '72'], answer: '(c) 64', explanation: '5²=25, 8²=64' },
+                    { text: 'लुप्त संख्या ज्ञात कीजिए: 2, 5, 10, 17, ?, 37', options: ['24', '26', '28', '30'], answer: '(b) 26', explanation: 'अंतर: +3, +5, +7, +9, +11 → 17+9=26' },
+                    { text: 'निम्नलिखित में से कौन सी वस्तु मांग के नियम का उल्लंघन नहीं करती है?', options: ['गिफिन वस्तुएं', 'वेबलेन वस्तुएं', 'सामान्य वस्तुएं', 'सट्टा वस्तुएं'], answer: '(c) सामान्य वस्तुएं', explanation: 'सामान्य वस्तुओं की मांग कीमत बढ़ने पर घटती है (मांग का नियम)।' },
+                    { text: 'कबड्डी में, रक्षण करने वाली टीम अंक कब प्राप्त करती है?', options: ['जब रेडर बोनस लाइन पार करता है', 'जब रेडर को सफलतापूर्वक पकड़ (tackle) किया जाता है', 'जब रेडर कबड्डी का दावा करता है', 'जब रक्षक प्रतिद्वंद्वी के पाले में प्रवेश करता है'], answer: '(b) जब रेडर को सफलतापूर्वक पकड़ (tackle) किया जाता है', explanation: 'रेडर को पकड़ने पर रक्षण टीम को 1 अंक मिलता है।' },
+                    { text: 'भारत की "पड़ोसी पहले" नीति का सबसे अच्छा वर्णन कौन करता है?', options: ['यूरोप पर ध्यान केंद्रित करना', 'दक्षिण एशियाई पड़ोसियों को प्राथमिकता', 'केवल सैन्य सहयोग', 'अफ्रीका के साथ व्यापार'], answer: '(b) दक्षिण एशियाई पड़ोसियों को प्राथमिकता', explanation: 'यह नीति पड़ोसी देशों पर केंद्रित है।' },
+                    { text: 'कथन 1: प्रवास शहरीकरण में योगदान देता है। <br>कथन 2: शहर रोजगार के बेहतर अवसर प्रदान करते हैं।', options: ['केवल 1', 'केवल 2', '1 और 2 दोनों', 'कोई नहीं'], answer: '(c) 1 और 2 दोनों', explanation: 'दोनों कथन सही हैं।' },
+                    { text: 'दास–दासी काल का कौन सा युग्म सही सुमेलित है?', options: ['बलबन – 20 वर्ष', 'रजिया सुल्ताना – 4 वर्ष', 'अलाउद्दीन खिलजी – 25 वर्ष', 'फिरोज शाह तुगलक – 10 वर्ष'], answer: '(b) रजिया सुल्ताना – 4 वर्ष', explanation: 'रजिया सुल्ताना ने 1236-1240 (4 वर्ष) शासन किया।' },
+                    { text: 'पद्म श्री 2025 से एक प्रसिद्ध लेखक को किस क्षेत्र के लिए सम्मानित किया गया था?', options: ['खेल', 'साहित्य और शिक्षा', 'विज्ञान', 'समाज सेवा'], answer: '(b) साहित्य और शिक्षा', explanation: 'लेखक को साहित्य क्षेत्र में सम्मान मिलता है।' },
+                    { text: 'भारत-भूटान संबंधों के संदर्भ में, निम्नलिखित कथनों पर विचार करें: <br>1. भारत और भूटान मैत्री संधि (2007 में संशोधित) पर आधारित एक अद्वितीय द्विपक्षीय संबंध साझा करते हैं। <br>2. जलविद्युत सहयोग एक प्रमुख स्तंभ है, जिसमें भारत भूटान को कई विद्युत परियोजनाओं के विकास में सहायता प्रदान कर रहा है। <br>उपरोक्त कथनों में से कौन सा/से कथन सही है/हैं?', options: ['केवल 1 और 2', 'केवल 2', 'केवल 1', 'इनमें से कोई नहीं'], answer: '(a) केवल 1 और 2', explanation: 'दोनों सही हैं।' },
+                    { text: 'एस्कर किसके कारण बनते हैं?', options: ['बहाव अपरदन (erosion)', 'पवन निक्षेपण', 'उपहिमनदीय पिघले हुए बर्फ का निक्षेपण', 'ज्वालामुखी गतिविधि'], answer: '(c) उपहिमनदीय पिघले हुए बर्फ का निक्षेपण', explanation: 'एस्कर हिमनदीय निक्षेपण से बनते हैं।' },
+                    { text: 'भारत की पर्यावरण रिपोर्ट के अनुसार, कौन सा क्षेत्र उत्सर्जन में सबसे अधिक योगदान देता है?', options: ['कृषि', 'परिवहन', 'ऊर्जा', 'अपशिष्ट'], answer: '(c) ऊर्जा', explanation: 'ऊर्जा क्षेत्र सबसे बड़ा उत्सर्जक है।' },
+                    { text: '“एक राष्ट्र एक कर” का तात्पर्य किससे है?', options: ['आयकर', 'निगम कर', 'जीएसटी (GST)', 'सीमा शुल्क'], answer: '(c) जीएसटी (GST)', explanation: 'GST को एक राष्ट्र एक कर कहा जाता है।' },
+                    { text: 'अभिकथन (A): एक समकालीन भारतीय पुस्तक राजनीतिक उथल-पुथल को चित्रित करती है। <br>कारण (R): पुस्तक को एक अंतर्राष्ट्रीय साहित्यिक पुरस्कार प्राप्त हुआ।', options: ['A और R दोनों सत्य हैं, और R, A की सही व्याख्या है', 'A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A सत्य है, लेकिन R असत्य है', 'A असत्य है, लेकिन R सत्य है'], answer: '(c) A सत्य है, लेकिन R असत्य है', explanation: 'A सत्य हो सकता है, लेकिन R (पुरस्कार) कारण नहीं है (असंबंधित) – विकल्प (c) सही।' },
+                    { text: 'एशियाई एथलेटिक्स चैंपियनशिप 2025 में भारत के प्रदर्शन के बारे में कौन सा कथन सही है?', options: ['भारत पदक तालिका में शीर्ष पर रहा', 'भारत ने कोई स्वर्ण पदक नहीं जीता', 'भारत ने रिले स्पर्धाओं में पदक हासिल किए', 'भारत अंतिम स्थान पर रहा'], answer: '(c) भारत ने रिले स्पर्धाओं में पदक हासिल किए', explanation: 'दिए गए पाठ के अनुसार सही कथन (c) है।' },
+                    { text: 'निम्नलिखित उपकरणों को उनके द्वारा मापे जाने वाले मापदंडों के साथ सुमेलित करें: <br>उपकरण: 1. एनीमोमीटर 2. हाइग्रोमीटर 3. बैरोमीटर <br>मापदंड: A. वायुमंडलीय दाब B. हवा की गति C. आर्द्रता', options: ['1–B, 2–C, 3–A', '1–C, 2–A, 3–B', '1–A, 2–B, 3–C', '1–B, 2–A, 3–C'], answer: '(a) 1–B, 2–C, 3–A', explanation: 'एनीमोमीटर → हवा की गति, हाइग्रोमीटर → आर्द्रता, बैरोमीटर → दाब' },
+                    { text: 'निम्नलिखित अनुच्छेदों का प्रावधानों से मिलान करें: <br>सूची I (अनुच्छेद), सूची II (प्रावधान) <br>A. अनुच्छेद 17 → 1. अस्पृश्यता का उन्मूलन <br>B. अनुच्छेद 14 → 2. समानता का अधिकार <br>C. अनुच्छेद 21 → 3. जीवन और व्यक्तिगत स्वतंत्रता का अधिकार <br>D. अनुच्छेद 32 → 4. संवैधानिक उपचारों का अधिकार', options: ['A–2, B–1, C–3, D–4', 'A–1, B–2, C–3, D–4', 'A–4, B–3, C–1, D–2', 'A–3, B–4, C–2, D–1'], answer: '(b) A–1, B–2, C–3, D–4', explanation: 'सही मिलान: 17→1, 14→2, 21→3, 32→4' },
+                    { text: 'यांत्रिक चोट के जवाब में सबसे पहले कौन सा पादप हार्मोन उत्पन्न होता है?', options: ['एथिलीन', 'ऑक्सिन', 'एब्सिसिक एसिड', 'सिस्टेमिन (Systemin)'], answer: '(d) सिस्टेमिन (Systemin)', explanation: 'सिस्टेमिन चोट के प्रतिक्रिया में उत्पन्न होता है।' },
+                    { text: 'अभिकथन (A): गांधार कला ग्रीको-रोमन प्रभाव दिखाती है। <br>कारण (R): गांधार मूर्तियां यथार्थवादी मानव शरीर रचना का उपयोग करती हैं।', options: ['A और R दोनों सत्य हैं, और R, A की सही व्याख्या है', 'A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A सत्य है, लेकिन R असत्य है', 'A असत्य है, लेकिन R सत्य है'], answer: '(a) A और R दोनों सत्य हैं, और R, A की सही व्याख्या है', explanation: 'गांधार कला ग्रीको-रोमन प्रभाव दिखाती है और यथार्थवादी है, इसलिए R, A की व्याख्या करता है।' },
+                    { text: 'भारतीय न्याय संहिता, 2023 के तहत, यौन अपराध कानूनों में किस अवधारणा को नया शामिल किया गया है?', options: ['सजा के रूप में सामुदायिक सेवा', 'लिंग-तटस्थ परिभाषाएं', 'सजा को हटाना', 'अनिवार्य मध्यस्थता'], answer: '(b) लिंग-तटस्थ परिभाषाएं', explanation: 'नई संहिता में लिंग-तटस्थ परिभाषाएं शामिल की गई हैं।' },
+                    { text: 'दसवीं अनुसूची के तहत राज्य के विधायक की अयोग्यता का निर्णय कौन करता है?', options: ['राज्यपाल', 'विधानसभा अध्यक्ष', 'चुनाव आयोग', 'उच्च न्यायालय'], answer: '(b) विधानसभा अध्यक्ष', explanation: 'विधानसभा अध्यक्ष अयोग्यता का निर्णय करता है।' },
+                    { text: 'रोजगार आश्वासन योजना (EAS) किस पंचवर्षीय योजना के दौरान शुरू की गई थी?', options: ['छठी', 'सातवीं', 'आठवीं', 'नौवीं'], answer: '(c) आठवीं', explanation: 'EAS आठवीं योजना (1992-97) में शुरू हुई।' },
+                    { text: 'इसरो (ISRO) के आगामी मानव अंतरिक्ष उड़ान कार्यक्रम का प्राथमिक उद्देश्य क्या है?', options: ['चंद्र आधार (lunar base) स्थापित करना', 'अंतरिक्ष यात्रियों को पृथ्वी की निचली कक्षा (low Earth orbit) में भेजना', 'स्वचालित जांच के साथ मंगल ग्रह का अन्वेषण करना', 'एक अंतरिक्ष टेलीस्कोप तैनात करना'], answer: '(b) अंतरिक्ष यात्रियों को पृथ्वी की निचली कक्षा (low Earth orbit) में भेजना', explanation: 'गगनयान मिशन LEO में मानव भेजने के लिए है।' },
+                    { text: 'निम्नलिखित में से कौन से उत्पाद कृषि आधारित क्षेत्र से प्राप्त नहीं होते हैं? <br>1. रेयॉन <br>2. जूट वस्त्र <br>3. नायलॉन <br>4. खाद्य तेल', options: ['केवल 1 और 3', 'केवल 2 और 4', 'केवल 3', '1, 2 और 3'], answer: '(a) केवल 1 और 3', explanation: 'रेयॉन और नायलॉन कृत्रिम रेशे हैं, कृषि आधारित नहीं।' },
+                    { text: 'निम्नलिखित में से कौन सी केरल की एक शास्त्रीय नृत्य-नाटिका परंपरा है?', options: ['यक्षगान', 'कथकली', 'छऊ', 'मणिपुरी'], answer: '(b) कथकली', explanation: 'कथकली केरल का शास्त्रीय नृत्य है।' },
+                    { text: 'भारत में औद्योगिक लाइसेंसिंग नीति में वर्तमान रुझान क्या है?', options: ['अनिवार्य लाइसेंसिंग का विस्तार', 'उद्योगों का पूर्ण राष्ट्रीयकरण', 'सरलीकरण और अनुमोदनों में आसानी', 'निजी उद्यमों पर प्रतिबंध'], answer: '(c) सरलीकरण और अनुमोदनों में आसानी', explanation: 'वर्तमान में लाइसेंसिंग सरलीकरण की ओर है।' },
+                    { text: 'कौन सी स्थिति संवेग संरक्षण के नियम का सबसे अच्छा प्रतिनिधित्व करती है?', options: ['गुरुत्वाकर्षण के तहत त्वरित होती गिरती हुई वस्तु', 'घर्षण के कारण रुकता हुआ वाहन', 'फायरिंग के बाद राइफल का पीछे हटना', 'पृथ्वी के चारों ओर परिक्रमा करता उपग्रह'], answer: '(c) फायरिंग के बाद राइफल का पीछे हटना', explanation: 'संवेग संरक्षण (गोली और राइफल) – यह उदाहरण सही है।' },
+                    { text: 'कौन सी योजना शहरी क्षेत्रों में किफायती आवास प्रदान करने पर केंद्रित है?', options: ['स्मार्ट सिटी मिशन', 'प्रधानमंत्री आवास योजना – शहरी', 'अमृत (AMRUT) मिशन', 'DAY-NULM'], answer: '(b) प्रधानमंत्री आवास योजना – शहरी', explanation: 'PMAY-Urban किफायती आवास पर केंद्रित है।' },
+                    { text: '3^105 का इकाई अंक है:', options: ['9', '3', '7', '1'], answer: '(b) 3', explanation: '3^1=3, 3^2=9, 3^3=27 (7), 3^4=81 (1), 3^5=243 (3) → चक्र 3,9,7,1; 105 mod 4 = 1 → 3' },
+                    { text: 'मूल्यांकित करें: (1/20) + (1/30) + (1/42) + (1/56)', options: ['0.150', '0.125', '0.100', '0.200'], answer: '(b) 0.125', explanation: '0.05 + 0.0333 + 0.0238 + 0.0179 = 0.125' },
+                    { text: 'A और B ने क्रमशः ₹60,000 तथा ₹90,000 का निवेश किया। एक वर्ष बाद, पूँजी पर 20% ब्याज सहित कुल लाभ ₹40,000 हुआ। B का हिस्सा कितना होगा?', options: ['₹24,000', '₹25,000', '₹22,000', '₹26,000'], answer: '(a) ₹24,000', explanation: 'निवेश अनुपात = 2:3, कुल लाभ 40,000, B = 3/5 × 40,000 = 24,000' },
+                    { text: '10 लोगों के एक समूह की औसत उम्र 1.5 साल बढ़ जाती है जब 25 साल के एक व्यक्ति की जगह कोई नया व्यक्ति आता है। नए व्यक्ति की उम्र पता करें।', options: ['35', '45', '40', '50'], answer: '(c) 40', explanation: 'कुल वृद्धि = 10×1.5 = 15, नई उम्र = 25+15 = 40' },
+                    { text: 'पेट्रोल की कीमत 10% बढ़ गई। एक परिवार हर महीने 20 लीटर पेट्रोल इस्तेमाल करता है। अगर मूल कीमत ₹100 प्रति लीटर थी, तो कीमत बढ़ने के कारण परिवार का सालाना अतिरिक्त खर्च कितना होगा?', options: ['₹2,000', '₹2,400', '₹2,200', '₹1,800'], answer: '(b) ₹2,400', explanation: 'प्रति माह अतिरिक्त = 20×10 = ₹200, सालाना = 200×12 = 2400' },
+                    { text: 'चक्रवृद्धि ब्याज के तहत एक निश्चित राशि 6 वर्षों में दोगुनी हो जाती है। उस राशि को अपने मूल मूल्य का 8 गुना होने में कितने वर्ष लगेंगे?', options: ['12', '24', '18', '16'], answer: '(c) 18', explanation: '2 गुना = 6 वर्ष, 8 = 2³ → 3×6 = 18 वर्ष' },
+                    { text: 'एक फल विक्रेता ने 40 kg सेब ₹2400 में खरीदे। 4 kg सेब खराब हो गए। उसे अपने कुल परिव्यय पर 25% का लाभ कमाने के लिए शेष सेबों को प्रति kg किस दर पर बेचना चाहिए?', options: ['₹80.00', '₹83.33', '₹75.50', '₹85.25'], answer: '(b) ₹83.33', explanation: 'कुल CP = 2400, लाभ 25% → SP = 3000, शेष kg = 36, प्रति kg = 3000/36 = 83.33' },
+                    { text: 'एक व्यापारी ₹60/kg वाले 50 kg चावल को ₹80/kg वाली एक महंगी किस्म के साथ मिलाता है। वह इस मिश्रण को ₹77/kg पर बेचता है और 10% लाभ प्राप्त करता है। उसने महंगी किस्म के कितने किलोग्राम चावल मिलाए?', options: ['40 kg', '50 kg', '60 kg', '55 kg'], answer: '(b) 50 kg', explanation: 'माना x kg महंगी, CP = (60×50 + 80x)/(50+x), SP = 77, लाभ 10% → CP = 70, समीकरण: (3000+80x)/(50+x)=70 → 3000+80x=3500+70x → 10x=500 → x=50' },
+                    { text: 'A एक कार्य को 20 दिनों में पूरा कर सकता है। हर तीसरे दिन, उसे B द्वारा सहायता प्रदान की जाती है जो अकेले उसी कार्य को 30 दिनों में पूरा कर सकता है। कार्य कितने दिनों में पूरा होगा?', options: ['15 दिन', '16 दिन', '16⅔ दिन', '18 दिन'], answer: '(c) 16⅔ दिन', explanation: 'A की दर=1/20, B=1/30. 3 दिन के चक्र में: A 3 दिन + B 1 दिन (हर तीसरे) → 3/20 + 1/30 = 9/60+2/60=11/60. 5 चक्र (15 दिन) = 55/60, शेष 5/60 = 1/12, A अकेले 1/12 ÷ (1/20) = 5/3 दिन, कुल 15+1.667=16.667 = 16⅔' },
+                    { text: 'एक ट्रक प्रति किलोमीटर 0.25 लीटर डीज़ल खर्च करता है, और एक कार प्रति किलोमीटर 0.10 लीटर खर्च करती है। अगर ट्रक 400 किलोमीटर और कार 600 किलोमीटर चलती है, तो ₹90 प्रति लीटर की दर से कुल फ्यूल का खर्च कितना होगा?', options: ['₹14,000', '₹14,400', '₹15,200', '₹13,500'], answer: '(b) ₹14,400', explanation: 'ट्रक: 400×0.25=100 L, कार: 600×0.10=60 L, कुल 160 L, खर्च = 160×90=14400' },
+                    { text: 'यदि x + 1/(x+5) = 4, तो (x+5)³ + 1/(x+5)³ का मान ज्ञात करें', options: ['702', '756', '512', '729'], answer: '(a) 702', explanation: 'माना y = x+5, तो x = y-5, दिया है (y-5)+1/y=4 → y+1/y=9. y³+1/y³ = (y+1/y)³ - 3(y+1/y) = 9³ - 3×9 = 729 - 27 = 702' },
+                    { text: 'आपके सामने 4 दरवाजे हैं। एक दरवाजे के पीछे एक कार है, और बाकी तीन के पीछे बकरियाँ हैं। आप एक दरवाजा चुनते हैं। होस्ट बाकी बचे दरवाजों में से 2 दरवाजे खोलता है, जिनमें बकरियाँ निकलती हैं। आपको दरवाजा बदलने का मौका दिया जाता है। अगर आप दरवाजा बदलते हैं, तो कार जीतने की क्या संभावना है?', options: ['1/4', '3/4', '1/2', '2/3'], answer: '(b) 3/4', explanation: '4 दरवाजों का मोंटी हॉल संस्करण: पहली पसंद गलत होने की प्रायिकता 3/4, और बदलने पर जीत = 3/4' },
+                    { text: '5 m/s की दर से लंबवत ऊपर की ओर बढ़ रहे एक ड्रोन को लॉन्च पैड A से 300 m दूर बिंदु B से देखा जाता है। उस क्षण जब उन्नयन कोण 30° होता है और जब यह 60° हो जाता है, उसके बीच कितना समय व्यतीत होता है?', options: ['60 s', '40√2 s', '69.28 s', '80 s'], answer: '(c) 69.28 s', explanation: 'ऊँचाई = 300 tanθ, θ=30° → 300/√3 = 173.2 m, θ=60° → 300√3 = 519.6 m, अंतर = 346.4 m, समय = 346.4/5 = 69.28 s' },
+                    { text: '200 मीटर ऊँचे एक टॉवर से, एक ही ओर सीधी रेखा में स्थित दो कारों के प्रति अवनमन कोण क्रमशः 30° और 60° हैं। दोनों कारों के बीच की दूरी ज्ञात कीजिए।', options: ['200√3 m', '400/√3 m', '100√3 m', '200 m'], answer: '(b) 400/√3 m', explanation: 'दूरी = 200(cot30 - cot60) = 200(√3 - 1/√3) = 200(2/√3) = 400/√3' },
+                    { text: 'R त्रिज्या वाले एक ठोस गोले में उसके सेंटर से R/2 त्रिज्या का एक बेलनाकार छेद किया गया है। हटाए गए बेलन की ऊंचाई 2R (पूरा डायमीटर) है। गोले के आयतन और हटाए गए बेलन के आयतन का अनुपात क्या है?', options: ['4:3', '8:3', '16:3', '2:1'], answer: '(b) 8:3', explanation: 'गोला आयतन = (4/3)πR³, बेलन आयतन = π(R/2)²(2R) = π R³/2, अनुपात = (4/3)πR³ : (πR³/2) = (4/3):(1/2) = 8:3' },
+                    { text: 'एक लंब प्रिज्म का आधार एक समबाहु त्रिभुज है जिसकी भुजा 10 सेमी है। प्रिज्म की ऊंचाई 12 सेमी है। प्रिज्म का आयतन ज्ञात कीजिए।', options: ['300√3 cm³', '250√3 cm³', '600 cm³', '360 cm³'], answer: '(a) 300√3 cm³', explanation: 'आधार क्षेत्र = (√3/4)×10² = 25√3, आयतन = 25√3 × 12 = 300√3' },
+                    { text: 'यदि a^b = 125 है, तो (a−2)^(b+1) का मान क्या है?', options: ['16', '64', '81', '256'], answer: '(c) 81', explanation: '125 = 5³ → a=5, b=3, (5−2)^(3+1) = 3^4 = 81' },
+                    { text: 'एक संयुक्त आकृति में 14 सेमी भुजा वाला एक वर्ग तथा उसकी एक भुजा से जुड़ा हुआ एक अर्धवृत्त है। इस आकृति का कुल क्षेत्रफल कितना होगा?', options: ['273 cm²', '196 cm²', '308 cm²', '254 cm²'], answer: '(a) 273 cm²', explanation: 'वर्ग क्षेत्र = 14²=196, अर्धवृत्त त्रिज्या=7, क्षेत्र = (1/2)π(7²)= (1/2)×(22/7)×49 = 77, कुल = 196+77=273' },
+                    { text: 'एक कोण का संपूरक कोण, उस कोण के तीन गुने से 30° कम है। कोण ज्ञात कीजिए।', options: ['52.5°', '45°', '60°', '30°'], answer: '(a) 52.5°', explanation: 'माना कोण x, संपूरक = 180-x, 180-x = 3x - 30 → 210 = 4x → x = 52.5' },
+                    { text: 'यदि sin θ = 8/17 और θ न्यूनकोण है, तो sec θ ज्ञात कीजिए।', options: ['17/15', '15/17', '17/8', '8/15'], answer: '(a) 17/15', explanation: 'cos θ = √(1 - (8/17)²) = √(225/289) = 15/17, sec = 17/15' },
+                    { text: 'एक त्रिभुज ABC में, केंद्रक (4, 2) पर है। दो शीर्ष (2, 5) और (6, -1) हैं। तीसरा शीर्ष ज्ञात कीजिए।', options: ['(4, 2)', '(3, 2)', '(4, 3)', '(4, 1)'], answer: '(a) (4, 2)', explanation: 'केंद्रक = ((x1+x2+x3)/3, (y1+y2+y3)/3) → (2+6+x3)/3 = 4 → x3=4, (5-1+y3)/3 = 2 → y3=2 → (4,2)' },
+                    { text: 'रेखा 3x - 5y = 10 के लंबवत रेखा का ढलान क्या है?', options: ['3/5', '-5/3', '5/3', '-3/5'], answer: '(b) -5/3', explanation: 'दी गई रेखा का ढलान = 3/5, लंबवत का ढलान = -5/3' },
+                    { text: 'एक वृत्त में, O केंद्र है। चाप AB केंद्र पर 100° का कोण अंतरित करता है। दीर्घ चाप पर स्थित एक बिंदु पर चाप द्वारा अंतरित कोण क्या है?', options: ['100°', '50°', '200°', '80°'], answer: '(b) 50°', explanation: 'परिधि पर अंतरित कोण = केंद्र पर कोण का आधा = 50°' },
+                    { text: 'एक मध्यम रूप से विषम वितरण के लिए, यदि बहुलक = 24, माध्यिका = 20 तो माध्य कितना होगा?', options: ['18', '22', '16', '12'], answer: '(a) 18', explanation: 'अनुभवजन्य सूत्र: माध्य - बहुलक = 3(माध्य - माध्यिका) → माध्य - 24 = 3(माध्य - 20) → माध्य - 24 = 3माध्य - 60 → 2माध्य = 36 → माध्य = 18' },
+                    { text: 'दो वृत्त जिनकी त्रिज्याएँ 8 सेमी और 6 सेमी हैं, वे बाह्य रूप से एक-दूसरे को स्पर्श करते हैं। उनके केंद्रों के बीच की दूरी कितनी है?', options: ['2 cm', '10 cm', '14 cm', '12 cm'], answer: '(c) 14 cm', explanation: 'बाह्य स्पर्श के लिए केंद्रों के बीच दूरी = r1 + r2 = 8+6=14 cm' },
+                    { text: 'Select the most appropriate antonym of the given word. SCORCHING', options: ['Searing', 'Icy', 'Blazing', 'Incendiary'], answer: '(b) Icy', explanation: 'Scorching = बहुत गरम, antonym = Icy (बर्फीला)' },
+                    { text: 'Which of the following best identifies the grammatical role of the phrase “in seeking knowledge” in the sentence: “In seeking knowledge, consciousness first treats its object as something outside itself—independent and self-standing.”', options: ['An adjective phrase describing “consciousness”', 'An adverbial phrase modifying “treats”', 'A noun phrase acting as the subject', 'An appositive explaining “object”'], answer: '(b) An adverbial phrase modifying “treats”', explanation: 'यह क्रिया "treats" को संशोधित करने वाला adverbial phrase है।' },
+                    { text: 'In the clause: “...believing it has reached certainty,” what grammatical structure is “believing” a part of?', options: ['A defining relative clause', 'A passive construction', 'A participial phrase', 'A finite past-tense verb'], answer: '(c) A participial phrase', explanation: '“believing” present participle से बना participial phrase है।' },
+                    { text: 'What is the closest synonym for the word “aufgehoben” (used in the passage) in the context of the dialectic?', options: ['Erased completely', 'Suppressed permanently', 'Lifted up, retained, and transformed', 'Overlooked entirely'], answer: '(c) Lifted up, retained, and transformed', explanation: 'हेगेलियन द्वंद्ववाद में aufgehoben का अर्थ है उठाना, संरक्षित करना और बदलना।' },
+                    { text: 'In the passage, the phrase “structured and shaped through” most nearly means:', options: ['Interrupted by', 'Bargained with', 'Filtered or organized by', 'Removed from'], answer: '(c) Filtered or organized by', explanation: 'यह "द्वारा व्यवस्थित/आकारित" का अर्थ देता है।' },
+                    { text: 'What central paradox is conveyed through the master–slave relation in the passage?', options: ['True knowledge is achieved only by controlling others', 'The slave remains permanently lesser in self-awareness', 'The master weakens recognition by denying the other’s autonomy', 'Consciousness can exist only through subjugation'], answer: '(c) The master weakens recognition by denying the other’s autonomy', explanation: 'गुरु-दास संबंध में विरोधाभास यह है कि गुरु दास को नकारकर अपनी पहचान कमजोर करता है।' },
+                    { text: 'Convert the sentence provided below from its passive voice structure to an active voice structure: <br>The confirmation will have been emailed by the assistant before noon.', options: ['The assistant emails the confirmation before noon.', 'The assistant has emailed the confirmation before noon.', 'The assistant will have emailed the confirmation before noon.', 'The assistant will be emailing the confirmation before noon.'], answer: '(c) The assistant will have emailed the confirmation before noon.', explanation: 'will have been emailed → will have emailed (future perfect active)' },
+                    { text: 'Choose the correct meaning of idiom given below: “Get the drop on someone”', options: ['Copy someone’s strategy', 'Win by trickery', 'Gain an advantage unexpectedly or secretly', 'Publicly reveal plans'], answer: '(c) Gain an advantage unexpectedly or secretly', explanation: 'मुहावरे का अर्थ: अप्रत्याशित रूप से बढ़त हासिल करना।' },
+                    { text: 'Fill in the blank with the most appropriate option: <br>Among all the economists on the committee, Riya was regarded as the ___ in interpreting macroeconomic trends.', options: ['best', 'better', 'most better', 'more best'], answer: '(a) best', explanation: 'सुपरलेटिव (सबसे अच्छा) – best' },
+                    { text: 'A sentence is provided in indirect speech. From the four given options, choose the one that most accurately conveys the sentence in its corresponding direct speech. <br>She asked whether, considering the delays caused by suppliers, the delivery deadline could be extended.', options: ['"Can the delivery deadline be extended because of the delays caused by suppliers?" she asked.', '"Given the supplier delays, can you review the delivery schedule?" she asked.', '"Would it be possible to extend the deadline due to supplier delays?" she asked.', '"Is there any chance the delivery deadline can be extended due to the supplier delays?" she asked.'], answer: '(a) "Can the delivery deadline be extended because of the delays caused by suppliers?" she asked.', explanation: 'सबसे सटीक प्रत्यक्ष कथन (a) है।' },
+                    { text: 'Choose the most suitable option to replace the highlighted part of the sentence: <br>He writes as better as a professional editor.', options: ['as well as', 'as good as', 'so better than', 'as better than'], answer: '(a) as well as', explanation: 'writes के साथ well का प्रयोग, as well as' },
+                    { text: 'Select the most appropriate synonym of the given word. UNREMITTING', options: ['Periodic', 'Persistent', 'Sporadic', 'Occasional'], answer: '(b) Persistent', explanation: 'UNREMITTING = लगातार, Persistent = निरंतर' },
+                    { text: 'What term describes: “The view that what we know is conditioned by the structure and limits of the human mind, so things cannot be known as they are in themselves.”', options: ['Empiricism', 'Phenomenalism', 'Idealism', 'Kantianism'], answer: '(d) Kantianism', explanation: 'यह कांट के दर्शन का वर्णन है (Kantianism)।' },
+                    { text: 'Find the part of the sentence that contains an error: <br>The coordinator called in (1)/ every applicant individually (2)/ but failed to bring forward (3)/ their real concerns. (4)', options: ['(1)', '(2)', '(3)', '(4)'], answer: '(c) (3)', explanation: 'bring forward → bring out (प्रकट करना) या bring up, error (3)' },
+                    { text: 'Identify the misspelt word:', options: ['Herculean', 'Pallocentrim', 'Structuralism', 'Metafiction'], answer: '(b) Pallocentrim', explanation: 'सही spelling: Palindrom? या Pallocentrim गलत है (शायद Palaeocentrism?)' },
+                    { text: 'What is the term for: “A device in which events turn out in the opposite way from what is normally expected.”', options: ['Antithesis', 'Verbal Irony', 'Paradox', 'Situational Irony'], answer: '(d) Situational Irony', explanation: 'यह परिस्थितिजन्य विडंबना (situational irony) है।' },
+                    { text: 'A sentence is provided in direct speech. From the four given options, choose the one that most accurately conveys the sentence in its corresponding indirect speech. <br>“How surprising that no one noticed the missing document until today!” cried the assistant.', options: ['The assistant cried it was surprising that no one noticed the missing document until today.', 'The assistant cried that it was surprising that no one had noticed the missing document until that day.', 'The assistant said that it was surprising no one had noticed the document till now.', 'The assistant cried how surprising no one had noticed the document.'], answer: '(b) The assistant cried that it was surprising that no one had noticed the missing document until that day.', explanation: 'Indirect speech: cried that + past perfect + that day' },
+                    { text: 'Rearrange the following sentences in correct order to make a meaningful passage. <br>1. The final dossier is submitted to the central review desk. <br>2. Automated screening detects inconsistencies in submitted statements. <br>3. Local reports are consolidated at the nodal coordination office. <br>4. Structured summaries are produced after verification.', options: ['3-2-4-1', '2-3-1-4', '4-3-2-1', '1-4-2-3'], answer: '(a) 3-2-4-1', explanation: 'स्थानीय रिपोर्ट → स्क्रीनिंग → सत्यापन → सारांश → अंतिम डोजियर' },
+                    { text: 'Change the following from active to passive: <br>Policy experts have been questioning the new proposal for its vague provisions and weak enforcement.', options: ['The new proposal has been being questioned for its vague provisions and weak enforcement by policy experts.', 'The new proposal was questioned by experts for vagueness.', 'The proposal has been questioned by experts for its weak enforcement.', 'The proposal is being questioned by experts for its vague provisions.'], answer: '(a) The new proposal has been being questioned for its vague provisions and weak enforcement by policy experts.', explanation: 'Present perfect continuous passive: has been being questioned' },
+                    { text: 'Convert the sentence provided below from its passive voice structure to an active voice structure: <br>The rare artefacts had been stored carefully by the curators before the flood occurred.', options: ['The curators have stored the rare artefacts carefully before the flood occurred.', 'The curators stored the rare artefacts carefully before the flood occurred.', 'The curators had stored the rare artefacts carefully before the flood occurred.', 'The curators has stored the rare artefacts carefully before the flood occurred.'], answer: '(c) The curators had stored the rare artefacts carefully before the flood occurred.', explanation: 'had been stored → had stored' },
+                    { text: 'Select the correctly spelt word meaning “a person who practices severe self-discipline for spiritual purposes”.', options: ['Asketic', 'Aescetic', 'Ascetic', 'Ascettik'], answer: '(c) Ascetic', explanation: 'Ascetic = तपस्वी' },
+                    { text: 'Rearrange the following sentences in correct order to make a meaningful passage. <br>1. The group forwarded the compiled results to the research unit. <br>2. Raw feedback forms were collected from various channels. <br>3. Each file was cleaned and standardized before analysis. <br>4. Duplicate entries were removed using automated checks.', options: ['2-3-4-1', '2-4-3-1', '3-2-4-1', '1-3-2-4'], answer: '(a) 2-3-4-1', explanation: 'संग्रह → सफाई → डुप्लिकेट हटाना → विश्लेषण → अग्रेषण' },
+                    { text: 'Which of the following is incorrectly spelled?', options: ['Chauvinism', 'Quiscence', 'Intermittent', 'Ubiquitous'], answer: '(b) Quiscence', explanation: 'सही spelling: Quiescence (शांति, निष्क्रियता)' },
+                    { text: 'Find the part of the sentence that contains an error: <br>The director (1)/ put off (2)/ the conference (3)/ without giving any reason out. (4)', options: ['(1)', '(2)', '(3)', '(4)'], answer: '(d) (4)', explanation: 'reason out → reason (बिना कारण बताए), "reason out" का प्रयोग गलत है।' },
+                    { text: 'Rearrange the following sentences in correct order to make a meaningful sentence. <br>P: while the board reviewed the proposed changes <br>Q: several stakeholders raised objections <br>R: about the likely consequences <br>S: during the open hearing session', options: ['RSPQ', 'QRSP', 'QSRP', 'PRQS'], answer: '(b) QRSP', explanation: 'Several stakeholders raised objections during the open hearing session about the likely consequences while the board reviewed the proposed changes.' }
+                ]
+            },
+            computed: {
+                answeredCount() {
+                    return this.questions.filter(q => q.showAnswer).length;
+                }
+            },
+            methods: {
+                toggleAnswer(idx) {
+                    this.questions[idx].showAnswer = !this.questions[idx].showAnswer;
+                    this.allOpen = this.questions.every(q => q.showAnswer === true);
+                },
+                toggleAllAnswers() {
+                    const newState = !this.allOpen;
+                    this.questions.forEach(q => q.showAnswer = newState);
+                    this.allOpen = newState;
+                },
+                resetAnswers() {
+                    this.questions.forEach(q => q.showAnswer = false);
+                    this.allOpen = false;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

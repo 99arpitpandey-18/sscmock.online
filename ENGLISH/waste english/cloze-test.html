@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SSC Cloze Test Practice</title>
+
+    <link
+        rel="stylesheet"
+        href="cloze-test.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+    <div class="header-left">
+
+        <div class="logo">
+            📘 SSC MOCK
+        </div>
+
+        <div class="header-title">
+            Cloze Test Practice
+        </div>
+
+    </div>
+
+
+    <div class="header-right">
+
+        <span>
+            25 Sets
+        </span>
+
+        <span>
+            10 Questions / Set
+        </span>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<main class="container">
+
+
+<!-- =====================================================
+     SET SELECTION
+===================================================== -->
+
+<section id="setScreen" class="screen">
+
+    <div class="page-title">
+
+        <h1>
+            📖 Cloze Test
+        </h1>
+
+        <p>
+            Choose a set and start your test
+        </p>
+
+    </div>
+
+
+    <!-- PROGRESS -->
+
+    <div class="progress-box">
+
+        <div class="progress-info">
+
+            <span>
+                Overall Progress
+            </span>
+
+            <strong id="progressText">
+                0 / 25 Sets Completed
+            </strong>
+
+        </div>
+
+
+        <div class="progress-bar">
+
+            <div
+                id="progressFill"
+                class="progress-fill"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SET GRID -->
+
+    <div
+        id="setGrid"
+        class="set-grid"
+    ></div>
+
+</section>
+
+
+
+<!-- =====================================================
+     START SCREEN
+===================================================== -->
+
+<section
+    id="startScreen"
+    class="screen hidden"
+>
+
+
+    <div class="start-card">
+
+        <div class="start-icon">
+            📚
+        </div>
+
+
+        <h1 id="startTitle">
+            Cloze Test – Set 1
+        </h1>
+
+
+        <p id="startDescription">
+            Read the passage carefully and select
+            the most appropriate option for each blank.
+        </p>
+
+
+        <div class="test-info">
+
+            <div class="info-item">
+
+                <span>Questions</span>
+
+                <strong>
+                    10
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>Time</span>
+
+                <strong>
+                    15 Minutes
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>Type</span>
+
+                <strong>
+                    Cloze Test
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="instructions">
+
+            <h3>
+                📌 Instructions
+            </h3>
+
+            <ul>
+
+                <li>
+                    Each set contains 10 questions.
+                </li>
+
+                <li>
+                    Read the complete passage before answering.
+                </li>
+
+                <li>
+                    Select one option for each blank.
+                </li>
+
+                <li>
+                    You can change your answer before submission.
+                </li>
+
+                <li>
+                    The test will automatically submit when the timer ends.
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="start-buttons">
+
+            <button
+                class="btn secondary"
+                onclick="backToSets()"
+            >
+                ← Back to Sets
+            </button>
+
+
+            <button
+                class="btn primary"
+                onclick="startTest()"
+            >
+                🚀 Start Test
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TEST SCREEN
+===================================================== -->
+
+<section
+    id="testScreen"
+    class="screen hidden"
+>
+
+
+    <!-- TEST HEADER -->
+
+    <div class="test-header">
+
+        <div>
+
+            <h2 id="testTitle">
+                Cloze Test – Set 1
+            </h2>
+
+            <span id="questionProgress">
+                Question 1 / 10
+            </span>
+
+        </div>
+
+
+        <div class="timer">
+
+            ⏱️
+
+            <span id="timer">
+                15:00
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PASSAGE -->
+
+    <div class="passage-card">
+
+        <div class="passage-heading">
+
+            <span>
+                📖 Passage
+            </span>
+
+            <span
+                id="passageSetLabel"
+                class="set-label"
+            >
+                Set 1
+            </span>
+
+        </div>
+
+
+        <div
+            id="passageText"
+            class="passage-text"
+        ></div>
+
+    </div>
+
+
+
+    <!-- QUESTION -->
+
+    <div class="question-card">
+
+
+        <div class="question-top">
+
+            <div
+                id="questionNumber"
+                class="question-number"
+            >
+                Question 1
+            </div>
+
+
+            <div
+                id="questionCount"
+                class="question-count"
+            >
+                1 / 10
+            </div>
+
+        </div>
+
+
+        <div
+            id="questionBox"
+            class="question-box"
+        ></div>
+
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <div class="navigation">
+
+        <button
+            id="previousBtn"
+            class="btn secondary"
+            onclick="previousQuestion()"
+        >
+            ◀ Previous
+        </button>
+
+
+        <button
+            id="nextBtn"
+            class="btn primary"
+            onclick="nextQuestion()"
+        >
+            Next ▶
+        </button>
+
+
+        <button
+            id="submitBtn"
+            class="btn danger hidden"
+            onclick="submitTest()"
+        >
+            📤 Submit Test
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RESULT SCREEN
+===================================================== -->
+
+<section
+    id="resultScreen"
+    class="screen hidden"
+>
+
+
+    <div class="result-card">
+
+
+        <div class="result-icon">
+            🎯
+        </div>
+
+
+        <h1>
+            Test Completed
+        </h1>
+
+
+        <p id="resultSubtitle">
+            Cloze Test – Set 1
+        </p>
+
+
+
+        <!-- SCORE -->
+
+        <div class="score-circle">
+
+            <span id="score">
+                0%
+            </span>
+
+        </div>
+
+
+
+        <!-- STATS -->
+
+        <div class="stats-grid">
+
+
+            <div class="stat correct-stat">
+
+                <strong id="correct">
+                    0
+                </strong>
+
+                <span>
+                    Correct
+                </span>
+
+            </div>
+
+
+            <div class="stat wrong-stat">
+
+                <strong id="wrong">
+                    0
+                </strong>
+
+                <span>
+                    Wrong
+                </span>
+
+            </div>
+
+
+            <div class="stat unattempted-stat">
+
+                <strong id="unattempted">
+                    0
+                </strong>
+
+                <span>
+                    Unattempted
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <strong id="accuracy">
+                    0%
+                </strong>
+
+                <span>
+                    Accuracy
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RESULT MESSAGE -->
+
+        <div
+            id="resultMessage"
+            class="result-message"
+        ></div>
+
+
+
+        <!-- REVIEW -->
+
+        <div class="review-section">
+
+            <h2>
+                📖 Hindi Explanation
+            </h2>
+
+            <p class="review-note">
+                Har question ka correct answer,
+                aapka answer aur Hindi explanation neeche diya gaya hai.
+            </p>
+
+
+            <div
+                id="review"
+                class="review-list"
+            ></div>
+
+        </div>
+
+
+
+        <!-- RESULT BUTTONS -->
+
+        <div class="result-buttons">
+
+
+            <button
+                class="btn secondary"
+                onclick="repeatTest()"
+            >
+                🔄 Repeat Test
+            </button>
+
+
+            <button
+                id="nextSetBtn"
+                class="btn primary"
+                onclick="goToNextSet()"
+            >
+                Next Set ➜
+            </button>
+
+
+            <button
+                class="btn dark"
+                onclick="backToSets()"
+            >
+                📚 All Sets
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<script src="cloze-test.js"></script>
+
+</body>
+
+</html>

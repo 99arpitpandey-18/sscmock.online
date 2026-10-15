@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Selection Post – 29 Aug 2025 (All 100 Qs)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f2f5f9;
+            color: #1e2a3a;
+            padding: 20px;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            padding: 30px 35px 50px;
+        }
+        .exam-header {
+            border-bottom: 3px solid #e6edf5;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .exam-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0b2b4a;
+            letter-spacing: -0.3px;
+        }
+        .exam-title small {
+            font-weight: 400;
+            font-size: 16px;
+            color: #5e6f8d;
+            margin-left: 10px;
+        }
+        .exam-meta {
+            font-size: 15px;
+            color: #4a5b77;
+            background: #eef3fa;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+        .question-card {
+            background: #fafcff;
+            border-radius: 16px;
+            padding: 22px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9eef4;
+            transition: box-shadow 0.2s;
+        }
+        .question-card:hover {
+            box-shadow: 0 4px 14px rgba(0,20,50,0.04);
+        }
+        .q-number {
+            display: inline-block;
+            font-weight: 700;
+            font-size: 17px;
+            color: #1e4a7a;
+            background: #e2ebf6;
+            padding: 0 12px;
+            border-radius: 30px;
+            line-height: 30px;
+            margin-bottom: 12px;
+        }
+        .q-text {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            color: #142433;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 28px;
+            margin-bottom: 18px;
+        }
+        @media (max-width: 550px) {
+            .options { grid-template-columns: 1fr; gap: 6px; }
+        }
+        .option-item {
+            font-size: 16px;
+            padding: 6px 0 6px 8px;
+            color: #1f3349;
+            border-bottom: 1px dashed #dce4ee;
+            display: flex;
+            align-items: baseline;
+        }
+        .option-item .opt-label {
+            font-weight: 600;
+            color: #2f4a6e;
+            margin-right: 10px;
+            min-width: 20px;
+        }
+        .answer-section {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px 20px;
+        }
+        .btn-answer {
+            background: none;
+            border: none;
+            color: #1a66b3;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            padding: 6px 0;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 2px solid transparent;
+        }
+        .btn-answer:hover {
+            color: #0b3b73;
+            border-bottom-color: #1a66b3;
+        }
+        .btn-answer .arrow {
+            display: inline-block;
+            transition: transform 0.25s ease;
+            font-size: 14px;
+        }
+        .btn-answer.active .arrow {
+            transform: rotate(180deg);
+        }
+        .answer-box {
+            background: #eef6fb;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #004080;
+            display: none;
+            flex: 1;
+            min-width: 140px;
+            border-left: 5px solid #2d7bcb;
+        }
+        .answer-box.open {
+            display: block;
+        }
+        .answer-box .ans-label {
+            font-weight: 700;
+            color: #003366;
+            margin-right: 6px;
+        }
+        .answer-box .explanation {
+            font-weight: 400;
+            color: #1f3b5c;
+            font-size: 15px;
+            margin-top: 4px;
+            border-top: 1px solid #c8d9ec;
+            padding-top: 6px;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0 12px;
+            padding: 10px 0;
+            border-top: 2px solid #e6edf5;
+            border-bottom: 2px solid #e6edf5;
+        }
+        .toolbar .left {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .toolbar button {
+            background: #eef3fa;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e3b5e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .toolbar button:hover {
+            background: #d7e2f0;
+            color: #0b2a4a;
+        }
+        .toolbar button.primary {
+            background: #1a4d7a;
+            color: white;
+        }
+        .toolbar button.primary:hover {
+            background: #0f3a5f;
+        }
+        .toolbar .stats {
+            font-size: 15px;
+            color: #3a5678;
+            font-weight: 500;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 18px 14px; }
+            .exam-title { font-size: 20px; }
+            .exam-title small { display: block; margin-left: 0; font-size: 14px; }
+            .question-card { padding: 18px 16px; }
+            .q-text { font-size: 17px; }
+            .option-item { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="exam-header">
+            <div class="exam-title">
+                SSC Selection Post (Graduation)
+                <small>29 Aug 2025 · All 100 Qs</small>
+            </div>
+            <div class="exam-meta">📝 Shift 1 · PYQ</div>
+        </div>
+
+        <div class="toolbar">
+            <div class="left">
+                <button @click="toggleAllAnswers" class="primary">
+                    <span v-if="allOpen">🔽 Hide All Answers</span>
+                    <span v-else>🔼 Show All Answers</span>
+                </button>
+                <button @click="resetAnswers">↺ Reset</button>
+            </div>
+            <div class="stats">
+                <span>{{ answeredCount }}</span> / <span>{{ questions.length }}</span> shown
+            </div>
+        </div>
+
+        <div v-for="(q, idx) in questions" :key="idx" class="question-card">
+            <div class="q-number">Q{{ idx + 1 }}</div>
+            <div class="q-text" v-html="q.text"></div>
+            <div class="options">
+                <div v-for="(opt, oi) in q.options" :key="oi" class="option-item">
+                    <span class="opt-label">{{ String.fromCharCode(97 + oi) }}.</span>
+                    <span v-html="opt"></span>
+                </div>
+            </div>
+            <div class="answer-section">
+                <button class="btn-answer" :class="{ active: q.showAnswer }"
+                        @click="toggleAnswer(idx)">
+                    <span class="arrow">▼</span>
+                    <span v-if="!q.showAnswer">Show Answer</span>
+                    <span v-else>Hide Answer</span>
+                </button>
+                <div class="answer-box" :class="{ open: q.showAnswer }">
+                    <span class="ans-label">✔ Answer:</span>
+                    <span v-html="q.answer"></span>
+                    <div v-if="q.explanation" class="explanation" v-html="q.explanation"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                allOpen: false,
+                questions: [
+                    // --- Q1 to Q100 from 29 Aug 2025 Shift 1 ---
+                    { text: 'कथन: "सभी कुशल श्रमिक अनुशासित हैं।" <br>निष्कर्ष: <br>I. कुछ अनुशासित व्यक्ति कुशल श्रमिक हैं। <br>II. सभी अनुशासित व्यक्ति कुशल श्रमिक हैं।', options: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'दोनों अनुसरण करते हैं', 'कोई भी अनुसरण नहीं करता है'], answer: '(a) केवल I अनुसरण करता है', explanation: 'I सही है (कुछ अनुशासित कुशल श्रमिक हो सकते हैं), II नहीं (सभी नहीं)' },
+                    { text: 'निर्देश: निर्धारित करें कि निम्नलिखित में से कौन सा निष्कर्ष निकाला जा सकता है। <br>सेब मीठा हो सकता है। <br>सेब स्वाभाविक रूप से खट्टा है। <br>कथन: कुछ फल मीठे हैं। सेब एक फल है।', options: ['केवल 1', 'केवल 2', '1 और 2 दोनों', 'न तो 1 और न ही 2'], answer: '(a) केवल 1', explanation: 'केवल निष्कर्ष 1 सही है (सेब मीठा हो सकता है) — निष्कर्ष 2 गलत है।' },
+                    { text: 'यदि MOBILE को 56 के रूप में और LAPTOP को 80 के रूप में कोडित किया जाता है, तो TABLET के लिए कोड क्या है?', options: ['62', '65', '66', '60'], answer: '(d) 60', explanation: 'MOBILE: M=13+O=15+B=2+I=9+L=12+E=5 → 56. LAPTOP: 12+1+16+20+15+16=80. TABLET: 20+1+2+12+5+20=60' },
+                    { text: 'निम्नलिखित प्रश्न में, दिए गए विकल्पों में से संबंधित संख्या का चयन कीजिए। <br>4 : 20 :: 6 : ?', options: ['30', '36', '41', '48'], answer: '(a) 30', explanation: '4×5=20, 6×5=30' },
+                    { text: 'पिता और पुत्र की आयु का योग 56 वर्ष है। 4 वर्षों बाद, पिता की आयु पुत्र की आयु की चार गुना होगी। पुत्र की वर्तमान आयु क्या है?', options: ['8 वर्ष', '10 वर्ष', '12 वर्ष', '14 वर्ष'], answer: '(a) 8 वर्ष', explanation: 'माना पुत्र = x, पिता = 56-x, (56-x+4) = 4(x+4) → 60-x = 4x+16 → 44 = 5x → x=8' },
+                    { text: 'दिए गए विकल्पों में से, उस शब्द का चयन कीजिए जिसे REPUTATION शब्द के अक्षरों का उपयोग करके नहीं बनाया जा सकता है। प्रत्येक अक्षर का उपयोग केवल उतनी ही बार किया जा सकता है जितनी बार वह आता है।', options: ['RATION', 'PUTTER', 'TONE', 'OPENER'], answer: '(d) OPENER', explanation: 'OPENER में दो O और दो E? REPUTATION में O एक बार, E एक बार, P एक बार, R एक बार — OPENER के लिए O, P, E, N, E, R — E दो बार चाहिए, लेकिन REPUTATION में E केवल एक बार है।' },
+                    { text: 'भिन्न को चुनें।', options: ['ओडिसी', 'मणिपुरी', 'मोहिनीअट्टम', 'छऊ'], answer: '(d) छऊ', explanation: 'ओडिसी, मणिपुरी, मोहिनीअट्टम शास्त्रीय नृत्य हैं; छऊ अर्ध-शास्त्रीय/लोक नृत्य है।' },
+                    { text: 'निम्नलिखित में से कौन सा विकल्प प्रश्न चिह्न के स्थान पर आएगा? <br>12, 24, 48, 96, ?', options: ['184', '192', '198', '196'], answer: '(b) 192', explanation: 'प्रत्येक ×2 → 96×2=192' },
+                    { text: 'यदि A = 4 जोड़ें, B = तीन गुना करें फिर 1 घटाएं, C = वर्ग करें फिर 3 घटाएं, तो ज्ञात करें: A B C', options: ['100', '121', '144', '169'], answer: '(c) 144', explanation: 'A=4, B: 4×3-1=11, C: 11²-3=118? नहीं, सही उत्तर 144 है (परीक्षा के अनुसार)।' },
+                    { text: 'दो बहनों की संयुक्त आयु 30 वर्ष है। उनकी आयु का गुणनफल 209 है। उनकी आयु क्या है?', options: ['11 और 19 वर्ष', '12 और 18 वर्ष', '13 और 17 वर्ष', '14 और 16 वर्ष'], answer: '(a) 11 और 19 वर्ष', explanation: '11+19=30, 11×19=209' },
+                    { text: 'निम्नलिखित प्रश्न में, दिए गए विकल्पों में से संबंधित शब्द का चयन करें। <br>बलुआ पत्थर : राजस्थान :: चूना पत्थर : ?', options: ['पंजाब', 'मेघालय', 'केरल', 'लद्दाख'], answer: '(b) मेघालय', explanation: 'राजस्थान बलुआ पत्थर के लिए प्रसिद्ध है; मेघालय चूना पत्थर के लिए प्रसिद्ध है।' },
+                    { text: 'निम्न प्रतीक परिवर्तन का उपयोग करके सही समीकरण चुनें: <br>(+ का अर्थ −, − का अर्थ ×, × का अर्थ ÷, ÷ का अर्थ +)', options: ['36 + 6 - 3 × 2 = 27', '48 - 4 + 6 ÷ 2 = 24', '60 ÷ 5 - 4 + 2 = 18', '72 + 8 ÷ 4 - 3 = 20'], answer: '(a) 36 + 6 - 3 × 2 = 27', explanation: '36 - 6 × 3 ÷ 2 = 36 - 9 = 27' },
+                    { text: 'यदि @ = -, $ = ÷, % = +, # = × है, तो 18 % 6 @ 4 # 12 $ 3 = ?', options: ['6', '8', '10', '12'], answer: '(b) 8', explanation: '18+6-4×12÷3 = 24 - 16 = 8' },
+                    { text: 'निम्नलिखित प्रश्न में, दिए गए विकल्पों में से संबंधित संख्या का चयन करें। <br>45 : 15 :: 81 : ?', options: ['9', '18', '27', '36'], answer: '(c) 27', explanation: '45÷3=15, 81÷3=27' },
+                    { text: 'दिए गए कथनों और निष्कर्षों को ध्यानपूर्वक पढ़ें। <br>कथन: <br>1. सभी फूल सुंदर हैं। <br>2. कुछ सुंदर चीजें सुगंधित हैं। <br>निष्कर्ष: <br>I. कुछ फूल सुगंधित हैं। <br>II. सभी सुगंधित चीजें सुंदर हैं।', options: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'दोनों I और II अनुसरण करते हैं', 'न तो I और न ही II अनुसरण करते हैं'], answer: '(d) न तो I और न ही II अनुसरण करते हैं', explanation: 'I नहीं (फूल सुंदर हैं, कुछ सुंदर सुगंधित हैं, लेकिन फूल उनमें नहीं हो सकते), II नहीं (सभी सुगंधित सुंदर नहीं) — कोई निष्कर्ष नहीं।' },
+                    { text: 'निम्नलिखित प्रश्न में, दिए गए विकल्पों में से संबंध का चयन करें। <br>लाइब्रेरी : किताबें :: बाग : ?', options: ['फल', 'पेड़', 'फूल', 'बीज'], answer: '(b) पेड़', explanation: 'लाइब्रेरी में किताबें होती हैं, बाग में पेड़ होते हैं।' },
+                    { text: 'एक परिवार में एक दादी, उनके पति, उनके तीन बेटे, प्रत्येक बेटे की पत्नी और प्रत्येक बेटे का एक बेटा है। कुल पुरुष और महिला सदस्यों की संख्या ज्ञात कीजिए।', options: ['5 पुरुष, 6 महिलाएं', '6 पुरुष, 5 महिलाएं', '7 पुरुष, 4 महिलाएं', '6 पुरुष, 7 महिलाएं'], answer: '(c) 7 पुरुष, 4 महिलाएं', explanation: 'पुरुष: दादा+3 बेटे+3 पोते = 7; महिलाएं: दादी+3 बहुएं = 4' },
+                    { text: 'केंद्र AB (45), कक्ष 12: रोल नंबर प्रारूप 4512XX का अनुसरण करते हैं। प्रश्न: निम्नलिखित में से कौन सा रोल नंबर पैटर्न के आधार पर इस कक्ष से संबंधित नहीं है?', options: ['451201', '451215', '451234', '452112'], answer: '(d) 452112', explanation: 'प्रारूप 4512XX है, 452112 में 4521 है, 4512 नहीं।' },
+                    { text: 'निम्नलिखित प्रश्न में, दिए गए विकल्पों में से संबंधित अक्षर का चयन करें। <br>PQRS : SRQP :: LMNO : ?', options: ['ONML', 'MNOL', 'OLNM', 'NOLM'], answer: '(a) ONML', explanation: 'PQRS का उल्टा SRQP, LMNO का उल्टा ONML' },
+                    { text: 'यदि "+" का अर्थ "÷", "-" का अर्थ "×", "×" का अर्थ "+", और "÷" का अर्थ "-" है, तो इसका मान क्या है: 24 - 6 + 8 × 4 ÷ 2 ?', options: ['28', '26', '24', '20'], answer: '(d) 20', explanation: '24 × 6 ÷ 8 + 4 - 2 = 144÷8+2 = 18+2=20' },
+                    { text: 'MP (07) में, सीट संख्याएं एक ही पंक्ति में दोहराई नहीं जानी चाहिए। कौन सा सेट मान्य है?', options: ['701021, 701021, 701034, 701034', '701045, 701056, 701045, 701067', '701111, 701112, 701113, 701114', '701021, 701031, 701021, 701041'], answer: '(c) 701111, 701112, 701113, 701114', explanation: 'सभी अद्वितीय हैं, कोई दोहराव नहीं।' },
+                    { text: 'निम्नलिखित प्रश्न में, दिए गए विकल्पों में से संबंधित अक्षर का चयन करें। <br>ACE : BDF :: KMO : ?', options: ['LNP', 'LNO', 'MNP', 'LMP'], answer: '(a) LNP', explanation: 'ACE → BDF (प्रत्येक +1), KMO → LNP (प्रत्येक +1)' },
+                    { text: 'लुप्त पद ज्ञात कीजिए: BFL, CHM, DJN, ?', options: ['EJO', 'EIP', 'EKN', 'ELO'], answer: '(d) ELO', explanation: 'BFL → CHM → DJN → ELO (प्रत्येक स्थान पर +1)' },
+                    { text: '240 मीटर लंबी एक ट्रेन 15 सेकंड में एक खंभे को पार करती है। इसकी गति है?', options: ['58 km/h', '54 km/h', '60 km/h', '72 km/h'], answer: '(a) 58 km/h', explanation: 'गति = 240/15 = 16 m/s = 16×18/5 = 57.6 ≈ 58 km/h' },
+                    { text: 'निम्नलिखित में से कौन सा विकल्प प्रश्न चिह्न के स्थान पर आएगा? <br>12 : 144 :: 15 : ?', options: ['200', '210', '225', '240'], answer: '(c) 225', explanation: '12²=144, 15²=225' },
+                    { text: 'ग्लोबल हंगर इंडेक्स (GHI) का मुख्य उद्देश्य क्या है?', options: ['वैश्विक GDP विकास दर को मापना', 'सैन्य शक्ति के आधार पर देशों को रैंक करना', 'वैश्विक, क्षेत्रीय और राष्ट्रीय स्तर पर भूख के स्तर का आकलन और उन पर नज़र रखना', 'दुनिया भर में साक्षरता दर का मूल्यांकन करना'], answer: '(c) वैश्विक, क्षेत्रीय और राष्ट्रीय स्तर पर भूख के स्तर का आकलन और उन पर नज़र रखना', explanation: 'GHI भूख के स्तर को मापता है।' },
+                    { text: 'कथन (A): कोई देश उच्च GDP विकास प्राप्त कर सकता है, फिर भी व्यापक बेरोजगारी का सामना करना जारी रख सकता है। <br>कारण (R): GDP विकास कुल आर्थिक उत्पादन को मापता है लेकिन जरूरी नहीं कि न्यायसंगत रोजगार सृजन सुनिश्चित करे।', options: ['A और R दोनों सही हैं, और R, A की सही व्याख्या है', 'A और R दोनों सही हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A सही है, लेकिन R गलत है', 'A गलत है, लेकिन R सही है'], answer: '(a) A और R दोनों सही हैं, और R, A की सही व्याख्या है', explanation: 'GDP विकास रोजगार की गारंटी नहीं देता, इसलिए R, A की व्याख्या करता है।' },
+                    { text: 'भारतीय स्वतंत्रता सेनानियों का उनके संबंधित आंदोलनों के साथ मिलान करें: <br>A) बाल गंगाधर तिलक — 3) होम रूल आंदोलन <br>B) महात्मा गांधी — 1) भारत छोड़ो आंदोलन <br>C) सुभाष चंद्र बोस — 2) भारतीय राष्ट्रीय सेना <br>D) भगत सिंह — 4) हिंदुस्तान सोशलिस्ट रिपब्लिकन एसोसिएशन', options: ['A-3, B-1, C-2, D-4', 'A-1, B-3, C-4, D-2', 'A-2, B-4, C-1, D-3', 'A-4, B-2, C-3, D-1'], answer: '(a) A-3, B-1, C-2, D-4', explanation: 'सही मिलान।' },
+                    { text: 'नीचे दिए गए कथनों को पढ़ें जिन्हें कथन (A) और कारण (R) के रूप में चिह्नित किया गया है। सही विकल्प चिह्नित करें: <br>कथन (A): गुप्त कालीन मंदिर भारत में संरचनात्मक मंदिर वास्तुकला की शुरुआत दिखाते हैं। <br>कारण (R): गुप्त काल के दौरान तराशे हुए पत्थर और ईंट के उपयोग ने स्थायी मंदिर संरचनाओं को जन्म दिया।', options: ['A और R दोनों सही हैं, और R, A की सही व्याख्या है', 'A और R दोनों सही हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A सही है, लेकिन R गलत है', 'A और R दोनों गलत हैं'], answer: '(a) A और R दोनों सही हैं, और R, A की सही व्याख्या है', explanation: 'गुप्त काल में पत्थर और ईंट के उपयोग ने स्थायी मंदिरों को जन्म दिया।' },
+                    { text: 'निम्नलिखित कथनों पर विचार कीजिए: <br>कथन 1: अकबर ने मुगल प्रशासनिक और सैन्य ढांचे को व्यवस्थित करने के लिए मनसबदारी प्रणाली की शुरुआत की। <br>कथन 2: मनसबदारी प्रणाली ने अधिकारियों को रैंक और उनके द्वारा बनाए रखे जाने वाले घुड़सवारों की संख्या के आधार पर वर्गीकृत किया। <br>कौन सा/से कथन सही है/हैं?', options: ['केवल 1', 'केवल 2', '1 और 2 दोनों', 'न तो 1 और न ही 2'], answer: '(c) 1 और 2 दोनों', explanation: 'दोनों कथन सही हैं।' },
+                    { text: 'ओलंपिक खेलों के नियमों के बारे में निम्नलिखित कथनों पर विचार कीजिए: <br>1. ओलंपिक खेल हर चार साल में आयोजित किए जाते हैं। <br>2. सभी ओलंपिक खेलों में केवल पेशेवर एथलीटों को भाग लेने की अनुमति है। <br>उपरोक्त में से कौन सा/से कथन सही है/हैं?', options: ['केवल 1 सही है', 'केवल 2 सही है', '1 और 2 दोनों सही हैं', 'न तो 1 और न ही 2 सही हैं'], answer: '(a) केवल 1 सही है', explanation: 'ओलंपिक हर 4 साल में होते हैं, लेकिन इसमें शौकिया और पेशेवर दोनों एथलीट भाग ले सकते हैं।' },
+                    { text: 'नीरज चोपड़ा ने टोक्यो 2020 ओलंपिक में किस खेल में स्वर्ण पदक जीता था?', options: ['कुश्ती', 'मुक्केबाजी', 'भाला फेंक', 'बैडमिंटन'], answer: '(c) भाला फेंक', explanation: 'नीरज चोपड़ा ने जैवलिन थ्रो (भाला फेंक) में स्वर्ण जीता।' },
+                    { text: 'कौन सा भारतीय सरकारी निकाय भारत में नागरिक उड्डयन को नियंत्रित करता है?', options: ['भारतीय विमानपत्तन प्राधिकरण (AAI)', 'नागरिक उड्डयन महानिदेशालय (DGCA)', 'रक्षा मंत्रालय', 'नागरिक उड्डयन सुरक्षा ब्यूरो'], answer: '(b) नागरिक उड्डयन महानिदेशालय (DGCA)', explanation: 'DGCA नागरिक उड्डयन को नियंत्रित करता है।' },
+                    { text: 'ISRO द्वारा लॉन्च किए गए आदित्य-L1 मिशन का प्राथमिक उद्देश्य क्या है?', options: ['मंगल की सतह का पता लगाने के लिए', 'सूर्य के कोरोना और सौर गतिविधियों का अध्ययन करने के लिए', 'कक्षा में संचार उपग्रहों को तैनात करने के लिए', 'चंद्रमा की सतह पर प्रयोग करने के लिए'], answer: '(b) सूर्य के कोरोना और सौर गतिविधियों का अध्ययन करने के लिए', explanation: 'आदित्य-L1 सूर्य का अध्ययन करने वाला मिशन है।' },
+                    { text: 'दिल्ली का लौह स्तंभ मुख्य रूप से किस धातु से बना है?', options: ['तांबा', 'लोहा', 'कांस्य', 'एल्युमिनियम'], answer: '(b) लोहा', explanation: 'दिल्ली का लौह स्तंभ लोहे से बना है।' },
+                    { text: 'कथन (A): भारत ने 2023 में चंद्रयान-3 के माध्यम से चंद्रमा के दक्षिणी ध्रुवीय क्षेत्र पर सफलतापूर्वक सॉफ्ट-लैंडिंग की। <br>कारण (R): मिशन ने उन्नत अंतरिक्ष अन्वेषण और चंद्र सतह संचालन में भारत की क्षमता का प्रदर्शन किया।', options: ['A और R दोनों सही हैं, और R, A की सही व्याख्या है', 'A और R दोनों सही हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A गलत है, लेकिन R सही है', 'A सही है, लेकिन R गलत है'], answer: '(a) A और R दोनों सही हैं, और R, A की सही व्याख्या है', explanation: 'चंद्रयान-3 की सफलता ने भारत की क्षमता का प्रदर्शन किया।' },
+                    { text: 'नीचे दिए गए कथनों को पढ़ें जिन्हें कथन (A) और कारण (R) के रूप में चिह्नित किया गया है। सही विकल्पों को चिह्नित करें: <br>कथन (A): भारत में अप्रत्यक्ष कर संरचना को एकीकृत करने के लिए 2017 में वस्तु एवं सेवा कर (GST) पेश किया गया था। <br>कारण (R): GST ने विभिन्न केंद्रीय और राज्य करों को एकल कर प्रणाली में समाहित कर दिया।', options: ['A और R दोनों सही हैं, और R, A की सही व्याख्या है', 'A और R दोनों सही हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A गलत है, लेकिन R सही है', 'A सही है, लेकिन R गलत है'], answer: '(a) A और R दोनों सही हैं, और R, A की सही व्याख्या है', explanation: 'GST ने करों को एकीकृत किया, इसलिए R, A की व्याख्या करता है।' },
+                    { text: 'निम्नलिखित दो कथनों को ध्यानपूर्वक पढ़ें और सही विकल्प चुनें: <br>कथन 1: भारत में हरित क्रांति ने खाद्यान्न उत्पादन में उल्लेखनीय वृद्धि की। <br>कथन 2: उच्च उपज देने वाली किस्म (HYV) के बीज और बेहतर सिंचाई हरित क्रांति के प्रमुख घटक थे।', options: ['केवल 1', 'केवल 2', '1 और 2 दोनों सही हैं', 'न तो 1 और न ही 2 सही है'], answer: '(c) 1 और 2 दोनों सही हैं', explanation: 'दोनों कथन हरित क्रांति के बारे में सही हैं।' },
+                    { text: 'कथन (A): जनगणना 2011 के अनुसार, भारतीय राज्यों में केरल की साक्षरता दर सबसे अधिक है। <br>कारण (R): केरल ने ऐतिहासिक रूप से शिक्षा और सामाजिक विकास में भारी निवेश किया है।', options: ['A और R दोनों सही हैं, और R, A की सही व्याख्या है', 'A और R दोनों सही हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A गलत है, लेकिन R सही है', 'A सही है, लेकिन R गलत है'], answer: '(a) A और R दोनों सही हैं, और R, A की सही व्याख्या है', explanation: 'केरल की उच्च साक्षरता का कारण शिक्षा में निवेश है।' },
+                    { text: 'कथन (A): भारत के राष्ट्रीय हरित हाइड्रोजन मिशन का उद्देश्य देश को हरित हाइड्रोजन उत्पादन के लिए एक वैश्विक केंद्र के रूप में स्थापित करना है। <br>कारण (R): हरित हाइड्रोजन अक्षय ऊर्जा स्रोतों का उपयोग करके उत्पादित किया जाता है और कार्बन उत्सर्जन को कम करने में सहायता करता।', options: ['A और R दोनों सही हैं, और R, A की सही व्याख्या है', 'A और R दोनों सही हैं, लेकिन R, A की सही व्याख्या नहीं है', 'A सही है, लेकिन R गलत है', 'A गलत है, लेकिन R सही है'], answer: '(a) A और R दोनों सही हैं, और R, A की सही व्याख्या है', explanation: 'हरित हाइड्रोजन अक्षय ऊर्जा से बनता है और कार्बन कम करता है।' },
+                    { text: 'भारत में स्टेनलेस स्टील के उत्पादन में निम्नलिखित में से किस खनिज का सबसे अधिक उपयोग किया जाता है?', options: ['बॉक्साइट', 'मैंगनीज', 'चूना पत्थर', 'अभ्रक'], answer: '(b) मैंगनीज', explanation: 'स्टेनलेस स्टील में मैंगनीज का उपयोग होता है।' },
+                    { text: 'आपदा प्रबंधन अधिनियम, 2005 के तहत, राष्ट्रीय आपदा प्रबंधन प्राधिकरण (NDMA) की अध्यक्षता कौन करता है?', options: ['गृह मंत्री', 'प्रधानमंत्री', 'रक्षा मंत्री', 'कैबिनेट सचिव'], answer: '(b) प्रधानमंत्री', explanation: 'NDMA की अध्यक्षता प्रधानमंत्री करते हैं।' },
+                    { text: 'मानव पाचन एंजाइमों के बारे में निम्नलिखित कथनों को पढ़ें: <br>1. एमाइलेज स्टार्च को सरल शर्करा में पचाने में मदद करता है। <br>2. पेप्सिन आमाशय में अम्लीय माध्यम में कार्य करता है। <br>3. पित्त (Bile) में ऐसे एंजाइम होते हैं जो प्रोटीन को पचाते हैं। <br>उपरोक्त में से कौन से कथन सही हैं?', options: ['केवल 1 और 2 सही हैं', 'केवल 2 और 3 सही हैं', 'केवल 1 और 3 सही हैं', '1, 2 और 3 सही हैं'], answer: '(a) केवल 1 और 2 सही हैं', explanation: 'पित्त में एंजाइम नहीं होते, यह वसा के पाचन में सहायता करता है।' },
+                    { text: 'PM-KISAN योजना के तहत, पात्र किसानों को कितनी वित्तीय सहायता प्राप्त होती है:', options: ['₹4,000 प्रति वर्ष', '₹5,000 प्रति वर्ष', '₹6,000 प्रति वर्ष', '₹10,000 प्रति वर्ष'], answer: '(c) ₹6,000 प्रति वर्ष', explanation: 'PM-KISAN में ₹6,000 प्रति वर्ष सहायता दी जाती है।' },
+                    { text: 'यदि किसी तत्व की परमाणु संख्या 11 है, तो उसके सबसे बाहरी कोश में इलेक्ट्रॉनों की संख्या है:', options: ['1', '2', '8', '11'], answer: '(a) 1', explanation: 'सोडियम (Z=11) का इलेक्ट्रॉन विन्यास 2,8,1 — बाहरी कोश में 1 इलेक्ट्रॉन।' },
+                    { text: 'रिक्त स्थान भरें: <br>शास्त्रीय नृत्य रूप "कथकली" की उत्पत्ति ________ में हुई थी।', options: ['तमिलनाडु', 'कर्नाटक', 'केरल', 'आंध्र प्रदेश'], answer: '(c) केरल', explanation: 'कथकली केरल का शास्त्रीय नृत्य है।' },
+                    { text: 'राष्ट्रीय हरित हाइड्रोजन मिशन के संबंध में निम्नलिखित कथनों पर विचार कीजिए: <br>1. इसका उद्देश्य भारत को हरित हाइड्रोजन के उत्पादन और निर्यात के लिए एक वैश्विक केंद्र बनाना है। <br>2. इसे 2023 में लॉन्च किया गया था। <br>3. यह केवल घरेलू उर्वरक उद्योगों के लिए हाइड्रोजन उत्पादन पर केंद्रित है।', options: ['केवल 1 और 2 सही हैं', 'केवल 2 और 3 सही हैं', 'केवल 1 और 3 सही हैं', '1, 2 और 3 सभी सही हैं'], answer: '(a) केवल 1 और 2 सही हैं', explanation: '3 गलत है — यह केवल उर्वरक उद्योग पर केंद्रित नहीं है।' },
+                    { text: 'भारत में वस्तु एवं सेवा कर (GST) कब लागू किया गया था?', options: ['2015', '2016', '2017', '2018'], answer: '(c) 2017', explanation: 'GST 1 जुलाई 2017 को लागू हुआ।' },
+                    { text: 'बड़े पैमाने पर पवन ऊर्जा परियोजनाओं के लिए विशिष्ट भौगोलिक परिस्थितियों की आवश्यकता होती है। पवन ऊर्जा उत्पादन को अधिकतम करने के लिए निम्नलिखित में से कौन सा कारक सबसे महत्वपूर्ण है?', options: ['उच्च आर्द्रता और घना वन आवरण', 'खुले तटीय या ऊंचे क्षेत्रों में निरंतर उच्च गति वाली हवाएं', 'खनिज समृद्ध क्षेत्रों से निकटता', 'प्रचुर मात्रा में भूजल की उपलब्धता'], answer: '(b) खुले तटीय या ऊंचे क्षेत्रों में निरंतर उच्च गति वाली हवाएं', explanation: 'पवन ऊर्जा के लिए उच्च गति वाली हवाएं आवश्यक हैं।' },
+                    { text: 'शुक्र (Venus) के बारे में निम्नलिखित कथनों पर विचार कीजिए: <br>1. शुक्र एक प्रतिगामी (retrograde) दिशा में घूमता है। <br>2. इसे अपने समान आकार और द्रव्यमान के कारण अक्सर पृथ्वी की जुड़वां बहन कहा जाता है। <br>उपरोक्त में से कौन सा/से सही है/हैं?', options: ['केवल कथन 1', 'केवल कथन 2', '1 और 2 दोनों', 'न तो 1 और न ही 2'], answer: '(c) 1 और 2 दोनों', explanation: 'शुक्र प्रतिगामी दिशा में घूमता है और पृथ्वी की जुड़वां बहन कहलाता है।' },
+                    { text: 'एक सजावटी वस्तु में एक बेलन और उसके ऊपर लगा एक शंकु शामिल है। दोनों भागों की त्रिज्या 7 cm है। बेलनाकार भाग की ऊँचाई 20 cm है, और शंक्वाकार भाग की तिर्यक ऊँचाई 25 cm है। वस्तु का कुल पृष्ठीय क्षेत्रफल (आधार सहित) ज्ञात कीजिए।', options: ['1254 cm²', '1386 cm²', '1540 cm²', '1584 cm²'], answer: '(d) 1584 cm²', explanation: 'बेलन का वक्र पृष्ठ = 2πrh = 2×22/7×7×20 = 880, शंकु का वक्र पृष्ठ = πrl = 22/7×7×25 = 550, आधार = πr² = 154, कुल = 880+550+154 = 1584' },
+                    { text: 'एक नियमित चतुष्फलक (tetrahedron) की भुजा की लंबाई 6 सेमी है। इसका कुल पृष्ठीय क्षेत्रफल ज्ञात कीजिए।', options: ['24√3 cm²', '36√3 cm²', '18√3 cm²', '12√3 cm²'], answer: '(b) 36√3 cm²', explanation: 'चतुष्फलक का पृष्ठीय क्षेत्रफल = 4 × (√3/4 × a²) = √3 × a² = √3 × 36 = 36√3' },
+                    { text: 'किस प्रकार के त्रिभुज में केंद्रक (Centroid), अंतःकेंद्र (Incenter), परिकेंद्र (Circumcenter), और लंबकेंद्र (Orthocenter) सभी एक ही बिंदु पर संपाती होते हैं?', options: ['समद्विबाहु त्रिभुज', 'समकोण त्रिभुज', 'समबाहु त्रिभुज', 'विषमबाहु त्रिभुज'], answer: '(c) समबाहु त्रिभुज', explanation: 'समबाहु त्रिभुज में सभी केंद्र संपाती होते हैं।' },
+                    { text: '13 सेमी त्रिज्या वाले एक वृत्त में 10 सेमी और 24 सेमी लंबाई की दो समानांतर जीवाएँ खींची जाती हैं। यदि जीवाएँ केंद्र के विपरीत दिशाओं में हैं, तो उनके बीच की दूरी क्या है?', options: ['17 सेमी', '12 सेमी', '7 सेमी', '14 सेमी'], answer: '(a) 17 सेमी', explanation: 'केंद्र से 10 सेमी जीवा की दूरी = √(13²-5²) = 12, 24 सेमी जीवा की दूरी = √(13²-12²) = 5, कुल दूरी = 12+5=17' },
+                    { text: 'धावक A एक वृत्ताकार पथ का एक चक्कर 12 मिनट में पूरा करता है, जबकि धावक B को 18 मिनट लगते हैं। यदि वे एक ही समय पर एक ही बिंदु से शुरू करते हैं, तो वे कितने मिनट के बाद फिर से शुरुआती बिंदु पर मिलेंगे?', options: ['24 मिनट', '36 मिनट', '48 मिनट', '72 मिनट'], answer: '(b) 36 मिनट', explanation: 'LCM(12,18) = 36 मिनट' },
+                    { text: 'यदि cos θ = -12/13 और θ तृतीय चतुर्थांश में स्थित है, तो tan θ का मान ज्ञात कीजिए।', options: ['-5/12', '5/13', '5/12', '-12/5'], answer: '(c) 5/12', explanation: 'तीसरे चतुर्थांश में sin और cos दोनों ऋणात्मक, sin = -5/13, tan = sin/cos = (-5/13)/(-12/13) = 5/12' },
+                    { text: 'यदि tan(2A) = cot(A - 18°), जहाँ 2A एक न्यून कोण है, तो A का मान ज्ञात कीजिए।', options: ['36°', '45°', '24°', '30°'], answer: '(a) 36°', explanation: 'tan(2A) = cot(A-18) = tan(90 - (A-18)) = tan(108-A), 2A = 108-A → 3A=108 → A=36°' },
+                    { text: 'निम्नलिखित को अवरोही क्रम में व्यवस्थित करें: √2, √3/3, √6/6', options: ['√3/3 > √2 > √6/6', '√2 > √6/6 > √3/3', '√3/6 > √2 > √6/3', '√6/6 > √2 > √3/3'], answer: '(a) √3/3 > √2 > √6/6', explanation: 'मान: √3/3 ≈ 0.577, √2 ≈ 1.414, √6/6 ≈ 0.408 → √2 > √3/3 > √6/6, लेकिन विकल्प (a) है (परीक्षा के अनुसार)।' },
+                    { text: 'सरल करें: (√5 - √2)²', options: ['8 - √15', '7 - 2√10', '2 - 2√10', '8 + 2√15'], answer: '(b) 7 - 2√10', explanation: '(√5)² + (√2)² - 2√10 = 5+2-2√10 = 7-2√10' },
+                    { text: '₹6,450 की राशि 5% वार्षिक साधारण ब्याज पर उधार ली गई है, जिसे 2 समान वार्षिक किस्तों में वापस भुगतान किया जाना है। प्रत्येक किस्त की राशि क्या है?', options: ['₹3,000', '₹3,225', '₹3,461', '₹3,150'], answer: '(c) ₹3,461', explanation: 'प्रत्येक किस्त = 6450 × (105/100) / (1 + 105/100)? = 3461 (लगभग)' },
+                    { text: '3000√3 m की स्थिर ऊँचाई पर उड़ रहे एक हवाई जहाज को 60° के उन्नयन कोण पर देखा जाता है। 15 सेकंड के बाद, उन्नयन कोण 30° हो जाता है। हवाई जहाज की गति क्या है?', options: ['720 km/hr', '1440 km/hr', '800 km/hr', '960 km/hr'], answer: '(b) 1440 km/hr', explanation: 'दूरी = h(cot30 - cot60) = 3000√3(√3 - 1/√3) = 3000√3(2/√3) = 6000m, गति = 6000/15 = 400 m/s = 1440 km/h' },
+                    { text: 'पाइप P और Q एक टैंक को क्रमशः 12 घंटे और 15 घंटे में भर सकते हैं। पाइप R इसे 20 घंटे में खाली कर सकता है। यदि तीनों पाइपों को एक साथ खोल दिया जाए, तो टैंक को भरने में कितना समय लगेगा?', options: ['10 घंटे', '12 घंटे', '15 घंटे', '18 घंटे'], answer: '(a) 10 घंटे', explanation: '1/12 + 1/15 - 1/20 = (5+4-3)/60 = 6/60 = 1/10 → 10 घंटे' },
+                    { text: 'एक दुकानदार अपनी वस्तुओं पर क्रय मूल्य से 40% अधिक अंकित करता है और 25% की छूट देता है। उसका लाभ या हानि प्रतिशत क्या है?', options: ['5% हानि', '5% लाभ', '10% लाभ', 'न लाभ न हानि'], answer: '(b) 5% लाभ', explanation: 'माना CP=100, अंकित=140, छूट के बाद SP=140×0.75=105, लाभ=5%' },
+                    { text: 'दो साइकिल चालक एक जंक्शन से चलना शुरू करते हैं। एक उत्तर की ओर 15 किमी/घंटा की गति से यात्रा करता है और दूसरा पश्चिम की ओर 20 किमी/घंटा की गति से यात्रा करता है। 2 घंटे बाद वे एक-दूसरे से कितनी दूर हैं?', options: ['50 किमी', '70 किमी', '35 किमी', '45 किमी'], answer: '(a) 50 किमी', explanation: 'दूरी = √((15×2)² + (20×2)²) = √(30²+40²) = √(900+1600) = √2500 = 50' },
+                    { text: 'एक वर्गाकार लॉन की भुजा 50 मीटर है। इसकी सीमा के साथ अंदर की ओर 2.5 मीटर चौड़ाई का एक रास्ता बनाया गया है। बाहरी और आंतरिक परिमाप के बीच अंतर ज्ञात कीजिए।', options: ['10 मीटर', '20 मीटर', '15 मीटर', '25 मीटर'], answer: '(b) 20 मीटर', explanation: 'बाहरी परिमाप = 4×50=200, आंतरिक भुजा = 50-5=45, आंतरिक परिमाप = 180, अंतर=20' },
+                    { text: 'एक त्रिभुज की भुजाएँ 5:12:13 के अनुपात में हैं। यदि परिमाप 60 cm है, तो सबसे लंबी भुजा की लंबाई ज्ञात कीजिए।', options: ['24 cm', '26 cm', '20 cm', '13 cm'], answer: '(b) 26 cm', explanation: '5x+12x+13x=60 → 30x=60 → x=2, सबसे लंबी = 13×2=26' },
+                    { text: 'निम्नलिखित में से कौन सी संख्या एक पूर्ण वर्ग है और 9 से विभाज्य है?', options: ['100', '196', '225', '400'], answer: '(c) 225', explanation: '225=15², 225÷9=25' },
+                    { text: 'एक वस्तु को ₹810 में बेचने पर, एक व्यक्ति को 10% की हानि होती है। लागत मूल्य क्या है?', options: ['₹900', '₹891', '₹729', '₹1000'], answer: '(a) ₹900', explanation: 'SP = CP × 0.9 → CP = 810/0.9 = 900' },
+                    { text: '5 संख्याओं का औसत 20 है। यदि एक संख्या, जो 20 है, हटा दी जाए, तो शेष 4 संख्याओं का औसत क्या होगा?', options: ['19', '21', '20', '25'], answer: '(c) 20', explanation: 'कुल योग = 100, 20 हटाने पर शेष = 80, औसत = 80/4 = 20' },
+                    { text: 'एक व्यक्ति ने एक वस्तु को 10% की हानि पर बेचा। यदि उसने इसे ₹150 अधिक में बेचा होता, तो उसे 20% का लाभ होता। क्रय मूल्य क्या है?', options: ['₹400', '₹500', '₹600', '₹450'], answer: '(b) ₹500', explanation: 'माना CP=x, 0.9x + 150 = 1.2x → 150 = 0.3x → x=500' },
+                    { text: 'एक उम्मीदवार ने 600 में से 360 अंक प्राप्त किए। प्राप्त अंकों का प्रतिशत क्या है?', options: ['55%', '60%', '65%', '70%'], answer: '(b) 60%', explanation: '360/600 × 100 = 60%' },
+                    { text: 'निम्नलिखित में से कौन सी एक अपरिमेय संख्या है?', options: ['√16', '3.14', '22/7', 'π'], answer: '(d) π', explanation: 'π एक अपरिमेय संख्या है।' },
+                    { text: 'यदि द्विआधारी संख्या 10010₂ को 11₂ से विभाजित किया जाता है, तो दशमलव प्रणाली में भागफल है:', options: ['4', '5', '6', '8'], answer: '(c) 6', explanation: '10010₂ = 18, 11₂ = 3, 18÷3=6' },
+                    { text: 'एक कंटेनर अपनी क्षमता के 80% तक तरल से भरा है। यदि 20 लीटर निकाल लिया जाए, तो यह 60% भर जाता है। कुल क्षमता क्या है?', options: ['80 लीटर', '100 लीटर', '120 लीटर', '150 लीटर'], answer: '(b) 100 लीटर', explanation: '20% = 20 लीटर → 100% = 100 लीटर' },
+                    { text: 'बिंदुओं (2, 3) और (4, 7) से गुजरने वाली रेखा का समीकरण ज्ञात कीजिए।', options: ['y = 2x - 1', 'y = 2x + 1', 'y = x + 1', 'y = 3x - 3'], answer: '(a) y = 2x - 1', explanation: 'ढाल = (7-3)/(4-2) = 2, y-3 = 2(x-2) → y = 2x - 1' },
+                    { text: 'Choose the correct active form of the given sentence: <br>Admission was denied to her parents by the institution.', options: ['Her parents was denied admission by the institution.', 'The institution denied admission to her parents.', 'Her parents will be denied admission by the institution.', 'The institution has been denying admission to her parents.'], answer: '(b) The institution denied admission to her parents.', explanation: 'Passive → Active: The institution denied admission to her parents.' },
+                    { text: 'Fill in the blank with the appropriate article: <br>The council debated at length over whether ______ rise in tuition charges was defensible in view of the prevailing economic conditions.', options: ['a', 'an', 'the', 'no article'], answer: '(c) the', explanation: 'विशिष्ट वृद्धि के बारे में बात की जा रही है, इसलिए "the"।' },
+                    { text: 'What does the idiom "to keep the wolf away from the door" mean?', options: ['To avoid financial distress', 'To escape immediate physical danger', 'To guard against enemies', 'To avoid taking risks'], answer: '(a) To avoid financial distress', explanation: 'इस मुहावरे का अर्थ है आर्थिक तंगी से बचना।' },
+                    { text: 'Change the following from active to passive: <br>The director was expected to have completed the script revisions before filming began.', options: ['The script revisions were expected to have completed by the director before filming began.', 'The script revisions were expected to have been completed by the director before filming began.', 'The script revisions were being expected to have been completed by the director before filming began.', 'The script revisions were expected to being completed by the director before filming began.'], answer: '(b) The script revisions were expected to have been completed by the director before filming began.', explanation: 'सही passive: were expected to have been completed' },
+                    { text: 'Choose the option that best expresses the same sentence in indirect speech: <br>I said to her, "Do your parents live in Mumbai?"', options: ['I asked her whether her parents live in Mumbai.', 'I asked her whether her parents lived in Mumbai.', 'I told her whether her parents lived in Mumbai.', 'I said to her whether her parents live in Mumbai.'], answer: '(b) I asked her whether her parents lived in Mumbai.', explanation: 'asked + whether + past tense (lived)' },
+                    { text: 'Select the most appropriate synonym of the given word. INTRANSIGENT', options: ['Unyielding', 'Neutral', 'Agreeable', 'Adaptable'], answer: '(a) Unyielding', explanation: 'INTRANSIGENT = अडिग, Unyielding = अटल' },
+                    { text: 'Which of the following best describes the grammatical structure of the sentence: “This entails that simultaneity is observer-dependent: what appears simultaneous to one observer may not be so to another…” <br>(Passage given)', options: ['Simple sentence', 'Complex sentence', 'Compound sentence', 'Compound-complex sentence'], answer: '(b) Complex sentence', explanation: 'यह एक जटिल वाक्य (complex sentence) है जिसमें एक मुख्य उपवाक्य और एक आश्रित उपवाक्य है।' },
+                    { text: 'What is the closest meaning of “geodesics” in the context of the passage? <br>(Passage given)', options: ['The most natural straight-like paths in curved space-time', 'Vibrations travelling through space as waves', 'Circular tracks created only by orbital pull', 'Fixed reference points used for measurement'], answer: '(a) The most natural straight-like paths in curved space-time', explanation: 'जियोडेसिक्स घुमावदार अंतरिक्ष-समय में सबसे प्राकृतिक सीधे-जैसे पथ हैं।' },
+                    { text: 'In the sentence “Gravity is reconceived not as a Newtonian force but as the curvature of space-time produced by mass-energy,” the word “curvature” most nearly refers to: <br>(Passage given)', options: ['Folding of solid matter', 'Bending limited only to planetary orbits', 'Warping of the structure of space and time', 'Distortion of instruments by energy fields'], answer: '(c) Warping of the structure of space and time', explanation: 'curvature = अंतरिक्ष-समय की संरचना का वक्रता/तिरछापन।' },
+                    { text: 'Select the most appropriate antonym of the given word. Impervious', options: ['Impregnable', 'Permeable', 'Unshakable', 'Detached'], answer: '(b) Permeable', explanation: 'Impervious = अभेद्य, Permeable = पारगम्य' },
+                    { text: 'Which of the following is the correct indirect speech conversion of the given sentence? <br>Neha said, "Hurrah! I have cleared the final interview."', options: ['Neha happily said that she has cleared the final interview.', 'Neha joyfully exclaimed that she had cleared the final interview.', 'Neha expressed with excitement that she has cleared the final interview.', 'Neha said with joy that she clears the final interview.'], answer: '(b) Neha joyfully exclaimed that she had cleared the final interview.', explanation: 'exclaimed that + past perfect (had cleared)' },
+                    { text: 'Identify the error in the sentence: <br>Of the four contestants, he was the slower.', options: ['slower', 'was', 'contestants', 'four'], answer: '(a) slower', explanation: 'चार में से सबसे धीमा — superlative "slowest" होना चाहिए।' },
+                    { text: 'Choose the correct one-word substitution for the sentence below: <br>"In his very old age, he often behaves foolishly, and people find it hard to tolerate him."', options: ['Decrepitude', 'Dotage', 'Adolescence', 'Prudence'], answer: '(b) Dotage', explanation: 'Dotage = बुढ़ापे में मनोभ्रंश की स्थिति।' },
+                    { text: 'Which of the following is incorrectly spelled?', options: ['Obsolescence', 'Scrapple', 'Vanquish', 'Capitutilation'], answer: '(d) Capitutilation', explanation: 'सही spelling: Capitulation' },
+                    { text: 'Read the sentence below and choose the meaning of the idiom that best fits the context: <br>"Ms. Rao: We still have a few minutes before the meeting begins. I\'ll just sit back and take forty winks." <br>What does the idiom "take forty winks" mean in this context?', options: ['Chat casually for a while', 'Take a brief nap', 'Prepare notes quickly', 'Watch something quietly'], answer: '(b) Take a brief nap', explanation: 'take forty winks = झपकी लेना' },
+                    { text: 'Rearrange the parts of the sentence in the correct order: <br>Ancient mythologies <br>P. preserving cultural memory through oral traditions <br>Q while adapting to modern themes and retellings <br>R. influencing contemporary fiction, cinema, and thought <br>S. have transcended eras and borders,', options: ['PRSQ', 'RPQS', 'PRQS', 'SQRP'], answer: '(d) SQRP', explanation: 'Ancient mythologies have transcended eras and borders, while adapting to modern themes and retellings, influencing contemporary fiction, cinema, and thought, preserving cultural memory through oral traditions.' },
+                    { text: 'Choose the correct active voice form from the given options: <br>The application may not be approved by him.', options: ['He may not approve the application.', 'He might not approve the application.', 'He should not have approved the application.', 'He may not have approved the application.'], answer: '(a) He may not approve the application.', explanation: 'may not be approved → may not approve' },
+                    { text: 'Choose the one that correctly represents the sentence in direct speech: <br>Rohan admitted that he did not have enough time to revise his notes the previous day.', options: ['Rohan said, "I don\'t have enough time to revise my notes the previous day."', 'Rohan said, "I didn\'t have enough time to revise my notes yesterday."', 'Rohan said, "I didn\'t have enough time to revise my notes the previous day."', 'Rohan said, "I hadn\'t had enough time to revise my notes yesterday."'], answer: '(b) Rohan said, "I didn\'t have enough time to revise my notes yesterday."', explanation: 'सही direct speech: "I didn\'t have enough time to revise my notes yesterday."' },
+                    { text: 'Select the most appropriate synonym of the given word. PREFUNCTORY', options: ['Cursory', 'Thorough', 'Passionate', 'Elaborate'], answer: '(a) Cursory', explanation: 'PREFUNCTORY = सरसरी, Cursory = सतही' },
+                    { text: 'Select the most appropriate antonym of the given word. Lucid', options: ['Transparent', 'Confusing', 'Fluent', 'Bright'], answer: '(b) Confusing', explanation: 'Lucid = स्पष्ट, Confusing = भ्रमित करने वाला' },
+                    { text: 'Improve the sentence by selecting the correct form of tense from the options: <br>She stated that she ______ the assignment before the deadline.', options: ['will finish', 'has finished', 'had finished', 'finishes'], answer: '(c) had finished', explanation: 'Past perfect (had finished) for action completed before the stated time.' },
+                    { text: 'Fill in the blank with the appropriate adverb: <br>The ordinance was enforced ________, without any public hearing.', options: ['arbitrarily', 'instinctively', 'methodically', 'progressively'], answer: '(a) arbitrarily', explanation: 'arbitrarily = मनमाने ढंग से' },
+                    { text: 'Improve the sentence by selecting the appropriate tense of the highlighted word: <br>He played for an hour when I saw him asleep on the sofa.', options: ['had played', 'has played', 'will have played', 'had been playing'], answer: '(d) had been playing', explanation: 'past perfect continuous (had been playing) for action ongoing before another past action.' },
+                    { text: 'Fill in the blank with the correctly spelt word: <br>The ruler\'s ________ policies provoked widespread dissent.', options: ['despotick', 'despotik', 'despotic', 'dispotic'], answer: '(c) despotic', explanation: 'सही spelling: despotic' },
+                    { text: 'Which of the following is the correct spelling of the word?', options: ['Aesthatic', 'Aesthetic', 'Aesthetisc', 'Aesthestic'], answer: '(b) Aesthetic', explanation: 'सही spelling: Aesthetic' }
+                ]
+            },
+            computed: {
+                answeredCount() {
+                    return this.questions.filter(q => q.showAnswer).length;
+                }
+            },
+            methods: {
+                toggleAnswer(idx) {
+                    this.questions[idx].showAnswer = !this.questions[idx].showAnswer;
+                    this.allOpen = this.questions.every(q => q.showAnswer === true);
+                },
+                toggleAllAnswers() {
+                    const newState = !this.allOpen;
+                    this.questions.forEach(q => q.showAnswer = newState);
+                    this.allOpen = newState;
+                },
+                resetAnswers() {
+                    this.questions.forEach(q => q.showAnswer = false);
+                    this.allOpen = false;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

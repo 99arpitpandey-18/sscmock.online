@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Classification Practice – SSC Reasoning</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --blue:#2563eb;
+    --dark:#0b1f4b;
+    --bg:#f5f7fb;
+    --white:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e1e6ef;
+    --green:#16a34a;
+    --red:#dc2626;
+    --lightblue:#eef5ff;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    background:linear-gradient(135deg,#07183d,#2445a0);
+    color:white;
+    padding:28px 6%;
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+}
+
+.back-btn{
+    color:white;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:bold;
+    display:inline-block;
+    margin-bottom:20px;
+}
+
+.header-content{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.header-icon{
+    width:76px;
+    height:76px;
+    border-radius:18px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:39px;
+}
+
+.header h1{
+    font-size:34px;
+    margin-bottom:7px;
+}
+
+.header p{
+    font-size:15px;
+    opacity:.86;
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    width:92%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 8px 25px rgba(15,35,80,.06);
+}
+
+.hero h2{
+    color:var(--dark);
+    margin-bottom:9px;
+}
+
+.hero p{
+    color:var(--muted);
+    line-height:1.7;
+}
+
+.stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:18px;
+}
+
+.stat{
+    background:var(--lightblue);
+    color:#21438f;
+    border:1px solid #d9e5ff;
+    padding:10px 15px;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+/* ================= CONTROLS ================= */
+
+.controls{
+    margin:22px 0;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    flex:1;
+    min-width:230px;
+    padding:12px 14px;
+    border:1px solid #ccd3df;
+    border-radius:10px;
+    font-size:14px;
+    outline:none;
+}
+
+.search-box:focus{
+    border-color:var(--blue);
+}
+
+select{
+    padding:12px 14px;
+    border:1px solid #ccd3df;
+    border-radius:10px;
+    background:white;
+    outline:none;
+}
+
+.btn{
+    padding:12px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-blue{
+    background:var(--blue);
+    color:white;
+    border:none;
+}
+
+.btn-white{
+    background:white;
+    border:1px solid #ccd3df;
+    color:#26344d;
+}
+
+/* ================= PROGRESS ================= */
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-size:14px;
+    color:var(--muted);
+    font-weight:bold;
+}
+
+.progress{
+    width:100%;
+    height:9px;
+    background:#e5e9f0;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#2563eb,#4f46e5);
+    transition:.3s;
+}
+
+/* ================= QUESTION CARD ================= */
+
+.question-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:17px;
+    margin-bottom:18px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(15,35,80,.05);
+}
+
+.question-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 20px 8px;
+}
+
+.question-number{
+    color:var(--blue);
+    font-weight:800;
+}
+
+.question-type{
+    background:#eef2f7;
+    color:#526071;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.question-body{
+    padding:8px 20px 20px;
+}
+
+.question-text{
+    font-size:17px;
+    line-height:1.7;
+    font-weight:650;
+    margin-bottom:16px;
+}
+
+.options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.option{
+    background:#f8fafc;
+    border:1px solid #dce2eb;
+    border-radius:10px;
+    padding:13px;
+    text-align:left;
+    cursor:pointer;
+    font-size:15px;
+    transition:.2s;
+}
+
+.option:hover{
+    background:#eff6ff;
+    border-color:#2563eb;
+}
+
+.option.correct{
+    background:#ecfdf3;
+    border-color:#22c55e;
+    color:#166534;
+}
+
+.option.wrong{
+    background:#fef2f2;
+    border-color:#ef4444;
+    color:#991b1b;
+}
+
+.answer-result{
+    margin-top:12px;
+    font-weight:bold;
+}
+
+.explanation{
+    display:none;
+    margin-top:15px;
+    padding:16px;
+    background:#f4f7ff;
+    border-left:4px solid #2563eb;
+    border-radius:8px;
+    line-height:1.8;
+}
+
+.explanation.show{
+    display:block;
+}
+
+.explanation-title{
+    color:#17449c;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    text-align:center;
+    padding:35px 10px;
+    color:#667085;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+    .header h1{
+        font-size:25px;
+    }
+
+    .header-content{
+        align-items:flex-start;
+    }
+
+    .header-icon{
+        width:60px;
+        height:60px;
+        font-size:30px;
+    }
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .question-text{
+        font-size:16px;
+    }
+
+    .container{
+        width:94%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+<a href="../new.html" class="back-btn">
+← Back to Reasoning Topics
+</a>
+
+<div class="header-content">
+
+<div class="header-icon">
+🔎
+</div>
+
+<div>
+
+<h1>Classification Practice</h1>
+
+<p>
+SSC CGL • CHSL • CPO • MTS • Selection Post
+| Topic-wise Reasoning Practice
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+<h2>Classification – Complete SSC Practice</h2>
+
+<p>
+Classification questions ask you to identify the item which is
+different from the remaining items on the basis of a common
+property, relationship, number pattern, alphabet pattern,
+word meaning, or logical relationship. These questions are
+frequently asked in SSC examinations.
+</p>
+
+<div class="stats">
+
+<div class="stat">320 Questions</div>
+
+<div class="stat">Word Classification</div>
+
+<div class="stat">Number Classification</div>
+
+<div class="stat">Alphabet Classification</div>
+
+<div class="stat">Meaning Based</div>
+
+<div class="stat">Mixed Classification</div>
+
+<div class="stat">Detailed Explanation</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= CONTROLS ================= -->
+
+<div class="controls">
+
+<input
+type="text"
+id="search"
+class="search-box"
+placeholder="Search question or keyword..."
+>
+
+<select id="filter">
+
+<option value="all">
+All Types
+</option>
+
+<option value="Word Classification">
+Word Classification
+</option>
+
+<option value="Number Classification">
+Number Classification
+</option>
+
+<option value="Alphabet Classification">
+Alphabet Classification
+</option>
+
+<option value="Meaning Classification">
+Meaning Classification
+</option>
+
+<option value="Mixed Classification">
+Mixed Classification
+</option>
+
+</select>
+
+<button
+class="btn btn-blue"
+onclick="showAllExplanations()"
+>
+Show Explanations
+</button>
+
+<button
+class="btn btn-white"
+onclick="resetQuiz()"
+>
+Reset
+</button>
+
+</div>
+
+
+<!-- ================= PROGRESS ================= -->
+
+<div class="progress-info">
+
+<span id="attemptText">
+Attempted: 0 / 320
+</span>
+
+<span id="scoreText">
+Score: 0
+</span>
+
+</div>
+
+<div class="progress">
+
+<div
+id="progressBar"
+class="progress-bar"
+></div>
+
+</div>
+
+
+<!-- ================= QUESTIONS ================= -->
+
+<div id="questionsContainer"></div>
+
+</main>
+
+
+<footer class="footer">
+Classification Practice • SSC Reasoning
+</footer>
+
+
+<script>
+
+/* =========================================================
+   QUESTION DATABASE
+   320+ QUESTIONS ARE GENERATED FROM VERIFIED PATTERNS
+========================================================= */
+
+const questions = [];
+
+
+/* =========================================================
+   BASE QUESTIONS
+========================================================= */
+
+const baseQuestions = [
+
+/* ================= WORD CLASSIFICATION ================= */
+
+{
+q:"Find the odd one out: Apple, Mango, Banana, Carrot",
+options:["Apple","Mango","Banana","Carrot"],
+answer:3,
+type:"Word Classification",
+exp:"Apple, Mango and Banana are fruits. Carrot is a vegetable. Therefore <b>Carrot</b> is the odd one out."
+},
+
+{
+q:"Find the odd one out: Rose, Lotus, Lily, Potato",
+options:["Rose","Lotus","Lily","Potato"],
+answer:3,
+type:"Word Classification",
+exp:"Rose, Lotus and Lily are flowers, whereas Potato is a vegetable. Hence <b>Potato</b> is different."
+},
+
+{
+q:"Find the odd one out: Dog, Cat, Cow, Sparrow",
+options:["Dog","Cat","Cow","Sparrow"],
+answer:3,
+type:"Word Classification",
+exp:"Dog, Cat and Cow are mammals. Sparrow is a bird. Therefore <b>Sparrow</b> is the odd one."
+},
+
+{
+q:"Find the odd one out: January, March, May, June",
+options:["January","March","May","June"],
+answer:3,
+type:"Word Classification",
+exp:"January, March and May have 31 days. June has 30 days. Therefore <b>June</b> is different."
+},
+
+{
+q:"Find the odd one out: Delhi, Mumbai, Kolkata, Nepal",
+options:["Delhi","Mumbai","Kolkata","Nepal"],
+answer:3,
+type:"Word Classification",
+exp:"Delhi, Mumbai and Kolkata are cities of India. Nepal is a country. Hence <b>Nepal</b> is the odd one."
+},
+
+{
+q:"Find the odd one out: Gold, Silver, Copper, Wood",
+options:["Gold","Silver","Copper","Wood"],
+answer:3,
+type:"Word Classification",
+exp:"Gold, Silver and Copper are metals. Wood is not a metal. Hence <b>Wood</b> is different."
+},
+
+{
+q:"Find the odd one out: Cricket, Football, Hockey, Chess",
+options:["Cricket","Football","Hockey","Chess"],
+answer:3,
+type:"Word Classification",
+exp:"Cricket, Football and Hockey are primarily outdoor field sports. Chess is an indoor board game. Therefore <b>Chess</b> is the odd one."
+},
+
+{
+q:"Find the odd one out: Pen, Pencil, Eraser, Chair",
+options:["Pen","Pencil","Eraser","Chair"],
+answer:3,
+type:"Word Classification",
+exp:"Pen, Pencil and Eraser are stationery items. Chair is furniture. Hence <b>Chair</b> is different."
+},
+
+{
+q:"Find the odd one out: Mercury, Venus, Earth, Moon",
+options:["Mercury","Venus","Earth","Moon"],
+answer:3,
+type:"Word Classification",
+exp:"Mercury, Venus and Earth are planets. Moon is a natural satellite. Therefore <b>Moon</b> is the odd one."
+},
+
+{
+q:"Find the odd one out: Tiger, Lion, Leopard, Goat",
+options:["Tiger","Lion","Leopard","Goat"],
+answer:3,
+type:"Word Classification",
+exp:"Tiger, Lion and Leopard are wild carnivorous animals. Goat is a domestic herbivore. Hence <b>Goat</b> is different."
+},
+
+/* ================= NUMBER CLASSIFICATION ================= */
+
+{
+q:"Find the odd number: 2, 4, 8, 16, 31",
+options:["2","8","16","31"],
+answer:3,
+type:"Number Classification",
+exp:"2, 4, 8 and 16 are powers of 2. 31 is not a power of 2. Hence <b>31</b> is the odd number."
+},
+
+{
+q:"Find the odd number: 3, 9, 27, 81, 162",
+options:["3","27","81","162"],
+answer:3,
+type:"Number Classification",
+exp:"3, 9, 27 and 81 follow multiplication by 3. 162 does not continue the same sequence. Hence <b>162</b> is different."
+},
+
+{
+q:"Find the odd number: 4, 9, 16, 25, 35",
+options:["4","16","25","35"],
+answer:3,
+type:"Number Classification",
+exp:"4, 9, 16 and 25 are perfect squares: 2², 3², 4² and 5². 35 is not a perfect square. Therefore <b>35</b> is the odd one."
+},
+
+{
+q:"Find the odd number: 11, 13, 17, 19, 21",
+options:["11","17","19","21"],
+answer:3,
+type:"Number Classification",
+exp:"11, 13, 17 and 19 are prime numbers. 21 is composite. Therefore <b>21</b> is different."
+},
+
+{
+q:"Find the odd number: 12, 18, 24, 30, 35",
+options:["12","24","30","35"],
+answer:3,
+type:"Number Classification",
+exp:"12, 18, 24 and 30 are divisible by 6. 35 is not divisible by 6. Hence <b>35</b> is the odd number."
+},
+
+{
+q:"Find the odd number: 8, 27, 64, 125, 200",
+options:["8","64","125","200"],
+answer:3,
+type:"Number Classification",
+exp:"8=2³, 27=3³, 64=4³ and 125=5³. 200 is not a perfect cube. Hence <b>200</b> is different."
+},
+
+{
+q:"Find the odd number: 15, 21, 27, 33, 40",
+options:["15","21","33","40"],
+answer:3,
+type:"Number Classification",
+exp:"15, 21, 27 and 33 are all divisible by 3. 40 is not divisible by 3. Hence <b>40</b> is the odd number."
+},
+
+{
+q:"Find the odd number: 10, 20, 30, 40, 55",
+options:["10","20","40","55"],
+answer:3,
+type:"Number Classification",
+exp:"10, 20, 30 and 40 are multiples of 10. 55 is not. Therefore <b>55</b> is different."
+},
+
+{
+q:"Find the odd number: 7, 14, 21, 28, 36",
+options:["7","21","28","36"],
+answer:3,
+type:"Number Classification",
+exp:"7, 14, 21 and 28 are multiples of 7. 36 is not. Therefore <b>36</b> is the odd number."
+},
+
+{
+q:"Find the odd number: 1, 4, 9, 16, 20",
+options:["1","9","16","20"],
+answer:3,
+type:"Number Classification",
+exp:"1, 4, 9 and 16 are perfect squares. 20 is not. Hence <b>20</b> is different."
+},
+
+/* ================= ALPHABET CLASSIFICATION ================= */
+
+{
+q:"Find the odd one out: AB, CD, EF, GI",
+options:["AB","CD","EF","GI"],
+answer:3,
+type:"Alphabet Classification",
+exp:"AB, CD and EF contain consecutive alphabet letters. GI is not a consecutive pair. Hence <b>GI</b> is the odd one."
+},
+
+{
+q:"Find the odd pair: MN, OP, QR, TV",
+options:["MN","OP","QR","TV"],
+answer:3,
+type:"Alphabet Classification",
+exp:"MN, OP and QR are consecutive letter pairs. T and V have U between them. Therefore <b>TV</b> is different."
+},
+
+{
+q:"Find the odd one: ACE, BDF, CEG, DFI",
+options:["ACE","BDF","CEG","DFI"],
+answer:3,
+type:"Alphabet Classification",
+exp:"ACE, BDF and CEG follow a +2 letter pattern. DFI breaks the expected pattern because D→F→H would be required. Hence <b>DFI</b>."
+},
+
+{
+q:"Find the odd one: A1, B2, C3, D5",
+options:["A1","B2","C3","D5"],
+answer:3,
+type:"Alphabet Classification",
+exp:"A=1, B=2 and C=3 follow their natural alphabet positions. D should correspond to 4, not 5. Therefore <b>D5</b> is odd."
+},
+
+{
+q:"Find the odd pair: AZ, BY, CX, DU",
+options:["AZ","BY","CX","DU"],
+answer:3,
+type:"Alphabet Classification",
+exp:"AZ, BY and CX contain letters whose positions add to 27. D should pair with W, not U. Hence <b>DU</b> is different."
+},
+
+/* ================= MEANING CLASSIFICATION ================= */
+
+{
+q:"Find the odd one out: Doctor, Nurse, Teacher, Hospital",
+options:["Doctor","Nurse","Teacher","Hospital"],
+answer:3,
+type:"Meaning Classification",
+exp:"Doctor, Nurse and Teacher are professions. Hospital is a place/institution. Hence <b>Hospital</b> is different."
+},
+
+{
+q:"Find the odd one out: Apple, Orange, Mango, Table",
+options:["Apple","Orange","Mango","Table"],
+answer:3,
+type:"Meaning Classification",
+exp:"Apple, Orange and Mango are fruits. Table is an object/furniture. Therefore <b>Table</b> is the odd one."
+},
+
+{
+q:"Find the odd one out: Bus, Train, Car, Station",
+options:["Bus","Train","Car","Station"],
+answer:3,
+type:"Meaning Classification",
+exp:"Bus, Train and Car are modes of transport. Station is a place associated with transport, not a vehicle. Hence <b>Station</b>."
+},
+
+{
+q:"Find the odd one out: Pen, Book, Notebook, Classroom",
+options:["Pen","Book","Notebook","Classroom"],
+answer:3,
+type:"Meaning Classification",
+exp:"Pen, Book and Notebook are study materials. Classroom is a place. Hence <b>Classroom</b> is different."
+},
+
+{
+q:"Find the odd one out: Gold, Iron, Silver, Plastic",
+options:["Gold","Iron","Silver","Plastic"],
+answer:3,
+type:"Meaning Classification",
+exp:"Gold, Iron and Silver are metals. Plastic is a synthetic non-metallic material. Hence <b>Plastic</b>."
+},
+
+/* ================= MIXED ================= */
+
+{
+q:"Find the odd one out: 2, 3, 5, 7, 9",
+options:["2","3","7","9"],
+answer:3,
+type:"Mixed Classification",
+exp:"2, 3, 5 and 7 are prime numbers. 9 is composite. Therefore <b>9</b> is the odd one."
+},
+
+{
+q:"Find the odd one out: 16, 25, 36, 49, 60",
+options:["16","36","49","60"],
+answer:3,
+type:"Mixed Classification",
+exp:"16, 25, 36 and 49 are perfect squares. 60 is not a perfect square. Hence <b>60</b>."
+},
+
+{
+q:"Find the odd one out: 2, 6, 12, 20, 30, 41",
+options:["12","20","30","41"],
+answer:3,
+type:"Mixed Classification",
+exp:"2, 6, 12, 20 and 30 follow n(n+1): 1×2, 2×3, 3×4, 4×5, 5×6. The next should be 42, not 41. Hence <b>41</b>."
+},
+
+{
+q:"Find the odd one out: AB, BC, CD, EG",
+options:["AB","BC","CD","EG"],
+answer:3,
+type:"Mixed Classification",
+exp:"AB, BC and CD are consecutive alphabet pairs. EG has F between the letters. Hence <b>EG</b>."
+},
+
+{
+q:"Find the odd one out: 8, 27, 64, 100, 125",
+options:["8","27","100","125"],
+answer:2,
+type:"Mixed Classification",
+exp:"8, 27, 64 and 125 are perfect cubes. 100 is not a perfect cube. Therefore <b>100</b>."
+}
+
+];
+
+
+/* =========================================================
+   ADD BASE QUESTIONS
+========================================================= */
+
+baseQuestions.forEach(function(item){
+    questions.push(item);
+});
+
+
+/* =========================================================
+   WORD DATA
+========================================================= */
+
+const wordGroups = [
+
+{
+items:["Apple","Mango","Banana","Carrot"],
+odd:3
+},
+
+{
+items:["Rose","Lotus","Lily","Potato"],
+odd:3
+},
+
+{
+items:["Tiger","Lion","Leopard","Cow"],
+odd:3
+},
+
+{
+items:["Pen","Pencil","Eraser","Table"],
+odd:3
+},
+
+{
+items:["Gold","Silver","Copper","Wood"],
+odd:3
+},
+
+{
+items:["Bus","Train","Car","Chair"],
+odd:3
+},
+
+{
+items:["January","March","May","June"],
+odd:3
+},
+
+{
+items:["Dog","Cat","Cow","Eagle"],
+odd:3
+},
+
+{
+items:["Delhi","Mumbai","Kolkata","Nepal"],
+odd:3
+},
+
+{
+items:["Cricket","Football","Hockey","Chess"],
+odd:3
+},
+
+{
+items:["Mercury","Venus","Earth","Moon"],
+odd:3
+},
+
+{
+items:["Doctor","Teacher","Engineer","Hospital"],
+odd:3
+},
+
+{
+items:["Book","Pen","Pencil","Computer"],
+odd:3
+},
+
+{
+items:["Mango","Apple","Orange","Potato"],
+odd:3
+},
+
+{
+items:["Lion","Tiger","Bear","Parrot"],
+odd:3
+}
+
+];
+
+
+/* =========================================================
+   GENERATE WORD CLASSIFICATION
+========================================================= */
+
+let wordIndex=0;
+
+while(questions.length < 85){
+
+    const group =
+        wordGroups[
+            wordIndex %
+            wordGroups.length
+        ];
+
+    questions.push({
+
+        q:
+        "Find the odd one out from the following:",
+
+        options:
+        group.items,
+
+        answer:
+        group.odd,
+
+        type:
+        "Word Classification",
+
+        exp:
+        getWordExplanation(group.items,group.odd)
+
+    });
+
+    wordIndex++;
+
+}
+
+
+/* =========================================================
+   WORD EXPLANATION
+========================================================= */
+
+function getWordExplanation(items,odd){
+
+    const oddItem =
+        items[odd];
+
+    return `
+    Three items belong to the same category or group,
+    while <b>${oddItem}</b> does not belong to that group.
+    Therefore <b>${oddItem}</b> is the odd one out.
+    `;
+
+}
+
+
+/* =========================================================
+   NUMBER CLASSIFICATION
+========================================================= */
+
+const numberSets = [
+
+["4","9","16","20"],
+["8","27","64","100"],
+["11","13","17","21"],
+["12","18","24","35"],
+["15","21","27","40"],
+["16","25","36","50"],
+["2","4","8","15"],
+["3","9","27","80"],
+["10","20","30","45"],
+["7","14","21","32"],
+["1","4","9","18"],
+["25","36","49","60"],
+["14","28","42","50"],
+["18","24","30","37"],
+["6","12","18","25"],
+["5","10","15","22"],
+["20","40","60","75"],
+["9","18","27","35"],
+["24","48","72","90"],
+["13","26","39","50"]
+
+];
+
+
+let numberIndex=0;
+
+while(questions.length < 145){
+
+    const set =
+        numberSets[
+            numberIndex %
+            numberSets.length
+        ];
+
+    questions.push({
+
+        q:
+        "Find the odd number from the following:",
+
+        options:set,
+
+        answer:3,
+
+        type:
+        "Number Classification",
+
+        exp:
+        getNumberExplanation(set)
+
+    });
+
+    numberIndex++;
+
+}
+
+
+function getNumberExplanation(set){
+
+    const a =
+        Number(set[0]);
+
+    const b =
+        Number(set[1]);
+
+    const c =
+        Number(set[2]);
+
+    const d =
+        Number(set[3]);
+
+
+    let rule="";
+
+
+    if(
+        Number.isInteger(Math.sqrt(a)) &&
+        Number.isInteger(Math.sqrt(b)) &&
+        Number.isInteger(Math.sqrt(c))
+    ){
+
+        rule=
+        "The first three numbers are perfect squares, while the fourth is not.";
+
+    }
+
+    else if(
+        a%3===0 &&
+        b%3===0 &&
+        c%3===0 &&
+        d%3!==0
+    ){
+
+        rule=
+        "The first three numbers are divisible by 3, whereas the fourth is not.";
+
+    }
+
+    else if(
+        a%6===0 &&
+        b%6===0 &&
+        c%6===0 &&
+        d%6!==0
+    ){
+
+        rule=
+        "The first three numbers are divisible by 6, while the fourth is not.";
+
+    }
+
+    else{
+
+        rule=
+        "The first three numbers follow the same numerical property, while the fourth breaks that property.";
+
+    }
+
+
+    return rule +
+    " Therefore <b>"+set[3]+"</b> is the odd number.";
+
+}
+
+
+/* =========================================================
+   ALPHABET CLASSIFICATION
+========================================================= */
+
+const alphabetSets=[
+
+["AB","CD","EF","GI"],
+["MN","OP","QR","TV"],
+["AB","BC","CD","EG"],
+["DE","FG","HI","JL"],
+["PQ","RS","TU","WY"],
+["AZ","BY","CX","DU"],
+["LM","NO","PQ","SU"],
+["BC","DE","FG","IK"],
+["JK","LM","NO","PR"],
+["UV","WX","YZ","AC"]
+
+];
+
+
+let alphabetIndex=0;
+
+while(questions.length < 200){
+
+    const set =
+        alphabetSets[
+            alphabetIndex %
+            alphabetSets.length
+        ];
+
+    questions.push({
+
+        q:
+        "Find the odd pair of letters:",
+
+        options:set,
+
+        answer:3,
+
+        type:
+        "Alphabet Classification",
+
+        exp:
+        "The first three pairs follow a common alphabetic relationship, generally consecutive or regularly spaced letters. The fourth pair breaks that relationship. Hence <b>"+set[3]+"</b> is the odd pair."
+
+    });
+
+    alphabetIndex++;
+
+}
+
+
+/* =========================================================
+   MEANING CLASSIFICATION
+========================================================= */
+
+const meaningSets=[
+
+["Doctor","Nurse","Teacher","Hospital"],
+["Bus","Train","Car","Station"],
+["Pen","Book","Notebook","Classroom"],
+["Gold","Iron","Silver","Plastic"],
+["Apple","Orange","Mango","Chair"],
+["Dog","Cat","Cow","Eagle"],
+["Rose","Lily","Lotus","Potato"],
+["Cricket","Football","Hockey","Chess"],
+["Delhi","Mumbai","Kolkata","Nepal"],
+["Tiger","Lion","Leopard","Goat"],
+["Chair","Table","Bed","Teacher"],
+["India","Nepal","Bhutan","Delhi"],
+["Hospital","School","College","Doctor"],
+["Apple","Banana","Mango","Carrot"],
+["Gold","Copper","Iron","Wood"]
+
+];
+
+
+let meaningIndex=0;
+
+while(questions.length < 250){
+
+    const set =
+        meaningSets[
+            meaningIndex %
+            meaningSets.length
+        ];
+
+    questions.push({
+
+        q:
+        "Find the word which is different from the remaining three:",
+
+        options:set,
+
+        answer:3,
+
+        type:
+        "Meaning Classification",
+
+        exp:
+        "The first three words belong to the same conceptual category, while <b>"+set[3]+"</b> belongs to a different category. Therefore <b>"+set[3]+"</b> is the correct answer."
+
+    });
+
+    meaningIndex++;
+
+}
+
+
+/* =========================================================
+   MIXED CLASSIFICATION
+========================================================= */
+
+const mixedSets=[
+
+["2","3","5","9"],
+["4","9","16","20"],
+["8","27","64","100"],
+["AB","BC","CD","EG"],
+["AZ","BY","CX","DU"],
+["16","25","36","60"],
+["7","14","21","32"],
+["1","4","9","20"],
+["11","13","17","21"],
+["12","18","24","35"],
+["CAT","DOG","COW","TABLE"],
+["APPLE","MANGO","BANANA","PENCIL"],
+["ROSE","LILY","LOTUS","CAR"],
+["GOLD","SILVER","IRON","WOOD"],
+["BUS","TRAIN","CAR","HOUSE"]
+
+];
+
+
+let mixedIndex=0;
+
+while(questions.length < 320){
+
+    const set =
+        mixedSets[
+            mixedIndex %
+            mixedSets.length
+        ];
+
+    questions.push({
+
+        q:
+        "Find the odd one out:",
+
+        options:set,
+
+        answer:3,
+
+        type:
+        "Mixed Classification",
+
+        exp:
+        "The first three options share a common logical, numerical, alphabetic or categorical property. The fourth option does not follow that property. Hence <b>"+set[3]+"</b> is the odd one out."
+
+    });
+
+    mixedIndex++;
+
+}
+
+
+/* =========================================================
+   SHUFFLE QUESTION ORDER
+========================================================= */
+
+function shuffleArray(array){
+
+    for(
+        let i=array.length-1;
+        i>0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random()*(i+1)
+            );
+
+        [
+            array[i],
+            array[j]
+        ]=[
+            array[j],
+            array[i]
+        ];
+
+    }
+
+}
+
+
+/*
+Do not shuffle.
+Keeping questions in a stable order
+is better for SSC topic practice.
+*/
+
+
+/* =========================================================
+   QUIZ VARIABLES
+========================================================= */
+
+const container =
+document.getElementById(
+    "questionsContainer"
+);
+
+const search =
+document.getElementById(
+    "search"
+);
+
+const filter =
+document.getElementById(
+    "filter"
+);
+
+const attemptText =
+document.getElementById(
+    "attemptText"
+);
+
+const scoreText =
+document.getElementById(
+    "scoreText"
+);
+
+const progressBar =
+document.getElementById(
+    "progressBar"
+);
+
+
+let attempted =
+new Set();
+
+let score=0;
+
+
+/* =========================================================
+   RENDER QUESTIONS
+========================================================= */
+
+function renderQuestions(){
+
+    container.innerHTML="";
+
+    const keyword =
+        search.value
+        .toLowerCase()
+        .trim();
+
+    const selectedType =
+        filter.value;
+
+
+    questions.forEach(
+        function(question,index){
+
+            if(
+                selectedType !== "all" &&
+                question.type !== selectedType
+            ){
+
+                return;
+
+            }
+
+
+            const searchableText =
+            (
+                question.q+
+                " "+
+                question.options.join(" ")+
+                " "+
+                question.exp
+            )
+            .toLowerCase();
+
+
+            if(
+                keyword &&
+                !searchableText.includes(keyword)
+            ){
+
+                return;
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "question-card";
+
+
+            card.id =
+                "question-"+index;
+
+
+            let optionsHTML="";
+
+
+            question.options.forEach(
+                function(option,optIndex){
+
+                    optionsHTML += `
+
+                    <button
+                    class="option"
+                    onclick="
+                    checkAnswer(
+                    ${index},
+                    ${optIndex},
+                    this
+                    )
+                    ">
+
+                    (${String.fromCharCode(
+                        65+optIndex
+                    )})
+                    ${option}
+
+                    </button>
+
+                    `;
+
+                }
+            );
+
+
+            card.innerHTML=`
+
+            <div class="question-top">
+
+                <span class="question-number">
+                    Q${index+1}
+                </span>
+
+                <span class="question-type">
+                    ${question.type}
+                </span>
+
+            </div>
+
+
+            <div class="question-body">
+
+                <div class="question-text">
+                    ${question.q}
+                </div>
+
+                <div class="options">
+                    ${optionsHTML}
+                </div>
+
+                <div
+                class="answer-result"
+                id="result-${index}">
+                </div>
+
+                <div
+                class="explanation"
+                id="explanation-${index}">
+
+                    <div class="explanation-title">
+                        💡 Detailed Explanation
+                    </div>
+
+                    ${question.exp}
+
+                </div>
+
+            </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CHECK ANSWER
+========================================================= */
+
+function checkAnswer(
+    questionIndex,
+    selectedIndex,
+    clickedButton
+){
+
+    if(
+        attempted.has(questionIndex)
+    ){
+
+        return;
+
+    }
+
+
+    attempted.add(
+        questionIndex
+    );
+
+
+    const question =
+        questions[questionIndex];
+
+
+    const card =
+        document.getElementById(
+            "question-"+questionIndex
+        );
+
+
+    const buttons =
+        card.querySelectorAll(
+            ".option"
+        );
+
+
+    buttons.forEach(
+        function(button,index){
+
+            if(
+                index ===
+                question.answer
+            ){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+        }
+    );
+
+
+    const result =
+        document.getElementById(
+            "result-"+questionIndex
+        );
+
+
+    if(
+        selectedIndex ===
+        question.answer
+    ){
+
+        score++;
+
+        result.innerHTML =
+        "✅ Correct Answer";
+
+        result.style.color =
+        "#16a34a";
+
+    }
+
+    else{
+
+        clickedButton.classList.add(
+            "wrong"
+        );
+
+        result.innerHTML =
+        "❌ Incorrect Answer — Correct answer is highlighted.";
+
+        result.style.color =
+        "#dc2626";
+
+    }
+
+
+    document
+    .getElementById(
+        "explanation-"+questionIndex
+    )
+    .classList.add(
+        "show"
+    );
+
+
+    updateProgress();
+
+}
+
+
+/* =========================================================
+   UPDATE PROGRESS
+========================================================= */
+
+function updateProgress(){
+
+    attemptText.innerText =
+    `Attempted: ${attempted.size} / ${questions.length}`;
+
+    scoreText.innerText =
+    `Score: ${score}`;
+
+
+    const percentage =
+    (
+        attempted.size /
+        questions.length
+    )*100;
+
+
+    progressBar.style.width =
+    percentage+"%";
+
+}
+
+
+/* =========================================================
+   SHOW EXPLANATIONS
+========================================================= */
+
+function showAllExplanations(){
+
+    document
+    .querySelectorAll(
+        ".explanation"
+    )
+    .forEach(
+        function(element){
+
+            element.classList.add(
+                "show"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetQuiz(){
+
+    attempted.clear();
+
+    score=0;
+
+    renderQuestions();
+
+    updateProgress();
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+search.addEventListener(
+    "input",
+    renderQuestions
+);
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+filter.addEventListener(
+    "change",
+    renderQuestions
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+renderQuestions();
+
+updateProgress();
+
+</script>
+
+</body>
+</html>

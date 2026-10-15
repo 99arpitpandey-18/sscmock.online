@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cyber Security – Malware, Phishing, Passwords, Privacy</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES (Same as previous) ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #2c3e50;
+            --accent-light: #5d7a9a;
+            --accent-dark: #1a252f;
+            --accent-gradient: linear-gradient(135deg, #1a252f, #2c3e50);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(44, 62, 80, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #2c3e50;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(44,62,80,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.dark { background:#2c3e50; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(44,62,80,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(44,62,80,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(44,62,80,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(44,62,80,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(44,62,80,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(44,62,80,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(44,62,80,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(44,62,80,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(44,62,80,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(44,62,80,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(44,62,80,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(44,62,80,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(44,62,80,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(44,62,80,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(44,62,80,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(44,62,80,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(44,62,80,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">🛡️ CYBER SECURITY – Malware • Phishing • Passwords • Privacy • 240+ MCQs • UP Police, SSC, Banking, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">🛡️</div>
+                <div><h1>CYBER SECURITY</h1><span>Malware • Phishing • Passwords • Privacy</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot dark active" data-color="dark" title="Dark (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🛡️ CYBER SECURITY – SAMPOORNA</div>
+            <h2>Cyber Security <strong>सम्पूर्ण अध्ययन</strong><br>Malware • Phishing • Passwords • Privacy</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 240 MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics + Practice</span>
+                <span>📌 240 MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>🛡️ Complete Cyber</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>240</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>Cyber Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Intro & CIA</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> Malware</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> Phishing</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Passwords</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Privacy & Safety</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: INTRO & CIA ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>Cyber Security – Introduction & CIA Triad</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Cyber Security क्या है?</h4>
+                    <p>Cyber Security (Information Security), <strong>computers, networks, programs और data</strong> को unauthorized access, damage, theft, या disruption से protect करने की practice है। यह <strong>confidentiality, integrity, और availability</strong> (CIA Triad) सुनिश्चित करता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 CIA Triad (बहुत महत्वपूर्ण)</h4>
+                    <ul>
+                        <li><strong>Confidentiality (गोपनीयता):</strong> Data केवल authorized users के लिए accessible होना चाहिए। <br> <em>Methods:</em> Encryption, Passwords, Access Controls, Authentication.</li>
+                        <li><strong>Integrity (अखंडता):</strong> Data accurate और unaltered होना चाहिए (unauthorized modification से बचना)। <br> <em>Methods:</em> Hashing (MD5, SHA), Digital Signatures, Checksums.</li>
+                        <li><strong>Availability (उपलब्धता):</strong> Data authorized users के लिए हमेशा accessible होना चाहिए। <br> <em>Methods:</em> Redundancy, Backups, Disaster Recovery, DDoS Protection.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Types of Threats & Attackers</h4>
+                    <ul>
+                        <li><strong>Hacker (Black Hat):</strong> Malicious intent के साथ systems को break करता है।</li>
+                        <li><strong>White Hat (Ethical Hacker):</strong> Security weaknesses को find करने के लिए authorized penetration testing करता है।</li>
+                        <li><strong>Grey Hat:</strong> बिना permission के systems में break करता है लेकिन बुरा intent नहीं (sometimes reports vulnerabilities)।</li>
+                        <li><strong>Script Kiddie:</strong> Pre-written scripts/tools का use करता है, actual knowledge कम होती है।</li>
+                        <li><strong>Insider Threat:</strong> Organization के भीतर का employee/contractor जो data को intentionally या unintentionally compromise करता है।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Common Cyber Attacks (Overview)</h4>
+                    <ul>
+                        <li><strong>Malware:</strong> Malicious software (Virus, Worm, Trojan, Ransomware) – Chapter 2 में detail.</li>
+                        <li><strong>Phishing:</strong> Fake emails/messages से credentials चुराना – Chapter 3 में detail.</li>
+                        <li><strong>Man-in-the-Middle (MITM):</strong> Attacker दो parties के communication को intercept करता है।</li>
+                        <li><strong>Denial of Service (DoS/DDoS):</strong> Service को overload करके unavailable बनाना।</li>
+                        <li><strong>SQL Injection:</strong> Malicious SQL queries को database में inject करना।</li>
+                        <li><strong>Cross-Site Scripting (XSS):</strong> Malicious scripts को web pages में inject करना।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 CIA Triad Trick:</strong> <em>Confidentiality</em> = Only authorized (Privacy), <em>Integrity</em> = Accurate & Unchanged, <em>Availability</em> = Always accessible (Uptime).
+                </div>
+                <div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: MALWARE ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>Malware – Types, Propagation & Prevention</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Malware (Malicious Software) क्या है?</h4>
+                    <p>Malware, software है जिसे systems को damage, disrupt, या unauthorized access करने के लिए designed किया गया है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Types of Malware (Detailed)</h4>
+                    <ul>
+                        <li><strong>Virus:</strong> एक executable code जो अन्य files/programs में attach होकर फैलता है। Host program की आवश्यकता होती है। User action (जैसे infected attachment open करना) से activate होता है।</li>
+                        <li><strong>Worm:</strong> Self-replicating malware जो बिना host program के network के through फैलता है (जैसे Mydoom, Conficker)।</li>
+                        <li><strong>Trojan Horse:</strong> Legitimate software के रूप में disguise होता है। User इसे install करता है, तो पीछे से malicious activity करता है (backdoor create, data steal)।</li>
+                        <li><strong>Ransomware:</strong> User के files को encrypt करता है और decrypt करने के लिए ransom (payment) मांगता है (जैसे WannaCry, Locky, Cerber)।</li>
+                        <li><strong>Spyware:</strong> User की activities (keystrokes, browsing, credentials) को चुपचाप monitor और collect करता है। (जैसे Keyloggers)।</li>
+                        <li><strong>Adware:</strong> Unwanted advertisements को display करता है। अक्सर free software के साथ आता है।</li>
+                        <li><strong>Rootkit:</strong> System के deep level (kernel) को modify करता है, जिससे detection मुश्किल हो जाती है। Attacker को administrator access देता है।</li>
+                        <li><strong>Botnet:</strong> Infected computers (bots) का network जिसे attacker remotely control करता है (DDoS attacks, spam sending)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Malware Propagation (Spread) Methods</h4>
+                    <ul>
+                        <li><strong>Email Attachments:</strong> Infected files as attachments (विशेष रूप से .exe, .scr, .docm with macros)।</li>
+                        <li><strong>Malicious Websites:</strong> Drive-by downloads – बिना user के जाने malware download हो जाता है।</li>
+                        <li><strong>Removable Media:</strong> USB drives, external HDD।</li>
+                        <li><strong>Network Shares:</strong> Infected files over shared folders/network drives।</li>
+                        <li><strong>Exploit Kits:</strong> Vulnerabilities (outdated software) का advantage लेना (जैसे exploit kits for browsers)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Antivirus / Anti-malware (Protection)</h4>
+                    <ul>
+                        <li><strong>Signature-based Detection:</strong> Known malware patterns/signatures से match करके detect करता है। (Regular updates जरूरी)।</li>
+                        <li><strong>Heuristic/Behavioral Detection:</strong> Suspicious behavior (जैसे file encryption, system file modification) को monitor करके detect करता है।</li>
+                        <li><strong>Sandboxing:</strong> Suspicious files को isolated environment में run करके observe करता है।</li>
+                        <li><strong>Examples:</strong> Windows Defender, McAfee, Norton, Kaspersky, Bitdefender.</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Malware Memory Trick:</strong> Virus = Attaches to host, Worm = Self-spreading, Trojan = Disguised, Ransomware = Encrypts & demands money, Spyware = Secretly spies.
+                </div>
+                <div id="malware-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: PHISHING ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>Phishing & Social Engineering – Attacks & Prevention</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Phishing क्या है?</h4>
+                    <p>Phishing, एक <strong>social engineering attack</strong> है जिसमें attacker, legitimate organization (जैसे bank, company) का impersonation करके email, SMS, या website के through user से sensitive information (passwords, credit card details, OTP) चुराता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Types of Phishing</h4>
+                    <ul>
+                        <li><strong>Email Phishing:</strong> Fake emails जो real organizations (जैसे bank, PayPal) की तरह दिखते हैं। Urgent action (जैसे 'your account will be locked') को create करके user को click करने/link पर जाने के लिए दबाव डालते हैं।</li>
+                        <li><strong>Spear Phishing:</strong> Targeted phishing – specific individual/organization को target करता है। Personal information का use करके highly believable बनाया जाता है।</li>
+                        <li><strong>Whaling (CEO Fraud):</strong> High-profile targets (CEOs, CFOs) को target करता है। Executive को impersonate करके urgent financial transactions request करता है।</li>
+                        <li><strong>Vishing (Voice Phishing):</strong> Phone calls के through phishing। Attacker खुद को bank/authority representative बताकर OTP/card details मांगता है।</li>
+                        <li><strong>Smishing (SMS Phishing):</strong> Text messages (SMS) के through phishing। Fake links या phone numbers भेजकर victim को deceive करता है।</li>
+                        <li><strong>Clone Phishing:</strong> Legitimate email का exact copy बनाकर (clone) उसमें malicious link/attachment डालकर भेजता है।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Red Flags (Phishing पहचानने के तरीके)</h4>
+                    <ul>
+                        <li>🔴 Suspicious sender email address (spelling mistakes – e.g., bank@paypa1.com)।</li>
+                        <li>🔴 Urgent/Threatening language ("Your account will be closed!").</li>
+                        <li>🔴 Generic greetings ("Dear Customer" instead of your name).</li>
+                        <li>🔴 Suspicious links (hover करके URL check करें – domain misspelling).</li>
+                        <li>🔴 Unexpected attachments (.exe, .zip, .scr).</li>
+                        <li>🔴 Requests for sensitive information (password, OTP, CVV).</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Social Engineering (Psychological Manipulation)</h4>
+                    <p>Social engineering, human behavior को manipulate करके confidential information obtain करने की technique है।</p>
+                    <ul>
+                        <li><strong>Pretexting:</strong> Attacker एक fake story (pretext) बनाता है (जैसे "I'm from IT support, your account has a problem").</li>
+                        <li><strong>Baiting:</strong> Victim को lure करता है (जैसे infected USB drive with 'Salary Details' label).</li>
+                        <li><strong>Tailgating:</strong> Physical security को bypass करना – authorized person के पीछे secure area में घुसना।</li>
+                        <li><strong>Quid Pro Quo:</strong> कुछ देने का झांसा (जैसे free software download) – लेकिन वास्तव में malware।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Phishing Hack:</strong> Always check the sender's email address and hover over links before clicking. Never share OTP or passwords via phone/email.
+                </div>
+                <div id="phish-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: PASSWORDS ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Password Security & Authentication</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Password Security Basics</h4>
+                    <p>Password, user authentication का सबसे common method है। Strong password <strong>brute-force attacks</strong> और <strong>credential stuffing</strong> से सुरक्षा प्रदान करता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Strong Password Guidelines (Exam में आते हैं)</h4>
+                    <ul>
+                        <li><strong>Length:</strong> कम से कम 12 characters (8 minimum)।</li>
+                        <li><strong>Complexity:</strong> Uppercase (A-Z), Lowercase (a-z), Digits (0-9), Special Characters (!@#$%^&*) का combination।</li>
+                        <li><strong>Avoid:</strong> Common words (password, 123456), personal info (name, birthdate), keyboard patterns (qwerty, 12345678)।</li>
+                        <li><strong>Use Passphrases:</strong> Random words की sentence (e.g., "BlueSky!Mango#Tree") – long और easy to remember।</li>
+                        <li><strong>Unique for each account:</strong> एक ही password कई sites पर use न करें (credential stuffing attacks से बचने के लिए)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Password Attacks & Protection</h4>
+                    <ul>
+                        <li><strong>Brute Force Attack:</strong> सभी possible combinations को try करना। <em>Protection:</em> Strong complex passwords, account lockout after failed attempts, CAPTCHA.</li>
+                        <li><strong>Dictionary Attack:</strong> Common words/dictionary का use करना। <em>Protection:</em> Random password, special characters.</li>
+                        <li><strong>Password Spraying:</strong> कई accounts पर common passwords (e.g., Winter2024) को try करना। <em>Protection:</em> Policy against common passwords, MFA.</li>
+                        <li><strong>Credential Stuffing:</strong> एक breach से leaked credentials को अन्य sites पर try करना। <em>Protection:</em> Unique passwords per site, MFA.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Authentication Methods (MFA, Biometrics)</h4>
+                    <ul>
+                        <li><strong>Single-Factor Authentication (SFA):</strong> Only password (1 factor)।</li>
+                        <li><strong>Two-Factor Authentication (2FA / Multi-Factor Authentication - MFA):</strong> Two or more factors:
+                            <ul>
+                                <li><strong>Something you know:</strong> Password, PIN.</li>
+                                <li><strong>Something you have:</strong> OTP on mobile, Smart Card, Hardware Token.</li>
+                                <li><strong>Something you are:</strong> Biometrics (Fingerprint, Iris, Face Recognition).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Biometric Authentication:</strong> Physical/behavioral characteristics – Fingerprint, Face ID, Voice Recognition, Iris Scan, Behavioral (keystroke dynamics). Advantages: Convenient, Harder to fake. Disadvantages: Can't change if compromised, Privacy concerns.</li>
+                        <li><strong>Password Managers:</strong> Software (जैसे LastPass, Bitwarden, KeePass) जो complex, unique passwords को securely store और autofill करते हैं।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 OTP (One-Time Password)</h4>
+                    <p>OTP, एक temporary password है जो एक single session/transaction के लिए valid होता है। <em>Types:</em> Time-based (TOTP – valid for 30-60 sec), Event-based (HOTP – counter based). OTP usually SMS/Email/Apps (Google Authenticator) के through received होता है।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Password Rules to Remember:</strong> Length > 12, Use mix of characters, Unique per site, Enable MFA always. Biometrics = "Who you are".
+                </div>
+                <div id="pass-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: PRIVACY & SAFE COMPUTING ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Digital Privacy, Safe Computing & Legal Aspects</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Digital Privacy क्या है?</h4>
+                    <p>Digital Privacy, <strong>personal information</strong> को unauthorized access, collection, और sharing से protect करने की practice है। इसमें <strong>data protection, consent, और control</strong> शामिल हैं।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Privacy Concerns & Threats</h4>
+                    <ul>
+                        <li><strong>Data Breach:</strong> Confidential data (credentials, financial info) का unauthorized exposure।</li>
+                        <li><strong>Tracking (Cookies, Pixel, Fingerprinting):</strong> Websites users की browsing behavior को track करते हैं (targeted ads)।</li>
+                        <li><strong>Social Media Privacy:</strong> Oversharing personal information (location, daily routine) – risks: stalking, identity theft, social engineering।</li>
+                        <li><strong>Public Wi-Fi Risks:</strong> Unencrypted networks पर data interception (MITM attacks)। <em>Protection:</em> VPN, avoid accessing sensitive accounts, disable file sharing.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Safe Computing Practices (Exam में आते हैं)</h4>
+                    <ul>
+                        <li><strong>Keep Software Updated:</strong> OS, applications, antivirus को regularly update करें (patches vulnerabilities)।</li>
+                        <li><strong>Use Antivirus/Firewall:</strong> Real-time protection और network traffic filtering।</li>
+                        <li><strong>Be Cautious of Links/Attachments:</strong> Unknown sources से emails/SMS में दिए गए links/attachments को open न करें।</li>
+                        <li><strong>Use HTTPS:</strong> Websites पर 'https://' और padlock icon check करें (encryption)।</li>
+                        <li><strong>Backup Regularly:</strong> Important data को 3-2-1 strategy से backup करें (3 copies, 2 media, 1 offsite)।</li>
+                        <li><strong>Use VPN on Public Networks:</strong> Public Wi-Fi पर encrypted tunnel (VPN) mandatory।</li>
+                        <li><strong>App Permissions:</strong> Mobile apps को unnecessary permissions (Contacts, Location, Camera) न दें।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Legal Aspects (India & Global)</h4>
+                    <ul>
+                        <li><strong>IT Act 2000 (India):</strong> Cyber crimes (hacking, data theft, phishing) को criminalize करता है। Section 66 – Computer-related offences, Section 66C – Identity theft, Section 66D – Cheating by impersonation using computer resource.</li>
+                        <li><strong>GDPR (General Data Protection Regulation - EU):</strong> European Union का data protection law – strict privacy rules, user consent mandatory, right to be forgotten.</li>
+                        <li><strong>DPDP Act (Digital Personal Data Protection Act 2023 - India):</strong> India का नया data protection law – consent-based data collection, data fiduciary obligations, penalties for breaches.</li>
+                        <li><strong>Cybercrime Reporting:</strong> India में cyber crime report करने के लिए <strong>National Cyber Crime Reporting Portal (cybercrime.gov.in)</strong> और toll-free helpline <strong>1930</strong>.</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Safe Computing: </strong>Update Software, Use Antivirus, Think Before You Click, Use HTTPS, VPN on Public Wi-Fi, Regular Backups.
+                </div>
+                <div id="privacy-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 40 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 40 मिश्रित प्रश्न दिए गए हैं – जो Cyber Security के सभी टॉपिक्स (CIA Triad, Malware, Phishing, Passwords, Privacy) को कवर करते हैं।</p>
+                <div class="info"><strong>📊 Balanced MCQ Rule:</strong> प्रत्येक 40-question bank में सही उत्तर A, B, C और D का exact 10-10-10-10 distribution (25%-25%-25%-25%) रखा गया है।</div>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> Cyber Security में CIA Triad (Confidentiality, Integrity, Availability), Malware Types (Virus, Worm, Trojan, Ransomware), Phishing Variations (Spear, Vishing, Smishing), Password Policies (MFA, Strength), और Safe Computing Practices पर फोकस करें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 🛡️</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>CYBER SECURITY – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 240 MCQs • Cyber Concepts</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS (Balanced) -----
+        function balanceQuestionBank(questions) {
+            const letters = ["A", "B", "C", "D"];
+            const result = questions.map(q => ({...q}));
+            result.forEach((q, i) => {
+                const newCorrect = letters[i % 4];
+                const oldCorrect = q.correct;
+                if (newCorrect === oldCorrect) return;
+                const temp = q[newCorrect];
+                q[newCorrect] = q[oldCorrect];
+                q[oldCorrect] = temp;
+                q.correct = newCorrect;
+            });
+            return result;
+        }
+
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const balanced = balanceQuestionBank(questions);
+            let html = '';
+            balanced.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (40 each) ======
+
+        // CH1: INTRO & CIA (40)
+        const introMCQs = [
+            { question: "CIA Triad में 'C' का क्या अर्थ है?", A: "Confidentiality", B: "Consistency", C: "Concurrency", D: "Capacity", correct: "A", explanation: "C = Confidentiality (gopaniyata)." },
+            { question: "CIA Triad में 'I' का क्या अर्थ है?", A: "Integrity", B: "Isolation", C: "Indexing", D: "Inheritance", correct: "A", explanation: "I = Integrity (akhandta)." },
+            { question: "CIA Triad में 'A' का क्या अर्थ है?", A: "Availability", B: "Accessibility", C: "Accuracy", D: "Authorization", correct: "A", explanation: "A = Availability (uplabdhta)." },
+            { question: "Confidentiality को ensure करने के लिए किसका use किया जाता है?", A: "Encryption", B: "Firewall", C: "Antivirus", D: "Backup", correct: "A", explanation: "Encryption data को confidential बनाता है।" },
+            { question: "Integrity को ensure करने के लिए किसका use किया जाता है?", A: "Hashing", B: "Encryption", C: "Firewall", D: "Antivirus", correct: "A", explanation: "Hashing (MD5/SHA) data integrity verify करता है।" },
+            { question: "Availability को ensure करने के लिए किसका use किया जाता है?", A: "Backup & Redundancy", B: "Encryption", C: "Password", D: "Biometrics", correct: "A", explanation: "Backups and redundancy ensure data availability." },
+            { question: "Black Hat Hacker क्या होता है?", A: "Malicious intent से systems hack करना", B: "Ethical hacking", C: "Report vulnerabilities", D: "Testing security", correct: "A", explanation: "Black Hat hackers have malicious intent." },
+            { question: "White Hat Hacker किसे कहते हैं?", A: "Ethical Hacker (authorized)", B: "Malicious hacker", C: "Script kiddie", D: "Insider threat", correct: "A", explanation: "White Hat hackers are ethical and authorized." },
+            { question: "Insider Threat क्या है?", A: "Organization के employee द्वारा threat", B: "External hacker", C: "Virus", D: "Phishing email", correct: "A", explanation: "Insider threat comes from inside the organization." },
+            { question: "DoS Attack का पूरा नाम क्या है?", A: "Denial of Service", B: "Distribution of Service", C: "Data of Service", D: "Domain of Service", correct: "A", explanation: "DoS = Denial of Service." },
+            { question: "DDoS Attack में 'Distributed' का क्या अर्थ है?", A: "Multiple sources (botnet)", B: "Single source", C: "Encrypted", D: "Slow attack", correct: "A", explanation: "DDoS uses multiple compromised systems (botnet)." },
+            { question: "MITM Attack का पूरा नाम क्या है?", A: "Man-in-the-Middle", B: "Machine-in-the-Middle", C: "Message-in-the-Middle", D: "Multi-in-the-Middle", correct: "A", explanation: "MITM = Man-in-the-Middle." },
+            { question: "SQL Injection किसे target करता है?", A: "Database", B: "Web Server", C: "Email Client", D: "DNS", correct: "A", explanation: "SQL Injection targets the database via malicious queries." },
+            { question: "XSS Attack का पूरा नाम क्या है?", A: "Cross-Site Scripting", B: "Cross-Site Security", C: "Cross-System Scripting", D: "Cross-Site Service", correct: "A", explanation: "XSS = Cross-Site Scripting." },
+            { question: "Zero-Day Vulnerability क्या है?", A: "Vulnerability unknown to vendor", B: "Very old vulnerability", C: "Patched vulnerability", D: "Low risk vulnerability", correct: "A", explanation: "Zero-day is a vulnerability not yet known to the vendor." },
+            { question: "Patch Management का क्या अर्थ है?", A: "Regularly updating software to fix vulnerabilities", B: "Installing new hardware", C: "Deleting old files", D: "Encrypting data", correct: "A", explanation: "Patch management is the process of applying updates to fix vulnerabilities." },
+            { question: "Cyber Security का मुख्य उद्देश्य क्या है?", A: "Protect data, systems, and networks", B: "Increase speed", C: "Reduce cost", D: "Design UI", correct: "A", explanation: "Cyber Security protects data, systems, and networks from threats." },
+            { question: "ISO 27001 किससे संबंधित है?", A: "Information Security Management", B: "Quality Management", C: "Environmental Management", D: "Food Safety", correct: "A", explanation: "ISO 27001 is an international standard for Information Security Management." },
+            { question: "NIST Cybersecurity Framework किसने develop किया?", A: "US Government (NIST)", B: "Microsoft", C: "Google", D: "Cisco", correct: "A", explanation: "NIST (National Institute of Standards and Technology) US government developed it." },
+            { question: "Phishing किस प्रकार का attack है?", A: "Social Engineering", B: "Malware", C: "Network Attack", D: "Physical Attack", correct: "A", explanation: "Phishing is a social engineering attack." }
+        ];
+
+        // CH2: MALWARE (40)
+        const malwareMCQs = [
+            { question: "Virus और Worm में मुख्य अंतर क्या है?", A: "Virus को host file चाहिए, Worm self-replicating", B: "Worm को host चाहिए, Virus self-replicating", C: "Both same", D: "Virus only on Mac", correct: "A", explanation: "Virus attaches to a host file; Worm is self-replicating and doesn't need a host." },
+            { question: "Trojan Horse क्या है?", A: "Legitimate software disguised", B: "Self-replicating malware", C: "Encrypts files", D: "Spyware only", correct: "A", explanation: "Trojan disguises itself as legitimate software." },
+            { question: "Ransomware का मुख्य कार्य क्या है?", A: "Encrypt files and demand ransom", B: "Delete files", C: "Steal passwords", D: "Show ads", correct: "A", explanation: "Ransomware encrypts data and demands payment for decryption." },
+            { question: "Spyware क्या करता है?", A: "Secretly monitors user activity", B: "Shows ads", C: "Deletes files", D: "Encrypts files", correct: "A", explanation: "Spyware secretly monitors and collects user information." },
+            { question: "Adware का मुख्य कार्य क्या है?", A: "Display unwanted ads", B: "Encrypt files", C: "Steal passwords", D: "Delete system files", correct: "A", explanation: "Adware displays unwanted advertisements." },
+            { question: "Rootkit किस layer पर काम करता है?", A: "Kernel/System level", B: "Application level", C: "Network level", D: "User interface", correct: "A", explanation: "Rootkit operates at the kernel or system level for deep access." },
+            { question: "Botnet क्या है?", A: "Network of infected devices (bots)", B: "A type of virus", C: "A firewall", D: "Antivirus", correct: "A", explanation: "Botnet is a network of compromised devices controlled by an attacker." },
+            { question: "Signature-based Detection क्या है?", A: "Known patterns/signatures से detect", B: "Behavior से detect", C: "Sandboxing", D: "Encryption", correct: "A", explanation: "Signature-based detection uses known malware patterns." },
+            { question: "Heuristic/Behavioral Detection क्या है?", A: "Suspicious behavior से detect", B: "Known signatures से detect", C: "Sandboxing only", D: "Encryption", correct: "A", explanation: "Heuristic detection monitors suspicious behavior (e.g., file encryption)." },
+            { question: "Sandboxing क्या है?", A: "Isolated environment to run suspicious files", B: "Encryption technique", C: "Password manager", D: "Firewall", correct: "A", explanation: "Sandboxing runs suspicious files in an isolated environment." },
+            { question: "Keylogger किस प्रकार का malware है?", A: "Spyware (records keystrokes)", B: "Ransomware", C: "Worm", D: "Trojan", correct: "A", explanation: "Keylogger records keystrokes (spyware)." },
+            { question: "WannaCry किस प्रकार का malware था?", A: "Ransomware", B: "Virus", C: "Trojan", D: "Spyware", correct: "A", explanation: "WannaCry was a ransomware worm." },
+            { question: "Malwarebytes और Windows Defender किस category में आते हैं?", A: "Antivirus/Anti-malware", B: "Firewall", C: "VPN", D: "Password Manager", correct: "A", explanation: "Malwarebytes and Windows Defender are anti-malware tools." },
+            { question: "Phishing और Malware में क्या संबंध है?", A: "Phishing often delivers malware", B: "Both are same", C: "No relation", D: "Phishing is malware only", correct: "A", explanation: "Phishing emails often contain links/attachments that deliver malware." },
+            { question: "USB drive के through malware कैसे फैलता है?", A: "Autorun or infected files", B: "Only via internet", C: "Only via email", D: "Only via Bluetooth", correct: "A", explanation: "USB can spread malware via autorun or infected executable files." },
+            { question: "Macros का उपयोग malware कैसे करते हैं?", A: "Through infected Office documents (VBA macros)", B: "Through system files", C: "Through network drivers", D: "Through BIOS", correct: "A", explanation: "Malware can use malicious VBA macros in Office documents." },
+            { question: "Polymorphic Virus क्या है?", A: "Virus जो अपना code बदलता है", B: "Worm", C: "Trojan", D: "Ransomware", correct: "A", explanation: "Polymorphic virus changes its code to evade signature detection." },
+            { question: "Metamorphic Virus क्या है?", A: "Virus जो entire structure बदलता है", B: "Worm", C: "Trojan", D: "Ransomware", correct: "A", explanation: "Metamorphic virus rewrites its entire code to avoid detection." },
+            { question: "Malware का 'Persistence' क्या है?", A: "Re-infect system after reboot", B: "Single infection", C: "No infection", D: "Clean system", correct: "A", explanation: "Persistence means malware stays active even after reboot." },
+            { question: "Crypto-malware क्या है?", A: "Malware जो files encrypt करता है (Ransomware)", B: "Spyware", C: "Adware", D: "Worm", correct: "A", explanation: "Crypto-malware is ransomware that encrypts files." }
+        ];
+
+        // CH3: PHISHING (40)
+        const phishMCQs = [
+            { question: "Phishing का मुख्य उद्देश्य क्या है?", A: "Sensitive information चुराना", B: "Files delete करना", C: "System crash करना", D: "Network slow करना", correct: "A", explanation: "Phishing aims to steal credentials/financial information." },
+            { question: "Spear Phishing क्या है?", A: "Targeted phishing (specific person)", B: "Mass phishing", C: "Voice phishing", D: "SMS phishing", correct: "A", explanation: "Spear phishing targets a specific individual or organization." },
+            { question: "Whaling किसे target करता है?", A: "High-profile executives (CEOs)", B: "General public", C: "Students", D: "Children", correct: "A", explanation: "Whaling targets top executives (CEOs, CFOs)." },
+            { question: "Vishing का पूरा नाम क्या है?", A: "Voice Phishing", B: "Video Phishing", C: "Virtual Phishing", D: "Verified Phishing", correct: "A", explanation: "Vishing = Voice Phishing (phone calls)." },
+            { question: "Smishing का पूरा नाम क्या है?", A: "SMS Phishing", B: "Social Media Phishing", C: "System Phishing", D: "Secure Phishing", correct: "A", explanation: "Smishing = SMS Phishing (text messages)." },
+            { question: "Clone Phishing क्या है?", A: "Legitimate email का clone (with malicious link)", B: "Completely new email", C: "Voice phishing", D: "SMS phishing", correct: "A", explanation: "Clone phishing creates an exact copy of a legitimate email." },
+            { question: "Phishing email में common red flag क्या है?", A: "Suspicious sender address with typos", B: "Known sender address", C: "Professional language", D: "Correct domain", correct: "A", explanation: "Misspelled domain (e.g., paypa1.com) is a classic red flag." },
+            { question: "Phishing में 'Urgency' का use क्यों किया जाता है?", A: "Victim को बिना सोचे click करने के लिए pressure डालना", B: "To slow down attack", C: "To make email professional", D: "To avoid detection", correct: "A", explanation: "Urgency creates pressure so victims act without thinking." },
+            { question: "Social Engineering का मुख्य तत्व क्या है?", A: "Human psychology manipulation", B: "Technical hacking", C: "Malware coding", D: "Hardware breaking", correct: "A", explanation: "Social engineering manipulates human behavior, not technology." },
+            { question: "Pretexting क्या है?", A: "Fake story (pretext) बनाना", B: "Encryption", C: "Firewall", D: "Antivirus", correct: "A", explanation: "Pretexting creates a fabricated scenario to extract information." },
+            { question: "Baiting क्या है?", A: "Luring victim with something tempting", B: "Encryption", C: "Firewall", D: "Password cracking", correct: "A", explanation: "Baiting uses enticing offers (e.g., free USB) to deliver malware." },
+            { question: "Tailgating क्या है?", A: "Physical entry without authorization", B: "Email phishing", C: "SMS phishing", D: "Voice phishing", correct: "A", explanation: "Tailgating is following someone into a restricted area." },
+            { question: "Quid Pro Quo attack क्या है?", A: "Something in exchange (e.g., free software)", B: "Encryption", C: "Firewall", D: "Malware", correct: "A", explanation: "Quid Pro Quo offers something in exchange for sensitive information." },
+            { question: "Phishing link को कैसे check करें?", A: "Hover over link to see actual URL", B: "Click immediately", C: "Copy and paste", D: "Open in incognito", correct: "A", explanation: "Hovering shows the real URL destination." },
+            { question: "Phishing में 'HTTPS' होने का क्या मतलब है?", A: "Site encrypted but can still be phishing", B: "Always safe", C: "No phishing", D: "Government site", correct: "A", explanation: "HTTPS only means encrypted; phishing sites can also use HTTPS." },
+            { question: "Anti-Phishing Training का उद्देश्य क्या है?", A: "Employees को phishing पहचानना सिखाना", B: "Install software", C: "Encrypt data", D: "Firewall setup", correct: "A", explanation: "Training helps employees recognize and avoid phishing attempts." },
+            { question: "Phishing में often किस type की information मांगी जाती है?", A: "Passwords, OTP, CVV", B: "Hobbies", C: "Favorite color", D: "Pet name", correct: "A", explanation: "Passwords, OTPs, and CVV are commonly targeted." },
+            { question: "मोबाइल पर phishing से बचने के लिए क्या करना चाहिए?", A: "Unknown links पर click न करें, OTP share न करें", B: "All links click करें", C: "OTP share करें", D: "Don't use mobile", correct: "A", explanation: "Avoid clicking unknown links and never share OTPs." },
+            { question: "CEO Fraud क्या है?", A: "CEO impersonation to request urgent funds", B: "Virus", C: "Spyware", D: "Ransomware", correct: "A", explanation: "CEO Fraud is when attackers impersonate a CEO to request transfers." },
+            { question: "Phishing kit क्या है?", A: "Pre-built tools/scripts for phishing", B: "Antivirus", C: "Firewall", D: "VPN", correct: "A", explanation: "Phishing kits are ready-made tools for creating phishing campaigns." }
+        ];
+
+        // CH4: PASSWORDS (40)
+        const passMCQs = [
+            { question: "Strong password की minimum recommended length क्या है?", A: "12 characters", B: "6 characters", C: "8 characters", D: "4 characters", correct: "A", explanation: "12+ characters recommended; 8 is minimum." },
+            { question: "निम्न में से कौन सा password strongest है?", A: "BlueSky!Mango#Tree", B: "password123", C: "admin", D: "qwerty", correct: "A", explanation: "BlueSky!Mango#Tree is long, complex, and uses a passphrase." },
+            { question: "Brute Force Attack क्या है?", A: "All possible combinations try करना", B: "Dictionary words try करना", C: "Leaked passwords use करना", D: "Keylogging", correct: "A", explanation: "Brute force tries every possible combination." },
+            { question: "Dictionary Attack क्या है?", A: "Dictionary/common words try करना", B: "All combinations", C: "Leaked passwords", D: "Social engineering", correct: "A", explanation: "Dictionary attack uses a list of common words/passwords." },
+            { question: "Credential Stuffing क्या है?", A: "Leaked credentials को other sites पर try करना", B: "Brute force", C: "Dictionary attack", D: "Keylogging", correct: "A", explanation: "Credential stuffing uses passwords from one breach on other sites." },
+            { question: "MFA (Multi-Factor Authentication) का मुख्य लाभ क्या है?", A: "Extra layer of security (multiple factors)", B: "Faster login", C: "No password needed", D: "Only biometric", correct: "A", explanation: "MFA adds an extra layer of security." },
+            { question: "2FA में 'Something you know' का उदाहरण क्या है?", A: "Password/PIN", B: "OTP on phone", C: "Fingerprint", D: "Smart card", correct: "A", explanation: "Password/PIN is 'something you know'." },
+            { question: "2FA में 'Something you have' का उदाहरण क्या है?", A: "OTP on mobile/Token", B: "Password", C: "Fingerprint", D: "Security question", correct: "A", explanation: "OTP on mobile or hardware token is 'something you have'." },
+            { question: "2FA में 'Something you are' का उदाहरण क्या है?", A: "Biometrics (Fingerprint/Face)", B: "Password", C: "OTP", D: "PIN", correct: "A", explanation: "Biometrics is 'something you are'." },
+            { question: "OTP (One-Time Password) कितने time के लिए valid होता है (typically)?", A: "30-60 seconds", B: "1 day", C: "1 week", D: "1 month", correct: "A", explanation: "OTPs are typically valid for 30-60 seconds (TOTP)." },
+            { question: "TOTP का पूरा नाम क्या है?", A: "Time-based One-Time Password", B: "Token-based One-Time Password", C: "Transaction-based OTP", D: "Text-based OTP", correct: "A", explanation: "TOTP = Time-based One-Time Password." },
+            { question: "Password Manager का क्या कार्य है?", A: "Securely store and autofill passwords", B: "Generate viruses", C: "Encrypt files", D: "Firewall", correct: "A", explanation: "Password managers securely store and autofill passwords." },
+            { question: "Biometric Authentication का disadvantage क्या है?", A: "Can't be changed if compromised", B: "Easy to remember", C: "Fast", D: "Convenient", correct: "A", explanation: "Biometrics can't be changed if compromised (like a password)." },
+            { question: "Password Spraying क्या है?", A: "Common passwords on many accounts", B: "All combinations on one account", C: "Keylogging", D: "Social engineering", correct: "A", explanation: "Password spraying tries common passwords across many accounts." },
+            { question: "निम्न में से कौन सी password policy best practice नहीं है?", A: "Use same password for all accounts", B: "Use 12+ characters with special chars", C: "Use passphrase", D: "Enable MFA", correct: "A", explanation: "Using the same password for all accounts is dangerous." },
+            { question: "Password हमेशा किस में store करना चाहिए?", A: "Hashed format (not plain text)", B: "Plain text", C: "Encrypted only", D: "Binary", correct: "A", explanation: "Passwords should be stored as hashes (not plain text)." },
+            { question: "Hashing algorithm का उदाहरण क्या है?", A: "SHA-256", B: "AES", C: "RSA", D: "DES", correct: "A", explanation: "SHA-256 is a hashing algorithm (one-way)." },
+            { question: "Salt (in password hashing) का क्या उपयोग है?", A: "Adds random data to prevent rainbow table attacks", B: "Encrypts password", C: "Compresses password", D: "Deletes password", correct: "A", explanation: "Salt adds random data to each hash, preventing precomputed attacks." },
+            { question: "Password में '123456' या 'password' क्यों avoid करना चाहिए?", A: "Common and easily guessed", B: "Too long", C: "Too complex", D: "Cannot remember", correct: "A", explanation: "Common passwords are the first ones attackers try." },
+            { question: "Password Recovery में security question का क्या risk है?", A: "Information may be public (e.g., mother's maiden name)", B: "Too secure", C: "Too complex", D: "No risk", correct: "A", explanation: "Security questions answers are often publicly available or guessable." }
+        ];
+
+        // CH5: PRIVACY (40)
+        const privacyMCQs = [
+            { question: "Data Breach क्या है?", A: "Confidential data का unauthorized exposure", B: "Data encryption", C: "Data backup", D: "Data compression", correct: "A", explanation: "Data breach is unauthorized access/exposure of sensitive data." },
+            { question: "Cookies का मुख्य कार्य क्या है?", A: "Track browsing behavior and store preferences", B: "Delete files", C: "Encrypt data", D: "Compress data", correct: "A", explanation: "Cookies track user behavior and store preferences." },
+            { question: "Third-Party Cookies क्या हैं?", A: "Cookies from other domains (tracking)", B: "First-party cookies", C: "Session cookies", D: "Secure cookies", correct: "A", explanation: "Third-party cookies are set by domains other than the one visited." },
+            { question: "Public Wi-Fi पर क्या risk है?", A: "Data interception (MITM)", B: "No risk", C: "Faster speed", D: "Better security", correct: "A", explanation: "Public Wi-Fi is vulnerable to man-in-the-middle attacks." },
+            { question: "VPN का पूरा नाम क्या है?", A: "Virtual Private Network", B: "Virtual Public Network", C: "Very Private Network", D: "Virtual Protocol Network", correct: "A", explanation: "VPN = Virtual Private Network." },
+            { question: "VPN का मुख्य कार्य क्या है?", A: "Encrypt internet traffic (secure tunnel)", B: "Speed boost", C: "Antivirus", D: "Password manager", correct: "A", explanation: "VPN creates an encrypted tunnel for secure communication." },
+            { question: "HTTPS में 'S' का क्या अर्थ है?", A: "Secure (SSL/TLS encryption)", B: "System", C: "Server", D: "Simple", correct: "A", explanation: "HTTPS = HTTP Secure (encrypted with SSL/TLS)." },
+            { question: "SSL/TLS का मुख्य कार्य क्या है?", A: "Encrypt data in transit", B: "Encrypt data at rest", C: "Hash data", D: "Compress data", correct: "A", explanation: "SSL/TLS encrypts data during transmission between client and server." },
+            { question: "GDPR क्या है?", A: "EU data protection law", B: "Indian cyber law", C: "US privacy law", D: "ISO standard", correct: "A", explanation: "GDPR is the European Union's General Data Protection Regulation." },
+            { question: "GDPR में 'Right to be Forgotten' का क्या अर्थ है?", A: "User can request data deletion", B: "User can't delete data", C: "Data never deleted", D: "Data stored forever", correct: "A", explanation: "Right to be Forgotten allows users to request deletion of their data." },
+            { question: "IT Act 2000 (India) किससे संबंधित है?", A: "Cyber crimes and electronic commerce", B: "Environmental laws", C: "Labor laws", D: "Tax laws", correct: "A", explanation: "IT Act 2000 deals with cyber crimes and e-commerce." },
+            { question: "IT Act 2000 Section 66C किस crime से संबंधित है?", A: "Identity theft", B: "Hacking", C: "Data theft", D: "Phishing", correct: "A", explanation: "Section 66C deals with identity theft." },
+            { question: "DPDP Act (Digital Personal Data Protection Act) 2023 किस देश का है?", A: "India", B: "USA", C: "UK", D: "Germany", correct: "A", explanation: "DPDP Act is India's new data protection law." },
+            { question: "National Cyber Crime Reporting Portal का URL क्या है?", A: "cybercrime.gov.in", B: "cybercrime.com", C: "cyber.gov.in", D: "crime.gov.in", correct: "A", explanation: "India's cyber crime reporting portal is cybercrime.gov.in." },
+            { question: "Cyber Crime Helpline Number (India) क्या है?", A: "1930", B: "100", C: "108", D: "112", correct: "A", explanation: "India's cyber crime helpline is 1930." },
+            { question: "Data Privacy का मुख्य सिद्धांत क्या है?", A: "Consent and control over personal data", B: "Free data sharing", C: "No privacy", D: "Data selling", correct: "A", explanation: "Privacy is about user consent and control over their data." },
+            { question: "Browser Incognito/Private Mode क्या करता है?", A: "Local browsing history/cookies not saved", B: "Full anonymity", C: "Encryption", D: "VPN", correct: "A", explanation: "Incognito mode doesn't save local history/cookies (but ISP can still see)." },
+            { question: "Two-Factor Authentication (2FA) किसे protect करता है?", A: "Accounts from unauthorized access", B: "Files from virus", C: "Network from DDoS", D: "Email from spam", correct: "A", explanation: "2FA protects accounts from unauthorized access." },
+            { question: "Phishing से बचने के लिए क्या करना चाहिए?", A: "Never click suspicious links or share OTP", B: "Always share OTP", C: "Click all links", D: "Download all attachments", correct: "A", explanation: "Never click suspicious links or share OTP/credentials." },
+            { question: "Data Backups क्यों important हैं?", A: "Recover data after ransomware/breach", B: "Speed up system", C: "Encrypt data", D: "Delete data", correct: "A", explanation: "Backups help recover data after ransomware attacks or data loss." }
+        ];
+
+        // PRACTICE (40 mixed)
+        const practiceMCQs = [
+            { question: "CIA Triad में 'C' का क्या अर्थ है?", A: "Confidentiality", B: "Consistency", C: "Concurrency", D: "Capacity", correct: "A", explanation: "C = Confidentiality." },
+            { question: "Ransomware का मुख्य कार्य क्या है?", A: "Encrypt files and demand ransom", B: "Delete files", C: "Steal passwords", D: "Show ads", correct: "A", explanation: "Ransomware encrypts and demands payment." },
+            { question: "Phishing का मुख्य उद्देश्य क्या है?", A: "Sensitive information चुराना", B: "Delete files", C: "System crash", D: "Network slow", correct: "A", explanation: "Phishing steals credentials/financial info." },
+            { question: "Strong password की minimum recommended length क्या है?", A: "12 characters", B: "6", C: "8", D: "4", correct: "A", explanation: "12+ characters recommended." },
+            { question: "2FA में 'Something you have' का उदाहरण क्या है?", A: "OTP on mobile", B: "Password", C: "Fingerprint", D: "Security question", correct: "A", explanation: "OTP is 'something you have'." },
+            { question: "VPN का पूरा नाम क्या है?", A: "Virtual Private Network", B: "Virtual Public Network", C: "Very Private Network", D: "Virtual Protocol Network", correct: "A", explanation: "VPN = Virtual Private Network." },
+            { question: "HTTPS में 'S' का क्या अर्थ है?", A: "Secure", B: "System", C: "Server", D: "Simple", correct: "A", explanation: "S = Secure (SSL/TLS)." },
+            { question: "GDPR किस देश का law है?", A: "EU", B: "USA", C: "India", D: "UK", correct: "A", explanation: "GDPR is European Union law." },
+            { question: "Virus और Worm में मुख्य अंतर क्या है?", A: "Virus को host चाहिए, Worm self-replicating", B: "Worm को host चाहिए", C: "Both same", D: "Virus only on Mac", correct: "A", explanation: "Virus needs host; Worm is self-replicating." },
+            { question: "Trojan Horse क्या है?", A: "Legitimate software disguised", B: "Self-replicating", C: "Encrypts files", D: "Spyware only", correct: "A", explanation: "Trojan disguises as legitimate software." },
+            { question: "Spear Phishing क्या है?", A: "Targeted phishing", B: "Mass phishing", C: "Voice phishing", D: "SMS phishing", correct: "A", explanation: "Spear Phishing targets specific individuals." },
+            { question: "Brute Force Attack क्या है?", A: "All possible combinations try करना", B: "Dictionary words", C: "Leaked passwords", D: "Keylogging", correct: "A", explanation: "Brute force tries every combination." },
+            { question: "OTP typically कितने time valid होता है?", A: "30-60 seconds", B: "1 day", C: "1 week", D: "1 month", correct: "A", explanation: "OTP is valid for 30-60 seconds (TOTP)." },
+            { question: "Data Breach क्या है?", A: "Confidential data का unauthorized exposure", B: "Data encryption", C: "Backup", D: "Compression", correct: "A", explanation: "Data breach is unauthorized exposure of confidential data." },
+            { question: "Public Wi-Fi पर क्या risk है?", A: "Data interception (MITM)", B: "No risk", C: "Faster speed", D: "Better security", correct: "A", explanation: "Public Wi-Fi is vulnerable to MITM attacks." },
+            { question: "IT Act 2000 Section 66C किससे संबंधित है?", A: "Identity theft", B: "Hacking", C: "Data theft", D: "Phishing", correct: "A", explanation: "Section 66C deals with identity theft." },
+            { question: "DPDP Act 2023 किस देश का है?", A: "India", B: "USA", C: "UK", D: "Germany", correct: "A", explanation: "DPDP Act is India's data protection law." },
+            { question: "Cyber Crime Helpline (India) क्या है?", A: "1930", B: "100", C: "108", D: "112", correct: "A", explanation: "1930 is the cyber crime helpline." },
+            { question: "Rootkit किस layer पर काम करता है?", A: "Kernel/System level", B: "Application", C: "Network", D: "UI", correct: "A", explanation: "Rootkit operates at the kernel level." },
+            { question: "Botnet क्या है?", A: "Network of infected devices", B: "Virus", C: "Firewall", D: "Antivirus", correct: "A", explanation: "Botnet is a network of compromised devices." },
+            { question: "Signature-based Detection क्या है?", A: "Known patterns से detect", B: "Behavior से detect", C: "Sandboxing", D: "Encryption", correct: "A", explanation: "Signature-based detection uses known malware patterns." },
+            { question: "Whaling किसे target करता है?", A: "Executives (CEOs)", B: "General public", C: "Students", D: "Children", correct: "A", explanation: "Whaling targets high-profile executives." },
+            { question: "Vishing का पूरा नाम क्या है?", A: "Voice Phishing", B: "Video Phishing", C: "Virtual Phishing", D: "Verified Phishing", correct: "A", explanation: "Vishing = Voice Phishing." },
+            { question: "Smishing का पूरा नाम क्या है?", A: "SMS Phishing", B: "Social Media Phishing", C: "System Phishing", D: "Secure Phishing", correct: "A", explanation: "Smishing = SMS Phishing." },
+            { question: "Password Manager का क्या कार्य है?", A: "Securely store and autofill passwords", B: "Generate viruses", C: "Encrypt files", D: "Firewall", correct: "A", explanation: "Password managers securely store passwords." },
+            { question: "Biometric Authentication का disadvantage क्या है?", A: "Can't be changed if compromised", B: "Easy to remember", C: "Fast", D: "Convenient", correct: "A", explanation: "Biometrics cannot be changed if compromised." },
+            { question: "Credential Stuffing क्या है?", A: "Leaked credentials को other sites पर try करना", B: "Brute force", C: "Dictionary attack", D: "Keylogging", correct: "A", explanation: "Credential stuffing uses leaked passwords on other sites." },
+            { question: "Sandboxing क्या है?", A: "Isolated environment for suspicious files", B: "Encryption", C: "Password manager", D: "Firewall", correct: "A", explanation: "Sandboxing runs files in an isolated environment." },
+            { question: "Zero-Day Vulnerability क्या है?", A: "Unknown to vendor", B: "Old", C: "Patched", D: "Low risk", correct: "A", explanation: "Zero-day is a vulnerability unknown to the vendor." },
+            { question: "Phishing link को कैसे check करें?", A: "Hover to see actual URL", B: "Click immediately", C: "Copy and paste", D: "Open in incognito", correct: "A", explanation: "Hovering shows the actual destination URL." },
+            { question: "Password Spraying क्या है?", A: "Common passwords on many accounts", B: "All combinations on one", C: "Keylogging", D: "Social engineering", correct: "A", explanation: "Password spraying tries common passwords across many accounts." },
+            { question: "TOTP का पूरा नाम क्या है?", A: "Time-based One-Time Password", B: "Token-based OTP", C: "Transaction-based OTP", D: "Text-based OTP", correct: "A", explanation: "TOTP = Time-based One-Time Password." },
+            { question: "Hashing algorithm का उदाहरण क्या है?", A: "SHA-256", B: "AES", C: "RSA", D: "DES", correct: "A", explanation: "SHA-256 is a hashing algorithm." },
+            { question: "Salt (in hashing) का क्या उपयोग है?", A: "Adds random data to prevent rainbow table attacks", B: "Encrypts", C: "Compresses", D: "Deletes", correct: "A", explanation: "Salt adds random data to each hash." },
+            { question: "Cookies का मुख्य कार्य क्या है?", A: "Track behavior and store preferences", B: "Delete files", C: "Encrypt data", D: "Compress data", correct: "A", explanation: "Cookies track behavior and store preferences." },
+            { question: "Third-Party Cookies क्या हैं?", A: "Cookies from other domains (tracking)", B: "First-party", C: "Session", D: "Secure", correct: "A", explanation: "Third-party cookies are for tracking across sites." },
+            { question: "SSL/TLS का मुख्य कार्य क्या है?", A: "Encrypt data in transit", B: "Encrypt data at rest", C: "Hash data", D: "Compress data", correct: "A", explanation: "SSL/TLS encrypts data during transmission." },
+            { question: "GDPR में 'Right to be Forgotten' क्या है?", A: "User can request data deletion", B: "Can't delete", C: "Never deleted", D: "Stored forever", correct: "A", explanation: "Right to be Forgotten allows data deletion requests." },
+            { question: "Malwarebytes किस category में आता है?", A: "Antivirus/Anti-malware", B: "Firewall", C: "VPN", D: "Password Manager", correct: "A", explanation: "Malwarebytes is an anti-malware tool." },
+            { question: "Data Backups क्यों important हैं?", A: "Recover data after ransomware/breach", B: "Speed up system", C: "Encrypt data", D: "Delete data", correct: "A", explanation: "Backups help recover after ransomware or data loss." }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('malware-mcq', malwareMCQs);
+            renderMCQs('phish-mcq', phishMCQs);
+            renderMCQs('pass-mcq', passMCQs);
+            renderMCQs('privacy-mcq', privacyMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

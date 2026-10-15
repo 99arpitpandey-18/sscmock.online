@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Reasoning Mega Study Guide</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ----- GLOBAL RESET & BASE (UNCHANGED) ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #0a0f1e;
+            color: #e0e6f0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1f2e; }
+        ::-webkit-scrollbar-thumb { background: #f0b429; border-radius: 10px; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ----- ANIMATED BACKGROUND (Particles) ----- */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* ----- HEADER WITH TYPING EFFECT ----- */
+        .header {
+            text-align: center;
+            padding: 30px 0 20px;
+            border-bottom: 2px solid rgba(240, 180, 41, 0.3);
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f0b429, #f7971e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            border-right: 3px solid #f0b429;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blinkCursor 0.8s step-end infinite;
+            letter-spacing: 2px;
+        }
+        @keyframes blinkCursor {
+            50% { border-color: transparent; }
+        }
+        .header p {
+            color: #8892b0;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+        .header p i {
+            color: #f0b429;
+            margin: 0 5px;
+        }
+
+        /* ----- FLOATING ANIMATED STATS BAR ----- */
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 60px;
+            padding: 15px 25px;
+            margin: 20px 0 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .stat-item {
+            text-align: center;
+            padding: 0 20px;
+            animation: floatUp 3s ease-in-out infinite;
+        }
+        .stat-item:nth-child(2) { animation-delay: 0.5s; }
+        .stat-item:nth-child(3) { animation-delay: 1s; }
+        .stat-item:nth-child(4) { animation-delay: 1.5s; }
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .stat-item .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f0b429;
+            display: block;
+        }
+        .stat-item .label {
+            font-size: 0.85rem;
+            color: #a8b2d1;
+            text-transform: uppercase;
+        }
+
+        /* ----- INTERACTIVE MIND MAP (CHART METHOD) ----- */
+        .mindmap-section {
+            background: rgba(16, 24, 44, 0.8);
+            border-radius: 30px;
+            padding: 30px 20px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(240, 180, 41, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        .mindmap-section h2 {
+            text-align: center;
+            color: #f0b429;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .mindmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .mind-node {
+            background: rgba(30, 40, 70, 0.7);
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .mind-node::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(240, 180, 41, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        .mind-node:hover::before { left: 100%; }
+        .mind-node:hover {
+            transform: scale(1.08) translateY(-5px);
+            border-color: #f0b429;
+            box-shadow: 0 15px 35px rgba(240, 180, 41, 0.2);
+        }
+        .mind-node .icon {
+            font-size: 2.5rem;
+            color: #f0b429;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .mind-node .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+        .mind-node .sub-text {
+            font-size: 0.7rem;
+            color: #8892b0;
+            margin-top: 5px;
+            display: block;
+            opacity: 0.8;
+        }
+        .mind-node:hover .sub-text {
+            color: #f0b429;
+        }
+
+        /* ----- ACCORDION / CHAPTER CARDS (UNCHANGED) ----- */
+        .chapter {
+            background: rgba(16, 24, 44, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealCard 0.6s forwards;
+        }
+        .chapter:nth-child(1) { animation-delay: 0.1s; }
+        .chapter:nth-child(2) { animation-delay: 0.2s; }
+        .chapter:nth-child(3) { animation-delay: 0.3s; }
+        .chapter:nth-child(4) { animation-delay: 0.4s; }
+        .chapter:nth-child(5) { animation-delay: 0.5s; }
+        .chapter:nth-child(6) { animation-delay: 0.6s; }
+        .chapter:nth-child(7) { animation-delay: 0.7s; }
+        .chapter:nth-child(8) { animation-delay: 0.8s; }
+        .chapter:nth-child(9) { animation-delay: 0.9s; }
+        .chapter:nth-child(10) { animation-delay: 1.0s; }
+
+        @keyframes revealCard {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chapter-header {
+            background: rgba(30, 45, 80, 0.5);
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border-left: 5px solid #f0b429;
+        }
+        .chapter-header:hover {
+            background: rgba(50, 70, 120, 0.4);
+        }
+        .chapter-header h3 {
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .chapter-header h3 i {
+            color: #f0b429;
+            width: 30px;
+        }
+        .chapter-header .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.4s ease;
+            color: #f0b429;
+        }
+        .chapter.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .chapter-body {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+            background: rgba(10, 15, 30, 0.4);
+        }
+        .chapter.active .chapter-body {
+            padding: 25px;
+            max-height: 12000px;
+        }
+
+        .chapter-body .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .topic-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px 20px;
+            border-radius: 15px;
+            border-left: 3px solid #f0b429;
+            transition: 0.3s;
+        }
+        .topic-card:hover {
+            background: rgba(240, 180, 41, 0.05);
+            transform: translateX(5px);
+        }
+        .topic-card h4 {
+            color: #f0b429;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            border-bottom: 1px dashed rgba(240, 180, 41, 0.2);
+            padding-bottom: 5px;
+        }
+        .topic-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .topic-card ul li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.95rem;
+            color: #c8d0e0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            line-height: 1.6;
+        }
+        .topic-card ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #f0b429;
+            font-weight: bold;
+        }
+        .topic-card ul li strong {
+            color: #fff;
+        }
+        .topic-card ul li .trick {
+            color: #f0b429;
+            font-weight: 600;
+            background: rgba(240, 180, 41, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .topic-card ul li .example {
+            color: #a8d8ea;
+            font-style: italic;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* ----- FOOTER ----- */
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 30px;
+            color: #8892b0;
+        }
+        .footer i {
+            color: #f0b429;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; white-space: normal; border-right: none; }
+            .stats-bar { flex-direction: column; align-items: center; border-radius: 30px; gap: 10px; }
+            .mindmap-grid { grid-template-columns: repeat(3, 1fr); }
+            .chapter-header h3 { font-size: 1rem; flex-wrap: wrap; }
+        }
+        @media (max-width: 480px) {
+            .mindmap-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🧠 Advanced Reasoning Guide</h1>
+            <p><i class="fas fa-arrow-right"></i> Chart Method + Full Animation + Deep Concepts + Tricks <i class="fas fa-arrow-left"></i></p>
+        </div>
+
+        <!-- STATS BAR -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="number">10</span>
+                <span class="label">मुख्य स्तंभ</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">150+</span>
+                <span class="label">पैटर्न/टॉपिक्स</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">50+</span>
+                <span class="label">Tricks & Formulas</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">100%</span>
+                <span class="label">Animation</span>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE MIND MAP -->
+        <div class="mindmap-section">
+            <h2><i class="fas fa-sitemap"></i> रीजनिंग मास्टर चार्ट</h2>
+            <div class="mindmap-grid">
+                <div class="mind-node"><span class="icon"><i class="fas fa-sort-numeric-up"></i></span><span class="title">श्रृंखला</span><span class="sub-text">Number · Alphabet · Mixed</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-key"></i></span><span class="title">कोडिंग-डिकोडिंग</span><span class="sub-text">Letter · Number · Symbol</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-users"></i></span><span class="title">रक्त संबंध</span><span class="sub-text">Family Tree · Coded</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-compass"></i></span><span class="title">दिशा व दूरी</span><span class="sub-text">North/South · Pythagoras</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-balance-scale"></i></span><span class="title">सादृश्य/वर्गीकरण</span><span class="sub-text">Analogy · Odd One Out</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-venn-diagram"></i></span><span class="title">सिलॉजिज्म</span><span class="sub-text">All/Some · Venn Diagram</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-chair"></i></span><span class="title">बैठक व्यवस्था</span><span class="sub-text">Linear · Circular</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-cube"></i></span><span class="title">Non-Verbal</span><span class="sub-text">Figures · Mirror/Water</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-clock"></i></span><span class="title">घड़ी/कैलेंडर</span><span class="sub-text">Clock Angle · Odd Days</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-database"></i></span><span class="title">Data Suf. & Puzzle</span><span class="sub-text">Sufficiency · Puzzle</span></div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- CHAPTER 1: SERIES (DEEP EXPLANATION) -->
+        <!-- ========================================== -->
+        <div class="chapter active">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-sort-numeric-up"></i> 1. 🔢 श्रृंखला (Number, Alphabet & Mixed Series)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🔣 संख्या श्रृंखला (Number Series)</h4><ul>
+                        <li><strong>अभाज्य (Prime), वर्ग (Square) और घन (Cube):</strong> अभाज्य संख्याएँ वे हैं जो 1 और स्वयं के अलावा किसी से विभाजित नहीं होतीं (2,3,5,7,11...)। वर्ग श्रृंखला (4,9,16,25) और घन श्रृंखला (8,27,64,125) सबसे सामान्य हैं। <br><span class="trick">ट्रिक:</span> सबसे पहले दो क्रमागत संख्याओं के बीच का अंतर (Difference) निकालें। यदि अंतर समान नहीं है, तो 'अंतरों का अंतर' (द्वितीय अंतर) देखें। <br><span class="example">उदाहरण: 2, 5, 10, 17, 26 → अंतर: +3, +5, +7, +9 (अंतरों में +2 का अंतर) → अगला पद = 26 + 11 = 37।</span></li>
+                        <li><strong>गुणन/भाग एवं योग/व्यवकलन (Multiplication/Division):</strong> इन श्रृंखलाओं में प्रत्येक पद पिछले पद को किसी निश्चित संख्या से गुणा/भाग करके तथा कुछ जोड़/घटाकर बनता है। <br><span class="trick">ट्रिक:</span> 2, 6, 24, 120 → यहाँ ×3, ×4, ×5 हो रहा है, अतः अगला पद = 120 × 6 = 720।</li>
+                        <li><strong>मिश्रित संक्रियाएँ (Mixed Operations):</strong> जहाँ एक साथ × और + (जैसे ×2+1) लगाए जाते हैं। <br><span class="example">उदाहरण: 3, 7, 15, 31, ? → (3×2)+1=7, (7×2)+1=15, (15×2)+1=31 → अगला = (31×2)+1 = 63।</span></li>
+                        <li><strong>गलत पद (Wrong Number/Wrong Term):</strong> श्रृंखला में एक पद ऐसा दिया होता है जो पैटर्न का पालन नहीं करता। <br><span class="trick">ट्रिक:</span> शुरुआत से अंतर निकालें, जहाँ अंतर पैटर्न तोड़े, वही गलत पद है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🔤 वर्णमाला श्रृंखला (Alphabet Series)</h4><ul>
+                        <li><strong>स्थानीय मान (Positional Value) - EJOTY TRICK:</strong> अक्षरों की स्थिति याद रखने का सबसे आसान तरीका है E=5, J=10, O=15, T=20, Y=25 (हर 5वाँ अक्षर)। <br><span class="trick">ट्रिक:</span> B=2, E=5 (E=5 ही है), इसलिए अंतर देखना आसान हो जाता है।</li>
+                        <li><strong>विपरीत अक्षर (Reverse Alphabet) - 27 का नियम:</strong> A का विपरीत Z है (1+26=27), B का विपरीत Y है (2+25=27)। <br><span class="trick">ट्रिक:</span> किसी भी अक्षर का विपरीत ज्ञात करने के लिए 27 में से उसका स्थानीय मान घटाएँ। (जैसे H=8 → 27-8 = 19 → S)।</li>
+                        <li><strong>मिश्रित वर्णमाला (Mixed Patterns):</strong> जैसे Z, X, V, T, ? → यहाँ -2 का अंतर है (Z→X→V→T), अगला R होगा। <br><span class="trick">ट्रिक:</span> यदि एक साथ दो अक्षर आगे और एक पीछे जाएँ (जैसे ABD, CEG, FHI...) तो उन्हें अलग-अलग श्रृंखलाओं में तोड़कर देखें (पहला अक्षर, दूसरा अक्षर, तीसरा अक्षर)।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📊 मिश्रित (Letter-Number-Symbol)</h4><ul>
+                        <li><strong>अक्षर-संख्या संयोजन:</strong> जैसे 4A7, 6C9, 8E11 → संख्याएँ (4,6,8 = +2) और अक्षर (A,C,E = +2 स्थान) स्वतंत्र श्रृंखलाएँ बनाते हैं। <br><span class="trick">ट्रिक:</span> श्रृंखला के तीनों हिस्सों (अक्षर, पहली संख्या, दूसरी संख्या) को अलग-अलग स्तंभों (Columns) में लिखें और प्रत्येक का पैटर्न खोजें।</li>
+                        <li><strong>तार्किक क्रम (Logical Order):</strong> कभी-कभी अक्षरों की श्रृंखला अंतरों के आधार पर बनती है जो क्रमागत बढ़ते हैं (जैसे +2, +3, +4, +5)। <br><span class="example">उदाहरण: A, C, F, J, O → अंतर +2, +3, +4, +5 → अगला U (+6) है।</span></li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 2: CODING-DECODING (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-key"></i> 2. 🔑 कोडिंग-डिकोडिंग & वर्गीकरण</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>📝 अक्षर कोडिंग (Letter Coding)</h4><ul>
+                        <li><strong>शिफ्ट कोडिंग (Shift/Addition):</strong> प्रत्येक अक्षर को किसी निश्चित संख्या से आगे या पीछे खिसका दिया जाता है। <br><span class="trick">ट्रिक:</span> अगर 'INDIA' → 'KPFKC' है, तो I→K (+2), N→P (+2)... सभी +2 है, इसलिए यह 'सीधी शिफ्ट' है।</li>
+                        <li><strong>विपरीत अक्षर कोडिंग (Reverse Coding):</strong> A को Z, B को Y, C को X में बदलना (27 का नियम)। <br><span class="example">उदाहरण: 'DELHI' को 'WOVSR' लिखा जाएगा क्योंकि D↔W, E↔V, L↔O (याद रखें L और O आपस में 12 और 15, 12+15=27)।</span></li>
+                        <li><strong>समूह कोडिंग (Group / Matrix Coding):</strong> जब शब्दों को संख्याओं के जोड़े के रूप में लिखा जाए (जैसे CAT → 3120, जहाँ C=3, A=1, T=20)। <br><span class="trick">ट्रिक:</span> 'EJOTY' ट्रिक याद होने पर C=3, A=1, T=20 जल्दी पता चल जाता है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🔢 संख्या/प्रतीक कोडिंग</h4><ul>
+                        <li><strong>योगात्मक कोडिंग (Sum of Digits):</strong> अक्षरों के स्थानीय मानों का योग कर कोड बनाना। <br><span class="example">उदाहरण: FAN → 6+1+14 = 21, इसलिए कोड 21 है। यदि योग 9 से अधिक है तो उसके अंकों का योग (Digit Sum) भी पूछा जा सकता है (जैसे 21 → 2+1=3)।</span></li>
+                        <li><strong>प्रतीक कोडिंग (Symbol Substitution):</strong> इसमें '+' का मतलब '×', '−' का मतलब '÷' आदि दिया होता है। <br><span class="trick">ट्रिक:</span> सबसे पहले कोड के अनुसार चिह्न बदलें, फिर BODMAS (भाग, गुणा, जोड़, घटाव) के नियम का पालन करें।</li>
+                        <li><strong>स्थान बदलकर कोडिंग (Interchange Coding):</strong> पहले अक्षर को दूसरे स्थान पर, दूसरे को तीसरे पर आदि। <br><span class="example">उदाहरण: यदि 12345 को 23451 लिखा जाए तो यह 'साइक्लिक शिफ्ट' (चक्रीय स्थानांतरण) है।</span></li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📂 वर्गीकरण (Odd One Out)</h4><ul>
+                        <li><strong>संख्या विषम (Odd Number):</strong> जो संख्या दिए गए गुण (सम/विषम, वर्ग/घन, अभाज्य/भाज्य) में फिट न बैठे। <br><span class="example">उदाहरण: 4, 9, 16, 25, 27 → 27 घन है, बाकी सभी वर्ग हैं, इसलिए 27 विषम है।</span></li>
+                        <li><strong>शब्द/वस्तु वर्गीकरण (Word Classification):</strong> जैसे (कागज, कलम, रबर, पत्थर) → पत्थर विषम है क्योंकि बाकी स्टेशनरी हैं। <br><span class="trick">ट्रिक:</span> सामान्य वर्ग (Class) खोजें जिसमें 3 वस्तुएँ आती हैं, जो न आए वही उत्तर है।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 3: BLOOD RELATIONS (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-users"></i> 3. 🧬 रक्त संबंध (Blood Relations)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>👪 पारिवारिक वृक्ष (Family Tree)</h4><ul>
+                        <li><strong>मूल शब्दावली:</strong> पिता (Father), माता (Mother), भाई (Brother), बहन (Sister), पुत्र (Son), पुत्री (Daughter), दादा/नाना (Grandfather), दादी/नानी (Grandmother), चाचा/ताऊ (Paternal Uncle), मामा (Maternal Uncle), बुआ (Paternal Aunt), मौसी (Maternal Aunt), साला (Wife's Brother), साली (Wife's Sister), जीजा (Sister's Husband), भाभी (Brother's Wife)। <br><span class="trick">ट्रिक:</span> 'पिता की ओर' (Paternal) और 'माता की ओर' (Maternal) में अंतर समझें। पीढ़ी (Generation) हमेशा + (पुरुष) और - (महिला) से चिन्हित करें।</li>
+                        <li><strong>नाते-रिश्ते की पहचान:</strong> यदि 'A, B की माता है' और 'B, C की बहन है', तो A, C की भी माता ही होगी। <br><span class="trick">ट्रिक:</span> हमेशा स्वयं (I) को केन्द्र मानकर ऊपर (माता-पिता), नीचे (संतान), और बगल (भाई-बहन) की पीढ़ी बनाएँ।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🔖 कोडेड रक्त संबंध (Coded Relations)</h4><ul>
+                        <li><strong>प्रतीकों का अर्थ (Symbols):</strong> 'A + B' का अर्थ A, B का पिता है; 'A × B' का अर्थ A, B की माता है; 'A - B' का अर्थ A, B का भाई है; 'A ÷ B' का अर्थ A, B की बहन है। <br><span class="trick">ट्रिक:</span> पहले कोड्स को मूल शब्दों में बदलें (जैसे + → Father, × → Mother), फिर पीढ़ी (Generation Gap) निकालें।</li>
+                        <li><strong>उदाहरण समाधान:</strong> यदि 'P + Q × R' है, तो P, Q का पिता है और Q, R की माता है → P, R का 'नाना' (Maternal Grandfather) है (क्योंकि P नर है, और R, Q की संतान है, इसलिए P, R का दादा/नाना है; चूंकि Q महिला है, इसलिए P = नाना)। <br><span class="trick">ट्रिक:</span> अंतिम व्यक्ति (R) से शुरू करें और उल्टा क्रम में संबंध बनाएँ।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🧩 मिश्रित प्रश्न (Puzzle Based)</h4><ul>
+                        <li><strong>परिवार के सदस्यों की संख्या:</strong> कभी-कभी पूछा जाता है कि "A, B की माता है, C, B का पुत्र है, तो A, C की क्या लगेगी?" → उत्तर: दादी (या नानी, यदि A महिला है)। <br><span class="trick">ट्रिक:</span> लिंग (Gender) का विशेष ध्यान रखें। यदि लिंग निर्धारित नहीं है, तो 'निर्धारित नहीं किया जा सकता' (Cannot be determined) उत्तर हो सकता है।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 4: DIRECTION & DISTANCE (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-compass"></i> 4. 🧭 दिशा एवं दूरी (Direction Sense)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🧭 दिशा चक्र (Direction Cycle)</h4><ul>
+                        <li><strong>चार मूल दिशाएँ (Cardinal):</strong> उत्तर (North), दक्षिण (South), पूर्व (East), पश्चिम (West)। चार मध्यवर्ती (Intercardinal): उत्तर-पूर्व (NE), उत्तर-पश्चिम (NW), दक्षिण-पूर्व (SE), दक्षिण-पश्चिम (SW)। <br><span class="trick">ट्रिक:</span> 'दायाँ मुड़ना' = दक्षिणावर्त (Clockwise) 90°; 'बायाँ मुड़ना' = वामावर्त (Anti-clockwise) 90°। यदि 45° पर मुड़ना हो तो विकर्ण (Diagonal) दिशा में चले जाते हैं।</li>
+                        <li><strong>मुख (Facing) बदलने का नियम:</strong> यदि कोई उत्तर की ओर मुख करके दायें मुड़ता है, तो वह पूर्व की ओर चलेगा। यदि दक्षिण की ओर मुख करके बायें मुड़ता है, तो वह पूर्व की ओर चलेगा (क्योंकि दक्षिण का बायाँ = पूर्व)। <br><span class="trick">ट्रिक:</span> अपने आप को उस दिशा में खड़ा करके सोचें (Physical orientation) — इससे गलती कम होती है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📏 दूरी (Distance) & पाइथागोरस प्रमेय</h4><ul>
+                        <li><strong>न्यूनतम/सीधी दूरी (Shortest Distance):</strong> यदि व्यक्ति दो बार 90° पर मुड़कर चला है, तो आरंभ और अंत बिंदु के बीच की दूरी = √(a² + b²), जहाँ a और b क्रमशः दो विभिन्न दिशाओं में चली गई दूरियाँ हैं। <br><span class="trick">ट्रिक:</span> सबसे पहले एक कच्चा नक्शा बनाएँ और सभी चालों को दिशा-सहित नोट करें। अंत में, उत्तर-दक्षिण (Vertical) और पूर्व-पश्चिम (Horizontal) दूरियाँ अलग-अलग जोड़ें।</li>
+                        <li><strong>विपरीत दिशा (Reverse Path):</strong> यदि कोई वापस लौटता है, तो वह ठीक विपरीत दिशा में जाएगा। <br><span class="example">उदाहरण: यदि कोई 10 किमी उत्तर, 10 किमी पूर्व, और 10 किमी दक्षिण जाता है, तो वह प्रारंभिक बिंदु से 10 किमी पूर्व में होगा (क्योंकि उत्तर-दक्षिण निरस्त हो गए)।</span></li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 5: SYLLOGISM (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-venn-diagram"></i> 5. ⚖️ सिलॉजिज्म (कथन-निष्कर्ष)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>📜 मूल वाक्य (All, Some, No)</h4><ul>
+                        <li><strong>"All A are B" (सभी A, B हैं):</strong> निश्चित निष्कर्ष → कुछ B, A हैं (Some B are A) ; कुछ A, B हैं (Some A are B) ; कोई A, B नहीं है (No) → गलत। <br><span class="trick">ट्रिक:</span> वेन डायग्राम: A, B के अंदर पूरी तरह समाहित होता है। 'All' का अर्थ है 100% A, B हैं, लेकिन 100% B, A हैं यह आवश्यक नहीं (Exceptional case जब दोनों equal हों)।</li>
+                        <li><strong>"Some A are B" (कुछ A, B हैं):</strong> निश्चित निष्कर्ष → कुछ B, A हैं (Some B are A) ; सभी A, B हैं (All) → संभव हो सकता है, लेकिन निश्चित नहीं। <br><span class="trick">ट्रिक:</span> 'Some' का अर्थ है 'कम से कम 1' (Minimum 1). यह 'All' को नकारता नहीं है, इसलिए 'All A are B' एक संभावना (Possibility) हो सकती है।</li>
+                        <li><strong>"No A is B" (कोई A, B नहीं है):</strong> निश्चित निष्कर्ष → कोई B, A नहीं है (No B are A) ; कुछ A, B हैं (Some) → गलत। <br><span class="trick">ट्रिक:</span> दोनों वृत्त (Sets) पूरी तरह अलग-अलग (Disjoint) होंगे।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📐 वेन डायग्राम विधि (Venn Diagram Method)</h4><ul>
+                        <li><strong>संभावित (Possibility) vs निश्चित (Definite):</strong> यदि निष्कर्ष सभी संभावित वेन डायग्राम में सत्य है, तो वह 'निश्चित' है। यदि केवल एक डायग्राम में सत्य है, तो वह 'संभावना' है। <br><span class="trick">ट्रिक:</span> 'Only a few' का अर्थ है "Some A are B और Some A are not B" — यह अधिक सशक्त (Stronger) है।</li>
+                        <li><strong>'Either-Or' की स्थिति (Complementary Pair):</strong> यदि निष्कर्ष I = कुछ A, B हैं (Some) और निष्कर्ष II = कोई A, B नहीं हैं (No) हो, तो ये पूरक (Complementary) जोड़ी हैं। यदि I और II दोनों व्यक्तिगत रूप से गलत हैं, तो 'Either I or II follows' सही होता है (परंतु दोनों में 'Some' और 'No' होना चाहिए, या 'All' और 'Some not')।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🧩 कथन-पूर्वधारणा (Assumptions)</h4><ul>
+                        <li><strong>मान्यता (Assumption):</strong> वह अप्रकट (Implicit) विश्वास जो कथन को सार्थक बनाता है। <br><span class="trick">ट्रिक:</span> यदि कथन हटा दिया जाए और मान्यता का कोई अर्थ न रहे, तो वह मान्यता सही है। 'सरकारी नीति' या 'सामान्य मान्यताएँ' प्रायः सही मानी जाती हैं।</li>
+                        <li><strong>तर्क (Argument) की ताकत:</strong> 'प्रभावी तर्क' (Strong) वह है जो सीधा, तार्किक, और व्यावहारिक हो। 'कमजोर तर्क' (Weak) भावनात्मक या अप्रासंगिक होता है।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 6: SEATING ARRANGEMENT (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-chair"></i> 6. 🪑 बैठक व्यवस्था (Seating Arrangement)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>➖ रैखिक व्यवस्था (Linear Arrangement)</h4><ul>
+                        <li><strong>एक पंक्ति (Single Row):</strong> सभी व्यक्ति उत्तर (North) या दक्षिण (South) की ओर मुख किए होते हैं। <br><span class="trick">ट्रिक:</span> यदि उत्तर मुखी हैं, तो उनका बायाँ = हमारा बायाँ; यदि दक्षिण मुखी हैं, तो उनका बायाँ = हमारा दायाँ (क्योंकि वे हमारी ओर देख रहे हैं) — इसे 'आईना' (Mirror) वाला नियम समझें।</li>
+                        <li><strong>दो पंक्तियाँ (Double Row):</strong> 8-10 व्यक्ति दो समानांतर पंक्तियों में आमने-सामने (Facing each other) बैठे होते हैं। <br><span class="trick">ट्रिक:</span> पहले एक पंक्ति (जैसे Row 1) को 'उत्तर मुखी' मान लें और दूसरी (Row 2) को 'दक्षिण मुखी'। अब दिए गए 'ठीक सामने' (Immediate opposite) वाले स्थानों को मिलाएँ। विरोधाभास (Contradiction) आने पर संभावित स्थान (Possible cases) बनाकर उसे हल करें।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🔄 वृत्ताकार व्यवस्था (Circular Arrangement)</h4><ul>
+                        <li><strong>केन्द्र की ओर मुख (Inward):</strong> सभी का मुख केंद्र (Center) की ओर है। इस स्थिति में, दायाँ व्यक्ति 'दक्षिणावर्त' (Clockwise) दिशा में होता है। <br><span class="trick">ट्रिक:</span> हमेशा पहले निश्चित (Fixed) स्थानों को गोले पर अंकित करें। 'तुरंत दायाँ' (Immediate Right) और 'दूसरा दायाँ' (Second Right) का ध्यान रखें।</li>
+                        <li><strong>केन्द्र से बाहर मुख (Outward):</strong> इस स्थिति में दायाँ व्यक्ति 'वामावर्त' (Anticlockwise) दिशा में होता है (पूरी तरह उल्टा)। <br><span class="trick">ट्रिक:</span> यदि कुछ व्यक्ति अंदर और कुछ बाहर मुख कर रहे हैं, तो दिशा-निर्देश (Direction) को ध्यान से पढ़ें और 'संभावित स्थान' (Cases) विधि अपनाएँ।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 7: PUZZLE & DATA SUFFICIENCY (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-database"></i> 7. 🧩 पहेली (Puzzle) & आँकड़ा पर्याप्तता</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>📊 आँकड़ा पर्याप्तता (Data Sufficiency)</h4><ul>
+                        <li><strong>कथन I और II की पर्याप्तता:</strong> प्रश्न में दो कथन होते हैं। हमें जाँचना होता है कि क्या अकेले I, अकेले II, या दोनों मिलकर उत्तर देने के लिए पर्याप्त हैं। <br><span class="trick">ट्रिक:</span> 
+                        1. केवल I लेकर देखें — यदि उत्तर मिल जाए, तो 'Only I'।
+                        2. केवल II लेकर देखें — यदि उत्तर मिल जाए, तो 'Only II'।
+                        3. यदि अकेले नहीं मिलते, तो दोनों को मिलाकर देखें — यदि मिल जाएं तो 'Both together'।
+                        4. यदि दोनों मिलाकर भी न मिलें, तो 'Neither' या 'Data insufficient'।</li>
+                        <li><strong>न्यूनतम/अधिकतम (Minimum/Maximum):</strong> 'कम से कम' या 'अधिक से अधिक' पूछे जाने पर, संभावित सीमाएँ (Extreme cases) बनाकर देखें।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🔐 क्रम/रैंकिंग (Ordering & Ranking)</h4><ul>
+                        <li><strong>रैंक ज्ञात करने के सूत्र:</strong> 
+                        कुल = (ऊपर से रैंक) + (नीचे से रैंक) - 1 <br>
+                        ऊपर से रैंक = कुल - नीचे से रैंक + 1 <br>
+                        नीचे से रैंक = कुल - ऊपर से रैंक + 1 <br>
+                        <span class="trick">ट्रिक:</span> मध्य (Middle) स्थान = (कुल + 1)/2 (यदि कुल विषम है)। यदि कुल सम (Even) है, तो दो मध्य स्थान होते हैं — कुल/2 और (कुल/2)+1।</li>
+                        <li><strong>वस्तुओं के बीच व्यक्तियों की संख्या:</strong> यदि A, बाएँ से 5वाँ है और B, दाएँ से 6वाँ है, तथा कुल 20 हैं, तो A और B के बीच व्यक्ति = 20 - (5+6) = 9 (यदि वे एक-दूसरे की ओर हैं)। <br><span class="trick">ट्रिक:</span> यदि 'बीच में' (Between) पूछा है और दोनों के रैंक का योग कुल से अधिक है, तो वे एक-दूसरे को ओवरलैप करते हैं, तब सूत्र: (रैंक1 + रैंक2) - कुल - 2।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🪜 फ्लोर/मंजिल पहेली (Floor Puzzle)</h4><ul>
+                        <li><strong>मंजिलें (Floor) और फ्लैट (Flat):</strong> कई मंजिलें (जैसे 1 से 8) होती हैं और प्रत्येक मंजिल पर 2 फ्लैट (Flat A/B)। <br><span class="trick">ट्रिक:</span> एक टेबल (Table) बनाएं। मंजिलों को क्रम (नीचे से ऊपर या ऊपर से नीचे) में लिखें और फ्लैट अलग-अलग कॉलम (Column) में। दिए गए संकेतों (Clues) को ध्यान से भरें और संभावित स्थानों को काटते (Eliminate) जाएँ।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 8: NON-VERBAL (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-cube"></i> 8. 🖼️ अशाब्दिक रीजनिंग (Non-Verbal)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🪞 दर्पण एवं जल प्रतिबिम्ब (Mirror & Water)</h4><ul>
+                        <li><strong>दर्पण प्रतिबिम्ब (Mirror Image - Vertical Mirror):</strong> बायाँ दायाँ बदल जाता है (Left ↔ Right)। अक्षरों का क्रम पूरी तरह उल्टा (Reverse) हो जाता है। <br><span class="trick">ट्रिक:</span> चित्र को अपनी बाईं ओर घुमाएँ (यदि दर्पण दाईं ओर रखा है)। अक्षरों में, यदि शब्द 'CODING' है, तो दर्पण में 'GNIDOC' दिखेगा, लेकिन प्रत्येक अक्षर भी उल्टा (जैसे C का मिरर) दिखेगा।</li>
+                        <li><strong>जल प्रतिबिम्ब (Water Image - Horizontal Mirror):</strong> ऊपर-नीचे उल्टा हो जाता है (Top ↔ Bottom)। <br><span class="trick">ट्रिक:</span> यदि अक्षर ऐसे हैं जो क्षैतिज रूप से सममित (Horizontal Symmetry) हैं (जैसे B, C, D, E, H, I, K, O, X) तो वे वैसे ही रहेंगे। 'घड़ी' (Clock) में जल प्रतिबिम्ब का सूत्र: 11:60 - दिया गया समय (12 घंटे वाली घड़ी के लिए)। <br><span class="example">उदाहरण: 3:25 का जल प्रतिबिम्ब = 11:60 - 3:25 = 8:35 होगा।</span></li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📐 आकृति श्रृंखला & गणना (Figure Series & Counting)</h4><ul>
+                        <li><strong>आकृति श्रृंखला (Figure Series):</strong> आकृतियाँ घूर्णन (Rotation 90°/180°), दर्पण (Reflection), आकार बढ़ना/घटना, या छायांकन (Shading) में बदलती हैं। <br><span class="trick">ट्रिक:</span> पहली और तीसरी आकृति समान हो सकती हैं, या दूसरी और चौथी। 'अगली आकृति' ज्ञात करने के लिए, पिछले दो चरणों में हुए परिवर्तन (Change) को दोहराएँ।</li>
+                        <li><strong>आकृतियों की गणना (Counting of Figures):</strong> <br>
+                        - <strong>त्रिभुज (Triangles):</strong> अलग-अलग आकारों (छोटे, बड़े, उल्टे) को गिनें और जोड़ें। <br>
+                        - <strong>वर्ग (Squares):</strong> n×n के ग्रिड में कुल वर्ग = n(n+1)(2n+1)/6। <br>
+                        - <strong>आयत (Rectangles):</strong> (n)(n+1)/2 × (m)(m+1)/2 (जहाँ n और m भुजाओं पर खंड हैं)।</li>
+                        <li><strong>अंतर्निहित आकृति (Embedded Figures):</strong> एक बड़ी आकृति के अंदर छोटी आकृति ढूँढना। <br><span class="trick">ट्रिक:</span> रेखाओं की मोटाई, कोण, और घुमाव (Orientation) को ध्यान से मिलाएँ।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📄 कागज मोड़ना और काटना (Paper Cutting/Folding)</h4><ul>
+                        <li><strong>कागज मोड़कर छेद करना:</strong> जब कागज को मोड़ा जाता है और छेद किया जाता है, तो खोलने (Unfold) पर छेदों की संख्या बढ़ जाती है। <br><span class="trick">ट्रिक:</span> मोड़ (Fold) को वापस खोलते समय, छेदों को दर्पण (Mirror) की तरह प्रतिबिंबित करें। प्रत्येक मोड़ छेदों की संख्या को दोगुना (Double) कर देता है।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 9: CLOCK & CALENDAR (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-clock"></i> 9. 🕒 घड़ी (Clock) & कैलेंडर (Calendar)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>⏱️ घड़ी (Clock Angle & Mirror)</h4><ul>
+                        <li><strong>सुइयों के बीच का कोण (Angle between Hands):</strong> सूत्र = | 30H - (11/2)M |, जहाँ H = घंटा (Hour) और M = मिनट (Minute)। <br><span class="trick">ट्रिक:</span> यदि प्राप्त कोण 180° से अधिक है, तो 360° में से घटाकर न्यूनतम कोण (Reflex Angle) निकालें। <br><span class="example">उदाहरण: 5:30 पर कोण = |30×5 - (11/2)×30| = |150 - 165| = 15°।</span></li>
+                        <li><strong>सुइयों का मिलना (Coincide) और विपरीत होना (Opposite):</strong> सुइयाँ 12 घंटे में 11 बार मिलती हैं (हर 65 5/11 मिनट पर)। एक दिन (24 घंटे) में 22 बार मिलती हैं और 22 बार विपरीत (180°) होती हैं। <br><span class="trick">ट्रिक:</span> 'सीधी रेखा' (Straight Line) का अर्थ है या तो 0° (मिलना) या 180° (विपरीत)।</li>
+                        <li><strong>दर्पण में समय (Mirror Time):</strong> 12 घंटे वाली घड़ी के लिए, दर्पण में समय = 11:60 - वास्तविक समय (जैसे 2:30 → 11:60 - 2:30 = 9:30)। यदि 24 घंटे वाली है, तो 23:60 - Time।</li>
+                        <li><strong>घड़ी की गति (Gain/Loss):</strong> यदि घड़ी 5 मिनट तेज (Gain) या धीमी (Loss) चलती है, तो वास्तविक समय और दिखाए गए समय में अंतर निकालें। <br><span class="trick">ट्रिक:</span> 12 घंटे में 5 मिनट तेज का अर्थ है 720 मिनट में 5 मिनट का अंतर।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📅 कैलेंडर (Calendar - Odd Days Method)</h4><ul>
+                        <li><strong>विषम दिनों की अवधारणा (Odd Days):</strong> 7 से अधिक बचे दिनों को 'विषम दिन' कहते हैं। <br>सामान्य वर्ष (365 दिन) = 1 विषम दिन (52 सप्ताह +1)<br>लीप वर्ष (366 दिन) = 2 विषम दिन (52 सप्ताह +2) <br><span class="trick">ट्रिक:</span> 100 वर्ष में 5 विषम दिन, 200 में 3, 300 में 1, 400 में 0 विषम दिन होते हैं (क्योंकि 400 एक लीप सदी है)।</li>
+                        <li><strong>तिथि/दिवस ज्ञात करना:</strong> <br>
+                        0 → रविवार, 1 → सोमवार, 2 → मंगलवार, 3 → बुधवार, 4 → गुरुवार, 5 → शुक्रवार, 6 → शनिवार। <br>
+                        <span class="trick">ट्रिक:</span> कुल विषम दिन = (पिछली सदी के विषम दिन) + (वर्ष के विषम दिन) + (महीने के विषम दिन) + (तारीख को 7 से भाग देने पर शेष) को जोड़कर 7 से भाग दें। <br><span class="example">उदाहरण: 15 अगस्त 2026 का दिन → 2025 तक का विषम दिन + जनवरी-जुलाई के विषम दिन + 15 → सोमवार।</span></li>
+                        <li><strong>महीनों के विषम दिन (Odd Days in Months):</strong> जन (3), फर (सामान्य 0 / लीप 1), मार्च (3), अप्रैल (2), मई (3), जून (2), जुलाई (3), अगस्त (3), सित (2), अक्टू (3), नव (2), दिस (3) — इन्हें याद रखना आवश्यक है।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 10: ANALOGY & MISCELLANEOUS (DEEP) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-balance-scale"></i> 10. 🧐 सादृश्य (Analogy) & विविध</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🔗 सादृश्य (Analogy)</h4><ul>
+                        <li><strong>अक्षर सादृश्य (Letter Analogy):</strong> B : G :: D : ? में B→G का अर्थ है +5 (2→7), इसलिए D→I (+5) = 9 → उत्तर I। <br><span class="trick">ट्रिक:</span> पहली जोड़ी (Pair) में जो संक्रिया (+, -, ×, ÷, वर्ग, घन) हुई है, वही दूसरी जोड़ी पर लागू करें।</li>
+                        <li><strong>संख्या सादृश्य (Number Analogy):</strong> 2 : 8 :: 5 : ? में 2³ = 8, इसलिए 5³ = 125 → उत्तर 125। <br><span class="trick">ट्रिक:</span> यदि 3 : 81 :: 4 : ? तो 3⁴ = 81, इसलिए 4⁴ = 256 (हर बार घात (Power) बदल सकती है, ध्यान दें)।</li>
+                        <li><strong>शब्द सादृश्य (Word Analogy):</strong> 'डॉक्टर : हॉस्पिटल :: शिक्षक : ?' → कार्य-स्थल (Workplace) संबंध, उत्तर 'स्कूल'। <br><span class="trick">ट्रिक:</span> संबंधों के प्रकार: कार्य-स्थान (Doctor-Hospital), उत्पाद-निर्माता (Car-Factory), वर्ग-उपवर्ग (Fruit-Mango), समानार्थी (Happy-Joyful), विलोम (Hot-Cold), कारण-प्रभाव (Rain-Flood)।</li>
+                        <li><strong>दोहरी सादृश्य (Double Analogy):</strong> 'A : B :: C : D' के स्थान पर 'A : B :: ? : D' दिया हो। <br><span class="trick">ट्रिक:</span> A और B के बीच संबंध खोजें, और D के साथ वही संबंध रखने वाला विकल्प चुनें।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🧩 अन्य महत्वपूर्ण (Misc.)</h4><ul>
+                        <li><strong>क्रम व्यवस्था (Arrangement):</strong> शब्दों को शब्दकोशीय क्रम (Lexicographical) में लगाना। <br><span class="trick">ट्रिक:</span> पहले अक्षर की तुलना करें, यदि बराबर है तो दूसरे अक्षर, और इसी तरह आगे बढ़ें।</li>
+                        <li><strong>आकृति पूर्ति (Figure Completion):</strong> किसी खाके (Matrix) में खाली जगह को भरना। <br><span class="trick">ट्रिक:</span> पंक्ति (Row) और स्तंभ (Column) में समरूपता (Symmetry) या घूर्णन (Rotation) का पैटर्न खोजें।</li>
+                        <li><strong>कथन-तर्क (Statement-Argument):</strong> दिए गए तर्कों में से 'प्रभावी' (Strong) और 'निर्बल' (Weak) की पहचान। <br><span class="trick">ट्रिक:</span> प्रभावी तर्क वह है जो वैज्ञानिक, सामाजिक या आर्थिक दृष्टि से महत्वपूर्ण हो तथा कथन से सीधा संबंध रखता हो।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <i class="fas fa-robot"></i> यह Advanced Reasoning Guide AI द्वारा गहन विश्लेषण (Deep Analysis) के साथ डिज़ाइन किया गया | <i class="fas fa-bolt"></i> Full Animated | <i class="fas fa-infinity"></i> Unlimited Shortcuts
+        </div>
+
+    </div>
+
+    <script>
+        // ----- TOGGLE CHAPTER (ACCORDION) - UNCHANGED -----
+        function toggleChapter(headerElement) {
+            const chapter = headerElement.closest('.chapter');
+            const isActive = chapter.classList.contains('active');
+            
+            document.querySelectorAll('.chapter').forEach(ch => {
+                if (ch !== chapter) {
+                    ch.classList.remove('active');
+                }
+            });
+
+            if (isActive) {
+                chapter.classList.remove('active');
+            } else {
+                chapter.classList.add('active');
+                setTimeout(() => {
+                    chapter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+
+        // ----- PARTICLES BACKGROUND (COMPLETE SAME) -----
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > width) this.speedX *= -1;
+                if (this.y < 0 || this.y > height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(240, 180, 41, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles(count = 100) {
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles(120);
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            for (let p of particles) {
+                p.update();
+                p.draw();
+            }
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(240, 180, 41, ${0.05 * (1 - dist/120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        console.log("Advanced Reasoning Mega Page Loaded with Deep Explanations! 🧠");
+    </script>
+</body>
+</html>

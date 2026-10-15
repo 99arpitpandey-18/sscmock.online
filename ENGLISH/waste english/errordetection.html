@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC CGL Error Detection – 500+ Questions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #eef2f7;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #0b1a3a;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .header .exam-title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+        .header .exam-title span {
+            color: #fbbf24;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .timer-box {
+            background: #1e2a4a;
+            padding: 6px 18px;
+            border-radius: 30px;
+            color: #fbbf24;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border: 2px solid #fbbf24;
+        }
+        .timer-box .blink {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+        .lang-select {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #4a5a7a;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .lang-select option {
+            background: #0b1a3a;
+            color: #fff;
+        }
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .header-actions button {
+            background: transparent;
+            border: 1px solid #4a5a7a;
+            color: #fff;
+            padding: 4px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+        .header-actions button:hover {
+            background: #1e2a4a;
+            border-color: #fbbf24;
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            gap: 24px;
+        }
+        .question-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        .sidebar {
+            width: 220px;
+            min-width: 180px;
+        }
+
+        /* ===== QUESTION CARD ===== */
+        .q-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .q-number-box {
+            background: #0b1a3a;
+            color: #fff;
+            padding: 4px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .q-instruction {
+            color: #5b6f82;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .q-segment-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin: 12px 0 18px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #1e293b;
+        }
+        .q-segment-box .seg {
+            display: inline-block;
+            background: #fff;
+            padding: 2px 10px;
+            margin: 2px 4px;
+            border-radius: 4px;
+            border: 1px dashed #d0d9e6;
+        }
+        .q-segment-box .seg-num {
+            color: #0b1a3a;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-right: 2px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 30px;
+            margin: 14px 0 18px;
+        }
+        .opt-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 2px solid transparent;
+        }
+        .opt-item:hover {
+            background: #f1f7fe;
+            border-color: #d0d9e6;
+        }
+        .opt-item.selected {
+            background: #dbeafe;
+            border-color: #0b1a3a;
+        }
+        .opt-item.correct-answer {
+            background: #dcfce7;
+            border-color: #16a34a;
+        }
+        .opt-item.wrong-answer {
+            background: #fee2e2;
+            border-color: #dc2626;
+        }
+        .opt-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #0b1a3a;
+        }
+        .opt-item input[type="radio"]:disabled {
+            cursor: not-allowed;
+        }
+        .opt-item .opt-label {
+            font-weight: 700;
+            color: #0b1a3a;
+            min-width: 18px;
+        }
+        .opt-item .opt-text {
+            font-size: 0.98rem;
+            color: #1e293b;
+        }
+
+        /* ===== NAVIGATION BUTTONS ===== */
+        .nav-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0 12px;
+        }
+        .nav-btn {
+            padding: 8px 22px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #eef3f8;
+            color: #1e293b;
+        }
+        .nav-btn:hover {
+            transform: scale(1.02);
+        }
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .nav-btn.primary {
+            background: #0b1a3a;
+            color: #fff;
+        }
+        .nav-btn.primary:hover:not(:disabled) {
+            background: #1a2f5a;
+        }
+        .nav-btn.mark {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .nav-btn.mark.marked {
+            background: #f59e0b;
+            color: #fff;
+        }
+        .nav-btn.submit {
+            background: #dc2626;
+            color: #fff;
+        }
+        .nav-btn.submit:hover:not(:disabled) {
+            background: #b91c1c;
+        }
+        .nav-btn.green {
+            background: #16a34a;
+            color: #fff;
+        }
+        .nav-btn.green:hover:not(:disabled) {
+            background: #15803d;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation-box {
+            background: #f1f7fe;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-top: 16px;
+            border-left: 5px solid #0b1a3a;
+            display: none;
+        }
+        .explanation-box.show {
+            display: block;
+        }
+        .exp-label {
+            font-weight: 700;
+            color: #0b1a3a;
+            font-size: 1rem;
+        }
+        .exp-text {
+            color: #1e293b;
+            margin-top: 4px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .show-ans-btn {
+            background: transparent;
+            border: 2px solid #0b1a3a;
+            color: #0b1a3a;
+            padding: 4px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 6px;
+        }
+        .show-ans-btn:hover {
+            background: #0b1a3a;
+            color: #fff;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-title {
+            font-weight: 700;
+            color: #0b1a3a;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 12px 0 18px;
+        }
+        .palette-btn {
+            aspect-ratio: 1;
+            border: 2px solid #d0d9e6;
+            border-radius: 8px;
+            background: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .palette-btn:hover {
+            transform: scale(1.05);
+        }
+        .palette-btn.attempted {
+            background: #16a34a;
+            border-color: #16a34a;
+            color: #fff;
+        }
+        .palette-btn.marked {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #fff;
+        }
+        .palette-btn.current {
+            border-color: #0b1a3a;
+            border-width: 3px;
+            box-shadow: 0 0 0 2px #fbbf24;
+        }
+        .palette-btn.not-attempted {
+            background: #fff;
+            color: #1e293b;
+        }
+        .palette-btn.correct-result {
+            background: #16a34a;
+            border-color: #16a34a;
+            color: #fff;
+        }
+        .palette-btn.wrong-result {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: #fff;
+        }
+        .palette-btn.not-attempted-result {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+            color: #4b5563;
+        }
+        .palette-btn.marked-result {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #fff;
+        }
+        .analysis-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-top: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .analysis-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.9rem;
+        }
+        .analysis-item .label {
+            color: #5b6f82;
+        }
+        .analysis-item .value {
+            font-weight: 700;
+            color: #0b1a3a;
+        }
+        .analysis-item .value.green {
+            color: #16a34a;
+        }
+        .analysis-item .value.orange {
+            color: #f59e0b;
+        }
+        .analysis-item .value.red {
+            color: #dc2626;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 0.75rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            border: 1px solid #d0d9e6;
+        }
+        .legend-dot.green {
+            background: #16a34a;
+        }
+        .legend-dot.orange {
+            background: #f59e0b;
+        }
+        .legend-dot.white {
+            background: #fff;
+        }
+        .legend-dot.red {
+            background: #dc2626;
+        }
+
+        /* ===== SET SELECTION ===== */
+        .set-selection {
+            padding: 20px;
+            display: block;
+        }
+        .set-selection.hidden {
+            display: none;
+        }
+        .set-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .set-btn {
+            padding: 14px;
+            background: #fff;
+            border: 2px solid #0b1a3a;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .set-btn:hover {
+            background: #0b1a3a;
+            color: #fff;
+            transform: scale(1.03);
+        }
+        .set-btn.completed {
+            background: #16a34a;
+            border-color: #16a34a;
+            color: #fff;
+        }
+        .set-btn .badge {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 400;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        /* ===== RESULT ===== */
+        .result-overlay {
+            display: none;
+            padding: 30px;
+            background: #fff;
+        }
+        .result-overlay.active {
+            display: block;
+        }
+        .result-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 14px 28px;
+            text-align: center;
+            min-width: 100px;
+            border: 1px solid #e2e8f0;
+        }
+        .stat-card .num {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .stat-card .num.green {
+            color: #16a34a;
+        }
+        .stat-card .num.red {
+            color: #dc2626;
+        }
+        .stat-card .num.orange {
+            color: #f59e0b;
+        }
+        .stat-card .num.blue {
+            color: #0b1a3a;
+        }
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: #5b6f82;
+        }
+
+        .result-detail-wrap {
+            max-height: 450px;
+            overflow-y: auto;
+            margin: 16px 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 8px 0;
+            background: #fafcfd;
+        }
+        .detail-item {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            align-items: center;
+            gap: 6px;
+        }
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        .detail-item .qno {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #0b1a3a;
+            min-width: 40px;
+        }
+        .detail-item .user-ans {
+            font-size: 0.85rem;
+            color: #4b5563;
+            background: #f3f4f6;
+            padding: 2px 10px;
+            border-radius: 30px;
+        }
+        .detail-item .correct-ans {
+            font-size: 0.85rem;
+            color: #16a34a;
+            font-weight: 700;
+            background: #dcfce7;
+            padding: 2px 10px;
+            border-radius: 30px;
+        }
+        .detail-item .status-badge {
+            font-weight: 600;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+        }
+        .status-badge.correct {
+            color: #16a34a;
+            background: #dcfce7;
+        }
+        .status-badge.wrong {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+        .status-badge.not-attempted {
+            color: #6b7280;
+            background: #f3f4f6;
+        }
+        .status-badge.marked {
+            color: #f59e0b;
+            background: #fef3c7;
+        }
+
+        /* ===== ALL ANSWERS SECTION ===== */
+        .all-answers-container {
+            margin-top: 16px;
+            display: none;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .all-answers-container.active {
+            display: block;
+        }
+        .all-answers-container .qa-item {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.92rem;
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+        }
+        .all-answers-container .qa-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .all-answers-container .qa-q {
+            font-weight: 700;
+            color: #0b1a3a;
+            margin-bottom: 3px;
+        }
+        .all-answers-container .qa-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.88rem;
+            color: #1e293b;
+        }
+        .all-answers-container .qa-detail .correct {
+            color: #16a34a;
+            font-weight: 600;
+        }
+        .all-answers-container .qa-detail .wrong {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        .all-answers-container .qa-detail .user {
+            color: #4b5563;
+        }
+        .all-answers-container .qa-exp {
+            font-size: 0.85rem;
+            color: #5b6f82;
+            background: #f1f7fe;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-top: 4px;
+        }
+        .toggle-ans-btn {
+            background: #0b1a3a;
+            color: #fff;
+            border: none;
+            padding: 10px 35px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+        .toggle-ans-btn:hover {
+            background: #1a2f5a;
+            transform: scale(1.02);
+        }
+        .toggle-ans-btn.active {
+            background: #6b7b8d;
+        }
+
+        /* ===== ANALYSIS SUMMARY ===== */
+        .analysis-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin: 14px 0;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .analysis-summary .item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .analysis-summary .item .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.green {
+            background: #16a34a;
+        }
+        .dot.red {
+            background: #dc2626;
+        }
+        .dot.gray {
+            background: #9ca3af;
+        }
+        .dot.orange {
+            background: #f59e0b;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .header-right {
+                justify-content: center;
+            }
+            .main {
+                flex-direction: column;
+            }
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            .result-stats {
+                gap: 12px;
+            }
+            .stat-card {
+                padding: 10px 16px;
+                min-width: 70px;
+            }
+            .stat-card .num {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <!-- ===== HEADER ===== -->
+        <div class="header">
+            <div class="exam-title">📘 <span>Combined Graduate Level Examination</span> Tier I</div>
+            <div class="header-right">
+                <div class="timer-box" id="timerBox">⏱️ <span id="timerDisplay">15:00</span></div>
+                <select class="lang-select" id="langSelect">
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी</option>
+                </select>
+                <div class="header-actions">
+                    <button onclick="alert('Report submitted!')">📄 Report</button>
+                    <button onclick="alert('Progress saved!')">💾 Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SET SELECTION ===== -->
+        <div class="set-selection" id="setSelection">
+            <h2 style="color:#0b1a3a; font-size:1.4rem; margin-bottom:8px;">📚 Select Set</h2>
+            <p style="color:#5b6f82; margin-bottom:12px;">Each set contains 25 Error Detection questions. Timer: 15 minutes.</p>
+            <div class="set-grid" id="setGrid"></div>
+            <div style="margin-top:12px; font-size:0.9rem; color:#5b6f82;" id="progressText"></div>
+        </div>
+
+        <!-- ===== MAIN ===== -->
+        <div class="main" id="mainArea" style="display:none;">
+            <!-- QUESTION SECTION -->
+            <div class="question-section">
+                <div class="q-top">
+                    <span class="q-number-box" id="qNumberDisplay">Question: 1</span>
+                    <span class="q-instruction">PART-A · Error Detection</span>
+                </div>
+
+                <div style="font-size:0.9rem; color:#5b6f82; margin-bottom:6px;">
+                    The following sentence has been split into four segments. Identify the segment that contains a grammatical error.
+                </div>
+
+                <div class="q-segment-box" id="segmentDisplay">
+                    <!-- segments rendered by JS -->
+                </div>
+
+                <div class="options-grid" id="optionsContainer">
+                    <!-- options rendered by JS -->
+                </div>
+
+                <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:4px;">
+                    <button class="show-ans-btn" id="showAnsBtn" onclick="toggleExplanation()">💡 Show Answer</button>
+                    <span style="font-size:0.8rem; color:#5b6f82;" id="answerStatus"></span>
+                </div>
+
+                <div class="explanation-box" id="explanationBox">
+                    <div class="exp-label">✅ Correct Answer: <span id="correctAnswerText"></span></div>
+                    <div class="exp-text" id="explanationText"></div>
+                </div>
+
+                <!-- NAVIGATION -->
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="prevBtn" onclick="prevQuestion()">◀ Previous</button>
+                    <button class="nav-btn mark" id="markBtn" onclick="toggleMark()">⭐ Mark for Review</button>
+                    <button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()">Save & Next ▶</button>
+                    <button class="nav-btn submit" id="submitBtn" onclick="submitSet()">📤 Submit Test</button>
+                </div>
+            </div>
+
+            <!-- ===== SIDEBAR ===== -->
+            <div class="sidebar">
+                <div class="sidebar-title">📋 Question Palette</div>
+                <div class="palette-grid" id="paletteGrid"></div>
+
+                <div class="legend">
+                    <span class="legend-item"><span class="legend-dot green"></span> Attempted</span>
+                    <span class="legend-item"><span class="legend-dot orange"></span> Marked</span>
+                    <span class="legend-item"><span class="legend-dot white"></span> Not Attempted</span>
+                </div>
+
+                <div class="analysis-box">
+                    <div style="font-weight:700; color:#0b1a3a; margin-bottom:6px;">PART-A Analysis</div>
+                    <div class="analysis-item"><span class="label">✅ Answered:</span> <span class="value green" id="answeredCount">0</span></div>
+                    <div class="analysis-item"><span class="label">⏳ Not Answered:</span> <span class="value red" id="notAnsweredCount">25</span></div>
+                    <div class="analysis-item"><span class="label">⭐ Marked:</span> <span class="value orange" id="markedCount">0</span></div>
+                </div>
+
+                <div style="margin-top:12px; font-size:0.75rem; color:#5b6f82; text-align:center;">
+                    Total Questions: <span id="totalQDisplay">25</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== RESULT OVERLAY ===== -->
+        <div class="result-overlay" id="resultOverlay">
+            <h2 style="color:#0b1a3a;">📊 Test Result</h2>
+
+            <!-- Stats -->
+            <div class="result-stats" id="resultStats"></div>
+
+            <!-- Analysis Summary -->
+            <div class="analysis-summary" id="analysisSummary"></div>
+
+            <!-- Question-wise Details -->
+            <div style="margin: 16px 0 6px; font-weight:700; color:#0b1a3a;">📋 Question-wise Analysis</div>
+            <div class="result-detail-wrap" id="resultDetail"></div>
+
+            <!-- Buttons -->
+            <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:16px;">
+                <button class="nav-btn green" onclick="backToSets()" style="font-size:1rem; padding:10px 40px;">⬅️ Back to Sets</button>
+                <button class="toggle-ans-btn" id="toggleAllAnswersBtn" onclick="toggleAllAnswers()">📖 Show All Correct Answers</button>
+            </div>
+
+            <!-- All Answers Container -->
+            <div class="all-answers-container" id="allAnswersContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  DATA – 500+ ERROR DETECTION QUESTIONS
+        // ================================================================
+
+        function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        function shuffle(arr) {
+            for (var i = arr.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            return arr;
+        }
+
+        function generateErrorQuestions() {
+            var qs = [];
+            var subjects = ['The committee', 'The team', 'The jury', 'The audience', 'The class', 'The army', 'The board',
+                'The staff', 'The group', 'The family', 'The government', 'The company'
+            ];
+            var nouns = ['student', 'teacher', 'doctor', 'manager', 'employee', 'citizen', 'official', 'worker', 'leader',
+                'member', 'candidate', 'applicant'
+            ];
+
+            // Subject-Verb Agreement (120)
+            for (var i = 0; i < 120; i++) {
+                var subj = pick(subjects);
+                var plural = pick([true, false]);
+                var wrongVerb = plural ? pick(['has', 'is', 'was', 'does']) : pick(['have', 'are', 'were', 'do']);
+                var obj = pick(nouns);
+                var parts = [
+                    subj + (plural ? ' have' : ' has') + ' decided',
+                    'to ' + (plural ? 'give' : 'gives') + ' a presentation',
+                    'about the ' + obj + "'s progress, ",
+                    wrongVerb + ' been well received.'
+                ];
+                var correctVerb = plural ? 'have been' : 'has been';
+                var explanation = '❌ Error: Subject-Verb Agreement issue in Part 4.\n✅ Correct: "' + correctVerb +
+                    '"\n💡 Reason: Subject "' + subj + '" is ' + (plural ? 'plural' : 'singular') +
+                    ', so verb must agree.\n📌 SSC Rule: Collective nouns take singular verb.';
+                qs.push({
+                    id: 'sv_' + i,
+                    parts: parts,
+                    question: parts.join(''),
+                    options: ['Part 1', 'Part 2', 'Part 3', 'Part 4', 'No error'],
+                    correct: 'Part 4 – "' + correctVerb + '"',
+                    explanation: explanation,
+                    errorType: 'Subject-Verb Agreement'
+                });
+            }
+
+            // Article Errors (100)
+            for (var i = 0; i < 100; i++) {
+                var noun = pick(nouns);
+                var wrongArt = pick(['', 'a', 'an', 'the']);
+                var correctArt = pick(['a', 'an', 'the']);
+                var parts = [
+                    pick(['She', 'He', 'They', 'We']) + ' went to',
+                    (wrongArt ? wrongArt + ' ' : '') + noun + ' shop',
+                    'to buy some ' + pick(['groceries', 'stationery', 'clothes']),
+                    'and came back late.'
+                ];
+                var correctPart = correctArt + ' ' + noun + ' shop';
+                if (wrongArt === '') correctPart = pick(['a', 'an', 'the']) + ' ' + noun + ' shop';
+                var explanation = '❌ Error: Article error in Part 2.\n✅ Correct: "' + correctPart + '"\n💡 Rule: ' + (
+                    correctArt === 'a' ? '"a" before consonant sound' : correctArt === 'an' ?
+                    '"an" before vowel sound' : '"the" for specific noun') + '.\n📌 SSC Tip: Use a/an for indefinite, the for definite.';
+                qs.push({
+                    id: 'art_' + i,
+                    parts: parts,
+                    question: parts.join(''),
+                    options: ['Part 1', 'Part 2', 'Part 3', 'Part 4', 'No error'],
+                    correct: 'Part 2 – "' + correctPart + '"',
+                    explanation: explanation,
+                    errorType: 'Article Error'
+                });
+            }
+
+            // Tense Errors (100)
+            var tenses = ['present', 'past', 'future'];
+            var verbs = ['write', 'read', 'speak', 'travel', 'work', 'study', 'play', 'sing'];
+            for (var i = 0; i < 100; i++) {
+                var tense = pick(tenses);
+                var wrongTense = pick(tenses);
+                while (wrongTense === tense) wrongTense = pick(tenses);
+                var verb = pick(verbs);
+                var parts = [
+                    'Yesterday, I ' + (tense === 'present' ? 'am' : tense === 'past' ? 'was' : 'will be') + ' ' +
+                    verb + 'ing',
+                    'the report when the manager',
+                    (wrongTense === 'present' ? 'calls' : wrongTense === 'past' ? 'called' : 'will call') + ' me',
+                    'for a meeting.'
+                ];
+                var correct = tense === 'present' ? 'calls' : tense === 'past' ? 'called' : 'will call';
+                var explanation = '❌ Error: Tense inconsistency in Part 3.\n✅ Correct: "' + correct +
+                    '"\n💡 Reason: "Yesterday" indicates past tense.\n📌 SSC Rule: Tense must be consistent throughout the sentence.';
+                qs.push({
+                    id: 'ten_' + i,
+                    parts: parts,
+                    question: parts.join(''),
+                    options: ['Part 1', 'Part 2', 'Part 3', 'Part 4', 'No error'],
+                    correct: 'Part 3 – "' + correct + '"',
+                    explanation: explanation,
+                    errorType: 'Tense Error'
+                });
+            }
+
+            // Preposition Errors (80)
+            var prepPairs = [
+                { wrong: 'besides', correct: 'beside', ctx: 'The girl lay down on the bed ______ her mother.' },
+                { wrong: 'except', correct: 'besides', ctx: '______ John, everyone came to the party.' },
+                { wrong: 'among', correct: 'between', ctx: 'The secret was shared ______ the two friends.' },
+                { wrong: 'between', correct: 'among', ctx: 'The food was distributed ______ the five children.' },
+                { wrong: 'in', correct: 'at', ctx: 'She is good ______ mathematics.' },
+                { wrong: 'at', correct: 'in', ctx: 'He lives ______ Delhi.' },
+                { wrong: 'on', correct: 'in', ctx: 'She is interested ______ painting.' },
+                { wrong: 'with', correct: 'to', ctx: 'He is married ______ a doctor.' },
+                { wrong: 'to', correct: 'with', ctx: 'She is angry ______ her brother.' },
+                { wrong: 'for', correct: 'since', ctx: 'He has been working here ______ 2015.' },
+                { wrong: 'since', correct: 'for', ctx: 'He has been working here ______ five years.' },
+                { wrong: 'on', correct: 'at', ctx: 'We will meet ______ 5 o\'clock.' },
+                { wrong: 'at', correct: 'on', ctx: 'We will meet ______ Monday.' },
+                { wrong: 'in', correct: 'on', ctx: 'The book is ______ the table.' },
+                { wrong: 'on', correct: 'in', ctx: 'The book is ______ the drawer.' }
+            ];
+            for (var i = 0; i < 80; i++) {
+                var p = pick(prepPairs);
+                var parts = p.ctx.replace('______', p.wrong).split(' ');
+                var explanation = '❌ Error: Preposition error.\n✅ Correct: "' + p.correct + '"\n💡 Reason: ' + (p
+                    .wrong === 'besides' ? '"besides" = in addition to, "beside" = next to' : p.wrong === 'except' ?
+                    '"except" = excluding, "besides" = in addition to' : p.wrong === 'among' ?
+                    '"among" for 3+, "between" for 2' : p.wrong === 'between' ?
+                    '"between" for 2, "among" for 3+' : p.wrong === 'in' ?
+                    '"in" for city/country, "at" for specific point' : p.wrong === 'at' ?
+                    '"at" for small place, "in" for large place' : p.wrong === 'on' ?
+                    '"on" for surface, "in" for enclosed space' : p.wrong === 'with' ?
+                    '"with" for angry, "to" for married' : p.wrong === 'to' ?
+                    '"to" for married, "with" for angry' : p.wrong === 'for' ?
+                    '"for" = duration, "since" = point of time' : p.wrong === 'since' ?
+                    '"since" = point of time, "for" = duration' : p.wrong === 'on' ?
+                    '"on" = day/date, "at" = time' : p.wrong === 'at' ?
+                    '"at" = time, "on" = day/date' : p.wrong === 'in' ?
+                    '"in" = enclosed, "on" = surface' : '"on" = surface, "in" = enclosed') +
+                    '.\n📌 SSC Tip: Learn preposition collocations.';
+                qs.push({
+                    id: 'prep_' + i,
+                    parts: parts,
+                    question: p.ctx.replace('______', p.wrong),
+                    options: ['Part 1', 'Part 2', 'Part 3', 'Part 4', 'No error'],
+                    correct: 'Replace "' + p.wrong + '" with "' + p.correct + '"',
+                    explanation: explanation,
+                    errorType: 'Preposition Error'
+                });
+            }
+
+            // Pronoun Errors (60)
+            for (var i = 0; i < 60; i++) {
+                var errType = pick(['reflexive', 'possessive', 'case']);
+                var parts = [];
+                var explanation = '';
+                var correct = '';
+                if (errType === 'reflexive') {
+                    parts = ['A man who has been accused of fraud', 'in an earlier job, he will never be',
+                        'welcome in any other', 'organisation.'
+                    ];
+                    correct = 'Remove "he" from Part 2';
+                    explanation =
+                        '❌ Error: Superfluous pronoun in Part 2.\n✅ Correct: Remove "he"\n💡 Reason: "A man" is already the subject, "he" is redundant.\n📌 SSC Rule: Do not repeat the subject.';
+                } else if (errType === 'possessive') {
+                    parts = ['Everyone should bring', 'their own lunch', 'to the picnic', 'tomorrow.'];
+                    correct = 'Replace "their" with "his or her"';
+                    explanation =
+                        '❌ Error: Pronoun-antecedent agreement in Part 2.\n✅ Correct: "his or her"\n💡 Reason: "Everyone" is singular.\n📌 SSC Rule: Everyone, everybody, someone, anyone, no one are singular.';
+                } else {
+                    parts = ['Between you and I,', 'this matter should be', 'resolved quickly',
+                        'without any delay.'
+                    ];
+                    correct = 'Replace "I" with "me"';
+                    explanation =
+                        '❌ Error: Pronoun case error in Part 1.\n✅ Correct: "me"\n💡 Reason: "Between" is a preposition, takes objective case (me, him, her, us, them).\n📌 SSC Rule: Prepositions take objective case.';
+                }
+                qs.push({
+                    id: 'pro_' + i,
+                    parts: parts,
+                    question: parts.join(' '),
+                    options: ['Part 1', 'Part 2', 'Part 3', 'Part 4', 'No error'],
+                    correct: correct,
+                    explanation: explanation,
+                    errorType: 'Pronoun Error'
+                });
+            }
+
+            // Comparative/Superlative (50)
+            for (var i = 0; i < 50; i++) {
+                var errType = pick(['double', 'wrong_form', 'irregular']);
+                var parts = [];
+                var explanation = '';
+                var correct = '';
+                if (errType === 'double') {
+                    parts = ['This movie is', 'more better than', 'the one we saw', 'last week.'];
+                    correct = 'Replace "more better" with "better"';
+                    explanation =
+                        '❌ Error: Double comparative in Part 2.\n✅ Correct: "better"\n💡 Reason: "better" is already comparative.\n📌 SSC Rule: No double comparatives (more better, most best).';
+                } else if (errType === 'wrong_form') {
+                    parts = ['She is the', 'most tallest girl', 'in the entire', 'school.'];
+                    correct = 'Replace "most tallest" with "tallest"';
+                    explanation =
+                        '❌ Error: Double superlative in Part 2.\n✅ Correct: "tallest"\n💡 Reason: "tallest" is already superlative.\n📌 SSC Rule: No double superlatives.';
+                } else {
+                    parts = ['Among the three sisters,', 'Meera is the elder', 'and Charu is the',
+                        'youngest.'
+                    ];
+                    correct = 'Replace "elder" with "eldest"';
+                    explanation =
+                        '❌ Error: Wrong comparative form in Part 2.\n✅ Correct: "eldest"\n💡 Reason: "elder" for 2 people, "eldest" for 3+.\n📌 SSC Rule: elder/eldest for family members, older/oldest for general comparison.';
+                }
+                qs.push({
+                    id: 'comp_' + i,
+                    parts: parts,
+                    question: parts.join(' '),
+                    options: ['Part 1', 'Part 2', 'Part 3', 'Part 4', 'No error'],
+                    correct: correct,
+                    explanation: explanation,
+                    errorType: 'Comparative/Superlative Error'
+                });
+            }
+
+            // No Error (50)
+            for (var i = 0; i < 50; i++) {
+                var subj = pick(subjects);
+                var verb = pick(['has', 'is', 'was', 'does']);
+                var parts = [
+                    subj + ' ' + verb + ' planning',
+                    'to launch a new project',
+                    'in the coming months,',
+                    'and it looks promising.'
+                ];
+                var explanation =
+                    '✅ No error. The sentence is grammatically correct.\n📌 SSC Tip: Always check all parts carefully. Sometimes "No error" is the correct answer.';
+                qs.push({
+                    id: 'noerr_' + i,
+                    parts: parts,
+                    question: parts.join(' '),
+                    options: ['Part 1', 'Part 2', 'Part 3', 'Part 4', 'No error'],
+                    correct: 'No error',
+                    explanation: explanation,
+                    errorType: 'No Error'
+                });
+            }
+
+            return shuffle(qs);
+        }
+
+        // ================================================================
+        //  APPLICATION STATE
+        // ================================================================
+
+        var allQuestions = generateErrorQuestions(); // ~560
+        var sets = [];
+        var completedSets = [];
+        var currentSetIndex = -1;
+        var currentQIndex = 0;
+        var userAnswers = {}; // qid -> selected option text
+        var markedQuestions = {}; // qid -> true/false
+        var setQuestions = [];
+        var setStarted = false;
+        var timerInterval = null;
+        var timeLeft = 15 * 60;
+        var isSubmitted = false;
+        var allAnswersVisible = false;
+
+        // ================================================================
+        //  BUILD SETS
+        // ================================================================
+
+        function buildSets() {
+            var shuffled = shuffle(allQuestions.slice());
+            var numSets = Math.floor(shuffled.length / 25);
+            for (var i = 0; i < numSets; i++) {
+                var start = i * 25;
+                sets.push(shuffled.slice(start, start + 25));
+            }
+            if (shuffled.length % 25 !== 0) {
+                var last = sets[sets.length - 1];
+                var leftover = shuffled.slice(numSets * 25);
+                for (var j = 0; j < leftover.length; j++) {
+                    last.push(leftover[j]);
+                }
+            }
+        }
+
+        function renderSets() {
+            var grid = document.getElementById('setGrid');
+            grid.innerHTML = '';
+            for (var i = 0; i < sets.length; i++) {
+                var btn = document.createElement('button');
+                var isCompleted = completedSets.indexOf(i) !== -1;
+                btn.className = 'set-btn' + (isCompleted ? ' completed' : '');
+                btn.innerHTML = 'Set ' + (i + 1) + ' <span class="badge">' + sets[i].length + ' Q</span>' + (isCompleted ?
+                    ' ✅' : '');
+                btn.onclick = (function(idx) {
+                    return function() { startSet(idx); };
+                })(i);
+                grid.appendChild(btn);
+            }
+            document.getElementById('progressText').textContent = '📊 ' + completedSets.length + ' of ' + sets.length +
+                ' sets completed';
+        }
+
+        // ================================================================
+        //  START SET
+        // ================================================================
+
+        function startSet(idx) {
+            if (setStarted) {
+                if (!confirm('Current set progress will be lost. Continue?')) return;
+            }
+            clearInterval(timerInterval);
+            currentSetIndex = idx;
+            setQuestions = sets[idx];
+            userAnswers = {};
+            markedQuestions = {};
+            setStarted = true;
+            isSubmitted = false;
+            allAnswersVisible = false;
+            currentQIndex = 0;
+            timeLeft = 15 * 60;
+            document.getElementById('setSelection').style.display = 'none';
+            document.getElementById('mainArea').style.display = 'flex';
+            document.getElementById('resultOverlay').classList.remove('active');
+            document.getElementById('timerBox').style.display = 'flex';
+            document.getElementById('allAnswersContainer').classList.remove('active');
+            document.getElementById('allAnswersContainer').innerHTML = '';
+            document.getElementById('toggleAllAnswersBtn').textContent = '📖 Show All Correct Answers';
+            updateTimerDisplay();
+            renderQuestion();
+            renderPalette();
+            updateAnalysis();
+            startTimer();
+            var sb = document.getElementById('submitBtn');
+            sb.disabled = false;
+            sb.textContent = '📤 Submit Test';
+        }
+
+        // ================================================================
+        //  RENDER QUESTION
+        // ================================================================
+
+        function renderQuestion() {
+            var q = setQuestions[currentQIndex];
+            var qid = q.id;
+            var total = setQuestions.length;
+
+            document.getElementById('qNumberDisplay').textContent = 'Question: ' + (currentQIndex + 1);
+
+            var segHtml = '';
+            for (var i = 0; i < q.parts.length; i++) {
+                segHtml += '<span class="seg"><span class="seg-num">' + (i + 1) + '.</span> ' + q.parts[i] + '</span> ';
+            }
+            document.getElementById('segmentDisplay').innerHTML = segHtml;
+
+            var optsHtml = '';
+            var selected = userAnswers[qid] || null;
+            var isResultMode = isSubmitted;
+
+            for (var i = 0; i < q.options.length; i++) {
+                var opt = q.options[i];
+                var sel = (selected === opt) ? 'selected' : '';
+                var checked = (selected === opt) ? 'checked' : '';
+                var disabled = isResultMode ? 'disabled' : '';
+                var extraClass = '';
+                if (isResultMode) {
+                    if (opt === q.correct) {
+                        extraClass = 'correct-answer';
+                    } else if (selected === opt && selected !== q.correct) {
+                        extraClass = 'wrong-answer';
+                    }
+                }
+                optsHtml += '<label class="opt-item ' + sel + ' ' + extraClass + '">' +
+                    '<input type="radio" name="q_option" value="' + opt + '" ' + checked + ' ' + disabled +
+                    ' onchange="selectOption(this.value)">' +
+                    '<span class="opt-label">' + String.fromCharCode(65 + i) + '.</span>' +
+                    '<span class="opt-text">' + opt + '</span>' +
+                    '</label>';
+            }
+            document.getElementById('optionsContainer').innerHTML = optsHtml;
+
+            var markBtn = document.getElementById('markBtn');
+            if (isResultMode) {
+                markBtn.style.display = 'none';
+            } else {
+                markBtn.style.display = 'inline-block';
+                if (markedQuestions[qid]) {
+                    markBtn.textContent = '⭐ Marked';
+                    markBtn.classList.add('marked');
+                } else {
+                    markBtn.textContent = '⭐ Mark for Review';
+                    markBtn.classList.remove('marked');
+                }
+            }
+
+            var showBtn = document.getElementById('showAnsBtn');
+            if (isResultMode) {
+                showBtn.style.display = 'none';
+            } else {
+                showBtn.style.display = 'inline-block';
+            }
+
+            document.getElementById('explanationBox').classList.remove('show');
+            document.getElementById('showAnsBtn').textContent = '💡 Show Answer';
+            document.getElementById('answerStatus').textContent = '';
+
+            document.getElementById('prevBtn').disabled = (currentQIndex === 0 || isResultMode);
+            document.getElementById('nextBtn').disabled = (currentQIndex === total - 1 || isResultMode);
+
+            renderPalette();
+            updateAnalysis();
+        }
+
+        // ================================================================
+        //  SELECT OPTION
+        // ================================================================
+
+        function selectOption(value) {
+            if (isSubmitted) return;
+            var q = setQuestions[currentQIndex];
+            userAnswers[q.id] = value;
+            var items = document.querySelectorAll('.opt-item');
+            items.forEach(function(el) {
+                el.classList.remove('selected');
+                var radio = el.querySelector('input[type="radio"]');
+                if (radio && radio.value === value) {
+                    el.classList.add('selected');
+                }
+            });
+            renderPalette();
+            updateAnalysis();
+        }
+
+        // ================================================================
+        //  NAVIGATION
+        // ================================================================
+
+        function nextQuestion() {
+            if (isSubmitted) return;
+            if (currentQIndex < setQuestions.length - 1) {
+                currentQIndex++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (isSubmitted) return;
+            if (currentQIndex > 0) {
+                currentQIndex--;
+                renderQuestion();
+            }
+        }
+
+        function toggleMark() {
+            if (isSubmitted) return;
+            var qid = setQuestions[currentQIndex].id;
+            markedQuestions[qid] = !markedQuestions[qid];
+            renderQuestion();
+            renderPalette();
+            updateAnalysis();
+        }
+
+        // ================================================================
+        //  TOGGLE EXPLANATION
+        // ================================================================
+
+        function toggleExplanation() {
+            if (isSubmitted) return;
+            var box = document.getElementById('explanationBox');
+            var btn = document.getElementById('showAnsBtn');
+            var q = setQuestions[currentQIndex];
+            if (box.classList.contains('show')) {
+                box.classList.remove('show');
+                btn.textContent = '💡 Show Answer';
+            } else {
+                document.getElementById('correctAnswerText').textContent = q.correct;
+                document.getElementById('explanationText').innerHTML = q.explanation.replace(/\n/g, '<br>');
+                box.classList.add('show');
+                btn.textContent = '🙈 Hide Answer';
+            }
+        }
+
+        // ================================================================
+        //  PALETTE
+        // ================================================================
+
+        function renderPalette() {
+            var grid = document.getElementById('paletteGrid');
+            grid.innerHTML = '';
+            for (var i = 0; i < setQuestions.length; i++) {
+                var q = setQuestions[i];
+                var btn = document.createElement('button');
+                btn.className = 'palette-btn';
+                if (i === currentQIndex && !isSubmitted) btn.classList.add('current');
+
+                if (isSubmitted) {
+                    var selected = userAnswers[q.id] || null;
+                    if (selected === q.correct) {
+                        btn.classList.add('correct-result');
+                    } else if (selected !== null && selected !== q.correct) {
+                        btn.classList.add('wrong-result');
+                    } else {
+                        btn.classList.add('not-attempted-result');
+                    }
+                    if (markedQuestions[q.id]) {
+                        btn.classList.add('marked-result');
+                    }
+                } else {
+                    if (userAnswers[q.id]) {
+                        btn.classList.add('attempted');
+                    } else if (markedQuestions[q.id]) {
+                        btn.classList.add('marked');
+                    } else {
+                        btn.classList.add('not-attempted');
+                    }
+                }
+                btn.textContent = i + 1;
+                btn.onclick = (function(idx) {
+                    return function() {
+                        if (!isSubmitted) {
+                            currentQIndex = idx;
+                            renderQuestion();
+                        }
+                    };
+                })(i);
+                grid.appendChild(btn);
+            }
+        }
+
+        // ================================================================
+        //  ANALYSIS
+        // ================================================================
+
+        function updateAnalysis() {
+            var answered = 0;
+            var marked = 0;
+            for (var i = 0; i < setQuestions.length; i++) {
+                var q = setQuestions[i];
+                if (userAnswers[q.id]) answered++;
+                if (markedQuestions[q.id]) marked++;
+            }
+            document.getElementById('answeredCount').textContent = answered;
+            document.getElementById('notAnsweredCount').textContent = setQuestions.length - answered;
+            document.getElementById('markedCount').textContent = marked;
+            document.getElementById('totalQDisplay').textContent = setQuestions.length;
+        }
+
+        // ================================================================
+        //  TIMER
+        // ================================================================
+
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('⏰ Time is up! Submitting automatically...');
+                    submitSet();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            var mins = Math.floor(timeLeft / 60);
+            var secs = timeLeft % 60;
+            var display = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+            document.getElementById('timerDisplay').textContent = display;
+            if (timeLeft <= 60) {
+                document.getElementById('timerDisplay').style.color = '#fbbf24';
+                document.getElementById('timerDisplay').style.animation = 'blink 1s infinite';
+            } else {
+                document.getElementById('timerDisplay').style.color = '#fbbf24';
+                document.getElementById('timerDisplay').style.animation = 'none';
+            }
+        }
+
+        // ================================================================
+        //  SUBMIT SET
+        // ================================================================
+
+        function submitSet() {
+            if (isSubmitted) return;
+            if (!confirm('Are you sure you want to submit this set?')) return;
+            clearInterval(timerInterval);
+            isSubmitted = true;
+
+            var correct = 0,
+                wrong = 0,
+                notAttempted = 0,
+                markedCount = 0;
+            var details = [];
+            for (var i = 0; i < setQuestions.length; i++) {
+                var q = setQuestions[i];
+                var selected = userAnswers[q.id] || null;
+                var isMarked = markedQuestions[q.id] || false;
+                if (isMarked) markedCount++;
+                if (selected === null) {
+                    notAttempted++;
+                    details.push({ qno: i + 1, status: 'Not Attempted', correct: false, marked: isMarked,
+                        userAns: '—', correctAns: q.correct, qText: q.question, explanation: q.explanation });
+                } else if (selected === q.correct) {
+                    correct++;
+                    details.push({ qno: i + 1, status: '✅ Correct', correct: true, marked: isMarked,
+                        userAns: selected, correctAns: q.correct, qText: q.question, explanation: q.explanation });
+                } else {
+                    wrong++;
+                    details.push({ qno: i + 1, status: '❌ Wrong', correct: false, marked: isMarked,
+                        userAns: selected, correctAns: q.correct, qText: q.question, explanation: q.explanation });
+                }
+            }
+            var total = setQuestions.length;
+            var percent = Math.round((correct / total) * 100);
+
+            // Hide main area, show result
+            document.getElementById('mainArea').style.display = 'none';
+            var overlay = document.getElementById('resultOverlay');
+            overlay.classList.add('active');
+
+            // Stats
+            var statsHtml =
+                '<div class="stat-card"><div class="num green">' + correct +
+                '</div><div class="label">✅ Correct</div></div>' +
+                '<div class="stat-card"><div class="num red">' + wrong +
+                '</div><div class="label">❌ Wrong</div></div>' +
+                '<div class="stat-card"><div class="num">' + notAttempted +
+                '</div><div class="label">⏳ Not Attempted</div></div>' +
+                '<div class="stat-card"><div class="num orange">' + markedCount +
+                '</div><div class="label">⭐ Marked</div></div>' +
+                '<div class="stat-card"><div class="num blue">' + percent +
+                '%</div><div class="label">📊 Score</div></div>';
+            document.getElementById('resultStats').innerHTML = statsHtml;
+
+            // Analysis Summary
+            var summaryHtml =
+                '<div class="item"><span class="dot green"></span> Correct: ' + correct + '</div>' +
+                '<div class="item"><span class="dot red"></span> Wrong: ' + wrong + '</div>' +
+                '<div class="item"><span class="dot gray"></span> Not Attempted: ' + notAttempted + '</div>' +
+                '<div class="item"><span class="dot orange"></span> Marked: ' + markedCount + '</div>';
+            document.getElementById('analysisSummary').innerHTML = summaryHtml;
+
+            // Detail
+            var detailHtml = '';
+            for (var d = 0; d < details.length; d++) {
+                var cls = details[d].correct ? 'correct' : (details[d].status === 'Not Attempted' ?
+                    'not-attempted' : 'wrong');
+                var markBadge = details[d].marked ? ' ⭐' : '';
+                detailHtml += '<div class="detail-item">' +
+                    '<span class="qno">Q' + (d + 1) + markBadge + '</span>' +
+                    '<span class="user-ans">Your: ' + details[d].userAns + '</span>' +
+                    '<span class="correct-ans">Correct: ' + details[d].correctAns + '</span>' +
+                    '<span class="status-badge ' + cls + '">' + details[d].status + '</span>' +
+                    '</div>';
+            }
+            document.getElementById('resultDetail').innerHTML = detailHtml;
+
+            // Store for "Show All Correct Answers"
+            window._resultDetails = details;
+            window._resultQuestions = setQuestions;
+            window._resultUserAnswers = userAnswers;
+
+            // Mark set as completed
+            if (completedSets.indexOf(currentSetIndex) === -1) {
+                completedSets.push(currentSetIndex);
+                renderSets();
+            }
+
+            renderPalette();
+            var sb = document.getElementById('submitBtn');
+            sb.disabled = true;
+            sb.textContent = '✅ Submitted';
+
+            // Reset all answers toggle
+            allAnswersVisible = false;
+            document.getElementById('allAnswersContainer').classList.remove('active');
+            document.getElementById('allAnswersContainer').innerHTML = '';
+            document.getElementById('toggleAllAnswersBtn').textContent = '📖 Show All Correct Answers';
+        }
+
+        // ================================================================
+        //  TOGGLE ALL CORRECT ANSWERS
+        // ================================================================
+
+        function toggleAllAnswers() {
+            var container = document.getElementById('allAnswersContainer');
+            var btn = document.getElementById('toggleAllAnswersBtn');
+
+            if (allAnswersVisible) {
+                container.classList.remove('active');
+                btn.textContent = '📖 Show All Correct Answers';
+                allAnswersVisible = false;
+                return;
+            }
+
+            var details = window._resultDetails || [];
+            if (details.length === 0) {
+                container.innerHTML = '<p style="color:#5b6f82;">Please submit a test first.</p>';
+                container.classList.add('active');
+                allAnswersVisible = true;
+                btn.textContent = '🙈 Hide All Answers';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < details.length; i++) {
+                var d = details[i];
+                var statusClass = d.correct ? 'correct' : (d.status === 'Not Attempted' ? '' : 'wrong');
+                var statusText = d.correct ? '✅ Correct' : (d.status === 'Not Attempted' ? '⏳ Not Attempted' : '❌ Wrong');
+                html += '<div class="qa-item">' +
+                    '<div class="qa-q">Q' + (i + 1) + '. ' + d.qText + '</div>' +
+                    '<div class="qa-detail">' +
+                    '<span class="user">Your: <strong>' + d.userAns + '</strong></span>' +
+                    '<span class="correct">✔ Correct: <strong>' + d.correctAns + '</strong></span>' +
+                    '<span style="font-weight:600; color:' + (d.correct ? '#16a34a' : d.status === 'Not Attempted' ?
+                        '#6b7280' : '#dc2626') + ';">' + statusText + '</span>' +
+                    '</div>' +
+                    '<div class="qa-exp">💡 ' + d.explanation.replace(/\n/g, '<br>') + '</div>' +
+                    '</div>';
+            }
+            container.innerHTML = html;
+            container.classList.add('active');
+            btn.textContent = '🙈 Hide All Answers';
+            allAnswersVisible = true;
+        }
+
+        // ================================================================
+        //  BACK TO SETS
+        // ================================================================
+
+        function backToSets() {
+            clearInterval(timerInterval);
+            setStarted = false;
+            isSubmitted = false;
+            allAnswersVisible = false;
+            document.getElementById('resultOverlay').classList.remove('active');
+            document.getElementById('mainArea').style.display = 'none';
+            document.getElementById('setSelection').style.display = 'block';
+            document.getElementById('timerBox').style.display = 'flex';
+            document.getElementById('allAnswersContainer').classList.remove('active');
+            document.getElementById('allAnswersContainer').innerHTML = '';
+            document.getElementById('toggleAllAnswersBtn').textContent = '📖 Show All Correct Answers';
+            timeLeft = 15 * 60;
+            updateTimerDisplay();
+            renderSets();
+            var sb = document.getElementById('submitBtn');
+            sb.disabled = false;
+            sb.textContent = '📤 Submit Test';
+        }
+
+        // ================================================================
+        //  LANGUAGE SELECTOR
+        // ================================================================
+
+        document.getElementById('langSelect').addEventListener('change', function() {
+            var lang = this.value;
+            if (lang === 'hi') {
+                document.querySelector('.q-instruction').textContent = 'PART-A · त्रुटि पहचान';
+                document.querySelector('.sidebar-title').textContent = '📋 प्रश्न सूची';
+                document.querySelector('.analysis-box > div:first-child').textContent = 'PART-A विश्लेषण';
+                var labels = document.querySelectorAll('.analysis-item .label');
+                if (labels.length >= 3) {
+                    labels[0].textContent = '✅ उत्तर दिए:';
+                    labels[1].textContent = '⏳ अनुत्तरित:';
+                    labels[2].textContent = '⭐ चिह्नित:';
+                }
+                document.getElementById('showAnsBtn').textContent = '💡 उत्तर दिखाएँ';
+                document.getElementById('markBtn').textContent = '⭐ समीक्षा के लिए चिह्नित करें';
+                document.getElementById('prevBtn').textContent = '◀ पिछला';
+                document.getElementById('nextBtn').textContent = 'सहेजें और अगला ▶';
+                document.getElementById('submitBtn').textContent = '📤 टेस्ट जमा करें';
+                document.getElementById('toggleAllAnswersBtn').textContent = allAnswersVisible ?
+                    '🙈 सभी उत्तर छिपाएँ' : '📖 सभी सही उत्तर दिखाएँ';
+            } else {
+                document.querySelector('.q-instruction').textContent = 'PART-A · Error Detection';
+                document.querySelector('.sidebar-title').textContent = '📋 Question Palette';
+                document.querySelector('.analysis-box > div:first-child').textContent = 'PART-A Analysis';
+                var labels = document.querySelectorAll('.analysis-item .label');
+                if (labels.length >= 3) {
+                    labels[0].textContent = '✅ Answered:';
+                    labels[1].textContent = '⏳ Not Answered:';
+                    labels[2].textContent = '⭐ Marked:';
+                }
+                document.getElementById('showAnsBtn').textContent = '💡 Show Answer';
+                document.getElementById('markBtn').textContent = '⭐ Mark for Review';
+                document.getElementById('prevBtn').textContent = '◀ Previous';
+                document.getElementById('nextBtn').textContent = 'Save & Next ▶';
+                document.getElementById('submitBtn').textContent = '📤 Submit Test';
+                document.getElementById('toggleAllAnswersBtn').textContent = allAnswersVisible ?
+                    '🙈 Hide All Answers' : '📖 Show All Correct Answers';
+            }
+        });
+
+        // ================================================================
+        //  INIT
+        // ================================================================
+
+        buildSets();
+        renderSets();
+        document.getElementById('timerBox').style.display = 'flex';
+    </script>
+</body>
+</html>

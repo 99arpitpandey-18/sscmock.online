@@ -1,0 +1,3453 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>SSC Chemistry Master Test Series</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --primary:#16a34a;
+    --primary-dark:#15803d;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e4e7ec;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#f59e0b;
+    --shadow:0 8px 30px rgba(15,23,42,.08);
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+header{
+    background:#111827;
+    color:white;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 4px 15px rgba(0,0,0,.15);
+}
+
+.navbar{
+    max-width:1250px;
+    margin:auto;
+    min-height:72px;
+    padding:10px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:46px;
+    height:46px;
+    border-radius:12px;
+    background:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:900;
+    color:white;
+}
+
+.brand-title{
+    font-size:20px;
+    font-weight:800;
+}
+
+.brand-sub{
+    color:#cbd5e1;
+    font-size:12px;
+    margin-top:2px;
+}
+
+.language-box{
+    display:flex;
+    gap:6px;
+}
+
+.language-box button{
+    border:1px solid #475569;
+    background:#1e293b;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.language-box button.active{
+    background:var(--primary);
+    border-color:var(--primary);
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:25px 18px 50px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#111827,#1a3a2a);
+    color:white;
+    border-radius:20px;
+    padding:35px;
+    margin-bottom:28px;
+    box-shadow:var(--shadow);
+}
+
+.hero h1{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    max-width:800px;
+    color:#dbe4ef;
+    font-size:15px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-top:25px;
+}
+
+.stat{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:14px;
+    padding:16px;
+}
+
+.stat strong{
+    display:block;
+    font-size:23px;
+    color:#fff;
+}
+
+.stat span{
+    color:#cbd5e1;
+    font-size:12px;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin:10px 0 18px;
+}
+
+.section-title h2{
+    font-size:25px;
+}
+
+.section-title p{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:4px;
+}
+
+.search-box{
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px 17px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:white;
+    font-size:15px;
+    outline:none;
+}
+
+.search-box input:focus{
+    border-color:var(--primary);
+}
+
+.topic-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.topic-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 4px 18px rgba(15,23,42,.05);
+    transition:.2s;
+}
+
+.topic-card:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow);
+    border-color:#86efac;
+}
+
+.topic-number{
+    color:var(--primary);
+    font-weight:900;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.topic-card h3{
+    font-size:17px;
+    line-height:1.35;
+    min-height:46px;
+}
+
+.topic-info{
+    color:var(--muted);
+    font-size:12px;
+    margin:10px 0 14px;
+}
+
+.set-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:7px;
+}
+
+.set-btn{
+    border:1px solid #86efac;
+    background:#f0fdf4;
+    color:#15803d;
+    padding:9px 5px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.set-btn:hover{
+    background:var(--primary);
+    color:white;
+    border-color:var(--primary);
+}
+
+/* TEST */
+
+#testPage,
+#resultPage{
+    display:none;
+}
+
+.test-header{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px 20px;
+    margin-bottom:18px;
+    box-shadow:var(--shadow);
+}
+
+.breadcrumb{
+    color:var(--primary);
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    margin-bottom:7px;
+}
+
+.test-title-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.test-title{
+    font-size:24px;
+}
+
+.timer{
+    min-width:95px;
+    text-align:center;
+    background:#111827;
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+    font-weight:900;
+    font-size:18px;
+}
+
+.timer.warning{
+    background:var(--danger);
+}
+
+.progress-track{
+    height:7px;
+    background:#edf0f4;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.2s;
+}
+
+.test-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 300px;
+    gap:18px;
+}
+
+.question-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:25px;
+    box-shadow:var(--shadow);
+}
+
+.question-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+#answerStatus{
+    font-weight:700;
+}
+
+.question{
+    font-size:19px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.question-hi{
+    color:#475467;
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:25px;
+}
+
+.option{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:1px solid var(--border);
+    padding:14px 15px;
+    border-radius:11px;
+    margin-bottom:10px;
+    font-size:15px;
+    transition:.15s;
+}
+
+.option:hover{
+    border-color:#86efac;
+    background:#f0fdf4;
+}
+
+.option.selected{
+    background:#f0fdf4;
+    border:2px solid var(--primary);
+    color:#14532d;
+}
+
+.option-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    background:#f2f4f7;
+    font-weight:900;
+    margin-right:10px;
+}
+
+.option.selected .option-letter{
+    background:var(--primary);
+    color:white;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:22px;
+    flex-wrap:wrap;
+}
+
+.nav-btn{
+    border:0;
+    padding:11px 17px;
+    border-radius:9px;
+    font-weight:800;
+    background:#eef2f6;
+    color:#344054;
+}
+
+.nav-btn:hover{
+    background:#dfe5ec;
+}
+
+.primary-btn{
+    background:var(--primary);
+    color:white;
+}
+
+.primary-btn:hover{
+    background:var(--primary-dark);
+}
+
+.mark-btn{
+    background:#f0fdf4;
+    color:#15803d;
+    border:1px solid #86efac;
+}
+
+.exit-btn{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.palette-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:var(--shadow);
+    height:max-content;
+    position:sticky;
+    top:95px;
+}
+
+.palette-card h3{
+    font-size:16px;
+    margin-bottom:13px;
+}
+
+.palette-info{
+    display:flex;
+    gap:12px;
+    font-size:11px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+}
+
+.palette-info span{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    display:inline-block;
+}
+
+.dot.answered{
+    background:var(--success);
+}
+
+.dot.unanswered{
+    background:#e5e7eb;
+}
+
+.dot.marked{
+    background:var(--warning);
+}
+
+.palette{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:7px;
+}
+
+.palette button{
+    height:36px;
+    border:1px solid #dfe3e8;
+    border-radius:7px;
+    background:#f8fafc;
+    font-weight:800;
+    font-size:12px;
+}
+
+.palette button.answered{
+    background:#dcfce7;
+    border-color:#86efac;
+    color:#166534;
+}
+
+.palette button.marked{
+    box-shadow:inset 0 0 0 2px var(--warning);
+}
+
+.palette button.current{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:white;
+}
+
+/* RESULT */
+
+.result-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:var(--shadow);
+}
+
+.result-card h2{
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+.result-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:28px;
+}
+
+.result-stat{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:17px;
+}
+
+.result-stat strong{
+    display:block;
+    font-size:24px;
+}
+
+.result-stat span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.review{
+    margin-top:20px;
+}
+
+.review-item{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:14px;
+}
+
+.review-question{
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.review-hi{
+    color:#667085;
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+.review-answer{
+    font-size:14px;
+    margin-top:6px;
+}
+
+.correct-text{
+    color:var(--success);
+    font-weight:700;
+}
+
+.wrong-text{
+    color:var(--danger);
+    font-weight:700;
+}
+
+.explanation{
+    background:#f8fafc;
+    border-left:4px solid var(--primary);
+    padding:12px;
+    margin-top:12px;
+    font-size:14px;
+}
+
+.result-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+    .topic-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .test-layout{
+        grid-template-columns:1fr;
+    }
+
+    .palette-card{
+        position:static;
+    }
+}
+
+@media(max-width:650px){
+    .navbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .language-box{
+        width:100%;
+    }
+
+    .language-box button{
+        flex:1;
+    }
+
+    .hero{
+        padding:24px;
+    }
+
+    .hero h1{
+        font-size:26px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .topic-grid{
+        grid-template-columns:1fr;
+    }
+
+    .test-title-row{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .timer{
+        width:100%;
+    }
+
+    .question-card{
+        padding:18px;
+    }
+
+    .result-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+
+        <div class="brand">
+            <div class="logo">⚗️</div>
+
+            <div>
+                <div class="brand-title">SSC Chemistry Master</div>
+                <div class="brand-sub">
+                    CGL • CHSL • CPO • GD • MTS
+                </div>
+            </div>
+        </div>
+
+        <div class="language-box">
+            <button id="englishBtn" onclick="changeLanguage('en')">
+                English
+            </button>
+
+            <button id="hindiBtn" onclick="changeLanguage('hi')">
+                हिन्दी
+            </button>
+
+            <button id="bothBtn" onclick="changeLanguage('both')">
+                H / E
+            </button>
+        </div>
+
+    </div>
+</header>
+
+<main class="container">
+
+<!-- ================= HOME ================= -->
+
+<section id="homePage">
+
+    <div class="hero">
+
+        <h1 id="heroTitle">
+            Chemistry Master Test Series
+        </h1>
+
+        <p id="heroDescription">
+            Master SSC Chemistry through topic-wise sectional tests.
+            Questions are based on SSC PYQ-style and most-repeated concepts
+            with balanced A/B/C/D answer distribution.
+        </p>
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong>7</strong>
+                <span>Chemistry Topics</span>
+            </div>
+
+            <div class="stat">
+                <strong>28</strong>
+                <span>Test Sets</span>
+            </div>
+
+            <div class="stat">
+                <strong>700</strong>
+                <span>Questions</span>
+            </div>
+
+            <div class="stat">
+                <strong>15 Min</strong>
+                <span>Sectional Timer</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="section-title">
+
+        <div>
+            <h2 id="chooseTitle">
+                Choose a Chemistry Topic
+            </h2>
+
+            <p id="chooseSubtitle">
+                Each topic contains 4 sectional sets × 25 questions
+            </p>
+        </div>
+
+    </div>
+
+    <div class="search-box">
+        <input
+            id="topicSearch"
+            type="text"
+            placeholder="Search Chemistry topic..."
+            oninput="searchTopics(this.value)"
+        >
+    </div>
+
+    <div class="topic-grid" id="topicGrid"></div>
+
+</section>
+
+
+<!-- ================= TEST ================= -->
+
+<section id="testPage">
+
+    <div class="test-header">
+
+        <div class="breadcrumb" id="breadcrumb">
+            CHEMISTRY • SET 1
+        </div>
+
+        <div class="test-title-row">
+
+            <h2 class="test-title" id="testTitle">
+                Chemistry — Set 1
+            </h2>
+
+            <div class="timer" id="timer">
+                15:00
+            </div>
+
+        </div>
+
+        <div class="progress-track">
+            <div class="progress" id="progress"></div>
+        </div>
+
+    </div>
+
+
+    <div class="test-layout">
+
+        <div class="question-card">
+
+            <div class="question-top">
+
+                <span id="questionNumber">
+                    Question 1 of 25
+                </span>
+
+                <span id="answerStatus">
+                    Not Answered
+                </span>
+
+            </div>
+
+            <div class="question" id="question"></div>
+
+            <div class="question-hi" id="questionHi"></div>
+
+            <div id="options"></div>
+
+            <div class="navigation">
+
+                <button
+                    class="nav-btn"
+                    id="previousBtn"
+                    onclick="previousQuestion()">
+                    ← Previous
+                </button>
+
+                <button
+                    class="nav-btn mark-btn"
+                    id="markBtn"
+                    onclick="markQuestion()">
+                    ☆ Mark
+                </button>
+
+                <button
+                    class="nav-btn primary-btn"
+                    id="nextBtn"
+                    onclick="nextQuestion()">
+                    Next →
+                </button>
+
+                <button
+                    class="nav-btn primary-btn"
+                    id="submitBtn"
+                    onclick="submitTest()"
+                    style="display:none;">
+                    Submit Test
+                </button>
+
+                <button
+                    class="nav-btn exit-btn"
+                    onclick="exitTest()">
+                    Exit Test
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <aside class="palette-card">
+
+            <h3 id="paletteTitle">
+                Question Palette
+            </h3>
+
+            <div class="palette-info">
+
+                <span>
+                    <i class="dot answered"></i>
+                    <span id="answeredLabel">Answered</span>
+                </span>
+
+                <span>
+                    <i class="dot unanswered"></i>
+                    <span id="notAnsweredLabel">Not Answered</span>
+                </span>
+
+                <span>
+                    <i class="dot marked"></i>
+                    Marked
+                </span>
+
+            </div>
+
+            <div class="palette" id="palette"></div>
+
+        </aside>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section id="resultPage">
+
+    <div class="result-card">
+
+        <h2 id="resultTitle">
+            Test Result
+        </h2>
+
+        <div class="result-stats">
+
+            <div class="result-stat">
+                <strong id="scoreValue">0/25</strong>
+                <span>Score</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="attemptedValue">0</strong>
+                <span id="attemptedLabel">Attempted</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="correctValue">0</strong>
+                <span id="correctLabel">Correct</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="accuracyValue">0%</strong>
+                <span id="accuracyLabel">Accuracy</span>
+            </div>
+
+        </div>
+
+        <h3 id="reviewTitle">
+            Detailed Explanation
+        </h3>
+
+        <p style="color:#667085;margin-top:5px;">
+            Correct answer + your answer + explanation
+        </p>
+
+        <div class="review" id="review"></div>
+
+        <div class="result-actions">
+
+            <button
+                class="nav-btn primary-btn"
+                onclick="retryTest()"
+                id="retryBtn">
+                ↻ Reattempt
+            </button>
+
+            <button
+                class="nav-btn primary-btn"
+                onclick="nextSet()"
+                id="nextSetBtn">
+                Next Set →
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="backToTopics()"
+                id="allTopicsBtn">
+                ← All Topics
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<script>
+
+/* ============================================================
+   CHEMISTRY TOPICS
+============================================================ */
+
+const topics = [
+    "Basic Chemistry Concepts",
+    "Atomic Structure & Periodic Table",
+    "Chemical Bonding",
+    "Acids, Bases & Salts",
+    "Metals & Non-Metals",
+    "Organic Chemistry",
+    "Environmental Chemistry & Miscellaneous"
+];
+
+
+/* ============================================================
+   TRANSLATIONS
+============================================================ */
+
+const translations = {
+
+    en: {
+
+        choose:"Choose a Chemistry Topic",
+
+        subtitle:
+        "Each topic contains 4 sectional sets × 25 questions, built from SSC PYQ-style & most-repeated Chemistry concepts",
+
+        heroTitle:
+        "Chemistry Master Test Series",
+
+        heroDescription:
+        "Master SSC Chemistry through topic-wise sectional tests — PYQ-style & most-repeated concepts with balanced A/B/C/D answer distribution.",
+
+        previous:"← Previous",
+
+        next:"Next →",
+
+        mark:"☆ Mark",
+
+        marked:"★ Marked",
+
+        submit:"Submit Test",
+
+        exit:"Exit Test",
+
+        palette:"Question Palette",
+
+        answered:"Answered",
+
+        notAnswered:"Not Answered",
+
+        result:"Test Result",
+
+        attempted:"Attempted",
+
+        correct:"Correct",
+
+        wrong:"Wrong",
+
+        accuracy:"Accuracy",
+
+        retry:"↻ Reattempt",
+
+        allTopics:"← All Topics",
+
+        nextSet:"Next Set →",
+
+        explanation:"Explanation",
+
+        correctAnswer:"Correct Answer",
+
+        yourAnswer:"Your Answer",
+
+        skipped:"Not Attempted"
+
+    },
+
+    hi: {
+
+        choose:"Chemistry विषय चुनें",
+
+        subtitle:
+        "हर विषय में 4 sectional sets × 25 प्रश्न हैं, जो SSC PYQ-style और सबसे अधिक पूछे गए Chemistry concepts पर आधारित हैं",
+
+        heroTitle:
+        "Chemistry मास्टर टेस्ट सीरीज़",
+
+        heroDescription:
+        "Topic-wise sectional tests के माध्यम से SSC Chemistry की तैयारी करें — PYQ-style और सबसे अधिक पूछे गए concepts के साथ।",
+
+        previous:"← पिछला",
+
+        next:"अगला →",
+
+        mark:"☆ मार्क",
+
+        marked:"★ मार्क्ड",
+
+        submit:"टेस्ट सबमिट करें",
+
+        exit:"टेस्ट छोड़ें",
+
+        palette:"प्रश्न पैलेट",
+
+        answered:"उत्तर दिया",
+
+        notAnswered:"उत्तर नहीं दिया",
+
+        result:"टेस्ट परिणाम",
+
+        attempted:"प्रयास किए",
+
+        correct:"सही",
+
+        wrong:"गलत",
+
+        accuracy:"सटीकता",
+
+        retry:"↻ दोबारा दें",
+
+        allTopics:"← सभी विषय",
+
+        nextSet:"अगला सेट →",
+
+        explanation:"व्याख्या",
+
+        correctAnswer:"सही उत्तर",
+
+        yourAnswer:"आपका उत्तर",
+
+        skipped:"प्रयास नहीं किया"
+
+    }
+
+};
+
+
+/* ============================================================
+   QUESTION HELPER
+============================================================ */
+
+function Q(en, hi, opts, optsHi, answer, explEn, explHi){
+    return {
+        question: en,
+        questionHi: hi,
+        options: opts,
+        optionsHi: optsHi,
+        answer: answer,
+        explanation: explEn,
+        explanationHi: explHi
+    };
+}
+
+
+/* ============================================================
+   QUESTION BANK
+============================================================ */
+
+const questionBank = {};
+
+
+/* ------------------------------------------------------------
+   TOPIC 1: Basic Chemistry Concepts
+------------------------------------------------------------ */
+
+questionBank["Basic Chemistry Concepts"] = [
+
+Q(
+    "What is the chemical formula of water?",
+    "पानी का रासायनिक सूत्र क्या है?",
+    ["H₂O", "CO₂", "NaCl", "HCl"],
+    ["H₂O", "CO₂", "NaCl", "HCl"],
+    0,
+    "Water has the chemical formula H₂O, consisting of two hydrogen atoms and one oxygen atom.",
+    "पानी का रासायनिक सूत्र H₂O है, जिसमें दो हाइड्रोजन परमाणु और एक ऑक्सीजन परमाणु होते हैं।"
+),
+
+Q(
+    "What is the chemical formula of common salt?",
+    "सामान्य नमक का रासायनिक सूत्र क्या है?",
+    ["NaCl", "KCl", "CaCO₃", "NaOH"],
+    ["NaCl", "KCl", "CaCO₃", "NaOH"],
+    0,
+    "Common salt is sodium chloride with the formula NaCl.",
+    "सामान्य नमक सोडियम क्लोराइड है जिसका सूत्र NaCl है।"
+),
+
+Q(
+    "What is the atomic number of Hydrogen?",
+    "हाइड्रोजन की परमाणु संख्या क्या है?",
+    ["1", "2", "3", "4"],
+    ["1", "2", "3", "4"],
+    0,
+    "Hydrogen has atomic number 1, meaning it has one proton.",
+    "हाइड्रोजन की परमाणु संख्या 1 है, जिसका अर्थ है कि इसमें एक प्रोटॉन होता है।"
+),
+
+Q(
+    "The symbol of Gold is:",
+    "सोने का प्रतीक क्या है?",
+    ["Au", "Ag", "Fe", "Cu"],
+    ["Au", "Ag", "Fe", "Cu"],
+    0,
+    "Gold is represented by Au, derived from the Latin word 'Aurum'.",
+    "सोने को Au द्वारा दर्शाया जाता है, जो लैटिन शब्द 'Aurum' से लिया गया है।"
+),
+
+Q(
+    "The symbol of Silver is:",
+    "चाँदी का प्रतीक क्या है?",
+    ["Ag", "Au", "Fe", "Cu"],
+    ["Ag", "Au", "Fe", "Cu"],
+    0,
+    "Silver is represented by Ag, derived from the Latin word 'Argentum'.",
+    "चाँदी को Ag द्वारा दर्शाया जाता है, जो लैटिन शब्द 'Argentum' से लिया गया है।"
+),
+
+Q(
+    "What is the pH of pure water?",
+    "शुद्ध पानी का pH क्या होता है?",
+    ["7", "6", "8", "5"],
+    ["7", "6", "8", "5"],
+    0,
+    "Pure water has a pH of 7, which is neutral.",
+    "शुद्ध पानी का pH 7 होता है, जो उदासीन होता है।"
+),
+
+Q(
+    "Which gas is known as laughing gas?",
+    "कौन सी गैस को लाफिंग गैस कहा जाता है?",
+    ["Nitrous oxide", "Carbon dioxide", "Methane", "Oxygen"],
+    ["नाइट्रस ऑक्साइड", "कार्बन डाइऑक्साइड", "मीथेन", "ऑक्सीजन"],
+    0,
+    "Nitrous oxide (N₂O) is known as laughing gas.",
+    "नाइट्रस ऑक्साइड (N₂O) को लाफिंग गैस कहा जाता है।"
+),
+
+Q(
+    "What is the chemical name of baking soda?",
+    "बेकिंग सोडा का रासायनिक नाम क्या है?",
+    ["Sodium bicarbonate", "Sodium carbonate", "Sodium chloride", "Sodium hydroxide"],
+    ["सोडियम बाइकार्बोनेट", "सोडियम कार्बोनेट", "सोडियम क्लोराइड", "सोडियम हाइड्रॉक्साइड"],
+    0,
+    "Baking soda is sodium bicarbonate with the formula NaHCO₃.",
+    "बेकिंग सोडा सोडियम बाइकार्बोनेट है जिसका सूत्र NaHCO₃ है।"
+),
+
+Q(
+    "What is the chemical name of common table salt?",
+    "सामान्य नमक का रासायनिक नाम क्या है?",
+    ["Sodium chloride", "Sodium bicarbonate", "Sodium carbonate", "Sodium hydroxide"],
+    ["सोडियम क्लोराइड", "सोडियम बाइकार्बोनेट", "सोडियम कार्बोनेट", "सोडियम हाइड्रॉक्साइड"],
+    0,
+    "Common salt is sodium chloride (NaCl).",
+    "सामान्य नमक सोडियम क्लोराइड (NaCl) है।"
+),
+
+Q(
+    "Which acid is present in vinegar?",
+    "सिरका में कौन सा अम्ल पाया जाता है?",
+    ["Acetic acid", "Citric acid", "Hydrochloric acid", "Sulphuric acid"],
+    ["एसिटिक अम्ल", "साइट्रिक अम्ल", "हाइड्रोक्लोरिक अम्ल", "सल्फ्यूरिक अम्ल"],
+    0,
+    "Vinegar contains acetic acid.",
+    "सिरका में एसिटिक अम्ल होता है।"
+),
+
+Q(
+    "Which acid is present in lemon?",
+    "नींबू में कौन सा अम्ल पाया जाता है?",
+    ["Citric acid", "Acetic acid", "Tartaric acid", "Malic acid"],
+    ["साइट्रिक अम्ल", "एसिटिक अम्ल", "टार्टरिक अम्ल", "मैलिक अम्ल"],
+    0,
+    "Lemon contains citric acid.",
+    "नींबू में साइट्रिक अम्ल होता है।"
+),
+
+Q(
+    "What is the pH of lemon juice?",
+    "नींबू के रस का pH क्या होता है?",
+    ["2-3", "5-6", "7-8", "9-10"],
+    ["2-3", "5-6", "7-8", "9-10"],
+    0,
+    "Lemon juice has a pH around 2-3, making it acidic.",
+    "नींबू के रस का pH लगभग 2-3 होता है, जो इसे अम्लीय बनाता है।"
+),
+
+Q(
+    "Which metal is the best conductor of electricity?",
+    "कौन सी धातु विद्युत की सबसे अच्छी सुचालक है?",
+    ["Silver", "Copper", "Gold", "Aluminium"],
+    ["चाँदी", "ताँबा", "सोना", "एल्युमीनियम"],
+    0,
+    "Silver is the best conductor of electricity among all metals.",
+    "सभी धातुओं में चाँदी विद्युत की सबसे अच्छी सुचालक है।"
+),
+
+Q(
+    "Which element is used in LED lights?",
+    "LED lights में कौन सा तत्व प्रयोग किया जाता है?",
+    ["Gallium", "Silicon", "Germanium", "Arsenic"],
+    ["गैलियम", "सिलिकॉन", "जर्मेनियम", "आर्सेनिक"],
+    0,
+    "Gallium is used in LED lights.",
+    "गैलियम का उपयोग LED lights में किया जाता है।"
+),
+
+Q(
+    "The chemical symbol of Potassium is:",
+    "पोटेशियम का रासायनिक प्रतीक क्या है?",
+    ["K", "P", "Po", "Pt"],
+    ["K", "P", "Po", "Pt"],
+    0,
+    "Potassium is represented by K (from Latin 'kalium').",
+    "पोटेशियम को K द्वारा दर्शाया जाता है (लैटिन 'kalium' से)।"
+),
+
+Q(
+    "The chemical symbol of Iron is:",
+    "लोहे का रासायनिक प्रतीक क्या है?",
+    ["Fe", "Ir", "In", "Fr"],
+    ["Fe", "Ir", "In", "Fr"],
+    0,
+    "Iron is represented by Fe (from Latin 'ferrum').",
+    "लोहे को Fe द्वारा दर्शाया जाता है (लैटिन 'ferrum' से)।"
+),
+
+Q(
+    "Which gas is released during photosynthesis?",
+    "प्रकाश संश्लेषण के दौरान कौन सी गैस निकलती है?",
+    ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+    ["ऑक्सीजन", "कार्बन डाइऑक्साइड", "नाइट्रोजन", "हाइड्रोजन"],
+    0,
+    "Oxygen is released during photosynthesis.",
+    "प्रकाश संश्लेषण के दौरान ऑक्सीजन निकलती है।"
+),
+
+Q(
+    "The process of rusting involves the reaction of iron with:",
+    "जंग लगने की प्रक्रिया में लोहे की किसके साथ प्रतिक्रिया होती है?",
+    ["Oxygen and water", "Oxygen only", "Water only", "Hydrogen"],
+    ["ऑक्सीजन और पानी", "केवल ऑक्सीजन", "केवल पानी", "हाइड्रोजन"],
+    0,
+    "Rusting involves iron reacting with oxygen and water.",
+    "जंग लगने की प्रक्रिया में लोहे की ऑक्सीजन और पानी के साथ प्रतिक्रिया होती है।"
+),
+
+Q(
+    "What is the most abundant element in the Earth's crust?",
+    "पृथ्वी की पपड़ी में सबसे प्रचुर तत्व कौन सा है?",
+    ["Oxygen", "Silicon", "Aluminium", "Iron"],
+    ["ऑक्सीजन", "सिलिकॉन", "एल्युमीनियम", "लोहा"],
+    0,
+    "Oxygen is the most abundant element in the Earth's crust.",
+    "पृथ्वी की पपड़ी में ऑक्सीजन सबसे प्रचुर तत्व है।"
+),
+
+Q(
+    "What is the most abundant gas in the atmosphere?",
+    "वायुमंडल में सबसे प्रचुर गैस कौन सी है?",
+    ["Nitrogen", "Oxygen", "Argon", "Carbon dioxide"],
+    ["नाइट्रोजन", "ऑक्सीजन", "आर्गन", "कार्बन डाइऑक्साइड"],
+    0,
+    "Nitrogen is the most abundant gas in the atmosphere.",
+    "वायुमंडल में नाइट्रोजन सबसे प्रचुर गैस है।"
+),
+
+Q(
+    "Which element is used in solar panels?",
+    "सोलर पैनल में कौन सा तत्व प्रयोग किया जाता है?",
+    ["Silicon", "Germanium", "Gallium", "Arsenic"],
+    ["सिलिकॉन", "जर्मेनियम", "गैलियम", "आर्सेनिक"],
+    0,
+    "Silicon is widely used in solar panels.",
+    "सिलिकॉन का व्यापक रूप से सोलर पैनल में उपयोग किया जाता है।"
+),
+
+Q(
+    "Which acid is used in car batteries?",
+    "कार बैटरी में कौन सा अम्ल प्रयोग किया जाता है?",
+    ["Sulphuric acid", "Hydrochloric acid", "Nitric acid", "Phosphoric acid"],
+    ["सल्फ्यूरिक अम्ल", "हाइड्रोक्लोरिक अम्ल", "नाइट्रिक अम्ल", "फॉस्फोरिक अम्ल"],
+    0,
+    "Sulphuric acid is used in car batteries.",
+    "कार बैटरी में सल्फ्यूरिक अम्ल का उपयोग किया जाता है।"
+),
+
+Q(
+    "What is the formula of methane?",
+    "मीथेन का सूत्र क्या है?",
+    ["CH₄", "C₂H₆", "C₃H₈", "C₄H₁₀"],
+    ["CH₄", "C₂H₆", "C₃H₈", "C₄H₁₀"],
+    0,
+    "Methane has the formula CH₄.",
+    "मीथेन का सूत्र CH₄ है।"
+),
+
+Q(
+    "What is the formula of ammonia?",
+    "अमोनिया का सूत्र क्या है?",
+    ["NH₃", "NH₄", "N₂H₄", "HNO₃"],
+    ["NH₃", "NH₄", "N₂H₄", "HNO₃"],
+    0,
+    "Ammonia has the formula NH₃.",
+    "अमोनिया का सूत्र NH₃ है।"
+),
+
+Q(
+    "What is the formula of hydrochloric acid?",
+    "हाइड्रोक्लोरिक अम्ल का सूत्र क्या है?",
+    ["HCl", "H₂SO₄", "HNO₃", "CH₃COOH"],
+    ["HCl", "H₂SO₄", "HNO₃", "CH₃COOH"],
+    0,
+    "Hydrochloric acid has the formula HCl.",
+    "हाइड्रोक्लोरिक अम्ल का सूत्र HCl है।"
+),
+
+Q(
+    "What is the formula of sulphuric acid?",
+    "सल्फ्यूरिक अम्ल का सूत्र क्या है?",
+    ["H₂SO₄", "HCl", "HNO₃", "H₂CO₃"],
+    ["H₂SO₄", "HCl", "HNO₃", "H₂CO₃"],
+    0,
+    "Sulphuric acid has the formula H₂SO₄.",
+    "सल्फ्यूरिक अम्ल का सूत्र H₂SO₄ है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 2: Atomic Structure & Periodic Table
+------------------------------------------------------------ */
+
+questionBank["Atomic Structure & Periodic Table"] = [
+
+Q(
+    "Who discovered the electron?",
+    "इलेक्ट्रॉन की खोज किसने की?",
+    ["J. J. Thomson", "Ernest Rutherford", "James Chadwick", "Niels Bohr"],
+    ["जे. जे. थॉमसन", "अर्नेस्ट रदरफोर्ड", "जेम्स चैडविक", "नील्स बोहर"],
+    0,
+    "J. J. Thomson discovered the electron in 1897.",
+    "जे. जे. थॉमसन ने 1897 में इलेक्ट्रॉन की खोज की।"
+),
+
+Q(
+    "Who discovered the nucleus?",
+    "नाभिक की खोज किसने की?",
+    ["Ernest Rutherford", "J. J. Thomson", "James Chadwick", "Niels Bohr"],
+    ["अर्नेस्ट रदरफोर्ड", "जे. जे. थॉमसन", "जेम्स चैडविक", "नील्स बोहर"],
+    0,
+    "Ernest Rutherford discovered the nucleus in 1911.",
+    "अर्नेस्ट रदरफोर्ड ने 1911 में नाभिक की खोज की।"
+),
+
+Q(
+    "Who discovered the neutron?",
+    "न्यूट्रॉन की खोज किसने की?",
+    ["James Chadwick", "J. J. Thomson", "Ernest Rutherford", "Niels Bohr"],
+    ["जेम्स चैडविक", "जे. जे. थॉमसन", "अर्नेस्ट रदरफोर्ड", "नील्स बोहर"],
+    0,
+    "James Chadwick discovered the neutron in 1932.",
+    "जेम्स चैडविक ने 1932 में न्यूट्रॉन की खोज की।"
+),
+
+Q(
+    "Who proposed the nuclear model of the atom?",
+    "परमाणु का नाभिकीय मॉडल किसने प्रस्तावित किया?",
+    ["Ernest Rutherford", "J. J. Thomson", "Niels Bohr", "John Dalton"],
+    ["अर्नेस्ट रदरफोर्ड", "जे. जे. थॉमसन", "नील्स बोहर", "जॉन डाल्टन"],
+    0,
+    "Ernest Rutherford proposed the nuclear model of the atom.",
+    "अर्नेस्ट रदरफोर्ड ने परमाणु का नाभिकीय मॉडल प्रस्तावित किया।"
+),
+
+Q(
+    "Who proposed the atomic theory?",
+    "परमाणु सिद्धांत किसने प्रस्तावित किया?",
+    ["John Dalton", "J. J. Thomson", "Ernest Rutherford", "Niels Bohr"],
+    ["जॉन डाल्टन", "जे. जे. थॉमसन", "अर्नेस्ट रदरफोर्ड", "नील्स बोहर"],
+    0,
+    "John Dalton proposed the atomic theory in 1808.",
+    "जॉन डाल्टन ने 1808 में परमाणु सिद्धांत प्रस्तावित किया।"
+),
+
+Q(
+    "Which particle has no charge?",
+    "किस कण पर कोई आवेश नहीं होता?",
+    ["Neutron", "Proton", "Electron", "Positron"],
+    ["न्यूट्रॉन", "प्रोटॉन", "इलेक्ट्रॉन", "पॉज़िट्रॉन"],
+    0,
+    "Neutron has no charge.",
+    "न्यूट्रॉन पर कोई आवेश नहीं होता।"
+),
+
+Q(
+    "Which particle has a negative charge?",
+    "किस कण पर ऋणात्मक आवेश होता है?",
+    ["Electron", "Proton", "Neutron", "Positron"],
+    ["इलेक्ट्रॉन", "प्रोटॉन", "न्यूट्रॉन", "पॉज़िट्रॉन"],
+    0,
+    "Electron has a negative charge.",
+    "इलेक्ट्रॉन पर ऋणात्मक आवेश होता है।"
+),
+
+Q(
+    "Which particle has a positive charge?",
+    "किस कण पर धनात्मक आवेश होता है?",
+    ["Proton", "Electron", "Neutron", "Positron"],
+    ["प्रोटॉन", "इलेक्ट्रॉन", "न्यूट्रॉन", "पॉज़िट्रॉन"],
+    0,
+    "Proton has a positive charge.",
+    "प्रोटॉन पर धनात्मक आवेश होता है।"
+),
+
+Q(
+    "What is the mass of an electron?",
+    "इलेक्ट्रॉन का द्रव्यमान क्या है?",
+    ["9.1 × 10⁻³¹ kg", "1.6 × 10⁻²⁷ kg", "9.1 × 10⁻²⁷ kg", "1.6 × 10⁻³¹ kg"],
+    ["9.1 × 10⁻³¹ kg", "1.6 × 10⁻²⁷ kg", "9.1 × 10⁻²⁷ kg", "1.6 × 10⁻³¹ kg"],
+    0,
+    "The mass of an electron is approximately 9.1 × 10⁻³¹ kg.",
+    "इलेक्ट्रॉन का द्रव्यमान लगभग 9.1 × 10⁻³¹ kg होता है।"
+),
+
+Q(
+    "What is the mass of a proton?",
+    "प्रोटॉन का द्रव्यमान क्या है?",
+    ["1.6 × 10⁻²⁷ kg", "9.1 × 10⁻³¹ kg", "1.6 × 10⁻³¹ kg", "9.1 × 10⁻²⁷ kg"],
+    ["1.6 × 10⁻²⁷ kg", "9.1 × 10⁻³¹ kg", "1.6 × 10⁻³¹ kg", "9.1 × 10⁻²⁷ kg"],
+    0,
+    "The mass of a proton is approximately 1.6 × 10⁻²⁷ kg.",
+    "प्रोटॉन का द्रव्यमान लगभग 1.6 × 10⁻²⁷ kg होता है।"
+),
+
+Q(
+    "What is the atomic number of Oxygen?",
+    "ऑक्सीजन की परमाणु संख्या क्या है?",
+    ["8", "6", "7", "9"],
+    ["8", "6", "7", "9"],
+    0,
+    "Oxygen has atomic number 8.",
+    "ऑक्सीजन की परमाणु संख्या 8 है।"
+),
+
+Q(
+    "What is the atomic number of Carbon?",
+    "कार्बन की परमाणु संख्या क्या है?",
+    ["6", "5", "7", "8"],
+    ["6", "5", "7", "8"],
+    0,
+    "Carbon has atomic number 6.",
+    "कार्बन की परमाणु संख्या 6 है।"
+),
+
+Q(
+    "What is the atomic number of Nitrogen?",
+    "नाइट्रोजन की परमाणु संख्या क्या है?",
+    ["7", "6", "8", "9"],
+    ["7", "6", "8", "9"],
+    0,
+    "Nitrogen has atomic number 7.",
+    "नाइट्रोजन की परमाणु संख्या 7 है।"
+),
+
+Q(
+    "How many electrons can the first shell hold?",
+    "पहले कोश में कितने इलेक्ट्रॉन रह सकते हैं?",
+    ["2", "8", "18", "32"],
+    ["2", "8", "18", "32"],
+    0,
+    "The first shell (K shell) can hold 2 electrons.",
+    "पहला कोश (K कोश) 2 इलेक्ट्रॉन धारण कर सकता है।"
+),
+
+Q(
+    "How many electrons can the second shell hold?",
+    "दूसरे कोश में कितने इलेक्ट्रॉन रह सकते हैं?",
+    ["8", "2", "18", "32"],
+    ["8", "2", "18", "32"],
+    0,
+    "The second shell can hold 8 electrons.",
+    "दूसरा कोश 8 इलेक्ट्रॉन धारण कर सकता है।"
+),
+
+Q(
+    "What is the electronic configuration of Sodium (Na)?",
+    "सोडियम (Na) का इलेक्ट्रॉनिक विन्यास क्या है?",
+    ["2, 8, 1", "2, 8, 2", "2, 8, 3", "2, 8, 4"],
+    ["2, 8, 1", "2, 8, 2", "2, 8, 3", "2, 8, 4"],
+    0,
+    "Sodium (atomic number 11) has electronic configuration 2, 8, 1.",
+    "सोडियम (परमाणु संख्या 11) का इलेक्ट्रॉनिक विन्यास 2, 8, 1 है।"
+),
+
+Q(
+    "What is the electronic configuration of Chlorine (Cl)?",
+    "क्लोरीन (Cl) का इलेक्ट्रॉनिक विन्यास क्या है?",
+    ["2, 8, 7", "2, 8, 6", "2, 8, 8", "2, 8, 5"],
+    ["2, 8, 7", "2, 8, 6", "2, 8, 8", "2, 8, 5"],
+    0,
+    "Chlorine (atomic number 17) has electronic configuration 2, 8, 7.",
+    "क्लोरीन (परमाणु संख्या 17) का इलेक्ट्रॉनिक विन्यास 2, 8, 7 है।"
+),
+
+Q(
+    "Which element is known as the 'Father of the Periodic Table'?",
+    "किस तत्व को 'आवर्त सारणी का जनक' कहा जाता है?",
+    ["Dmitri Mendeleev", "John Dalton", "J. J. Thomson", "Ernest Rutherford"],
+    ["दिमित्री मेंडेलीव", "जॉन डाल्टन", "जे. जे. थॉमसन", "अर्नेस्ट रदरफोर्ड"],
+    0,
+    "Dmitri Mendeleev is known as the father of the periodic table.",
+    "दिमित्री मेंडेलीव को आवर्त सारणी का जनक कहा जाता है।"
+),
+
+Q(
+    "How many groups are there in the periodic table?",
+    "आवर्त सारणी में कितने समूह होते हैं?",
+    ["18", "7", "8", "16"],
+    ["18", "7", "8", "16"],
+    0,
+    "There are 18 groups in the periodic table.",
+    "आवर्त सारणी में 18 समूह होते हैं।"
+),
+
+Q(
+    "How many periods are there in the periodic table?",
+    "आवर्त सारणी में कितने आवर्त होते हैं?",
+    ["7", "6", "8", "9"],
+    ["7", "6", "8", "9"],
+    0,
+    "There are 7 periods in the periodic table.",
+    "आवर्त सारणी में 7 आवर्त होते हैं।"
+),
+
+Q(
+    "Which element is in Group 1 of the periodic table?",
+    "आवर्त सारणी के समूह 1 में कौन सा तत्व है?",
+    ["Sodium", "Chlorine", "Oxygen", "Carbon"],
+    ["सोडियम", "क्लोरीन", "ऑक्सीजन", "कार्बन"],
+    0,
+    "Sodium is in Group 1 (alkali metals).",
+    "सोडियम समूह 1 (क्षार धातु) में है।"
+),
+
+Q(
+    "Which element is in Group 17 of the periodic table?",
+    "आवर्त सारणी के समूह 17 में कौन सा तत्व है?",
+    ["Chlorine", "Sodium", "Oxygen", "Carbon"],
+    ["क्लोरीन", "सोडियम", "ऑक्सीजन", "कार्बन"],
+    0,
+    "Chlorine is in Group 17 (halogens).",
+    "क्लोरीन समूह 17 (हैलोजन) में है।"
+),
+
+Q(
+    "Which element is in Group 18 of the periodic table?",
+    "आवर्त सारणी के समूह 18 में कौन सा तत्व है?",
+    ["Neon", "Sodium", "Chlorine", "Oxygen"],
+    ["नियॉन", "सोडियम", "क्लोरीन", "ऑक्सीजन"],
+    0,
+    "Neon is in Group 18 (noble gases).",
+    "नियॉन समूह 18 (अक्रिय गैस) में है।"
+),
+
+Q(
+    "What is the atomic number of Calcium?",
+    "कैल्शियम की परमाणु संख्या क्या है?",
+    ["20", "19", "21", "22"],
+    ["20", "19", "21", "22"],
+    0,
+    "Calcium has atomic number 20.",
+    "कैल्शियम की परमाणु संख्या 20 है।"
+),
+
+Q(
+    "What is the atomic number of Magnesium?",
+    "मैग्नीशियम की परमाणु संख्या क्या है?",
+    ["12", "11", "13", "14"],
+    ["12", "11", "13", "14"],
+    0,
+    "Magnesium has atomic number 12.",
+    "मैग्नीशियम की परमाणु संख्या 12 है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 3: Chemical Bonding
+------------------------------------------------------------ */
+
+questionBank["Chemical Bonding"] = [
+
+Q(
+    "What is an ionic bond?",
+    "आयनिक बंध क्या है?",
+    ["Bond formed by transfer of electrons", "Bond formed by sharing of electrons", "Bond formed by attraction between molecules", "Bond formed by metallic attraction"],
+    ["इलेक्ट्रॉनों के स्थानांतरण से बना बंध", "इलेक्ट्रॉनों के साझा करने से बना बंध", "अणुओं के बीच आकर्षण से बना बंध", "धातु आकर्षण से बना बंध"],
+    0,
+    "Ionic bonds are formed by the transfer of electrons from one atom to another.",
+    "आयनिक बंध एक परमाणु से दूसरे परमाणु में इलेक्ट्रॉनों के स्थानांतरण से बनते हैं।"
+),
+
+Q(
+    "What is a covalent bond?",
+    "सहसंयोजक बंध क्या है?",
+    ["Bond formed by sharing of electrons", "Bond formed by transfer of electrons", "Bond formed by attraction between molecules", "Bond formed by metallic attraction"],
+    ["इलेक्ट्रॉनों के साझा करने से बना बंध", "इलेक्ट्रॉनों के स्थानांतरण से बना बंध", "अणुओं के बीच आकर्षण से बना बंध", "धातु आकर्षण से बना बंध"],
+    0,
+    "Covalent bonds are formed by sharing of electrons between atoms.",
+    "सहसंयोजक बंध परमाणुओं के बीच इलेक्ट्रॉनों को साझा करने से बनते हैं।"
+),
+
+Q(
+    "What is a hydrogen bond?",
+    "हाइड्रोजन बंध क्या है?",
+    ["Weak bond between hydrogen and electronegative atom", "Bond between two hydrogen atoms", "Bond formed by electron transfer", "Bond formed by sharing of electrons"],
+    ["हाइड्रोजन और विद्युत ऋणात्मक परमाणु के बीच कमजोर बंध", "दो हाइड्रोजन परमाणुओं के बीच बंध", "इलेक्ट्रॉन स्थानांतरण द्वारा बना बंध", "इलेक्ट्रॉनों के साझा करने से बना बंध"],
+    0,
+    "Hydrogen bonds are weak bonds between hydrogen and highly electronegative atoms like O, N, F.",
+    "हाइड्रोजन बंध हाइड्रोजन और अत्यधिक विद्युत ऋणात्मक परमाणुओं जैसे O, N, F के बीच कमजोर बंध होते हैं।"
+),
+
+Q(
+    "Which type of bond is present in NaCl?",
+    "NaCl में किस प्रकार का बंध पाया जाता है?",
+    ["Ionic bond", "Covalent bond", "Hydrogen bond", "Metallic bond"],
+    ["आयनिक बंध", "सहसंयोजक बंध", "हाइड्रोजन बंध", "धात्विक बंध"],
+    0,
+    "NaCl has an ionic bond between Na⁺ and Cl⁻ ions.",
+    "NaCl में Na⁺ और Cl⁻ आयनों के बीच आयनिक बंध होता है।"
+),
+
+Q(
+    "Which type of bond is present in H₂O?",
+    "H₂O में किस प्रकार का बंध पाया जाता है?",
+    ["Covalent bond", "Ionic bond", "Hydrogen bond", "Metallic bond"],
+    ["सहसंयोजक बंध", "आयनिक बंध", "हाइड्रोजन बंध", "धात्विक बंध"],
+    0,
+    "Water (H₂O) has covalent bonds between oxygen and hydrogen atoms.",
+    "पानी (H₂O) में ऑक्सीजन और हाइड्रोजन परमाणुओं के बीच सहसंयोजक बंध होते हैं।"
+),
+
+Q(
+    "What is a metallic bond?",
+    "धात्विक बंध क्या है?",
+    ["Attraction between metal cations and free electrons", "Bond formed by electron transfer", "Bond formed by sharing of electrons", "Bond between two non-metals"],
+    ["धातु धनायनों और मुक्त इलेक्ट्रॉनों के बीच आकर्षण", "इलेक्ट्रॉन स्थानांतरण द्वारा बना बंध", "इलेक्ट्रॉनों के साझा करने से बना बंध", "दो अधातुओं के बीच बंध"],
+    0,
+    "Metallic bonds are the attraction between metal cations and delocalized free electrons.",
+    "धात्विक बंध धातु धनायनों और विस्थानित मुक्त इलेक्ट्रॉनों के बीच आकर्षण है।"
+),
+
+Q(
+    "Which type of bond is present in diamond?",
+    "हीरे में किस प्रकार का बंध पाया जाता है?",
+    ["Covalent bond", "Ionic bond", "Metallic bond", "Hydrogen bond"],
+    ["सहसंयोजक बंध", "आयनिक बंध", "धात्विक बंध", "हाइड्रोजन बंध"],
+    0,
+    "Diamond has covalent bonds between carbon atoms in a tetrahedral structure.",
+    "हीरे में कार्बन परमाणुओं के बीच चतुष्फलकीय संरचना में सहसंयोजक बंध होते हैं।"
+),
+
+Q(
+    "Which type of bond is present in graphite?",
+    "ग्रेफाइट में किस प्रकार का बंध पाया जाता है?",
+    ["Covalent and van der Waals", "Ionic bond", "Metallic bond", "Hydrogen bond"],
+    ["सहसंयोजक और वैन डर वाल्स", "आयनिक बंध", "धात्विक बंध", "हाइड्रोजन बंध"],
+    0,
+    "Graphite has covalent bonds within layers and weak van der Waals forces between layers.",
+    "ग्रेफाइट में परतों के भीतर सहसंयोजक बंध और परतों के बीच कमजोर वैन डर वाल्स बल होते हैं।"
+),
+
+Q(
+    "What is the valency of Sodium (Na)?",
+    "सोडियम (Na) की संयोजकता क्या है?",
+    ["1", "2", "3", "4"],
+    ["1", "2", "3", "4"],
+    0,
+    "Sodium has valency 1 (it loses one electron).",
+    "सोडियम की संयोजकता 1 है (यह एक इलेक्ट्रॉन खो देता है)।"
+),
+
+Q(
+    "What is the valency of Oxygen (O)?",
+    "ऑक्सीजन (O) की संयोजकता क्या है?",
+    ["2", "1", "3", "4"],
+    ["2", "1", "3", "4"],
+    0,
+    "Oxygen has valency 2 (it gains two electrons).",
+    "ऑक्सीजन की संयोजकता 2 है (यह दो इलेक्ट्रॉन ग्रहण करता है)।"
+),
+
+Q(
+    "What is the valency of Chlorine (Cl)?",
+    "क्लोरीन (Cl) की संयोजकता क्या है?",
+    ["1", "2", "3", "4"],
+    ["1", "2", "3", "4"],
+    0,
+    "Chlorine has valency 1 (it gains one electron).",
+    "क्लोरीन की संयोजकता 1 है (यह एक इलेक्ट्रॉन ग्रहण करता है)।"
+),
+
+Q(
+    "What is the valency of Carbon (C)?",
+    "कार्बन (C) की संयोजकता क्या है?",
+    ["4", "2", "3", "1"],
+    ["4", "2", "3", "1"],
+    0,
+    "Carbon has valency 4 (it can form four bonds).",
+    "कार्बन की संयोजकता 4 है (यह चार बंध बना सकता है)।"
+),
+
+Q(
+    "What is the total number of bonds in a water molecule?",
+    "पानी के अणु में कुल कितने बंध होते हैं?",
+    ["2", "1", "3", "4"],
+    ["2", "1", "3", "4"],
+    0,
+    "Water has two covalent bonds between oxygen and hydrogen.",
+    "पानी में ऑक्सीजन और हाइड्रोजन के बीच दो सहसंयोजक बंध होते हैं।"
+),
+
+Q(
+    "What is the total number of bonds in a carbon dioxide molecule?",
+    "कार्बन डाइऑक्साइड अणु में कुल कितने बंध होते हैं?",
+    ["4", "2", "3", "5"],
+    ["4", "2", "3", "5"],
+    0,
+    "CO₂ has two double bonds (four total bonds).",
+    "CO₂ में दो द्वि-बंध (कुल चार बंध) होते हैं।"
+),
+
+Q(
+    "Which bond is stronger: ionic or covalent?",
+    "कौन सा बंध मजबूत है: आयनिक या सहसंयोजक?",
+    ["Ionic bonds are generally stronger", "Covalent bonds are generally stronger", "Both are equal", "Neither is stronger"],
+    ["आयनिक बंध आमतौर पर मजबूत होते हैं", "सहसंयोजक बंध आमतौर पर मजबूत होते हैं", "दोनों बराबर हैं", "कोई भी मजबूत नहीं है"],
+    0,
+    "Ionic bonds are generally stronger than covalent bonds.",
+    "आयनिक बंध आमतौर पर सहसंयोजक बंधों से मजबूत होते हैं।"
+),
+
+Q(
+    "What is the basis of the octet rule?",
+    "अष्टक नियम का आधार क्या है?",
+    ["Atoms tend to have 8 electrons in valence shell", "Atoms tend to have 8 protons", "Atoms tend to have 8 neutrons", "Atoms tend to have 8 bonds"],
+    ["परमाणु अपने संयोजी कोश में 8 इलेक्ट्रॉन रखना चाहते हैं", "परमाणु 8 प्रोटॉन रखना चाहते हैं", "परमाणु 8 न्यूट्रॉन रखना चाहते हैं", "परमाणु 8 बंध बनाना चाहते हैं"],
+    0,
+    "The octet rule states that atoms tend to have 8 electrons in their valence shell.",
+    "अष्टक नियम कहता है कि परमाणु अपने संयोजी कोश में 8 इलेक्ट्रॉन रखना चाहते हैं।"
+),
+
+Q(
+    "Which elements do not follow the octet rule?",
+    "कौन से तत्व अष्टक नियम का पालन नहीं करते?",
+    ["Hydrogen and Helium", "Sodium and Potassium", "Chlorine and Fluorine", "Oxygen and Nitrogen"],
+    ["हाइड्रोजन और हीलियम", "सोडियम और पोटेशियम", "क्लोरीन और फ्लोरीन", "ऑक्सीजन और नाइट्रोजन"],
+    0,
+    "Hydrogen and Helium do not follow the octet rule (they follow the duet rule).",
+    "हाइड्रोजन और हीलियम अष्टक नियम का पालन नहीं करते (वे द्विक नियम का पालन करते हैं)।"
+),
+
+Q(
+    "What is the total number of lone pairs in a water molecule?",
+    "पानी के अणु में एकाकी इलेक्ट्रॉन युग्मों की कुल संख्या क्या है?",
+    ["2", "1", "3", "4"],
+    ["2", "1", "3", "4"],
+    0,
+    "Water has two lone pairs of electrons on oxygen.",
+    "पानी में ऑक्सीजन पर इलेक्ट्रॉनों के दो एकाकी युग्म होते हैं।"
+),
+
+Q(
+    "What is the geometry of water molecule?",
+    "पानी के अणु की ज्यामिति क्या है?",
+    ["Bent/V-shaped", "Linear", "Tetrahedral", "Trigonal planar"],
+    ["मुड़ी हुई/V-आकार", "रैखिक", "चतुष्फलकीय", "त्रिकोणीय समतलीय"],
+    0,
+    "Water has a bent or V-shaped geometry due to two lone pairs on oxygen.",
+    "पानी की ज्यामिति ऑक्सीजन पर दो एकाकी युग्मों के कारण मुड़ी हुई या V-आकार की होती है।"
+),
+
+Q(
+    "What is the geometry of carbon tetrachloride (CCl₄)?",
+    "कार्बन टेट्राक्लोराइड (CCl₄) की ज्यामिति क्या है?",
+    ["Tetrahedral", "Linear", "Bent", "Trigonal planar"],
+    ["चतुष्फलकीय", "रैखिक", "मुड़ी हुई", "त्रिकोणीय समतलीय"],
+    0,
+    "CCl₄ has a tetrahedral geometry.",
+    "CCl₄ की ज्यामिति चतुष्फलकीय होती है।"
+),
+
+Q(
+    "What is the geometry of carbon dioxide (CO₂)?",
+    "कार्बन डाइऑक्साइड (CO₂) की ज्यामिति क्या है?",
+    ["Linear", "Bent", "Tetrahedral", "Trigonal planar"],
+    ["रैखिक", "मुड़ी हुई", "चतुष्फलकीय", "त्रिकोणीय समतलीय"],
+    0,
+    "CO₂ has a linear geometry.",
+    "CO₂ की ज्यामिति रैखिक होती है।"
+),
+
+Q(
+    "What is the bond angle in water?",
+    "पानी में बंध कोण क्या है?",
+    ["104.5°", "180°", "109.5°", "120°"],
+    ["104.5°", "180°", "109.5°", "120°"],
+    0,
+    "The bond angle in water is approximately 104.5°.",
+    "पानी में बंध कोण लगभग 104.5° होता है।"
+),
+
+Q(
+    "What is the bond angle in carbon dioxide?",
+    "कार्बन डाइऑक्साइड में बंध कोण क्या है?",
+    ["180°", "104.5°", "109.5°", "120°"],
+    ["180°", "104.5°", "109.5°", "120°"],
+    0,
+    "The bond angle in CO₂ is 180°.",
+    "CO₂ में बंध कोण 180° होता है।"
+),
+
+Q(
+    "What is the bond angle in methane (CH₄)?",
+    "मीथेन (CH₄) में बंध कोण क्या है?",
+    ["109.5°", "104.5°", "180°", "120°"],
+    ["109.5°", "104.5°", "180°", "120°"],
+    0,
+    "The bond angle in methane is 109.5°.",
+    "मीथेन में बंध कोण 109.5° होता है।"
+),
+
+Q(
+    "What is the bond angle in ammonia (NH₃)?",
+    "अमोनिया (NH₃) में बंध कोण क्या है?",
+    ["107°", "104.5°", "109.5°", "120°"],
+    ["107°", "104.5°", "109.5°", "120°"],
+    0,
+    "The bond angle in ammonia is approximately 107°.",
+    "अमोनिया में बंध कोण लगभग 107° होता है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 4: Acids, Bases & Salts
+------------------------------------------------------------ */
+
+questionBank["Acids, Bases & Salts"] = [
+
+Q(
+    "What is the pH range of acids?",
+    "अम्लों की pH सीमा क्या है?",
+    ["0-6", "7", "8-14", "7-14"],
+    ["0-6", "7", "8-14", "7-14"],
+    0,
+    "Acids have a pH value less than 7 (0-6).",
+    "अम्लों का pH मान 7 से कम (0-6) होता है।"
+),
+
+Q(
+    "What is the pH of a neutral solution?",
+    "उदासीन विलयन का pH क्या होता है?",
+    ["7", "0", "14", "6"],
+    ["7", "0", "14", "6"],
+    0,
+    "A neutral solution has pH 7.",
+    "एक उदासीन विलयन का pH 7 होता है।"
+),
+
+Q(
+    "What is the pH of a basic solution?",
+    "क्षारीय विलयन का pH क्या होता है?",
+    ["8-14", "0-6", "7", "6-8"],
+    ["8-14", "0-6", "7", "6-8"],
+    0,
+    "Bases have pH greater than 7 (8-14).",
+    "क्षारों का pH 7 से अधिक (8-14) होता है।"
+),
+
+Q(
+    "Which acid is present in the human stomach?",
+    "मानव पेट में कौन सा अम्ल पाया जाता है?",
+    ["Hydrochloric acid", "Acetic acid", "Citric acid", "Sulphuric acid"],
+    ["हाइड्रोक्लोरिक अम्ल", "एसिटिक अम्ल", "साइट्रिक अम्ल", "सल्फ्यूरिक अम्ल"],
+    0,
+    "Hydrochloric acid (HCl) is present in the human stomach.",
+    "मानव पेट में हाइड्रोक्लोरिक अम्ल (HCl) पाया जाता है।"
+),
+
+Q(
+    "Which acid is known as 'aqua regia'?",
+    "किस अम्ल को 'एक्वा रेजिया' कहा जाता है?",
+    ["Mixture of HCl and HNO₃", "Mixture of H₂SO₄ and HNO₃", "Mixture of HCl and H₂SO₄", "Pure HNO₃"],
+    ["HCl और HNO₃ का मिश्रण", "H₂SO₄ और HNO₃ का मिश्रण", "HCl और H₂SO₄ का मिश्रण", "शुद्ध HNO₃"],
+    0,
+    "Aqua regia is a mixture of concentrated HCl and HNO₃ in a ratio of 3:1.",
+    "एक्वा रेजिया सांद्र HCl और HNO₃ का 3:1 के अनुपात में मिश्रण है।"
+),
+
+Q(
+    "What is the chemical name of lime water?",
+    "चूने के पानी का रासायनिक नाम क्या है?",
+    ["Calcium hydroxide", "Calcium carbonate", "Calcium oxide", "Calcium chloride"],
+    ["कैल्शियम हाइड्रॉक्साइड", "कैल्शियम कार्बोनेट", "कैल्शियम ऑक्साइड", "कैल्शियम क्लोराइड"],
+    0,
+    "Lime water is calcium hydroxide (Ca(OH)₂).",
+    "चूने का पानी कैल्शियम हाइड्रॉक्साइड (Ca(OH)₂) है।"
+),
+
+Q(
+    "What is the chemical name of quick lime?",
+    "बिना बुझा चूना (क्विक लाइम) का रासायनिक नाम क्या है?",
+    ["Calcium oxide", "Calcium hydroxide", "Calcium carbonate", "Calcium chloride"],
+    ["कैल्शियम ऑक्साइड", "कैल्शियम हाइड्रॉक्साइड", "कैल्शियम कार्बोनेट", "कैल्शियम क्लोराइड"],
+    0,
+    "Quick lime is calcium oxide (CaO).",
+    "बिना बुझा चूना कैल्शियम ऑक्साइड (CaO) है।"
+),
+
+Q(
+    "What is the chemical name of bleaching powder?",
+    "ब्लीचिंग पाउडर का रासायनिक नाम क्या है?",
+    ["Calcium hypochlorite", "Sodium hypochlorite", "Calcium chloride", "Sodium chloride"],
+    ["कैल्शियम हाइपोक्लोराइट", "सोडियम हाइपोक्लोराइट", "कैल्शियम क्लोराइड", "सोडियम क्लोराइड"],
+    0,
+    "Bleaching powder is calcium hypochlorite (Ca(OCl)₂).",
+    "ब्लीचिंग पाउडर कैल्शियम हाइपोक्लोराइट (Ca(OCl)₂) है।"
+),
+
+Q(
+    "Which gas is released when an acid reacts with a metal?",
+    "जब अम्ल धातु के साथ अभिक्रिया करता है तो कौन सी गैस निकलती है?",
+    ["Hydrogen", "Oxygen", "Carbon dioxide", "Nitrogen"],
+    ["हाइड्रोजन", "ऑक्सीजन", "कार्बन डाइऑक्साइड", "नाइट्रोजन"],
+    0,
+    "Hydrogen gas is released when an acid reacts with a metal.",
+    "जब अम्ल धातु के साथ अभिक्रिया करता है तो हाइड्रोजन गैस निकलती है।"
+),
+
+Q(
+    "Which gas is released when a carbonate reacts with an acid?",
+    "जब कार्बोनेट अम्ल के साथ अभिक्रिया करता है तो कौन सी गैस निकलती है?",
+    ["Carbon dioxide", "Hydrogen", "Oxygen", "Nitrogen"],
+    ["कार्बन डाइऑक्साइड", "हाइड्रोजन", "ऑक्सीजन", "नाइट्रोजन"],
+    0,
+    "Carbon dioxide is released when a carbonate reacts with an acid.",
+    "जब कार्बोनेट अम्ल के साथ अभिक्रिया करता है तो कार्बन डाइऑक्साइड गैस निकलती है।"
+),
+
+Q(
+    "What is the pH of gastric juice?",
+    "गैस्ट्रिक जूस (आमाशय रस) का pH क्या है?",
+    ["1-3", "7", "8-10", "4-6"],
+    ["1-3", "7", "8-10", "4-6"],
+    0,
+    "Gastric juice has a very acidic pH of about 1-3.",
+    "गैस्ट्रिक जूस (आमाशय रस) का pH लगभग 1-3 (अत्यधिक अम्लीय) होता है।"
+),
+
+Q(
+    "What is the chemical name of table salt?",
+    "खाने योग्य नमक (टेबल सॉल्ट) का रासायनिक नाम क्या है?",
+    ["Sodium chloride", "Sodium bicarbonate", "Sodium carbonate", "Sodium hydroxide"],
+    ["सोडियम क्लोराइड", "सोडियम बाइकार्बोनेट", "सोडियम कार्बोनेट", "सोडियम हाइड्रॉक्साइड"],
+    0,
+    "Table salt is sodium chloride (NaCl).",
+    "खाने योग्य नमक सोडियम क्लोराइड (NaCl) है।"
+),
+
+Q(
+    "What is the chemical name of baking soda?",
+    "बेकिंग सोडा का रासायनिक नाम क्या है?",
+    ["Sodium bicarbonate", "Sodium carbonate", "Sodium chloride", "Sodium hydroxide"],
+    ["सोडियम बाइकार्बोनेट", "सोडियम कार्बोनेट", "सोडियम क्लोराइड", "सोडियम हाइड्रॉक्साइड"],
+    0,
+    "Baking soda is sodium bicarbonate (NaHCO₃).",
+    "बेकिंग सोडा सोडियम बाइकार्बोनेट (NaHCO₃) है।"
+),
+
+Q(
+    "What is the chemical name of washing soda?",
+    "धोने का सोडा (वाशिंग सोडा) का रासायनिक नाम क्या है?",
+    ["Sodium carbonate", "Sodium bicarbonate", "Sodium chloride", "Sodium hydroxide"],
+    ["सोडियम कार्बोनेट", "सोडियम बाइकार्बोनेट", "सोडियम क्लोराइड", "सोडियम हाइड्रॉक्साइड"],
+    0,
+    "Washing soda is sodium carbonate (Na₂CO₃).",
+    "धोने का सोडा सोडियम कार्बोनेट (Na₂CO₃) है।"
+),
+
+Q(
+    "What is the chemical name of caustic soda?",
+    "कास्टिक सोडा का रासायनिक नाम क्या है?",
+    ["Sodium hydroxide", "Sodium carbonate", "Sodium bicarbonate", "Sodium chloride"],
+    ["सोडियम हाइड्रॉक्साइड", "सोडियम कार्बोनेट", "सोडियम बाइकार्बोनेट", "सोडियम क्लोराइड"],
+    0,
+    "Caustic soda is sodium hydroxide (NaOH).",
+    "कास्टिक सोडा सोडियम हाइड्रॉक्साइड (NaOH) है।"
+),
+
+Q(
+    "Which acid is used in the manufacture of fertilizer?",
+    "उर्वरक निर्माण में किस अम्ल का उपयोग किया जाता है?",
+    ["Sulphuric acid", "Hydrochloric acid", "Nitric acid", "Acetic acid"],
+    ["सल्फ्यूरिक अम्ल", "हाइड्रोक्लोरिक अम्ल", "नाइट्रिक अम्ल", "एसिटिक अम्ल"],
+    0,
+    "Sulphuric acid is widely used in fertilizer production.",
+    "सल्फ्यूरिक अम्ल का व्यापक रूप से उर्वरक उत्पादन में उपयोग किया जाता है।"
+),
+
+Q(
+    "Which acid is used in the production of explosives?",
+    "विस्फोटकों के उत्पादन में किस अम्ल का उपयोग किया जाता है?",
+    ["Nitric acid", "Sulphuric acid", "Hydrochloric acid", "Phosphoric acid"],
+    ["नाइट्रिक अम्ल", "सल्फ्यूरिक अम्ल", "हाइड्रोक्लोरिक अम्ल", "फॉस्फोरिक अम्ल"],
+    0,
+    "Nitric acid is used in the production of explosives like TNT.",
+    "नाइट्रिक अम्ल का उपयोग TNT जैसे विस्फोटकों के उत्पादन में किया जाता है।"
+),
+
+Q(
+    "What is the pH of pure water?",
+    "शुद्ध पानी का pH क्या है?",
+    ["7", "0", "14", "5"],
+    ["7", "0", "14", "5"],
+    0,
+    "Pure water has a pH of 7.",
+    "शुद्ध पानी का pH 7 होता है।"
+),
+
+Q(
+    "Which salt is commonly used as a preservative?",
+    "किस लवण का उपयोग आमतौर पर परिरक्षक के रूप में किया जाता है?",
+    ["Sodium chloride", "Sodium bicarbonate", "Sodium carbonate", "Sodium hydroxide"],
+    ["सोडियम क्लोराइड", "सोडियम बाइकार्बोनेट", "सोडियम कार्बोनेट", "सोडियम हाइड्रॉक्साइड"],
+    0,
+    "Sodium chloride (common salt) is used as a preservative.",
+    "सोडियम क्लोराइड (सामान्य नमक) का उपयोग परिरक्षक के रूप में किया जाता है।"
+),
+
+Q(
+    "What is the process of neutralization?",
+    "उदासीनीकरण की प्रक्रिया क्या है?",
+    ["Acid + Base → Salt + Water", "Acid + Metal → Salt + Hydrogen", "Base + Metal → Salt + Hydrogen", "Acid + Carbonate → Salt + Water + CO₂"],
+    ["अम्ल + क्षार → लवण + जल", "अम्ल + धातु → लवण + हाइड्रोजन", "क्षार + धातु → लवण + हाइड्रोजन", "अम्ल + कार्बोनेट → लवण + जल + CO₂"],
+    0,
+    "Neutralization is the reaction of an acid with a base to form salt and water.",
+    "उदासीनीकरण अम्ल की क्षार के साथ अभिक्रिया है जिससे लवण और जल बनते हैं।"
+),
+
+Q(
+    "What is the common name of calcium sulphate hemihydrate?",
+    "कैल्शियम सल्फेट हेमीहाइड्रेट का सामान्य नाम क्या है?",
+    ["Plaster of Paris", "Gypsum", "Limestone", "Marble"],
+    ["प्लास्टर ऑफ पेरिस", "जिप्सम", "चूना पत्थर", "संगमरमर"],
+    0,
+    "Calcium sulphate hemihydrate is known as Plaster of Paris.",
+    "कैल्शियम सल्फेट हेमीहाइड्रेट को प्लास्टर ऑफ पेरिस कहा जाता है।"
+),
+
+Q(
+    "What is the common name of calcium sulphate dihydrate?",
+    "कैल्शियम सल्फेट डाइहाइड्रेट का सामान्य नाम क्या है?",
+    ["Gypsum", "Plaster of Paris", "Limestone", "Marble"],
+    ["जिप्सम", "प्लास्टर ऑफ पेरिस", "चूना पत्थर", "संगमरमर"],
+    0,
+    "Calcium sulphate dihydrate is known as gypsum.",
+    "कैल्शियम सल्फेट डाइहाइड्रेट को जिप्सम कहा जाता है।"
+),
+
+Q(
+    "What is the pH of vinegar?",
+    "सिरका का pH क्या होता है?",
+    ["2-3", "7", "8-10", "4-5"],
+    ["2-3", "7", "8-10", "4-5"],
+    0,
+    "Vinegar has a pH of about 2-3.",
+    "सिरका का pH लगभग 2-3 होता है।"
+),
+
+Q(
+    "What is the pH of lemon juice?",
+    "नींबू के रस का pH क्या होता है?",
+    ["2-3", "7", "8-10", "4-5"],
+    ["2-3", "7", "8-10", "4-5"],
+    0,
+    "Lemon juice has a pH of about 2-3.",
+    "नींबू के रस का pH लगभग 2-3 होता है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 5: Metals & Non-Metals
+------------------------------------------------------------ */
+
+questionBank["Metals & Non-Metals"] = [
+
+Q(
+    "Which is the most abundant metal in the Earth's crust?",
+    "पृथ्वी की पपड़ी में सबसे प्रचुर धातु कौन सी है?",
+    ["Aluminium", "Iron", "Copper", "Gold"],
+    ["एल्युमीनियम", "लोहा", "ताँबा", "सोना"],
+    0,
+    "Aluminium is the most abundant metal in the Earth's crust.",
+    "एल्युमीनियम पृथ्वी की पपड़ी में सबसे प्रचुर धातु है।"
+),
+
+Q(
+    "Which is the most abundant non-metal in the Earth's crust?",
+    "पृथ्वी की पपड़ी में सबसे प्रचुर अधातु कौन सी है?",
+    ["Oxygen", "Carbon", "Nitrogen", "Silicon"],
+    ["ऑक्सीजन", "कार्बन", "नाइट्रोजन", "सिलिकॉन"],
+    0,
+    "Oxygen is the most abundant non-metal in the Earth's crust.",
+    "ऑक्सीजन पृथ्वी की पपड़ी में सबसे प्रचुर अधातु है।"
+),
+
+Q(
+    "Which metal is the best conductor of heat?",
+    "कौन सी धातु ऊष्मा की सबसे अच्छी सुचालक है?",
+    ["Silver", "Copper", "Gold", "Aluminium"],
+    ["चाँदी", "ताँबा", "सोना", "एल्युमीनियम"],
+    0,
+    "Silver is the best conductor of heat among metals.",
+    "धातुओं में चाँदी ऊष्मा की सबसे अच्छी सुचालक है।"
+),
+
+Q(
+    "Which metal is liquid at room temperature?",
+    "कौन सी धातु कमरे के तापमान पर द्रव होती है?",
+    ["Mercury", "Gallium", "Caesium", "Rubidium"],
+    ["पारा", "गैलियम", "सीज़ियम", "रूबिडियम"],
+    0,
+    "Mercury (Hg) is liquid at room temperature.",
+    "पारा (Hg) कमरे के तापमान पर द्रव होता है।"
+),
+
+Q(
+    "Which metal is used in the filament of a light bulb?",
+    "प्रकाश बल्ब के फिलामेंट में किस धातु का उपयोग किया जाता है?",
+    ["Tungsten", "Copper", "Silver", "Gold"],
+    ["टंगस्टन", "ताँबा", "चाँदी", "सोना"],
+    0,
+    "Tungsten is used in the filament of light bulbs due to its high melting point.",
+    "टंगस्टन का उपयोग इसके उच्च गलनांक के कारण प्रकाश बल्बों के फिलामेंट में किया जाता है।"
+),
+
+Q(
+    "Which non-metal is a good conductor of electricity?",
+    "कौन सी अधातु विद्युत की सुचालक है?",
+    ["Graphite", "Diamond", "Sulphur", "Phosphorus"],
+    ["ग्रेफाइट", "हीरा", "गंधक", "फॉस्फोरस"],
+    0,
+    "Graphite is a non-metal that is a good conductor of electricity.",
+    "ग्रेफाइट एक अधातु है जो विद्युत की सुचालक है।"
+),
+
+Q(
+    "Which metal is commonly used for making electrical wires?",
+    "विद्युत तारों को बनाने के लिए सामान्यतः किस धातु का उपयोग किया जाता है?",
+    ["Copper", "Silver", "Gold", "Aluminium"],
+    ["ताँबा", "चाँदी", "सोना", "एल्युमीनियम"],
+    0,
+    "Copper is commonly used for electrical wires due to its good conductivity and low cost.",
+    "अच्छी चालकता और कम लागत के कारण ताँबा का सामान्यतः विद्युत तारों में उपयोग किया जाता है।"
+),
+
+Q(
+    "Which metal is used in the galvanization of iron?",
+    "लोहे के गैल्वेनीकरण में किस धातु का उपयोग किया जाता है?",
+    ["Zinc", "Copper", "Silver", "Gold"],
+    ["जस्ता", "ताँबा", "चाँदी", "सोना"],
+    0,
+    "Zinc is used in the galvanization of iron to prevent rusting.",
+    "जंग को रोकने के लिए लोहे के गैल्वेनीकरण में जस्ता का उपयोग किया जाता है।"
+),
+
+Q(
+    "What is the alloy of copper and zinc called?",
+    "ताँबा और जस्ता की मिश्र धातु को क्या कहा जाता है?",
+    ["Brass", "Bronze", "Steel", "Amalgam"],
+    ["पीतल", "कांसा", "इस्पात", "एमलगम"],
+    0,
+    "Brass is an alloy of copper and zinc.",
+    "पीतल ताँबा और जस्ता की मिश्र धातु है।"
+),
+
+Q(
+    "What is the alloy of copper and tin called?",
+    "ताँबा और टिन की मिश्र धातु को क्या कहा जाता है?",
+    ["Bronze", "Brass", "Steel", "Amalgam"],
+    ["कांसा", "पीतल", "इस्पात", "एमलगम"],
+    0,
+    "Bronze is an alloy of copper and tin.",
+    "कांसा ताँबा और टिन की मिश्र धातु है।"
+),
+
+Q(
+    "Which metal is used in the manufacturing of bullets?",
+    "गोलियों के निर्माण में किस धातु का उपयोग किया जाता है?",
+    ["Lead", "Iron", "Copper", "Aluminium"],
+    ["सीसा", "लोहा", "ताँबा", "एल्युमीनियम"],
+    0,
+    "Lead is used in the manufacturing of bullets.",
+    "गोलियों के निर्माण में सीसा का उपयोग किया जाता है।"
+),
+
+Q(
+    "Which non-metal is essential for respiration?",
+    "श्वसन के लिए कौन सी अधातु आवश्यक है?",
+    ["Oxygen", "Nitrogen", "Carbon", "Hydrogen"],
+    ["ऑक्सीजन", "नाइट्रोजन", "कार्बन", "हाइड्रोजन"],
+    0,
+    "Oxygen is essential for respiration.",
+    "ऑक्सीजन श्वसन के लिए आवश्यक है।"
+),
+
+Q(
+    "Which non-metal is used in the manufacture of fertilizers?",
+    "उर्वरकों के निर्माण में किस अधातु का उपयोग किया जाता है?",
+    ["Nitrogen", "Oxygen", "Carbon", "Sulphur"],
+    ["नाइट्रोजन", "ऑक्सीजन", "कार्बन", "गंधक"],
+    0,
+    "Nitrogen is used in the manufacture of fertilizers.",
+    "उर्वरकों के निर्माण में नाइट्रोजन का उपयोग किया जाता है।"
+),
+
+Q(
+    "Which metal is used in the manufacture of stainless steel?",
+    "स्टेनलेस स्टील के निर्माण में किस धातु का उपयोग किया जाता है?",
+    ["Chromium and Nickel", "Iron and Copper", "Aluminium and Zinc", "Silver and Gold"],
+    ["क्रोमियम और निकल", "लोहा और ताँबा", "एल्युमीनियम और जस्ता", "चाँदी और सोना"],
+    0,
+    "Stainless steel contains chromium and nickel along with iron.",
+    "स्टेनलेस स्टील में लोहे के साथ क्रोमियम और निकल होते हैं।"
+),
+
+Q(
+    "Which element is present in all organic compounds?",
+    "सभी कार्बनिक यौगिकों में कौन सा तत्व पाया जाता है?",
+    ["Carbon", "Hydrogen", "Oxygen", "Nitrogen"],
+    ["कार्बन", "हाइड्रोजन", "ऑक्सीजन", "नाइट्रोजन"],
+    0,
+    "Carbon is present in all organic compounds.",
+    "सभी कार्बनिक यौगिकों में कार्बन पाया जाता है।"
+),
+
+Q(
+    "Which metal is used in thermometers?",
+    "थर्मामीटर में किस धातु का उपयोग किया जाता है?",
+    ["Mercury", "Gallium", "Lead", "Silver"],
+    ["पारा", "गैलियम", "सीसा", "चाँदी"],
+    0,
+    "Mercury is used in thermometers.",
+    "पारा का उपयोग थर्मामीटर में किया जाता है।"
+),
+
+Q(
+    "Which non-metal is used in water purification?",
+    "जल शुद्धीकरण में किस अधातु का उपयोग किया जाता है?",
+    ["Chlorine", "Oxygen", "Nitrogen", "Carbon"],
+    ["क्लोरीन", "ऑक्सीजन", "नाइट्रोजन", "कार्बन"],
+    0,
+    "Chlorine is used in water purification.",
+    "जल शुद्धीकरण में क्लोरीन का उपयोग किया जाता है।"
+),
+
+Q(
+    "Which metal is used in the manufacture of electric bulbs?",
+    "विद्युत बल्बों के निर्माण में किस धातु का उपयोग किया जाता है?",
+    ["Tungsten", "Copper", "Silver", "Gold"],
+    ["टंगस्टन", "ताँबा", "चाँदी", "सोना"],
+    0,
+    "Tungsten is used in the manufacture of electric bulbs.",
+    "विद्युत बल्बों के निर्माण में टंगस्टन का उपयोग किया जाता है।"
+),
+
+Q(
+    "Which metal is used in the manufacture of mirrors?",
+    "दर्पणों के निर्माण में किस धातु का उपयोग किया जाता है?",
+    ["Silver", "Gold", "Copper", "Aluminium"],
+    ["चाँदी", "सोना", "ताँबा", "एल्युमीनियम"],
+    0,
+    "Silver is used in the manufacture of mirrors.",
+    "दर्पणों के निर्माण में चाँदी का उपयोग किया जाता है।"
+),
+
+Q(
+    "Which is the lightest metal?",
+    "सबसे हल्की धातु कौन सी है?",
+    ["Lithium", "Sodium", "Potassium", "Magnesium"],
+    ["लिथियम", "सोडियम", "पोटेशियम", "मैग्नीशियम"],
+    0,
+    "Lithium is the lightest metal.",
+    "लिथियम सबसे हल्की धातु है।"
+),
+
+Q(
+    "Which is the heaviest metal?",
+    "सबसे भारी धातु कौन सी है?",
+    ["Osmium", "Platinum", "Gold", "Mercury"],
+    ["ऑस्मियम", "प्लैटिनम", "सोना", "पारा"],
+    0,
+    "Osmium is the heaviest metal.",
+    "ऑस्मियम सबसे भारी धातु है।"
+),
+
+Q(
+    "Which metal is used in batteries?",
+    "बैटरियों में किस धातु का उपयोग किया जाता है?",
+    ["Lead", "Copper", "Silver", "Gold"],
+    ["सीसा", "ताँबा", "चाँदी", "सोना"],
+    0,
+    "Lead is used in lead-acid batteries.",
+    "सीसा-अम्ल बैटरियों में सीसा का उपयोग किया जाता है।"
+),
+
+Q(
+    "Which non-metal is used in the manufacture of steel?",
+    "इस्पात के निर्माण में किस अधातु का उपयोग किया जाता है?",
+    ["Carbon", "Oxygen", "Nitrogen", "Sulphur"],
+    ["कार्बन", "ऑक्सीजन", "नाइट्रोजन", "गंधक"],
+    0,
+    "Carbon is used in the manufacture of steel.",
+    "इस्पात के निर्माण में कार्बन का उपयोग किया जाता है।"
+),
+
+Q(
+    "Which metal is used in the production of jewellery?",
+    "आभूषणों के उत्पादन में किस धातु का उपयोग किया जाता है?",
+    ["Gold", "Silver", "Platinum", "All of the above"],
+    ["सोना", "चाँदी", "प्लैटिनम", "उपरोक्त सभी"],
+    3,
+    "Gold, silver, and platinum are all used in jewellery.",
+    "सोना, चाँदी और प्लैटिनम सभी का उपयोग आभूषणों में किया जाता है।"
+),
+
+Q(
+    "Which is the hardest natural substance?",
+    "सबसे कठोर प्राकृतिक पदार्थ कौन सा है?",
+    ["Diamond", "Graphite", "Quartz", "Topaz"],
+    ["हीरा", "ग्रेफाइट", "क्वार्ट्ज", "टोपाज"],
+    0,
+    "Diamond is the hardest natural substance.",
+    "हीरा सबसे कठोर प्राकृतिक पदार्थ है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 6: Organic Chemistry
+------------------------------------------------------------ */
+
+questionBank["Organic Chemistry"] = [
+
+Q(
+    "What is the general formula of alkanes?",
+    "ऐल्केनों का सामान्य सूत्र क्या है?",
+    ["CₙH₂ₙ₊₂", "CₙH₂ₙ", "CₙH₂ₙ₋₂", "CₙH₂ₙ₊₁"],
+    ["CₙH₂ₙ₊₂", "CₙH₂ₙ", "CₙH₂ₙ₋₂", "CₙH₂ₙ₊₁"],
+    0,
+    "Alkanes have the general formula CₙH₂ₙ₊₂.",
+    "ऐल्केनों का सामान्य सूत्र CₙH₂ₙ₊₂ होता है।"
+),
+
+Q(
+    "What is the general formula of alkenes?",
+    "ऐल्कीनों का सामान्य सूत्र क्या है?",
+    ["CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₋₂", "CₙH₂ₙ₊₁"],
+    ["CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₋₂", "CₙH₂ₙ₊₁"],
+    0,
+    "Alkenes have the general formula CₙH₂ₙ.",
+    "ऐल्कीनों का सामान्य सूत्र CₙH₂ₙ होता है।"
+),
+
+Q(
+    "What is the general formula of alkynes?",
+    "ऐल्काइनों का सामान्य सूत्र क्या है?",
+    ["CₙH₂ₙ₋₂", "CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₊₁"],
+    ["CₙH₂ₙ₋₂", "CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₊₁"],
+    0,
+    "Alkynes have the general formula CₙH₂ₙ₋₂.",
+    "ऐल्काइनों का सामान्य सूत्र CₙH₂ₙ₋₂ होता है।"
+),
+
+Q(
+    "What is the first member of the alkane family?",
+    "ऐल्केन श्रेणी का पहला सदस्य क्या है?",
+    ["Methane", "Ethane", "Propane", "Butane"],
+    ["मीथेन", "एथेन", "प्रोपेन", "ब्यूटेन"],
+    0,
+    "Methane (CH₄) is the first member of the alkane family.",
+    "मीथेन (CH₄) ऐल्केन श्रेणी का पहला सदस्य है।"
+),
+
+Q(
+    "What is the formula of ethane?",
+    "एथेन का सूत्र क्या है?",
+    ["C₂H₆", "CH₄", "C₃H₈", "C₄H₁₀"],
+    ["C₂H₆", "CH₄", "C₃H₈", "C₄H₁₀"],
+    0,
+    "Ethane has the formula C₂H₆.",
+    "एथेन का सूत्र C₂H₆ है।"
+),
+
+Q(
+    "What is the formula of propane?",
+    "प्रोपेन का सूत्र क्या है?",
+    ["C₃H₈", "C₂H₆", "CH₄", "C₄H₁₀"],
+    ["C₃H₈", "C₂H₆", "CH₄", "C₄H₁₀"],
+    0,
+    "Propane has the formula C₃H₈.",
+    "प्रोपेन का सूत्र C₃H₈ है।"
+),
+
+Q(
+    "What is the formula of butane?",
+    "ब्यूटेन का सूत्र क्या है?",
+    ["C₄H₁₀", "C₃H₈", "C₂H₆", "CH₄"],
+    ["C₄H₁₀", "C₃H₈", "C₂H₆", "CH₄"],
+    0,
+    "Butane has the formula C₄H₁₀.",
+    "ब्यूटेन का सूत्र C₄H₁₀ है।"
+),
+
+Q(
+    "Which functional group is present in alcohols?",
+    "अल्कोहलों में कौन सा क्रियात्मक समूह पाया जाता है?",
+    ["-OH", "-CHO", "-COOH", "-NH₂"],
+    ["-OH", "-CHO", "-COOH", "-NH₂"],
+    0,
+    "Alcohols contain the hydroxyl group (-OH).",
+    "अल्कोहल में हाइड्रॉक्सिल समूह (-OH) पाया जाता है।"
+),
+
+Q(
+    "Which functional group is present in carboxylic acids?",
+    "कार्बोक्सिलिक अम्लों में कौन सा क्रियात्मक समूह पाया जाता है?",
+    ["-COOH", "-OH", "-CHO", "-NH₂"],
+    ["-COOH", "-OH", "-CHO", "-NH₂"],
+    0,
+    "Carboxylic acids contain the carboxyl group (-COOH).",
+    "कार्बोक्सिलिक अम्लों में कार्बोक्सिल समूह (-COOH) पाया जाता है।"
+),
+
+Q(
+    "Which functional group is present in aldehydes?",
+    "ऐल्डिहाइडों में कौन सा क्रियात्मक समूह पाया जाता है?",
+    ["-CHO", "-OH", "-COOH", "-NH₂"],
+    ["-CHO", "-OH", "-COOH", "-NH₂"],
+    0,
+    "Aldehydes contain the formyl group (-CHO).",
+    "ऐल्डिहाइडों में फॉर्मिल समूह (-CHO) पाया जाता है।"
+),
+
+Q(
+    "Which functional group is present in ketones?",
+    "कीटोनों में कौन सा क्रियात्मक समूह पाया जाता है?",
+    ["-CO-", "-CHO", "-OH", "-COOH"],
+    ["-CO-", "-CHO", "-OH", "-COOH"],
+    0,
+    "Ketones contain the carbonyl group (-CO-).",
+    "कीटोनों में कार्बोनिल समूह (-CO-) पाया जाता है।"
+),
+
+Q(
+    "Which organic compound is used as a preservative in food?",
+    "कौन सा कार्बनिक यौगिक भोजन में परिरक्षक के रूप में उपयोग किया जाता है?",
+    ["Benzoic acid", "Acetic acid", "Citric acid", "Lactic acid"],
+    ["बेंजोइक अम्ल", "एसिटिक अम्ल", "साइट्रिक अम्ल", "लैक्टिक अम्ल"],
+    0,
+    "Benzoic acid is used as a food preservative.",
+    "बेंजोइक अम्ल का उपयोग भोजन में परिरक्षक के रूप में किया जाता है।"
+),
+
+Q(
+    "Which organic compound is used in the manufacture of soap?",
+    "साबुन के निर्माण में किस कार्बनिक यौगिक का उपयोग किया जाता है?",
+    ["Fatty acids", "Carboxylic acids", "Alcohols", "Aldehydes"],
+    ["वसीय अम्ल", "कार्बोक्सिलिक अम्ल", "अल्कोहल", "ऐल्डिहाइड"],
+    0,
+    "Fatty acids are used in the manufacture of soap.",
+    "साबुन के निर्माण में वसीय अम्ल का उपयोग किया जाता है।"
+),
+
+Q(
+    "What is the chemical name of glucose?",
+    "ग्लूकोज का रासायनिक नाम क्या है?",
+    ["D-Glucose", "Fructose", "Sucrose", "Galactose"],
+    ["D-ग्लूकोज", "फ्रक्टोज", "सुक्रोज", "गैलेक्टोज"],
+    0,
+    "Glucose is also known as D-Glucose or dextrose.",
+    "ग्लूकोज को D-ग्लूकोज या डेक्सट्रोज भी कहा जाता है।"
+),
+
+Q(
+    "What is the chemical name of table sugar?",
+    "खाने की शक्कर (टेबल शुगर) का रासायनिक नाम क्या है?",
+    ["Sucrose", "Glucose", "Fructose", "Lactose"],
+    ["सुक्रोज", "ग्लूकोज", "फ्रक्टोज", "लैक्टोज"],
+    0,
+    "Table sugar is sucrose (C₁₂H₂₂O₁₁).",
+    "खाने की शक्कर सुक्रोज (C₁₂H₂₂O₁₁) है।"
+),
+
+Q(
+    "Which compound is known as the 'king of chemicals'?",
+    "किस यौगिक को 'रसायनों का राजा' कहा जाता है?",
+    ["Sulphuric acid", "Hydrochloric acid", "Nitric acid", "Phosphoric acid"],
+    ["सल्फ्यूरिक अम्ल", "हाइड्रोक्लोरिक अम्ल", "नाइट्रिक अम्ल", "फॉस्फोरिक अम्ल"],
+    0,
+    "Sulphuric acid is known as the 'king of chemicals'.",
+    "सल्फ्यूरिक अम्ल को 'रसायनों का राजा' कहा जाता है।"
+),
+
+Q(
+    "Which compound is known as 'oil of vitriol'?",
+    "किस यौगिक को 'ऑयल ऑफ विट्रियल' कहा जाता है?",
+    ["Sulphuric acid", "Hydrochloric acid", "Nitric acid", "Acetic acid"],
+    ["सल्फ्यूरिक अम्ल", "हाइड्रोक्लोरिक अम्ल", "नाइट्रिक अम्ल", "एसिटिक अम्ल"],
+    0,
+    "Sulphuric acid is historically known as oil of vitriol.",
+    "सल्फ्यूरिक अम्ल को ऐतिहासिक रूप से ऑयल ऑफ विट्रियल कहा जाता है।"
+),
+
+Q(
+    "Which compound is used in the manufacture of plastics?",
+    "प्लास्टिक के निर्माण में किस यौगिक का उपयोग किया जाता है?",
+    ["Ethylene", "Methane", "Propane", "Butane"],
+    ["इथीलीन", "मीथेन", "प्रोपेन", "ब्यूटेन"],
+    0,
+    "Ethylene is used in the manufacture of plastics (polyethylene).",
+    "इथीलीन का उपयोग प्लास्टिक (पॉलीथीन) के निर्माण में किया जाता है।"
+),
+
+Q(
+    "What is the polymer of ethylene called?",
+    "इथीलीन के बहुलक को क्या कहा जाता है?",
+    ["Polyethylene", "Polypropylene", "Polystyrene", "PVC"],
+    ["पॉलीथीन", "पॉलीप्रोपीन", "पॉलीस्टाइरीन", "PVC"],
+    0,
+    "The polymer of ethylene is polyethylene (polythene).",
+    "इथीलीन का बहुलक पॉलीथीन (पॉलीथिन) है।"
+),
+
+Q(
+    "Which compound is used in the manufacture of paints?",
+    "पेंट के निर्माण में किस यौगिक का उपयोग किया जाता है?",
+    ["Acetone", "Ethanol", "Methanol", "Benzene"],
+    ["एसीटोन", "एथेनॉल", "मेथेनॉल", "बेंजीन"],
+    0,
+    "Acetone is used as a solvent in the manufacture of paints.",
+    "एसीटोन का उपयोग पेंट के निर्माण में विलायक के रूप में किया जाता है।"
+),
+
+Q(
+    "Which compound is used as a fuel in cars?",
+    "कारों में ईंधन के रूप में किस यौगिक का उपयोग किया जाता है?",
+    ["Gasoline", "Diesel", "Ethanol", "All of the above"],
+    ["पेट्रोल", "डीजल", "एथेनॉल", "उपरोक्त सभी"],
+    3,
+    "Gasoline, diesel, and ethanol are all used as fuels in cars.",
+    "पेट्रोल, डीजल और एथेनॉल सभी का उपयोग कारों में ईंधन के रूप में किया जाता है।"
+),
+
+Q(
+    "What is the formula of ethanol?",
+    "एथेनॉल का सूत्र क्या है?",
+    ["C₂H₅OH", "CH₃OH", "C₃H₇OH", "C₄H₉OH"],
+    ["C₂H₅OH", "CH₃OH", "C₃H₇OH", "C₄H₉OH"],
+    0,
+    "Ethanol has the formula C₂H₅OH.",
+    "एथेनॉल का सूत्र C₂H₅OH है।"
+),
+
+Q(
+    "What is the formula of methanol?",
+    "मेथेनॉल का सूत्र क्या है?",
+    ["CH₃OH", "C₂H₅OH", "C₃H₇OH", "C₄H₉OH"],
+    ["CH₃OH", "C₂H₅OH", "C₃H₇OH", "C₄H₉OH"],
+    0,
+    "Methanol has the formula CH₃OH.",
+    "मेथेनॉल का सूत्र CH₃OH है।"
+),
+
+Q(
+    "Which is the simplest hydrocarbon?",
+    "सबसे सरल हाइड्रोकार्बन कौन सा है?",
+    ["Methane", "Ethane", "Propane", "Butane"],
+    ["मीथेन", "एथेन", "प्रोपेन", "ब्यूटेन"],
+    0,
+    "Methane (CH₄) is the simplest hydrocarbon.",
+    "मीथेन (CH₄) सबसे सरल हाइड्रोकार्बन है।"
+),
+
+Q(
+    "Which compound is used in the manufacture of nylon?",
+    "नायलॉन के निर्माण में किस यौगिक का उपयोग किया जाता है?",
+    ["Adipic acid", "Acetic acid", "Citric acid", "Benzoic acid"],
+    ["एडिपिक अम्ल", "एसिटिक अम्ल", "साइट्रिक अम्ल", "बेंजोइक अम्ल"],
+    0,
+    "Adipic acid is used in the manufacture of nylon.",
+    "एडिपिक अम्ल का उपयोग नायलॉन के निर्माण में किया जाता है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 7: Environmental Chemistry & Miscellaneous
+------------------------------------------------------------ */
+
+questionBank["Environmental Chemistry & Miscellaneous"] = [
+
+Q(
+    "Which gas is responsible for global warming?",
+    "ग्लोबल वार्मिंग के लिए कौन सी गैस जिम्मेदार है?",
+    ["Carbon dioxide", "Oxygen", "Nitrogen", "Argon"],
+    ["कार्बन डाइऑक्साइड", "ऑक्सीजन", "नाइट्रोजन", "आर्गन"],
+    0,
+    "Carbon dioxide is a major greenhouse gas responsible for global warming.",
+    "कार्बन डाइऑक्साइड एक प्रमुख ग्रीनहाउस गैस है जो ग्लोबल वार्मिंग के लिए जिम्मेदार है।"
+),
+
+Q(
+    "The ozone layer is found in which layer of atmosphere?",
+    "ओजोन परत वायुमंडल की किस परत में पाई जाती है?",
+    ["Stratosphere", "Troposphere", "Mesosphere", "Thermosphere"],
+    ["समताप मंडल", "क्षोभ मंडल", "मध्य मंडल", "ताप मंडल"],
+    0,
+    "The ozone layer is found in the stratosphere.",
+    "ओजोन परत समताप मंडल में पाई जाती है।"
+),
+
+Q(
+    "Which gas is used in fire extinguishers?",
+    "अग्निशामक यंत्रों में कौन सी गैस प्रयोग की जाती है?",
+    ["Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen"],
+    ["कार्बन डाइऑक्साइड", "ऑक्सीजन", "नाइट्रोजन", "हाइड्रोजन"],
+    0,
+    "Carbon dioxide is commonly used in fire extinguishers.",
+    "कार्बन डाइऑक्साइड का सामान्यतः अग्निशामक यंत्रों में उपयोग किया जाता है।"
+),
+
+Q(
+    "Which gas is the main contributor to acid rain?",
+    "अम्लीय वर्षा का मुख्य कारक कौन सी गैस है?",
+    ["Sulphur dioxide", "Carbon dioxide", "Nitrogen", "Oxygen"],
+    ["सल्फर डाइऑक्साइड", "कार्बन डाइऑक्साइड", "नाइट्रोजन", "ऑक्सीजन"],
+    0,
+    "Sulphur dioxide is the main contributor to acid rain.",
+    "सल्फर डाइऑक्साइड अम्लीय वर्षा का मुख्य कारक है।"
+),
+
+Q(
+    "Which compound is responsible for the depletion of the ozone layer?",
+    "ओजोन परत के क्षरण के लिए कौन सा यौगिक जिम्मेदार है?",
+    ["Chlorofluorocarbons (CFCs)", "Carbon dioxide", "Methane", "Nitrous oxide"],
+    ["क्लोरोफ्लोरोकार्बन (CFC)", "कार्बन डाइऑक्साइड", "मीथेन", "नाइट्रस ऑक्साइड"],
+    0,
+    "CFCs are responsible for ozone layer depletion.",
+    "CFC ओजोन परत के क्षरण के लिए जिम्मेदार हैं।"
+),
+
+Q(
+    "Which gas is known as 'laughing gas'?",
+    "किस गैस को 'लाफिंग गैस' कहा जाता है?",
+    ["Nitrous oxide", "Carbon dioxide", "Methane", "Oxygen"],
+    ["नाइट्रस ऑक्साइड", "कार्बन डाइऑक्साइड", "मीथेन", "ऑक्सीजन"],
+    0,
+    "Nitrous oxide (N₂O) is known as laughing gas.",
+    "नाइट्रस ऑक्साइड (N₂O) को लाफिंग गैस कहा जाता है।"
+),
+
+Q(
+    "Which gas is used in the preparation of ammonia?",
+    "अमोनिया के निर्माण में किस गैस का उपयोग किया जाता है?",
+    ["Nitrogen", "Oxygen", "Carbon dioxide", "Hydrogen"],
+    ["नाइट्रोजन", "ऑक्सीजन", "कार्बन डाइऑक्साइड", "हाइड्रोजन"],
+    0,
+    "Nitrogen is used in the preparation of ammonia (Haber process).",
+    "नाइट्रोजन का उपयोग अमोनिया (हैबर प्रक्रिया) के निर्माण में किया जाता है।"
+),
+
+Q(
+    "Which gas is used in the preparation of nitric acid?",
+    "नाइट्रिक अम्ल के निर्माण में किस गैस का उपयोग किया जाता है?",
+    ["Ammonia", "Nitrogen", "Oxygen", "Hydrogen"],
+    ["अमोनिया", "नाइट्रोजन", "ऑक्सीजन", "हाइड्रोजन"],
+    0,
+    "Ammonia is used in the Ostwald process for nitric acid production.",
+    "अमोनिया का उपयोग ओस्टवाल्ड प्रक्रिया में नाइट्रिक अम्ल के उत्पादन के लिए किया जाता है।"
+),
+
+Q(
+    "Which compound is used in the manufacture of glass?",
+    "कांच के निर्माण में किस यौगिक का उपयोग किया जाता है?",
+    ["Silica", "Carbon", "Sulphur", "Phosphorus"],
+    ["सिलिका", "कार्बन", "गंधक", "फॉस्फोरस"],
+    0,
+    "Silica (SiO₂) is used in the manufacture of glass.",
+    "सिलिका (SiO₂) का उपयोग कांच के निर्माण में किया जाता है।"
+),
+
+Q(
+    "Which element is used in the semiconductor industry?",
+    "अर्धचालक उद्योग में किस तत्व का उपयोग किया जाता है?",
+    ["Silicon", "Carbon", "Sulphur", "Phosphorus"],
+    ["सिलिकॉन", "कार्बन", "गंधक", "फॉस्फोरस"],
+    0,
+    "Silicon is widely used in the semiconductor industry.",
+    "सिलिकॉन का व्यापक रूप से अर्धचालक उद्योग में उपयोग किया जाता है।"
+),
+
+Q(
+    "Which compound is used as a bleaching agent?",
+    "ब्लीचिंग एजेंट के रूप में किस यौगिक का उपयोग किया जाता है?",
+    ["Bleaching powder", "Baking soda", "Washing soda", "Common salt"],
+    ["ब्लीचिंग पाउडर", "बेकिंग सोडा", "धोने का सोडा", "सामान्य नमक"],
+    0,
+    "Bleaching powder is used as a bleaching agent.",
+    "ब्लीचिंग पाउडर का उपयोग ब्लीचिंग एजेंट के रूप में किया जाता है।"
+),
+
+Q(
+    "Which compound is used in the manufacture of detergents?",
+    "डिटर्जेंट के निर्माण में किस यौगिक का उपयोग किया जाता है?",
+    ["Sodium carbonate", "Sodium bicarbonate", "Sodium chloride", "Sodium hydroxide"],
+    ["सोडियम कार्बोनेट", "सोडियम बाइकार्बोनेट", "सोडियम क्लोराइड", "सोडियम हाइड्रॉक्साइड"],
+    0,
+    "Sodium carbonate is used in the manufacture of detergents.",
+    "सोडियम कार्बोनेट का उपयोग डिटर्जेंट के निर्माण में किया जाता है।"
+),
+
+Q(
+    "Which gas is used in the production of steel?",
+    "इस्पात के उत्पादन में किस गैस का उपयोग किया जाता है?",
+    ["Oxygen", "Nitrogen", "Hydrogen", "Carbon dioxide"],
+    ["ऑक्सीजन", "नाइट्रोजन", "हाइड्रोजन", "कार्बन डाइऑक्साइड"],
+    0,
+    "Oxygen is used in the production of steel.",
+    "ऑक्सीजन का उपयोग इस्पात के उत्पादन में किया जाता है।"
+),
+
+Q(
+    "Which compound is used in the treatment of water?",
+    "पानी के उपचार में किस यौगिक का उपयोग किया जाता है?",
+    ["Chlorine", "Oxygen", "Nitrogen", "Hydrogen"],
+    ["क्लोरीन", "ऑक्सीजन", "नाइट्रोजन", "हाइड्रोजन"],
+    0,
+    "Chlorine is used in the treatment of water.",
+    "क्लोरीन का उपयोग पानी के उपचार में किया जाता है।"
+),
+
+Q(
+    "Which compound is used in the manufacture of paper?",
+    "कागज के निर्माण में किस यौगिक का उपयोग किया जाता है?",
+    ["Sodium hydroxide", "Sodium chloride", "Sodium carbonate", "Sodium bicarbonate"],
+    ["सोडियम हाइड्रॉक्साइड", "सोडियम क्लोराइड", "सोडियम कार्बोनेट", "सोडियम बाइकार्बोनेट"],
+    0,
+    "Sodium hydroxide is used in the manufacture of paper.",
+    "सोडियम हाइड्रॉक्साइड का उपयोग कागज के निर्माण में किया जाता है।"
+),
+
+Q(
+    "Which element is used in the production of fertilizers?",
+    "उर्वरकों के उत्पादन में किस तत्व का उपयोग किया जाता है?",
+    ["Nitrogen", "Oxygen", "Carbon", "Sulphur"],
+    ["नाइट्रोजन", "ऑक्सीजन", "कार्बन", "गंधक"],
+    0,
+    "Nitrogen is used in the production of fertilizers.",
+    "नाइट्रोजन का उपयोग उर्वरकों के उत्पादन में किया जाता है।"
+),
+
+Q(
+    "Which compound is known as 'marsh gas'?",
+    "किस यौगिक को 'मार्श गैस' कहा जाता है?",
+    ["Methane", "Ethane", "Propane", "Butane"],
+    ["मीथेन", "एथेन", "प्रोपेन", "ब्यूटेन"],
+    0,
+    "Methane is known as marsh gas.",
+    "मीथेन को मार्श गैस कहा जाता है।"
+),
+
+Q(
+    "Which compound is known as 'white vitriol'?",
+    "किस यौगिक को 'सफेद विट्रियल' कहा जाता है?",
+    ["Zinc sulphate", "Copper sulphate", "Iron sulphate", "Magnesium sulphate"],
+    ["जिंक सल्फेट", "कॉपर सल्फेट", "आयरन सल्फेट", "मैग्नीशियम सल्फेट"],
+    0,
+    "Zinc sulphate is known as white vitriol.",
+    "जिंक सल्फेट को सफेद विट्रियल कहा जाता है।"
+),
+
+Q(
+    "Which compound is known as 'blue vitriol'?",
+    "किस यौगिक को 'नीला विट्रियल' कहा जाता है?",
+    ["Copper sulphate", "Zinc sulphate", "Iron sulphate", "Magnesium sulphate"],
+    ["कॉपर सल्फेट", "जिंक सल्फेट", "आयरन सल्फेट", "मैग्नीशियम सल्फेट"],
+    0,
+    "Copper sulphate is known as blue vitriol.",
+    "कॉपर सल्फेट को नीला विट्रियल कहा जाता है।"
+),
+
+Q(
+    "Which compound is known as 'green vitriol'?",
+    "किस यौगिक को 'हरा विट्रियल' कहा जाता है?",
+    ["Iron sulphate", "Copper sulphate", "Zinc sulphate", "Magnesium sulphate"],
+    ["आयरन सल्फेट", "कॉपर सल्फेट", "जिंक सल्फेट", "मैग्नीशियम सल्फेट"],
+    0,
+    "Iron sulphate is known as green vitriol.",
+    "आयरन सल्फेट को हरा विट्रियल कहा जाता है।"
+),
+
+Q(
+    "Which acid is known as 'king of acids'?",
+    "किस अम्ल को 'अम्लों का राजा' कहा जाता है?",
+    ["Sulphuric acid", "Hydrochloric acid", "Nitric acid", "Phosphoric acid"],
+    ["सल्फ्यूरिक अम्ल", "हाइड्रोक्लोरिक अम्ल", "नाइट्रिक अम्ल", "फॉस्फोरिक अम्ल"],
+    0,
+    "Sulphuric acid is known as the 'king of acids'.",
+    "सल्फ्यूरिक अम्ल को 'अम्लों का राजा' कहा जाता है।"
+),
+
+Q(
+    "Which acid is known as 'queen of acids'?",
+    "किस अम्ल को 'अम्लों की रानी' कहा जाता है?",
+    ["Nitric acid", "Hydrochloric acid", "Sulphuric acid", "Phosphoric acid"],
+    ["नाइट्रिक अम्ल", "हाइड्रोक्लोरिक अम्ल", "सल्फ्यूरिक अम्ल", "फॉस्फोरिक अम्ल"],
+    0,
+    "Nitric acid is sometimes referred to as the 'queen of acids'.",
+    "नाइट्रिक अम्ल को कभी-कभी 'अम्लों की रानी' कहा जाता है।"
+),
+
+Q(
+    "Which element is the most reactive non-metal?",
+    "सबसे अधिक अभिक्रियाशील अधातु कौन सी है?",
+    ["Fluorine", "Chlorine", "Oxygen", "Nitrogen"],
+    ["फ्लोरीन", "क्लोरीन", "ऑक्सीजन", "नाइट्रोजन"],
+    0,
+    "Fluorine is the most reactive non-metal.",
+    "फ्लोरीन सबसे अधिक अभिक्रियाशील अधातु है।"
+),
+
+Q(
+    "Which is the lightest element?",
+    "सबसे हल्का तत्व कौन सा है?",
+    ["Hydrogen", "Helium", "Lithium", "Beryllium"],
+    ["हाइड्रोजन", "हीलियम", "लिथियम", "बेरिलियम"],
+    0,
+    "Hydrogen is the lightest element.",
+    "हाइड्रोजन सबसे हल्का तत्व है।"
+)
+
+];
+
+
+/* ============================================================
+   STATE AND LOGIC – SAME AS PREVIOUS VERSIONS
+============================================================ */
+
+let currentTopic = "";
+let currentTopicQuestions = [];
+let currentQuestions = [];
+let currentSetNumber = 1;
+let currentQuestionIndex = 0;
+let userAnswers = [];
+let markedQuestions = new Set();
+let selectedLanguage = "both";
+let testStarted = false;
+let testSubmitted = false;
+let timerInterval = null;
+let remainingSeconds = 15 * 60;
+
+const $ = id => document.getElementById(id);
+
+function escapeHTML(value){
+    if(value === undefined || value === null) return "";
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function setLanguage(lang){
+    selectedLanguage = lang === "hi" ? "hi" : lang === "en" ? "en" : "both";
+    ["englishBtn","hindiBtn","bothBtn"].forEach(id => $(id)?.classList.remove("active"));
+    const active = selectedLanguage === "en" ? $("englishBtn") : 
+                   selectedLanguage === "hi" ? $("hindiBtn") : $("bothBtn");
+    active?.classList.add("active");
+    const t = selectedLanguage === "hi" ? translations.hi : translations.en;
+    $("chooseTitle").textContent = t.choose;
+    $("chooseSubtitle").textContent = t.subtitle;
+    $("heroTitle").textContent = t.heroTitle;
+    $("heroDescription").textContent = t.heroDescription;
+    $("previousBtn").textContent = t.previous;
+    $("nextBtn").textContent = t.next;
+    $("markBtn").textContent = markedQuestions.has(currentQuestionIndex) ? t.marked : t.mark;
+    $("submitBtn").textContent = t.submit;
+    $("paletteTitle").textContent = t.palette;
+    $("answeredLabel").textContent = t.answered;
+    $("notAnsweredLabel").textContent = t.notAnswered;
+    $("retryBtn").textContent = t.retry;
+    $("nextSetBtn").textContent = t.nextSet;
+    $("allTopicsBtn").textContent = t.allTopics;
+    if(testStarted && currentQuestions.length) renderQuestion();
+}
+
+function changeLanguage(lang){
+    setLanguage(lang);
+}
+
+function prepareQuestionForSet(sourceQuestion, index){
+    const q = {
+        ...sourceQuestion,
+        options: [...sourceQuestion.options],
+        optionsHi: [...sourceQuestion.optionsHi],
+        explanation: sourceQuestion.explanation,
+        explanationHi: sourceQuestion.explanationHi
+    };
+    if(q.options.length < 4) return q;
+    const targetAnswer = index % 4;
+    const currentAnswer = Number.isInteger(q.answer) ? q.answer : 0;
+    const shift = (targetAnswer - currentAnswer + 4) % 4;
+    if(shift){
+        q.options = q.options.map((_, i) => q.options[(i - shift + 4) % 4]);
+        q.optionsHi = q.optionsHi.map((_, i) => q.optionsHi[(i - shift + 4) % 4]);
+    }
+    q.answer = targetAnswer;
+    return q;
+}
+
+function getSetQuestions(topicName, setNumber){
+    const bank = questionBank[topicName];
+    if(!bank || !bank.length) return [];
+    const set = Math.min(4, Math.max(1, Number(setNumber) || 1));
+    const questions = [];
+    for(let i = 0; i < 25; i++){
+        const sourceIndex = ((set - 1) * 25 + i) % bank.length;
+        const sourceQuestion = bank[sourceIndex];
+        questions.push(prepareQuestionForSet(sourceQuestion, i));
+    }
+    return questions;
+}
+
+function startTopic(topicName, setNumber = 1){
+    if(!questionBank[topicName]){
+        alert("Questions are not available for this topic.");
+        return;
+    }
+    currentTopic = topicName;
+    currentTopicQuestions = [...questionBank[topicName]];
+    currentSetNumber = Math.min(4, Math.max(1, Number(setNumber) || 1));
+    currentQuestions = getSetQuestions(topicName, currentSetNumber);
+    currentQuestionIndex = 0;
+    userAnswers = new Array(currentQuestions.length).fill(null);
+    markedQuestions = new Set();
+    testStarted = true;
+    testSubmitted = false;
+    remainingSeconds = 15 * 60;
+
+    $("homePage").style.display = "none";
+    $("resultPage").style.display = "none";
+    $("testPage").style.display = "block";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    startTimer();
+    renderQuestion();
+    renderQuestionPalette();
+    updateProgress();
+    updateNavigationButtons();
+}
+
+function renderQuestion(){
+    if(!currentQuestions.length) return;
+    const q = currentQuestions[currentQuestionIndex];
+    const n = currentQuestionIndex + 1;
+    const total = currentQuestions.length;
+
+    $("questionNumber").textContent = `Question ${n} of ${total}`;
+    $("breadcrumb").textContent = `CHEMISTRY • ${currentTopic} • SET ${currentSetNumber}`;
+    $("testTitle").textContent = `${currentTopic} — Set ${currentSetNumber}`;
+
+    if(selectedLanguage === "en"){
+        $("question").textContent = q.question;
+        $("questionHi").textContent = "";
+    } else if(selectedLanguage === "hi"){
+        $("question").textContent = q.questionHi;
+        $("questionHi").textContent = "";
+    } else {
+        $("question").textContent = q.question;
+        $("questionHi").textContent = q.questionHi;
+    }
+
+    const optionsContainer = $("options");
+    optionsContainer.innerHTML = "";
+
+    q.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        if(userAnswers[currentQuestionIndex] === index) btn.classList.add("selected");
+        const letters = ["A", "B", "C", "D"];
+        let optionText = selectedLanguage === "hi" ? q.optionsHi[index] : q.options[index];
+        btn.innerHTML = `
+            <span class="option-letter">${letters[index]}</span>
+            ${escapeHTML(optionText)}
+        `;
+        btn.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(btn);
+    });
+
+    $("answerStatus").textContent = userAnswers[currentQuestionIndex] === null ?
+        (selectedLanguage === "hi" ? "उत्तर नहीं दिया" : "Not Answered") :
+        (selectedLanguage === "hi" ? "उत्तर दिया" : "Answered");
+
+    $("markBtn").textContent = markedQuestions.has(currentQuestionIndex) ?
+        (selectedLanguage === "hi" ? "★ मार्क्ड" : "★ Marked") :
+        (selectedLanguage === "hi" ? "☆ मार्क" : "☆ Mark");
+}
+
+function selectAnswer(index){
+    if(testSubmitted) return;
+    userAnswers[currentQuestionIndex] = index;
+    renderQuestion();
+    renderQuestionPalette();
+    updateProgress();
+    updateNavigationButtons();
+}
+
+function nextQuestion(){
+    if(currentQuestionIndex < currentQuestions.length - 1){
+        currentQuestionIndex++;
+        renderQuestion();
+        renderQuestionPalette();
+        updateProgress();
+        updateNavigationButtons();
+    }
+}
+
+function previousQuestion(){
+    if(currentQuestionIndex > 0){
+        currentQuestionIndex--;
+        renderQuestion();
+        renderQuestionPalette();
+        updateProgress();
+        updateNavigationButtons();
+    }
+}
+
+function goToQuestion(index){
+    if(index < 0 || index >= currentQuestions.length) return;
+    currentQuestionIndex = index;
+    renderQuestion();
+    renderQuestionPalette();
+    updateProgress();
+    updateNavigationButtons();
+}
+
+function markQuestion(){
+    if(markedQuestions.has(currentQuestionIndex))
+        markedQuestions.delete(currentQuestionIndex);
+    else
+        markedQuestions.add(currentQuestionIndex);
+    renderQuestion();
+    renderQuestionPalette();
+}
+
+function renderQuestionPalette(){
+    const palette = $("palette");
+    palette.innerHTML = "";
+    currentQuestions.forEach((q, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = index + 1;
+        if(userAnswers[index] !== null) btn.classList.add("answered");
+        if(markedQuestions.has(index)) btn.classList.add("marked");
+        if(index === currentQuestionIndex) btn.classList.add("current");
+        btn.onclick = () => goToQuestion(index);
+        palette.appendChild(btn);
+    });
+}
+
+function updateProgress(){
+    const answered = userAnswers.filter(x => x !== null).length;
+    const percent = (answered / currentQuestions.length) * 100;
+    $("progress").style.width = percent + "%";
+}
+
+function updateNavigationButtons(){
+    $("previousBtn").disabled = currentQuestionIndex === 0;
+    const isLast = currentQuestionIndex === currentQuestions.length - 1;
+    $("nextBtn").style.display = isLast ? "none" : "inline-block";
+    $("submitBtn").style.display = isLast ? "inline-block" : "none";
+}
+
+function submitTest(auto = false){
+    if(testSubmitted) return;
+    if(!auto){
+        const unanswered = userAnswers.filter(x => x === null).length;
+        if(unanswered > 0){
+            const message = selectedLanguage === "hi" ?
+                `अभी ${unanswered} प्रश्नों का उत्तर नहीं दिया गया है। क्या आप टेस्ट सबमिट करना चाहते हैं?` :
+                `${unanswered} questions are unanswered. Do you want to submit the test?`;
+            if(!confirm(message)) return;
+        }
+    }
+    stopTimer();
+    testSubmitted = true;
+    testStarted = false;
+    showResult();
+}
+
+function showResult(){
+    $("testPage").style.display = "none";
+    $("resultPage").style.display = "block";
+
+    const correct = currentQuestions.reduce((count, q, index) => count + (userAnswers[index] === q.answer ? 1 : 0), 0);
+    const attempted = userAnswers.filter(x => x !== null).length;
+    const accuracy = attempted ? Math.round(correct / attempted * 100) : 0;
+
+    $("resultTitle").textContent = `${currentTopic} — Set ${currentSetNumber}`;
+    $("scoreValue").textContent = `${correct}/${currentQuestions.length}`;
+    $("attemptedValue").textContent = attempted;
+    $("correctValue").textContent = correct;
+    $("accuracyValue").textContent = accuracy + "%";
+
+    renderReview();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderReview(){
+    const review = $("review");
+    review.innerHTML = "";
+    const t = selectedLanguage === "hi" ? translations.hi : translations.en;
+
+    currentQuestions.forEach((q, index) => {
+        const item = document.createElement("div");
+        item.className = "review-item";
+
+        const userAnswer = userAnswers[index];
+        const correctAnswer = q.answer;
+        const isCorrect = userAnswer === correctAnswer;
+        const letters = ["A", "B", "C", "D"];
+
+        const correctText = selectedLanguage === "hi" ? q.optionsHi[correctAnswer] : q.options[correctAnswer];
+        const correctExpl = selectedLanguage === "hi" ? q.explanationHi : q.explanation;
+        let yourText = "";
+        if(userAnswer === null){
+            yourText = t.skipped;
+        } else {
+            yourText = selectedLanguage === "hi" ? q.optionsHi[userAnswer] : q.options[userAnswer];
+        }
+
+        let questionHTML = "";
+        if(selectedLanguage === "en"){
+            questionHTML = `<div class="review-question">${index+1}. ${escapeHTML(q.question)}</div>`;
+        } else if(selectedLanguage === "hi"){
+            questionHTML = `<div class="review-question">${index+1}. ${escapeHTML(q.questionHi)}</div>`;
+        } else {
+            questionHTML = `
+                <div class="review-question">${index+1}. ${escapeHTML(q.question)}</div>
+                <div class="review-hi">${escapeHTML(q.questionHi)}</div>
+            `;
+        }
+
+        item.innerHTML = `
+            ${questionHTML}
+            <div class="review-answer">
+                ${t.correctAnswer}:
+                <span class="correct-text">${letters[correctAnswer]}. ${escapeHTML(correctText)}</span>
+            </div>
+            <div class="review-answer">
+                ${t.yourAnswer}:
+                <span class="${isCorrect ? "correct-text" : "wrong-text"}">
+                    ${userAnswer === null ? t.skipped : `${letters[userAnswer]}. ${escapeHTML(yourText)}`}
+                </span>
+            </div>
+            <div class="explanation">
+                <strong>${t.explanation}:</strong>
+                ${escapeHTML(correctExpl)}
+            </div>
+        `;
+        review.appendChild(item);
+    });
+}
+
+function retryTest(){
+    if(!currentTopic) return;
+    startTopic(currentTopic, currentSetNumber);
+}
+
+function restartTest(){
+    retryTest();
+}
+
+function nextSet(){
+    if(!currentTopic) return;
+    const next = currentSetNumber < 4 ? currentSetNumber + 1 : 1;
+    startTopic(currentTopic, next);
+}
+
+function startTimer(){
+    stopTimer();
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        if(!testStarted || testSubmitted) return;
+        remainingSeconds--;
+        updateTimerDisplay();
+        if(remainingSeconds <= 0){
+            stopTimer();
+            submitTest(true);
+        }
+    }, 1000);
+}
+
+function stopTimer(){
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+function updateTimerDisplay(){
+    const timer = $("timer");
+    const minutes = Math.floor(Math.max(0, remainingSeconds) / 60);
+    const seconds = Math.max(0, remainingSeconds) % 60;
+    timer.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    timer.classList.toggle("warning", remainingSeconds <= 60);
+}
+
+function exitTest(){
+    if(!testStarted || testSubmitted){
+        backToTopics();
+        return;
+    }
+    const message = selectedLanguage === "hi" ?
+        "क्या आप टेस्ट से बाहर निकलना चाहते हैं? आपकी वर्तमान प्रगति खो जाएगी।" :
+        "Are you sure you want to exit this test? Your current progress will be lost.";
+    if(confirm(message)) backToTopics();
+}
+
+function backToTopics(){
+    stopTimer();
+    testStarted = false;
+    testSubmitted = false;
+    currentQuestionIndex = 0;
+    currentQuestions = [];
+    currentTopicQuestions = [];
+    userAnswers = [];
+    markedQuestions = new Set();
+    remainingSeconds = 15 * 60;
+
+    $("testPage").style.display = "none";
+    $("resultPage").style.display = "none";
+    $("homePage").style.display = "block";
+
+    updateTimerDisplay();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goHome(){
+    backToTopics();
+}
+
+function initializeTopicCards(){
+    const container = $("topicGrid");
+    container.innerHTML = "";
+
+    const topicEntries = Object.keys(questionBank);
+
+    topicEntries.forEach((topic, index) => {
+        const card = document.createElement("div");
+        card.className = "topic-card";
+
+        card.innerHTML = `
+            <div class="topic-number">${String(index+1).padStart(2, "0")}</div>
+            <h3>${escapeHTML(topic)}</h3>
+            <div class="topic-info">4 Sets • 25 Questions per Set</div>
+            <div class="set-grid">
+                ${Array.from({length: 4}, (_, i) => `
+                    <button type="button" class="set-btn" data-set="${i+1}">Set ${i+1}</button>
+                `).join("")}
+            </div>
+        `;
+
+        card.addEventListener("click", event => {
+            const button = event.target.closest(".set-btn");
+            if(!button) return;
+            event.stopPropagation();
+            startTopic(topic, Number(button.dataset.set));
+        });
+
+        container.appendChild(card);
+    });
+
+    const topicCount = topicEntries.length;
+    const totalSets = topicCount * 4;
+    const totalQuestions = topicCount * 4 * 25;
+
+    const stats = document.querySelectorAll(".stats .stat");
+    if(stats[0]) stats[0].querySelector("strong").textContent = topicCount;
+    if(stats[1]) stats[1].querySelector("strong").textContent = totalSets;
+    if(stats[2]) stats[2].querySelector("strong").textContent = totalQuestions.toLocaleString();
+}
+
+function searchTopics(searchText){
+    const query = String(searchText || "").toLowerCase().trim();
+    document.querySelectorAll(".topic-card").forEach(card => {
+        card.style.display = card.textContent.toLowerCase().includes(query) ? "" : "none";
+    });
+}
+
+document.addEventListener("keydown", event => {
+    if(!testStarted || testSubmitted) return;
+    const tag = document.activeElement?.tagName;
+    if(["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+    const key = event.key.toLowerCase();
+    if(["a", "b", "c", "d"].includes(key)){
+        selectAnswer(key.charCodeAt(0) - 97);
+    } else if(event.key === "ArrowRight"){
+        nextQuestion();
+    } else if(event.key === "ArrowLeft"){
+        previousQuestion();
+    }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+    initializeTopicCards();
+    setLanguage("both");
+    updateTimerDisplay();
+});
+
+window.startTopic = startTopic;
+window.nextQuestion = nextQuestion;
+window.previousQuestion = previousQuestion;
+window.goToQuestion = goToQuestion;
+window.submitTest = submitTest;
+window.restartTest = restartTest;
+window.retryTest = retryTest;
+window.nextSet = nextSet;
+window.markQuestion = markQuestion;
+window.backToTopics = backToTopics;
+window.goHome = goHome;
+window.setLanguage = setLanguage;
+window.changeLanguage = changeLanguage;
+window.searchTopics = searchTopics;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,820 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC Mock Test — Exam Interface</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,"Segoe UI",sans-serif;background:#e8ecf1;color:#1f2937}
+button{font-family:inherit;cursor:pointer}
+
+/* INSTRUCTIONS */
+.instruction-screen{position:fixed;inset:0;background:#e8ecf1;overflow-y:auto;padding:24px;z-index:100}
+.instr-wrap{max-width:1000px;margin:0 auto;background:#fff;border-radius:8px;box-shadow:0 6px 30px rgba(0,0,0,.12);overflow:hidden}
+.instr-head{background:linear-gradient(135deg,#17233c,#243b64);color:#fff;padding:20px 28px}
+.instr-head h1{font-size:20px;margin-bottom:6px}
+.instr-head p{font-size:13px;opacity:.85}
+.instr-body{padding:24px 28px}
+.instr-info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+.instr-info-grid > div{background:#f1f4f8;padding:12px;border-radius:6px;text-align:center;border:1px solid #d8dee7}
+.instr-info-grid strong{display:block;font-size:20px;color:#243b64}
+.instr-info-grid span{font-size:11px;color:#64748b}
+.instr-section{margin-bottom:22px}
+.instr-section h2{font-size:15px;color:#17233c;border-bottom:2px solid #243b64;padding-bottom:6px;margin-bottom:12px}
+.instr-section ul{padding-left:22px;font-size:13.5px;line-height:1.9;color:#374151}
+.instr-checkbox{display:flex;align-items:center;gap:10px;padding:14px;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;margin:20px 0;font-size:13.5px;color:#78350f;cursor:pointer}
+.instr-checkbox input{width:18px;height:18px;cursor:pointer}
+.start-exam-btn{display:block;width:100%;max-width:280px;margin:0 auto;padding:14px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:700;transition:.25s}
+.start-exam-btn:disabled{background:#94a3b8;cursor:not-allowed;opacity:.6}
+.start-exam-btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(22,163,74,.35)}
+
+/* EXAM */
+.exam-screen{display:none;flex-direction:column;height:100vh;width:100%}
+.exam-screen.active{display:flex}
+.exam-topbar{height:60px;background:#17233c;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;box-shadow:0 2px 8px rgba(0,0,0,.25);flex-shrink:0}
+.topbar-candidate{display:flex;align-items:center;gap:11px}
+.topbar-candidate .cand-avatar{width:40px;height:40px;background:#243b64;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.topbar-candidate .cand-info{line-height:1.25}
+.topbar-candidate .cand-info strong{font-size:13px;display:block}
+.topbar-candidate .cand-info small{font-size:10.5px;opacity:.75}
+.topbar-title{text-align:center;flex:1}
+.topbar-title h2{font-size:14px}
+.topbar-title small{font-size:10.5px;opacity:.75}
+.topbar-timer{display:flex;align-items:center;gap:10px}
+.timer-label{font-size:11px;text-align:right;line-height:1.2}
+.timer-label strong{display:block;font-size:14px}
+.timer-box{background:#fff1f2;color:#c62828;padding:8px 14px;border-radius:5px;font-size:19px;font-weight:800;letter-spacing:1px;min-width:112px;text-align:center;border:1px solid #fecdd3}
+.timer-box.warning{animation:pulseTimer 1s infinite}
+@keyframes pulseTimer{0%,100%{box-shadow:0 0 0 0 rgba(198,40,40,.6)}50%{box-shadow:0 0 0 8px rgba(198,40,40,0)}}
+
+.section-tabs{background:#fff;display:flex;align-items:center;padding:8px 12px;gap:6px;border-bottom:1px solid #cbd5e1;overflow-x:auto;flex-shrink:0}
+.section-tab{padding:9px 16px;background:#f1f4f8;border:1px solid #cbd5e1;border-radius:5px;font-size:12.5px;font-weight:700;color:#334155;white-space:nowrap;transition:.2s}
+.section-tab:hover{background:#e2e8f0}
+.section-tab.active{background:#243b64;border-color:#243b64;color:#fff}
+.lang-selector{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#334155;padding-left:12px;border-left:1px solid #cbd5e1;flex-shrink:0}
+.lang-selector select{padding:7px 10px;border:1px solid #cbd5e1;border-radius:5px;background:#fff;font-size:12px;font-weight:600;cursor:pointer}
+
+.exam-body{flex:1;display:grid;grid-template-columns:1fr 320px;gap:10px;padding:10px;overflow:hidden;min-height:0}
+
+.question-panel{background:#fff;border:1px solid #cbd5e1;border-radius:6px;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+.question-head{background:#f1f4f8;padding:10px 18px;border-bottom:1px solid #cbd5e1;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.question-head strong{font-size:14px;color:#17233c}
+.question-head small{font-size:11px;color:#64748b}
+.marks-info{display:flex;gap:14px;font-size:11px;font-weight:700}
+.marks-info span.positive{color:#15803d}
+.marks-info span.negative{color:#dc2626}
+
+.question-scroll{flex:1;padding:24px 28px;overflow-y:auto;min-height:0}
+.question-text{font-size:15px;line-height:1.7;margin-bottom:24px;font-weight:600}
+.option-list{display:flex;flex-direction:column;gap:10px}
+.option-item{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#fff;border:1.5px solid #cbd5e1;border-radius:6px;cursor:pointer;transition:.2s}
+.option-item:hover{background:#f5f7fa;border-color:#94a3b8}
+.option-item.selected{background:#e0e7ff;border-color:#243b64;border-width:2px;box-shadow:inset 4px 0 0 #243b64}
+.option-radio{width:20px;height:20px;border-radius:50%;border:2px solid #94a3b8;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.option-item.selected .option-radio{border-color:#243b64;background:#243b64}
+.option-item.selected .option-radio::after{content:"";width:8px;height:8px;background:#fff;border-radius:50%}
+.option-label{width:32px;height:32px;border-radius:50%;background:#f1f4f8;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#334155;flex-shrink:0}
+.option-item.selected .option-label{background:#243b64;border-color:#243b64;color:#fff}
+.option-text{font-size:14.5px;font-weight:500}
+
+.question-footer{background:#f6f7f9;border-top:1px solid #cbd5e1;padding:10px 14px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;flex-shrink:0}
+.qbtn{padding:9px 16px;border:1px solid #aeb8c5;background:#fff;color:#263449;border-radius:5px;font-size:12px;font-weight:700;min-height:38px}
+.qbtn:hover:not(:disabled){background:#f1f4f8;border-color:#64748b}
+.qbtn:disabled{opacity:.45;cursor:not-allowed}
+.qbtn-mark{color:#a16207}
+.qbtn-mark.active{background:#fff4d6;border-color:#e6a21a;color:#8a5a00}
+.qbtn-next{background:#243b64;border-color:#243b64;color:#fff;margin-left:auto}
+
+.sidebar-panel{background:#fff;border:1px solid #cbd5e1;border-radius:6px;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+.palette-head{background:#f1f4f8;padding:11px 16px;border-bottom:1px solid #cbd5e1;font-size:13px;font-weight:800;color:#17233c;display:flex;justify-content:space-between;flex-shrink:0}
+.palette-head small{font-size:10.5px;color:#64748b}
+.palette-scroll{flex:1;overflow-y:auto;padding:14px 16px;min-height:0}
+.palette-section-title{font-size:11px;font-weight:800;color:#17233c;margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid #e2e8f0;text-transform:uppercase}
+.palette-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.palette-btn{height:38px;border:1px solid #bfc8d4;background:#fff;color:#334155;border-radius:5px;font-size:12px;font-weight:800;position:relative}
+.palette-btn.current{box-shadow:0 0 0 3px #fbbf24}
+.palette-btn.answered{background:#16845b;border-color:#16845b;color:#fff}
+.palette-btn.not-answered{background:#dc2626;border-color:#dc2626;color:#fff}
+.palette-btn.marked{background:#7c3aed;border-color:#7c3aed;color:#fff}
+.palette-btn.marked-answered{background:#7c3aed;border-color:#7c3aed;color:#fff}
+.palette-btn.marked-answered::after{content:"";position:absolute;right:3px;top:3px;width:8px;height:8px;background:#16a34a;border-radius:50%;border:1.5px solid #fff}
+
+.palette-legend{padding:12px 16px;border-top:1px solid #e2e8f0;background:#fafbfc;display:flex;flex-direction:column;gap:7px;flex-shrink:0}
+.legend-row{display:flex;align-items:center;gap:9px;font-size:11px;color:#475569}
+.legend-box{width:22px;height:22px;border-radius:4px;border:1px solid #cbd5e1;flex-shrink:0;position:relative}
+.legend-box.answered{background:#16845b;border-color:#16845b}
+.legend-box.not-answered{background:#dc2626;border-color:#dc2626}
+.legend-box.not-visited{background:#fff}
+.legend-box.marked{background:#7c3aed;border-color:#7c3aed}
+.legend-box.marked-answered{background:#7c3aed;border-color:#7c3aed}
+.legend-box.marked-answered::after{content:"";position:absolute;right:1px;top:1px;width:7px;height:7px;background:#16a34a;border-radius:50%;border:1px solid #fff}
+.legend-count{margin-left:auto;font-weight:800;color:#17233c;font-size:12px}
+
+.submit-wrap{padding:12px 16px;border-top:1px solid #cbd5e1;background:#fff;flex-shrink:0}
+.submit-btn{width:100%;padding:12px;background:#dc2626;border:none;border-radius:5px;color:#fff;font-size:13px;font-weight:800}
+.submit-btn:hover{background:#b91c1c}
+
+/* MODAL */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-backdrop.active{display:flex}
+.modal-card{background:#fff;border-radius:8px;max-width:440px;width:100%;padding:26px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.4)}
+.modal-card h3{font-size:19px;color:#17233c;margin-bottom:10px}
+.modal-card p{font-size:13.5px;color:#64748b;line-height:1.7;margin-bottom:18px}
+.modal-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:20px;text-align:left}
+.modal-summary > div{padding:10px 12px;background:#f1f4f8;border-radius:5px;font-size:12px;display:flex;justify-content:space-between;border-left:3px solid #243b64}
+.modal-buttons{display:flex;gap:10px}
+.modal-btn{flex:1;padding:11px;border-radius:5px;font-size:13px;font-weight:800;border:1px solid transparent}
+.modal-btn-cancel{background:#fff;border-color:#cbd5e1;color:#334155}
+.modal-btn-confirm{background:#dc2626;color:#fff}
+
+/* RESULT */
+.result-screen{display:none;position:fixed;inset:0;background:#e8ecf1;overflow-y:auto;padding:30px 20px;z-index:200}
+.result-screen.active{display:block}
+.result-wrap{max-width:900px;margin:0 auto}
+.result-hero{background:linear-gradient(135deg,#17233c,#243b64);color:#fff;border-radius:10px;padding:30px;text-align:center;margin-bottom:20px}
+.result-hero .icon{width:70px;height:70px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:36px}
+.result-hero h1{font-size:24px;margin-bottom:6px}
+.result-hero p{font-size:13px;opacity:.85}
+.result-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.result-stat{background:#fff;padding:18px 12px;border-radius:8px;text-align:center;border:1px solid #e2e8f0}
+.result-stat strong{display:block;font-size:26px;font-weight:800;color:#243b64;margin-bottom:4px}
+.result-stat.green strong{color:#15803d}
+.result-stat.red strong{color:#dc2626}
+.result-stat.orange strong{color:#d97706}
+.result-stat span{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:700}
+.result-section{background:#fff;border-radius:8px;padding:20px;margin-bottom:16px}
+.result-section h2{font-size:15px;color:#17233c;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+.section-score-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.section-score-row:last-child{border-bottom:none}
+.section-score-row .name{flex:1;font-weight:700;color:#334155}
+.section-score-row .bar{flex:1.5;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden}
+.section-score-row .bar-fill{height:100%;background:linear-gradient(90deg,#16a34a,#22c55e);border-radius:4px}
+.section-score-row .val{font-weight:800;color:#17233c;min-width:60px;text-align:right}
+.result-actions{display:flex;gap:12px;justify-content:center;margin-top:20px}
+.result-btn{padding:13px 26px;border-radius:6px;font-size:13.5px;font-weight:800;border:none;cursor:pointer;min-width:170px}
+.result-btn-primary{background:#243b64;color:#fff}
+.result-btn-secondary{background:#fff;color:#243b64;border:1.5px solid #243b64}
+
+/* LOADING / ERROR */
+.loading-screen{position:fixed;inset:0;background:#e8ecf1;display:flex;align-items:center;justify-content:center;z-index:300;flex-direction:column;gap:16px;text-align:center;padding:20px}
+.spinner{width:52px;height:52px;border:5px solid #dbeafe;border-top-color:#2563eb;border-radius:50%;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-screen h2{color:#17233c;font-size:18px}
+.loading-screen p{color:#64748b;font-size:13.5px}
+.back-link{margin-top:10px;padding:11px 22px;background:#2563eb;color:#fff;text-decoration:none;border-radius:8px;font-size:13px;font-weight:700}
+
+/* MOBILE */
+@media(max-width:900px){
+    .exam-body{grid-template-columns:1fr}
+    .sidebar-panel{max-height:45vh}
+    .palette-grid{grid-template-columns:repeat(8,1fr)}
+    .instr-info-grid{grid-template-columns:repeat(2,1fr)}
+    .result-stats{grid-template-columns:repeat(2,1fr)}
+    .topbar-title{display:none}
+}
+@media(max-width:600px){
+    .exam-topbar{padding:0 10px;height:54px}
+    .topbar-candidate .cand-info{display:none}
+    .timer-box{font-size:16px;padding:6px 10px;min-width:90px}
+    .section-tab{font-size:11px;padding:7px 10px}
+    .palette-grid{grid-template-columns:repeat(6,1fr);gap:5px}
+    .palette-btn{height:34px;font-size:11px}
+    .qbtn{padding:8px 10px;font-size:11px;min-height:34px}
+    .qbtn-next{margin-left:0;width:100%}
+    .result-actions{flex-direction:column}
+    .result-btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-screen" id="loadingScreen">
+    <div class="spinner"></div>
+    <h2 id="loadingText">Loading test data...</h2>
+    <p id="loadingSub">Please wait</p>
+    <a href="../mock.html" class="back-link" id="backLink" style="display:none;">← Back to Mock Tests</a>
+</div>
+
+<!-- INSTRUCTIONS -->
+<div class="instruction-screen" id="instructionScreen" style="display:none">
+    <div class="instr-wrap">
+        <div class="instr-head">
+            <h1 id="instrTitle">📝 Mock Test Instructions</h1>
+            <p>Kripya instructions dhyan se padhein, test shuru karne se pehle.</p>
+        </div>
+        <div class="instr-body">
+            <div class="instr-info-grid">
+                <div><strong id="instrQ">0</strong><span>Questions</span></div>
+                <div><strong id="instrTime">0</strong><span>Minutes</span></div>
+                <div><strong id="instrMarks">0</strong><span>Max Marks</span></div>
+                <div><strong id="instrSec">0</strong><span>Sections</span></div>
+            </div>
+
+            <div class="instr-section">
+                <h2>General Instructions</h2>
+                <ul>
+                    <li>Total duration of the exam is <strong id="instrDurTxt">0 minutes</strong>.</li>
+                    <li>Countdown timer top right corner mein dikhega.</li>
+                    <li>Timer 0 hone pe exam auto-submit ho jayega.</li>
+                    <li>Time end hone se pehle "Submit Test" click karke submit kar sakte ho.</li>
+                    <li>Language toggle (English/हिंदी) sidebar mein hai.</li>
+                </ul>
+            </div>
+
+            <div class="instr-section">
+                <h2>Navigating a Question</h2>
+                <ul>
+                    <li><strong>Save &amp; Next</strong> — answer save karke aage badho</li>
+                    <li><strong>Mark for Review &amp; Next</strong> — review ke liye mark karo</li>
+                    <li><strong>Clear Response</strong> — answer deselect karo</li>
+                    <li><strong>Previous</strong> — pichle question pe jao</li>
+                </ul>
+            </div>
+
+            <div class="instr-section">
+                <h2>Marking Scheme</h2>
+                <ul>
+                    <li><strong>Correct:</strong> +2 marks</li>
+                    <li><strong>Wrong:</strong> <span id="instrNeg">−0.5</span> marks</li>
+                    <li><strong>Unattempted:</strong> 0 marks</li>
+                </ul>
+            </div>
+
+            <label class="instr-checkbox">
+                <input type="checkbox" id="agreeCheck">
+                <span>Maine saari instructions padh li hain aur main inse sehmat hoon.</span>
+            </label>
+
+            <button class="start-exam-btn" id="startExamBtn" disabled>▶ Start Test</button>
+        </div>
+    </div>
+</div>
+
+<!-- EXAM -->
+<div class="exam-screen" id="examScreen">
+    <div class="exam-topbar">
+        <div class="topbar-candidate">
+            <div class="cand-avatar">👤</div>
+            <div class="cand-info">
+                <strong id="candName">Candidate</strong>
+                <small id="candExam">SSC Mock Test</small>
+            </div>
+        </div>
+        <div class="topbar-title">
+            <h2 id="examTitle">—</h2>
+            <small id="testTitle">—</small>
+        </div>
+        <div class="topbar-timer">
+            <div class="timer-label">
+                <strong>Time Left</strong>
+                <small>hours : min : sec</small>
+            </div>
+            <div class="timer-box" id="timerBox">00:00:00</div>
+        </div>
+    </div>
+
+    <div class="section-tabs" id="sectionTabs">
+        <div class="lang-selector">
+            <label>Language:</label>
+            <select id="langSelect">
+                <option value="en">English</option>
+                <option value="hi">हिंदी</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="exam-body">
+        <div class="question-panel">
+            <div class="question-head">
+                <div>
+                    <strong>Question No. <span id="qNumber">1</span></strong>
+                    <small id="qType">Multiple Choice</small>
+                </div>
+                <div class="marks-info">
+                    <span class="positive">✔ +2</span>
+                    <span class="negative">✘ <span id="qNeg">−0.5</span></span>
+                </div>
+            </div>
+            <div class="question-scroll">
+                <div class="question-text" id="questionText"></div>
+                <div class="option-list" id="optionList"></div>
+            </div>
+            <div class="question-footer">
+                <button class="qbtn" id="prevBtn" type="button">◀ Previous</button>
+                <button class="qbtn" id="clearBtn" type="button">✕ Clear Response</button>
+                <button class="qbtn qbtn-mark" id="markBtn" type="button">🔖 Mark for Review &amp; Next</button>
+                <button class="qbtn qbtn-next" id="nextBtn" type="button">Save &amp; Next ▶</button>
+            </div>
+        </div>
+
+        <div class="sidebar-panel">
+            <div class="palette-head">
+                <span>Question Palette</span>
+                <small id="paletteSection">Section 1</small>
+            </div>
+            <div class="palette-scroll">
+                <div class="palette-section-title" id="paletteTitle">Section</div>
+                <div class="palette-grid" id="paletteGrid"></div>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-row"><div class="legend-box answered"></div><span>Answered</span><span class="legend-count" id="cntAnswered">0</span></div>
+                <div class="legend-row"><div class="legend-box not-answered"></div><span>Not Answered</span><span class="legend-count" id="cntNotAnswered">0</span></div>
+                <div class="legend-row"><div class="legend-box not-visited"></div><span>Not Visited</span><span class="legend-count" id="cntNotVisited">0</span></div>
+                <div class="legend-row"><div class="legend-box marked"></div><span>Marked for Review</span><span class="legend-count" id="cntMarked">0</span></div>
+                <div class="legend-row"><div class="legend-box marked-answered"></div><span>Answered &amp; Marked</span><span class="legend-count" id="cntMarkedAns">0</span></div>
+            </div>
+            <div class="submit-wrap">
+                <button class="submit-btn" id="submitBtn" type="button">🚩 Submit Test</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-backdrop" id="submitModal">
+    <div class="modal-card">
+        <h3>⚠️ Submit Test?</h3>
+        <p>Ek baar submit karne ke baad aap dobara test nahi de sakte. Kya aap sure hain?</p>
+        <div class="modal-summary">
+            <div><span>Answered:</span> <strong id="mAnswered">0</strong></div>
+            <div><span>Not Answered:</span> <strong id="mNotAnswered">0</strong></div>
+            <div><span>Marked:</span> <strong id="mMarked">0</strong></div>
+            <div><span>Not Visited:</span> <strong id="mNotVisited">0</strong></div>
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-cancel" id="cancelSubmit" type="button">Cancel</button>
+            <button class="modal-btn modal-btn-confirm" id="confirmSubmit" type="button">Yes, Submit</button>
+        </div>
+    </div>
+</div>
+
+<!-- RESULT -->
+<div class="result-screen" id="resultScreen">
+    <div class="result-wrap">
+        <div class="result-hero">
+            <div class="icon">🏆</div>
+            <h1>Test Submitted Successfully!</h1>
+            <p id="resultSubtitle">—</p>
+        </div>
+        <div class="result-stats">
+            <div class="result-stat green"><strong id="rScore">0</strong><span>Score</span></div>
+            <div class="result-stat"><strong id="rCorrect">0</strong><span>Correct</span></div>
+            <div class="result-stat red"><strong id="rWrong">0</strong><span>Wrong</span></div>
+            <div class="result-stat orange"><strong id="rAccuracy">0%</strong><span>Accuracy</span></div>
+        </div>
+        <div class="result-section">
+            <h2>📊 Section-wise Performance</h2>
+            <div id="sectionScores"></div>
+        </div>
+        <div class="result-section">
+            <h2>⏱ Time Analysis</h2>
+            <div class="section-score-row"><span class="name">Time Taken</span><span class="val" id="rTimeTaken">0 min</span></div>
+            <div class="section-score-row"><span class="name">Time Remaining</span><span class="val" id="rTimeLeft">0 min</span></div>
+            <div class="section-score-row"><span class="name">Attempted</span><span class="val" id="rAttempted">0 / 0</span></div>
+        </div>
+        <div class="result-section">
+            <h2>📋 Answer Review</h2>
+            <div id="reviewContainer"></div>
+        </div>
+        <div class="result-actions">
+            <button class="result-btn result-btn-secondary" onclick="window.location.href='../mock.html'" type="button">← Back to Mock Tests</button>
+            <button class="result-btn result-btn-primary" onclick="location.reload()" type="button">🔄 Re-attempt</button>
+        </div>
+    </div>
+</div>
+
+<!-- DATA FILES -->
+<script src="data/cgl-tier1.js"></script>
+<script src="data/cgl-tier2.js"></script>
+<script src="data/cpo-paper1.js"></script>
+<script src="data/cpo-paper2.js"></script>
+<script src="data/chsl-tier1.js"></script>
+<script src="data/chsl-tier2.js"></script>
+<script src="data/mts.js"></script>
+<script src="data/gd.js"></script>
+<script src="data/selection-post.js"></script>
+<script src="data/steno.js"></script>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================
+   STATE
+========================================= */
+let CURRENT_LANG = "en";
+let EXAM_META = {};
+let QUESTIONS = [];   // flat array of all questions
+let SECTIONS_MAP = [];// ordered sections with their question indices
+let current = 0;
+let answers = [];
+let review = [];
+let submitted = false;
+let timerInterval = null;
+let timeLeft = 0;
+let TOTAL_TIME = 0;
+
+/* =========================================
+   INIT
+========================================= */
+(function init(){
+    const params = new URLSearchParams(location.search);
+    const examKey = params.get("exam");
+    const testId = params.get("test");
+
+    if (!examKey || !testId) {
+        return showError("❌ Invalid URL", "exam aur test ID missing hai.");
+    }
+
+    const examData = window.MOCK_DATA && window.MOCK_DATA[examKey];
+    if (!examData) {
+        return showError("❌ Exam not found", "Data file missing: data/" + examKey + ".js");
+    }
+
+    const testData = (examData.tests || []).find(t => t.id === testId);
+    if (!testData) {
+        return showError("❌ Test not found", "Test ID: " + testId + ". Is exam mein abhi tests add nahi hue.");
+    }
+
+    const allQuestions = testData.questions || [];
+    if (allQuestions.length === 0) {
+        return showError("❌ No questions", "Is test mein abhi questions nahi hain.");
+    }
+
+    EXAM_META = {
+        examKey, examTitle: examData.title || examKey,
+        testTitle: testData.title || testId, testId,
+        duration: examData.duration || 60,
+        marks: examData.marks || 200,
+        negative: (typeof examData.negative === "number") ? examData.negative : 0.5
+    };
+
+    TOTAL_TIME = EXAM_META.duration * 60;
+    timeLeft = TOTAL_TIME;
+
+    /* Build flat QUESTIONS array + ordered sections */
+    const sectionOrder = [];
+    const sectionSeen = {};
+    allQuestions.forEach((q, i) => {
+        const secName = q.section || "General";
+        if (!sectionSeen[secName]) {
+            sectionSeen[secName] = { name: secName, indices: [] };
+            sectionOrder.push(sectionSeen[secName]);
+        }
+        sectionSeen[secName].indices.push(i);
+        QUESTIONS.push(q);
+    });
+    SECTIONS_MAP = sectionOrder;
+
+    answers = new Array(QUESTIONS.length).fill(null);
+    review = new Array(QUESTIONS.length).fill(false);
+
+    /* Update UI */
+    document.getElementById("instrTitle").textContent = "📝 " + EXAM_META.examTitle + " — Instructions";
+    document.getElementById("instrQ").textContent = QUESTIONS.length;
+    document.getElementById("instrTime").textContent = EXAM_META.duration;
+    document.getElementById("instrMarks").textContent = EXAM_META.marks;
+    document.getElementById("instrSec").textContent = SECTIONS_MAP.length;
+    document.getElementById("instrDurTxt").textContent = EXAM_META.duration + " minutes";
+    document.getElementById("instrNeg").textContent = "−" + EXAM_META.negative;
+    document.getElementById("qNeg").textContent = "−" + EXAM_META.negative;
+
+    document.getElementById("examTitle").textContent = EXAM_META.examTitle;
+    document.getElementById("testTitle").textContent = EXAM_META.testTitle;
+    document.getElementById("candExam").textContent = EXAM_META.examTitle;
+
+    document.getElementById("loadingScreen").style.display = "none";
+    document.getElementById("instructionScreen").style.display = "block";
+
+    console.log("✅ Loaded:", examKey, testId, "| Questions:", QUESTIONS.length, "| Sections:", SECTIONS_MAP.length);
+})();
+
+function showError(title, msg){
+    document.getElementById("loadingText").textContent = title;
+    document.getElementById("loadingSub").textContent = msg;
+    document.getElementById("loadingScreen").querySelector(".spinner").style.display = "none";
+    document.getElementById("backLink").style.display = "inline-block";
+}
+
+/* =========================================
+   LANGUAGE
+========================================= */
+document.getElementById("langSelect").addEventListener("change", function(){
+    CURRENT_LANG = this.value;
+    if (document.getElementById("examScreen").classList.contains("active")) {
+        renderQuestion();
+    }
+});
+
+/* =========================================
+   START EXAM
+========================================= */
+document.getElementById("agreeCheck").addEventListener("change", function(){
+    document.getElementById("startExamBtn").disabled = !this.checked;
+});
+document.getElementById("startExamBtn").addEventListener("click", function(){
+    document.getElementById("instructionScreen").style.display = "none";
+    document.getElementById("examScreen").classList.add("active");
+    buildSectionTabs();
+    goToQuestion(0);
+    startTimer();
+});
+
+/* =========================================
+   SECTION TABS
+========================================= */
+function buildSectionTabs(){
+    const tabs = document.getElementById("sectionTabs");
+    const langBox = tabs.querySelector(".lang-selector");
+    tabs.innerHTML = "";
+    SECTIONS_MAP.forEach((sec, i) => {
+        const btn = document.createElement("button");
+        btn.className = "section-tab";
+        btn.type = "button";
+        btn.textContent = sec.name;
+        btn.dataset.index = i;
+        btn.addEventListener("click", () => goToQuestion(sec.indices[0]));
+        tabs.appendChild(btn);
+    });
+    tabs.appendChild(langBox);
+    updateSectionTabs();
+}
+function updateSectionTabs(){
+    const curSectionName = QUESTIONS[current] ? QUESTIONS[current].section : "";
+    document.querySelectorAll(".section-tab").forEach(tab => {
+        tab.classList.toggle("active", tab.textContent === curSectionName);
+    });
+}
+
+/* =========================================
+   RENDER QUESTION
+========================================= */
+function renderQuestion(){
+    const q = QUESTIONS[current];
+    if (!q) return;
+    const isHi = CURRENT_LANG === "hi";
+
+    /* Section name + question number */
+    const secName = q.section || "General";
+    const sectionInfo = SECTIONS_MAP.find(s => s.name === secName);
+    const qPosInSec = sectionInfo ? sectionInfo.indices.indexOf(current) + 1 : (current + 1);
+    const secTotal = sectionInfo ? sectionInfo.indices.length : 1;
+
+    document.getElementById("qNumber").textContent = qPosInSec + " / " + secTotal;
+    document.getElementById("paletteSection").textContent = secName;
+    document.getElementById("paletteTitle").textContent = secName;
+
+    /* Question text */
+    document.getElementById("questionText").textContent =
+        (isHi ? (q.qHi || q.qEn) : q.qEn) || "Question not available";
+
+    /* Options */
+    const optionList = document.getElementById("optionList");
+    optionList.innerHTML = "";
+    const opts = (isHi ? (q.oHi || q.oEn) : q.oEn) || [];
+
+    opts.forEach((opt, oi) => {
+        const div = document.createElement("div");
+        div.className = "option-item" + (answers[current] === oi ? " selected" : "");
+        div.innerHTML =
+            '<div class="option-radio"></div>' +
+            '<div class="option-label">' + String.fromCharCode(65 + oi) + '</div>' +
+            '<div class="option-text">' + escapeHTML(opt) + '</div>';
+        div.addEventListener("click", () => {
+            answers[current] = oi;
+            renderQuestion();
+        });
+        optionList.appendChild(div);
+    });
+
+    /* Mark button state */
+    document.getElementById("markBtn").classList.toggle("active", !!review[current]);
+
+    /* Prev disabled */
+    document.getElementById("prevBtn").disabled = current === 0;
+
+    buildPalette();
+    updateCounts();
+    updateSectionTabs();
+    document.querySelector(".question-scroll").scrollTop = 0;
+}
+
+/* =========================================
+   PALETTE
+========================================= */
+function buildPalette(){
+    const curSectionName = QUESTIONS[current].section;
+    const sec = SECTIONS_MAP.find(s => s.name === curSectionName);
+    if (!sec) return;
+
+    const grid = document.getElementById("paletteGrid");
+    grid.innerHTML = "";
+
+    sec.indices.forEach((globalIdx, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "palette-btn";
+        btn.textContent = i + 1;
+
+        if (globalIdx === current) btn.classList.add("current");
+
+        const a = answers[globalIdx] !== null;
+        const m = !!review[globalIdx];
+
+        if (m && a) btn.classList.add("marked-answered");
+        else if (m) btn.classList.add("marked");
+        else if (a) btn.classList.add("answered");
+
+        btn.addEventListener("click", () => goToQuestion(globalIdx));
+        grid.appendChild(btn);
+    });
+}
+
+function updateCounts(){
+    const curSectionName = QUESTIONS[current].section;
+    const sec = SECTIONS_MAP.find(s => s.name === curSectionName);
+    if (!sec) return;
+
+    let a = 0, m = 0, mAns = 0;
+    sec.indices.forEach(i => {
+        const ans = answers[i] !== null;
+        const mark = !!review[i];
+        if (mark && ans) mAns++;
+        else if (mark) m++;
+        else if (ans) a++;
+    });
+
+    document.getElementById("cntAnswered").textContent = a;
+    document.getElementById("cntMarked").textContent = m;
+    document.getElementById("cntMarkedAns").textContent = mAns;
+    document.getElementById("cntNotVisited").textContent = sec.indices.length - (a + m + mAns);
+    document.getElementById("cntNotAnswered").textContent = 0;
+}
+
+/* =========================================
+   NAV
+========================================= */
+function goToQuestion(idx){
+    if (idx < 0 || idx >= QUESTIONS.length) return;
+    current = idx;
+    renderQuestion();
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+    if (current < QUESTIONS.length - 1) goToQuestion(current + 1);
+    else openSubmitModal();
+});
+document.getElementById("prevBtn").addEventListener("click", () => {
+    if (current > 0) goToQuestion(current - 1);
+});
+document.getElementById("clearBtn").addEventListener("click", () => {
+    answers[current] = null;
+    renderQuestion();
+});
+document.getElementById("markBtn").addEventListener("click", () => {
+    review[current] = !review[current];
+    if (current < QUESTIONS.length - 1) goToQuestion(current + 1);
+    else renderQuestion();
+});
+
+/* =========================================
+   TIMER
+========================================= */
+function startTimer(){
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        if (submitted) return;
+        timeLeft--;
+        if (timeLeft <= 0) {
+            timeLeft = 0;
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            finishTest();
+            return;
+        }
+        updateTimerDisplay();
+    }, 1000);
+}
+function updateTimerDisplay(){
+    const h = Math.floor(timeLeft / 3600);
+    const m = Math.floor((timeLeft % 3600) / 60);
+    const s = timeLeft % 60;
+    document.getElementById("timerBox").textContent =
+        String(h).padStart(2,"0") + ":" + String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+    document.getElementById("timerBox").classList.toggle("warning", timeLeft <= 60);
+}
+
+/* =========================================
+   SUBMIT MODAL
+========================================= */
+function openSubmitModal(){
+    let a = 0, notA = 0, m = 0;
+    answers.forEach((ans, i) => {
+        if (ans !== null) a++;
+        else notA++;
+        if (review[i]) m++;
+    });
+    document.getElementById("mAnswered").textContent = a;
+    document.getElementById("mNotAnswered").textContent = notA;
+    document.getElementById("mMarked").textContent = m;
+    document.getElementById("mNotVisited").textContent = QUESTIONS.length - a - notA;
+    document.getElementById("submitModal").classList.add("active");
+}
+document.getElementById("submitBtn").addEventListener("click", openSubmitModal);
+document.getElementById("cancelSubmit").addEventListener("click", () => {
+    document.getElementById("submitModal").classList.remove("active");
+});
+document.getElementById("confirmSubmit").addEventListener("click", () => {
+    document.getElementById("submitModal").classList.remove("active");
+    finishTest();
+});
+
+/* =========================================
+   FINISH
+========================================= */
+function finishTest(){
+    if (submitted) return;
+    submitted = true;
+    clearInterval(timerInterval);
+
+    let totalCorrect = 0, totalWrong = 0, totalUnanswered = 0;
+    const sectionResults = SECTIONS_MAP.map(sec => {
+        let c = 0, w = 0, u = 0;
+        sec.indices.forEach(i => {
+            const q = QUESTIONS[i];
+            const ans = answers[i];
+            if (ans === null) u++;
+            else if (ans === q.a) c++;
+            else w++;
+        });
+        const total = sec.indices.length;
+        const score = c * 2 - w * EXAM_META.negative;
+        totalCorrect += c;
+        totalWrong += w;
+        totalUnanswered += u;
+        return { name: sec.name, correct: c, wrong: w, unanswered: u, total, score };
+    });
+
+    const totalScore = totalCorrect * 2 - totalWrong * EXAM_META.negative;
+    const attempted = totalCorrect + totalWrong;
+    const accuracy = attempted > 0 ? Math.round((totalCorrect / attempted) * 100) : 0;
+
+    document.getElementById("rScore").textContent = totalScore.toFixed(1);
+    document.getElementById("rCorrect").textContent = totalCorrect;
+    document.getElementById("rWrong").textContent = totalWrong;
+    document.getElementById("rAccuracy").textContent = accuracy + "%";
+    document.getElementById("resultSubtitle").textContent =
+        EXAM_META.examTitle + " · " + EXAM_META.testTitle;
+
+    const timeTaken = Math.round((TOTAL_TIME - timeLeft) / 60);
+    const timeLeftMin = Math.round(timeLeft / 60);
+    document.getElementById("rTimeTaken").textContent = timeTaken + " min";
+    document.getElementById("rTimeLeft").textContent = timeLeftMin + " min";
+    document.getElementById("rAttempted").textContent = attempted + " / " + QUESTIONS.length;
+
+    document.getElementById("sectionScores").innerHTML = sectionResults.map(r => {
+        const pct = r.total > 0 ? Math.round((r.correct / r.total) * 100) : 0;
+        return '<div class="section-score-row">' +
+            '<span class="name">' + escapeHTML(r.name) + '</span>' +
+            '<div class="bar"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<span class="val">' + r.correct + '/' + r.total + '</span></div>';
+    }).join("");
+
+    /* Review */
+    const isHi = CURRENT_LANG === "hi";
+    document.getElementById("reviewContainer").innerHTML = QUESTIONS.map((q, i) => {
+        const ans = answers[i];
+        let type = ans === null ? "unanswered" : (ans === q.a ? "correct" : "wrong");
+        const opts = isHi ? (q.oHi || q.oEn) : q.oEn;
+        const qText = isHi ? (q.qHi || q.qEn) : q.qEn;
+        const exp = isHi ? (q.eHi || q.eEn || "") : (q.eEn || "");
+        const userAns = ans === null ? "Not Attempted" :
+            String.fromCharCode(65 + ans) + ". " + opts[ans];
+        const correctAns = String.fromCharCode(65 + q.a) + ". " + opts[q.a];
+
+        return '<div class="review-item ' + type + '" style="border:1px solid #e2e8f0;border-left:5px solid ' +
+            (type === 'correct' ? '#16a34a' : type === 'wrong' ? '#dc2626' : '#64748b') +
+            ';border-radius:8px;padding:14px;margin-bottom:10px;background:#fff">' +
+            '<div style="font-weight:800;color:#17233c;margin-bottom:8px">Q' + (i+1) + '. ' + escapeHTML(qText) + '</div>' +
+            '<div style="font-size:13px;margin:4px 0"><strong>Your Answer:</strong> ' + escapeHTML(userAns) + '</div>' +
+            '<div style="font-size:13px;margin:4px 0"><strong>Correct:</strong> ' + escapeHTML(correctAns) + '</div>' +
+            (exp ? '<div style="margin-top:8px;padding:10px;background:#f8fafc;border-radius:6px;font-size:12.5px;border-left:3px solid #2563eb"><strong>Explanation:</strong> ' + escapeHTML(exp) + '</div>' : '') +
+            '</div>';
+    }).join("");
+
+    document.getElementById("examScreen").classList.remove("active");
+    document.getElementById("resultScreen").classList.add("active");
+    window.scrollTo(0, 0);
+}
+
+function escapeHTML(t){
+    return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+})();
+</script>
+</body>
+</html>

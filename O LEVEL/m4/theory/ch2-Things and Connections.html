@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M4-R5 Chapter 2 | Things and Connections | NIELIT O Level IoT</title>
+
+<meta name="description"
+content="NIELIT O Level M4-R5 Things and Connections complete bilingual notes. Controlled systems, feedback loop, TCP/IP vs OSI, wired and wireless connectivity, IoT process flow, examples, exam points and revision.">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at 5% 10%,rgba(0,220,255,.14),transparent 25%),
+        radial-gradient(circle at 95% 15%,rgba(168,85,247,.16),transparent 27%),
+        radial-gradient(circle at 50% 90%,rgba(16,185,129,.10),transparent 28%),
+        linear-gradient(135deg,#06101d,#0b1528 50%,#07121e);
+
+    color:#eaf4ff;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        radial-gradient(circle,#35ddff 1px,transparent 1px),
+        radial-gradient(circle,#a78bfa 1px,transparent 1px);
+    background-size:130px 130px,190px 190px;
+    background-position:20px 30px,80px 100px;
+    opacity:.12;
+    z-index:-1;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    backdrop-filter:blur(18px);
+    background:rgba(5,13,25,.82);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    padding:14px 5%;
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,
+        rgba(34,211,238,.20),
+        rgba(139,92,246,.20));
+
+    border:1px solid rgba(67,220,255,.25);
+    color:#45e4ff;
+    font-weight:900;
+    box-shadow:0 0 25px rgba(0,210,255,.12);
+}
+
+.brand-title{
+    font-size:17px;
+    font-weight:800;
+}
+
+.brand-sub{
+    font-size:11px;
+    color:#8294aa;
+    margin-top:3px;
+}
+
+.back-btn{
+    text-decoration:none;
+    color:#dcecff;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(255,255,255,.04);
+    padding:10px 15px;
+    border-radius:10px;
+    font-size:12px;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    color:#45e4ff;
+    border-color:#45e4ff;
+    transform:translateY(-2px);
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:42px 5% 80px;
+}
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:42px;
+    border-radius:26px;
+
+    background:
+        linear-gradient(135deg,
+        rgba(18,39,64,.92),
+        rgba(10,22,40,.80));
+
+    border:1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.04);
+
+    margin-bottom:32px;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:180px;
+    height:3px;
+    background:linear-gradient(90deg,#22d3ee,#8b5cf6,#22c55e);
+    box-shadow:0 0 25px #22d3ee;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    right:-130px;
+    top:-130px;
+    border-radius:50%;
+    background:rgba(34,211,238,.08);
+    filter:blur(45px);
+}
+
+.badge{
+    display:inline-flex;
+    padding:7px 12px;
+    border-radius:30px;
+    color:#42e3ff;
+
+    background:rgba(34,211,238,.08);
+    border:1px solid rgba(34,211,238,.20);
+
+    font-size:11px;
+    font-weight:800;
+    margin-bottom:17px;
+}
+
+.hero h1{
+    font-size:clamp(29px,4vw,47px);
+    margin-bottom:12px;
+
+    background:
+        linear-gradient(90deg,#fff,#52e3ff,#b69cff);
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:850px;
+    color:#95a7bd;
+    line-height:1.75;
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+    margin-top:28px;
+}
+
+.stat{
+    padding:17px;
+    border-radius:15px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat strong{
+    display:block;
+    color:#45e4ff;
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:#8192a9;
+    font-size:10px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:40px 0 18px;
+}
+
+.section-icon{
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:11px;
+
+    background:rgba(34,211,238,.08);
+    border:1px solid rgba(34,211,238,.16);
+    font-size:19px;
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:#74879f;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.card{
+    padding:26px;
+    border-radius:20px;
+
+    background:
+        linear-gradient(145deg,
+        rgba(20,39,63,.84),
+        rgba(9,22,39,.76));
+
+    border:1px solid rgba(255,255,255,.08);
+
+    margin-bottom:18px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.16);
+}
+
+.card h3{
+    color:#57e4ff;
+    font-size:19px;
+    margin-bottom:12px;
+}
+
+.card h4{
+    color:#bca7ff;
+    margin:18px 0 9px;
+    font-size:15px;
+}
+
+.card p{
+    color:#a5b5c8;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.bilingual{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:15px;
+}
+
+.lang-box{
+    padding:17px;
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.lang-box .label{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:6px;
+    font-size:9px;
+    font-weight:800;
+    margin-bottom:9px;
+
+    color:#46e3ff;
+    background:rgba(34,211,238,.08);
+}
+
+.lang-box p{
+    font-size:12px;
+    line-height:1.75;
+}
+
+.example{
+    margin-top:16px;
+    padding:17px;
+    border-radius:14px;
+
+    background:
+        linear-gradient(135deg,
+        rgba(34,211,238,.07),
+        rgba(139,92,246,.07));
+
+    border-left:3px solid #3ddfff;
+}
+
+.example strong{
+    color:#5ee7ff;
+    font-size:12px;
+}
+
+.example p{
+    margin-top:6px;
+}
+
+.warning{
+    padding:18px;
+    border-radius:14px;
+    background:rgba(245,158,11,.07);
+    border:1px solid rgba(245,158,11,.18);
+    margin-top:15px;
+}
+
+.warning strong{
+    color:#fbbf24;
+}
+
+.warning p{
+    margin-top:7px;
+    color:#b6c1ce;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.flow{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.flow-item{
+    padding:17px 10px;
+    text-align:center;
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.flow-number{
+    width:35px;
+    height:35px;
+    margin:auto auto 9px;
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#4de4ff;
+    font-weight:900;
+
+    background:rgba(34,211,238,.08);
+    border:1px solid rgba(34,211,238,.15);
+}
+
+.flow-item h4{
+    font-size:12px;
+    margin-bottom:5px;
+    color:#eef7ff;
+}
+
+.flow-item p{
+    font-size:9px;
+    color:#7f91a7;
+    line-height:1.5;
+}
+
+.compare{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+    overflow:hidden;
+    border-radius:12px;
+}
+
+.compare th,
+.compare td{
+    padding:13px;
+    border:1px solid rgba(255,255,255,.07);
+    text-align:left;
+    font-size:11px;
+}
+
+.compare th{
+    background:rgba(34,211,238,.10);
+    color:#5ce5ff;
+}
+
+.compare td{
+    color:#a6b6c9;
+    background:rgba(255,255,255,.025);
+}
+
+.layers{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:15px;
+}
+
+.layer{
+    padding:17px;
+    border-radius:14px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.layer strong{
+    display:block;
+    color:#b99cff;
+    margin-bottom:6px;
+}
+
+.layer p{
+    font-size:11px;
+}
+
+.tech-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+    margin-top:15px;
+}
+
+.tech{
+    padding:17px;
+    text-align:center;
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.tech-icon{
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.tech h4{
+    color:#eef7ff;
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.tech p{
+    font-size:9px;
+}
+
+.mcq{
+    padding:19px;
+    margin-bottom:12px;
+    border-radius:15px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.mcq b{
+    color:#57e4ff;
+    font-size:12px;
+}
+
+.mcq p{
+    margin-top:7px;
+    color:#d6e2ef;
+    font-size:12px;
+}
+
+.answer{
+    margin-top:8px;
+    padding:8px 10px;
+    border-radius:8px;
+    background:rgba(34,197,94,.07);
+    color:#72e7a0;
+    font-size:11px;
+}
+
+.exam-box{
+    padding:23px;
+    border-radius:18px;
+
+    background:
+        linear-gradient(135deg,
+        rgba(124,58,237,.10),
+        rgba(34,211,238,.07));
+
+    border:1px solid rgba(139,92,246,.18);
+}
+
+.exam-list{
+    list-style:none;
+    margin-top:12px;
+}
+
+.exam-list li{
+    padding:9px 0;
+    border-bottom:1px solid rgba(255,255,255,.05);
+    color:#a9b8c9;
+    font-size:12px;
+}
+
+.exam-list li::before{
+    content:"✓";
+    color:#48e1ff;
+    margin-right:9px;
+}
+
+.quick{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.quick-card{
+    padding:19px;
+    border-radius:15px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.quick-card h4{
+    color:#5ee5ff;
+    margin-bottom:8px;
+    font-size:13px;
+}
+
+.quick-card p{
+    color:#95a5b8;
+    font-size:11px;
+    line-height:1.7;
+}
+
+.footer{
+    text-align:center;
+    padding:30px 10px;
+    color:#657991;
+    font-size:10px;
+    border-top:1px solid rgba(255,255,255,.06);
+    margin-top:45px;
+}
+
+@media(max-width:950px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .flow{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .tech-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .quick{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:650px){
+
+    .container{
+        padding:28px 4% 60px;
+    }
+
+    .hero{
+        padding:28px 20px;
+    }
+
+    .stats,
+    .bilingual,
+    .layers,
+    .quick{
+        grid-template-columns:1fr;
+    }
+
+    .flow{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .tech-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .back-btn{
+        padding:8px 10px;
+        font-size:10px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="header-inner">
+
+<div class="logo-area">
+
+<div class="logo">M4</div>
+
+<div>
+<div class="brand-title">M4-R5 Study Zone</div>
+<div class="brand-sub">Internet of Things & Its Applications</div>
+</div>
+
+</div>
+
+<a href="m4.html" class="back-btn">
+← M4 Home
+</a>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="badge">
+✦ NIELIT O LEVEL • M4-R5 • CHAPTER 02
+</div>
+
+<h1>
+Things & Connections
+</h1>
+
+<p>
+Complete bilingual exam-oriented notes covering controlled systems,
+feedback loops, TCP/IP and OSI models, wired and wireless connectivity,
+IoT communication and the complete process flow of an IoT application.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<strong>02</strong>
+<span>Chapter Number</span>
+</div>
+
+<div class="stat">
+<strong>10</strong>
+<span>Written Marks Focus</span>
+</div>
+
+<div class="stat">
+<strong>05</strong>
+<span>Major Concepts</span>
+</div>
+
+<div class="stat">
+<strong>100%</strong>
+<span>Exam Focused</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CHAPTER ROADMAP -->
+
+<div class="section-title">
+
+<div class="section-icon">🧭</div>
+
+<div>
+<h2>Chapter Roadmap</h2>
+<p>इस chapter में क्या-क्या पढ़ना है?</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<div class="flow">
+
+<div class="flow-item">
+<div class="flow-number">01</div>
+<h4>Controlled System</h4>
+<p>Control and monitoring concept</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">02</div>
+<h4>Feedback Loop</h4>
+<p>Sensor → Controller → Action</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">03</div>
+<h4>TCP/IP & OSI</h4>
+<p>Communication models</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">04</div>
+<h4>Connectivity</h4>
+<p>Wired & wireless methods</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">05</div>
+<h4>IoT Process Flow</h4>
+<p>Data to action</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- 1 CONTROLLED SYSTEM -->
+
+<div class="section-title">
+
+<div class="section-icon">⚙️</div>
+
+<div>
+<h2>1. Controlled Systems</h2>
+<p>Control system को आसान भाषा में समझें</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<h3>What is a Controlled System?</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<span class="label">ENGLISH</span>
+
+<p>
+A controlled system is a system in which the operation or behaviour
+of a device/process is monitored and controlled according to a desired
+condition or input.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<span class="label">हिंदी</span>
+
+<p>
+Controlled System वह system है जिसमें किसी device या process के
+operation को किसी desired condition के अनुसार monitor और control किया जाता है।
+</p>
+
+</div>
+
+</div>
+
+
+<div class="example">
+
+<strong>💡 Example 1 — Air Conditioner (AC)</strong>
+
+<p>
+Suppose the required temperature is <b>24°C</b>.
+The temperature sensor measures the room temperature.
+If temperature increases above the desired value, the controller
+can command the AC to cool the room.
+</p>
+
+<p style="margin-top:8px;">
+<b>Hindi:</b> अगर room का temperature set temperature से ज्यादा हो जाता है,
+तो sensor information controller तक भेजता है और system cooling action लेता है।
+</p>
+
+</div>
+
+
+<div class="example">
+
+<strong>💡 Example 2 — Refrigerator</strong>
+
+<p>
+A refrigerator continuously monitors temperature and controls
+the cooling mechanism to maintain a desired temperature range.
+</p>
+
+</div>
+
+
+<h4>Basic Components</h4>
+
+<div class="tech-grid">
+
+<div class="tech">
+<div class="tech-icon">📡</div>
+<h4>Sensor</h4>
+<p>Measures physical condition.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">🧠</div>
+<h4>Controller</h4>
+<p>Processes the information.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">⚡</div>
+<h4>Actuator</h4>
+<p>Performs required action.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">🎯</div>
+<h4>Target</h4>
+<p>Desired condition.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- 2 FEEDBACK LOOP -->
+
+<div class="section-title">
+
+<div class="section-icon">🔄</div>
+
+<div>
+<h2>2. Feedback Loop</h2>
+<p>M4 exam का बहुत important concept</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<h3>What is Feedback?</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<span class="label">ENGLISH</span>
+
+<p>
+Feedback is the process of returning information about the current
+condition of a system to the controller so that corrective action
+can be taken.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<span class="label">हिंदी</span>
+
+<p>
+Feedback वह process है जिसमें system की current condition की information
+वापस controller को दी जाती है ताकि जरूरत पड़ने पर corrective action लिया जा सके।
+</p>
+
+</div>
+
+</div>
+
+
+<h4>Feedback Loop</h4>
+
+<p>
+A feedback loop continuously measures the output and uses that information
+to control or adjust the system.
+</p>
+
+
+<div class="flow">
+
+<div class="flow-item">
+<div class="flow-number">1</div>
+<h4>Measure</h4>
+<p>Sensor measures condition.</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">2</div>
+<h4>Compare</h4>
+<p>Compare with desired value.</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">3</div>
+<h4>Decide</h4>
+<p>Controller decides action.</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">4</div>
+<h4>Act</h4>
+<p>Actuator performs action.</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">5</div>
+<h4>Repeat</h4>
+<p>System measures again.</p>
+</div>
+
+</div>
+
+
+<div class="example">
+
+<strong>🌡️ Thermostat Example</strong>
+
+<p>
+Set temperature = 24°C<br><br>
+
+Room temperature = 28°C → Sensor detects 28°C →
+Controller compares 28 with 24 → Cooling is required →
+AC starts cooling → Temperature decreases →
+Sensor measures again.
+</p>
+
+</div>
+
+
+<div class="warning">
+
+<strong>⭐ EXAM TRICK</strong>
+
+<p>
+Remember the sequence:
+
+<b>Sensor → Controller → Actuator → System → Sensor</b>
+
+यह feedback system को समझने के लिए सबसे useful sequence है।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- 3 TCP IP -->
+
+<div class="section-title">
+
+<div class="section-icon">🌐</div>
+
+<div>
+<h2>3. TCP/IP Model</h2>
+<p>Internet communication का fundamental model</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<h3>TCP/IP</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<span class="label">ENGLISH</span>
+
+<p>
+TCP/IP is a communication protocol suite used for communication
+between devices over networks and the Internet.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<span class="label">हिंदी</span>
+
+<p>
+TCP/IP protocols का एक suite है जो network और Internet पर
+devices के बीच communication के लिए उपयोग किया जाता है।
+</p>
+
+</div>
+
+</div>
+
+
+<h4>TCP/IP Layers</h4>
+
+<div class="layers">
+
+<div class="layer">
+<strong>1. Application Layer</strong>
+<p>
+Provides network services to applications.
+Examples include HTTP, HTTPS, FTP, DNS, SMTP.
+</p>
+</div>
+
+<div class="layer">
+<strong>2. Transport Layer</strong>
+<p>
+Provides end-to-end communication.
+Important protocols: TCP and UDP.
+</p>
+</div>
+
+<div class="layer">
+<strong>3. Internet Layer</strong>
+<p>
+Responsible for logical addressing and packet routing.
+Important protocol: IP.
+</p>
+</div>
+
+<div class="layer">
+<strong>4. Network Access Layer</strong>
+<p>
+Handles communication with the physical/network interface.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- 4 OSI -->
+
+<div class="section-title">
+
+<div class="section-icon">🧱</div>
+
+<div>
+<h2>4. OSI Model</h2>
+<p>Seven-layer reference model</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<h3>OSI Model — Open Systems Interconnection</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<span class="label">ENGLISH</span>
+
+<p>
+OSI is a seven-layer reference model developed to understand
+how communication takes place between networked systems.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<span class="label">हिंदी</span>
+
+<p>
+OSI एक seven-layer reference model है जो network devices के बीच
+communication को समझने के लिए उपयोग किया जाता है।
+</p>
+
+</div>
+
+</div>
+
+
+<h4>7 OSI Layers — Top to Bottom</h4>
+
+<table class="compare">
+
+<tr>
+<th>Layer</th>
+<th>Name</th>
+<th>Easy Meaning</th>
+</tr>
+
+<tr>
+<td>7</td>
+<td>Application</td>
+<td>User/application network services</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Presentation</td>
+<td>Translation, encryption, compression</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Session</td>
+<td>Establish/manage communication session</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Transport</td>
+<td>End-to-end delivery</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Network</td>
+<td>Routing and logical addressing</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Data Link</td>
+<td>Frames and MAC addressing</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Physical</td>
+<td>Bits and physical transmission</td>
+</tr>
+
+</table>
+
+
+<div class="warning">
+
+<strong>🧠 MEMORY TRICK</strong>
+
+<p>
+Top → Bottom:
+
+<b>
+All People Seem To Need Data Processing
+</b>
+
+Application → Presentation → Session → Transport →
+Network → Data Link → Physical
+</p>
+
+</div>
+
+</section>
+
+
+<!-- TCP VS OSI -->
+
+<div class="section-title">
+
+<div class="section-icon">⚔️</div>
+
+<div>
+<h2>5. TCP/IP vs OSI</h2>
+<p>Exam में comparison question के लिए important</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<table class="compare">
+
+<tr>
+<th>Feature</th>
+<th>TCP/IP</th>
+<th>OSI</th>
+</tr>
+
+<tr>
+<td>Layers</td>
+<td>4 layers</td>
+<td>7 layers</td>
+</tr>
+
+<tr>
+<td>Nature</td>
+<td>Protocol suite/model</td>
+<td>Reference model</td>
+</tr>
+
+<tr>
+<td>Development</td>
+<td>Developed around Internet protocols</td>
+<td>Developed as a standard reference framework</td>
+</tr>
+
+<tr>
+<td>Application</td>
+<td>Widely used in Internet networking</td>
+<td>Mainly used for understanding/reference</td>
+</tr>
+
+<tr>
+<td>Transport</td>
+<td>TCP / UDP</td>
+<td>Transport layer</td>
+</tr>
+
+<tr>
+<td>Internet/Network</td>
+<td>Internet layer</td>
+<td>Network layer</td>
+</tr>
+
+</table>
+
+
+<div class="example">
+
+<strong>🎯 EXAM POINT</strong>
+
+<p>
+अगर question आए:
+
+<b>"Which model has seven layers?"</b>
+
+Answer: <b>OSI Model</b>
+
+अगर पूछा जाए:
+
+<b>"Which model is strongly associated with Internet protocol suite?"</b>
+
+Answer: <b>TCP/IP</b>
+</p>
+
+</div>
+
+</section>
+
+
+<!-- CONNECTIVITY -->
+
+<div class="section-title">
+
+<div class="section-icon">📶</div>
+
+<div>
+<h2>6. Connectivity in IoT</h2>
+<p>Things आपस में कैसे connect होती हैं?</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<h3>Connectivity Models</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<span class="label">ENGLISH</span>
+
+<p>
+Connectivity refers to the method by which IoT devices communicate
+with other devices, gateways, servers or cloud platforms.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<span class="label">हिंदी</span>
+
+<p>
+Connectivity का मतलब है IoT devices किस माध्यम से दूसरे devices,
+gateway, server या cloud के साथ communication करते हैं।
+</p>
+
+</div>
+
+</div>
+
+
+<h4>Two Major Methods</h4>
+
+<div class="tech-grid">
+
+<div class="tech">
+<div class="tech-icon">🔌</div>
+<h4>Wired</h4>
+<p>Physical cable is used.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">📡</div>
+<h4>Wireless</h4>
+<p>Radio/wireless communication.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">🌐</div>
+<h4>Network</h4>
+<p>Connects multiple devices.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">☁️</div>
+<h4>Cloud</h4>
+<p>Remote data processing/storage.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WIRED -->
+
+<div class="section-title">
+
+<div class="section-icon">🔌</div>
+
+<div>
+<h2>7. Wired Connectivity</h2>
+<p>Cable-based communication</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<h3>Wired Communication</h3>
+
+<p>
+In wired communication, devices communicate through a physical medium
+such as cables.
+</p>
+
+<div class="tech-grid">
+
+<div class="tech">
+<div class="tech-icon">🔗</div>
+<h4>Ethernet</h4>
+<p>Common wired LAN technology.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">🧵</div>
+<h4>Fiber Optic</h4>
+<p>Uses light for transmission.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">🔌</div>
+<h4>Serial</h4>
+<p>Used for device communication.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">⚙️</div>
+<h4>Industrial Bus</h4>
+<p>Used in industrial systems.</p>
+</div>
+
+</div>
+
+
+<div class="example">
+
+<strong>Example:</strong>
+
+<p>
+A sensor connected to a controller through a physical cable
+represents wired connectivity.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- WIRELESS -->
+
+<div class="section-title">
+
+<div class="section-icon">📡</div>
+
+<div>
+<h2>8. Wireless Connectivity</h2>
+<p>Without physical communication cable</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<h3>Wireless Communication</h3>
+
+<p>
+Wireless communication allows devices to exchange information
+without a physical cable, generally through electromagnetic signals.
+</p>
+
+<div class="tech-grid">
+
+<div class="tech">
+<div class="tech-icon">📶</div>
+<h4>Wi-Fi</h4>
+<p>Wireless local networking.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">🔵</div>
+<h4>Bluetooth</h4>
+<p>Short-range communication.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">📲</div>
+<h4>Cellular</h4>
+<p>Wide-area mobile connectivity.</p>
+</div>
+
+<div class="tech">
+<div class="tech-icon">📡</div>
+<h4>RF</h4>
+<p>Radio-frequency communication.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WIRED VS WIRELESS -->
+
+<div class="section-title">
+
+<div class="section-icon">⚖️</div>
+
+<div>
+<h2>9. Wired vs Wireless</h2>
+<p>Very important comparison</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<table class="compare">
+
+<tr>
+<th>Feature</th>
+<th>Wired</th>
+<th>Wireless</th>
+</tr>
+
+<tr>
+<td>Medium</td>
+<td>Physical cable</td>
+<td>Wireless signal</td>
+</tr>
+
+<tr>
+<td>Mobility</td>
+<td>Limited</td>
+<td>Generally higher</td>
+</tr>
+
+<tr>
+<td>Installation</td>
+<td>May require cabling</td>
+<td>Usually easier for flexible deployment</td>
+</tr>
+
+<tr>
+<td>Example</td>
+<td>Ethernet</td>
+<td>Wi-Fi / Bluetooth</td>
+</tr>
+
+<tr>
+<td>IoT Use</td>
+<td>Industrial/controlled environments</td>
+<td>Smart home, mobile sensors, etc.</td>
+</tr>
+
+</table>
+
+</section>
+
+
+<!-- PROCESS FLOW -->
+
+<div class="section-title">
+
+<div class="section-icon">🔄</div>
+
+<div>
+<h2>10. Process Flow of an IoT Application</h2>
+<p>IoT application में data कैसे travel करता है?</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<h3>Typical IoT Data Flow</h3>
+
+<p>
+An IoT application generally collects data from the physical world,
+processes/transmits that data and may generate an action or useful output.
+</p>
+
+
+<div class="flow">
+
+<div class="flow-item">
+<div class="flow-number">1</div>
+<h4>Thing</h4>
+<p>Physical object produces information.</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">2</div>
+<h4>Sensor</h4>
+<p>Measures physical quantity.</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">3</div>
+<h4>Network</h4>
+<p>Transfers data.</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">4</div>
+<h4>Processing</h4>
+<p>Data is analyzed.</p>
+</div>
+
+<div class="flow-item">
+<div class="flow-number">5</div>
+<h4>Action</h4>
+<p>Decision/output is generated.</p>
+</div>
+
+</div>
+
+
+<div class="example">
+
+<strong>🏠 Smart Home Example</strong>
+
+<p>
+
+Temperature Sensor
+→ Controller
+→ Wi-Fi
+→ Processing/Application
+→ Decision
+→ AC Control
+
+<br><br>
+
+<b>Hindi:</b>
+Temperature sensor room की information collect करता है →
+controller उसे process करता है → network के माध्यम से data जाता है →
+application/logic decision लेता है → required action होता है।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- IMPORTANT TERMS -->
+
+<div class="section-title">
+
+<div class="section-icon">📌</div>
+
+<div>
+<h2>11. Important Terms</h2>
+<p>One-line revision</p>
+</div>
+
+</div>
+
+<section class="quick">
+
+<div class="quick-card">
+<h4>Controlled System</h4>
+<p>System whose behaviour is monitored and controlled according to a desired condition.</p>
+</div>
+
+<div class="quick-card">
+<h4>Feedback</h4>
+<p>Information returned to the controller about the current condition.</p>
+</div>
+
+<div class="quick-card">
+<h4>Sensor</h4>
+<p>Device that measures a physical quantity.</p>
+</div>
+
+<div class="quick-card">
+<h4>Actuator</h4>
+<p>Device that performs a physical/control action.</p>
+</div>
+
+<div class="quick-card">
+<h4>TCP/IP</h4>
+<p>Protocol suite/model used for network and Internet communication.</p>
+</div>
+
+<div class="quick-card">
+<h4>OSI</h4>
+<p>Seven-layer reference model for network communication.</p>
+</div>
+
+<div class="quick-card">
+<h4>Wired</h4>
+<p>Communication using a physical transmission medium.</p>
+</div>
+
+<div class="quick-card">
+<h4>Wireless</h4>
+<p>Communication without a physical cable.</p>
+</div>
+
+<div class="quick-card">
+<h4>IoT Process</h4>
+<p>Things/Sensors → Communication → Processing → Decision/Action.</p>
+</div>
+
+</section>
+
+
+<!-- EXAM BOX -->
+
+<div class="section-title">
+
+<div class="section-icon">🎯</div>
+
+<div>
+<h2>12. Exam-Oriented Points</h2>
+<p>इन points को जरूर याद करें</p>
+</div>
+
+</div>
+
+<section class="exam-box">
+
+<ul class="exam-list">
+
+<li>
+Feedback system में sensor current condition को measure करता है।
+</li>
+
+<li>
+Thermostat और AC controlled/feedback systems के common examples हैं।
+</li>
+
+<li>
+OSI model में कुल 7 layers होती हैं।
+</li>
+
+<li>
+TCP/IP model commonly 4-layer architecture के रूप में पढ़ाया जाता है।
+</li>
+
+<li>
+OSI का Transport Layer Layer 4 है।
+</li>
+
+<li>
+OSI का Network Layer Layer 3 है।
+</li>
+
+<li>
+OSI का Data Link Layer Layer 2 है।
+</li>
+
+<li>
+OSI का Physical Layer Layer 1 है।
+</li>
+
+<li>
+TCP/IP में TCP और UDP Transport layer से जुड़े हैं।
+</li>
+
+<li>
+IP logical addressing और routing से संबंधित है।
+</li>
+
+<li>
+Ethernet wired communication का common example है।
+</li>
+
+<li>
+Wi-Fi और Bluetooth wireless communication के examples हैं।
+</li>
+
+<li>
+IoT application में sensor physical world से data collect करता है।
+</li>
+
+<li>
+Communication network collected data को दूसरे system तक पहुँचाता है।
+</li>
+
+<li>
+IoT system feedback के माध्यम से monitoring और control कर सकता है।
+</li>
+
+</ul>
+
+</section>
+
+
+<!-- MCQ -->
+
+<div class="section-title">
+
+<div class="section-icon">🧠</div>
+
+<div>
+<h2>13. Quick MCQ Practice</h2>
+<p>Chapter complete करने के बाद खुद को test करें</p>
+</div>
+
+</div>
+
+<section class="card">
+
+<div class="mcq">
+
+<b>Q1. Which model has seven layers?</b>
+
+<p>
+A) TCP/IP &nbsp;&nbsp;
+B) OSI &nbsp;&nbsp;
+C) Bluetooth &nbsp;&nbsp;
+D) Ethernet
+</p>
+
+<div class="answer">
+✓ Answer: B) OSI
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<b>Q2. Which device measures a physical quantity?</b>
+
+<p>
+A) Actuator &nbsp;&nbsp;
+B) Sensor &nbsp;&nbsp;
+C) Router &nbsp;&nbsp;
+D) Switch
+</p>
+
+<div class="answer">
+✓ Answer: B) Sensor
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<b>Q3. Which is a wired connectivity example?</b>
+
+<p>
+A) Wi-Fi &nbsp;&nbsp;
+B) Bluetooth &nbsp;&nbsp;
+C) Ethernet &nbsp;&nbsp;
+D) Radio
+</p>
+
+<div class="answer">
+✓ Answer: C) Ethernet
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<b>Q4. Which OSI layer is responsible for routing?</b>
+
+<p>
+A) Physical &nbsp;&nbsp;
+B) Data Link &nbsp;&nbsp;
+C) Network &nbsp;&nbsp;
+D) Presentation
+</p>
+
+<div class="answer">
+✓ Answer: C) Network
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<b>Q5. What is the main purpose of feedback?</b>
+
+<p>
+A) To permanently stop a system<br>
+B) To provide information about current system condition<br>
+C) To remove sensors<br>
+D) To disconnect the network
+</p>
+
+<div class="answer">
+✓ Answer: B) To provide information about current system condition
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<b>Q6. Which is a wireless technology?</b>
+
+<p>
+A) Ethernet &nbsp;&nbsp;
+B) Fiber cable &nbsp;&nbsp;
+C) Wi-Fi &nbsp;&nbsp;
+D) Copper cable
+</p>
+
+<div class="answer">
+✓ Answer: C) Wi-Fi
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<b>Q7. In an IoT system, what usually measures temperature?</b>
+
+<p>
+A) Sensor &nbsp;&nbsp;
+B) Actuator &nbsp;&nbsp;
+C) Display &nbsp;&nbsp;
+D) Keyboard
+</p>
+
+<div class="answer">
+✓ Answer: A) Sensor
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<b>Q8. How many layers are commonly used in the TCP/IP model?</b>
+
+<p>
+A) 2 &nbsp;&nbsp;
+B) 4 &nbsp;&nbsp;
+C) 5 &nbsp;&nbsp;
+D) 7
+</p>
+
+<div class="answer">
+✓ Answer: B) 4
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FINAL REVISION -->
+
+<div class="section-title">
+
+<div class="section-icon">🚀</div>
+
+<div>
+<h2>14. 60-Second Revision</h2>
+<p>Exam से पहले यह पूरा box revise करें</p>
+</div>
+
+</div>
+
+<section class="exam-box">
+
+<p style="line-height:2;color:#c7d4e3;font-size:13px;">
+
+<b style="color:#54e4ff;">Controlled System</b>
+= system को desired condition के अनुसार control करना.
+
+<br>
+
+<b style="color:#54e4ff;">Feedback</b>
+= current condition की information controller को वापस देना.
+
+<br>
+
+<b style="color:#54e4ff;">Feedback Loop</b>
+= Sensor → Controller → Actuator → System → Sensor.
+
+<br>
+
+<b style="color:#b79aff;">OSI</b>
+= 7 Layers.
+
+<br>
+
+<b style="color:#b79aff;">TCP/IP</b>
+= commonly 4 Layers.
+
+<br>
+
+<b style="color:#66e59a;">Wired</b>
+= Ethernet, cable-based communication.
+
+<br>
+
+<b style="color:#66e59a;">Wireless</b>
+= Wi-Fi, Bluetooth etc.
+
+<br>
+
+<b style="color:#ffca6b;">IoT Flow</b>
+= Thing → Sensor → Communication → Processing → Decision/Action.
+
+</p>
+
+</section>
+
+
+<footer class="footer">
+
+<p>
+M4-R5 • Internet of Things and Its Applications
+</p>
+
+<p style="margin-top:6px;">
+Chapter 02 — Things and Connections • Bilingual Exam-Oriented Notes
+</p>
+
+</footer>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,4856 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>M4-R5 IoT Practical Master Book | 60+ Bilingual Questions | NIELIT O Level</title>
+
+<meta name="description"
+content="NIELIT O Level M4-R5 IoT Practical Master Book with 60+ bilingual practical questions, Arduino programming, IDE, sensors, actuators, IoT applications, outputs, viva questions and exam tricks.">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+    --primary:#00e5ff;
+    --secondary:#7c4dff;
+    --accent:#ff4081;
+    --success:#00e676;
+    --warning:#ffca28;
+
+    --bg:#07111f;
+    --bg2:#0d1930;
+    --card:#101f38;
+
+    --text:#f4f8ff;
+    --muted:#9badc7;
+    --border:rgba(255,255,255,.10);
+}
+
+body{
+    font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+    color:var(--text);
+
+    background:
+        radial-gradient(circle at 10% 10%,rgba(0,229,255,.14),transparent 25%),
+        radial-gradient(circle at 90% 15%,rgba(124,77,255,.16),transparent 28%),
+        radial-gradient(circle at 50% 90%,rgba(255,64,129,.10),transparent 30%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* =========================================================
+   THEME SYSTEM
+========================================================= */
+
+body.theme-ocean{
+    --primary:#00e5ff;
+    --secondary:#2979ff;
+    --accent:#00bfa5;
+}
+
+body.theme-purple{
+    --primary:#b388ff;
+    --secondary:#7c4dff;
+    --accent:#ff4081;
+}
+
+body.theme-sunset{
+    --primary:#ffca28;
+    --secondary:#ff7043;
+    --accent:#ff4081;
+}
+
+body.theme-green{
+    --primary:#69f0ae;
+    --secondary:#00c853;
+    --accent:#18ffff;
+}
+
+body.theme-royal{
+    --primary:#82b1ff;
+    --secondary:#536dfe;
+    --accent:#ea80fc;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+
+    background-image:
+        radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1px);
+
+    background-size:120px 120px;
+    opacity:.08;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+
+    top:-250px;
+    right:-180px;
+
+    background:var(--primary);
+    filter:blur(150px);
+    opacity:.08;
+
+    pointer-events:none;
+    z-index:-1;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:999;
+
+    padding:13px 4%;
+
+    background:rgba(5,13,25,.82);
+
+    backdrop-filter:blur(22px);
+
+    border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+    max-width:1400px;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:50px;
+    height:50px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    color:#07111f;
+
+    font-weight:900;
+    font-size:16px;
+
+    box-shadow:
+        0 0 25px color-mix(in srgb,var(--primary) 35%,transparent);
+}
+
+.brand-title{
+    font-weight:900;
+    font-size:17px;
+}
+
+.brand-sub{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:3px;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.back-btn,
+.theme-btn{
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.05);
+    color:var(--text);
+
+    padding:9px 13px;
+    border-radius:10px;
+
+    text-decoration:none;
+    font-size:12px;
+
+    cursor:pointer;
+}
+
+.back-btn:hover,
+.theme-btn:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+.theme-panel{
+    position:fixed;
+    right:20px;
+    top:75px;
+
+    width:220px;
+
+    padding:17px;
+
+    border-radius:17px;
+
+    background:rgba(10,22,40,.95);
+
+    border:1px solid var(--border);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+
+    display:none;
+
+    z-index:1001;
+}
+
+.theme-panel.show{
+    display:block;
+}
+
+.theme-panel h4{
+    margin-bottom:12px;
+}
+
+.theme-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+}
+
+.theme-option{
+    padding:10px;
+    border-radius:9px;
+
+    border:1px solid var(--border);
+
+    cursor:pointer;
+
+    font-size:11px;
+    color:white;
+}
+
+.theme-option:hover{
+    transform:translateY(-2px);
+}
+
+.ocean{background:linear-gradient(135deg,#00e5ff,#2979ff);}
+.purple{background:linear-gradient(135deg,#b388ff,#7c4dff);}
+.sunset{background:linear-gradient(135deg,#ffca28,#ff4081);}
+.green{background:linear-gradient(135deg,#69f0ae,#00c853);}
+.royal{background:linear-gradient(135deg,#82b1ff,#ea80fc);}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:35px 4% 80px;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:45px;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(16,35,62,.94),
+            rgba(12,25,46,.82)
+        );
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.35);
+
+    overflow:hidden;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+    width:250px;
+    height:250px;
+
+    top:-120px;
+    right:-80px;
+
+    background:var(--primary);
+
+    filter:blur(90px);
+    opacity:.14;
+}
+
+.badge{
+    display:inline-block;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    color:var(--primary);
+
+    border:1px solid color-mix(in srgb,var(--primary) 30%,transparent);
+
+    background:color-mix(in srgb,var(--primary) 8%,transparent);
+
+    font-size:12px;
+    font-weight:800;
+
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,55px);
+
+    line-height:1.1;
+
+    margin-bottom:15px;
+
+    background:
+        linear-gradient(
+            90deg,
+            white,
+            var(--primary),
+            var(--secondary)
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:900px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+
+    gap:12px;
+
+    margin-top:30px;
+}
+
+.stat{
+    padding:17px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.045);
+
+    border:1px solid var(--border);
+}
+
+.stat strong{
+    display:block;
+
+    font-size:24px;
+
+    color:var(--primary);
+
+    margin-bottom:5px;
+}
+
+.stat span{
+    font-size:10px;
+    color:var(--muted);
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-title{
+    margin:42px 0 18px;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.section-icon{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:12px;
+
+    background:color-mix(in srgb,var(--primary) 10%,transparent);
+
+    border:1px solid color-mix(in srgb,var(--primary) 25%,transparent);
+
+    font-size:19px;
+}
+
+.section-title h2{
+    font-size:22px;
+}
+
+.section-title p{
+    margin-top:4px;
+
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* =========================================================
+   FILTER BAR
+========================================================= */
+
+.control-bar{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:20px;
+}
+
+.search{
+    flex:1;
+    min-width:220px;
+
+    padding:13px 15px;
+
+    border-radius:11px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid var(--border);
+
+    color:white;
+
+    outline:none;
+}
+
+.search:focus{
+    border-color:var(--primary);
+}
+
+.filter-btn{
+    padding:11px 15px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.05);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    cursor:pointer;
+}
+
+.filter-btn.active,
+.filter-btn:hover{
+    background:color-mix(in srgb,var(--primary) 12%,transparent);
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+/* =========================================================
+   CHAPTER / QUESTION CARDS
+========================================================= */
+
+.question-card{
+    margin-bottom:20px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,37,65,.90),
+            rgba(9,22,40,.82)
+        );
+
+    border:1px solid var(--border);
+
+    overflow:hidden;
+
+    transition:.3s;
+}
+
+.question-card:hover{
+    transform:translateY(-3px);
+
+    border-color:
+        color-mix(in srgb,var(--primary) 40%,transparent);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.25);
+}
+
+.q-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:18px 20px;
+
+    background:rgba(255,255,255,.035);
+
+    border-bottom:1px solid var(--border);
+}
+
+.q-number{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+}
+
+.q-badge{
+    padding:6px 9px;
+
+    border-radius:7px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    color:#06111e;
+
+    font-size:11px;
+    font-weight:900;
+}
+
+.level{
+    padding:5px 9px;
+
+    border-radius:20px;
+
+    font-size:9px;
+
+    background:rgba(255,202,40,.10);
+
+    color:var(--warning);
+
+    border:1px solid rgba(255,202,40,.2);
+}
+
+.q-body{
+    padding:20px;
+}
+
+.en{
+    color:var(--text);
+    font-size:15px;
+    font-weight:800;
+    line-height:1.6;
+}
+
+.hi{
+    color:var(--primary);
+    font-size:13px;
+    line-height:1.7;
+    margin-top:5px;
+    font-weight:600;
+}
+
+.info-box{
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:rgba(0,0,0,.18);
+
+    border-left:3px solid var(--primary);
+}
+
+.info-box strong{
+    color:var(--primary);
+}
+
+.output{
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,230,118,.07),
+            rgba(0,229,255,.05)
+        );
+
+    border:1px solid rgba(0,230,118,.16);
+}
+
+.output-title{
+    color:var(--success);
+
+    font-size:11px;
+    font-weight:900;
+
+    margin-bottom:8px;
+}
+
+pre{
+    margin-top:12px;
+
+    padding:16px;
+
+    overflow:auto;
+
+    border-radius:11px;
+
+    background:#050c16;
+
+    border:1px solid rgba(255,255,255,.07);
+
+    color:#d9e9ff;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+.copy-btn{
+    margin-top:9px;
+
+    padding:7px 10px;
+
+    border-radius:7px;
+
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.05);
+
+    color:var(--muted);
+
+    cursor:pointer;
+
+    font-size:10px;
+}
+
+.copy-btn:hover{
+    color:var(--primary);
+    border-color:var(--primary);
+}
+
+/* =========================================================
+   TRICK
+========================================================= */
+
+.trick{
+    margin-top:15px;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,202,40,.08),
+            rgba(255,112,67,.05)
+        );
+
+    border:1px solid rgba(255,202,40,.15);
+}
+
+.trick-title{
+    color:var(--warning);
+
+    font-weight:900;
+
+    font-size:11px;
+
+    margin-bottom:5px;
+}
+
+.trick p{
+    color:#c8d4e5;
+
+    font-size:12px;
+
+    line-height:1.6;
+}
+
+/* =========================================================
+   VIVA
+========================================================= */
+
+.viva{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+
+    gap:14px;
+}
+
+.viva-card{
+    padding:19px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.viva-card h4{
+    color:var(--primary);
+    margin-bottom:9px;
+}
+
+.viva-card p{
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+/* =========================================================
+   CHECKLIST
+========================================================= */
+
+.checklist{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.check-item{
+    padding:16px;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+
+    color:#b8c8dd;
+
+    font-size:12px;
+}
+
+.check-item::before{
+    content:"✓";
+
+    color:var(--success);
+
+    font-weight:900;
+
+    margin-right:8px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:55px;
+
+    padding:30px;
+
+    text-align:center;
+
+    border-top:1px solid var(--border);
+
+    color:#71849d;
+
+    font-size:11px;
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-wrap{
+    position:fixed;
+
+    bottom:20px;
+    left:20px;
+
+    z-index:900;
+
+    width:210px;
+
+    padding:13px;
+
+    border-radius:14px;
+
+    background:rgba(7,17,31,.92);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid var(--border);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.progress-title{
+    font-size:10px;
+    color:var(--muted);
+    margin-bottom:6px;
+}
+
+.progress-bar{
+    height:6px;
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+
+    width:0%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    transition:.3s;
+}
+
+.progress-text{
+    margin-top:6px;
+
+    font-size:10px;
+
+    color:var(--primary);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .checklist{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .hero{
+        padding:28px 20px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .viva,
+    .checklist{
+        grid-template-columns:1fr;
+    }
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .brand-title{
+        font-size:14px;
+    }
+
+    .back-btn{
+        display:none;
+    }
+
+    .progress-wrap{
+        width:170px;
+        bottom:10px;
+        left:10px;
+    }
+}
+
+</style>
+</head>
+
+<body class="theme-ocean">
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+<div class="logo-area">
+
+<div class="logo">
+M4
+</div>
+
+<div>
+<div class="brand-title">
+M4-R5 Practical Master Book
+</div>
+
+<div class="brand-sub">
+IoT • Arduino • Sensors • Applications
+</div>
+</div>
+
+</div>
+
+<div class="header-actions">
+
+<button class="theme-btn" onclick="toggleTheme()">
+🎨 Theme
+</button>
+
+<a href="m4.html" class="back-btn">
+← M4 Study Zone
+</a>
+
+</div>
+
+</div>
+
+</header>
+
+
+<!-- =========================================================
+     THEME PANEL
+========================================================= -->
+
+<div class="theme-panel" id="themePanel">
+
+<h4>🎨 Choose Your Theme</h4>
+
+<div class="theme-grid">
+
+<div class="theme-option ocean"
+onclick="setTheme('theme-ocean')">
+Ocean
+</div>
+
+<div class="theme-option purple"
+onclick="setTheme('theme-purple')">
+Purple
+</div>
+
+<div class="theme-option sunset"
+onclick="setTheme('theme-sunset')">
+Sunset
+</div>
+
+<div class="theme-option green"
+onclick="setTheme('theme-green')">
+Green
+</div>
+
+<div class="theme-option royal"
+onclick="setTheme('theme-royal')">
+Royal
+</div>
+
+</div>
+
+</div>
+
+
+<main class="container">
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="badge">
+✦ NIELIT O LEVEL • M4-R5 • PRACTICAL
+</div>
+
+<h1>
+IoT Practical Master Book
+</h1>
+
+<p>
+Complete bilingual practical preparation for NIELIT O Level M4-R5.
+Learn Arduino IDE, programming, digital and analog sensors,
+LED, buzzer, LDR, temperature sensor, ultrasonic sensor,
+servo motor, LCD, IoT concepts, serial communication,
+troubleshooting and practical viva questions with expected outputs.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<strong>60+</strong>
+<span>Practical Questions</span>
+</div>
+
+<div class="stat">
+<strong>30+</strong>
+<span>Code Examples</span>
+</div>
+
+<div class="stat">
+<strong>40+</strong>
+<span>Output Concepts</span>
+</div>
+
+<div class="stat">
+<strong>50+</strong>
+<span>Viva Points</span>
+</div>
+
+<div class="stat">
+<strong>2×</strong>
+<span>Bilingual Learning</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     PRACTICAL ROADMAP
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">🧭</div>
+
+<div>
+<h2>Practical Learning Roadmap</h2>
+<p>Follow this sequence before attempting the final practical.</p>
+</div>
+
+</div>
+
+<div class="checklist">
+
+<div class="check-item">
+Arduino IDE & Board Setup
+</div>
+
+<div class="check-item">
+Basic Arduino Program
+</div>
+
+<div class="check-item">
+Digital Input / Output
+</div>
+
+<div class="check-item">
+Analog Input
+</div>
+
+<div class="check-item">
+Sensors
+</div>
+
+<div class="check-item">
+Actuators
+</div>
+
+<div class="check-item">
+LCD Display
+</div>
+
+<div class="check-item">
+Serial Monitor
+</div>
+
+<div class="check-item">
+IoT Application
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     SEARCH
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">🔎</div>
+
+<div>
+<h2>Practical Question Bank</h2>
+<p>Search any practical topic.</p>
+</div>
+
+</div>
+
+<div class="control-bar">
+
+<input
+type="text"
+class="search"
+id="searchBox"
+placeholder="Search: LED, LDR, LCD, Arduino, sensor..."
+onkeyup="searchQuestions()"
+>
+
+<button class="filter-btn active"
+onclick="filterQuestions('all',this)">
+All
+</button>
+
+<button class="filter-btn"
+onclick="filterQuestions('basic',this)">
+Basic
+</button>
+
+<button class="filter-btn"
+onclick="filterQuestions('sensor',this)">
+Sensors
+</button>
+
+<button class="filter-btn"
+onclick="filterQuestions('iot',this)">
+IoT
+</button>
+
+<button class="filter-btn"
+onclick="filterQuestions('advanced',this)">
+Advanced
+</button>
+
+</div>
+
+
+<!-- =========================================================
+     QUESTIONS
+========================================================= -->
+
+<section id="questions">
+
+
+<!-- Q1 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+
+<div class="q-number">
+<span class="q-badge">01</span>
+<span>Arduino Basics</span>
+</div>
+
+<span class="level">BASIC</span>
+
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What is Arduino IDE? Explain its main components.
+</div>
+
+<div class="hi">
+Arduino IDE क्या है? इसके मुख्य components को समझाइए।
+</div>
+
+<div class="info-box">
+
+<strong>Answer / उत्तर:</strong>
+
+Arduino IDE is software used to write, compile and upload
+programs to Arduino boards.
+
+<br><br>
+
+Arduino IDE का उपयोग Arduino board के लिए program लिखने,
+compile करने और board में upload करने के लिए किया जाता है।
+
+</div>
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT / RESULT
+</div>
+
+IDE में program लिखने के बाद Verify और Upload options
+से program board पर भेजा जा सकता है।
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 EXAM TRICK</div>
+
+<p>
+IDE = Write → Verify → Upload → Run.
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q2 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">02</span>
+<span>Arduino Program</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Write a basic Arduino program using setup() and loop().
+</div>
+
+<div class="hi">
+setup() और loop() का उपयोग करके basic Arduino program लिखिए।
+</div>
+
+<pre id="code2">void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.println("Hello IoT");
+  delay(1000);
+}</pre>
+
+<button class="copy-btn" onclick="copyCode('code2')">
+📋 Copy Code
+</button>
+
+<div class="output">
+
+<div class="output-title">
+EXPECTED OUTPUT
+</div>
+
+Serial Monitor:
+
+<br><br>
+
+Hello IoT<br>
+Hello IoT<br>
+Hello IoT
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 REMEMBER</div>
+
+<p>
+setup() normally runs once, while loop() repeatedly executes.
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q3 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">03</span>
+<span>Blink LED</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Write a program to blink an LED connected to pin 13.
+</div>
+
+<div class="hi">
+Pin 13 से connected LED को blink कराने का program लिखिए।
+</div>
+
+<pre id="code3">void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+
+  digitalWrite(13, HIGH);
+  delay(1000);
+
+  digitalWrite(13, LOW);
+  delay(1000);
+
+}</pre>
+
+<button class="copy-btn" onclick="copyCode('code3')">
+📋 Copy Code
+</button>
+
+<div class="output">
+
+<div class="output-title">
+EXPECTED OUTPUT / अपेक्षित परिणाम</div>
+
+LED 1 second ON → 1 second OFF → repeat.
+
+LED लगातार ON/OFF होती रहेगी।
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 TRICK</div>
+
+<p>
+HIGH = ON, LOW = OFF
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q4 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">04</span>
+<span>Digital Output</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+How do you configure a digital pin as output?
+</div>
+
+<div class="hi">
+Digital pin को output के रूप में कैसे configure करते हैं?
+</div>
+
+<pre id="code4">pinMode(8, OUTPUT);</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Pin 8 digital output की तरह काम करेगा।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q5 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">05</span>
+<span>Digital Input</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Read the state of a push button using Arduino.
+</div>
+
+<div class="hi">
+Arduino से push button की state read कीजिए।
+</div>
+
+<pre id="code5">int buttonPin = 7;
+
+void setup() {
+
+  pinMode(buttonPin, INPUT);
+  Serial.begin(9600);
+
+}
+
+void loop() {
+
+  int state = digitalRead(buttonPin);
+
+  Serial.println(state);
+
+  delay(300);
+}</pre>
+
+<button class="copy-btn" onclick="copyCode('code5')">
+📋 Copy Code
+</button>
+
+<div class="output">
+
+<div class="output-title">EXPECTED OUTPUT</div>
+
+Button state के अनुसार Serial Monitor पर:
+
+0 = LOW
+
+1 = HIGH
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q6 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">06</span>
+<span>Analog Input</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Read an analog value from A0.
+</div>
+
+<div class="hi">
+A0 pin से analog value read कीजिए।
+</div>
+
+<pre id="code6">void setup() {
+
+  Serial.begin(9600);
+
+}
+
+void loop() {
+
+  int value = analogRead(A0);
+
+  Serial.println(value);
+
+  delay(500);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">EXPECTED OUTPUT</div>
+
+Serial Monitor पर changing numerical values दिखाई देंगी।
+
+Arduino Uno में analog input सामान्यतः 0 से 1023 range में
+read होती है।
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 TRICK</div>
+
+<p>
+analogRead() → sensor value read करता है।
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q7 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">07</span>
+<span>LDR Sensor</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Interface an LDR with Arduino and display its analog value.
+</div>
+
+<div class="hi">
+LDR को Arduino से interface करके उसकी analog value display कीजिए।
+</div>
+
+<pre id="code7">int ldr = A0;
+
+void setup() {
+
+  Serial.begin(9600);
+
+}
+
+void loop() {
+
+  int lightValue = analogRead(ldr);
+
+  Serial.print("LDR = ");
+  Serial.println(lightValue);
+
+  delay(500);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+LDR = 452
+
+LDR = 601
+
+LDR = 735
+
+<br><br>
+
+Value light intensity के अनुसार बदलती रहेगी।
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 EXAM TRICK</div>
+
+<p>
+LDR = Light Dependent Resistor.
+<br>
+Light condition बदलो → sensor reading observe करो।
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q8 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">08</span>
+<span>Automatic Light</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Turn ON an LED automatically when the light level becomes low.
+</div>
+
+<div class="hi">
+जब light level कम हो जाए तो LED automatically ON कीजिए।
+</div>
+
+<pre id="code8">int ldr = A0;
+int led = 8;
+
+void setup() {
+
+  pinMode(led, OUTPUT);
+
+}
+
+void loop() {
+
+  int value = analogRead(ldr);
+
+  if(value < 400){
+    digitalWrite(led, HIGH);
+  }
+  else{
+    digitalWrite(led, LOW);
+  }
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Dark → LED ON
+
+Bright → LED OFF
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q9 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">09</span>
+<span>Temperature Sensor</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Read an analog temperature sensor value.
+</div>
+
+<div class="hi">
+Analog temperature sensor की value read कीजिए।
+</div>
+
+<pre id="code9">int sensorPin = A0;
+
+void setup(){
+
+  Serial.begin(9600);
+
+}
+
+void loop(){
+
+  int value = analogRead(sensorPin);
+
+  Serial.print("Sensor Value: ");
+  Serial.println(value);
+
+  delay(1000);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+Sensor Value: 410
+
+Sensor Value: 415
+
+Sensor Value: 421
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q10 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">10</span>
+<span>Ultrasonic Sensor</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Measure distance using an ultrasonic sensor.
+</div>
+
+<div class="hi">
+Ultrasonic sensor से distance measure कीजिए।
+</div>
+
+<pre id="code10">const int trigPin = 9;
+const int echoPin = 10;
+
+void setup(){
+
+  Serial.begin(9600);
+
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+}
+
+void loop(){
+
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration =
+  pulseIn(echoPin, HIGH);
+
+  float distance =
+  duration * 0.034 / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  delay(500);
+
+}</pre>
+
+<button class="copy-btn" onclick="copyCode('code10')">
+📋 Copy Code
+</button>
+
+<div class="output">
+
+<div class="output-title">EXPECTED OUTPUT</div>
+
+Distance: 25.4 cm
+
+Distance: 24.8 cm
+
+Distance: 23.9 cm
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 REMEMBER</div>
+
+<p>
+HC-SR04 → TRIG sends pulse, ECHO receives reflected pulse.
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q11 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">11</span>
+<span>Serial Communication</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Display a message on Serial Monitor.
+</div>
+
+<div class="hi">
+Serial Monitor पर message display कीजिए।
+</div>
+
+<pre id="code11">void setup(){
+
+  Serial.begin(9600);
+
+}
+
+void loop(){
+
+  Serial.println("NIELIT M4 Practical");
+
+  delay(1000);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+NIELIT M4 Practical
+
+NIELIT M4 Practical
+
+NIELIT M4 Practical
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q12 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">12</span>
+<span>Multiple LED</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Control three LEDs sequentially.
+</div>
+
+<div class="hi">
+तीन LEDs को sequence में ON/OFF कीजिए।
+</div>
+
+<pre id="code12">int led1 = 8;
+int led2 = 9;
+int led3 = 10;
+
+void setup(){
+
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  pinMode(led3,OUTPUT);
+
+}
+
+void loop(){
+
+  digitalWrite(led1,HIGH);
+  delay(500);
+  digitalWrite(led1,LOW);
+
+  digitalWrite(led2,HIGH);
+  delay(500);
+  digitalWrite(led2,LOW);
+
+  digitalWrite(led3,HIGH);
+  delay(500);
+  digitalWrite(led3,LOW);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+LED1 → LED2 → LED3 → repeat
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q13 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">13</span>
+<span>Buzzer</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Generate a tone using a buzzer.
+</div>
+
+<div class="hi">
+Buzzer से tone generate कीजिए।
+</div>
+
+<pre id="code13">int buzzer = 8;
+
+void setup(){
+
+}
+
+void loop(){
+
+  tone(buzzer,1000);
+
+  delay(500);
+
+  noTone(buzzer);
+
+  delay(500);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+Buzzer 500 ms sound → 500 ms silent → repeat.
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q14 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">14</span>
+<span>PIR Sensor</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Detect motion using a PIR sensor.
+</div>
+
+<div class="hi">
+PIR sensor से motion detect कीजिए।
+</div>
+
+<pre id="code14">int pir = 7;
+int led = 8;
+
+void setup(){
+
+  pinMode(pir,INPUT);
+  pinMode(led,OUTPUT);
+
+}
+
+void loop(){
+
+  int motion =
+  digitalRead(pir);
+
+  if(motion == HIGH){
+
+    digitalWrite(led,HIGH);
+
+  }
+  else{
+
+    digitalWrite(led,LOW);
+
+  }
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Motion detected → LED ON
+
+No motion → LED OFF
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q15 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">15</span>
+<span>Push Button LED</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Control an LED using a push button.
+</div>
+
+<div class="hi">
+Push button की मदद से LED control कीजिए।
+</div>
+
+<pre id="code15">int button = 7;
+int led = 8;
+
+void setup(){
+
+  pinMode(button,INPUT);
+  pinMode(led,OUTPUT);
+
+}
+
+void loop(){
+
+  if(digitalRead(button)==HIGH){
+
+    digitalWrite(led,HIGH);
+
+  }
+  else{
+
+    digitalWrite(led,LOW);
+
+  }
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+Button pressed → LED ON
+
+Button released → LED OFF
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q16 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">16</span>
+<span>PWM LED</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Control LED brightness using PWM.
+</div>
+
+<div class="hi">
+PWM की सहायता से LED की brightness control कीजिए।
+</div>
+
+<pre id="code16">int led = 9;
+
+void setup(){
+
+  pinMode(led,OUTPUT);
+
+}
+
+void loop(){
+
+  for(int i=0;i<=255;i++){
+
+    analogWrite(led,i);
+
+    delay(10);
+
+  }
+
+  for(int i=255;i>=0;i--){
+
+    analogWrite(led,i);
+
+    delay(10);
+
+  }
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+LED धीरे-धीरे bright होगी और फिर धीरे-धीरे dim होगी।
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 TRICK</div>
+
+<p>
+analogWrite() का उपयोग PWM output के लिए किया जाता है।
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q17 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">17</span>
+<span>Servo Motor</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Rotate a servo motor to different angles.
+</div>
+
+<div class="hi">
+Servo motor को अलग-अलग angles पर rotate कीजिए।
+</div>
+
+<pre id="code17">#include &lt;Servo.h&gt;
+
+Servo myServo;
+
+void setup(){
+
+  myServo.attach(9);
+
+}
+
+void loop(){
+
+  myServo.write(0);
+  delay(1000);
+
+  myServo.write(90);
+  delay(1000);
+
+  myServo.write(180);
+  delay(1000);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Servo:
+
+0° → 90° → 180° → repeat
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q18 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">18</span>
+<span>Servo + Ultrasonic</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain how an ultrasonic sensor and servo motor can be combined in an IoT project.
+</div>
+
+<div class="hi">
+Ultrasonic sensor और servo motor को एक IoT project में कैसे combine किया जा सकता है?
+</div>
+
+<div class="info-box">
+
+Sensor distance detect करता है और Arduino decision ले सकता है।
+
+उदाहरण:
+
+Distance < threshold → servo moves.
+
+Distance ≥ threshold → servo remains in another position.
+
+</div>
+
+<div class="output">
+
+<div class="output-title">EXAMPLE RESULT</div>
+
+Object detected → Servo rotates.
+
+Object absent → Servo returns.
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q19 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">19</span>
+<span>LCD Display</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Display text on a 16×2 LCD.
+</div>
+
+<div class="hi">
+16×2 LCD पर text display कीजिए।
+</div>
+
+<pre id="code19">#include &lt;LiquidCrystal.h&gt;
+
+LiquidCrystal lcd(
+  12,11,5,4,3,2
+);
+
+void setup(){
+
+  lcd.begin(16,2);
+
+  lcd.print("NIELIT M4");
+
+}
+
+void loop(){
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">LCD OUTPUT</div>
+
+NIELIT M4
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 REMEMBER</div>
+
+<p>
+LCD 16×2 = 16 columns × 2 rows.
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q20 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">20</span>
+<span>LCD Sensor Value</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Display an analog sensor value on LCD.
+</div>
+
+<div class="hi">
+LCD पर analog sensor की value display कीजिए।
+</div>
+
+<pre id="code20">#include &lt;LiquidCrystal.h&gt;
+
+LiquidCrystal lcd(
+  12,11,5,4,3,2
+);
+
+void setup(){
+
+  lcd.begin(16,2);
+
+}
+
+void loop(){
+
+  int value =
+  analogRead(A0);
+
+  lcd.clear();
+
+  lcd.print("Sensor:");
+
+  lcd.setCursor(0,1);
+
+  lcd.print(value);
+
+  delay(500);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">LCD OUTPUT</div>
+
+Sensor:
+
+645
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q21 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">21</span>
+<span>IoT Concept</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain a basic IoT architecture.
+</div>
+
+<div class="hi">
+Basic IoT architecture समझाइए।
+</div>
+
+<div class="info-box">
+
+<strong>Typical flow:</strong>
+
+Sensor → Controller → Network → Cloud/Server → User
+
+<br><br>
+
+<strong>Hindi:</strong>
+
+Sensor → Controller → Internet/Network → Cloud → User
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 EXAM TRICK</div>
+
+<p>
+IoT याद रखें: Sense → Process → Connect → Analyze → Act.
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q22 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">22</span>
+<span>IoT Sensor</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What is the role of a sensor in IoT?
+</div>
+
+<div class="hi">
+IoT में sensor का क्या role है?
+</div>
+
+<div class="info-box">
+
+Sensor physical environment से data collect करता है।
+
+Examples:
+
+Temperature
+
+Light
+
+Motion
+
+Distance
+
+Humidity
+
+</div>
+
+<div class="output">
+
+<div class="output-title">EXAMPLE</div>
+
+Temperature sensor → temperature data
+
+LDR → light intensity
+
+PIR → motion detection
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q23 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">23</span>
+<span>Actuator</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What is an actuator?
+</div>
+
+<div class="hi">
+Actuator क्या होता है?
+</div>
+
+<div class="info-box">
+
+Actuator controller के command के आधार पर physical action करता है।
+
+Examples:
+
+Motor
+
+Relay
+
+Servo
+
+Buzzer
+
+LED
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 EASY TRICK</div>
+
+<p>
+Sensor = Sense करता है.
+<br>
+Actuator = Action करता है.
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q24 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">24</span>
+<span>IoT Applications</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Give examples of IoT applications.
+</div>
+
+<div class="hi">
+IoT applications के examples दीजिए।
+</div>
+
+<div class="info-box">
+
+Smart Home
+
+Smart Agriculture
+
+Smart Healthcare
+
+Smart City
+
+Industrial IoT
+
+Smart Energy
+
+Connected Vehicles
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q25 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">25</span>
+<span>Smart Home</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Design the concept of a smart home lighting system.
+</div>
+
+<div class="hi">
+Smart home lighting system का concept समझाइए।
+</div>
+
+<div class="info-box">
+
+LDR detects light.
+
+Controller processes the value.
+
+Relay/LED controls light.
+
+User can monitor/control the system.
+
+</div>
+
+<div class="output">
+
+<div class="output-title">FLOW</div>
+
+LDR → Arduino/Controller → Decision → Light ON/OFF
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q26 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">26</span>
+<span>Humidity Sensor</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain how a humidity sensor can be used in IoT.
+</div>
+
+<div class="hi">
+Humidity sensor को IoT में कैसे use किया जा सकता है?
+</div>
+
+<div class="info-box">
+
+Humidity sensor environmental moisture/humidity data देता है।
+
+यह data controller द्वारा process करके cloud या application
+तक भेजा जा सकता है।
+
+</div>
+
+<div class="output">
+
+<div class="output-title">EXAMPLE</div>
+
+Humidity = 65%
+
+Controller receives → 65%
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q27 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">27</span>
+<span>Gas Sensor</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain a gas sensor based IoT alert system.
+</div>
+
+<div class="hi">
+Gas sensor आधारित IoT alert system समझाइए।
+</div>
+
+<div class="info-box">
+
+Gas sensor gas concentration detect करता है।
+
+यदि value threshold से ऊपर जाती है:
+
+Sensor → Controller → Alert
+
+</div>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Normal → Safe
+
+High gas level → Warning/Alert
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q28 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">28</span>
+<span>Flame Sensor</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain a flame sensor based monitoring system.
+</div>
+
+<div class="hi">
+Flame sensor based monitoring system समझाइए।
+</div>
+
+<div class="info-box">
+
+Flame sensor flame/IR radiation detect करता है।
+
+Controller detection के बाद alarm/notification trigger कर सकता है।
+
+</div>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+No flame → Normal
+
+Flame detected → Alert
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q29 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">29</span>
+<span>Delay Function</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What is the use of delay()?
+</div>
+
+<div class="hi">
+delay() function का क्या use है?
+</div>
+
+<pre id="code29">delay(1000);</pre>
+
+<div class="output">
+
+<div class="output-title">MEANING</div>
+
+Program approximately 1000 milliseconds यानी 1 second wait करेगा।
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 REMEMBER</div>
+
+<p>
+1000 ms = 1 second
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q30 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">30</span>
+<span>Variables</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Create a variable to store sensor data.
+</div>
+
+<div class="hi">
+Sensor data store करने के लिए variable बनाइए।
+</div>
+
+<pre id="code30">int sensorValue;
+
+void loop(){
+
+  sensorValue =
+  analogRead(A0);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+sensorValue में A0 की reading store होगी।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q31 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">31</span>
+<span>If Condition</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Use an if condition to control an LED based on sensor value.
+</div>
+
+<div class="hi">
+Sensor value के आधार पर if condition से LED control कीजिए।
+</div>
+
+<pre id="code31">int value = analogRead(A0);
+
+if(value > 700){
+
+  digitalWrite(8,HIGH);
+
+}
+else{
+
+  digitalWrite(8,LOW);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Value > 700 → LED ON
+
+Value ≤ 700 → LED OFF
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q32 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">32</span>
+<span>For Loop</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Blink an LED multiple times using a for loop.
+</div>
+
+<div class="hi">
+for loop का use करके LED को multiple times blink कीजिए।
+</div>
+
+<pre id="code32">for(int i=0;i<5;i++){
+
+  digitalWrite(8,HIGH);
+  delay(300);
+
+  digitalWrite(8,LOW);
+  delay(300);
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+LED 5 बार blink करेगी।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q33 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">33</span>
+<span>Array</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Store multiple LED pins in an array.
+</div>
+
+<div class="hi">
+Multiple LED pins को array में store कीजिए।
+</div>
+
+<pre id="code33">int leds[] = {8,9,10};
+
+void setup(){
+
+  for(int i=0;i<3;i++){
+
+    pinMode(leds[i],OUTPUT);
+
+  }
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Three LED pin numbers array में store हो जाएँगे।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q34 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">34</span>
+<span>Function</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Create a custom function to turn an LED ON.
+</div>
+
+<div class="hi">
+LED ON करने के लिए custom function बनाइए।
+</div>
+
+<pre id="code34">void ledOn(){
+
+  digitalWrite(8,HIGH);
+
+}
+
+void setup(){
+
+  pinMode(8,OUTPUT);
+
+}
+
+void loop(){
+
+  ledOn();
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+LED ON रहेगी।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q35 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">35</span>
+<span>IoT Communication</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain the importance of communication in IoT.
+</div>
+
+<div class="hi">
+IoT में communication क्यों important है?
+</div>
+
+<div class="info-box">
+
+IoT devices को data exchange करने के लिए communication/network
+की आवश्यकता होती है।
+
+Common technologies:
+
+Wi-Fi
+
+Bluetooth
+
+Zigbee
+
+Cellular
+
+Ethernet
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q36 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">36</span>
+<span>Cloud in IoT</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What is the role of cloud computing in IoT?
+</div>
+
+<div class="hi">
+IoT में cloud computing का क्या role है?
+</div>
+
+<div class="info-box">
+
+Cloud data storage, processing, analytics और remote access
+जैसी सुविधाएँ provide कर सकता है।
+
+</div>
+
+<div class="output">
+
+<div class="output-title">FLOW</div>
+
+Device → Internet → Cloud → Dashboard/User
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q37 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">37</span>
+<span>IoT Security</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+List important IoT security practices.
+</div>
+
+<div class="hi">
+Important IoT security practices लिखिए।
+</div>
+
+<div class="info-box">
+
+• Strong passwords
+
+• Software updates
+
+• Secure communication
+
+• Access control
+
+• Data encryption
+
+• Device authentication
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 EXAM TRICK</div>
+
+<p>
+IoT Security = Device + Network + Data + User.
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q38 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">38</span>
+<span>Smart Agriculture</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Design a basic smart irrigation system.
+</div>
+
+<div class="hi">
+Basic smart irrigation system का design समझाइए।
+</div>
+
+<div class="info-box">
+
+Soil moisture sensor soil condition detect करता है।
+
+Controller value process करता है।
+
+Threshold के अनुसार irrigation system activate/deactivate
+हो सकता है।
+
+</div>
+
+<div class="output">
+
+<div class="output-title">FLOW</div>
+
+Soil Sensor → Controller → Decision → Pump Control
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q39 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">39</span>
+<span>Smart Parking</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain a smart parking IoT system.
+</div>
+
+<div class="hi">
+Smart parking IoT system समझाइए।
+</div>
+
+<div class="info-box">
+
+Distance/occupancy sensor parking slot की स्थिति detect करता है।
+
+Data controller और dashboard तक भेजा जा सकता है।
+
+</div>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Slot Free → GREEN / Available
+
+Slot Occupied → RED / Occupied
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q40 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">40</span>
+<span>Smart Health</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain a basic IoT healthcare monitoring concept.
+</div>
+
+<div class="hi">
+Basic IoT healthcare monitoring concept समझाइए।
+</div>
+
+<div class="info-box">
+
+Sensors → Controller → Communication → Cloud/Application
+
+Patient-related measurements can be collected and monitored
+by an authorized system.
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q41 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">41</span>
+<span>pinMode()</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain pinMode().
+</div>
+
+<div class="hi">
+pinMode() function समझाइए।
+</div>
+
+<pre id="code41">pinMode(8, OUTPUT);
+
+pinMode(7, INPUT);</pre>
+
+<div class="output">
+
+<div class="output-title">MEANING</div>
+
+Pin 8 → Output
+
+Pin 7 → Input
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q42 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">42</span>
+<span>digitalWrite()</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain digitalWrite().
+</div>
+
+<div class="hi">
+digitalWrite() समझाइए।
+</div>
+
+<pre id="code42">digitalWrite(8,HIGH);
+
+digitalWrite(8,LOW);</pre>
+
+<div class="output">
+
+<div class="output-title">MEANING</div>
+
+HIGH → Digital HIGH output
+
+LOW → Digital LOW output
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q43 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">43</span>
+<span>digitalRead()</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain digitalRead().
+</div>
+
+<div class="hi">
+digitalRead() function समझाइए।
+</div>
+
+<pre id="code43">int state =
+digitalRead(7);</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Digital input pin की state variable में store होगी।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q44 -->
+
+<div class="question-card" data-type="basic">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">44</span>
+<span>analogRead()</span>
+</div>
+<span class="level">BASIC</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain analogRead().
+</div>
+
+<div class="hi">
+analogRead() function समझाइए।
+</div>
+
+<pre id="code44">int value =
+analogRead(A0);</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+A0 की analog sensor reading value में store होगी।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q45 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">45</span>
+<span>analogWrite()</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain analogWrite() and PWM.
+</div>
+
+<div class="hi">
+analogWrite() और PWM समझाइए।
+</div>
+
+<pre id="code45">analogWrite(9,128);</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+PWM-capable pin पर duty cycle level set किया जा सकता है।
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 TRICK</div>
+
+<p>
+analogRead = Input reading
+<br>
+analogWrite = PWM output
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q46 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">46</span>
+<span>Serial.begin()</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Initialize serial communication at 9600 baud.
+</div>
+
+<div class="hi">
+9600 baud पर serial communication initialize कीजिए।
+</div>
+
+<pre id="code46">Serial.begin(9600);</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Arduino serial communication initialize करेगा।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q47 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">47</span>
+<span>IoT Data Flow</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain the complete flow of IoT data.
+</div>
+
+<div class="hi">
+IoT data का complete flow समझाइए।
+</div>
+
+<div class="info-box">
+
+<strong>Step 1:</strong> Sensor collects data.
+
+<br>
+
+<strong>Step 2:</strong> Controller processes data.
+
+<br>
+
+<strong>Step 3:</strong> Network transfers data.
+
+<br>
+
+<strong>Step 4:</strong> Cloud/server stores or processes it.
+
+<br>
+
+<strong>Step 5:</strong> User sees information.
+
+</div>
+
+<div class="output">
+
+<div class="output-title">FLOW</div>
+
+SENSE → PROCESS → CONNECT → CLOUD → USER
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q48 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">48</span>
+<span>IoT Gateway</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What is an IoT gateway?
+</div>
+
+<div class="hi">
+IoT gateway क्या होता है?
+</div>
+
+<div class="info-box">
+
+Gateway devices/networks के बीच communication और protocol
+translation जैसी भूमिका निभा सकता है।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q49 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">49</span>
+<span>Edge Computing</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What is edge computing in IoT?
+</div>
+
+<div class="hi">
+IoT में edge computing क्या है?
+</div>
+
+<div class="info-box">
+
+Data को source/device के पास process करना edge computing
+का basic concept है।
+
+इससे कुछ applications में latency और unnecessary data transfer
+कम किया जा सकता है।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q50 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">50</span>
+<span>IoT Project</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Design a complete mini IoT project architecture.
+</div>
+
+<div class="hi">
+एक complete mini IoT project architecture तैयार कीजिए।
+</div>
+
+<div class="info-box">
+
+Example:
+
+Temperature Sensor
+
+↓
+
+Arduino / Controller
+
+↓
+
+Wi-Fi / Network
+
+↓
+
+Cloud / Server
+
+↓
+
+Mobile/Web Dashboard
+
+</div>
+
+<div class="output">
+
+<div class="output-title">PROJECT OUTPUT</div>
+
+Dashboard पर sensor data दिखाई दे सकता है।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q51 -->
+
+<div class="question-card" data-type="sensor">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">51</span>
+<span>Sensor Calibration</span>
+</div>
+<span class="level">SENSOR</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Why is sensor calibration important?
+</div>
+
+<div class="hi">
+Sensor calibration important क्यों है?
+</div>
+
+<div class="info-box">
+
+Calibration sensor readings को known reference के साथ
+compare/adjust करने की प्रक्रिया है।
+
+इससे measurement accuracy improve करने में मदद मिलती है।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q52 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">52</span>
+<span>Threshold System</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Create a threshold-based alert system.
+</div>
+
+<div class="hi">
+Threshold based alert system बनाइए।
+</div>
+
+<pre id="code52">int value = analogRead(A0);
+
+if(value > 700){
+
+  Serial.println("ALERT");
+
+}
+else{
+
+  Serial.println("NORMAL");
+
+}</pre>
+
+<div class="output">
+
+<div class="output-title">RESULT</div>
+
+Value > 700 → ALERT
+
+Value ≤ 700 → NORMAL
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q53 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">53</span>
+<span>Remote Monitoring</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain remote monitoring using IoT.
+</div>
+
+<div class="hi">
+IoT की मदद से remote monitoring समझाइए।
+</div>
+
+<div class="info-box">
+
+Device sensor data collect करता है।
+
+Network के माध्यम से data remote server/cloud तक जाता है।
+
+Authorized user dashboard/application से data monitor कर सकता है।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q54 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">54</span>
+<span>IoT Dashboard</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What information can an IoT dashboard display?
+</div>
+
+<div class="hi">
+IoT dashboard पर कौन-कौन सी information दिखाई जा सकती है?
+</div>
+
+<div class="info-box">
+
+Sensor values
+
+Device status
+
+Alerts
+
+Graphs
+
+Historical data
+
+Connection status
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q55 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">55</span>
+<span>Troubleshooting</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+What should you check if an Arduino program does not upload?
+</div>
+
+<div class="hi">
+यदि Arduino program upload नहीं हो रहा है तो क्या check करेंगे?
+</div>
+
+<div class="info-box">
+
+1. Correct board selected?
+
+<br>
+2. Correct COM/Port selected?
+
+<br>
+3. USB cable working?
+
+<br>
+4. Board connected?
+
+<br>
+5. Syntax/compiler error?
+
+<br>
+6. Required library installed?
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">💡 EXAM TRICK</div>
+
+<p>
+Board → Port → Cable → Code → Library.
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q56 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">56</span>
+<span>Library</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Why are libraries used in Arduino programming?
+</div>
+
+<div class="hi">
+Arduino programming में libraries क्यों use की जाती हैं?
+</div>
+
+<div class="info-box">
+
+Libraries ready-made functions और support provide कर सकती हैं,
+जिससे sensors, displays, motors आदि के साथ programming आसान होती है।
+
+</div>
+
+<div class="output">
+
+<div class="output-title">EXAMPLES</div>
+
+Servo library
+
+LiquidCrystal library
+
+Sensor-specific libraries
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q57 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">57</span>
+<span>Smart City</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain three IoT applications in a smart city.
+</div>
+
+<div class="hi">
+Smart city में तीन IoT applications समझाइए।
+</div>
+
+<div class="info-box">
+
+Smart Parking
+
+Smart Traffic
+
+Smart Waste Management
+
+Smart Lighting
+
+Environmental Monitoring
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q58 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">58</span>
+<span>IoT Security Threat</span>
+</div>
+<span class="level">IoT</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Why should IoT devices be secured?
+</div>
+
+<div class="hi">
+IoT devices को secure करना क्यों जरूरी है?
+</div>
+
+<div class="info-box">
+
+Connected devices sensitive data और physical systems से जुड़े
+हो सकते हैं। इसलिए unauthorized access और data misuse से
+protection important है।
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q59 -->
+
+<div class="question-card" data-type="advanced">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">59</span>
+<span>Final Mini Project</span>
+</div>
+<span class="level">ADVANCED</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Create an automatic room monitoring concept using LDR,
+temperature sensor and LED.
+</div>
+
+<div class="hi">
+LDR, temperature sensor और LED का use करके automatic room
+monitoring concept तैयार कीजिए।
+</div>
+
+<div class="info-box">
+
+LDR → light monitoring
+
+Temperature sensor → temperature monitoring
+
+LED → status indication
+
+Arduino → processing
+
+Serial Monitor/LCD → display
+
+</div>
+
+<div class="output">
+
+<div class="output-title">EXAMPLE OUTPUT</div>
+
+Light: LOW
+
+Temperature: NORMAL
+
+LED: ON
+
+</div>
+
+</div>
+</div>
+
+
+<!-- Q60 -->
+
+<div class="question-card" data-type="iot">
+
+<div class="q-head">
+<div class="q-number">
+<span class="q-badge">60</span>
+<span>Complete IoT Practical</span>
+</div>
+<span class="level">FINAL</span>
+</div>
+
+<div class="q-body">
+
+<div class="en">
+Explain the complete workflow of an IoT practical project from sensor to user.
+</div>
+
+<div class="hi">
+Sensor से user तक complete IoT practical project workflow समझाइए।
+</div>
+
+<div class="info-box">
+
+<strong>STEP 1 — Sensing</strong>
+
+Sensor environment से data collect करता है।
+
+<br><br>
+
+<strong>STEP 2 — Processing</strong>
+
+Arduino/controller data process करता है।
+
+<br><br>
+
+<strong>STEP 3 — Communication</strong>
+
+Network data transfer करता है।
+
+<br><br>
+
+<strong>STEP 4 — Cloud/Server</strong>
+
+Data store/process हो सकता है।
+
+<br><br>
+
+<strong>STEP 5 — Application</strong>
+
+User dashboard/application पर result देखता है।
+
+<br><br>
+
+<strong>STEP 6 — Action</strong>
+
+Required होने पर actuator action perform कर सकता है।
+
+</div>
+
+<div class="output">
+
+<div class="output-title">MASTER FLOW</div>
+
+🌡️ SENSOR
+
+↓
+
+🧠 CONTROLLER
+
+↓
+
+📡 NETWORK
+
+↓
+
+☁️ CLOUD
+
+↓
+
+📱 USER
+
+↓
+
+⚙️ ACTION
+
+</div>
+
+<div class="trick">
+
+<div class="trick-title">🔥 FINAL EXAM TRICK</div>
+
+<p>
+M4 practical में केवल code याद मत करो।
+हर practical के लिए 5 चीजें याद रखो:
+<br><br>
+1. Component
+<br>
+2. Connection
+<br>
+3. Code
+<br>
+4. Expected Output
+<br>
+5. Working Principle
+</p>
+
+</div>
+
+</div>
+</div>
+
+
+</section>
+
+
+<!-- =========================================================
+     VIVA ZONE
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">🎤</div>
+
+<div>
+<h2>M4 Practical Viva Master</h2>
+<p>Quick viva revision points.</p>
+</div>
+
+</div>
+
+<section class="viva">
+
+<div class="viva-card">
+<h4>Q. Arduino क्या है?</h4>
+<p>
+Arduino एक programmable electronics platform है जिसका use
+prototyping और embedded/IoT projects में किया जाता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. Sensor क्या है?</h4>
+<p>
+Sensor physical/environmental parameter को detect या measure
+करके usable signal/data provide करता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. Actuator क्या है?</h4>
+<p>
+Actuator controller के signal के अनुसार physical action करता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. setup()?</h4>
+<p>
+Arduino sketch शुरू होने पर सामान्यतः एक बार execute होता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. loop()?</h4>
+<p>
+Program का repeated execution वाला section है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. Serial Monitor?</h4>
+<p>
+Serial communication के माध्यम से messages/data देखने के लिए
+use किया जाता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. LDR?</h4>
+<p>
+Light Dependent Resistor — light intensity के अनुसार resistance
+change करता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. PIR?</h4>
+<p>
+Passive Infrared sensor, commonly motion detection के लिए use होता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. IoT?</h4>
+<p>
+Internet-connected physical devices का ecosystem जो data collect,
+exchange और process कर सकता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>Q. Cloud?</h4>
+<p>
+Remote computing/storage/services provide करने वाला infrastructure।
+</p>
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     LAST DAY CHECKLIST
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">🚀</div>
+
+<div>
+<h2>Practical Exam — Last Day Checklist</h2>
+<p>Exam से पहले इन points को जरूर revise करें.</p>
+</div>
+
+</div>
+
+<div class="checklist">
+
+<div class="check-item">
+Arduino IDE खोलना
+</div>
+
+<div class="check-item">
+Board select करना
+</div>
+
+<div class="check-item">
+Port select करना
+</div>
+
+<div class="check-item">
+Program Verify करना
+</div>
+
+<div class="check-item">
+Program Upload करना
+</div>
+
+<div class="check-item">
+Serial Monitor खोलना
+</div>
+
+<div class="check-item">
+LED Blink
+</div>
+
+<div class="check-item">
+Push Button
+</div>
+
+<div class="check-item">
+LDR
+</div>
+
+<div class="check-item">
+Ultrasonic
+</div>
+
+<div class="check-item">
+PIR
+</div>
+
+<div class="check-item">
+Buzzer
+</div>
+
+<div class="check-item">
+Servo
+</div>
+
+<div class="check-item">
+LCD
+</div>
+
+<div class="check-item">
+analogRead()
+</div>
+
+<div class="check-item">
+digitalRead()
+</div>
+
+<div class="check-item">
+digitalWrite()
+</div>
+
+<div class="check-item">
+analogWrite()
+</div>
+
+<div class="check-item">
+pinMode()
+</div>
+
+<div class="check-item">
+Serial.begin()
+</div>
+
+<div class="check-item">
+IoT Architecture
+</div>
+
+<div class="check-item">
+IoT Security
+</div>
+
+<div class="check-item">
+Sensor vs Actuator
+</div>
+
+<div class="check-item">
+Troubleshooting
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     MASTER TRICKS
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">🧠</div>
+
+<div>
+<h2>10 Super Practical Tricks</h2>
+<p>Fast revision for practical + viva.</p>
+</div>
+
+</div>
+
+<section class="viva">
+
+<div class="viva-card">
+<h4>01 — HIGH / LOW</h4>
+<p>
+HIGH = digital ON/state HIGH concept<br>
+LOW = digital OFF/state LOW concept
+</p>
+</div>
+
+<div class="viva-card">
+<h4>02 — INPUT / OUTPUT</h4>
+<p>
+Sensor/Button → INPUT<br>
+LED/Buzzer/Actuator → OUTPUT
+</p>
+</div>
+
+<div class="viva-card">
+<h4>03 — Analog</h4>
+<p>
+analogRead() sensor values read करने के लिए याद रखें।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>04 — PWM</h4>
+<p>
+analogWrite() commonly PWM output के लिए use होता है।
+</p>
+</div>
+
+<div class="viva-card">
+<h4>05 — setup()</h4>
+<p>
+Initial configuration → setup()
+</p>
+</div>
+
+<div class="viva-card">
+<h4>06 — loop()</h4>
+<p>
+Repeated execution → loop()
+</p>
+</div>
+
+<div class="viva-card">
+<h4>07 — Serial</h4>
+<p>
+Serial.begin() → communication start.
+</p>
+</div>
+
+<div class="viva-card">
+<h4>08 — LDR</h4>
+<p>
+Light measurement/application.
+</p>
+</div>
+
+<div class="viva-card">
+<h4>09 — Ultrasonic</h4>
+<p>
+TRIG → pulse send<br>
+ECHO → response receive
+</p>
+</div>
+
+<div class="viva-card">
+<h4>10 — IoT Flow</h4>
+<p>
+Sensor → Controller → Network → Cloud → User → Action
+</p>
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<p>
+<strong>M4-R5 IoT Practical Master Book</strong>
+</p>
+
+<p style="margin-top:7px;">
+Bilingual • Practical • Viva • Output • Exam Oriented
+</p>
+
+<p style="margin-top:7px;">
+NIELIT O Level Preparation
+</p>
+
+</footer>
+
+</main>
+
+
+<!-- =========================================================
+     PROGRESS
+========================================================= -->
+
+<div class="progress-wrap">
+
+<div class="progress-title">
+📚 Reading Progress
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+
+<div class="progress-text" id="progressText">
+0% Completed
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document
+    .getElementById("themePanel")
+    .classList.toggle("show");
+
+}
+
+function setTheme(theme){
+
+    document.body.className = theme;
+
+    localStorage.setItem(
+        "m4Theme",
+        theme
+    );
+
+    document
+    .getElementById("themePanel")
+    .classList.remove("show");
+
+}
+
+const savedTheme =
+localStorage.getItem("m4Theme");
+
+if(savedTheme){
+
+    document.body.className =
+    savedTheme;
+
+}
+
+
+/* =========================================================
+   COPY CODE
+========================================================= */
+
+function copyCode(id){
+
+    const code =
+    document.getElementById(id).innerText;
+
+    navigator.clipboard
+    .writeText(code)
+    .then(()=>{
+
+        alert("Code copied successfully!");
+
+    });
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function searchQuestions(){
+
+    const value =
+    document
+    .getElementById("searchBox")
+    .value
+    .toLowerCase();
+
+    const cards =
+    document.querySelectorAll(
+        ".question-card"
+    );
+
+    cards.forEach(card=>{
+
+        const text =
+        card.innerText
+        .toLowerCase();
+
+        if(text.includes(value)){
+
+            card.style.display="block";
+
+        }
+        else{
+
+            card.style.display="none";
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function filterQuestions(type,button){
+
+    document
+    .querySelectorAll(".filter-btn")
+    .forEach(btn=>{
+
+        btn.classList.remove("active");
+
+    });
+
+    button.classList.add("active");
+
+    document
+    .querySelectorAll(".question-card")
+    .forEach(card=>{
+
+        if(
+            type==="all" ||
+            card.dataset.type===type
+        ){
+
+            card.style.display="block";
+
+        }
+        else{
+
+            card.style.display="none";
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   READING PROGRESS
+========================================================= */
+
+window.addEventListener(
+    "scroll",
+    updateProgress
+);
+
+function updateProgress(){
+
+    const scrollTop =
+    window.scrollY;
+
+    const height =
+    document.documentElement.scrollHeight
+    -
+    window.innerHeight;
+
+    const progress =
+    height > 0
+    ?
+    Math.round(
+        (scrollTop / height) * 100
+    )
+    :
+    0;
+
+    document
+    .getElementById("progressFill")
+    .style.width =
+    progress + "%";
+
+    document
+    .getElementById("progressText")
+    .innerText =
+    progress + "% Completed";
+
+}
+
+
+/* =========================================================
+   CLOSE THEME WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(e){
+
+        const panel =
+        document.getElementById(
+            "themePanel"
+        );
+
+        const button =
+        document.querySelector(
+            ".theme-btn"
+        );
+
+        if(
+            panel.classList.contains("show") &&
+            !panel.contains(e.target) &&
+            !button.contains(e.target)
+        ){
+
+            panel.classList.remove("show");
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+ 

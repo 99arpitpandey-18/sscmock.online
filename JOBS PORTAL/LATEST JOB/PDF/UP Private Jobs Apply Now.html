@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Mock.com - Job Fair & Job Listings</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Main Container - Clickable */
+        .main-container {
+            width: 100%;
+            max-width: 950px;
+            background-color: #ffffff;
+            border: 5px solid #000000;
+            position: relative;
+            padding: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
+
+        /* Vertical Side Text */
+        .vertical-text {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 25px;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 2px;
+            z-index: 10;
+            border-left: 2px solid #000;
+            border-right: 2px solid #000;
+        }
+
+        .vertical-text.left { left: 0; }
+        .vertical-text.right { right: 0; }
+
+        /* Header Section */
+        header {
+            border-bottom: 2px solid #000;
+            padding: 10px 30px;
+            background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+        }
+
+        .header-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+        }
+
+        .logo-placeholder {
+            width: 100px;
+            height: 50px;
+            background-color: #2b2b2b;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 10px;
+            text-align: center;
+            padding: 5px;
+            border: 2px solid #000;
+            flex-shrink: 0;
+        }
+
+        .header-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .header-text h1 {
+            font-size: 20px;
+            font-weight: 900;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .header-text h2 {
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Top Bar Info */
+        .top-bar {
+            background-color: #2b2b2b;
+            color: #fff;
+            padding: 5px 35px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Main Content */
+        main {
+            padding: 15px 35px;
+            text-align: left;
+        }
+
+        .banner-box {
+            background-color: #e6f2ff;
+            border: 1px solid #b3d9ff;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #004085;
+        }
+
+        .job-fair-info {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #000;
+            background-color: #f2f2f2;
+            padding: 8px;
+            border-left: 5px solid #000;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 6px 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #d9e1f2;
+            font-weight: bold;
+        }
+
+        /* Alternating row colors */
+        tbody tr:nth-child(even) { background-color: #f9f9f9; }
+        tbody tr:nth-child(odd) { background-color: #ffffff; }
+
+        .vacancy-table {
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .vacancy-table table {
+            min-width: 800px;
+        }
+
+        .apply-btn {
+            background-color: #d32f2f;
+            color: #ffffff;
+            padding: 4px 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .filters-box {
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .filters-box strong {
+            color: #000;
+        }
+
+        .apply-text {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 30px;
+            text-align: center;
+            color: #000;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #ffd700;
+            border-top: 4px solid #000;
+            padding: 10px 30px;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+        }
+
+        .footer-logo {
+            width: 90px;
+            height: 60px;
+            background-color: #2b2b2b;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 50%;
+            text-align: center;
+            border: 2px solid #000;
+            flex-shrink: 0;
+        }
+
+        .footer-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .footer-text p {
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .footer-text h2 {
+            font-size: 22px;
+            font-weight: 900;
+            color: #000;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .vertical-text { display: none; }
+            header, main, footer, .top-bar { padding-left: 10px; padding-right: 10px; }
+            .header-link, .footer-link { flex-direction: column; text-align: center; gap: 10px; }
+            .header-text h1 { font-size: 16px; }
+            .header-text h2 { font-size: 10px; }
+            table { font-size: 12px; }
+            .footer-text h2 { font-size: 16px; }
+            .footer-logo { border-radius: 10px; width: 100%; height: auto; padding: 10px; }
+            .top-bar { flex-direction: column; gap: 5px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- onclick event makes the entire container clickable -->
+    <div class="main-container" onclick="window.open('https://www.sscmock.com', '_blank')">
+        
+        <!-- Vertical Side Texts -->
+        <div class="vertical-text left">SSC MOCK.COM SSC MOCK.COM SSC MOCK.COM SSC MOCK.COM</div>
+        <div class="vertical-text right">SSC MOCK.COM SSC MOCK.COM SSC MOCK.COM SSC MOCK.COM</div>
+
+        <!-- Top Info Bar -->
+        <div class="top-bar">
+            <span>For any help Call us :155330</span>
+            <span>Signup/ Login</span>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <a href="https://www.sscmock.com" target="_blank" class="header-link">
+                <div class="logo-placeholder">SSC<br>Mock</div>
+                <div class="header-text">
+                    <h1>SSC Mock.com® | WWW.SSCMOCK.COM</h1>
+                    <h2>Latest Jobs, Result, Admit Card (No. 1 Education Portal) Since 2012</h2>
+                </div>
+            </a>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div class="banner-box">
+                Navdisha | Empowering Women through Digital & Financial Literacy - An Initiative by Directorate of Employment U.P.
+            </div>
+
+            <div class="job-fair-info">
+                <strong>Job Fair in Meerut:</strong> 12-09-2026 - 12-09-2026<br>
+                <strong>Location:</strong> विनायक विद्यापीठ मोदीपुरम बाईपास, मेरठ मे एक रोजगार मेले का आयोजन किया जा रहा है। नियोजक कृपया अपनी रिक्ति अपलोड करें।
+            </div>
+
+            <div class="filters-box">
+                <strong>Filters:</strong> Job Location (All, Auraiya, Ayodhya, Azamgarh, Badaun, Bagpat, Ballia, Balrampur, Banda, Barabanki, Bareilly, Basti) | Education (All, Below SSC, Computer Competency, Diploma, Doctorate, Graduate, HSC/Intermediate, Illiterate, ITI, M.Phil) | Work Experience | Expected Salary | Special Category (Ex-Serviceman, Freedom Fighter, Handicapped, Men, Sportsperson, Women) | Job Source (All, Rojgaar Sangam, TCS, Quess Corp, JobFair)
+            </div>
+
+            <div class="section-title">9 Jobs Found (Job Listings)</div>
+            
+            <div class="vacancy-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Company/Aggregator</th>
+                            <th>Experience</th>
+                            <th>Total Vacancy</th>
+                            <th>Age Limit</th>
+                            <th>Salary</th>
+                            <th>Skills</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sales Executive</td>
+                            <td>THAKUR PUBLICATION</td>
+                            <td>Fresher To 1 Year</td>
+                            <td>15</td>
+                            <td>18 To 30 Year</td>
+                            <td>₹ 15,500 Per Month</td>
+                            <td>Sales And Marketing</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                        <tr>
+                            <td>Wellness Advisor</td>
+                            <td>PUKHRAJ HEALTH CARE PVT LTD</td>
+                            <td>Fresher</td>
+                            <td>50</td>
+                            <td>18 To 25 Year</td>
+                            <td>₹ 12,500 Per Month</td>
+                            <td>Not Applicable</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                        <tr>
+                            <td>Sales Officer</td>
+                            <td>VARNIKA RECRUITMENT PVT LTD</td>
+                            <td>Fresher To 1 Year</td>
+                            <td>50</td>
+                            <td>20 To 25 Year</td>
+                            <td>₹ 24,500 Per Month</td>
+                            <td>Banking/Insurance Sector</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                        <tr>
+                            <td>Apprenticeship Candidates</td>
+                            <td>TDS PLACEMENTS AND SERVICES PVT.LTD.</td>
+                            <td>Fresher</td>
+                            <td>100</td>
+                            <td>18 To 26 Year</td>
+                            <td>₹ 15,000 Per Month</td>
+                            <td>Not Applicable</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                        <tr>
+                            <td>Production</td>
+                            <td>PRAYAN GLOBAL SERVICES</td>
+                            <td>Fresher</td>
+                            <td>100</td>
+                            <td>18 To 32 Year</td>
+                            <td>₹ 29,000 Per Month</td>
+                            <td>Not Applicable</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                        <tr>
+                            <td>Machine Operator</td>
+                            <td>LEGPRO SOLUTIONS</td>
+                            <td>Fresher</td>
+                            <td>100</td>
+                            <td>18 To 30 Year</td>
+                            <td>₹ 24,000 Per Month</td>
+                            <td>Not Applicable</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                        <tr>
+                            <td>Wellness Advisor</td>
+                            <td>PUKHRAJ HEALTH CARE PVT LTD</td>
+                            <td>Fresher</td>
+                            <td>50</td>
+                            <td>18 To 25 Year</td>
+                            <td>₹ 10,000 Per Month</td>
+                            <td>Not Applicable</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                        <tr>
+                            <td>ITI Diploma Engineering Btech</td>
+                            <td>SKM PLACEMENT & MANAGEMENT CONSULTANTS</td>
+                            <td>Fresher To 25 Year</td>
+                            <td>25</td>
+                            <td>18 To 48 Year</td>
+                            <td>₹ 25,000 Per Month</td>
+                            <td>Not Applicable</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                        <tr>
+                            <td>ITI Diploma Engineering Btech</td>
+                            <td>SKM PLACEMENT & MANAGEMENT CONSULTANTS</td>
+                            <td>Fresher To 25 Year</td>
+                            <td>25</td>
+                            <td>18 To 48 Year</td>
+                            <td>₹ 25,000 Per Month</td>
+                            <td>Not Applicable</td>
+                            <td><a href="https://www.sscmock.com" target="_blank" class="apply-btn">APPLY</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="filters-box" style="text-align: center;">
+                Page 1 of 1 (9 items) | Prev 1 Next | Rows per page: 20
+            </div>
+
+            <div class="section-title">About SSC Mock.com</div>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 15px; text-align: justify;">
+                SSC Mock.com is an Integrated Solution comprising all types of Jobs such as Private Sector jobs, Outsourcing jobs in the Government Sector and Private Job for Skilled Labours available. 
+            </p>
+
+            <div class="section-title">Important Links</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Link Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Download App (App Store | Google Play)</td><td><a href="https://www.sscmock.com" target="_blank" style="color: #d32f2f; font-weight: bold;">Click Here</a></td></tr>
+                    <tr><td>Subscribe to Our Newsletter</td><td><a href="https://www.sscmock.com" target="_blank" style="color: #d32f2f; font-weight: bold;">Subscribe</a></td></tr>
+                    <tr><td>Home | Active Rojgaar Mela | Job Search</td><td><a href="https://www.sscmock.com" target="_blank" style="color: #d32f2f; font-weight: bold;">Click Here</a></td></tr>
+                    <tr><td>Download Form | Complain / Suggestion | Contact Us</td><td><a href="https://www.sscmock.com" target="_blank" style="color: #d32f2f; font-weight: bold;">Click Here</a></td></tr>
+                    <tr><td>About Us | Terms | UP Cyber Security | Guidelines | FAQ</td><td><a href="https://www.sscmock.com" target="_blank" style="color: #d32f2f; font-weight: bold;">Click Here</a></td></tr>
+                </tbody>
+            </table>
+
+            <div class="apply-text">For Apply & Details Visit Official SSC Mock.com : SSCMOCK.COM</div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <a href="https://www.sscmock.com" target="_blank" class="footer-link">
+                <div class="footer-logo">SSC<br>Mock</div>
+                <div class="footer-text">
+                    <p>Directorate of Training & Employment UP, Rojgaar Bhawan Guru Govind Singh Marg, Lucknow Pincode -226001</p>
+                    <p>Mail id : rojgaarsangam.up@gmail.com | sewayojan-up@gov.in</p>
+                    <h2>VISIT : WWW.SSCMOCK.COM</h2>
+                </div>
+            </a>
+        </footer>
+    </div>
+
+</body>
+</html>

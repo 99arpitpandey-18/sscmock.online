@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC Website - YouTube Advertisement</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#050816;
+    font-family:Arial, Helvetica, sans-serif;
+    overflow:hidden;
+    color:white;
+}
+
+/* =========================
+   AD CONTAINER
+========================= */
+
+.ad{
+    width:100vw;
+    height:100vh;
+    min-height:600px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 40%, #18295c 0%, #080d24 42%, #03040d 100%);
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+    background-size:50px 50px;
+    transform:perspective(500px) rotateX(55deg) scale(1.5);
+    transform-origin:center bottom;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(5px);
+    opacity:.45;
+    animation:float 7s infinite ease-in-out;
+}
+
+.orb1{
+    width:220px;
+    height:220px;
+    background:#2463ff;
+    left:-70px;
+    top:-70px;
+}
+
+.orb2{
+    width:180px;
+    height:180px;
+    background:#9b32ff;
+    right:-60px;
+    bottom:-50px;
+    animation-delay:1s;
+}
+
+.orb3{
+    width:100px;
+    height:100px;
+    background:#00d9ff;
+    right:20%;
+    top:10%;
+    animation-delay:2s;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) scale(1);}
+    50%{transform:translateY(-30px) scale(1.08);}
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.top{
+    position:absolute;
+    top:25px;
+    left:35px;
+    right:35px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:10;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#35d8ff;
+}
+
+.ad-label{
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.2);
+    padding:8px 15px;
+    border-radius:30px;
+    font-size:13px;
+}
+
+/* =========================
+   SCENES
+========================= */
+
+.scene{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    opacity:0;
+    transform:scale(.92);
+    pointer-events:none;
+    transition:opacity .7s ease, transform .7s ease;
+    padding:40px;
+}
+
+.scene.active{
+    opacity:1;
+    transform:scale(1);
+}
+
+/* =========================
+   SCENE 1
+========================= */
+
+.hook{
+    max-width:900px;
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 20px;
+    border-radius:50px;
+    background:linear-gradient(90deg,#ff1744,#ff6d00);
+    font-weight:900;
+    margin-bottom:25px;
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+    50%{box-shadow:0 0 35px rgba(255,70,40,.65);}
+}
+
+.hook h1{
+    font-size:clamp(40px,7vw,85px);
+    line-height:1.05;
+    font-weight:1000;
+}
+
+.hook h1 span{
+    color:#35d8ff;
+    text-shadow:0 0 30px rgba(53,216,255,.5);
+}
+
+.hook p{
+    margin-top:25px;
+    font-size:24px;
+    color:#c8d2ee;
+}
+
+/* =========================
+   QUESTION
+========================= */
+
+.question-box{
+    width:min(900px,95vw);
+    background:rgba(10,17,43,.92);
+    border:1px solid rgba(53,216,255,.35);
+    border-radius:25px;
+    padding:35px;
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.5),
+        0 0 50px rgba(53,216,255,.08);
+}
+
+.qtag{
+    color:#35d8ff;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.question{
+    font-size:clamp(23px,3vw,38px);
+    font-weight:800;
+    line-height:1.3;
+}
+
+.options{
+    margin-top:28px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.option{
+    padding:18px;
+    border-radius:14px;
+    background:#111b3d;
+    border:1px solid rgba(255,255,255,.1);
+    font-size:19px;
+    text-align:left;
+    transition:.3s;
+}
+
+.option:hover{
+    transform:translateY(-4px);
+    border-color:#35d8ff;
+}
+
+.countdown{
+    margin:25px auto 0;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    font-weight:900;
+    background:#ff1744;
+    box-shadow:0 0 35px rgba(255,23,68,.55);
+}
+
+/* =========================
+   ANSWER
+========================= */
+
+.answer-card{
+    max-width:800px;
+}
+
+.correct{
+    font-size:80px;
+    margin-bottom:20px;
+    animation:pop .6s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(.3);opacity:0}
+    70%{transform:scale(1.15)}
+    100%{transform:scale(1)}
+}
+
+.answer-card h2{
+    font-size:clamp(32px,5vw,65px);
+}
+
+.answer-card h2 span{
+    color:#39f58a;
+}
+
+.answer-card p{
+    margin-top:20px;
+    font-size:25px;
+    color:#cbd4ee;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features-wrap{
+    width:min(1050px,95vw);
+}
+
+.features-wrap h2{
+    font-size:clamp(30px,5vw,58px);
+    margin-bottom:30px;
+}
+
+.features-wrap h2 span{
+    color:#35d8ff;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.feature{
+    background:rgba(17,27,61,.9);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:18px;
+    padding:22px 15px;
+    font-size:19px;
+    font-weight:bold;
+    transform:translateY(30px);
+    opacity:0;
+}
+
+.scene.active .feature{
+    animation:featureIn .6s forwards;
+}
+
+.scene.active .feature:nth-child(2){animation-delay:.1s}
+.scene.active .feature:nth-child(3){animation-delay:.2s}
+.scene.active .feature:nth-child(4){animation-delay:.3s}
+.scene.active .feature:nth-child(5){animation-delay:.4s}
+.scene.active .feature:nth-child(6){animation-delay:.5s}
+.scene.active .feature:nth-child(7){animation-delay:.6s}
+.scene.active .feature:nth-child(8){animation-delay:.7s}
+.scene.active .feature:nth-child(9){animation-delay:.8s}
+
+@keyframes featureIn{
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+.icon{
+    display:block;
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+    max-width:900px;
+}
+
+.cta h2{
+    font-size:clamp(35px,6vw,75px);
+    line-height:1.05;
+}
+
+.cta h2 span{
+    color:#35d8ff;
+}
+
+.cta p{
+    font-size:22px;
+    margin:25px 0;
+    color:#c8d2ee;
+}
+
+.cta-button{
+    display:inline-block;
+    padding:20px 42px;
+    border-radius:60px;
+    background:linear-gradient(90deg,#00c6ff,#0072ff);
+    font-size:24px;
+    font-weight:1000;
+    box-shadow:0 0 45px rgba(0,150,255,.45);
+    animation:buttonPulse 1.4s infinite;
+}
+
+@keyframes buttonPulse{
+    50%{
+        transform:scale(1.06);
+        box-shadow:0 0 70px rgba(0,150,255,.7);
+    }
+}
+
+.url{
+    margin-top:20px;
+    font-size:18px;
+    color:#8fa2d0;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress{
+    position:absolute;
+    bottom:0;
+    left:0;
+    height:5px;
+    width:0%;
+    background:#35d8ff;
+    box-shadow:0 0 15px #35d8ff;
+    z-index:50;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particle{
+    position:absolute;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:#fff;
+    opacity:.5;
+    animation:particleMove linear infinite;
+}
+
+@keyframes particleMove{
+    from{
+        transform:translateY(110vh);
+    }
+    to{
+        transform:translateY(-20vh);
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    .top{
+        left:18px;
+        right:18px;
+        top:15px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .ad-label{
+        font-size:10px;
+        padding:6px 10px;
+    }
+
+    .scene{
+        padding:25px 15px;
+    }
+
+    .hook h1{
+        font-size:45px;
+    }
+
+    .hook p{
+        font-size:18px;
+    }
+
+    .question-box{
+        padding:22px 16px;
+    }
+
+    .question{
+        font-size:23px;
+    }
+
+    .options{
+        grid-template-columns:1fr;
+        gap:10px;
+    }
+
+    .option{
+        padding:13px;
+        font-size:16px;
+    }
+
+    .features{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .feature{
+        padding:15px 8px;
+        font-size:14px;
+    }
+
+    .icon{
+        font-size:25px;
+    }
+
+    .correct{
+        font-size:60px;
+    }
+
+    .answer-card p{
+        font-size:19px;
+    }
+
+    .cta p{
+        font-size:18px;
+    }
+
+    .cta-button{
+        font-size:19px;
+        padding:16px 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ad">
+
+    <div class="grid"></div>
+
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <!-- PARTICLES -->
+    <div class="particle" style="left:8%;animation-duration:8s;"></div>
+    <div class="particle" style="left:18%;animation-duration:11s;"></div>
+    <div class="particle" style="left:31%;animation-duration:9s;"></div>
+    <div class="particle" style="left:45%;animation-duration:13s;"></div>
+    <div class="particle" style="left:60%;animation-duration:10s;"></div>
+    <div class="particle" style="left:75%;animation-duration:12s;"></div>
+    <div class="particle" style="left:88%;animation-duration:9s;"></div>
+
+    <!-- TOP -->
+    <div class="top">
+        <div class="logo">
+            SSC <span>MOCK</span>
+        </div>
+
+        <div class="ad-label">
+            YouTube Advertisement
+        </div>
+    </div>
+
+    <!-- =========================
+         SCENE 1
+    ========================== -->
+
+    <section class="scene active" id="scene1">
+
+        <div class="hook">
+
+            <div class="badge">
+                🚨 SSC ASPIRANTS
+            </div>
+
+            <h1>
+                ये सवाल<br>
+                <span>5 सेकंड</span> में हल करके दिखाओ!
+            </h1>
+
+            <p>
+                तैयार हो? आपका SSC Challenge शुरू होता है...
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         SCENE 2
+    ========================== -->
+
+    <section class="scene" id="scene2">
+
+        <div class="question-box">
+
+            <div class="qtag">
+                🔥 SSC QUICK QUIZ
+            </div>
+
+            <div class="question">
+                भारतीय संविधान का अनुच्छेद 32<br>
+                किससे संबंधित है?
+            </div>
+
+            <div class="options">
+
+                <div class="option">
+                    <b>A)</b> समानता का अधिकार
+                </div>
+
+                <div class="option">
+                    <b>B)</b> संवैधानिक उपचार का अधिकार
+                </div>
+
+                <div class="option">
+                    <b>C)</b> स्वतंत्रता का अधिकार
+                </div>
+
+                <div class="option">
+                    <b>D)</b> शिक्षा का अधिकार
+                </div>
+
+            </div>
+
+            <div class="countdown" id="countdown">
+                5
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         SCENE 3
+    ========================== -->
+
+    <section class="scene" id="scene3">
+
+        <div class="answer-card">
+
+            <div class="correct">
+                🎯
+            </div>
+
+            <h2>
+                सही उत्तर:
+                <span>B</span>
+            </h2>
+
+            <p>
+                संवैधानिक उपचार का अधिकार
+            </p>
+
+            <p>
+                इतना आसान लगा? 😏<br>
+                अब असली Test दो!
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         SCENE 4
+    ========================== -->
+
+    <section class="scene" id="scene4">
+
+        <div class="features-wrap">
+
+            <h2>
+                SSC की तैयारी <span>एक ही जगह!</span>
+            </h2>
+
+            <div class="features">
+
+                <div class="feature">
+                    <span class="icon">🎯</span>
+                    SSC CGL
+                </div>
+
+                <div class="feature">
+                    <span class="icon">📚</span>
+                    SSC CHSL
+                </div>
+
+                <div class="feature">
+                    <span class="icon">🔥</span>
+                    SSC MTS
+                </div>
+
+                <div class="feature">
+                    <span class="icon">⚡</span>
+                    SSC GD
+                </div>
+
+                <div class="feature">
+                    <span class="icon">🏆</span>
+                    SSC CPO
+                </div>
+
+                <div class="feature">
+                    <span class="icon">📖</span>
+                    Previous Year Questions
+                </div>
+
+                <div class="feature">
+                    <span class="icon">📝</span>
+                    Mock Tests
+                </div>
+
+                <div class="feature">
+                    <span class="icon">💡</span>
+                    Detailed Explanation
+                </div>
+
+                <div class="feature">
+                    <span class="icon">📊</span>
+                    Practice & Revision
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         SCENE 5
+    ========================== -->
+
+    <section class="scene" id="scene5">
+
+        <div class="cta">
+
+            <h2>
+                आज ही अपनी<br>
+                <span>SSC तैयारी</span> शुरू करो!
+            </h2>
+
+            <p>
+                PYQs • Mock Tests • GK • Maths • Reasoning • English
+            </p>
+
+            <div class="cta-button">
+                🚀 START FREE TEST
+            </div>
+
+            <!-- अपना domain यहां डालें -->
+            <div class="url">
+                www.YOURWEBSITE.com
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="progress" id="progress"></div>
+
+</div>
+
+<script>
+
+/* =====================================
+   SCENE TIMING
+===================================== */
+
+const scenes = [
+    document.getElementById("scene1"),
+    document.getElementById("scene2"),
+    document.getElementById("scene3"),
+    document.getElementById("scene4"),
+    document.getElementById("scene5")
+];
+
+let currentScene = 0;
+
+const sceneDuration = 6000;
+const totalDuration = sceneDuration * scenes.length;
+
+function showScene(index){
+
+    scenes.forEach((scene,i)=>{
+        scene.classList.toggle("active",i === index);
+    });
+
+}
+
+function nextScene(){
+
+    currentScene++;
+
+    if(currentScene >= scenes.length){
+        currentScene = 0;
+    }
+
+    showScene(currentScene);
+
+}
+
+setInterval(nextScene,sceneDuration);
+
+
+/* =====================================
+   COUNTDOWN
+===================================== */
+
+let count = 5;
+
+const countdown = document.getElementById("countdown");
+
+setInterval(()=>{
+
+    if(currentScene === 1){
+
+        count--;
+
+        if(count < 1){
+            count = 5;
+        }
+
+        countdown.textContent = count;
+
+        countdown.style.transform = "scale(1.25)";
+
+        setTimeout(()=>{
+            countdown.style.transform = "scale(1)";
+        },150);
+
+    }else{
+
+        count = 5;
+        countdown.textContent = count;
+
+    }
+
+},1000);
+
+
+/* =====================================
+   PROGRESS BAR
+===================================== */
+
+const progress = document.getElementById("progress");
+
+let startTime = Date.now();
+
+function updateProgress(){
+
+    let elapsed = Date.now() - startTime;
+
+    let percent = (elapsed % totalDuration) / totalDuration * 100;
+
+    progress.style.width = percent + "%";
+
+    requestAnimationFrame(updateProgress);
+
+}
+
+updateProgress();
+
+</script>
+
+</body>
+</html>

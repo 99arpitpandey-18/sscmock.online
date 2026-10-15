@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M3 Chapter 9 – NumPy | NIELIT O Level Python Notes</title>
+
+<meta name="description"
+content="NIELIT O Level M3 Chapter 8 NumPy complete bilingual Hindi English notes with examples, outputs, important functions, exam points, MCQs and practical programs.">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+    --bg1:#07111f;
+    --bg2:#101b35;
+    --card:#111e36;
+    --card2:#162642;
+    --text:#edf6ff;
+    --muted:#9aabc2;
+    --accent:#39e7ff;
+    --accent2:#8b5cf6;
+    --green:#35e59a;
+    --yellow:#ffd166;
+    --pink:#ff6bb5;
+    --orange:#ff9f43;
+    --border:rgba(255,255,255,.10);
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 10%,rgba(57,231,255,.14),transparent 28%),
+        radial-gradient(circle at 90% 10%,rgba(139,92,246,.15),transparent 30%),
+        radial-gradient(circle at 50% 90%,rgba(255,107,181,.08),transparent 30%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.13;
+    background-image:
+        radial-gradient(circle,var(--accent) 1px,transparent 1px),
+        radial-gradient(circle,var(--accent2) 1px,transparent 1px);
+    background-size:120px 120px,180px 180px;
+    z-index:-1;
+}
+
+/* HEADER */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:999;
+    backdrop-filter:blur(18px);
+    background:rgba(5,12,25,.82);
+    border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+    padding:13px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    color:#fff;
+    background:linear-gradient(135deg,var(--accent2),var(--accent));
+    box-shadow:0 0 25px rgba(57,231,255,.20);
+}
+
+.brand h2{
+    font-size:17px;
+}
+
+.brand p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:3px;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.05);
+    color:var(--text);
+    padding:9px 12px;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:11px;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--accent);
+    color:var(--accent);
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:38px 5% 80px;
+}
+
+/* HERO */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:42px;
+    border-radius:25px;
+    border:1px solid var(--border);
+    background:
+        linear-gradient(135deg,rgba(20,38,68,.90),rgba(12,24,46,.82));
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
+    margin-bottom:30px;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:280px;
+    height:280px;
+    right:-110px;
+    top:-120px;
+    border-radius:50%;
+    background:rgba(57,231,255,.10);
+    filter:blur(45px);
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 13px;
+    border-radius:30px;
+    background:rgba(57,231,255,.09);
+    border:1px solid rgba(57,231,255,.20);
+    color:var(--accent);
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:17px;
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,52px);
+    margin-bottom:10px;
+    background:linear-gradient(90deg,#fff,var(--accent),#c4a5ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero h1 span{
+    font-size:.55em;
+    display:block;
+    margin-top:5px;
+}
+
+.hero p{
+    max-width:850px;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:25px;
+}
+
+.stat{
+    padding:16px;
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--border);
+}
+
+.stat strong{
+    display:block;
+    color:var(--accent);
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* SECTION */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:38px 0 18px;
+}
+
+.section-icon{
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:11px;
+    background:linear-gradient(135deg,rgba(57,231,255,.12),rgba(139,92,246,.14));
+    border:1px solid var(--border);
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* CONTENT CARD */
+
+.card{
+    background:linear-gradient(145deg,rgba(20,38,65,.86),rgba(12,25,46,.80));
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,.16);
+}
+
+.card h3{
+    margin-bottom:10px;
+    font-size:18px;
+}
+
+.card h4{
+    margin:17px 0 8px;
+    color:var(--accent);
+    font-size:14px;
+}
+
+.card p,
+.card li{
+    color:var(--muted);
+    line-height:1.75;
+    font-size:13px;
+}
+
+.card ul{
+    padding-left:20px;
+}
+
+/* BILINGUAL */
+
+.bi{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.lang-box{
+    padding:17px;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.035);
+}
+
+.lang-box .label{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:6px;
+    font-size:9px;
+    font-weight:bold;
+    margin-bottom:9px;
+}
+
+.english .label{
+    background:rgba(57,231,255,.10);
+    color:var(--accent);
+}
+
+.hindi .label{
+    background:rgba(255,107,181,.10);
+    color:var(--pink);
+}
+
+.lang-box p{
+    font-size:12px;
+}
+
+/* HIGHLIGHT */
+
+.highlight{
+    padding:17px;
+    border-left:4px solid var(--accent);
+    background:rgba(57,231,255,.06);
+    border-radius:0 12px 12px 0;
+    margin:15px 0;
+}
+
+.highlight strong{
+    color:var(--accent);
+}
+
+.warning{
+    border-left-color:var(--yellow);
+    background:rgba(255,209,102,.06);
+}
+
+.warning strong{
+    color:var(--yellow);
+}
+
+.success{
+    border-left-color:var(--green);
+    background:rgba(53,229,154,.06);
+}
+
+.success strong{
+    color:var(--green);
+}
+
+/* CODE */
+
+.code-wrap{
+    margin:15px 0;
+    border-radius:15px;
+    overflow:hidden;
+    border:1px solid rgba(57,231,255,.18);
+}
+
+.code-head{
+    padding:9px 13px;
+    background:#091426;
+    color:var(--accent);
+    font-size:10px;
+    font-weight:bold;
+}
+
+pre{
+    background:#050c17;
+    padding:18px;
+    overflow:auto;
+    color:#d9e8ff;
+    font-size:12px;
+    line-height:1.65;
+}
+
+.output{
+    padding:15px;
+    border-radius:12px;
+    background:rgba(53,229,154,.06);
+    border:1px solid rgba(53,229,154,.16);
+    margin-top:10px;
+}
+
+.output-title{
+    color:var(--green);
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.output pre{
+    padding:0;
+    background:transparent;
+    color:#d9ffe9;
+}
+
+/* FUNCTION GRID */
+
+.function-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:13px;
+}
+
+.function-card{
+    padding:18px;
+    border-radius:15px;
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--border);
+    transition:.3s;
+}
+
+.function-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(57,231,255,.30);
+}
+
+.function-card code{
+    color:var(--accent);
+    font-weight:bold;
+}
+
+.function-card p{
+    margin-top:8px;
+    font-size:11px;
+}
+
+/* TABLE */
+
+.table-wrap{
+    overflow:auto;
+    border-radius:14px;
+    border:1px solid var(--border);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:600px;
+}
+
+th,td{
+    padding:12px;
+    text-align:left;
+    border-bottom:1px solid var(--border);
+    font-size:11px;
+}
+
+th{
+    color:var(--accent);
+    background:rgba(57,231,255,.06);
+}
+
+td{
+    color:var(--muted);
+}
+
+/* MCQ */
+
+.mcq{
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:rgba(255,255,255,.035);
+    margin-bottom:12px;
+}
+
+.question{
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.option{
+    padding:9px 11px;
+    margin:6px 0;
+    border-radius:8px;
+    background:rgba(255,255,255,.035);
+    color:var(--muted);
+    font-size:11px;
+}
+
+.answer{
+    margin-top:10px;
+    color:var(--green);
+    font-size:11px;
+    font-weight:bold;
+}
+
+/* EXAM */
+
+.exam-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.exam-card{
+    padding:20px;
+    border-radius:16px;
+    border:1px solid var(--border);
+    background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(57,231,255,.04));
+}
+
+.exam-card h3{
+    color:#c9b6ff;
+}
+
+.exam-card li{
+    margin:7px 0;
+}
+
+/* THEME PANEL */
+
+.theme-panel{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:1000;
+    padding:12px;
+    border-radius:15px;
+    background:rgba(6,14,28,.94);
+    border:1px solid var(--border);
+    backdrop-filter:blur(15px);
+}
+
+.theme-panel p{
+    color:var(--muted);
+    font-size:9px;
+    margin-bottom:7px;
+}
+
+.theme-btn{
+    width:23px;
+    height:23px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.5);
+    cursor:pointer;
+    display:inline-block;
+    margin:2px;
+}
+
+.t1{background:#39e7ff;}
+.t2{background:#8b5cf6;}
+.t3{background:#35e59a;}
+.t4{background:#ff6bb5;}
+.t5{background:#ff9f43;}
+
+/* FOOTER */
+
+.footer{
+    margin-top:45px;
+    text-align:center;
+    padding:25px;
+    color:#6f819c;
+    border-top:1px solid var(--border);
+    font-size:11px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+    .function-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:650px){
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .hero{
+        padding:28px 20px;
+    }
+
+    .bi,
+    .function-grid,
+    .exam-grid,
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:28px 4% 60px;
+    }
+
+    .header-actions .btn{
+        font-size:9px;
+        padding:7px 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="header-inner">
+
+    <div class="brand">
+        <div class="logo">NP</div>
+        <div>
+            <h2>M3 Study Zone</h2>
+            <p>Python Programming • Chapter 8</p>
+        </div>
+    </div>
+
+    <div class="header-actions">
+        <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+            ↑ Top
+        </button>
+
+        <button class="btn" onclick="window.print()">
+            🖨 Print
+        </button>
+
+        <button class="btn" onclick="document.body.classList.toggle('focus')">
+            ✦ Focus
+        </button>
+    </div>
+
+</div>
+</header>
+
+
+<main class="container">
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="badge">
+        ✦ NIELIT O LEVEL • M3-R5 • CHAPTER 8
+    </div>
+
+    <h1>
+        NumPy
+        <span>Numerical Python • Complete Bilingual Notes</span>
+    </h1>
+
+    <p>
+        NumPy is one of the most important Python libraries for numerical
+        computing. This chapter explains arrays, dimensions, indexing,
+        slicing, data types, mathematical operations, aggregation functions,
+        reshaping and commonly used NumPy functions with practical examples.
+    </p>
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>01</strong>
+            <span>Core Library</span>
+        </div>
+
+        <div class="stat">
+            <strong>2D+</strong>
+            <span>Array Concepts</span>
+        </div>
+
+        <div class="stat">
+            <strong>20+</strong>
+            <span>Important Functions</span>
+        </div>
+
+        <div class="stat">
+            <strong>2×</strong>
+            <span>More Examples</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- INTRO -->
+
+<div class="section-title">
+    <div class="section-icon">📘</div>
+    <div>
+        <h2>1. What is NumPy?</h2>
+        <p>NumPy का basic concept समझें</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="bi">
+
+    <div class="lang-box english">
+        <span class="label">ENGLISH</span>
+        <p>
+            NumPy stands for <strong>Numerical Python</strong>. It is a
+            Python library mainly used for numerical calculations,
+            scientific computing and working with multidimensional arrays.
+        </p>
+    </div>
+
+    <div class="lang-box hindi">
+        <span class="label">हिन्दी</span>
+        <p>
+            NumPy का पूरा नाम <strong>Numerical Python</strong> है।
+            यह Python की एक library है जिसका उपयोग numerical calculation,
+            scientific computing और multidimensional arrays के लिए किया जाता है।
+        </p>
+    </div>
+
+</div>
+
+<div class="highlight">
+    <strong>Exam Point:</strong>
+    NumPy का मुख्य object <b>ndarray</b> है, जिसे NumPy array भी कहा जाता है।
+</div>
+
+</div>
+
+
+<!-- WHY NUMPY -->
+
+<div class="section-title">
+    <div class="section-icon">⭐</div>
+    <div>
+        <h2>2. Why Do We Use NumPy?</h2>
+        <p>NumPy की आवश्यकता क्यों पड़ती है?</p>
+    </div>
+</div>
+
+<div class="card">
+
+<ul>
+    <li>Large numerical data के साथ काम करना आसान होता है।</li>
+    <li>Multidimensional arrays को efficiently handle करता है।</li>
+    <li>Mathematical operations आसानी से perform किए जा सकते हैं।</li>
+    <li>Array operations Python lists की तुलना में numerical computing में अधिक efficient हो सकते हैं।</li>
+    <li>Scientific computing, data analysis और machine learning में widely used है।</li>
+</ul>
+
+<div class="highlight success">
+    <strong>Easy Trick:</strong>
+    Python List = General purpose collection  
+    <br>
+    NumPy Array = Numerical data के लिए powerful structure
+</div>
+
+</div>
+
+
+<!-- INSTALLATION -->
+
+<div class="section-title">
+    <div class="section-icon">⚙️</div>
+    <div>
+        <h2>3. Installing NumPy</h2>
+        <p>NumPy को install और import करना</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="bi">
+
+<div class="lang-box english">
+<span class="label">ENGLISH</span>
+<p>
+If NumPy is not already installed, it can generally be installed
+using the Python package manager pip.
+</p>
+</div>
+
+<div class="lang-box hindi">
+<span class="label">हिन्दी</span>
+<p>
+यदि NumPy install नहीं है तो सामान्यतः इसे
+<strong>pip</strong> की सहायता से install किया जा सकता है।
+</p>
+</div>
+
+</div>
+
+<div class="code-wrap">
+<div class="code-head">COMMAND</div>
+<pre>pip install numpy</pre>
+</div>
+
+<h4>Import NumPy</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>import numpy as np</pre>
+</div>
+
+<div class="highlight">
+<strong>Important:</strong>
+यहाँ <b>np</b> NumPy का commonly used alias है।
+</div>
+
+</div>
+
+
+<!-- ARRAY -->
+
+<div class="section-title">
+    <div class="section-icon">🔢</div>
+    <div>
+        <h2>4. NumPy Array</h2>
+        <p>ndarray को समझें</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="bi">
+
+<div class="lang-box english">
+<span class="label">ENGLISH</span>
+<p>
+A NumPy array is an object used to store elements of the same
+data type in one or more dimensions.
+</p>
+</div>
+
+<div class="lang-box hindi">
+<span class="label">हिन्दी</span>
+<p>
+NumPy array एक ऐसा data structure है जिसमें सामान्यतः
+एक ही प्रकार के data elements को एक या अधिक dimensions में रखा जाता है।
+</p>
+</div>
+
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 1 — CREATE ARRAY</div>
+<pre>import numpy as np
+
+a = np.array([10, 20, 30, 40])
+
+print(a)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[10 20 30 40]</pre>
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 2 — ARRAY FROM LIST</div>
+<pre>import numpy as np
+
+numbers = [5, 10, 15, 20]
+
+arr = np.array(numbers)
+
+print(arr)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[ 5 10 15 20]</pre>
+</div>
+
+</div>
+
+
+<!-- DIMENSIONS -->
+
+<div class="section-title">
+    <div class="section-icon">📐</div>
+    <div>
+        <h2>5. Dimensions of NumPy Array</h2>
+        <p>1D, 2D और 3D arrays</p>
+    </div>
+</div>
+
+<div class="card">
+
+<h4>1D Array</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>a = np.array([10,20,30,40])</pre>
+</div>
+
+<p>
+एक single row/sequence को सरल रूप से 1D array के रूप में समझा जा सकता है।
+</p>
+
+<h4>2D Array</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>b = np.array([
+    [1,2,3],
+    [4,5,6]
+])
+
+print(b)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[[1 2 3]
+ [4 5 6]]</pre>
+</div>
+
+<h4>3D Array</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>c = np.array([
+    [[1,2],[3,4]],
+    [[5,6],[7,8]]
+])
+
+print(c)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[[[1 2]
+  [3 4]]
+
+ [[5 6]
+  [7 8]]]</pre>
+</div>
+
+<div class="highlight warning">
+<strong>Exam Trick:</strong>
+Dimension को समझने के लिए nested brackets की level पर ध्यान दें।
+</div>
+
+</div>
+
+
+<!-- ATTRIBUTES -->
+
+<div class="section-title">
+    <div class="section-icon">🧩</div>
+    <div>
+        <h2>6. Important Array Attributes</h2>
+        <p>ndarray की important properties</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="function-grid">
+
+<div class="function-card">
+<code>ndim</code>
+<p>Array की number of dimensions बताता है।</p>
+</div>
+
+<div class="function-card">
+<code>shape</code>
+<p>Array की dimensions का size बताता है।</p>
+</div>
+
+<div class="function-card">
+<code>size</code>
+<p>Array में total elements की संख्या बताता है।</p>
+</div>
+
+<div class="function-card">
+<code>dtype</code>
+<p>Elements का data type बताता है।</p>
+</div>
+
+<div class="function-card">
+<code>itemsize</code>
+<p>एक element के bytes में size को बताता है।</p>
+</div>
+
+<div class="function-card">
+<code>nbytes</code>
+<p>Array द्वारा उपयोग किए गए total bytes को बताता है।</p>
+</div>
+
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE</div>
+<pre>import numpy as np
+
+a = np.array([
+    [10,20,30],
+    [40,50,60]
+])
+
+print(a.ndim)
+print(a.shape)
+print(a.size)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>2
+(2, 3)
+6</pre>
+</div>
+
+</div>
+
+
+<!-- INDEXING -->
+
+<div class="section-title">
+    <div class="section-icon">🎯</div>
+    <div>
+        <h2>7. Array Indexing</h2>
+        <p>Array के elements access करना</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="bi">
+
+<div class="lang-box english">
+<span class="label">ENGLISH</span>
+<p>
+Indexing is used to access individual elements of an array.
+Like Python lists, NumPy arrays use zero-based indexing.
+</p>
+</div>
+
+<div class="lang-box hindi">
+<span class="label">हिन्दी</span>
+<p>
+Indexing का उपयोग array के individual elements को access करने के लिए
+किया जाता है। NumPy में indexing zero से शुरू होती है।
+</p>
+</div>
+
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 1</div>
+<pre>a = np.array([10,20,30,40])
+
+print(a[0])
+print(a[2])
+print(a[-1])</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>10
+30
+40</pre>
+</div>
+
+<h4>2D Indexing</h4>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 2</div>
+<pre>a = np.array([
+    [10,20,30],
+    [40,50,60]
+])
+
+print(a[0,1])
+print(a[1,2])</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>20
+60</pre>
+</div>
+
+</div>
+
+
+<!-- SLICING -->
+
+<div class="section-title">
+    <div class="section-icon">✂️</div>
+    <div>
+        <h2>8. Array Slicing</h2>
+        <p>Array के एक हिस्से को निकालना</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 1</div>
+<pre>a = np.array([10,20,30,40,50])
+
+print(a[1:4])</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[20 30 40]</pre>
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 2</div>
+<pre>a = np.array([10,20,30,40,50])
+
+print(a[:3])
+print(a[2:])
+print(a[::2])</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[10 20 30]
+[30 40 50]
+[10 30 50]</pre>
+</div>
+
+<div class="highlight">
+<strong>Remember:</strong>
+Python slicing में ending index generally included नहीं होता।
+</div>
+
+</div>
+
+
+<!-- SPECIAL ARRAYS -->
+
+<div class="section-title">
+    <div class="section-icon">⚡</div>
+    <div>
+        <h2>9. Special NumPy Arrays</h2>
+        <p>zeros, ones, arange और linspace</p>
+    </div>
+</div>
+
+<div class="card">
+
+<h4>np.zeros()</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>print(np.zeros(5))</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[0. 0. 0. 0. 0.]</pre>
+</div>
+
+<h4>np.ones()</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>print(np.ones(4))</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[1. 1. 1. 1.]</pre>
+</div>
+
+<h4>np.arange()</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>print(np.arange(1,10,2))</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[1 3 5 7 9]</pre>
+</div>
+
+<h4>np.linspace()</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>print(np.linspace(0,10,5))</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[ 0.   2.5  5.   7.5 10. ]</pre>
+</div>
+
+</div>
+
+
+<!-- DATA TYPES -->
+
+<div class="section-title">
+    <div class="section-icon">🔠</div>
+    <div>
+        <h2>10. Data Types in NumPy</h2>
+        <p>dtype को समझें</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE</div>
+<pre>a = np.array([1,2,3,4])
+
+print(a.dtype)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT — MAY DEPEND ON PLATFORM / NUMPY BUILD</div>
+<pre>int...</pre>
+</div>
+
+<p>
+NumPy में integer, floating-point, boolean और अन्य data types का उपयोग किया जा सकता है।
+</p>
+
+<div class="code-wrap">
+<div class="code-head">SPECIFY DATA TYPE</div>
+<pre>a = np.array([1,2,3], dtype=float)
+
+print(a)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[1. 2. 3.]</pre>
+</div>
+
+</div>
+
+
+<!-- MATHEMATICAL OPERATIONS -->
+
+<div class="section-title">
+    <div class="section-icon">➗</div>
+    <div>
+        <h2>11. Mathematical Operations</h2>
+        <p>Arrays पर arithmetic operations</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 1</div>
+<pre>a = np.array([10,20,30])
+b = np.array([1,2,3])
+
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[11 22 33]
+[ 9 18 27]
+[10 40 90]
+[10. 10. 10.]</pre>
+</div>
+
+<div class="highlight success">
+<strong>Key Concept:</strong>
+NumPy arrays पर element-wise arithmetic operations की जा सकती हैं।
+</div>
+
+</div>
+
+
+<!-- UNIVERSAL FUNCTIONS -->
+
+<div class="section-title">
+    <div class="section-icon">🧮</div>
+    <div>
+        <h2>12. Important Mathematical Functions</h2>
+        <p>Exam में frequently useful functions</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="function-grid">
+
+<div class="function-card">
+<code>np.sqrt()</code>
+<p>Square root निकालता है।</p>
+</div>
+
+<div class="function-card">
+<code>np.square()</code>
+<p>Elements का square निकालता है।</p>
+</div>
+
+<div class="function-card">
+<code>np.abs()</code>
+<p>Absolute values निकालता है।</p>
+</div>
+
+<div class="function-card">
+<code>np.sin()</code>
+<p>Sine values calculate करता है।</p>
+</div>
+
+<div class="function-card">
+<code>np.cos()</code>
+<p>Cosine values calculate करता है।</p>
+</div>
+
+<div class="function-card">
+<code>np.log()</code>
+<p>Natural logarithm calculate करता है।</p>
+</div>
+
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE</div>
+<pre>a = np.array([1,4,9,16])
+
+print(np.sqrt(a))
+print(np.square(a))</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[1. 2. 3. 4.]
+[  1  16  81 256]</pre>
+</div>
+
+</div>
+
+
+<!-- AGGREGATE -->
+
+<div class="section-title">
+    <div class="section-icon">📊</div>
+    <div>
+        <h2>13. Aggregate Functions</h2>
+        <p>sum, min, max, mean आदि</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Function</th>
+<th>Meaning</th>
+<th>हिन्दी</th>
+</tr>
+
+<tr>
+<td>np.sum()</td>
+<td>Sum of elements</td>
+<td>योग</td>
+</tr>
+
+<tr>
+<td>np.min()</td>
+<td>Minimum value</td>
+<td>सबसे छोटी value</td>
+</tr>
+
+<tr>
+<td>np.max()</td>
+<td>Maximum value</td>
+<td>सबसे बड़ी value</td>
+</tr>
+
+<tr>
+<td>np.mean()</td>
+<td>Average</td>
+<td>औसत</td>
+</tr>
+
+<tr>
+<td>np.median()</td>
+<td>Median</td>
+<td>मध्यिका</td>
+</tr>
+
+<tr>
+<td>np.std()</td>
+<td>Standard deviation</td>
+<td>मानक विचलन</td>
+</tr>
+
+</table>
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE</div>
+<pre>a = np.array([10,20,30,40,50])
+
+print(np.sum(a))
+print(np.min(a))
+print(np.max(a))
+print(np.mean(a))
+print(np.median(a))</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>150
+10
+50
+30.0
+30.0</pre>
+</div>
+
+</div>
+
+
+<!-- RESHAPE -->
+
+<div class="section-title">
+    <div class="section-icon">🔄</div>
+    <div>
+        <h2>14. Reshaping an Array</h2>
+        <p>Array का shape बदलना</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="bi">
+
+<div class="lang-box english">
+<span class="label">ENGLISH</span>
+<p>
+The <strong>reshape()</strong> method changes the shape of an array
+without changing its data.
+</p>
+</div>
+
+<div class="lang-box hindi">
+<span class="label">हिन्दी</span>
+<p>
+<strong>reshape()</strong> array के data को बदले बिना उसके shape को बदलने
+के लिए उपयोग किया जाता है।
+</p>
+</div>
+
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE</div>
+<pre>a = np.array([1,2,3,4,5,6])
+
+b = a.reshape(2,3)
+
+print(b)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[[1 2 3]
+ [4 5 6]]</pre>
+</div>
+
+<div class="highlight warning">
+<strong>Important:</strong>
+Reshape करते समय total number of elements compatible होना चाहिए।
+उदाहरण: 6 elements को 2×3 में reshape किया जा सकता है।
+</div>
+
+</div>
+
+
+<!-- FLATTEN -->
+
+<div class="section-title">
+    <div class="section-icon">📉</div>
+    <div>
+        <h2>15. Flattening an Array</h2>
+        <p>Multidimensional array को 1D में बदलना</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE</div>
+<pre>a = np.array([
+    [1,2,3],
+    [4,5,6]
+])
+
+b = a.flatten()
+
+print(b)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[1 2 3 4 5 6]</pre>
+</div>
+
+</div>
+
+
+<!-- CONCATENATION -->
+
+<div class="section-title">
+    <div class="section-icon">🔗</div>
+    <div>
+        <h2>16. Joining Arrays</h2>
+        <p>Arrays को जोड़ना</p>
+    </div>
+</div>
+
+<div class="card">
+
+<h4>np.concatenate()</h4>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE</div>
+<pre>a = np.array([1,2,3])
+b = np.array([4,5,6])
+
+c = np.concatenate((a,b))
+
+print(c)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[1 2 3 4 5 6]</pre>
+</div>
+
+</div>
+
+
+<!-- SORT -->
+
+<div class="section-title">
+    <div class="section-icon">📌</div>
+    <div>
+        <h2>17. Sorting Arrays</h2>
+        <p>Values को ascending order में arrange करना</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 1</div>
+<pre>a = np.array([40,10,30,20])
+
+print(np.sort(a))</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[10 20 30 40]</pre>
+</div>
+
+<div class="code-wrap">
+<div class="code-head">EXAMPLE 2</div>
+<pre>a = np.array([5,1,8,2,3])
+
+b = np.sort(a)
+
+print(b)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[1 2 3 5 8]</pre>
+</div>
+
+</div>
+
+
+<!-- RANDOM -->
+
+<div class="section-title">
+    <div class="section-icon">🎲</div>
+    <div>
+        <h2>18. Random Numbers</h2>
+        <p>NumPy random module का basic use</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="code-wrap">
+<div class="code-head">RANDOM INTEGER</div>
+<pre>import numpy as np
+
+x = np.random.randint(1, 10)
+
+print(x)</pre>
+</div>
+
+<p>
+Output हर execution में बदल सकता है क्योंकि random value generate होती है।
+</p>
+
+<div class="code-wrap">
+<div class="code-head">RANDOM ARRAY</div>
+<pre>x = np.random.randint(1, 10, size=5)
+
+print(x)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">EXAMPLE OUTPUT — WILL VARY</div>
+<pre>[4 1 8 3 7]</pre>
+</div>
+
+</div>
+
+
+<!-- PRACTICAL PROGRAMS -->
+
+<div class="section-title">
+    <div class="section-icon">💻</div>
+    <div>
+        <h2>19. Important Practical Programs</h2>
+        <p>Exam + practical preparation</p>
+    </div>
+</div>
+
+<div class="card">
+
+<h4>Program 1 — Sum of Array</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>import numpy as np
+
+a = np.array([10,20,30,40,50])
+
+total = np.sum(a)
+
+print("Total =", total)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>Total = 150</pre>
+</div>
+
+<h4>Program 2 — Find Maximum</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>import numpy as np
+
+a = np.array([12,45,7,89,23])
+
+print("Maximum =", np.max(a))</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>Maximum = 89</pre>
+</div>
+
+<h4>Program 3 — Average</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>import numpy as np
+
+marks = np.array([70,80,90,60,75])
+
+average = np.mean(marks)
+
+print("Average =", average)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>Average = 75.0</pre>
+</div>
+
+<h4>Program 4 — 1D to 2D</h4>
+
+<div class="code-wrap">
+<div class="code-head">PYTHON</div>
+<pre>import numpy as np
+
+a = np.arange(1,7)
+
+b = a.reshape(2,3)
+
+print(b)</pre>
+</div>
+
+<div class="output">
+<div class="output-title">OUTPUT</div>
+<pre>[[1 2 3]
+ [4 5 6]]</pre>
+</div>
+
+</div>
+
+
+<!-- COMMON FUNCTIONS -->
+
+<div class="section-title">
+    <div class="section-icon">🚀</div>
+    <div>
+        <h2>20. Most Important NumPy Functions</h2>
+        <p>Quick revision table</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Function / Attribute</th>
+<th>Use</th>
+</tr>
+
+<tr>
+<td>np.array()</td>
+<td>Create NumPy array</td>
+</tr>
+
+<tr>
+<td>np.zeros()</td>
+<td>Create array filled with zeros</td>
+</tr>
+
+<tr>
+<td>np.ones()</td>
+<td>Create array filled with ones</td>
+</tr>
+
+<tr>
+<td>np.arange()</td>
+<td>Create evenly spaced values using a step</td>
+</tr>
+
+<tr>
+<td>np.linspace()</td>
+<td>Create a specified number of evenly spaced values</td>
+</tr>
+
+<tr>
+<td>np.reshape()</td>
+<td>Change array shape</td>
+</tr>
+
+<tr>
+<td>np.sort()</td>
+<td>Sort array</td>
+</tr>
+
+<tr>
+<td>np.concatenate()</td>
+<td>Join arrays</td>
+</tr>
+
+<tr>
+<td>np.sum()</td>
+<td>Calculate sum</td>
+</tr>
+
+<tr>
+<td>np.min()</td>
+<td>Find minimum</td>
+</tr>
+
+<tr>
+<td>np.max()</td>
+<td>Find maximum</td>
+</tr>
+
+<tr>
+<td>np.mean()</td>
+<td>Find average</td>
+</tr>
+
+<tr>
+<td>np.median()</td>
+<td>Find median</td>
+</tr>
+
+<tr>
+<td>np.sqrt()</td>
+<td>Square root</td>
+</tr>
+
+<tr>
+<td>np.random.randint()</td>
+<td>Generate random integers</td>
+</tr>
+
+<tr>
+<td>ndim</td>
+<td>Number of dimensions</td>
+</tr>
+
+<tr>
+<td>shape</td>
+<td>Shape of array</td>
+</tr>
+
+<tr>
+<td>size</td>
+<td>Total elements</td>
+</tr>
+
+<tr>
+<td>dtype</td>
+<td>Data type</td>
+</tr>
+
+</table>
+</div>
+
+</div>
+
+
+<!-- COMMON MISTAKES -->
+
+<div class="section-title">
+    <div class="section-icon">⚠️</div>
+    <div>
+        <h2>21. Common Mistakes</h2>
+        <p>इन गलतियों से बचें</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="highlight warning">
+<strong>Mistake 1:</strong>
+NumPy import किए बिना np.array() use करना।
+<br><br>
+Correct:
+<code>import numpy as np</code>
+</div>
+
+<div class="highlight warning">
+<strong>Mistake 2:</strong>
+reshape में incompatible dimensions देना।
+<br><br>
+Example: 6 elements को 2×4 में reshape नहीं किया जा सकता।
+</div>
+
+<div class="highlight warning">
+<strong>Mistake 3:</strong>
+np.arange() और np.linspace() को same समझना।
+<br><br>
+दोनों का purpose और argument behavior अलग है।
+</div>
+
+<div class="highlight warning">
+<strong>Mistake 4:</strong>
+Array indexing में पहला index 1 समझना।
+<br><br>
+Python और NumPy में indexing सामान्यतः <strong>0</strong> से शुरू होती है।
+</div>
+
+</div>
+
+
+<!-- EXAM CAPSULE -->
+
+<div class="section-title">
+    <div class="section-icon">🎯</div>
+    <div>
+        <h2>22. NIELIT Exam Capsule</h2>
+        <p>Last-minute revision</p>
+    </div>
+</div>
+
+<div class="exam-grid">
+
+<div class="exam-card">
+<h3>🔥 Must Remember</h3>
+<ul>
+<li>NumPy = Numerical Python</li>
+<li>Main array object = ndarray</li>
+<li>Common alias = np</li>
+<li>Indexing starts from 0</li>
+<li>ndim = dimensions</li>
+<li>shape = dimensions' size</li>
+<li>size = total elements</li>
+</ul>
+</div>
+
+<div class="exam-card">
+<h3>⚡ Functions</h3>
+<ul>
+<li>np.array()</li>
+<li>np.zeros()</li>
+<li>np.ones()</li>
+<li>np.arange()</li>
+<li>np.linspace()</li>
+<li>np.reshape()</li>
+<li>np.sort()</li>
+<li>np.sum()</li>
+</ul>
+</div>
+
+</div>
+
+
+<!-- MCQS -->
+
+<div class="section-title">
+    <div class="section-icon">🧠</div>
+    <div>
+        <h2>23. Important MCQs</h2>
+        <p>Chapter 8 exam practice</p>
+    </div>
+</div>
+
+
+<div class="card">
+
+<div class="mcq">
+<div class="question">
+1. NumPy stands for:
+</div>
+<div class="option">A. Number Python</div>
+<div class="option">B. Numerical Python</div>
+<div class="option">C. New Python</div>
+<div class="option">D. Numeric Program</div>
+<div class="answer">✓ Answer: B — Numerical Python</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+2. NumPy का मुख्य array object क्या है?
+</div>
+<div class="option">A. list</div>
+<div class="option">B. tuple</div>
+<div class="option">C. ndarray</div>
+<div class="option">D. dict</div>
+<div class="answer">✓ Answer: C — ndarray</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+3. NumPy को commonly किस alias से import किया जाता है?
+</div>
+<div class="option">A. np</div>
+<div class="option">B. num</div>
+<div class="option">C. py</div>
+<div class="option">D. numpy1</div>
+<div class="answer">✓ Answer: A — np</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+4. np.zeros(4) क्या create करता है?
+</div>
+<div class="option">A. Four ones</div>
+<div class="option">B. Four zeros</div>
+<div class="option">C. Empty list</div>
+<div class="option">D. Four random values</div>
+<div class="answer">✓ Answer: B — Four zeros</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+5. Array की dimensions जानने के लिए कौन-सा attribute use होता है?
+</div>
+<div class="option">A. size</div>
+<div class="option">B. shape</div>
+<div class="option">C. ndim</div>
+<div class="option">D. dtype</div>
+<div class="answer">✓ Answer: C — ndim</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+6. Array में total elements जानने के लिए कौन-सा attribute use होता है?
+</div>
+<div class="option">A. size</div>
+<div class="option">B. shape</div>
+<div class="option">C. ndim</div>
+<div class="option">D. item</div>
+<div class="answer">✓ Answer: A — size</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+7. Average निकालने के लिए कौन-सा NumPy function use किया जाता है?
+</div>
+<div class="option">A. np.avg()</div>
+<div class="option">B. np.mean()</div>
+<div class="option">C. np.averageValue()</div>
+<div class="option">D. np.middle()</div>
+<div class="answer">✓ Answer: B — np.mean()</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+8. Array को नया shape देने के लिए कौन-सा method use होता है?
+</div>
+<div class="option">A. change()</div>
+<div class="option">B. resizeShape()</div>
+<div class="option">C. reshape()</div>
+<div class="option">D. newshape()</div>
+<div class="answer">✓ Answer: C — reshape()</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+9. NumPy array indexing सामान्यतः कहाँ से शुरू होती है?
+</div>
+<div class="option">A. 0</div>
+<div class="option">B. 1</div>
+<div class="option">C. -1</div>
+<div class="option">D. 2</div>
+<div class="answer">✓ Answer: A — 0</div>
+</div>
+
+
+<div class="mcq">
+<div class="question">
+10. np.max() का उपयोग किसके लिए होता है?
+</div>
+<div class="option">A. Minimum value</div>
+<div class="option">B. Maximum value</div>
+<div class="option">C. Average</div>
+<div class="option">D. Sum</div>
+<div class="answer">✓ Answer: B — Maximum value</div>
+</div>
+
+</div>
+
+
+<!-- FINAL REVISION -->
+
+<div class="section-title">
+    <div class="section-icon">🏆</div>
+    <div>
+        <h2>24. One-Page Revision</h2>
+        <p>Chapter को जल्दी revise करें</p>
+    </div>
+</div>
+
+<div class="card">
+
+<div class="highlight success">
+<strong>NumPy = Numerical Python</strong>
+</div>
+
+<ul>
+<li><b>Import:</b> import numpy as np</li>
+<li><b>Array:</b> np.array()</li>
+<li><b>Zeros:</b> np.zeros()</li>
+<li><b>Ones:</b> np.ones()</li>
+<li><b>Range:</b> np.arange()</li>
+<li><b>Equal spacing:</b> np.linspace()</li>
+<li><b>Dimensions:</b> ndim</li>
+<li><b>Shape:</b> shape</li>
+<li><b>Total elements:</b> size</li>
+<li><b>Data type:</b> dtype</li>
+<li><b>Reshape:</b> reshape()</li>
+<li><b>Sort:</b> np.sort()</li>
+<li><b>Sum:</b> np.sum()</li>
+<li><b>Minimum:</b> np.min()</li>
+<li><b>Maximum:</b> np.max()</li>
+<li><b>Average:</b> np.mean()</li>
+<li><b>Median:</b> np.median()</li>
+<li><b>Square root:</b> np.sqrt()</li>
+<li><b>Random integer:</b> np.random.randint()</li>
+</ul>
+
+<div class="highlight">
+<strong>Golden Rule:</strong>
+NumPy chapter में सिर्फ definitions याद न करें — 
+<strong>array creation → indexing → slicing → shape → mathematical functions → reshape</strong>
+का flow examples के साथ जरूर practice करें।
+</div>
+
+</div>
+
+
+<footer class="footer">
+
+<p>
+M3-R5 • Python Programming • Chapter 8 — NumPy
+</p>
+
+<p style="margin-top:6px;">
+Bilingual Study Notes • Examples • Outputs • Exam Capsule • MCQs
+</p>
+
+</footer>
+
+</main>
+
+
+<!-- THEME -->
+
+<div class="theme-panel">
+<p>TEXT / ACCENT THEME</p>
+
+<span class="theme-btn t1" onclick="setTheme('#39e7ff')"></span>
+<span class="theme-btn t2" onclick="setTheme('#8b5cf6')"></span>
+<span class="theme-btn t3" onclick="setTheme('#35e59a')"></span>
+<span class="theme-btn t4" onclick="setTheme('#ff6bb5')"></span>
+<span class="theme-btn t5" onclick="setTheme('#ff9f43')"></span>
+</div>
+
+
+<script>
+
+function setTheme(color){
+
+    document.documentElement.style.setProperty(
+        '--accent',
+        color
+    );
+
+}
+
+</script>
+
+</body>
+</html>

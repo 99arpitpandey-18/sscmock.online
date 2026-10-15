@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 500+ Reasoning Questions – All Topics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #f4f7fc;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ---------- SIDEBAR ---------- */
+        .sidebar {
+            width: 270px;
+            background: #0b1a33;
+            color: #e6edf5;
+            padding: 25px 0 20px 0;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+        }
+        .sidebar h2 {
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            padding: 0 10px 22px 10px;
+            border-bottom: 1px solid #2a3f5a;
+            margin-bottom: 15px;
+            color: #b6d0ff;
+        }
+        .sidebar h2 span {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: #8aa3c9;
+            margin-top: 4px;
+        }
+        .topic-btn {
+            background: transparent;
+            border: none;
+            color: #c8d8f0;
+            padding: 14px 22px;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 4px solid transparent;
+            margin: 2px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .topic-btn:hover {
+            background: #1f3450;
+            color: #fff;
+            border-left-color: #5a8de4;
+        }
+        .topic-btn.active {
+            background: #1f3450;
+            color: #fff;
+            border-left-color: #5a8de4;
+            font-weight: 600;
+        }
+        .topic-btn .badge {
+            margin-left: auto;
+            background: #2a405b;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #a0bbdf;
+        }
+        .topic-btn.active .badge {
+            background: #3b5d88;
+            color: #fff;
+        }
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 20px 22px 10px;
+            font-size: 0.75rem;
+            color: #5f7a9e;
+            border-top: 1px solid #1e334d;
+            text-align: center;
+        }
+
+        /* ---------- MAIN CONTENT ---------- */
+        .main {
+            flex: 1;
+            padding: 30px 35px 60px 35px;
+            max-width: calc(100% - 270px);
+        }
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            border-bottom: 2px solid #dce3ed;
+            padding-bottom: 18px;
+        }
+        .main-header h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0b1a33;
+        }
+        .main-header h1 small {
+            font-weight: 400;
+            font-size: 1rem;
+            color: #5d738e;
+            margin-left: 12px;
+        }
+        .stats {
+            background: #e9eff7;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #1f3a5f;
+            font-size: 0.95rem;
+        }
+
+        /* ---------- QUESTION CARDS ---------- */
+        .question-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .q-card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 20px 24px 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eef2f8;
+            transition: 0.15s;
+        }
+        .q-card:hover {
+            border-color: #cbd7e8;
+            box-shadow: 0 6px 16px rgba(0, 20, 50, 0.06);
+        }
+        .q-number {
+            font-weight: 600;
+            color: #2a4b7c;
+            margin-right: 10px;
+            font-size: 0.95rem;
+        }
+        .q-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #142b44;
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+        .q-text .highlight {
+            background: #f0f5ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 18px;
+            margin-bottom: 12px;
+        }
+        .option {
+            padding: 8px 12px;
+            background: #f8faff;
+            border-radius: 8px;
+            border: 1px solid #e3eaf3;
+            font-size: 0.95rem;
+            color: #1f3a57;
+            transition: 0.1s;
+            cursor: default;
+        }
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            font-weight: 600;
+            color: #155724;
+        }
+        .option.wrong {
+            background: #f8dddd;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .q-actions {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-top: 6px;
+        }
+        .btn-show-answer {
+            background: #eef3fa;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #1f3a5f;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-show-answer:hover {
+            background: #d4e0f0;
+        }
+        .btn-show-answer.revealed {
+            background: #d4edda;
+            color: #0e4f1f;
+        }
+        .answer-text {
+            font-weight: 500;
+            color: #155724;
+            background: #e9f7eb;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .answer-text.show {
+            display: inline-block;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 800px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 12px 16px;
+                justify-content: center;
+                gap: 6px;
+            }
+            .sidebar h2 {
+                width: 100%;
+                padding-bottom: 8px;
+                margin-bottom: 6px;
+                border-bottom: 1px solid #2a3f5a;
+                font-size: 1.1rem;
+            }
+            .sidebar h2 span {
+                display: inline;
+                font-size: 0.7rem;
+            }
+            .topic-btn {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+                border-left: none;
+                border-radius: 30px;
+                background: #1f3450;
+                margin: 2px;
+            }
+            .topic-btn.active {
+                background: #3b5d88;
+                border-left: none;
+            }
+            .topic-btn .badge {
+                display: none;
+            }
+            .sidebar-footer {
+                display: none;
+            }
+            .main {
+                max-width: 100%;
+                padding: 20px 16px;
+            }
+            .options {
+                grid-template-columns: 1fr;
+            }
+            .main-header h1 {
+                font-size: 1.3rem;
+            }
+            .main-header h1 small {
+                font-size: 0.8rem;
+                display: block;
+                margin-left: 0;
+            }
+        }
+        @media (max-width: 500px) {
+            .q-card {
+                padding: 14px;
+            }
+            .q-text {
+                font-size: 0.95rem;
+            }
+            .option {
+                font-size: 0.85rem;
+                padding: 6px 10px;
+            }
+        }
+
+        /* scroll */
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: #0b1a33;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #3b5d88;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+        <h2>🧠 Reasoning <span>500+ Questions</span></h2>
+        <div id="topicList"></div>
+        <div class="sidebar-footer">⚡ Click topic to load 60 Qs</div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="main" id="mainContent">
+        <div class="main-header">
+            <h1 id="topicTitle">Blood Relations <small>60 questions</small></h1>
+            <div class="stats" id="statsDisplay">📝 0 / 60</div>
+        </div>
+        <div id="questionContainer" class="question-grid"></div>
+    </main>
+
+    <script>
+        // --------------------------------------------------------------
+        //  TOPIC CONFIG
+        // --------------------------------------------------------------
+        const TOPICS = [
+            { id: 'blood', label: '🩸 Blood Relations' },
+            { id: 'direction', label: '🧭 Direction & Distance' },
+            { id: 'syllogism', label: '📊 Syllogism' },
+            { id: 'venn', label: '🔵 Venn Diagram' },
+            { id: 'ranking', label: '🏅 Order & Ranking' },
+            { id: 'calendar', label: '📅 Calendar & Clock' },
+            { id: 'nonverbal', label: '🔷 Non-Verbal Reasoning' },
+            { id: 'puzzle', label: '🧩 Puzzle & Arrangement' },
+            { id: 'mixed', label: '🌀 Mixed Reasoning' }
+        ];
+
+        // --------------------------------------------------------------
+        //  UTILITY
+        // --------------------------------------------------------------
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function pick(arr, n) {
+            const copy = [...arr];
+            shuffle(copy);
+            return copy.slice(0, n);
+        }
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // --------------------------------------------------------------
+        //  BLOOD RELATIONS  (60+)
+        // --------------------------------------------------------------
+        const BLOOD_TEMPLATES = [
+            { text: '{X} is the father of {Y}. {Y} is the sister of {Z}.', ans: 'Father' },
+            { text: '{X} is the mother of {Y}. {Z} is the brother of {X}.', ans: 'Uncle' },
+            { text: '{X} is the brother of {Y}. {Y} is the mother of {Z}.', ans: 'Maternal Uncle' },
+            { text: '{X} is the wife of {Y}. {Y} is the father of {Z}.', ans: 'Mother' },
+            { text: '{X} is the son of {Y}. {Y} is the daughter of {Z}.', ans: 'Grandson' },
+            { text: '{X} is the daughter of {Y}. {Y} is the son of {Z}.', ans: 'Granddaughter' },
+            { text: '{X} is the father of {Y}. {Z} is the mother of {Y}.', ans: 'Husband' },
+            { text: '{X} is the mother of {Y}. {Z} is the father of {Y}.', ans: 'Wife' },
+            { text: '{X} is the brother of {Y}. {Z} is the sister of {Y}.', ans: 'Brother' },
+            { text: '{X} is the father of {Y}. {Y} is the brother of {Z}.', ans: 'Father' },
+            { text: '{X} is the mother of {Y}. {Y} is the sister of {Z}.', ans: 'Mother' },
+            { text: '{X} is the uncle of {Y}. {Y} is the father of {Z}.', ans: 'Granduncle' },
+            { text: '{X} is the aunt of {Y}. {Y} is the mother of {Z}.', ans: 'Grandaunt' },
+            { text: '{X} is the son of {Y}. {Y} is the brother of {Z}.', ans: 'Nephew' },
+            { text: '{X} is the daughter of {Y}. {Y} is the sister of {Z}.', ans: 'Niece' },
+            { text: '{X} is the husband of {Y}. {Y} is the sister of {Z}.', ans: 'Brother-in-law' },
+            { text: '{X} is the wife of {Y}. {Y} is the brother of {Z}.', ans: 'Sister-in-law' },
+            { text: '{X} is the father of {Y}. {Z} is the daughter of {Y}.', ans: 'Grandfather' },
+            { text: '{X} is the mother of {Y}. {Z} is the son of {Y}.', ans: 'Grandmother' },
+            { text: '{X} is the brother of {Y}. {Y} is the father of {Z}.', ans: 'Uncle' }
+        ];
+
+        const RELATION_POOL = ['Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Grandfather', 'Grandmother',
+            'Son', 'Daughter', 'Husband', 'Wife', 'Nephew', 'Niece', 'Cousin', 'Brother-in-law', 'Sister-in-law',
+            'Grandson', 'Granddaughter'
+        ];
+
+        function generateBloodQuestion() {
+            const tmpl = BLOOD_TEMPLATES[randomInt(0, BLOOD_TEMPLATES.length - 1)];
+            const names = ['A', 'B', 'C', 'D', 'E'];
+            const used = [];
+            const x = names[randomInt(0, names.length - 1)];
+            used.push(x);
+            let y, z;
+            do { y = names[randomInt(0, names.length - 1)]; } while (y === x);
+            used.push(y);
+            do { z = names[randomInt(0, names.length - 1)]; } while (z === x || z === y);
+            const text = tmpl.text.replace(/\{X\}/g, x).replace(/\{Y\}/g, y).replace(/\{Z\}/g, z);
+            const correct = tmpl.ans;
+            const distractors = pick(RELATION_POOL.filter(r => r !== correct), 3);
+            const options = shuffle([correct, ...distractors]);
+            const answerIndex = options.indexOf(correct);
+            return { text, options, answerIndex };
+        }
+
+        // --------------------------------------------------------------
+        //  DIRECTION & DISTANCE (60+)
+        // --------------------------------------------------------------
+        const DIR_TEMPLATES = [{
+            dir: 'North-East',
+            text: 'Start from point O, walk {A} m North, then turn right and walk {A} m East.'
+        }, {
+            dir: 'South-East',
+            text: 'Start from point O, walk {A} m South, then turn left and walk {A} m East.'
+        }, {
+            dir: 'South-East',
+            text: 'Start from point O, walk {A} m East, then turn right and walk {A} m South.'
+        }, {
+            dir: 'South-West',
+            text: 'Start from point O, walk {A} m West, then turn left and walk {A} m South.'
+        }, {
+            dir: 'East',
+            text: 'Start from point O, walk {A} m North, then turn right and walk {A} m East, then turn right and walk {A} m South.'
+        }, {
+            dir: 'West',
+            text: 'Start from point O, walk {A} m South, then turn left and walk {A} m East, then turn left and walk {A} m North.'
+        }, {
+            dir: 'North-West',
+            text: 'Start from point O, walk {A} m West, then turn right and walk {A} m North.'
+        }, {
+            dir: 'South',
+            text: 'Start from point O, walk {A} m East, then turn right and walk {A} m South, then turn left and walk {A} m East.'
+        }, {
+            dir: 'North',
+            text: 'Start from point O, walk {A} m West, then turn left and walk {A} m South, then turn left and walk {A} m East.'
+        }, {
+            dir: 'North-East',
+            text: 'Start from point O, walk {A} m East, then turn left and walk {A} m North.'
+        }, {
+            dir: 'South-West',
+            text: 'Start from point O, walk {A} m South, then turn right and walk {A} m West.'
+        }, {
+            dir: 'North-West',
+            text: 'Start from point O, walk {A} m North, then turn left and walk {A} m West.'
+        }, {
+            dir: 'South-East',
+            text: 'Start from point O, walk {A} m East, then turn right and walk {A} m South.'
+        }, {
+            dir: 'East',
+            text: 'Start from point O, walk {A} m North, then turn right and walk {A} m East, then turn right and walk {A} m South, then turn right and walk {A} m West.'
+        }, {
+            dir: 'West',
+            text: 'Start from point O, walk {A} m North, then turn left and walk {A} m West, then turn left and walk {A} m South.'
+        }, ];
+
+        const DIR_POOL = ['North', 'South', 'East', 'West', 'North-East', 'North-West', 'South-East', 'South-West'];
+
+        function generateDirectionQuestion() {
+            const tmpl = DIR_TEMPLATES[randomInt(0, DIR_TEMPLATES.length - 1)];
+            const dist = randomInt(5, 20) * 5;
+            const text = tmpl.text.replace(/\{A\}/g, dist) + ' In which direction is the person from the starting point?';
+            const correct = tmpl.dir;
+            const distractors = pick(DIR_POOL.filter(d => d !== correct), 3);
+            const options = shuffle([correct, ...distractors]);
+            const answerIndex = options.indexOf(correct);
+            return { text, options, answerIndex };
+        }
+
+        // --------------------------------------------------------------
+        //  SYLLOGISM (60+)
+        // --------------------------------------------------------------
+        const CATEGORIES = ['Cats', 'Dogs', 'Rats', 'Birds', 'Animals', 'Mammals', 'Reptiles', 'Fish', 'Trees', 'Flowers',
+            'Fruits', 'Vegetables'
+        ];
+
+        function generateSyllogism() {
+            const c = shuffle([...CATEGORIES]);
+            const A = c[0],
+                B = c[1],
+                C = c[2];
+            const templates = [{
+                s1: `All ${A} are ${B}.`,
+                s2: `All ${B} are ${C}.`,
+                cons: [`All ${A} are ${C}.`, `Some ${C} are ${A}.`],
+                correct: 0
+            }, {
+                s1: `All ${A} are ${B}.`,
+                s2: `No ${B} are ${C}.`,
+                cons: [`No ${A} are ${C}.`, `Some ${C} are ${A}.`],
+                correct: 0
+            }, {
+                s1: `Some ${A} are ${B}.`,
+                s2: `All ${B} are ${C}.`,
+                cons: [`Some ${A} are ${C}.`, `All ${C} are ${A}.`],
+                correct: 0
+            }, {
+                s1: `Some ${A} are ${B}.`,
+                s2: `Some ${B} are ${C}.`,
+                cons: [`Some ${A} are ${C}.`, `No ${A} are ${C}.`],
+                correct: 1 // second is definitely false (no definite)
+            }, {
+                s1: `No ${A} are ${B}.`,
+                s2: `All ${B} are ${C}.`,
+                cons: [`Some ${C} are not ${A}.`, `All ${A} are ${C}.`],
+                correct: 0
+            }, {
+                s1: `All ${A} are ${B}.`,
+                s2: `Some ${B} are ${C}.`,
+                cons: [`Some ${A} are ${C}.`, `Some ${C} are ${A}.`],
+                correct: 1 // neither definite
+            }, {
+                s1: `Some ${A} are ${B}.`,
+                s2: `No ${B} are ${C}.`,
+                cons: [`Some ${A} are not ${C}.`, `All ${A} are ${C}.`],
+                correct: 0
+            }, {
+                s1: `All ${A} are ${B}.`,
+                s2: `No ${C} are ${B}.`,
+                cons: [`No ${C} are ${A}.`, `Some ${A} are ${C}.`],
+                correct: 0
+            }, ];
+
+            const t = templates[randomInt(0, templates.length - 1)];
+            const statement = `${t.s1} ${t.s2}`;
+            const c1 = t.cons[0];
+            const c2 = t.cons[1];
+            const correct = t.correct;
+            // Build options: which conclusion follows?
+            const optTexts = [
+                `Only conclusion I follows (${c1})`,
+                `Only conclusion II follows (${c2})`,
+                `Both conclusions follow`,
+                `Neither conclusion follows`
+            ];
+            // Determine correct option index based on correctness of c1 and c2.
+            // In our templates, correct = 0 means only I follows, 1 means only II follows.
+            // But we need to map correctly.
+            // Actually let's just make options: 
+            // A) Only I, B) Only II, C) Both, D) Neither
+            // We know correct.
+            let ansIdx = 0;
+            if (correct === 0) ansIdx = 0; // Only I
+            else if (correct === 1) ansIdx = 1; // Only II
+            // For simplicity we'll just use the pre-defined correct.
+            // But let's randomize the order of options.
+            const displayOpts = [
+                `Only conclusion I follows: ${c1}`,
+                `Only conclusion II follows: ${c2}`,
+                `Both conclusions I and II follow`,
+                `Neither conclusion follows`
+            ];
+            // correct answer is at index ansIdx
+            const shuffledOpts = shuffle([...displayOpts]);
+            const answerIndex = shuffledOpts.indexOf(displayOpts[ansIdx]);
+            const fullText =
+                `Statements: ${statement}  \nWhich of the following conclusions logically follows?`;
+            return { text: fullText, options: shuffledOpts, answerIndex };
+        }
+
+        // --------------------------------------------------------------
+        //  VENN DIAGRAM (60+)
+        // --------------------------------------------------------------
+        function generateVennQuestion() {
+            const total = randomInt(80, 200);
+            const A = randomInt(30, total - 20);
+            const B = randomInt(20, total - A + 10);
+            const both = randomInt(5, Math.min(A, B, 40));
+            const neither = total - (A + B - both);
+            if (neither < 0) return generateVennQuestion();
+            const text =
+                `In a group of ${total} people, ${A} like category X, ${B} like category Y, and ${both} like both. How many like neither X nor Y?`;
+            const correct = neither;
+            const distractors = pick([total - A, total - B, A - both, B - both, both, A + B, total - (A + B)], 3);
+            const opts = shuffle([correct, ...distractors]);
+            const ansIdx = opts.indexOf(correct);
+            return {
+                text: text + ' (Choose the correct number)',
+                options: opts.map(v => `${v}`),
+                answerIndex: ansIdx
+            };
+        }
+
+        // --------------------------------------------------------------
+        //  ORDER & RANKING (60+)
+        // --------------------------------------------------------------
+        function generateRankingQuestion() {
+            const total = randomInt(30, 120);
+            const rankLeft = randomInt(3, total - 3);
+            const rankRight = total - rankLeft + 1;
+            const text =
+                `In a row of ${total} students, A is ${rankLeft}th from the left. What is A's rank from the right?`;
+            const correct = rankRight;
+            const distractors = pick([total - rankLeft, rankLeft + 1, total - rankLeft + 2, rankLeft - 1, total], 3);
+            const opts = shuffle([correct, ...distractors]);
+            const ansIdx = opts.indexOf(correct);
+            return {
+                text,
+                options: opts.map(v => `${v}`),
+                answerIndex: ansIdx
+            };
+        }
+
+        // --------------------------------------------------------------
+        //  CALENDAR (60+)
+        // --------------------------------------------------------------
+        function generateCalendarQuestion() {
+            const year = randomInt(1950, 2050);
+            const month = randomInt(1, 12);
+            const day = randomInt(1, 28);
+            const dateObj = new Date(year, month - 1, day);
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const correct = days[dateObj.getDay()];
+            const text = `What was the day on ${day}/${month}/${year}?`;
+            const distractors = pick(days.filter(d => d !== correct), 3);
+            const opts = shuffle([correct, ...distractors]);
+            const ansIdx = opts.indexOf(correct);
+            return { text, options: opts, answerIndex: ansIdx };
+        }
+
+        // --------------------------------------------------------------
+        //  NON-VERBAL (60+)
+        // --------------------------------------------------------------
+        function generateNonVerbal() {
+            const type = randomInt(0, 2);
+            if (type === 0) {
+                // Number series
+                const start = randomInt(1, 10);
+                const diff = randomInt(2, 6);
+                const seq = [start, start + diff, start + 2 * diff, start + 3 * diff];
+                const correct = start + 4 * diff;
+                const text =
+                    `Find the next number in the series: ${seq.join(', ')}, ?`;
+                const distractors = pick([correct + diff, correct - diff, correct + 1, correct - 1, correct * 2], 3);
+                const opts = shuffle([correct, ...distractors]);
+                const ansIdx = opts.indexOf(correct);
+                return { text, options: opts.map(v => `${v}`), answerIndex: ansIdx };
+            } else if (type === 1) {
+                // Alphabet series
+                const alph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const start = randomInt(0, 18);
+                const step = randomInt(2, 5);
+                const seq = [alph[start], alph[start + step], alph[start + 2 * step], alph[start + 3 * step]];
+                const correct = alph[start + 4 * step];
+                const text =
+                    `Find the next alphabet in the series: ${seq.join(', ')}, ?`;
+                const distractors = pick(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                    'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+                ].filter(l => l !== correct), 3);
+                const opts = shuffle([correct, ...distractors]);
+                const ansIdx = opts.indexOf(correct);
+                return { text, options: opts, answerIndex: ansIdx };
+            } else {
+                // Shape pattern
+                const shapes = ['▲', '■', '●', '★', '◆', '⬟'];
+                const s = shuffle([...shapes]);
+                const seq = [s[0], s[1], s[0], s[1]];
+                const correct = s[0];
+                const text =
+                    `Find the next figure in the pattern: ${seq.join(' ')} , ? (▲=triangle, ■=square, ●=circle, ★=star)`;
+                const distractors = pick(shapes.filter(sh => sh !== correct), 3);
+                const opts = shuffle([correct, ...distractors]);
+                const ansIdx = opts.indexOf(correct);
+                return { text, options: opts, answerIndex: ansIdx };
+            }
+        }
+
+        // --------------------------------------------------------------
+        //  PUZZLE & ARRANGEMENT (60+)
+        // --------------------------------------------------------------
+        function generatePuzzle() {
+            const names = ['A', 'B', 'C', 'D', 'E'];
+            const order = shuffle([...names]);
+            // ask: who is at left end? or right end? or middle?
+            const qtype = randomInt(0, 2);
+            let text, correct;
+            if (qtype === 0) {
+                correct = order[0];
+                text =
+                    `Five persons ${names.join(', ')} are sitting in a row. The arrangement (left to right) is: ${order.join(' ')}. Who is at the left end?`;
+            } else if (qtype === 1) {
+                correct = order[order.length - 1];
+                text =
+                    `Five persons ${names.join(', ')} are sitting in a row. The arrangement (left to right) is: ${order.join(' ')}. Who is at the right end?`;
+            } else {
+                correct = order[Math.floor(order.length / 2)];
+                text =
+                    `Five persons ${names.join(', ')} are sitting in a row. The arrangement (left to right) is: ${order.join(' ')}. Who is sitting in the middle?`;
+            }
+            const distractors = pick(names.filter(n => n !== correct), 3);
+            const opts = shuffle([correct, ...distractors]);
+            const ansIdx = opts.indexOf(correct);
+            return { text, options: opts, answerIndex: ansIdx };
+        }
+
+        // --------------------------------------------------------------
+        //  MIXED (random from above)
+        // --------------------------------------------------------------
+        function generateMixed() {
+            const generators = [
+                generateBloodQuestion,
+                generateDirectionQuestion,
+                generateSyllogism,
+                generateVennQuestion,
+                generateRankingQuestion,
+                generateCalendarQuestion,
+                generateNonVerbal,
+                generatePuzzle
+            ];
+            const gen = generators[randomInt(0, generators.length - 1)];
+            return gen();
+        }
+
+        // --------------------------------------------------------------
+        //  QUESTION GENERATOR DISPATCH
+        // --------------------------------------------------------------
+        function generateQuestion(topicId) {
+            switch (topicId) {
+                case 'blood':
+                    return generateBloodQuestion();
+                case 'direction':
+                    return generateDirectionQuestion();
+                case 'syllogism':
+                    return generateSyllogism();
+                case 'venn':
+                    return generateVennQuestion();
+                case 'ranking':
+                    return generateRankingQuestion();
+                case 'calendar':
+                    return generateCalendarQuestion();
+                case 'nonverbal':
+                    return generateNonVerbal();
+                case 'puzzle':
+                    return generatePuzzle();
+                case 'mixed':
+                    return generateMixed();
+                default:
+                    return generateBloodQuestion();
+            }
+        }
+
+        // --------------------------------------------------------------
+        //  RENDER
+        // --------------------------------------------------------------
+        const topicTitle = document.getElementById('topicTitle');
+        const questionContainer = document.getElementById('questionContainer');
+        const statsDisplay = document.getElementById('statsDisplay');
+        const topicList = document.getElementById('topicList');
+
+        let currentTopic = 'blood';
+        const QUESTIONS_PER_TOPIC = 60;
+
+        function renderSidebar() {
+            topicList.innerHTML = '';
+            TOPICS.forEach(topic => {
+                const btn = document.createElement('button');
+                btn.className = `topic-btn${topic.id === currentTopic ? ' active' : ''}`;
+                btn.innerHTML = `${topic.label} <span class="badge">60</span>`;
+                btn.dataset.topic = topic.id;
+                btn.addEventListener('click', () => {
+                    currentTopic = topic.id;
+                    renderSidebar();
+                    loadQuestions(topic.id);
+                });
+                topicList.appendChild(btn);
+            });
+        }
+
+        function loadQuestions(topicId) {
+            const topic = TOPICS.find(t => t.id === topicId);
+            topicTitle.innerHTML = `${topic.label} <small>60 questions</small>`;
+            const qs = [];
+            for (let i = 0; i < QUESTIONS_PER_TOPIC; i++) {
+                let q = generateQuestion(topicId);
+                // ensure option length is 4
+                while (q.options.length < 4) {
+                    q.options.push('None of these');
+                }
+                qs.push(q);
+            }
+            renderQuestions(qs);
+            statsDisplay.textContent = `📝 0 / ${qs.length}`;
+        }
+
+        function renderQuestions(questions) {
+            questionContainer.innerHTML = '';
+            let revealedCount = 0;
+            questions.forEach((q, idx) => {
+                const card = document.createElement('div');
+                card.className = 'q-card';
+                const qNum = document.createElement('div');
+                qNum.className = 'q-number';
+                qNum.textContent = `Q${idx + 1}.`;
+
+                const qText = document.createElement('div');
+                qText.className = 'q-text';
+                qText.innerHTML = q.text.replace(/\n/g, '<br>');
+
+                const optContainer = document.createElement('div');
+                optContainer.className = 'options';
+                const optElements = [];
+                q.options.forEach((opt, oi) => {
+                    const div = document.createElement('div');
+                    div.className = 'option';
+                    div.textContent = `${String.fromCharCode(65 + oi)}. ${opt}`;
+                    div.dataset.optIndex = oi;
+                    div.dataset.correct = (oi === q.answerIndex) ? 'true' : 'false';
+                    optContainer.appendChild(div);
+                    optElements.push(div);
+                });
+
+                const actions = document.createElement('div');
+                actions.className = 'q-actions';
+
+                const answerText = document.createElement('span');
+                answerText.className = 'answer-text';
+                answerText.textContent = `✅ Correct: ${q.options[q.answerIndex]}`;
+
+                const revealBtn = document.createElement('button');
+                revealBtn.className = 'btn-show-answer';
+                revealBtn.textContent = '🔍 Show Answer';
+                let revealed = false;
+
+                revealBtn.addEventListener('click', () => {
+                    if (!revealed) {
+                        revealed = true;
+                        revealedCount++;
+                        statsDisplay.textContent = `📝 ${revealedCount} / ${questions.length}`;
+                        answerText.classList.add('show');
+                        revealBtn.classList.add('revealed');
+                        revealBtn.textContent = '✅ Answer shown';
+                        optElements.forEach(el => {
+                            if (el.dataset.correct === 'true') {
+                                el.classList.add('correct');
+                            } else {
+                                el.classList.add('wrong');
+                            }
+                        });
+                    }
+                });
+
+                actions.appendChild(revealBtn);
+                actions.appendChild(answerText);
+                card.appendChild(qNum);
+                card.appendChild(qText);
+                card.appendChild(optContainer);
+                card.appendChild(actions);
+                questionContainer.appendChild(card);
+            });
+            statsDisplay.textContent = `📝 0 / ${questions.length}`;
+        }
+
+        // --------------------------------------------------------------
+        //  INIT
+        // --------------------------------------------------------------
+        renderSidebar();
+        loadQuestions('blood');
+    </script>
+</body>
+</html>

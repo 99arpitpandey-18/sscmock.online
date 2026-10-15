@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC MOCK – Homonyms Practice (500+ MCQs)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+        body { background: #e9edf2; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 30px 15px; }
+        .app-container { max-width: 1100px; width: 100%; background: #ffffff; border-radius: 40px; box-shadow: 0 25px 60px rgba(0,0,0,0.15); overflow: hidden; }
+
+        /* ===== HEADER ===== */
+        .header { background: #0b1a33; padding: 16px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #8e44ad; flex-wrap: wrap; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { background: #8e44ad; color: #0b1a33; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1.6rem; font-weight: 800; }
+        .logo-text { color: white; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo-text span { color: #8e44ad; font-weight: 400; }
+        .header-badge { background: rgba(142, 68, 173, 0.15); color: #8e44ad; padding: 6px 18px; border-radius: 40px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(142,68,173,0.3); }
+
+        /* ===== PAGES ===== */
+        .page { display: none; padding: 30px 35px; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        /* ===== COVER / DASHBOARD ===== */
+        .cover-top { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 25px; margin-bottom: 25px; }
+        .cover-badge { display: inline-block; background: #8e44ad; color: #fff; font-weight: 800; font-size: 0.9rem; padding: 6px 24px; border-radius: 40px; letter-spacing: 1px; margin-bottom: 15px; }
+        .cover-title { font-size: 2.8rem; font-weight: 800; color: #0b1a33; line-height: 1.1; }
+        .cover-title .highlight { color: #8e44ad; background: #f4ecf7; padding: 0 12px; border-radius: 12px; }
+        .cover-subtitle { font-size: 1.3rem; color: #334155; font-weight: 600; margin-top: 12px; background: #f1f5f9; display: inline-block; padding: 6px 30px; border-radius: 60px; }
+        .cover-desc { font-size: 1.05rem; color: #475569; margin-top: 18px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        /* ===== SETS GRID ===== */
+        .sets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin: 25px 0; }
+        .set-card { background: #f8fafc; border-radius: 20px; padding: 18px 14px; text-align: center; border: 2px solid #e9eef3; cursor: pointer; transition: 0.25s ease; position: relative; }
+        .set-card:hover { border-color: #8e44ad; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(142,68,173,0.12); }
+        .set-card .set-num { font-size: 1.8rem; font-weight: 800; color: #0b1a33; }
+        .set-card .set-label { font-size: 0.75rem; color: #64748b; font-weight: 600; margin-top: 2px; }
+        .set-card .set-progress { font-size: 0.7rem; color: #8e44ad; font-weight: 600; margin-top: 6px; background: #f4ecf7; padding: 2px 12px; border-radius: 20px; display: inline-block; }
+        .set-card .set-status { position: absolute; top: 8px; right: 10px; font-size: 0.6rem; padding: 2px 10px; border-radius: 20px; font-weight: 600; }
+        .set-card .set-status.completed { background: #eafaf1; color: #27ae60; }
+        .set-card .set-status.inprogress { background: #fef9e7; color: #f39c12; }
+        .set-card .set-status.notstarted { background: #f1f5f9; color: #94a3b8; }
+
+        .overall-progress { background: #f8fafc; border-radius: 16px; padding: 14px 22px; margin-bottom: 22px; border: 1px solid #e9eef3; display: flex; flex-wrap: wrap; gap: 18px 30px; align-items: center; }
+        .overall-progress .bar-wrap { flex: 1; min-width: 120px; height: 8px; background: #e9eef3; border-radius: 20px; overflow: hidden; }
+        .overall-progress .bar-wrap .bar { height: 100%; width: 0%; background: linear-gradient(90deg, #8e44ad, #c39bd3); border-radius: 20px; transition: width 0.5s; }
+
+        /* ===== PRACTICE HEADER ===== */
+        .practice-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-bottom: 3px solid #8e44ad; padding-bottom: 15px; margin-bottom: 20px; gap: 12px; }
+        .practice-header .left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .practice-header .left h2 { font-size: 1.5rem; font-weight: 800; color: #0b1a33; }
+        .practice-header .left h2 i { color: #8e44ad; margin-right: 8px; }
+        .practice-header .set-tag { background: #0b1a33; color: white; padding: 5px 18px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; }
+
+        /* ===== SCORE BAR ===== */
+        .score-bar { display: flex; flex-wrap: wrap; gap: 18px 30px; background: #f8fafc; border-radius: 16px; padding: 12px 22px; margin-bottom: 22px; border: 1px solid #e9eef3; }
+        .score-item { display: flex; align-items: center; gap: 8px; font-weight: 500; color: #334155; font-size: 0.9rem; }
+        .score-item i { font-size: 1rem; }
+        .score-item .num { font-weight: 700; font-size: 1.1rem; color: #0b1a33; }
+        .score-item.correct i { color: #27ae60; }
+        .score-item.wrong i { color: #e74c3c; }
+        .score-item.attempted i { color: #2980b9; }
+        .score-item.percent i { color: #8e44ad; }
+        .score-item.percent .num { color: #8e44ad; }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card { background: #ffffff; border-radius: 20px; padding: 22px 26px; margin-bottom: 20px; border: 1px solid #e9eef3; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: 0.2s; border-left: 6px solid #8e44ad; }
+        .question-card:hover { border-color: #d2b4de; box-shadow: 0 6px 20px rgba(0,0,0,0.04); }
+        .q-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+        .q-number { font-weight: 800; font-size: 0.95rem; color: #8e44ad; background: #f4ecf7; padding: 2px 14px; border-radius: 40px; flex-shrink: 0; }
+        .q-text { font-size: 1.05rem; font-weight: 500; color: #0b1a33; line-height: 1.6; }
+        .q-text .blank { display: inline-block; min-width: 80px; border-bottom: 3px dashed #8e44ad; color: #8e44ad; font-weight: 700; padding-bottom: 2px; }
+
+        .options { display: flex; gap: 25px; flex-wrap: wrap; margin: 12px 0 14px; }
+        .options label { display: flex; align-items: center; gap: 10px; font-weight: 500; color: #1e293b; cursor: pointer; font-size: 1rem; padding: 4px 14px 4px 6px; border-radius: 30px; transition: 0.2s; background: #f8fafc; border: 1px solid transparent; }
+        .options label:hover { background: #f4ecf7; border-color: #d2b4de; }
+        .options input[type="radio"] { width: 17px; height: 17px; accent-color: #8e44ad; cursor: pointer; flex-shrink: 0; }
+        .options label.correct-ans { background: #eafaf1; border-color: #27ae60; color: #1e8449; }
+        .options label.wrong-ans { background: #fdedec; border-color: #e74c3c; color: #922b21; }
+        .options input[type="radio"]:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        .btn-answer { background: #0b1a33; color: white; border: none; padding: 7px 24px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-answer:hover:not(:disabled) { background: #8e44ad; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(142,68,173,0.25); }
+        .btn-answer:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+        .answer-box { margin-top: 14px; padding: 14px 20px; border-radius: 14px; background: #f4ecf7; border-left: 6px solid #8e44ad; display: none; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { 0% { opacity: 0; transform: translateY(-8px); } 100% { opacity: 1; transform: translateY(0); } }
+        .answer-box .correct-word { font-weight: 700; font-size: 1.05rem; color: #27ae60; }
+        .answer-box .explanation { margin-top: 6px; color: #2c3e50; font-size: 0.92rem; line-height: 1.6; }
+        .answer-box .explanation strong { color: #0b1a33; }
+        .answer-box .original-sentence { margin-top: 6px; font-size: 0.85rem; color: #64748b; border-top: 1px solid #d2b4de; padding-top: 8px; }
+
+        /* ===== NAV ===== */
+        .nav-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 18px; border-top: 1px solid #e9eef3; flex-wrap: wrap; gap: 12px; }
+        .btn-nav { background: transparent; color: #0b1a33; border: 2px solid #cbd5e1; padding: 8px 22px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-nav:hover { border-color: #8e44ad; background: #f4ecf7; }
+        .btn-nav.primary { background: #0b1a33; color: white; border-color: #0b1a33; }
+        .btn-nav.primary:hover { background: #8e44ad; border-color: #8e44ad; }
+        .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-indicator { font-weight: 600; color: #64748b; background: #f1f5f9; padding: 4px 18px; border-radius: 40px; font-size: 0.85rem; }
+
+        .text-center { text-align: center; margin-top: 10px; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .page { padding: 20px 16px; }
+            .cover-title { font-size: 2rem; }
+            .sets-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+            .set-card { padding: 14px 10px; }
+            .set-card .set-num { font-size: 1.4rem; }
+            .practice-header .left h2 { font-size: 1.2rem; }
+            .question-card { padding: 16px 16px; }
+            .q-text { font-size: 0.95rem; }
+            .options { gap: 12px; }
+            .options label { font-size: 0.9rem; padding: 3px 10px 3px 4px; }
+            .score-bar { gap: 10px 16px; padding: 10px 14px; }
+            .score-item { font-size: 0.8rem; }
+            .score-item .num { font-size: 0.95rem; }
+            .nav-footer { flex-direction: column; align-items: stretch; }
+            .btn-nav { justify-content: center; }
+            .header { padding: 12px 16px; }
+            .logo-text { font-size: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .sets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .set-card .set-num { font-size: 1.2rem; }
+            .cover-title { font-size: 1.6rem; }
+            .options { flex-direction: column; gap: 8px; }
+            .btn-answer { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <a href="#" class="logo" onclick="goToDashboard(); return false;">
+            <div class="logo-icon"><i class="fas fa-exchange-alt"></i></div>
+            <div class="logo-text">SSC <span>MOCK</span></div>
+        </a>
+        <div class="header-badge"><i class="fas fa-pencil-alt"></i> Practice Sets</div>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="page active" id="page-dashboard">
+        <div class="cover-top">
+            <div class="cover-badge"><i class="fas fa-star"></i> SSC CGL / CHSL / CPO / MTS</div>
+            <h1 class="cover-title"><span class="highlight">500+</span> Homonyms<br>Practice Sets</h1>
+            <div class="cover-subtitle">Master Confusing Words</div>
+            <p class="cover-desc">Based on SSC Previous Year Questions – 20 Sets × 25 MCQs = 500+ Questions</p>
+        </div>
+
+        <div class="overall-progress">
+            <div><strong>Overall Progress:</strong> <span id="overallProgressText">0 / 500</span></div>
+            <div class="bar-wrap"><div class="bar" id="overallProgressBar"></div></div>
+            <div><strong>Score:</strong> <span id="overallScoreText">0%</span></div>
+        </div>
+
+        <div class="sets-grid" id="setsGrid"></div>
+
+        <div class="text-center">
+            <button class="btn-nav primary" onclick="resetAllProgress()"><i class="fas fa-redo-alt"></i> Reset All Progress</button>
+        </div>
+    </div>
+
+    <!-- ===== PRACTICE PAGE ===== -->
+    <div class="page" id="page-practice">
+        <div class="practice-header">
+            <div class="left">
+                <button class="btn-nav" onclick="goToDashboard()" style="padding:6px 14px;font-size:0.8rem;"><i class="fas fa-arrow-left"></i> Sets</button>
+                <h2><i class="fas fa-pen-fancy"></i> <span id="setTitle">Set 1</span></h2>
+            </div>
+            <span class="set-tag" id="setTag"><i class="fas fa-layer-group"></i> Set 1 / 20</span>
+        </div>
+
+        <div class="score-bar">
+            <div class="score-item correct"><i class="fas fa-check-circle"></i> Correct: <span class="num" id="correctCount">0</span></div>
+            <div class="score-item wrong"><i class="fas fa-times-circle"></i> Wrong: <span class="num" id="wrongCount">0</span></div>
+            <div class="score-item attempted"><i class="fas fa-flag"></i> Attempted: <span class="num" id="attemptedCount">0</span></div>
+            <div class="score-item percent"><i class="fas fa-star"></i> Score: <span class="num" id="scorePercent">0</span>%</div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="nav-footer">
+            <button class="btn-nav" id="prevSetBtn" onclick="changeSet(-1)"><i class="fas fa-chevron-left"></i> Previous</button>
+            <span class="page-indicator" id="setIndicator">Set 1 of 20</span>
+            <button class="btn-nav primary" id="nextSetBtn" onclick="changeSet(1)">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ================================================================
+// 📦 HOMOPHONE DATA – 513 PAIRS (A-Z SEQUENCE)
+// ================================================================
+const homophoneData = [
+    { id: 1, w1: "Accept", w2: "Except", m1: "स्वीकार करना", m2: "के अलावा", def: "Accept = receive; Except = excluding", ex1: "Please accept my apology.", ex2: "Everyone except him came." },
+    { id: 2, w1: "Affect", w2: "Effect", m1: "प्रभाव डालना", m2: "परिणाम", def: "Affect (verb) = influence; Effect (noun) = result", ex1: "The weather affects my mood.", ex2: "The effect was immediate." },
+    { id: 3, w1: "Allowed", w2: "Aloud", m1: "अनुमति दी गई", m2: "ज़ोर से", def: "Allowed = permitted; Aloud = audibly", ex1: "We are allowed to go.", ex2: "Read the text aloud." },
+    { id: 4, w1: "Ant", w2: "Aunt", m1: "चींटी", m2: "चाची/मौसी", def: "Ant = insect; Aunt = relative", ex1: "An ant is small.", ex2: "My aunt is coming." },
+    { id: 5, w1: "Arc", w2: "Ark", m1: "चाप", m2: "नाव", def: "Arc = curve; Ark = boat", ex1: "Draw an arc.", ex2: "Noah built an ark." },
+    { id: 6, w1: "Ate", w2: "Eight", m1: "खाया", m2: "आठ", def: "Ate = past of eat; Eight = number 8", ex1: "I ate lunch.", ex2: "I have eight books." },
+    { id: 7, w1: "Aye", w2: "Eye", m1: "हाँ", m2: "आँख", def: "Aye = yes; Eye = organ", ex1: "All say aye.", ex2: "He has a blue eye." },
+    { id: 8, w1: "Air", w2: "Heir", m1: "हवा", m2: "वारिस", def: "Air = atmosphere; Heir = successor", ex1: "The air is fresh.", ex2: "He is the heir to the throne." },
+    { id: 9, w1: "All", w2: "Awl", m1: "सब", m2: "सूआ", def: "All = everything; Awl = pointed tool", ex1: "All are welcome.", ex2: "He used an awl to make holes." },
+    { id: 10, w1: "Alms", w2: "Arms", m1: "भिक्षा", m2: "हथियार/बाहें", def: "Alms = charity; Arms = weapons/limbs", ex1: "He asked for alms.", ex2: "He carried arms." },
+    { id: 11, w1: "Altar", w2: "Alter", m1: "वेदी", m2: "बदलना", def: "Altar = table for worship; Alter = to change", ex1: "They prayed at the altar.", ex2: "Please alter your plans." },
+    { id: 12, w1: "Aisle", w2: "Isle", m1: "गलियारा", m2: "द्वीप", def: "Aisle = passage; Isle = island", ex1: "Walk down the aisle.", ex2: "We visited the isle." },
+    { id: 13, w1: "Amoral", w2: "Immoral", m1: "अनैतिक (नैतिकता से रहित)", m2: "अनैतिक (गलत)", def: "Amoral = without morals; Immoral = morally wrong", ex1: "Animals are amoral.", ex2: "Stealing is immoral." },
+    { id: 14, w1: "Assent", w2: "Ascent", m1: "सहमति", m2: "चढ़ाई", def: "Assent = agreement; Ascent = climb", ex1: "He nodded in assent.", ex2: "The ascent was steep." },
+    { id: 15, w1: "Auger", w2: "Augur", m1: "बरमा", m2: "शगुन", def: "Auger = drilling tool; Augur = omen", ex1: "He used an auger.", ex2: "The storm augurs disaster." },
+    { id: 16, w1: "Aural", w2: "Oral", m1: "श्रवण संबंधी", m2: "मौखिक", def: "Aural = relating to hearing; Oral = spoken", ex1: "He has aural problems.", ex2: "She gave an oral test." },
+    { id: 17, w1: "Awry", w2: "Aery", m1: "टेढ़ा/गलत", m2: "हवाई", def: "Awry = askew/wrong; Aery = airy/ethereal", ex1: "The plan went awry.", ex2: "The aery view was beautiful." },
+    { id: 18, w1: "Ax", w2: "Acts", m1: "कुल्हाड़ी", m2: "कार्य", def: "Ax = tool; Acts = deeds", ex1: "He chopped wood with an ax.", ex2: "His acts are kind." },
+    { id: 19, w1: "Ail", w2: "Ale", m1: "बीमार होना", m2: "एक प्रकार की बीयर", def: "Ail = to trouble/ill; Ale = a type of beer", ex1: "What ails you?", ex2: "He drank a glass of ale." },
+    { id: 20, w1: "Aim", w2: "Ame", m1: "लक्ष्य", m2: "प्रेम (फ्रेंच)", def: "Aim = goal; Ame = soul (French)", ex1: "His aim is clear.", ex2: "Ame is a French word." },
+    { id: 21, w1: "An", w2: "Ann", m1: "एक", m2: "एन (नाम)", def: "An = indefinite article; Ann = name", ex1: "I have an apple.", ex2: "Ann is my sister." },
+    { id: 22, w1: "Apace", w2: "Appease", m1: "तेज़ी से", m2: "तुष्ट करना", def: "Apace = quickly; Appease = to pacify", ex1: "The work is going apace.", ex2: "He tried to appease her." },
+    { id: 23, w1: "Are", w2: "Our", m1: "हैं", m2: "हमारा", def: "Are = verb; Our = possessive", ex1: "We are coming.", ex2: "This is our house." },
+    { id: 24, w1: "As", w2: "Ass", m1: "जैसे/क्योंकि", m2: "गधा", def: "As = like/because; Ass = donkey", ex1: "I am as tall as you.", ex2: "He is stubborn as an ass." },
+    { id: 25, w1: "Aught", w2: "Ought", m1: "कुछ भी", m2: "चाहिए", def: "Aught = anything; Ought = should", ex1: "He doesn't care aught.", ex2: "You ought to go." },
+    { id: 26, w1: "Bare", w2: "Bear", m1: "नंगा", m2: "भालू/सहन करना", def: "Bare = naked; Bear = animal/tolerate", ex1: "His arms were bare.", ex2: "I can't bear the pain." },
+    { id: 27, w1: "Base", w2: "Bass", m1: "आधार", m2: "बास (ध्वनि/मछली)", def: "Base = foundation; Bass = low pitch/fish", ex1: "The base is strong.", ex2: "He plays bass guitar." },
+    { id: 28, w1: "Be", w2: "Bee", m1: "होना", m2: "मधुमक्खी", def: "Be = verb; Bee = insect", ex1: "I want to be happy.", ex2: "A bee stung me." },
+    { id: 29, w1: "Beach", w2: "Beech", m1: "समुद्र तट", m2: "बीच का पेड़", def: "Beach = shore; Beech = tree", ex1: "We went to the beach.", ex2: "The beech tree is tall." },
+    { id: 30, w1: "Beat", w2: "Beet", m1: "मारना/ताल", m2: "चुकंदर", def: "Beat = strike/rhythm; Beet = vegetable", ex1: "He beat the drum.", ex2: "I like beet curry." },
+    { id: 31, w1: "Berry", w2: "Bury", m1: "बेरी", m2: "दफनाना", def: "Berry = fruit; Bury = to inter", ex1: "I love strawberry.", ex2: "They will bury the dead." },
+    { id: 32, w1: "Blew", w2: "Blue", m1: "उड़ा दिया", m2: "नीला", def: "Blew = past of blow; Blue = color", ex1: "The wind blew hard.", ex2: "The sky is blue." },
+    { id: 33, w1: "Board", w2: "Bored", m1: "तख्ता/समिति", m2: "ऊबा हुआ", def: "Board = plank/committee; Bored = uninterested", ex1: "He is on the board.", ex2: "I am bored today." },
+    { id: 34, w1: "Brake", w2: "Break", m1: "ब्रेक", m2: "तोड़ना/विराम", def: "Brake = stopping device; Break = shatter/rest", ex1: "Apply the brake.", ex2: "Take a break." },
+    { id: 35, w1: "Bridal", w2: "Bridle", m1: "शादी से संबंधित", m2: "लगाम", def: "Bridal = wedding; Bridle = horse harness", ex1: "She wore a bridal dress.", ex2: "He held the bridle." },
+    { id: 36, w1: "Buy", w2: "Bye", m1: "खरीदना", m2: "अलविदा", def: "Buy = purchase; Bye = goodbye", ex1: "I will buy a car.", ex2: "He said bye." },
+    { id: 37, w1: "Bread", w2: "Bred", m1: "रोटी", m2: "पाला गया", def: "Bread = food; Bred = raised", ex1: "I eat bread daily.", ex2: "He was bred in the city." },
+    { id: 38, w1: "Bight", w2: "Bite", m1: "खाड़ी", m2: "काटना", def: "Bight = bay; Bite = cut with teeth", ex1: "The ship anchored in the bight.", ex2: "The dog gave a bite." },
+    { id: 39, w1: "Birth", w2: "Berth", m1: "जन्म", m2: "बर्थ (सीट/बिस्तर)", def: "Birth = being born; Berth = bed/space", ex1: "She gave birth.", ex2: "He booked a berth." },
+    { id: 40, w1: "Boar", w2: "Bore", m1: "सूअर", m2: "ऊबाना/छेद करना", def: "Boar = wild pig; Bore = drill/uninteresting", ex1: "The boar was huge.", ex2: "He bores me with his stories." },
+    { id: 41, w1: "Bough", w2: "Bow", m1: "डाली", m2: "झुकना/धनुष", def: "Bough = branch; Bow = bend/weapon", ex1: "He sat on the bough.", ex2: "He took a bow." },
+    { id: 42, w1: "Boy", w2: "Buoy", m1: "लड़का", m2: "तैरता हुआ चिह्न", def: "Boy = male child; Buoy = floating marker", ex1: "The boy is playing.", ex2: "The buoy is in the water." },
+    { id: 43, w1: "Breach", w2: "Breech", m1: "उल्लंघन/दरार", m2: "पिछला भाग", def: "Breach = gap/violation; Breech = rear part", ex1: "A breach in the wall.", ex2: "The breech of the gun." },
+    { id: 44, w1: "Broach", w2: "Brooch", m1: "छेड़ना/शुरू करना", m2: "ब्रोच (गहना)", def: "Broach = bring up a topic; Brooch = a piece of jewelry", ex1: "He broached the subject.", ex2: "She wore a silver brooch." },
+    { id: 45, w1: "But", w2: "Butt", m1: "लेकिन", m2: "नितंब/ठोकर", def: "But = however; Butt = end/impact", ex1: "I went, but he didn't.", ex2: "He hit him with his butt." },
+    { id: 46, w1: "Bury", w2: "Berry", m1: "दफनाना", m2: "बेरी", def: "Bury = to inter; Berry = fruit", ex1: "Bury the dead.", ex2: "Strawberry is a berry." },
+    { id: 47, w1: "Bussed", w2: "Bust", m1: "चूमा", m2: "टूटा हुआ/प्रतिमा", def: "Bussed = past of bus; Bust = sculpture/break", ex1: "He bussed her cheek.", ex2: "The statue is a bust." },
+    { id: 48, w1: "By", w2: "Bye", m1: "द्वारा/पास", m2: "अलविदा", def: "By = preposition; Bye = goodbye", ex1: "The book is by him.", ex2: "She said bye." },
+    { id: 49, w1: "Bazaar", w2: "Bizarre", m1: "बाजार", m2: "विचित्र", def: "Bazaar = market; Bizarre = strange", ex1: "I went to the bazaar.", ex2: "He wore a bizarre hat." },
+    { id: 50, w1: "Bale", w2: "Bail", m1: "गठरी", m2: "जमानत/पानी निकालना", def: "Bale = bundle; Bail = bond/water removal", ex1: "Bale of cotton.", ex2: "He got bail." },
+    { id: 51, w1: "Bawl", w2: "Ball", m1: "चिल्लाना", m2: "गेंद", def: "Bawl = to shout/cry; Ball = spherical object", ex1: "He bawled at the top of his voice.", ex2: "He threw the ball." },
+    { id: 52, w1: "Banns", w2: "Bands", m1: "विवाह की घोषणा", m2: "बैंड", def: "Banns = marriage announcement; Bands = groups/straps", ex1: "The banns were read.", ex2: "The band played music." },
+    { id: 53, w1: "Bar", w2: "Barre", m1: "बार/सलाख", m2: "राज दंड", def: "Bar = rod; Barre = ballet rail", ex1: "He stood at the bar.", ex2: "She held the barre." },
+    { id: 54, w1: "Bear", w2: "Beer", m1: "भालू/सहन करना", m2: "बीयर", def: "Bear = tolerate/animal; Beer = alcoholic drink", ex1: "He can bear the cold.", ex2: "He drank a beer." },
+    { id: 55, w1: "Billed", w2: "Build", m1: "बिल किया", m2: "निर्माण करना", def: "Billed = charged/invoiced; Build = to construct", ex1: "He was billed for the service.", ex2: "They build a house." },
+    { id: 56, w1: "Cache", w2: "Cash", m1: "गुप्त भंडार", m2: "नकदी", def: "Cache = hidden store; Cash = money", ex1: "Police found a cache.", ex2: "I need cash." },
+    { id: 57, w1: "Capital", w2: "Capitol", m1: "राजधानी/पूँजी", m2: "संसद भवन", def: "Capital = city/wealth; Capitol = government building", ex1: "Delhi is the capital.", ex2: "The capitol is in Delhi." },
+    { id: 58, w1: "Ceiling", w2: "Sealing", m1: "छत", m2: "सील करना", def: "Ceiling = top of room; Sealing = closing tightly", ex1: "The ceiling is high.", ex2: "He is sealing the envelope." },
+    { id: 59, w1: "Cell", w2: "Sell", m1: "कोशिका/कैदखाना", m2: "बेचना", def: "Cell = room/biology; Sell = to vend", ex1: "He is in a prison cell.", ex2: "I want to sell my car." },
+    { id: 60, w1: "Cent", w2: "Scent", m1: "सेंट (मुद्रा)", m2: "गंध", def: "Cent = coin; Scent = smell", ex1: "It costs 50 cents.", ex2: "The scent is sweet." },
+    { id: 61, w1: "Cereal", w2: "Serial", m1: "अनाज", m2: "धारावाहिक", def: "Cereal = grain; Serial = series", ex1: "I eat cereal.", ex2: "I watch a serial." },
+    { id: 62, w1: "Check", w2: "Cheque", m1: "जाँच करना/रोकना", m2: "चेक (बैंक)", def: "Check = examine/stop; Cheque = bank draft", ex1: "Check the document.", ex2: "He wrote a cheque." },
+    { id: 63, w1: "Cite", w2: "Sight", m1: "उद्धरण देना", m2: "दृश्य", def: "Cite = quote; Sight = view", ex1: "He cited a poet.", ex2: "The sight was beautiful." },
+    { id: 64, w1: "Close", w2: "Clothes", m1: "बंद करना", m2: "कपड़े", def: "Close = shut; Clothes = garments", ex1: "Close the door.", ex2: "I bought new clothes." },
+    { id: 65, w1: "Coarse", w2: "Course", m1: "खुरदरा", m2: "पाठ्यक्रम/दिशा", def: "Coarse = rough; Course = path/curriculum", ex1: "The cloth is coarse.", ex2: "He took a history course." },
+    { id: 66, w1: "Complement", w2: "Compliment", m1: "पूरक", m2: "तारीफ", def: "Complement = complete; Compliment = praise", ex1: "The wine complements the meal.", ex2: "He gave me a compliment." },
+    { id: 67, w1: "Council", w2: "Counsel", m1: "परिषद", m2: "सलाह/वकील", def: "Council = committee; Counsel = advice/lawyer", ex1: "The council met.", ex2: "He gave wise counsel." },
+    { id: 68, w1: "Cue", w2: "Queue", m1: "संकेत", m2: "कतार", def: "Cue = hint/signal; Queue = line", ex1: "He missed his cue.", ex2: "Stand in the queue." },
+    { id: 69, w1: "Curb", w2: "Kerb", m1: "नियंत्रण करना", m2: "अंचल (सड़क का किनारा)", def: "Curb = restrain; Kerb = edge of road", ex1: "He needs to curb his anger.", ex2: "He parked by the kerb." },
+    { id: 70, w1: "Cymbal", w2: "Symbol", m1: "करताल", m2: "प्रतीक", def: "Cymbal = musical instrument; Symbol = sign", ex1: "He played the cymbal.", ex2: "The dove is a symbol of peace." },
+    { id: 71, w1: "Cession", w2: "Session", m1: "समर्पण (क्षेत्र)", m2: "सत्र", def: "Cession = yielding territory; Session = meeting", ex1: "The cession of land.", ex2: "The court session is over." },
+    { id: 72, w1: "Chord", w2: "Cord", m1: "स्वरसंगति", m2: "रस्सी", def: "Chord = musical notes; Cord = rope", ex1: "He played a beautiful chord.", ex2: "Tie the cord." },
+    { id: 73, w1: "Climactic", w2: "Climatic", m1: "चरम बिंदु से संबंधित", m2: "जलवायु संबंधी", def: "Climactic = relating to climax; Climatic = relating to climate", ex1: "The climactic scene was thrilling.", ex2: "The climatic conditions are harsh." },
+    { id: 74, w1: "Click", w2: "Clique", m1: "क्लिक करना", m2: "गुट/दल", def: "Click = sound; Clique = small exclusive group", ex1: "Click the mouse.", ex2: "He belongs to a clique." },
+    { id: 75, w1: "Coal", w2: "Cole", m1: "कोयला", m2: "गोभी (Cole slaw)", def: "Coal = fuel; Cole = cabbage", ex1: "Coal is black.", ex2: "He ate cole slaw." },
+    { id: 76, w1: "Colonel", w2: "Kernel", m1: "कर्नल", m2: "दाना/गिरी", def: "Colonel = military rank; Kernel = seed/core", ex1: "He is a colonel.", ex2: "The kernel of the nut." },
+    { id: 77, w1: "Complacent", w2: "Complaisant", m1: "आत्मसंतुष्ट", m2: "सौम्य (लोगों को खुश करने वाला)", def: "Complacent = self-satisfied; Complaisant = agreeable", ex1: "He is complacent.", ex2: "She is complaisant." },
+    { id: 78, w1: "Concious", w2: "Conscious", m1: "सचेत", m2: "सचेत", def: "Concious = aware (misspelling); Conscious = correct spelling", ex1: "He is conscious of his mistakes.", ex2: "Be careful with the spelling." },
+    { id: 79, w1: "Council", w2: "Counsel", m1: "परिषद", m2: "सलाह", def: "Council = committee; Counsel = advice", ex1: "The council decided.", ex2: "He gave counsel." },
+    { id: 80, w1: "Crews", w2: "Cruise", m1: "दल (बहुवचन)", m2: "समुद्री यात्रा", def: "Crews = teams; Cruise = sea voyage", ex1: "The crews worked hard.", ex2: "We went on a cruise." },
+    { id: 81, w1: "Cue", w2: "Queue", m1: "संकेत", m2: "कतार", def: "Cue = signal; Queue = line", ex1: "Wait for the cue.", ex2: "Join the queue." },
+    { id: 82, w1: "Currant", w2: "Current", m1: "एक प्रकार का सूखा अंगूर", m2: "वर्तमान/धारा", def: "Currant = dried grape; Current = present/flow", ex1: "He ate a currant.", ex2: "The current is strong." },
+    { id: 83, w1: "Cymbals", w2: "Symbols", m1: "करताल", m2: "प्रतीक", def: "Cymbals = instruments; Symbols = signs", ex1: "Cymbals are loud.", ex2: "Symbols are meaningful." },
+    { id: 84, w1: "Cite", w2: "Site", m1: "उद्धरण देना", m2: "स्थान/वेबसाइट", def: "Cite = quote; Site = location/website", ex1: "Cite the source.", ex2: "Visit the site." },
+    { id: 85, w1: "Coarse", w2: "Course", m1: "खुरदरा", m2: "पाठ्यक्रम", def: "Coarse = rough; Course = path/curriculum", ex1: "The texture is coarse.", ex2: "He took the course." },
+    { id: 86, w1: "Complement", w2: "Compliment", m1: "पूरक", m2: "तारीफ", def: "Complement = completes; Compliment = praise", ex1: "They complement each other.", ex2: "He paid her a compliment." },
+    { id: 87, w1: "Coup", w2: "Coop", m1: "तख्तापलट", m2: "पिंजरा (मुर्गियों का)", def: "Coup = overthrow; Coop = cage", ex1: "There was a military coup.", ex2: "The chickens are in the coop." },
+    { id: 88, w1: "Crew", w2: "Cru", m1: "दल", m2: "क्रू (शराब)", def: "Crew = team; Cru = wine grade", ex1: "The crew is ready.", ex2: "The cru of this wine is excellent." },
+    { id: 89, w1: "Crow", w2: "Croe", m1: "कौआ", m2: "क्रो (मवेशी)", def: "Crow = bird; Croe = a type of cattle", ex1: "The crow is black.", ex2: "He raised croe." },
+    { id: 90, w1: "Cue", w2: "Queue", m1: "संकेत", m2: "कतार", def: "Cue = signal; Queue = line", ex1: "Give me the cue.", ex2: "Stand in queue." },
+    { id: 91, w1: "Dam", w2: "Damn", m1: "बांध", m2: "धिक्कार", def: "Dam = barrier; Damn = curse", ex1: "They built a dam.", ex2: "Damn it!" },
+    { id: 92, w1: "Dear", w2: "Deer", m1: "प्रिय", m2: "हिरण", def: "Dear = beloved/expensive; Deer = animal", ex1: "He is my dear friend.", ex2: "The deer ran fast." },
+    { id: 93, w1: "Desert", w2: "Dessert", m1: "रेगिस्तान", m2: "मिठाई", def: "Desert = arid land; Dessert = sweet dish", ex1: "The Sahara is a desert.", ex2: "I love chocolate dessert." },
+    { id: 94, w1: "Dew", w2: "Due", m1: "ओस", m2: "देय/कारण", def: "Dew = moisture; Due = owing/expected", ex1: "Dew drops on leaves.", ex2: "The payment is due." },
+    { id: 95, w1: "Die", w2: "Dye", m1: "मरना", m2: "रंग", def: "Die = stop living; Dye = color", ex1: "We all die one day.", ex2: "She used dye on her hair." },
+    { id: 96, w1: "Discreet", w2: "Discrete", m1: "विवेकी", m2: "अलग-अलग", def: "Discreet = careful; Discrete = separate", ex1: "He is discreet.", ex2: "These are discrete units." },
+    { id: 97, w1: "Doe", w2: "Dough", m1: "हिरनी", m2: "आटा", def: "Doe = female deer; Dough = flour paste", ex1: "The doe is shy.", ex2: "Knead the dough." },
+    { id: 98, w1: "Done", w2: "Dun", m1: "पूरा हुआ", m2: "गहरा भूरा", def: "Done = completed; Dun = dull grey-brown", ex1: "The work is done.", ex2: "The horse is dun." },
+    { id: 99, w1: "Douse", w2: "Douse", m1: "डुबाना/बुझाना", m2: "हटाना (नाव)", def: "Douse = to extinguish; Douse = to lower a sail", ex1: "He doused the fire.", ex2: "He doused the sail." },
+    { id: 100, w1: "Draft", w2: "Draught", m1: "प्रारूप/कर्ज", m2: "हवा का झोंका", def: "Draft = first version/bank draft; Draught = current of air", ex1: "He wrote a draft.", ex2: "There is a draught." },
+    { id: 101, w1: "Dual", w2: "Duel", m1: "दोहरा", m2: "द्वंद्व", def: "Dual = double; Duel = fight", ex1: "He has a dual role.", ex2: "They fought a duel." },
+    { id: 102, w1: "Dun", w2: "Done", m1: "गहरा भूरा", m2: "पूरा हुआ", def: "Dun = color; Done = completed", ex1: "The horse is dun.", ex2: "The work is done." },
+    { id: 103, w1: "Dyed", w2: "Died", m1: "रंगा हुआ", m2: "मर गया", def: "Dyed = colored; Died = ceased to live", ex1: "She dyed her hair.", ex2: "He died yesterday." },
+    { id: 104, w1: "Dearth", w2: "Death", m1: "कमी", m2: "मृत्यु", def: "Dearth = scarcity; Death = end of life", ex1: "There is a dearth of water.", ex2: "Death is inevitable." },
+    { id: 105, w1: "Deco", w2: "Deco", m1: "सजावटी शैली", m2: "सजावटी शैली", def: "Deco = Art Deco style; Deco = decoration", ex1: "He likes deco style.", ex2: "The deco is beautiful." },
+    { id: 106, w1: "Deep", w2: "Deep", m1: "गहरा", m2: "गहरा", def: "Deep = profound; Deep = serious", ex1: "The sea is deep.", ex2: "He is in deep thought." },
+    { id: 107, w1: "Descent", w2: "Dissent", m1: "उतराई/वंश", m2: "असहमति", def: "Descent = downward slope/lineage; Dissent = disagreement", ex1: "The descent was steep.", ex2: "There was dissent in the party." },
+    { id: 108, w1: "Device", w2: "Devise", m1: "उपकरण", m2: "योजना बनाना", def: "Device = tool; Devise = to invent/plan", ex1: "He invented a device.", ex2: "He devised a plan." },
+    { id: 109, w1: "Disc", w2: "Disk", m1: "डिस्क (सीडी/रिकॉर्ड)", m2: "डिस्क (कंप्यूटर)", def: "Disc = optical/record; Disk = magnetic storage", ex1: "He inserted the disc.", ex2: "The hard disk is full." },
+    { id: 110, w1: "Doe", w2: "Dough", m1: "हिरनी", m2: "आटा", def: "Doe = female deer; Dough = flour mixture", ex1: "The doe is grazing.", ex2: "The dough is rising." },
+    { id: 111, w1: "Done", w2: "Dun", m1: "पूरा", m2: "गहरा भूरा", def: "Done = finished; Dun = dull brown", ex1: "The job is done.", ex2: "The walls are dun." },
+    { id: 112, w1: "Douse", w2: "Douse", m1: "बुझाना", m2: "डुबाना", def: "Douse = extinguish; Douse = immerse", ex1: "He doused the flames.", ex2: "He doused himself in water." },
+    { id: 113, w1: "Draft", w2: "Draught", m1: "प्रारूप", m2: "हवा का झोंका", def: "Draft = preliminary version; Draught = current of air", ex1: "Write a draft.", ex2: "Close the door, there's a draught." },
+    { id: 114, w1: "Dual", w2: "Duel", m1: "दोहरा", m2: "द्वंद्व", def: "Dual = double; Duel = combat", ex1: "He has dual citizenship.", ex2: "They fought a duel." },
+    { id: 115, w1: "Dye", w2: "Die", m1: "रंग", m2: "मरना", def: "Dye = color; Die = cease to live", ex1: "The dye is permanent.", ex2: "He will die one day." },
+    { id: 116, w1: "Earn", w2: "Urn", m1: "कमाना", m2: "कलश", def: "Earn = gain money; Urn = vessel", ex1: "I earn a good salary.", ex2: "The ashes are in an urn." },
+    { id: 117, w1: "Eye", w2: "I", m1: "आँख", m2: "मैं", def: "Eye = organ; I = pronoun", ex1: "I have an eye infection.", ex2: "I am going." },
+    { id: 118, w1: "Ewe", w2: "You", m1: "भेड़ (मादा)", m2: "तुम", def: "Ewe = female sheep; You = pronoun", ex1: "The ewe is grazing.", ex2: "You are my friend." },
+    { id: 119, w1: "Elicit", w2: "Illicit", m1: "निकालना (जानकारी)", m2: "अवैध", def: "Elicit = to draw out; Illicit = illegal", ex1: "He elicited a response.", ex2: "Illicit activities are banned." },
+    { id: 120, w1: "Ensure", w2: "Insure", m1: "सुनिश्चित करना", m2: "बीमा करना", def: "Ensure = make certain; Insure = to protect financially", ex1: "Ensure that you reach on time.", ex2: "I need to insure my car." },
+    { id: 121, w1: "Envelop", w2: "Envelope", m1: "ढकना", m2: "लिफाफा", def: "Envelop (verb) = to cover; Envelope (noun) = cover for letters", ex1: "Darkness enveloped the city.", ex2: "He sent the letter in an envelope." },
+    { id: 122, w1: "Exalt", w2: "Exult", m1: "ऊंचा करना", m2: "उत्साहित होना", def: "Exalt = to elevate/glorify; Exult = to rejoice", ex1: "He was exalted to a higher position.", ex2: "He exulted in his victory." },
+    { id: 123, w1: "Exercise", w2: "Exorcise", m1: "व्यायाम/अभ्यास", m2: "भूत निकालना", def: "Exercise = physical activity; Exorcise = to expel evil spirits", ex1: "He exercises daily.", ex2: "The priest exorcised the demon." },
+    { id: 124, w1: "Eave", w2: "Eve", m1: "छत का ढलान", m2: "संध्या/पूर्व संध्या", def: "Eave = overhanging roof; Eve = evening/day before", ex1: "Birds nest under the eave.", ex2: "On the eve of the exam." },
+    { id: 125, w1: "Eery", w2: "Eerie", m1: "भयानक", m2: "भयानक", def: "Eery = strange; Eerie = correct spelling", ex1: "The place has an eery atmosphere.", ex2: "The eerie silence was unnerving." },
+    { id: 126, w1: "Emigrant", w2: "Immigrant", m1: "प्रवासी (जो देश छोड़ रहा)", m2: "प्रवासी (जो देश में आ रहा)", def: "Emigrant = one who leaves country; Immigrant = one who comes to country", ex1: "He is an emigrant from India.", ex2: "He is an immigrant to the US." },
+    { id: 127, w1: "Eminent", w2: "Imminent", m1: "प्रतिष्ठित", m2: "आसन्न", def: "Eminent = distinguished; Imminent = about to happen", ex1: "He is an eminent scientist.", ex2: "A storm is imminent." },
+    { id: 128, w1: "Errand", w2: "Errant", m1: "कार्य/संदेश", m2: "पथभ्रष्ट", def: "Errand = short journey; Errant = straying", ex1: "I have an errand to run.", ex2: "He is an errant knight." },
+    { id: 129, w1: "Escape", w2: "Escarp", m1: "भागना", m2: "खड़ी चट्टान", def: "Escape = to flee; Escarp = steep cliff", ex1: "He escaped from prison.", ex2: "The escarp is dangerous." },
+    { id: 130, w1: "Euchre", w2: "Uker", m1: "एक प्रकार का खेल", m2: "एक प्रकार का खेल", def: "Euchre = card game; Uker = variant", ex1: "They played euchre.", ex2: "Uker is an old game." },
+    { id: 131, w1: "European", w2: "European", m1: "यूरोपीय", m2: "यूरोपीय", def: "European = relating to Europe; European = correct spelling", ex1: "He is European.", ex2: "European culture is rich." },
+    { id: 132, w1: "Excess", w2: "Access", m1: "अत्यधिकता", m2: "पहुँच", def: "Excess = surplus; Access = entry", ex1: "There is an excess of food.", ex2: "He has access to the room." },
+    { id: 133, w1: "Expel", w2: "Exile", m1: "निकालना", m2: "निर्वासन", def: "Expel = to force out; Exile = banishment", ex1: "He was expelled from school.", ex2: "He lived in exile." },
+    { id: 134, w1: "Extant", w2: "Extent", m1: "विद्यमान", m2: "सीमा/हद", def: "Extant = still existing; Extent = scope/degree", ex1: "The manuscript is extant.", ex2: "The extent of the damage is huge." },
+    { id: 135, w1: "Ewe", w2: "Yew", m1: "भेड़ (मादा)", m2: "एक प्रकार का पेड़", def: "Ewe = female sheep; Yew = tree", ex1: "The ewe has a lamb.", ex2: "The yew tree is old." },
+    { id: 136, w1: "Fair", w2: "Fare", m1: "मेला/गोरा/उचित", m2: "किराया", def: "Fair = just/festival; Fare = fee", ex1: "It's a fair deal.", ex2: "The bus fare is high." },
+    { id: 137, w1: "Faze", w2: "Phase", m1: "परेशान करना", m2: "चरण", def: "Faze = disturb; Phase = stage", ex1: "His remarks did not faze me.", ex2: "It is a new phase." },
+    { id: 138, w1: "Feet", w2: "Feat", m1: "पैर", m2: "करतब", def: "Feet = plural of foot; Feat = achievement", ex1: "My feet are cold.", ex2: "It was a great feat." },
+    { id: 139, w1: "Find", w2: "Fined", m1: "खोजना", m2: "जुर्माना लगाना", def: "Find = to discover; Fined = penalized", ex1: "I found a coin.", ex2: "He was fined for speeding." },
+    { id: 140, w1: "Firm", w2: "Ferm", m1: "दृढ़", m2: "कंपनी (अप्रचलित)", def: "Firm = solid/company; Ferm = a term", ex1: "He is firm in his decision.", ex2: "The ferm was established." },
+    { id: 141, w1: "Flair", w2: "Flare", m1: "शैली/कुशलता", m2: "ज्वाला", def: "Flair = natural ability; Flare = burst of fire", ex1: "She has a flair for writing.", ex2: "The torch flared." },
+    { id: 142, w1: "Flee", w2: "Flea", m1: "भागना", m2: "पिस्सू", def: "Flee = to run away; Flea = insect", ex1: "They had to flee the war.", ex2: "The dog has fleas." },
+    { id: 143, w1: "Flour", w2: "Flower", m1: "आटा", m2: "फूल", def: "Flour = powder from grain; Flower = bloom", ex1: "I need flour for bread.", ex2: "The flower is beautiful." },
+    { id: 144, w1: "For", w2: "Four", m1: "के लिए", m2: "चार", def: "For = preposition; Four = number 4", ex1: "This is for you.", ex2: "I have four pens." },
+    { id: 145, w1: "Foreword", w2: "Forward", m1: "प्रस्तावना", m2: "आगे", def: "Foreword = introduction; Forward = onward", ex1: "He wrote the foreword.", ex2: "Move forward." },
+    { id: 146, w1: "Fort", w2: "Forte", m1: "किला", m2: "विशेषता/ताकत", def: "Fort = fortress; Forte = strong point", ex1: "They captured the fort.", ex2: "Singing is her forte." },
+    { id: 147, w1: "Freeze", w2: "Frieze", m1: "जमना", m2: "चित्रवल्लरी", def: "Freeze = turn to ice; Frieze = decorative panel", ex1: "Water freezes at 0°C.", ex2: "The frieze is carved." },
+    { id: 148, w1: "Fur", w2: "Fir", m1: "फर (जानवर का)", m2: "चीड़ का पेड़", def: "Fur = animal hair; Fir = tree", ex1: "The cat has soft fur.", ex2: "The fir tree is tall." },
+    { id: 149, w1: "Foul", w2: "Fowl", m1: "गंदा/अनुचित", m2: "पक्षी", def: "Foul = dirty/unfair; Fowl = bird", ex1: "The water is foul.", ex2: "He keeps fowl." },
+    { id: 150, w1: "Faze", w2: "Phase", m1: "परेशान करना", m2: "चरण", def: "Faze = bother; Phase = stage", ex1: "Nothing fazes him.", ex2: "The project is in the first phase." },
+    { id: 151, w1: "Feint", w2: "Faint", m1: "बहाना (हमला)", m2: "बेहोश होना", def: "Feint = deceptive move; Faint = to lose consciousness", ex1: "He made a feint.", ex2: "She felt faint." },
+    { id: 152, w1: "File", w2: "Phial", m1: "फाइल", m2: "शीशी", def: "File = folder/tool; Phial = small bottle", ex1: "I need the file.", ex2: "The phial contains medicine." },
+    { id: 153, w1: "Fill", w2: "Fill", m1: "भरना", m2: "भरना", def: "Fill = to make full; Fill = to occupy", ex1: "Fill the glass.", ex2: "He filled the vacancy." },
+    { id: 154, w1: "Fir", w2: "Fur", m1: "चीड़", m2: "फर", def: "Fir = tree; Fur = animal hair", ex1: "The fir is green.", ex2: "She wore a fur coat." },
+    { id: 155, w1: "Fistic", w2: "Fistic", m1: "मुक्केबाजी", m2: "मुक्केबाजी", def: "Fistic = relating to boxing; Fistic = pugilistic", ex1: "He is a fistic champion.", ex2: "Fistic skills are useful." },
+    { id: 156, w1: "Flaw", w2: "Floor", m1: "दोष", m2: "फर्श", def: "Flaw = defect; Floor = ground", ex1: "There is a flaw in the plan.", ex2: "The floor is dirty." },
+    { id: 157, w1: "Flew", w2: "Flue", m1: "उड़ा", m2: "चिमनी का रास्ता", def: "Flew = past of fly; Flue = chimney duct", ex1: "The bird flew away.", ex2: "The flue is blocked." },
+    { id: 158, w1: "Flour", w2: "Flower", m1: "आटा", m2: "फूल", def: "Flour = grain powder; Flower = plant bloom", ex1: "Mix the flour with water.", ex2: "She received a flower." },
+    { id: 159, w1: "For", w2: "Fore", m1: "के लिए", m2: "आगे", def: "For = preposition; Fore = front", ex1: "This is for you.", ex2: "He is in the fore." },
+    { id: 160, w1: "Forbear", w2: "Forebear", m1: "बर्दाश्त करना", m2: "पूर्वज", def: "Forbear = to restrain; Forebear = ancestor", ex1: "He forbore to retaliate.", ex2: "His forebears were kings." },
+    { id: 161, w1: "Gait", w2: "Gate", m1: "चाल", m2: "दरवाजा", def: "Gait = walking style; Gate = entrance", ex1: "He has a slow gait.", ex2: "Open the gate." },
+    { id: 162, w1: "Great", w2: "Grate", m1: "महान", m2: "कद्दूकस/चूल्हा", def: "Great = excellent; Grate = grill/shred", ex1: "He is a great leader.", ex2: "Grate the cheese." },
+    { id: 163, w1: "Groan", w2: "Grown", m1: "कराहना", m2: "बढ़ा हुआ", def: "Groan = a moaning sound; Grown = past of grow", ex1: "He let out a groan.", ex2: "He has grown tall." },
+    { id: 164, w1: "Guessed", w2: "Guest", m1: "अंदाजा लगाया", m2: "मेहमान", def: "Guessed = past of guess; Guest = visitor", ex1: "I guessed the answer.", ex2: "He is a guest." },
+    { id: 165, w1: "Guild", w2: "Gilded", m1: "श्रेणी/संगठन", m2: "सोने का पानी चढ़ा", def: "Guild = association; Gilded = covered in gold", ex1: "He joined the writers' guild.", ex2: "The gilded frame is beautiful." },
+    { id: 166, w1: "Gilt", w2: "Guilt", m1: "सोने का पानी", m2: "अपराधबोध", def: "Gilt = gold coating; Guilt = feeling of blame", ex1: "The ornament is gilt.", ex2: "He felt guilt." },
+    { id: 167, w1: "Gopher", w2: "Gopher", m1: "गोफर (जानवर)", m2: "गोफर (संदेश वाहक)", def: "Gopher = a burrowing rodent; Gopher = a messenger", ex1: "The gopher dug a hole.", ex2: "He works as a gopher." },
+    { id: 168, w1: "Gorilla", w2: "Guerilla", m1: "गोरिल्ला", m2: "गुरिल्ला", def: "Gorilla = ape; Guerilla = irregular soldier", ex1: "The gorilla is powerful.", ex2: "They fought a guerilla war." },
+    { id: 169, w1: "Grate", w2: "Great", m1: "कद्दूकस/भट्टी", m2: "महान", def: "Grate = grill/shred; Great = very good", ex1: "He placed logs on the grate.", ex2: "He is a great man." },
+    { id: 170, w1: "Grave", w2: "Grave", m1: "कब्र", m2: "गंभीर", def: "Grave = burial place; Grave = serious", ex1: "He visited the grave.", ex2: "The situation is grave." },
+    { id: 171, w1: "Grease", w2: "Greece", m1: "चिकनाई", m2: "ग्रीस (देश)", def: "Grease = fat/oil; Greece = country", ex1: "The grease is dirty.", ex2: "He visited Greece." },
+    { id: 172, w1: "Grisly", w2: "Grizzly", m1: "भयानक", m2: "भूरा भालू", def: "Grisly = horrifying; Grizzly = bear/ grey", ex1: "It was a grisly scene.", ex2: "He saw a grizzly bear." },
+    { id: 173, w1: "Gait", w2: "Gait", m1: "चाल", m2: "चाल", def: "Gait = manner of walking; Gait = also used in horse riding", ex1: "His gait is distinctive.", ex2: "The horse has a smooth gait." },
+    { id: 174, w1: "Gamble", w2: "Gambol", m1: "जुआ खेलना", m2: "उछल-कूद करना", def: "Gamble = to bet; Gambol = to skip/play", ex1: "He likes to gamble.", ex2: "The lambs gambolled in the field." },
+    { id: 175, w1: "Geld", w2: "Guild", m1: "बधिया करना", m2: "संगठन", def: "Geld = to castrate; Guild = association", ex1: "They gelded the horse.", ex2: "He joined the guild." },
+    { id: 176, w1: "Hair", w2: "Hare", m1: "बाल", m2: "खरगोश", def: "Hair = strands; Hare = rabbit", ex1: "My hair is black.", ex2: "A hare ran fast." },
+    { id: 177, w1: "Hall", w2: "Haul", m1: "हॉल", m2: "ढोना", def: "Hall = room; Haul = carry/drag", ex1: "The hall is big.", ex2: "He hauled the luggage." },
+    { id: 178, w1: "Heal", w2: "Heel", m1: "ठीक होना", m2: "एड़ी", def: "Heal = recover; Heel = body part", ex1: "The wound will heal.", ex2: "My heel hurts." },
+    { id: 179, w1: "Hear", w2: "Here", m1: "सुनना", m2: "यहाँ", def: "Hear = listen; Here = this place", ex1: "I hear you.", ex2: "Come here." },
+    { id: 180, w1: "Him", w2: "Hymn", m1: "उसे", m2: "भजन", def: "Him = pronoun; Hymn = religious song", ex1: "I saw him.", ex2: "They sang a hymn." },
+    { id: 181, w1: "Hole", w2: "Whole", m1: "छेद", m2: "पूरा", def: "Hole = opening; Whole = entire", ex1: "There is a hole in the wall.", ex2: "He ate the whole cake." },
+    { id: 182, w1: "Hour", w2: "Our", m1: "घंटा", m2: "हमारा", def: "Hour = 60 minutes; Our = belonging to us", ex1: "I will wait for an hour.", ex2: "This is our car." },
+    { id: 183, w1: "Hoarse", w2: "Horse", m1: "भारी आवाज", m2: "घोड़ा", def: "Hoarse = rough voice; Horse = animal", ex1: "He spoke in a hoarse voice.", ex2: "The horse is running." },
+    { id: 184, w1: "Hue", w2: "Hew", m1: "रंग", m2: "काटना", def: "Hue = color; Hew = to chop", ex1: "The hue of the sky is blue.", ex2: "He hewed the wood." },
+    { id: 185, w1: "Hurdle", w2: "Hurtle", m1: "बाधा/कूदना", m2: "तेजी से गिरना/उछलना", def: "Hurdle = obstacle; Hurtle = to rush/fall", ex1: "He cleared the hurdle.", ex2: "The car hurtled down the hill." },
+    { id: 186, w1: "Heart", w2: "Hart", m1: "दिल", m2: "हिरण (नर)", def: "Heart = organ; Hart = male deer", ex1: "He has a kind heart.", ex2: "The hart is running." },
+    { id: 187, w1: "Him", w2: "Hymn", m1: "उसे", m2: "भजन", def: "Him = object pronoun; Hymn = song", ex1: "I know him.", ex2: "He sang a hymn." },
+    { id: 188, w1: "Hi", w2: "High", m1: "नमस्ते", m2: "ऊँचा", def: "Hi = greeting; High = tall", ex1: "Hi, how are you?", ex2: "The mountain is high." },
+    { id: 189, w1: "Hoard", w2: "Horde", m1: "भंडार", m2: "भीड़", def: "Hoard = store of goods; Horde = large crowd", ex1: "He has a hoard of gold.", ex2: "A horde of people came." },
+    { id: 190, w1: "Hole", w2: "Whole", m1: "छेद", m2: "पूरा", def: "Hole = cavity; Whole = entire", ex1: "There is a hole.", ex2: "The whole thing." },
+    { id: 191, w1: "Holy", w2: "Wholly", m1: "पवित्र", m2: "पूर्णतः", def: "Holy = sacred; Wholly = completely", ex1: "This is a holy place.", ex2: "I am wholly in agreement." },
+    { id: 192, w1: "Hour", w2: "Our", m1: "घंटा", m2: "हमारा", def: "Hour = time; Our = possessive", ex1: "It's been an hour.", ex2: "Our team won." },
+    { id: 193, w1: "Humerus", w2: "Humorous", m1: "प्रगंडिका (हड्डी)", m2: "हास्यपूर्ण", def: "Humerus = bone in arm; Humorous = funny", ex1: "He broke his humerus.", ex2: "He made a humorous comment." },
+    { id: 194, w1: "Hundred", w2: "Hundred", m1: "सौ", m2: "सौ", def: "Hundred = number; Hundred = correct spelling", ex1: "I have a hundred rupees.", ex2: "Hundred is a number." },
+    { id: 195, w1: "Hurdle", w2: "Hurtle", m1: "बाधा", m2: "तेजी से गिरना", def: "Hurdle = obstacle; Hurtle = to move rapidly", ex1: "He jumped over the hurdle.", ex2: "The car hurtled down the road." },
+    { id: 196, w1: "Hymnal", w2: "Himnal", m1: "भजन पुस्तिका", m2: "भजन पुस्तिका", def: "Hymnal = book of hymns; Himnal = incorrect spelling", ex1: "They used a hymnal.", ex2: "Himnal is not correct." },
+    { id: 197, w1: "Hair", w2: "Hare", m1: "बाल", m2: "खरगोश", def: "Hair = strands; Hare = animal", ex1: "She has long hair.", ex2: "The hare is fast." },
+    { id: 198, w1: "Hall", w2: "Haul", m1: "हॉल", m2: "ढोना", def: "Hall = building; Haul = to pull", ex1: "The hall is large.", ex2: "He hauled the box." },
+    { id: 199, w1: "Heard", w2: "Herd", m1: "सुना", m2: "झुंड", def: "Heard = past of hear; Herd = group of animals", ex1: "I heard the news.", ex2: "A herd of cattle." },
+    { id: 200, w1: "Herd", w2: "Heard", m1: "झुंड", m2: "सुना", def: "Herd = animals; Heard = listened", ex1: "He is a shepherd who herds sheep.", ex2: "I heard him sing." },
+    { id: 201, w1: "Idol", w2: "Idle", m1: "मूर्ति", m2: "बेकार/आलसी", def: "Idol = statue; Idle = lazy/not working", ex1: "They worship the idol.", ex2: "He is idle today." },
+    { id: 202, w1: "In", w2: "Inn", m1: "अंदर", m2: "सराय", def: "In = inside; Inn = hotel", ex1: "Put it in the box.", ex2: "We stayed at an inn." },
+    { id: 203, w1: "Its", w2: "It's", m1: "इसका (possessive)", m2: "यह है (it is)", def: "Its = belonging to it; It's = contraction of it is", ex1: "The cat licked its paw.", ex2: "It's raining outside." },
+    { id: 204, w1: "Ice", w2: "I", m1: "बर्फ", m2: "मैं", def: "Ice = frozen water; I = pronoun", ex1: "The ice is melting.", ex2: "I am a student." },
+    { id: 205, w1: "Idle", w2: "Idol", m1: "आलसी", m2: "मूर्ति", def: "Idle = lazy; Idol = statue", ex1: "He leads an idle life.", ex2: "The idol is made of gold." },
+    { id: 206, w1: "Ill", w2: "I'll", m1: "बीमार", m2: "मैं करूंगा", def: "Ill = sick; I'll = I will", ex1: "He is ill today.", ex2: "I'll help you." },
+    { id: 207, w1: "Illusion", w2: "Allusion", m1: "भ्रम", m2: "संकेत", def: "Illusion = false perception; Allusion = indirect reference", ex1: "It was an illusion.", ex2: "He made an allusion to history." },
+    { id: 208, w1: "Immoral", w2: "Amoral", m1: "अनैतिक (गलत)", m2: "अनैतिक (नैतिकता से रहित)", def: "Immoral = morally wrong; Amoral = without morality", ex1: "Cheating is immoral.", ex2: "Animals are amoral." },
+    { id: 209, w1: "Incite", w2: "Insight", m1: "भड़काना", m2: "अंतर्दृष्टि", def: "Incite = to provoke; Insight = deep understanding", ex1: "He incited the mob.", ex2: "He has great insight." },
+    { id: 210, w1: "It's", w2: "Its", m1: "यह है", m2: "इसका", def: "It's = it is; Its = belonging to it", ex1: "It's a beautiful day.", ex2: "The cat chased its tail." },
+    { id: 211, w1: "I", w2: "Eye", m1: "मैं", m2: "आँख", def: "I = pronoun; Eye = organ", ex1: "I am happy.", ex2: "My eye is red." },
+    { id: 212, w1: "In", w2: "In", m1: "अंदर", m2: "अंदर", def: "In = preposition; In = fashionably popular", ex1: "He is in the room.", ex2: "Long skirts are in." },
+    { id: 213, w1: "Indite", w2: "Indict", m1: "लिखना", m2: "अभियोग लगाना", def: "Indite = to write; Indict = to charge with crime", ex1: "He indited a poem.", ex2: "He was indicted for fraud." },
+    { id: 214, w1: "Ingrain", w2: "Engrain", m1: "जमा देना", m2: "जड़ जमा देना", def: "Ingrain = to fix deeply; Engrain = same meaning", ex1: "His values are ingrained.", ex2: "The idea is engrained." },
+    { id: 215, w1: "Initial", w2: "Initial", m1: "आरंभिक", m2: "आरंभिक", def: "Initial = first; Initial = initial letters", ex1: "His initial reaction was shock.", ex2: "Write your initials here." },
+    { id: 216, w1: "Jewel", w2: "Joule", m1: "रत्न", m2: "जूल (ऊर्जा की इकाई)", def: "Jewel = gem; Joule = unit of energy", ex1: "She wore a jewel.", ex2: "The unit is a joule." },
+    { id: 217, w1: "Jibe", w2: "Gibe", m1: "उपहास करना", m2: "उपहास करना", def: "Jibe = taunt; Gibe = same", ex1: "He made a jibe at him.", ex2: "He gave a gibe." },
+    { id: 218, w1: "Judge", w2: "Judge", m1: "न्यायाधीश", m2: "निर्णय करना", def: "Judge = magistrate; Judge = to evaluate", ex1: "He is a judge.", ex2: "Don't judge him." },
+    { id: 219, w1: "Jug", w2: "Jug", m1: "जग", m2: "जेल (बोलचाल)", def: "Jug = container; Jug = prison", ex1: "He filled the jug.", ex2: "He was in the jug." },
+    { id: 220, w1: "Jury", w2: "Jury", m1: "जूरी", m2: "जूरी", def: "Jury = panel; Jury = group", ex1: "The jury announced the verdict.", ex2: "The jury is out." },
+    { id: 221, w1: "Knead", w2: "Need", m1: "गूंथना", m2: "आवश्यकता", def: "Knead = work dough; Need = require", ex1: "Knead the dough.", ex2: "I need water." },
+    { id: 222, w1: "Knew", w2: "New", m1: "जानता था", m2: "नया", def: "Knew = past of know; New = fresh", ex1: "I knew him.", ex2: "I bought a new phone." },
+    { id: 223, w1: "Knight", w2: "Night", m1: "शूरवीर", m2: "रात", def: "Knight = warrior; Night = evening", ex1: "The knight fought bravely.", ex2: "I sleep at night." },
+    { id: 224, w1: "Knot", w2: "Not", m1: "गाँठ", m2: "नहीं", def: "Knot = tie; Not = negation", ex1: "Tie the knot tightly.", ex2: "I am not coming." },
+    { id: 225, w1: "Know", w2: "No", m1: "जानना", m2: "नहीं", def: "Know = understand; No = negative", ex1: "I know the answer.", ex2: "No, I don't." },
+    { id: 226, w1: "Kernel", w2: "Colonel", m1: "दाना/गिरी", m2: "कर्नल", def: "Kernel = seed; Colonel = military rank", ex1: "The kernel of the nut.", ex2: "He is a colonel." },
+    { id: 227, w1: "Key", w2: "Quay", m1: "चाबी", m2: "गोदी/बंदरगाह", def: "Key = lock opener; Quay = pier", ex1: "I lost the key.", ex2: "The ship docked at the quay." },
+    { id: 228, w1: "Kill", w2: "Kill", m1: "मारना", m2: "बंद करना (इंजन)", def: "Kill = to slay; Kill = to stop/switch off", ex1: "He killed the snake.", ex2: "Kill the engine." },
+    { id: 229, w1: "Kine", w2: "Kine", m1: "गाय (बहुवचन, पुराना)", m2: "गाय (बहुवचन)", def: "Kine = cattle (old plural); Kine = variant", ex1: "The kine grazed in the field.", ex2: "Kine are useful animals." },
+    { id: 230, w1: "Knapsack", w2: "Napsack", m1: "बैग", m2: "बैग (गलत स्पेलिंग)", def: "Knapsack = backpack; Napsack = incorrect", ex1: "He carried a knapsack.", ex2: "Napsack is not correct." },
+    { id: 231, w1: "Knave", w2: "Nave", m1: "बदमाश", m2: "गुम्बद/चर्च का भाग", def: "Knave = a dishonest person; Nave = central part of church", ex1: "He is a knave.", ex2: "They entered the nave." },
+    { id: 232, w1: "Knee", w2: "Neigh", m1: "घुटना", m2: "हिनहिनाना", def: "Knee = body part; Neigh = horse sound", ex1: "He hurt his knee.", ex2: "The horse neighed." },
+    { id: 233, w1: "Knight", w2: "Night", m1: "शूरवीर", m2: "रात", def: "Knight = medieval warrior; Night = dark period", ex1: "The knight wore armor.", ex2: "It is a dark night." },
+    { id: 234, w1: "Knob", w2: "Nob", m1: "घुंडी/उभार", m2: "कुलीन व्यक्ति", def: "Knob = rounded protrusion; Nob = rich/socially important person", ex1: "Turn the knob.", ex2: "He is a nob." },
+    { id: 235, w1: "Knock", w2: "Nock", m1: "खटखटाना", m2: "तीर के पंख लगाना", def: "Knock = rap on door; Nock = notch on a bow", ex1: "Knock on the door.", ex2: "He nocked the arrow." },
+    { id: 236, w1: "Lead", w2: "Led", m1: "नेतृत्व करना (वर्तमान)", m2: "नेतृत्व किया (भूतकाल)", def: "Lead = guide/present; Led = past tense", ex1: "He will lead the team.", ex2: "He led the team." },
+    { id: 237, w1: "Leak", w2: "Leek", m1: "रिसाव", m2: "प्याज़ (हरा)", def: "Leak = escape of liquid; Leek = vegetable", ex1: "The pipe has a leak.", ex2: "He cooked leek soup." },
+    { id: 238, w1: "Lessen", w2: "Lesson", m1: "कम होना", m2: "पाठ", def: "Lessen = reduce; Lesson = class", ex1: "The pain will lessen.", ex2: "I learned a lesson." },
+    { id: 239, w1: "Lie", w2: "Lye", m1: "झूठ बोलना/लेटना", m2: "क्षार", def: "Lie = falsehood/recline; Lye = alkaline solution", ex1: "Don't tell a lie.", ex2: "Lye is used in soap." },
+    { id: 240, w1: "Loose", w2: "Lose", m1: "ढीला", m2: "खोना", def: "Loose = not tight; Lose = misplace/be defeated", ex1: "The knot is loose.", ex2: "Don't lose your keys." },
+    { id: 241, w1: "Lumbar", w2: "Lumber", m1: "कमर संबंधी", m2: "लकड़ी", def: "Lumbar = relating to lower back; Lumber = timber", ex1: "He has lumbar pain.", ex2: "The lumber is stacked." },
+    { id: 242, w1: "Lynx", w2: "Links", m1: "एक प्रकार की बिल्ली", m2: "कड़ियाँ/गोल्फ मैदान", def: "Lynx = wildcat; Links = connections/golf course", ex1: "The lynx is a wild cat.", ex2: "He played on the links." },
+    { id: 243, w1: "Lion", w2: "Lien", m1: "शेर", m2: "ग्रहणाधिकार", def: "Lion = animal; Lien = legal right", ex1: "The lion is the king of the jungle.", ex2: "He has a lien on the property." },
+    { id: 244, w1: "Liquid", w2: "Liquor", m1: "तरल", m2: "शराब", def: "Liquid = fluid; Liquor = alcohol", ex1: "Water is a liquid.", ex2: "He drinks liquor." },
+    { id: 245, w1: "Loath", w2: "Loathe", m1: "अनिच्छुक", m2: "घृणा करना", def: "Loath = reluctant; Loathe = to hate", ex1: "He is loath to go.", ex2: "I loathe violence." },
+    { id: 246, w1: "Lone", w2: "Loan", m1: "अकेला", m2: "ऋण", def: "Lone = solitary; Loan = borrowed money", ex1: "He is a lone wolf.", ex2: "I need a loan." },
+    { id: 247, w1: "Loor", w2: "Lure", m1: "लोअर (कपड़ा)", m2: "लालच", def: "Loor = a type of fabric; Lure = temptation", ex1: "He wore loor.", ex2: "The lure of money." },
+    { id: 248, w1: "Loud", w2: "Laud", m1: "तेज़", m2: "प्रशंसा करना", def: "Loud = high volume; Laud = to praise", ex1: "The music is too loud.", ex2: "He was lauded for his work." },
+    { id: 249, w1: "Lover", w2: "Lava", m1: "प्रेमी", m2: "लावा", def: "Lover = partner; Lava = molten rock", ex1: "He is my lover.", ex2: "Lava flowed from the volcano." },
+    { id: 250, w1: "Lunch", w2: "Lunch", m1: "दोपहर का भोजन", m2: "दोपहर का भोजन", def: "Lunch = midday meal; Lunch = to eat lunch", ex1: "I have lunch at 1 pm.", ex2: "Let's lunch together." },
+    { id: 251, w1: "Lye", w2: "Lie", m1: "क्षार", m2: "झूठ/लेटना", def: "Lye = alkaline; Lie = falsehood/recline", ex1: "Lye is a chemical.", ex2: "Lie down." },
+    { id: 252, w1: "Loon", w2: "Lun", m1: "पक्षी/पागल", m2: "लून (मुद्रा)", def: "Loon = bird/crazy person; Lun = an old coin", ex1: "The loon is a bird.", ex2: "He found a lun." },
+    { id: 253, w1: "Lust", w2: "List", m1: "वासना", m2: "सूची", def: "Lust = strong desire; List = itemized record", ex1: "Lust is a sin.", ex2: "Make a list." },
+    { id: 254, w1: "Lute", w2: "Loot", m1: "एक प्रकार का वाद्य यंत्र", m2: "लूट", def: "Lute = stringed instrument; Loot = stolen goods", ex1: "He played the lute.", ex2: "The loot was recovered." },
+    { id: 255, w1: "Lyric", w2: "Liric", m1: "गीत", m2: "गीत (गलत स्पेलिंग)", def: "Lyric = poetic; Liric = incorrect spelling", ex1: "He wrote the lyrics.", ex2: "Liric is wrong spelling." },
+    { id: 256, w1: "Mail", w2: "Male", m1: "डाक", m2: "पुरुष", def: "Mail = post; Male = gender", ex1: "I got the mail.", ex2: "He is a male." },
+    { id: 257, w1: "Main", w2: "Mane", m1: "मुख्य", m2: "अयाल", def: "Main = principal; Mane = horse hair", ex1: "This is the main gate.", ex2: "The horse has a long mane." },
+    { id: 258, w1: "Meat", w2: "Meet", m1: "मांस", m2: "मिलना", def: "Meat = flesh; Meet = encounter", ex1: "I don't eat meat.", ex2: "Let's meet tomorrow." },
+    { id: 259, w1: "Might", w2: "Mite", m1: "शक्ति/शायद", m2: "कुत्सित कीट", def: "Might = power/possibility; Mite = tiny creature", ex1: "It might rain.", ex2: "The mite is tiny." },
+    { id: 260, w1: "Miner", w2: "Minor", m1: "खनिक", m2: "अल्पवयस्क/छोटा", def: "Miner = one who mines; Minor = underage/small", ex1: "The miner worked underground.", ex2: "He is a minor." },
+    { id: 261, w1: "Moat", w2: "Mote", m1: "परिखा", m2: "कण", def: "Moat = defensive ditch; Mote = speck", ex1: "The castle has a moat.", ex2: "A mote of dust." },
+    { id: 262, w1: "Morning", w2: "Mourning", m1: "सुबह", m2: "शोक", def: "Morning = early day; Mourning = grief", ex1: "I wake up in the morning.", ex2: "He is in mourning." },
+    { id: 263, w1: "Muscle", w2: "Mussel", m1: "मांसपेशी", m2: "एक प्रकार की सीप", def: "Muscle = body tissue; Mussel = shellfish", ex1: "He has strong muscles.", ex2: "He ate mussels." },
+    { id: 264, w1: "Medal", w2: "Meddle", m1: "पदक", m2: "दखल देना", def: "Medal = award; Meddle = to interfere", ex1: "He won a medal.", ex2: "Don't meddle in my affairs." },
+    { id: 265, w1: "Metal", w2: "Mettle", m1: "धातु", m2: "साहस", def: "Metal = metallic substance; Mettle = courage", ex1: "The box is made of metal.", ex2: "He showed his mettle." },
+    { id: 266, w1: "Meter", w2: "Metre", m1: "मापक यंत्र", m2: "मीटर (लंबाई की इकाई)", def: "Meter = measuring device; Metre = unit of length", ex1: "He checked the meter.", ex2: "The distance is 100 metres." },
+    { id: 267, w1: "Might", w2: "Mite", m1: "शक्ति", m2: "कीट", def: "Might = power; Mite = insect", ex1: "He used all his might.", ex2: "The mite is harmful." },
+    { id: 268, w1: "Mind", w2: "Mined", m1: "मन", m2: "खनन किया", def: "Mind = intellect; Mined = extracted from mine", ex1: "Mind your own business.", ex2: "Gold is mined here." },
+    { id: 269, w1: "Missed", w2: "Mist", m1: "चूक गया/याद किया", m2: "कोहरा", def: "Missed = failed to hit/remember; Mist = fog", ex1: "I missed the train.", ex2: "The mist is thick." },
+    { id: 270, w1: "Mousse", w2: "Moose", m1: "मूस (मिठाई)", m2: "मूस (जानवर)", def: "Mousse = dessert; Moose = animal", ex1: "I love chocolate mousse.", ex2: "The moose is a large deer." },
+    { id: 271, w1: "Mucous", w2: "Mucus", m1: "श्लेष्मा संबंधी", m2: "श्लेष्मा", def: "Mucous = adjective relating to mucus; Mucus = substance", ex1: "The mucous membrane is sensitive.", ex2: "He coughed up mucus." },
+    { id: 272, w1: "Marshall", w2: "Martial", m1: "मार्शल (शीर्षक)", m2: "सैन्य/युद्ध संबंधी", def: "Marshall = rank; Martial = military", ex1: "He is a marshall.", ex2: "Martial law was imposed." },
+    { id: 273, w1: "Massage", w2: "Message", m1: "मालिश", m2: "संदेश", def: "Massage = kneading muscles; Message = communication", ex1: "He got a massage.", ex2: "I got a message." },
+    { id: 274, w1: "Maze", w2: "Maize", m1: "भूलभुलैया", m2: "मक्का", def: "Maze = labyrinth; Maize = corn", ex1: "He solved the maze.", ex2: "The field is full of maize." },
+    { id: 275, w1: "Mead", w2: "Meed", m1: "मीड (शराब)", m2: "इनाम", def: "Mead = alcoholic drink; Meed = reward", ex1: "He drank mead.", ex2: "He got his meed." },
+    { id: 276, w1: "Meat", w2: "Meet", m1: "मांस", m2: "मिलना", def: "Meat = flesh; Meet = encounter", ex1: "He eats meat.", ex2: "Meet me at 5." },
+    { id: 277, w1: "Mettle", w2: "Metal", m1: "साहस", m2: "धातु", def: "Mettle = courage; Metal = substance", ex1: "He has the mettle to fight.", ex2: "Iron is a metal." },
+    { id: 278, w1: "Mince", w2: "Minds", m1: "कीमा", m2: "मन (बहुवचन)", def: "Mince = chopped meat; Minds = brains", ex1: "She bought mince.", ex2: "Great minds think alike." },
+    { id: 279, w1: "Miner", w2: "Minor", m1: "खनिक", m2: "छोटा/नाबालिग", def: "Miner = worker; Minor = underage/small", ex1: "The miner's lamp.", ex2: "He is a minor." },
+    { id: 280, w1: "Mite", w2: "Might", m1: "कीट", m2: "शक्ति", def: "Mite = insect; Might = power", ex1: "The mite is small.", ex2: "He tried with all his might." },
+    { id: 281, w1: "Navel", w2: "Naval", m1: "नाभि", m2: "नौसेना संबंधी", def: "Navel = belly button; Naval = navy", ex1: "He has a pierced navel.", ex2: "He is a naval officer." },
+    { id: 282, w1: "No", w2: "Know", m1: "नहीं", m2: "जानना", def: "No = negative; Know = understand", ex1: "I said no.", ex2: "I know you." },
+    { id: 283, w1: "None", w2: "Nun", m1: "कोई नहीं", m2: "नन (भिक्षुणी)", def: "None = not any; Nun = religious sister", ex1: "None of them came.", ex2: "She is a nun." },
+    { id: 284, w1: "Naught", w2: "Nought", m1: "शून्य", m2: "शून्य", def: "Naught = nothing/zero; Nought = zero", ex1: "All his efforts came to naught.", ex2: "The number is nought." },
+    { id: 285, w1: "Naval", w2: "Navel", m1: "नौसेना", m2: "नाभि", def: "Naval = relating to ships; Navel = belly button", ex1: "Naval base.", ex2: "She wore a ring on her navel." },
+    { id: 286, w1: "Need", w2: "Knead", m1: "आवश्यकता", m2: "गूंथना", def: "Need = require; Knead = to work dough", ex1: "I need help.", ex2: "Knead the flour." },
+    { id: 287, w1: "New", w2: "Knew", m1: "नया", m2: "जानता था", def: "New = fresh; Knew = past of know", ex1: "This is a new car.", ex2: "I knew him." },
+    { id: 288, w1: "Night", w2: "Knight", m1: "रात", m2: "शूरवीर", def: "Night = dark period; Knight = warrior", ex1: "It is a starry night.", ex2: "The knight is brave." },
+    { id: 289, w1: "Not", w2: "Knot", m1: "नहीं", m2: "गाँठ", def: "Not = negation; Knot = tie", ex1: "I am not ready.", ex2: "Tie a knot." },
+    { id: 290, w1: "Nose", w2: "Knows", m1: "नाक", m2: "जानता है", def: "Nose = body part; Knows = third person of know", ex1: "He has a big nose.", ex2: "He knows the answer." },
+    { id: 291, w1: "Nought", w2: "Naught", m1: "शून्य", m2: "व्यर्थ", def: "Nought = zero; Naught = nothing/failure", ex1: "The score is nought.", ex2: "His plans came to naught." },
+    { id: 292, w1: "Nun", w2: "None", m1: "नन", m2: "कोई नहीं", def: "Nun = religious woman; None = not any", ex1: "The nun is praying.", ex2: "None of them are here." },
+    { id: 293, w1: "Nuke", w2: "Nuke", m1: "परमाणु", m2: "माइक्रोवेव में गरम करना", def: "Nuke = nuclear; Nuke = to microwave", ex1: "They tested a nuke.", ex2: "Nuke the food for 2 minutes." },
+    { id: 294, w1: "Nut", w2: "Gnut", m1: "अखरोट", m2: "ग्नट (गलत स्पेलिंग)", def: "Nut = seed; Gnut = incorrect", ex1: "He ate a nut.", ex2: "Gnut is a misspelling." },
+    { id: 295, w1: "Nice", w2: "Gneiss", m1: "अच्छा", m2: "एक प्रकार का पत्थर", def: "Nice = pleasant; Gneiss = metamorphic rock", ex1: "He is very nice.", ex2: "Gneiss is a rock." },
+    { id: 296, w1: "Oar", w2: "Or", m1: "चप्पू", m2: "या", def: "Oar = boat paddle; Or = conjunction", ex1: "Row with an oar.", ex2: "Tea or coffee?" },
+    { id: 297, w1: "One", w2: "Won", m1: "एक", m2: "जीता", def: "One = number; Won = past of win", ex1: "I have one brother.", ex2: "I won the match." },
+    { id: 298, w1: "Ought", w2: "Aught", m1: "चाहिए", m2: "कुछ भी", def: "Ought = should; Aught = anything", ex1: "You ought to go.", ex2: "He doesn't care aught." },
+    { id: 299, w1: "Overdo", w2: "Overdue", m1: "अत्यधिक करना", m2: "अतिदेय", def: "Overdo = do too much; Overdue = not paid on time", ex1: "Don't overdo it.", ex2: "The book is overdue." },
+    { id: 300, w1: "Ordain", w2: "Ordain", m1: "नियुक्त करना", m2: "नियुक्त करना (गलत)", def: "Ordain = to appoint; Ordain = correct", ex1: "He was ordained as a priest.", ex2: "Ordain is the correct spelling." },
+    { id: 301, w1: "Ore", w2: "Oar", m1: "अयस्क", m2: "चप्पू", def: "Ore = mineral; Oar = paddle", ex1: "Iron ore is mined.", ex2: "He used an oar." },
+    { id: 302, w1: "Our", w2: "Hour", m1: "हमारा", m2: "घंटा", def: "Our = possessive; Hour = time", ex1: "Our house is large.", ex2: "I worked for an hour." },
+    { id: 303, w1: "Owl", w2: "Ole", m1: "उल्लू", m2: "ओले (स्पेनिश में)", def: "Owl = bird; Ole = Spanish cheer", ex1: "The owl is nocturnal.", ex2: "They shouted 'ole'." },
+    { id: 304, w1: "Ox", w2: "Ox", m1: "बैल", m2: "बैल (बहुवचन)", def: "Ox = male cow; Ox = plural", ex1: "The ox is strong.", ex2: "The oxen are working." },
+    { id: 305, w1: "Oyster", w2: "Oyster", m1: "सीप", m2: "सीप", def: "Oyster = shellfish; Oyster = a type of oyster", ex1: "He ate an oyster.", ex2: "Oysters are delicious." },
+    { id: 306, w1: "Ozone", w2: "Ozen", m1: "ओजोन", m2: "ओजेन (गलत)", def: "Ozone = gas; Ozen = incorrect", ex1: "The ozone layer is depleting.", ex2: "Ozen is not correct." },
+    { id: 307, w1: "Olive", w2: "Oliv", m1: "जैतून", m2: "जैतून (गलत)", def: "Olive = fruit; Oliv = incorrect spelling", ex1: "He ate an olive.", ex2: "Oliv is a misspelling." },
+    { id: 308, w1: "Orphan", w2: "Orphan", m1: "अनाथ", m2: "अनाथ", def: "Orphan = child without parents; Orphan = to make someone orphan", ex1: "He is an orphan.", ex2: "The war orphaned many." },
+    { id: 309, w1: "Ounce", w2: "Ounce", m1: "औंस (माप)", m2: "औंस", def: "Ounce = unit of weight; Ounce = small amount", ex1: "He weighs 100 ounces.", ex2: "He doesn't have an ounce of sense." },
+    { id: 310, w1: "Oven", w2: "Oven", m1: "ओवन", m2: "ओवन", def: "Oven = appliance; Oven = heater", ex1: "Bake it in the oven.", ex2: "The oven is hot." },
+    { id: 311, w1: "Pair", w2: "Pear", m1: "जोड़ा", m2: "नाशपाती", def: "Pair = couple; Pear = fruit", ex1: "I bought a pair of shoes.", ex2: "He ate a pear." },
+    { id: 312, w1: "Peace", w2: "Piece", m1: "शांति", m2: "टुकड़ा", def: "Peace = calm; Piece = part", ex1: "We want peace.", ex2: "Give me a piece of cake." },
+    { id: 313, w1: "Plain", w2: "Plane", m1: "साधारण/मैदान", m2: "हवाई जहाज/समतल", def: "Plain = simple/field; Plane = aircraft/flat", ex1: "It is plain to see.", ex2: "The plane is flying." },
+    { id: 314, w1: "Principal", w2: "Principle", m1: "प्रधानाचार्य/मूलधन", m2: "सिद्धांत", def: "Principal = head/chief; Principle = rule/belief", ex1: "He is the principal of the school.", ex2: "It's against my principles." },
+    { id: 315, w1: "Presence", w2: "Presents", m1: "उपस्थिति", m2: "उपहार", def: "Presence = being present; Presents = gifts", ex1: "His presence was felt.", ex2: "She received many presents." },
+    { id: 316, w1: "Pail", w2: "Pale", m1: "बाल्टी", m2: "पीला", def: "Pail = bucket; Pale = light color", ex1: "He carried a pail of water.", ex2: "She turned pale." },
+    { id: 317, w1: "Pain", w2: "Pane", m1: "दर्द", m2: "शीशा", def: "Pain = hurt; Pane = glass panel", ex1: "He felt pain.", ex2: "He broke the pane." },
+    { id: 318, w1: "Passed", w2: "Past", m1: "पारित किया", m2: "अतीत", def: "Passed = past tense of pass; Past = time gone by", ex1: "He passed the exam.", ex2: "In the past, life was different." },
+    { id: 319, w1: "Patience", w2: "Patients", m1: "धैर्य", m2: "मरीज़", def: "Patience = calmness; Patients = people under medical care", ex1: "You need patience.", ex2: "The doctor is busy with patients." },
+    { id: 320, w1: "Peak", w2: "Peek", m1: "शिखर", m2: "झांकना", def: "Peak = top; Peek = glance quickly", ex1: "He climbed to the peak.", ex2: "Don't peek at your presents." },
+    { id: 321, w1: "Peer", w2: "Pier", m1: "सहकर्मी", m2: "घाट", def: "Peer = equal; Pier = dock", ex1: "He is my peer.", ex2: "The ship is at the pier." },
+    { id: 322, w1: "Plumb", w2: "Plum", m1: "साहुल (माप)", m2: "आलूबुखारा", def: "Plumb = lead weight; Plum = fruit", ex1: "He used a plumb line.", ex2: "He ate a plum." },
+    { id: 323, w1: "Pole", w2: "Poll", m1: "खंभा", m2: "सर्वेक्षण/मतदान", def: "Pole = long stick; Poll = survey/election", ex1: "The flag is on a pole.", ex2: "The poll results are out." },
+    { id: 324, w1: "Pour", w2: "Poor", m1: "डालना", m2: "गरीब", def: "Pour = to flow; Poor = not rich", ex1: "Pour the water.", ex2: "He is a poor man." },
+    { id: 325, w1: "Pray", w2: "Prey", m1: "प्रार्थना करना", m2: "शिकार", def: "Pray = to ask; Prey = victim", ex1: "They pray to God.", ex2: "The lion hunts its prey." },
+    { id: 326, w1: "Precede", w2: "Proceed", m1: "पूर्व में होना", m2: "आगे बढ़ना", def: "Precede = come before; Proceed = go forward", ex1: "The introduction precedes the chapter.", ex2: "Proceed with your plan." },
+    { id: 327, w1: "Prescribe", w2: "Proscribe", m1: "दवा लिखना/सुझाव देना", m2: "प्रतिबंधित करना", def: "Prescribe = to recommend; Proscribe = to forbid", ex1: "The doctor prescribed medicine.", ex2: "Smoking is proscribed here." },
+    { id: 328, w1: "Profit", w2: "Prophet", m1: "लाभ", m2: "पैगंबर", def: "Profit = gain; Prophet = religious leader", ex1: "He made a profit.", ex2: "He is a prophet." },
+    { id: 329, w1: "Pupil", w2: "Pupil", m1: "छात्र", m2: "पुतली", def: "Pupil = student; Pupil = eye part", ex1: "He is a pupil.", ex2: "Her pupils dilated." },
+    { id: 330, w1: "Peace", w2: "Piece", m1: "शांति", m2: "टुकड़ा", def: "Peace = tranquility; Piece = part", ex1: "The world needs peace.", ex2: "He took a piece of the cake." },
+    { id: 331, w1: "Plain", w2: "Plane", m1: "सादा", m2: "विमान", def: "Plain = simple; Plane = aircraft", ex1: "She wore a plain dress.", ex2: "He flew a plane." },
+    { id: 332, w1: "Principal", w2: "Principle", m1: "प्रधान", m2: "सिद्धांत", def: "Principal = main/head; Principle = rule", ex1: "The principal is in his office.", ex2: "This is against my principles." },
+    { id: 333, w1: "Profit", w2: "Prophet", m1: "लाभ", m2: "पैगंबर", def: "Profit = financial gain; Prophet = messenger", ex1: "He made a profit of 10%", ex2: "Prophet Muhammad was a great leader." },
+    { id: 334, w1: "Prostate", w2: "Prostrate", m1: "प्रोस्टेट (ग्रंथि)", m2: "नतमस्तक होना", def: "Prostate = gland; Prostrate = lying down", ex1: "He has prostate issues.", ex2: "He lay prostrate on the ground." },
+    { id: 335, w1: "Pursue", w2: "Peruse", m1: "पीछा करना", m2: "ध्यान से पढ़ना", def: "Pursue = to chase; Peruse = to read carefully", ex1: "He pursued his dreams.", ex2: "Please peruse the document." },
+    { id: 336, w1: "Pail", w2: "Pale", m1: "बाल्टी", m2: "पीला", def: "Pail = bucket; Pale = light color", ex1: "He filled the pail.", ex2: "His face was pale." },
+    { id: 337, w1: "Pain", w2: "Pane", m1: "दर्द", m2: "खिड़की का शीशा", def: "Pain = agony; Pane = window glass", ex1: "He has a pain in his leg.", ex2: "He cleaned the pane." },
+    { id: 338, w1: "Passed", w2: "Past", m1: "पास किया", m2: "अतीत", def: "Passed = finished; Past = before present", ex1: "He passed the ball.", ex2: "He walked past me." },
+    { id: 339, w1: "Patience", w2: "Patients", m1: "धैर्य", m2: "मरीज़", def: "Patience = endurance; Patients = sick people", ex1: "Wait with patience.", ex2: "The patients are waiting." },
+    { id: 340, w1: "Peak", w2: "Peek", m1: "शिखर", m2: "झांकना", def: "Peak = summit; Peek = glance", ex1: "The peak is covered with snow.", ex2: "I will peek through the window." },
+    { id: 341, w1: "Peer", w2: "Pier", m1: "सहकर्मी", m2: "घाट", def: "Peer = colleague; Pier = dock", ex1: "He is respected by his peers.", ex2: "The boat is tied to the pier." },
+    { id: 342, w1: "Pie", w2: "Pie", m1: "पाई", m2: "पाई", def: "Pie = pastry; Pie = pastry", ex1: "She baked an apple pie.", ex2: "He ate the whole pie." },
+    { id: 343, w1: "Pole", w2: "Poll", m1: "खंभा", m2: "सर्वेक्षण", def: "Pole = rod; Poll = survey", ex1: "He put up a pole.", ex2: "The poll showed a lead." },
+    { id: 344, w1: "Poor", w2: "Pour", m1: "गरीब", m2: "डालना", def: "Poor = not rich; Pour = to flow", ex1: "He is poor.", ex2: "Pour the juice." },
+    { id: 345, w1: "Pray", w2: "Prey", m1: "प्रार्थना", m2: "शिकार", def: "Pray = to pray; Prey = hunted animal", ex1: "They pray every day.", ex2: "The lion is a predator that hunts its prey." },
+    { id: 346, w1: "Queue", w2: "Cue", m1: "कतार", m2: "संकेत", def: "Queue = line; Cue = signal", ex1: "Stand in the queue.", ex2: "Wait for the cue." },
+    { id: 347, w1: "Quay", w2: "Key", m1: "गोदी", m2: "चाबी", def: "Quay = dock; Key = lock opener", ex1: "The ship docked at the quay.", ex2: "I lost the key." },
+    { id: 348, w1: "Quiet", w2: "Quite", m1: "शांत", m2: "बहुत/पूरी तरह", def: "Quiet = silent; Quite = very", ex1: "The room is quiet.", ex2: "It's quite cold outside." },
+    { id: 349, w1: "Quit", w2: "Quiet", m1: "छोड़ना", m2: "शांत", def: "Quit = stop/leave; Quiet = silent", ex1: "He quit his job.", ex2: "Be quiet." },
+    { id: 350, w1: "Quad", w2: "Quad", m1: "चौगुना", m2: "चौक", def: "Quad = quadruple; Quad = courtyard", ex1: "He is a quad in the team.", ex2: "They played in the quad." },
+    { id: 351, w1: "Rain", w2: "Reign", m1: "बारिश", m2: "शासन", def: "Rain = water drops; Reign = rule", ex1: "Rain is falling.", ex2: "The king's reign was long." },
+    { id: 352, w1: "Right", w2: "Write", m1: "सही/दायाँ", m2: "लिखना", def: "Right = correct/direction; Write = to scribe", ex1: "You are right.", ex2: "Write a letter." },
+    { id: 353, w1: "Role", w2: "Roll", m1: "भूमिका", m2: "लोटना/रोल", def: "Role = character; Roll = rotate/list", ex1: "He played a great role.", ex2: "Roll the ball." },
+    { id: 354, w1: "Root", w2: "Route", m1: "जड़", m2: "मार्ग", def: "Root = plant part; Route = path", ex1: "The tree has deep roots.", ex2: "Which route shall we take?" },
+    { id: 355, w1: "Rap", w2: "Wrap", m1: "खटखटाना", m2: "लपेटना", def: "Rap = knock; Wrap = cover", ex1: "He rapped on the door.", ex2: "Wrap the gift." },
+    { id: 356, w1: "Read", w2: "Red", m1: "पढ़ा", m2: "लाल", def: "Read = past of read; Red = color", ex1: "I read the book.", ex2: "The apple is red." },
+    { id: 357, w1: "Real", w2: "Reel", m1: "वास्तविक", m2: "रिल/घूमना", def: "Real = genuine; Reel = spool/stagger", ex1: "Is this real?", ex2: "He reeled in the fish." },
+    { id: 358, w1: "Rest", w2: "Wrest", m1: "आराम", m2: "छीनना", def: "Rest = relax; Wrest = take by force", ex1: "Take some rest.", ex2: "He wrested the gun from him." },
+    { id: 359, w1: "Review", w2: "Revue", m1: "समीक्षा", m2: "समीक्षा (मंचन)", def: "Review = assessment; Revue = theatrical show", ex1: "He wrote a review.", ex2: "They performed a revue." },
+    { id: 360, w1: "Rheum", w2: "Room", m1: "स्राव (आँखों/नाक से)", m2: "कमरा", def: "Rheum = mucus; Room = space", ex1: "He had rheum in his eyes.", ex2: "The room is clean." },
+    { id: 361, w1: "Rite", w2: "Right", m1: "अनुष्ठान", m2: "सही/दायाँ", def: "Rite = ritual; Right = correct", ex1: "They performed a religious rite.", ex2: "He is right." },
+    { id: 362, w1: "Rye", w2: "Wry", m1: "राई (अनाज)", m2: "व्यंग्यपूर्ण", def: "Rye = grain; Wry = ironic", ex1: "He grows rye.", ex2: "He made a wry comment." },
+    { id: 363, w1: "Rode", w2: "Road", m1: "सवार हुआ", m2: "सड़क", def: "Rode = past of ride; Road = street", ex1: "He rode a horse.", ex2: "The road is long." },
+    { id: 364, w1: "Rote", w2: "Wrote", m1: "रटना", m2: "लिखा", def: "Rote = mechanical repetition; Wrote = past of write", ex1: "He learned by rote.", ex2: "He wrote a letter." },
+    { id: 365, w1: "Ring", w2: "Wring", m1: "अंगूठी/घंटी", m2: "निचोड़ना", def: "Ring = circular band/sound; Wring = twist/squeeze", ex1: "She wore a gold ring.", ex2: "Wring the clothes." },
+    { id: 366, w1: "Rough", w2: "Ruff", m1: "खुरदरा", m2: "झालरदार कॉलर", def: "Rough = not smooth; Ruff = pleated collar", ex1: "The surface is rough.", ex2: "He wore a ruff." },
+    { id: 367, w1: "Rout", w2: "Route", m1: "भगदड़/पराजय", m2: "मार्ग", def: "Rout = disorderly retreat; Route = path", ex1: "The army was in a rout.", ex2: "We took a different route." },
+    { id: 368, w1: "Rung", w2: "Wrung", m1: "सीढ़ी का डंडा", m2: "निचोड़ा", def: "Rung = cross-bar; Wrung = past of wring", ex1: "He climbed the rung.", ex2: "He wrung the towel." },
+    { id: 369, w1: "Rain", w2: "Rein", m1: "बारिश", m2: "लगाम", def: "Rain = precipitation; Rein = strap", ex1: "Rain is water.", ex2: "He held the reins." },
+    { id: 370, w1: "Raise", w2: "Rays", m1: "बढ़ाना/उठाना", m2: "किरणें", def: "Raise = lift/increase; Rays = beams of light", ex1: "Raise your hand.", ex2: "Sun rays are warm." },
+    { id: 371, w1: "Rap", w2: "Rapp", m1: "खटखटाना", m2: "खटखटाना (वैकल्पिक)", def: "Rap = knock; Rapp = knock (variant)", ex1: "He rapped on the door.", ex2: "He rapp for attention." },
+    { id: 372, w1: "Read", w2: "Red", m1: "पढ़ना", m2: "लाल", def: "Read = to read; Red = color", ex1: "He reads a book.", ex2: "The dress is red." },
+    { id: 373, w1: "Reed", w2: "Read", m1: "नरकट", m2: "पढ़ना", def: "Reed = plant; Read = to read", ex1: "The reed grows by the river.", ex2: "I read the newspaper." },
+    { id: 374, w1: "Reel", w2: "Real", m1: "रिल", m2: "वास्तविक", def: "Reel = spool; Real = genuine", ex1: "He wound the reel.", ex2: "Is this real life?" },
+    { id: 375, w1: "Resign", w2: "Re-sign", m1: "इस्तीफा देना", m2: "फिर से हस्ताक्षर करना", def: "Resign = quit; Re-sign = sign again", ex1: "He resigned from his job.", ex2: "Please re-sign the document." },
+    { id: 376, w1: "Rest", w2: "Wrest", m1: "आराम", m2: "छीनना", def: "Rest = relaxation; Wrest = take by force", ex1: "He needs rest.", ex2: "He wrested control." },
+    { id: 377, w1: "Rheum", w2: "Room", m1: "स्राव", m2: "कमरा", def: "Rheum = bodily fluid; Room = chamber", ex1: "He wiped the rheum from his eyes.", ex2: "The room is dirty." },
+    { id: 378, w1: "Rime", w2: "Rhyme", m1: "पाला", m2: "तुक", def: "Rime = frost; Rhyme = poetic correspondence", ex1: "There was rime on the grass.", ex2: "The poem has a rhyme." },
+    { id: 379, w1: "Ring", w2: "Wring", m1: "छल्ला", m2: "निचोड़ना", def: "Ring = band; Wring = squeeze", ex1: "He gave her a ring.", ex2: "Wring out the cloth." },
+    { id: 380, w1: "Root", w2: "Route", m1: "जड़", m2: "मार्ग", def: "Root = plant part; Route = way", ex1: "The root of the tree.", ex2: "Which route is best?" },
+    { id: 381, w1: "Sail", w2: "Sale", m1: "पाल", m2: "बिक्री", def: "Sail = fabric on boat; Sale = selling", ex1: "The sail is broken.", ex2: "The item is for sale." },
+    { id: 382, w1: "Scene", w2: "Seen", m1: "दृश्य", m2: "देखा (भूतकाल)", def: "Scene = view; Seen = past of see", ex1: "The scene was beautiful.", ex2: "I have seen him." },
+    { id: 383, w1: "Sea", w2: "See", m1: "समुद्र", m2: "देखना", def: "Sea = ocean; See = sight", ex1: "The sea is blue.", ex2: "Can you see me?" },
+    { id: 384, w1: "So", w2: "Sew", m1: "इसलिए/बहुत", m2: "सिलना", def: "So = therefore/very; Sew = stitch", ex1: "It was so cold.", ex2: "I will sew a button." },
+    { id: 385, w1: "Some", w2: "Sum", m1: "कुछ", m2: "योग", def: "Some = a portion; Sum = total", ex1: "I need some water.", ex2: "The sum is 100." },
+    { id: 386, w1: "Son", w2: "Sun", m1: "बेटा", m2: "सूरज", def: "Son = male child; Sun = star", ex1: "He is my son.", ex2: "The sun is shining." },
+    { id: 387, w1: "Stationary", w2: "Stationery", m1: "स्थिर", m2: "लेखन सामग्री", def: "Stationary = not moving; Stationery = paper/pen", ex1: "The car is stationary.", ex2: "I bought stationery." },
+    { id: 388, w1: "Steal", w2: "Steel", m1: "चोरी करना", m2: "इस्पात", def: "Steal = to thieve; Steel = metal", ex1: "Don't steal.", ex2: "The sword is made of steel." },
+    { id: 389, w1: "Sight", w2: "Site", m1: "दृश्य/नज़र", m2: "स्थान/वेबसाइट", def: "Sight = view; Site = location", ex1: "The sight is amazing.", ex2: "Visit our website site." },
+    { id: 390, w1: "Sleight", w2: "Slight", m1: "चालाकी", m2: "मामूली", def: "Sleight = dexterity; Slight = small", ex1: "He used sleight of hand.", ex2: "There is a slight difference." },
+    { id: 391, w1: "Soar", w2: "Sore", m1: "ऊँचा उड़ना", m2: "दर्द/घाव", def: "Soar = fly high; Sore = painful", ex1: "The eagle soars high.", ex2: "My throat is sore." },
+    { id: 392, w1: "Sole", w2: "Soul", m1: "एकमात्र/तला", m2: "आत्मा", def: "Sole = only/underside; Soul = spirit", ex1: "He is the sole owner.", ex2: "He has a kind soul." },
+    { id: 393, w1: "Stair", w2: "Stare", m1: "सीढ़ी", m2: "घूरना", def: "Stair = step; Stare = look fixedly", ex1: "He climbed the stair.", ex2: "Don't stare at her." },
+    { id: 394, w1: "Stake", w2: "Steak", m1: "दांव/खूंटा", m2: "स्टेक (मांस)", def: "Stake = share/post; Steak = meat slice", ex1: "He has a stake in the company.", ex2: "He ate a steak." },
+    { id: 395, w1: "Stalk", w2: "Stock", m1: "तना/पीछा करना", m2: "स्टॉक/भंडार", def: "Stalk = stem/pursue; Stock = inventory", ex1: "He stalked his prey.", ex2: "The stock is low." },
+    { id: 396, w1: "Stile", w2: "Style", m1: "सीढ़ी (बाड़ के लिए)", m2: "शैली", def: "Stile = steps for fence; Style = fashion", ex1: "He climbed the stile.", ex2: "Her style is unique." },
+    { id: 397, w1: "Straight", w2: "Strait", m1: "सीधा", m2: "जलडमरूमध्य", def: "Straight = not curved; Strait = narrow waterway", ex1: "He walked straight.", ex2: "They crossed the strait." },
+    { id: 398, w1: "Suit", w2: "Suite", m1: "सूट", m2: "सुइट (कमरा)", def: "Suit = garment; Suite = set of rooms", ex1: "He wore a suit.", ex2: "They stayed in a hotel suite." },
+    { id: 399, w1: "Swat", w2: "Swat", m1: "मारना", m2: "मारना", def: "Swat = to hit; Swat = to hit", ex1: "He swatted the fly.", ex2: "Swat the insect." },
+    { id: 400, w1: "Sew", w2: "Sow", m1: "सिलना", m2: "बोना", def: "Sew = stitch; Sow = plant seeds", ex1: "She sews clothes.", ex2: "Sow the seeds." },
+    { id: 401, w1: "Sight", w2: "Cite", m1: "दृश्य", m2: "उद्धरण", def: "Sight = view; Cite = quote", ex1: "The sight is beautiful.", ex2: "Cite your sources." },
+    { id: 402, w1: "Sink", w2: "Sync", m1: "डूबना/सिंक", m2: "तालमेल", def: "Sink = go down; Sync = synchronization", ex1: "The ship sank.", ex2: "The video is not in sync." },
+    { id: 403, w1: "Sole", w2: "Soul", m1: "एकमात्र", m2: "आत्मा", def: "Sole = only; Soul = spirit", ex1: "He is the sole survivor.", ex2: "He is the soul of the party." },
+    { id: 404, w1: "Some", w2: "Sum", m1: "कुछ", m2: "योग", def: "Some = a few; Sum = total", ex1: "Some people came.", ex2: "The sum is correct." },
+    { id: 405, w1: "Staid", w2: "Stayed", m1: "गंभीर", m2: "रुका", def: "Staid = serious/steady; Stayed = remained", ex1: "He is a staid person.", ex2: "He stayed at home." },
+    { id: 406, w1: "Stare", w2: "Stair", m1: "घूरना", m2: "सीढ़ी", def: "Stare = gaze; Stair = step", ex1: "She stared at him.", ex2: "He tripped on the stair." },
+    { id: 407, w1: "Steal", w2: "Steel", m1: "चोरी करना", m2: "इस्पात", def: "Steal = to rob; Steel = iron alloy", ex1: "He tried to steal the car.", ex2: "The sword is steel." },
+    { id: 408, w1: "Steep", w2: "Steppe", m1: "खड़ी", m2: "स्टेपी (घास का मैदान)", def: "Steep = sharply inclined; Steppe = grassland", ex1: "The hill is steep.", ex2: "They crossed the steppe." },
+    { id: 409, w1: "Stile", w2: "Style", m1: "सीढ़ी", m2: "शैली", def: "Stile = steps; Style = manner", ex1: "He climbed over the stile.", ex2: "He has a unique style." },
+    { id: 410, w1: "Straight", w2: "Strait", m1: "सीधा", m2: "जलडमरूमध्य", def: "Straight = direct; Strait = narrow channel", ex1: "Go straight.", ex2: "The strait of Gibraltar." },
+    { id: 411, w1: "Surf", w2: "Serf", m1: "सर्फिंग", m2: "दास", def: "Surf = waves; Serf = feudal laborer", ex1: "He loves to surf.", ex2: "The serf worked on the land." },
+    { id: 412, w1: "Sway", w2: "Suave", m1: "झूलना", m2: "सौम्य", def: "Sway = swing; Suave = charming", ex1: "The tree swayed in the wind.", ex2: "He is a suave man." },
+    { id: 413, w1: "Sweet", w2: "Suite", m1: "मीठा", m2: "सुइट", def: "Sweet = sugary; Suite = set", ex1: "The cake is sweet.", ex2: "They have a suite." },
+    { id: 414, w1: "Swell", w2: "Swelle", m1: "सूजना", m2: "सूजना (गलत)", def: "Swell = expand; Swelle = incorrect", ex1: "His ankle began to swell.", ex2: "Swelle is incorrect." },
+    { id: 415, w1: "Sword", w2: "Sward", m1: "तलवार", m2: "घास", def: "Sword = weapon; Sward = grass", ex1: "He drew his sword.", ex2: "The lawn is covered in sward." },
+    { id: 416, w1: "Sigh", w2: "Sigh", m1: "आह भरना", m2: "आह भरना", def: "Sigh = exhale; Sigh = sound", ex1: "He let out a sigh.", ex2: "She sighed deeply." },
+    { id: 417, w1: "Sink", w2: "Synch", m1: "डूबना", m2: "तालमेल", def: "Sink = submerge; Synch = synchronize", ex1: "The boat sank.", ex2: "They are in synch." },
+    { id: 418, w1: "Slew", w2: "Slough", m1: "मार डाला", m2: "दलदल", def: "Slew = past of slay; Slough = swamp", ex1: "He slew the dragon.", ex2: "They crossed the slough." },
+    { id: 419, w1: "Sole", w2: "Soul", m1: "तला", m2: "आत्मा", def: "Sole = bottom of foot; Soul = spirit", ex1: "He has a hole in his sole.", ex2: "The soul is immortal." },
+    { id: 420, w1: "Some", w2: "Sum", m1: "कुछ", m2: "जोड़", def: "Some = a few; Sum = addition", ex1: "I need some sugar.", ex2: "The sum of 2 and 3 is 5." },
+    { id: 421, w1: "Tail", w2: "Tale", m1: "पूँछ", m2: "कहानी", def: "Tail = appendage; Tale = story", ex1: "The dog wagged its tail.", ex2: "He told a tale." },
+    { id: 422, w1: "Their", w2: "There", m1: "उनका", m2: "वहाँ", def: "Their = belonging to them; There = that place", ex1: "That is their house.", ex2: "I went there." },
+    { id: 423, w1: "To", w2: "Too", m1: "को/तक", m2: "बहुत/भी", def: "To = preposition; Too = excessively/also", ex1: "I am going to school.", ex2: "I am too tired." },
+    { id: 424, w1: "Two", w2: "Too", m1: "दो", m2: "बहुत/भी", def: "Two = number 2; Too = excessively/also", ex1: "I have two pens.", ex2: "She is coming too." },
+    { id: 425, w1: "Threw", w2: "Through", m1: "फेंका", m2: "के माध्यम से", def: "Threw = past of throw; Through = into and out of", ex1: "He threw the ball.", ex2: "He walked through the door." },
+    { id: 426, w1: "Throne", w2: "Thrown", m1: "सिंहासन", m2: "फेंका गया", def: "Throne = royal seat; Thrown = past of throw", ex1: "The king sat on his throne.", ex2: "The ball was thrown." },
+    { id: 427, w1: "Tic", w2: "Tick", m1: "मरोड़", m2: "टिक/निशान", def: "Tic = twitch; Tick = mark/parasite", ex1: "He has a nervous tic.", ex2: "Put a tick mark." },
+    { id: 428, w1: "Toe", w2: "Tow", m1: "पैर का अंगूठा", m2: "रस्सा", def: "Toe = digit; Tow = pull", ex1: "He stubbed his toe.", ex2: "They towed the car." },
+    { id: 429, w1: "Track", w2: "Tract", m1: "पटरी/निशान", m2: "क्षेत्र/पर्चा", def: "Track = path/rail; Tract = area/pamphlet", ex1: "They followed the tracks.", ex2: "He bought a tract of land." },
+    { id: 430, w1: "Troop", w2: "Troupe", m1: "सैन्य दल", m2: "नाट्य दल", def: "Troop = soldiers; Troupe = performers", ex1: "The troop marched forward.", ex2: "The troupe performed well." },
+    { id: 431, w1: "Theirs", w2: "There's", m1: "उनका (possessive)", m2: "वहाँ है (There is)", def: "Theirs = belonging to them; There's = there is", ex1: "The house is theirs.", ex2: "There's a cat on the roof." },
+    { id: 432, w1: "Teem", w2: "Team", m1: "बहुतायत होना", m2: "टीम", def: "Teem = be full of; Team = group", ex1: "The river teems with fish.", ex2: "He is in the team." },
+    { id: 433, w1: "Tense", w2: "Tents", m1: "तनाव", m2: "तम्बू", def: "Tense = stressed; Tents = shelters", ex1: "He is tense.", ex2: "They pitched tents." },
+    { id: 434, w1: "Tide", w2: "Tied", m1: "ज्वार", m2: "बाँधा हुआ", def: "Tide = rise and fall of sea; Tied = bound", ex1: "The tide is high.", ex2: "He tied the rope." },
+    { id: 435, w1: "Tire", w2: "Tyre", m1: "थकान", m2: "टायर", def: "Tire = to exhaust/UK tyre; Tyre = tire", ex1: "He tires easily.", ex2: "The tyre is flat." },
+    { id: 436, w1: "Too", w2: "Two", m1: "बहुत/भी", m2: "दो", def: "Too = excessively; Two = number", ex1: "It's too hot.", ex2: "She has two dogs." },
+    { id: 437, w1: "Tort", w2: "Torte", m1: "अन्याय/अपकृत्य", m2: "टोर्टे (केक)", def: "Tort = legal wrong; Torte = rich cake", ex1: "He committed a tort.", ex2: "She baked a torte." },
+    { id: 438, w1: "Toward", w2: "Toward", m1: "की ओर", m2: "की ओर", def: "Toward = direction; Toward = correct", ex1: "Walk toward the river.", ex2: "He walked toward the door." },
+    { id: 439, w1: "Trail", w2: "Trial", m1: "निशान/पगडंडी", m2: "परीक्षण/मुकदमा", def: "Trail = path; Trial = test/court case", ex1: "He followed the trail.", ex2: "He is on trial." },
+    { id: 440, w1: "Tread", w2: "Tred", m1: "पैर रखना", m2: "पैर रखना (गलत)", def: "Tread = step; Tred = incorrect", ex1: "Don't tread on the grass.", ex2: "Tred is a misspelling." },
+    { id: 441, w1: "Trough", w2: "Trot", m1: "नाली/गर्त", m2: "दौड़ना (घोड़ा)", def: "Trough = container/valley; Trot = moderate pace", ex1: "He filled the trough.", ex2: "The horse trotted." },
+    { id: 442, w1: "Trunk", w2: "Trunk", m1: "तना/धड़", m2: "डिक्की", def: "Trunk = tree trunk; Trunk = car trunk", ex1: "The trunk is thick.", ex2: "He opened the trunk." },
+    { id: 443, w1: "Tweak", w2: "Twik", m1: "समायोजित करना", m2: "समायोजित करना (गलत)", def: "Tweak = adjust; Twik = incorrect", ex1: "He tweaked the settings.", ex2: "Twik is wrong." },
+    { id: 444, w1: "Twin", w2: "Twin", m1: "जुड़वाँ", m2: "जुड़वाँ", def: "Twin = double; Twin = one of a pair", ex1: "She has a twin sister.", ex2: "The twins are identical." },
+    { id: 445, w1: "Twist", w2: "Twist", m1: "मरोड़ना", m2: "मोड़", def: "Twist = rotate; Twist = a curve", ex1: "He twisted his ankle.", ex2: "There is a twist in the plot." },
+    { id: 446, w1: "Type", w2: "Tip", m1: "प्रकार", m2: "टिप/सुझाव", def: "Type = kind; Tip = suggestion", ex1: "What type of car?", ex2: "He gave me a tip." },
+    { id: 447, w1: "Tear", w2: "Tare", m1: "आँसू/फाड़ना", m2: "तौल का भार", def: "Tear = drop/rip; Tare = container weight", ex1: "He shed a tear.", ex2: "The tare weight is 10 kg." },
+    { id: 448, w1: "Tense", w2: "Tents", m1: "तनावपूर्ण", m2: "तम्बू", def: "Tense = anxious; Tents = canvas shelters", ex1: "The atmosphere is tense.", ex2: "They set up tents." },
+    { id: 449, w1: "Tic", w2: "Tick", m1: "मरोड़", m2: "टिक/निशान", def: "Tic = involuntary movement; Tick = mark/parasite", ex1: "He has a facial tic.", ex2: "The clock ticks." },
+    { id: 450, w1: "Tide", w2: "Tied", m1: "ज्वार", m2: "बंधा हुआ", def: "Tide = water movement; Tied = fastened", ex1: "The tide is coming in.", ex2: "He tied his shoes." },
+    { id: 451, w1: "Urn", w2: "Earn", m1: "कलश", m2: "कमाना", def: "Urn = vessel; Earn = gain", ex1: "The ashes are in an urn.", ex2: "I earn a living." },
+    { id: 452, w1: "Use", w2: "Juice", m1: "उपयोग करना", m2: "रस", def: "Use = to utilize; Juice = liquid", ex1: "Use the tool.", ex2: "I need juice." },
+    { id: 453, w1: "Upraise", w2: "Uprise", m1: "ऊपर उठाना", m2: "उठना", def: "Upraise = to lift; Uprise = to rise", ex1: "He upraised the banner.", ex2: "The people uprose." },
+    { id: 454, w1: "Under", w2: "Under", m1: "नीचे", m2: "कम", def: "Under = below; Under = less than", ex1: "It is under the table.", ex2: "It costs under $10." },
+    { id: 455, w1: "Unite", w2: "Unite", m1: "एकजुट होना", m2: "एकजुट होना", def: "Unite = to join; Unite = come together", ex1: "They united against the enemy.", ex2: "The party needs to unite." },
+    { id: 456, w1: "Utter", w2: "Utter", m1: "कहना", m2: "पूर्ण", def: "Utter = to speak; Utter = absolute", ex1: "He uttered a cry.", ex2: "It was utter chaos." },
+    { id: 457, w1: "Uxorious", w2: "Uxorious", m1: "स्त्री के अधीन", m2: "स्त्री के अधीन", def: "Uxorious = doting on wife; Uxorious = excessively fond", ex1: "He is an uxorious husband.", ex2: "His uxorious nature is evident." },
+    { id: 458, w1: "Umpire", w2: "Umpire", m1: "अंपायर", m2: "मध्यस्थ", def: "Umpire = referee; Umpire = to referee", ex1: "The umpire gave a decision.", ex2: "He umpired the game." },
+    { id: 459, w1: "Uncle", w2: "Ankle", m1: "चाचा/मामा", m2: "टखना", def: "Uncle = relative; Ankle = joint", ex1: "He is my uncle.", ex2: "He twisted his ankle." },
+    { id: 460, w1: "Urban", w2: "Urbane", m1: "शहरी", m2: "सुशील", def: "Urban = city-related; Urbane = sophisticated", ex1: "He lives in an urban area.", ex2: "He is an urbane gentleman." },
+    { id: 461, w1: "Vain", w2: "Vane", m1: "घमंडी/व्यर्थ", m2: "पवन दिशा सूचक", def: "Vain = conceited/useless; Vane = wind indicator", ex1: "He is vain about his looks.", ex2: "The vane on the roof shows wind direction." },
+    { id: 462, w1: "Vale", w2: "Veil", m1: "घाटी", m2: "घूंघट", def: "Vale = valley; Veil = covering", ex1: "He lives in a vale.", ex2: "She wore a veil." },
+    { id: 463, w1: "Vial", w2: "Vile", m1: "शीशी", m2: "घृणित", def: "Vial = small bottle; Vile = evil/disgusting", ex1: "The vial contains poison.", ex2: "He is a vile man." },
+    { id: 464, w1: "Vice", w2: "Vise", m1: "बुराई", m2: "बंधक (औजार)", def: "Vice = immoral habit; Vise = clamping tool", ex1: "Gambling is a vice.", ex2: "He used a vise to hold it." },
+    { id: 465, w1: "Vain", w2: "Vein", m1: "घमंडी", m2: "नस", def: "Vain = conceited; Vein = blood vessel", ex1: "He is vain.", ex2: "He has a vein on his forehead." },
+    { id: 466, w1: "Vast", w2: "Vast", m1: "विशाल", m2: "विशाल", def: "Vast = huge; Vast = immense", ex1: "The desert is vast.", ex2: "There is a vast difference." },
+    { id: 467, w1: "Verbal", w2: "Verbal", m1: "मौखिक", m2: "शाब्दिक", def: "Verbal = spoken; Verbal = relating to words", ex1: "He gave a verbal warning.", ex2: "Verbal communication is important." },
+    { id: 468, w1: "Very", w2: "Vary", m1: "बहुत", m2: "बदलना", def: "Very = extremely; Vary = differ", ex1: "It is very cold.", ex2: "The prices vary." },
+    { id: 469, w1: "View", w2: "Vu", m1: "दृश्य", m2: "दृश्य (फ्रेंच)", def: "View = sight; Vu = French for 'seen'", ex1: "The view is beautiful.", ex2: "He has a point of vu." },
+    { id: 470, w1: "Virtue", w2: "Virtual", m1: "गुण", m2: "आभासी", def: "Virtue = moral good; Virtual = almost/computer-generated", ex1: "Honesty is a virtue.", ex2: "He lives in a virtual world." },
+    { id: 471, w1: "Vocal", w2: "Vocal", m1: "मुखर", m2: "गायन", def: "Vocal = spoken; Vocal = singing", ex1: "He is a vocal critic.", ex2: "She has vocal training." },
+    { id: 472, w1: "Voile", w2: "Viol", m1: "वायल (कपड़ा)", m2: "वायल (वाद्य)", def: "Voile = fabric; Viol = stringed instrument", ex1: "The dress is made of voile.", ex2: "He played the viol." },
+    { id: 473, w1: "Vow", w2: "Vow", m1: "प्रतिज्ञा", m2: "प्रतिज्ञा", def: "Vow = promise; Vow = pledge", ex1: "He made a vow.", ex2: "They exchanged vows." },
+    { id: 474, w1: "Voyage", w2: "Voyage", m1: "यात्रा", m2: "यात्रा", def: "Voyage = long journey; Voyage = journey by sea", ex1: "He went on a voyage.", ex2: "The voyage was long." },
+    { id: 475, w1: "Vulgar", w2: "Vulgar", m1: "अश्लील", m2: "अश्लील", def: "Vulgar = crude; Vulgar = common", ex1: "His language is vulgar.", ex2: "Vulgar habits are bad." },
+    { id: 476, w1: "Wait", w2: "Weight", m1: "इंतज़ार करना", m2: "वज़न", def: "Wait = to stay; Weight = heaviness", ex1: "Wait for me.", ex2: "What is your weight?" },
+    { id: 477, w1: "Waste", w2: "Waist", m1: "बर्बाद करना", m2: "कमर", def: "Waste = discard; Waist = body part", ex1: "Don't waste water.", ex2: "He has a slim waist." },
+    { id: 478, w1: "Way", w2: "Weigh", m1: "रास्ता/तरीका", m2: "तौलना", def: "Way = path/manner; Weigh = measure heaviness", ex1: "Show me the way.", ex2: "Weigh the fruits." },
+    { id: 479, w1: "Weak", w2: "Week", m1: "कमजोर", m2: "सप्ताह", def: "Weak = not strong; Week = seven days", ex1: "He is weak.", ex2: "I will come next week." },
+    { id: 480, w1: "Weather", w2: "Whether", m1: "मौसम", m2: "क्या (चाहे)", def: "Weather = climate; Whether = if/choice", ex1: "The weather is cold.", ex2: "I don't know whether he will come." },
+    { id: 481, w1: "Where", w2: "Wear", m1: "कहाँ", m2: "पहनना", def: "Where = place; Wear = to put on", ex1: "Where are you?", ex2: "Wear your uniform." },
+    { id: 482, w1: "Which", w2: "Witch", m1: "कौन सा", m2: "डायन", def: "Which = what one; Witch = sorceress", ex1: "Which color do you like?", ex2: "She is a witch in the story." },
+    { id: 483, w1: "Who's", w2: "Whose", m1: "कौन है", m2: "किसका", def: "Who's = who is; Whose = possessive", ex1: "Who's there?", ex2: "Whose book is this?" },
+    { id: 484, w1: "Wood", w2: "Would", m1: "लकड़ी", m2: "करता (सहायक क्रिया)", def: "Wood = timber; Would = modal verb", ex1: "The chair is made of wood.", ex2: "I would like to go." },
+    { id: 485, w1: "Wail", w2: "Whale", m1: "विलाप करना", m2: "व्हेल (मछली)", def: "Wail = mournful cry; Whale = marine mammal", ex1: "He wailed in grief.", ex2: "The whale is huge." },
+    { id: 486, w1: "Wane", w2: "Wain", m1: "क्षय होना", m2: "गाड़ी (पुराना)", def: "Wane = to decrease; Wain = wagon", ex1: "The moon is waning.", ex2: "He drove the wain." },
+    { id: 487, w1: "Wear", w2: "Ware", m1: "पहनना/घिसना", m2: "सामान/माल", def: "Wear = attire; Ware = goods", ex1: "He wears a suit.", ex2: "They sell kitchen ware." },
+    { id: 488, w1: "Weave", w2: "We've", m1: "बुनना", m2: "हमने (we have)", def: "Weave = to knit; We've = we have", ex1: "He weaves baskets.", ex2: "We've finished the work." },
+    { id: 489, w1: "Whet", w2: "Wet", m1: "तेज़ करना", m2: "गीला", def: "Whet = to sharpen; Wet = damp", ex1: "He whetted the knife.", ex2: "He is wet from the rain." },
+    { id: 490, w1: "While", w2: "Wile", m1: "जबकि", m2: "चाल", def: "While = during; Wile = trick", ex1: "He read while she worked.", ex2: "He used wiles to get it." },
+    { id: 491, w1: "Whine", w2: "Wine", m1: "शिकायत/रोना", m2: "शराब", def: "Whine = complaint; Wine = alcoholic drink", ex1: "He always whines.", ex2: "He drinks wine." },
+    { id: 492, w1: "Wring", w2: "Ring", m1: "निचोड़ना", m2: "अंगूठी/घंटी", def: "Wring = twist/squeeze; Ring = circular band/sound", ex1: "Wring out the towel.", ex2: "The ring is gold." },
+    { id: 493, w1: "Write", w2: "Right", m1: "लिखना", m2: "सही/दायाँ", def: "Write = to scribe; Right = correct/direction", ex1: "Write your name.", ex2: "He is right." },
+    { id: 494, w1: "Wrote", w2: "Rote", m1: "लिखा", m2: "रटना", def: "Wrote = past of write; Rote = mechanical repetition", ex1: "He wrote a letter.", ex2: "He learned by rote." },
+    { id: 495, w1: "Way", w2: "Whey", m1: "रास्ता", m2: "मट्ठा", def: "Way = path; Whey = liquid from milk", ex1: "He showed the way.", ex2: "Whey is used in protein." },
+    { id: 496, w1: "We", w2: "Wee", m1: "हम", m2: "छोटा", def: "We = pronoun; Wee = small", ex1: "We are going.", ex2: "He is a wee boy." },
+    { id: 497, w1: "Weak", w2: "Weke", m1: "कमजोर", m2: "कमजोर (पुराना)", def: "Weak = not strong; Weke = old spelling", ex1: "He feels weak.", ex2: "Weke is archaic." },
+    { id: 498, w1: "Weal", w2: "Weel", m1: "भलाई/खुशहाली", m2: "जाल", def: "Weal = well-being; Weel = trap", ex1: "He worked for the public weal.", ex2: "The weel caught the fish." },
+    { id: 499, w1: "Weather", w2: "Whether", m1: "मौसम", m2: "चाहे", def: "Weather = climate; Whether = if", ex1: "The weather is pleasant.", ex2: "I asked whether he would come." },
+    { id: 500, w1: "Weave", w2: "Weave", m1: "बुनना", m2: "घूमना (रास्ता)", def: "Weave = to interlace; Weave = to move in a winding way", ex1: "She weaves cloth.", ex2: "The car weaved through traffic." },
+    { id: 501, w1: "Wheel", w2: "Weal", m1: "पहिया", m2: "खुशहाली", def: "Wheel = circular object; Weal = welfare", ex1: "The wheel is turning.", ex2: "He cares for the weal of all." },
+    { id: 502, w1: "When", w2: "Wen", m1: "कब", m2: "फोड़ा", def: "When = at what time; Wen = benign skin lump", ex1: "When will you come?", ex2: "He has a wen on his face." },
+    { id: 503, w1: "Whir", w2: "Were", m1: "घूमना (आवाज)", m2: "थे", def: "Whir = sound of rotation; Were = past of are", ex1: "The fan made a whir.", ex2: "They were there." },
+    { id: 504, w1: "Whisky", w2: "Whiskey", m1: "व्हिस्की (स्कॉटिश)", m2: "व्हिस्की (आयरिश)", def: "Whisky = Scottish; Whiskey = Irish/US", ex1: "He drinks Scotch whisky.", ex2: "He prefers Irish whiskey." },
+    { id: 505, w1: "Who", w2: "Whom", m1: "कौन (कर्ता)", m2: "किसे (कर्म)", def: "Who = subject; Whom = object", ex1: "Who is coming?", ex2: "Whom did you meet?" },
+    { id: 506, w1: "Xenial", w2: "Xenial", m1: "अतिथि संबंधी", m2: "अतिथि संबंधी", def: "Xenial = relating to guest-host relationship; Xenial = correct", ex1: "He has a xenial attitude.", ex2: "Xenial customs are warm." },
+    { id: 507, w1: "Yew", w2: "You", m1: "एक प्रकार का पेड़", m2: "तुम", def: "Yew = tree; You = pronoun", ex1: "The yew tree is ancient.", ex2: "You are my friend." },
+    { id: 508, w1: "Yoke", w2: "Yolk", m1: "जुआ", m2: "अंडे की जर्दी", def: "Yoke = harness; Yolk = egg yellow part", ex1: "The oxen carried the yoke.", ex2: "I don't like egg yolk." },
+    { id: 509, w1: "Yew", w2: "Ewe", m1: "यू का पेड़", m2: "भेड़ (मादा)", def: "Yew = tree; Ewe = female sheep", ex1: "The yew tree is dark.", ex2: "The ewe is grazing." },
+    { id: 510, w1: "Yore", w2: "Your", m1: "पुराना समय", m2: "तुम्हारा", def: "Yore = time long ago; Your = belonging to you", ex1: "In days of yore.", ex2: "This is your book." },
+    { id: 511, w1: "Young", w2: "Yung", m1: "युवा", m2: "युवा (गलत स्पेलिंग)", def: "Young = youthful; Yung = incorrect", ex1: "He is young.", ex2: "Yung is wrong." },
+    { id: 512, w1: "Zeal", w2: "Zeal", m1: "उत्साह", m2: "उत्साह", def: "Zeal = enthusiasm; Zeal = passion", ex1: "He works with zeal.", ex2: "His zeal is inspiring." },
+    { id: 513, w1: "Zenith", w2: "Zenith", m1: "चरम बिंदु", m2: "शिखर", def: "Zenith = highest point; Zenith = peak", ex1: "He reached the zenith of his career.", ex2: "The sun is at its zenith." }
+];
+
+// ================================================================
+// 🔧 BUILD QUESTIONS – 20 SETS × 25 = 500 QUESTIONS
+// ================================================================
+const TOTAL_SETS = 20;
+const PER_SET = 25;
+
+function buildAllQuestions(data) {
+    const sorted = [...data].sort((a, b) => a.w1.localeCompare(b.w1));
+    const qs = [];
+    const used = sorted.slice(0, TOTAL_SETS * PER_SET);
+    used.forEach((item, idx) => {
+        const useFirst = Math.random() < 0.5;
+        let sentence, correctWord, wrongWord, correctMeaning, wrongMeaning;
+        if (useFirst) {
+            sentence = item.ex1;
+            correctWord = item.w1;
+            wrongWord = item.w2;
+            correctMeaning = item.m1;
+            wrongMeaning = item.m2;
+        } else {
+            sentence = item.ex2;
+            correctWord = item.w2;
+            wrongWord = item.w1;
+            correctMeaning = item.m2;
+            wrongMeaning = item.m1;
+        }
+        const regex = new RegExp('\\b' + correctWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+        const qText = sentence.replace(regex, '________');
+        const opts = [item.w1, item.w2];
+        const correctIdx = opts.indexOf(correctWord);
+        const expl = `"${correctWord}" का अर्थ: ${correctMeaning}. ${item.def}. दूसरा शब्द "${wrongWord}" (${wrongMeaning}) इस वाक्य में सही नहीं बैठता।`;
+        qs.push({
+            id: idx + 1,
+            question: qText,
+            options: opts,
+            correctIndex: correctIdx,
+            correctWord: correctWord,
+            wrongWord: wrongWord,
+            explanation: expl,
+            original: sentence,
+            set: Math.floor(idx / PER_SET) + 1
+        });
+    });
+    return qs;
+}
+
+// ================================================================
+// 🎮 STATE
+// ================================================================
+let allQuestions = [];
+let currentSet = 1;
+let setProgress = {};
+let selectedOptions = {};
+let answeredQuestions = {};
+
+function init() {
+    allQuestions = buildAllQuestions(homophoneData);
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        setProgress[s] = { attempted: 0, correct: 0, wrong: 0 };
+    }
+    renderDashboard();
+    renderSet(1);
+}
+
+// ================================================================
+// 📊 DASHBOARD
+// ================================================================
+function renderDashboard() {
+    const grid = document.getElementById('setsGrid');
+    let html = '';
+    let totalAttempted = 0, totalCorrect = 0;
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        const p = setProgress[s] || { attempted: 0, correct: 0, wrong: 0 };
+        totalAttempted += p.attempted;
+        totalCorrect += p.correct;
+        const status = p.attempted === 0 ? 'notstarted' : (p.attempted === PER_SET ? 'completed' : 'inprogress');
+        const label = status === 'notstarted' ? 'Not Started' : (status === 'completed' ? '✅ Done' : '⏳ In Progress');
+        const pct = p.attempted === 0 ? 0 : Math.round((p.correct / p.attempted) * 100);
+        html += `
+            <div class="set-card" onclick="openSet(${s})">
+                <div class="set-status ${status}">${label}</div>
+                <div class="set-num">${s}</div>
+                <div class="set-label">Set ${s}</div>
+                <div class="set-progress">${p.attempted}/${PER_SET} · ${pct}%</div>
+            </div>
+        `;
+    }
+    grid.innerHTML = html;
+    const totalQ = TOTAL_SETS * PER_SET;
+    document.getElementById('overallProgressText').textContent = `${totalAttempted} / ${totalQ}`;
+    document.getElementById('overallProgressBar').style.width = `${(totalAttempted / totalQ) * 100}%`;
+    document.getElementById('overallScoreText').textContent = totalAttempted === 0 ? '0%' : `${Math.round((totalCorrect / totalAttempted) * 100)}%`;
+}
+
+// ================================================================
+// 📝 RENDER SET
+// ================================================================
+function renderSet(setNum) {
+    currentSet = setNum;
+    const questions = allQuestions.filter(q => q.set === setNum);
+    const container = document.getElementById('questionsContainer');
+    const p = setProgress[setNum] || { attempted: 0, correct: 0, wrong: 0 };
+
+    document.getElementById('setTitle').textContent = `Set ${setNum}`;
+    document.getElementById('setTag').innerHTML = `<i class="fas fa-layer-group"></i> Set ${setNum} / ${TOTAL_SETS}`;
+    document.getElementById('setIndicator').textContent = `Set ${setNum} of ${TOTAL_SETS}`;
+
+    document.getElementById('correctCount').textContent = p.correct || 0;
+    document.getElementById('wrongCount').textContent = p.wrong || 0;
+    document.getElementById('attemptedCount').textContent = p.attempted || 0;
+    const pct = p.attempted === 0 ? 0 : Math.round((p.correct / p.attempted) * 100);
+    document.getElementById('scorePercent').textContent = pct;
+
+    document.getElementById('prevSetBtn').disabled = (setNum === 1);
+    document.getElementById('nextSetBtn').disabled = (setNum === TOTAL_SETS);
+
+    let html = '';
+    questions.forEach((q, idx) => {
+        const qNum = idx + 1;
+        const isAnswered = answeredQuestions[q.id] || false;
+        const selected = selectedOptions[q.id];
+        html += `
+            <div class="question-card" id="qcard-${q.id}">
+                <div class="q-top">
+                    <span class="q-number">Q${qNum}</span>
+                    <span class="q-text">${q.question}</span>
+                </div>
+                <div class="options" id="options-${q.id}">
+                    ${q.options.map((opt, oi) => `
+                        <label>
+                            <input type="radio" name="q${q.id}" value="${oi}" 
+                                ${isAnswered ? 'disabled' : ''}
+                                onchange="selectOption(${q.id}, ${oi})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="btn-answer" id="btn-${q.id}" 
+                    onclick="showAnswer(${q.id})" 
+                    ${isAnswered ? 'disabled' : ''}>
+                    <i class="fas fa-eye"></i> Show Answer
+                </button>
+                <div class="answer-box" id="answer-${q.id}">
+                    <div><span class="correct-word">✔ ${q.correctWord}</span> <span id="result-${q.id}"></span></div>
+                    <div class="explanation"><strong>💡 Explanation:</strong> ${q.explanation}</div>
+                    <div class="original-sentence"><i class="fas fa-quote-left"></i> ${q.original}</div>
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+
+    // Restore answered state
+    questions.forEach(q => {
+        if (answeredQuestions[q.id]) {
+            const ansBox = document.getElementById(`answer-${q.id}`);
+            if (ansBox) ansBox.style.display = 'block';
+            const selected = selectedOptions[q.id];
+            const isCorrect = (selected === q.correctIndex);
+            const resultSpan = document.getElementById(`result-${q.id}`);
+            if (resultSpan) {
+                if (isCorrect) { resultSpan.innerHTML = ' ✅ Correct!'; resultSpan.style.color = '#27ae60'; }
+                else { const chosen = q.options[selected] || 'None'; resultSpan.innerHTML = ` ❌ Your answer: ${chosen}`; resultSpan.style.color = '#e74c3c'; }
+            }
+            const optContainer = document.getElementById(`options-${q.id}`);
+            if (optContainer) {
+                const labels = optContainer.querySelectorAll('label');
+                labels.forEach((label, idx) => {
+                    if (idx === q.correctIndex) label.classList.add('correct-ans');
+                    else if (idx === selected && !isCorrect) label.classList.add('wrong-ans');
+                    const radio = label.querySelector('input');
+                    if (radio) radio.disabled = true;
+                });
+            }
+            const btn = document.getElementById(`btn-${q.id}`);
+            if (btn) btn.disabled = true;
+        }
+    });
+    renderDashboard();
+}
+
+// ================================================================
+// 🎯 INTERACTIONS
+// ================================================================
+function selectOption(qId, idx) {
+    if (answeredQuestions[qId]) return;
+    selectedOptions[qId] = idx;
+}
+
+function showAnswer(qId) {
+    if (answeredQuestions[qId]) return;
+    const q = allQuestions.find(item => item.id === qId);
+    if (!q) return;
+    const selected = selectedOptions[qId];
+    const isCorrect = (selected === q.correctIndex);
+
+    answeredQuestions[qId] = true;
+    const p = setProgress[q.set] || { attempted: 0, correct: 0, wrong: 0 };
+    p.attempted++;
+    if (isCorrect) p.correct++;
+    else p.wrong++;
+    setProgress[q.set] = p;
+
+    const ansBox = document.getElementById(`answer-${qId}`);
+    if (ansBox) ansBox.style.display = 'block';
+
+    const resultSpan = document.getElementById(`result-${qId}`);
+    if (resultSpan) {
+        if (isCorrect) { resultSpan.innerHTML = ' ✅ Correct!'; resultSpan.style.color = '#27ae60'; }
+        else { const chosen = q.options[selected] || 'None'; resultSpan.innerHTML = ` ❌ Your answer: ${chosen}`; resultSpan.style.color = '#e74c3c'; }
+    }
+
+    const optContainer = document.getElementById(`options-${qId}`);
+    if (optContainer) {
+        const labels = optContainer.querySelectorAll('label');
+        labels.forEach((label, idx) => {
+            if (idx === q.correctIndex) label.classList.add('correct-ans');
+            else if (idx === selected && !isCorrect) label.classList.add('wrong-ans');
+            const radio = label.querySelector('input');
+            if (radio) radio.disabled = true;
+        });
+    }
+    const btn = document.getElementById(`btn-${qId}`);
+    if (btn) btn.disabled = true;
+
+    renderSet(q.set);
+}
+
+// ================================================================
+// 🧭 NAVIGATION
+// ================================================================
+function openSet(setNum) {
+    if (setNum < 1 || setNum > TOTAL_SETS) return;
+    document.getElementById('page-dashboard').classList.remove('active');
+    document.getElementById('page-practice').classList.add('active');
+    renderSet(setNum);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToDashboard() {
+    document.getElementById('page-practice').classList.remove('active');
+    document.getElementById('page-dashboard').classList.add('active');
+    renderDashboard();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function changeSet(delta) {
+    const newSet = currentSet + delta;
+    if (newSet < 1 || newSet > TOTAL_SETS) return;
+    openSet(newSet);
+}
+
+function resetAllProgress() {
+    if (!confirm('Reset all progress for all sets? This cannot be undone.')) return;
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        setProgress[s] = { attempted: 0, correct: 0, wrong: 0 };
+    }
+    selectedOptions = {};
+    answeredQuestions = {};
+    allQuestions = buildAllQuestions(homophoneData);
+    renderDashboard();
+    if (document.getElementById('page-practice').classList.contains('active')) {
+        renderSet(currentSet);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ================================================================
+// 🚀 BOOT
+// ================================================================
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

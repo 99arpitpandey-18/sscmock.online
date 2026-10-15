@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UPCISS – O-Level (M1-R5) IT Tools & Networks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* --- Reset & Base --- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --primary: #1a3a5c;
+            --primary-light: #2a5a7a;
+            --secondary: #e67e22;
+            --accent: #c0392b;
+            --bg: #f7f4f0;
+            --card-bg: #ffffff;
+            --text: #1e1e2a;
+            --text-light: #3d3d4a;
+            --border: #e0dbd4;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --max-width: 820px;
+            --font-deva: 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
+            --font-eng: 'Inter', 'Segoe UI', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font-deva);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .book-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 8px;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--primary);
+        }
+        h1 {
+            font-size: 2.2rem;
+            letter-spacing: -0.01em;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.8rem;
+            margin-bottom: 0.6rem;
+            color: var(--primary-light);
+        }
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text-light);
+        }
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: var(--accent);
+        }
+        .cover {
+            background: linear-gradient(145deg, var(--primary) 0%, #0f2a44 100%);
+            color: #fff;
+            padding: 3.5rem 2.5rem;
+            text-align: center;
+            border-bottom: 6px solid var(--secondary);
+        }
+        .cover .brand {
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+        .cover h1 {
+            color: #fff;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.3rem;
+        }
+        .cover .sub {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.85;
+            margin-bottom: 0.5rem;
+        }
+        .cover .badge {
+            display: inline-block;
+            margin-top: 1.2rem;
+            background: var(--secondary);
+            padding: 0.3rem 1.6rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .toc {
+            padding: 2rem 2.5rem;
+            background: #faf8f6;
+            border-bottom: 1px solid var(--border);
+        }
+        .toc h2 {
+            border-bottom: none;
+            margin-top: 0;
+            font-size: 1.6rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .toc h2::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--border), transparent);
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem 1.5rem;
+            margin-top: 0.8rem;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+        }
+        .toc-item:hover {
+            background: rgba(26, 58, 92, 0.06);
+        }
+        .toc-item .num {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            min-width: 1.8rem;
+        }
+        .toc-item a {
+            color: var(--text);
+            font-weight: 500;
+        }
+        .toc-item a:hover {
+            color: var(--secondary);
+        }
+        .content {
+            padding: 2rem 2.5rem 3rem;
+        }
+        .chapter {
+            scroll-margin-top: 1rem;
+            padding-top: 0.5rem;
+        }
+        .chapter+.chapter {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px dashed var(--border);
+        }
+        .chapter-head {
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .chapter-head .ch-num {
+            background: var(--secondary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.5px;
+        }
+        ul,
+        ol {
+            padding-left: 1.6rem;
+            margin-bottom: 1.2rem;
+        }
+        li {
+            margin-bottom: 0.3rem;
+        }
+        .check-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .check-list li {
+            padding-left: 1.8rem;
+            position: relative;
+            margin-bottom: 0.4rem;
+        }
+        .check-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        .arrow-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .arrow-list li {
+            padding-left: 1.6rem;
+            position: relative;
+            margin-bottom: 0.3rem;
+        }
+        .arrow-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.2rem 0 1.8rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+        th,
+        td {
+            padding: 0.6rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 500;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:nth-child(even) td {
+            background: #f9f7f5;
+        }
+        .info-box {
+            background: #f0edeb;
+            border-left: 5px solid var(--secondary);
+            padding: 1rem 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.2rem 0;
+        }
+        .tip-box {
+            background: #eaf4f0;
+            border-left: 5px solid #1a8a5a;
+            padding: 1rem 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.2rem 0;
+        }
+        .warning-box {
+            background: #fdf0e6;
+            border-left: 5px solid var(--accent);
+            padding: 1rem 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.2rem 0;
+        }
+        .kbd-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem 2rem;
+            background: #f8f6f4;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+        .kbd-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.15rem 0;
+            font-size: 0.9rem;
+            border-bottom: 1px dotted #e8e3dc;
+        }
+        .kbd-item:last-child {
+            border-bottom: none;
+        }
+        .kbd-item .key {
+            font-family: var(--font-eng);
+            font-weight: 600;
+            color: var(--primary);
+            background: #eae5de;
+            padding: 0 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .questions {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 3px double var(--border);
+        }
+        .questions h3 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+        .q-item {
+            margin-bottom: 1.8rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--secondary);
+            padding-left: 1rem;
+        }
+        .q-item .q {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .q-item .q-label {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-right: 0.3rem;
+        }
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .chapter-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background 0.25s, transform 0.15s;
+        }
+        .chapter-nav a:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+        .chapter-nav a.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        @media (max-width: 700px) {
+            body {
+                padding: 0.6rem;
+            }
+            .cover {
+                padding: 2rem 1.2rem;
+            }
+            .cover h1 {
+                font-size: 1.8rem;
+            }
+            .cover .sub {
+                font-size: 1rem;
+            }
+            .toc {
+                padding: 1.2rem 1.2rem;
+            }
+            .toc-grid {
+                grid-template-columns: 1fr;
+                gap: 0.1rem;
+            }
+            .content {
+                padding: 1.2rem 1.2rem 2rem;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .kbd-grid {
+                grid-template-columns: 1fr;
+                padding: 0.8rem 1rem;
+            }
+            .chapter-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .chapter-nav a {
+                justify-content: center;
+            }
+        }
+        @media print {
+            body {
+                background: #fff;
+                padding: 0.2in;
+            }
+            .book-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .cover {
+                background: #1a3a5c !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .chapter-nav {
+                display: none;
+            }
+            .toc {
+                break-after: avoid;
+            }
+            .chapter {
+                break-inside: avoid;
+                page-break-after: always;
+            }
+            .chapter:last-child {
+                page-break-after: avoid;
+            }
+        }
+        .highlight {
+            background: #fef3d7;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+        .term-hint {
+            font-size: 0.85em;
+            color: var(--text-light);
+            background: #f0edeb;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            margin-left: 0.3rem;
+            display: inline-block;
+            font-weight: 400;
+        }
+        .term-hint::before {
+            content: " (";
+        }
+        .term-hint::after {
+            content: ")";
+        }
+        .note-credit {
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background: #faf8f6;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+        .note-credit strong {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="book-container">
+
+        <!-- COVER -->
+        <div class="cover">
+            <div class="brand">UPCISS</div>
+            <h1>O-Level (M1-R5)</h1>
+            <div class="sub">IT Tools &amp; Basics of Networks</div>
+            <div class="badge">📺 Complete Study Material</div>
+            <div style="margin-top:1.2rem; font-size:0.75rem; opacity:0.4;">
+                www.youtube.com/upciss &bull; www.upcissyoutube.com
+            </div>
+        </div>
+
+        <!-- TOC -->
+        <div class="toc" id="toc">
+            <h2>📖 सामग्री · Contents</h2>
+            <div class="toc-grid">
+                <div class="toc-item"><span class="num">01</span><a href="#ch1">Introduction to Computer</a></div>
+                <div class="toc-item"><span class="num">02</span><a href="#ch2">Introduction to Operating System</a></div>
+                <div class="toc-item"><span class="num">03</span><a href="#ch3">Word Processing</a></div>
+                <div class="toc-item"><span class="num">04</span><a href="#ch4">Spreadsheet</a></div>
+                <div class="toc-item"><span class="num">05</span><a href="#ch5">Presentation</a></div>
+                <div class="toc-item"><span class="num">06</span><a href="#ch6">Internet &amp; WWW</a></div>
+                <div class="toc-item"><span class="num">07</span><a href="#ch7">E-mail, Social &amp; e-Governance</a></div>
+                <div class="toc-item"><span class="num">08</span><a href="#ch8">IT &amp; Society, Cyber Law</a></div>
+                <div class="toc-item"><span class="num">09</span><a href="#ch9">Futureskills &amp; Cyber Security</a></div>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- ====================== CHAPTER 1 ====================== -->
+            <div class="chapter" id="ch1">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 1</span>
+                    <h2>Introduction to Computer</h2>
+                </div>
+                <p><strong>Computer</strong> <span class="term-hint">कंप्यूटर</span> is derived from Latin "Computare" – to compute. It is an electronic device that processes data according to instructions.</p>
+                <p><strong>Four basic units:</strong> Input, Storage, CPU, Output.</p>
+                <h3>Classification of Computer</h3>
+                <ul class="arrow-list">
+                    <li><strong>Analog Computer</strong> <span class="term-hint">एनालॉग कंप्यूटर</span> – processes continuous data (temperature, pressure).</li>
+                    <li><strong>Digital Computer</strong> <span class="term-hint">डिजिटल कंप्यूटर</span> – processes discrete data (binary).</li>
+                    <li><strong>Hybrid Computer</strong> <span class="term-hint">हाइब्रिड कंप्यूटर</span> – combines analog &amp; digital.</li>
+                </ul>
+                <h3>Digital Computers – by size &amp; power</h3>
+                <ul class="arrow-list">
+                    <li><strong>Micro Computer</strong> <span class="term-hint">माइक्रो कंप्यूटर</span> – small, cheap, uses microprocessor. Types: Desktop, Laptop, Notebook, PDA.</li>
+                    <li><strong>Mini Computer</strong> <span class="term-hint">मिनी कंप्यूटर</span> – multi-user, supports 10–100 users.</li>
+                    <li><strong>Mainframe Computer</strong> <span class="term-hint">मेनफ्रेम कंप्यूटर</span> – powerful, supports thousands of users, used in banks, airlines.</li>
+                    <li><strong>Super Computer</strong> <span class="term-hint">सुपर कंप्यूटर</span> – fastest, most expensive, used in space, weather, military.</li>
+                </ul>
+                <h3>Characteristics of Computer</h3>
+                <ul class="check-list">
+                    <li><strong>Speed</strong> <span class="term-hint">गति</span> – millions of instructions per second.</li>
+                    <li><strong>Accuracy</strong> <span class="term-hint">सटीकता</span> – 100% accurate.</li>
+                    <li><strong>Versatility</strong> <span class="term-hint">बहुमुखी प्रतिभा</span> – can do many tasks.</li>
+                    <li><strong>Power of remembering</strong> <span class="term-hint">स्मरण शक्ति</span> – stores large data.</li>
+                    <li><strong>Diligence</strong> <span class="term-hint">लगन</span> – no tiredness.</li>
+                    <li><strong>Storage</strong> <span class="term-hint">भंडारण</span> – primary (RAM/ROM) and secondary (hard disk, CD).</li>
+                </ul>
+                <h3>Components of Computer System</h3>
+                <ul class="arrow-list">
+                    <li><strong>Input Unit</strong> <span class="term-hint">इनपुट यूनिट</span> – Keyboard, Mouse, Scanner, Joystick, Barcode Reader.</li>
+                    <li><strong>CPU</strong> <span class="term-hint">सीपीयू</span> – Control Unit (CU) and Arithmetic Logic Unit (ALU).</li>
+                    <li><strong>Memory Unit</strong> <span class="term-hint">मेमोरी यूनिट</span> – primary (RAM, ROM, Cache) and secondary (hard disk, CD, DVD, USB).</li>
+                    <li><strong>Output Unit</strong> <span class="term-hint">आउटपुट यूनिट</span> – Monitor, Printer, Plotter.</li>
+                </ul>
+                <h3>Processor Speed &amp; Booting</h3>
+                <p><strong>Processor speed</strong> <span class="term-hint">प्रोसेसर की गति</span> measured in Hertz (MHz, GHz). <strong>Booting</strong> <span class="term-hint">बूटिंग</span> is the initialization process; boot loader loads the OS.</p>
+                <h3>Memory Types</h3>
+                <ul class="arrow-list">
+                    <li><strong>Primary Memory</strong> <span class="term-hint">प्राथमिक मेमोरी</span> – RAM (SRAM, DRAM), ROM (PROM, EPROM, EEPROM).</li>
+                    <li><strong>Secondary Memory</strong> <span class="term-hint">द्वितीयक मेमोरी</span> – Floppy disk, Hard disk, Optical disk (CD, DVD, Blu-ray), USB thumb drive.</li>
+                    <li><strong>Cache Memory</strong> <span class="term-hint">कैश मेमोरी</span> – small, fast memory between CPU and RAM.</li>
+                </ul>
+                <h3>Computer Software</h3>
+                <ul class="arrow-list">
+                    <li><strong>System Software</strong> <span class="term-hint">सिस्टम सॉफ्टवेयर</span> – OS, Utility programs.</li>
+                    <li><strong>Application Software</strong> <span class="term-hint">एप्लिकेशन सॉफ्टवेयर</span> – MS Word, Excel, PowerPoint, etc.</li>
+                </ul>
+                <h3>Compiler, Interpreter</h3>
+                <p><strong>Compiler</strong> <span class="term-hint">कंपाइलर</span> translates entire program into machine code. <strong>Interpreter</strong> <span class="term-hint">इंटरप्रेटर</span> translates line by line.</p>
+                <div class="info-box"><strong>High-level languages</strong> (COBOL, FORTRAN, C, C++, Java, PHP) are closer to human language.</div>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 1</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> What is the difference between primary and secondary memory?</div><p><strong>Primary</strong> – internal, fast, volatile, expensive, less storage. <strong>Secondary</strong> – external, slow, non-volatile, cheap, more storage.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> Explain Compiler, Interpreter, Assembler.</div><p><strong>Compiler</strong> – whole program to machine code. <strong>Interpreter</strong> – line by line. <strong>Assembler</strong> – Assembly ↔ Machine.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> Draw and explain block diagram of computer.</div><p>Input → Memory → CPU (CU &amp; ALU) → Output. Secondary storage connected to memory.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch2">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ====================== CHAPTER 2 ====================== -->
+            <div class="chapter" id="ch2">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 2</span>
+                    <h2>Introduction to Operating System</h2>
+                </div>
+                <p><strong>Operating System (OS)</strong> <span class="term-hint">ऑपरेटिंग सिस्टम</span> – system software that manages hardware, software, and provides user interface. It handles processing, memory, I/O, file management, and security.</p>
+                <h3>Popular OS</h3>
+                <ul class="arrow-list">
+                    <li>Windows (Microsoft) – versions: 1.0, 2.0, 3.0, 95, 98, 2000, XP, Vista, 7, 8, 10, 11.</li>
+                    <li>Linux – open source, kernel-based, supports multitasking, multi-user.</li>
+                    <li>macOS – Apple's OS.</li>
+                </ul>
+                <h3>Basic Windows Elements</h3>
+                <ul class="arrow-list">
+                    <li><strong>Window</strong> – application window, dialog box.</li>
+                    <li><strong>Taskbar</strong> <span class="term-hint">टास्कबार</span> – bottom bar with Start menu, notification area.</li>
+                    <li><strong>Icons</strong> <span class="term-hint">आइकॉन</span> – small graphics for programs.</li>
+                    <li><strong>Start Menu</strong> – access to programs, settings.</li>
+                    <li><strong>Title Bar</strong> – shows window name, includes Minimize, Maximize/Restore, Close buttons.</li>
+                    <li><strong>Menu Bar</strong> – contains menus (File, Edit, View, etc.).</li>
+                </ul>
+                <h3>File Management</h3>
+                <p>Using Windows Explorer or My Computer – create, rename, delete, copy, move files/folders. Also view details (name, type, size).</p>
+                <h3>System Tools</h3>
+                <ul class="arrow-list">
+                    <li><strong>Disk Cleanup</strong> – frees space by deleting temporary files.</li>
+                    <li><strong>Disk Defragmenter</strong> – rearranges fragmented data for efficiency.</li>
+                </ul>
+                <h3>Accessories</h3>
+                <ul class="arrow-list">
+                    <li><strong>Notepad</strong> – simple text editor.</li>
+                    <li><strong>WordPad</strong> – basic word processor with formatting.</li>
+                    <li><strong>Paint</strong> – graphics drawing program.</li>
+                    <li><strong>Calculator</strong> – Standard, Scientific, Programmer, Statistics modes.</li>
+                    <li><strong>Command Prompt</strong> – CLI for commands (dir, cd, etc.).</li>
+                </ul>
+                <h3>Linux Overview</h3>
+                <p>Linux is a UNIX-like kernel developed by Linus Torvalds (1991). It is free, open-source, supports multitasking, multi-user, TCP/IP, and many file systems. It has a hierarchical file system starting from root (<code>/</code>).</p>
+                <div class="info-box"><strong>Linux File Structure:</strong> /bin, /boot, /dev, /etc, /home, /lib, /usr, /var, /tmp, etc.</div>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 2</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> What is an OS? Explain its functions.</div><p>OS is system software managing hardware/software. Functions: Processing, Memory, I/O, File, Security management.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> Difference between Ubuntu and Windows?</div><p>Ubuntu – Linux-based, open source, free. Windows – DOS-based, closed source, paid.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> Explain Kernel, System Library, Shell in Linux.</div><p><strong>Kernel</strong> – core, interacts with hardware. <strong>System Library</strong> – functions to access kernel. <strong>Shell</strong> – interface for user commands.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#ch1">← Previous</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch3">Next →</a>
+                </div>
+            </div>
+
+            <!-- ====================== CHAPTER 3 ====================== -->
+            <div class="chapter" id="ch3">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 3</span>
+                    <h2>Word Processing</h2>
+                </div>
+                <p><strong>Word Processing</strong> <span class="term-hint">वर्ड प्रोसेसिंग</span> – creating, editing, formatting documents. Microsoft Word is a popular word processor.</p>
+                <h3>Features of MS Word</h3>
+                <ul class="check-list">
+                    <li>Create letters, resumes, reports.</li>
+                    <li>Store electronically.</li>
+                    <li>Edit, format text.</li>
+                    <li>Insert tables, graphics, charts.</li>
+                    <li>Mail merge, spell check, grammar check.</li>
+                </ul>
+                <h3>Opening, Saving, Closing</h3>
+                <ul class="arrow-list">
+                    <li><strong>Open</strong> – File → Open or Ctrl+O.</li>
+                    <li><strong>Save</strong> – Ctrl+S (first time use Save As). File naming rules: up to 260 chars, no / \ > < * ? " : |.</li>
+                    <li><strong>Close</strong> – Ctrl+W or Alt+F4.</li>
+                </ul>
+                <h3>Text Selection &amp; Editing</h3>
+                <ul class="arrow-list">
+                    <li>Select: double-click word, triple-click paragraph, Ctrl+A for all.</li>
+                    <li>Edit: Copy (Ctrl+C), Cut (Ctrl+X), Paste (Ctrl+V), Undo (Ctrl+Z), Redo (Ctrl+Y).</li>
+                    <li>Find &amp; Replace: Ctrl+H.</li>
+                </ul>
+                <h3>Formatting</h3>
+                <ul class="arrow-list">
+                    <li><strong>Character</strong> – font, size, bold (Ctrl+B), italic (Ctrl+I), underline (Ctrl+U), color.</li>
+                    <li><strong>Paragraph</strong> – alignment (left, center, right, justify), indentation, bullets, numbering.</li>
+                    <li><strong>Page Layout</strong> – margins, orientation (portrait/landscape), size.</li>
+                </ul>
+                <h3>Tables &amp; Charts</h3>
+                <ul class="arrow-list">
+                    <li>Insert Table – Insert → Table, choose rows/columns.</li>
+                    <li>Insert Chart – Insert → Chart, edit data in spreadsheet.</li>
+                </ul>
+                <h3>Mail Merge</h3>
+                <p>Mailings → Start Mail Merge → Step by Step Wizard – create letters with variable data from Excel.</p>
+                <h3>Spelling &amp; Grammar</h3>
+                <p>Review → Spelling &amp; Grammar (F7). Red underline = spelling error, blue = grammar, green = contextual.</p>
+                <h3>Graphics</h3>
+                <ul class="arrow-list">
+                    <li><strong>Clip Art</strong> – Insert → Clip Art.</li>
+                    <li><strong>Pictures</strong> – Insert → Picture from file.</li>
+                    <li><strong>WordArt</strong> – Insert → WordArt.</li>
+                    <li><strong>Watermark</strong> – Page Layout → Watermark.</li>
+                </ul>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 3</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> How to turn on/off automatic spelling check?</div><p>Review → Spelling &amp; Grammar → Options → Proofing → check/uncheck "Check spelling as you type".</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> Steps to add watermark in Word?</div><p>Page Layout → Watermark → choose or custom.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> Five features of word processor.</div><p>Editing, Word Wrap, Search &amp; Replace, Copy/Cut, Headers/Footers.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#ch2">← Previous</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch4">Next →</a>
+                </div>
+            </div>
+
+            <!-- ====================== CHAPTER 4 ====================== -->
+            <div class="chapter" id="ch4">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 4</span>
+                    <h2>Spreadsheet</h2>
+                </div>
+                <p><strong>Spreadsheet</strong> <span class="term-hint">स्प्रेडशीट</span> – application for organizing, analyzing data in tabular form. Microsoft Excel is the most widely used.</p>
+                <h3>Excel Basics</h3>
+                <ul class="arrow-list">
+                    <li><strong>Workbook</strong> – file with multiple worksheets.</li>
+                    <li><strong>Worksheet</strong> – grid of rows (1–1,048,576) and columns (A–XFD).</li>
+                    <li><strong>Cell</strong> – intersection of row and column; referenced by column letter and row number (e.g., A1).</li>
+                    <li><strong>Formula Bar</strong> – shows/edit cell content; starts with '='.</li>
+                </ul>
+                <h3>Entering Data &amp; Operators</h3>
+                <ul class="arrow-list">
+                    <li>Enter data by typing in active cell.</li>
+                    <li><strong>Arithmetic Operators</strong> – +, -, *, /, %.</li>
+                    <li><strong>Comparison Operators</strong> – =, &lt;, &gt;, &lt;=, &gt;=, &lt;&gt;.</li>
+                    <li><strong>Text Operator</strong> – &amp; for concatenation.</li>
+                    <li><strong>Reference Operators</strong> – : (range), , (union).</li>
+                </ul>
+                <h3>Functions</h3>
+                <ul class="arrow-list">
+                    <li><strong>Math</strong> – SUM, AVERAGE, MAX, MIN.</li>
+                    <li><strong>Logical</strong> – IF, AND, OR, NOT.</li>
+                    <li><strong>Statistical</strong> – COUNT, COUNTA, STDEV.</li>
+                    <li><strong>Text</strong> – LEFT, RIGHT, MID, CONCATENATE.</li>
+                    <li><strong>Date/Time</strong> – DATE, DAY, MONTH, YEAR.</li>
+                </ul>
+                <h3>Formatting Worksheet</h3>
+                <ul class="arrow-list">
+                    <li><strong>Alignment</strong> – left, center, right, top, middle, bottom; merge &amp; center; wrap text.</li>
+                    <li><strong>Number Formats</strong> – Currency, Accounting, Date, Percentage.</li>
+                    <li><strong>Font</strong> – type, size, style, color.</li>
+                </ul>
+                <h3>Charts</h3>
+                <p>Select data → Insert → Chart (choose type). Modify via Chart Tools – Design, Layout, Format.</p>
+                <h3>Printing</h3>
+                <p>File → Print (Ctrl+P) – set active sheets, entire workbook, selection; adjust margins, orientation, scaling.</p>
+                <h3>Import Data</h3>
+                <ul class="arrow-list">
+                    <li>From Text: Data → From Text → import wizard.</li>
+                    <li>From Web: Data → From Web → enter URL → select table.</li>
+                </ul>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 4</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> Explain elements of spreadsheet.</div><p>Workbook, Worksheet, Row, Column, Cell, Formula, Functions.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> Cell referencing types.</div><p>Absolute ($A$1), Relative (A1), Mixed ($A1 or A$1).</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> What is Array Formula?</div><p>Formula that performs multiple calculations on one or more items.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#ch3">← Previous</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch5">Next →</a>
+                </div>
+            </div>
+
+            <!-- ====================== CHAPTER 5 ====================== -->
+            <div class="chapter" id="ch5">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 5</span>
+                    <h2>Presentation</h2>
+                </div>
+                <p><strong>Microsoft PowerPoint</strong> <span class="term-hint">पॉवरपॉइंट</span> – slide show presentation program. Create professional slides with text, graphics, media.</p>
+                <h3>Opening &amp; Creating</h3>
+                <ul class="arrow-list">
+                    <li>Start → All Programs → Microsoft Office → PowerPoint.</li>
+                    <li>New blank presentation or use templates.</li>
+                </ul>
+                <h3>Views</h3>
+                <ul class="arrow-list">
+                    <li><strong>Normal View</strong> – edit slides.</li>
+                    <li><strong>Slide Sorter</strong> – rearrange slides.</li>
+                    <li><strong>Notes Page</strong> – add speaker notes.</li>
+                    <li><strong>Reading View</strong> – preview presentation.</li>
+                </ul>
+                <h3>Working with Slides</h3>
+                <ul class="arrow-list">
+                    <li>Add new slide: Home → New Slide (Ctrl+M).</li>
+                    <li>Rearrange: drag in Slide Sorter or Normal.</li>
+                    <li>Delete: select and press Delete.</li>
+                </ul>
+                <h3>Text &amp; Formatting</h3>
+                <ul class="arrow-list">
+                    <li>Add text: click placeholder or Insert → Text Box.</li>
+                    <li>Format: Home tab – font, size, color, bold, italic, underline.</li>
+                    <li>Paragraph: alignment, bullets, numbering, indent, line spacing.</li>
+                    <li>WordArt for stylized text.</li>
+                </ul>
+                <h3>Objects &amp; Graphics</h3>
+                <ul class="arrow-list">
+                    <li>Insert Table, Excel Spreadsheet, Formula (Equation).</li>
+                    <li>Insert Clip Art, Pictures.</li>
+                    <li>Shapes: Insert → Shapes, format via Drawing Tools.</li>
+                </ul>
+                <h3>Slide Show &amp; Transition</h3>
+                <ul class="arrow-list">
+                    <li>Run show: F5 (from beginning), Shift+F5 (from current).</li>
+                    <li>Transitions: Transitions tab → choose effect, set timing.</li>
+                    <li>Animations: Animate objects.</li>
+                </ul>
+                <h3>Printing</h3>
+                <p>File → Print – choose slides, handouts, notes; select layout.</p>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 5</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> What is Handout Master?</div><p>Handout is printout of slides (1–9 per page) for audience.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> Advantages of presentation package?</div><p>Standard, attractive features, easy to use, export to multiple formats.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> How to add movies/sounds in Impress?</div><p>Insert → Audio or Video → select file.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#ch4">← Previous</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch6">Next →</a>
+                </div>
+            </div>
+
+            <!-- ====================== CHAPTER 6 ====================== -->
+            <div class="chapter" id="ch6">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 6</span>
+                    <h2>Introduction to Internet and WWW</h2>
+                </div>
+                <p><strong>Internet</strong> <span class="term-hint">इंटरनेट</span> – global network of networks. Uses TCP/IP protocol. Started as ARPANET (1969). Vint Cerf is Father of Internet.</p>
+                <h3>Computer Networks</h3>
+                <ul class="arrow-list">
+                    <li><strong>LAN</strong> – local area, up to 1 km, high speed.</li>
+                    <li><strong>MAN</strong> – metropolitan area, city-wide.</li>
+                    <li><strong>WAN</strong> – wide area, countries/continents, Internet.</li>
+                </ul>
+                <h3>Network Topologies</h3>
+                <ul class="arrow-list">
+                    <li>Bus, Ring, Star, Mesh, Tree.</li>
+                </ul>
+                <h3>Networking Devices</h3>
+                <ul class="arrow-list">
+                    <li>Repeater, Hub, Switch, Bridge, Router, Gateway, NIC, Modem.</li>
+                </ul>
+                <h3>Internet Protocols</h3>
+                <ul class="arrow-list">
+                    <li>TCP/IP, HTTP/HTTPS, FTP, POP3, SMTP, Ethernet, UDP, PPP, Telnet.</li>
+                </ul>
+                <h3>IP Address</h3>
+                <ul class="arrow-list">
+                    <li><strong>IPv4</strong> – 32-bit (e.g., 172.16.254.1).</li>
+                    <li><strong>IPv6</strong> – 128-bit (e.g., 2001:0db8:...).</li>
+                </ul>
+                <h3>ISP</h3>
+                <p>Internet Service Provider – Tier1, Tier2, Tier3. Provides internet connection, email, hosting, security.</p>
+                <h3>WWW, URL, Domain Names</h3>
+                <ul class="arrow-list">
+                    <li>WWW – World Wide Web (Tim Berners-Lee, 1989).</li>
+                    <li>URL – Uniform Resource Locator.</li>
+                    <li>Domain extensions: .com, .edu, .gov, .net, .org.</li>
+                </ul>
+                <h3>Web Browsers</h3>
+                <ul class="arrow-list">
+                    <li>Internet Explorer, Edge, Chrome, Firefox, Opera.</li>
+                </ul>
+                <h3>Search Engines</h3>
+                <ul class="arrow-list">
+                    <li>Google, Bing, Yahoo, Ask, Baidu, Yandex, DuckDuckGo.</li>
+                </ul>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 6</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> What is ISP? How many parts?</div><p>ISP – Internet Service Provider. Divided into Tier1, Tier2, Tier3.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> Define network topology.</div><p>Shape/layout of network. Types: Bus, Ring, Star, Mesh, Tree.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> Difference between LAN and WAN?</div><p>LAN – local, private, high speed. WAN – wide, public, slower.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#ch5">← Previous</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch7">Next →</a>
+                </div>
+            </div>
+
+            <!-- ====================== CHAPTER 7 ====================== -->
+            <div class="chapter" id="ch7">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 7</span>
+                    <h2>E-mail, Social Networking &amp; e-Governance</h2>
+                </div>
+                <p><strong>E-mail</strong> <span class="term-hint">ईमेल</span> – electronic mail. First e-mail by Ray Tomlinson (1971). Address format: username@domain.</p>
+                <h3>E-mail Components</h3>
+                <ul class="arrow-list">
+                    <li>To, CC, BCC, Subject, Body, Attachments, Signature.</li>
+                    <li>Protocols: SMTP (send), POP3/IMAP (receive).</li>
+                </ul>
+                <h3>Social Networking</h3>
+                <ul class="arrow-list">
+                    <li>Platforms: Facebook, Twitter, LinkedIn, Instagram, WhatsApp.</li>
+                    <li>Instant Messaging: WhatsApp, Messenger, Telegram.</li>
+                </ul>
+                <h3>E-Commerce</h3>
+                <ul class="arrow-list">
+                    <li>Buying/selling goods/services online.</li>
+                    <li>Models: B2B, B2C, C2B, C2C, B2A, C2A.</li>
+                </ul>
+                <h3>e-Governance</h3>
+                <ul class="arrow-list">
+                    <li>Government services online – IRCTC, Passport, eHospital (ORS).</li>
+                    <li>UMANG App – unified mobile app for governance.</li>
+                    <li>DigiLocker – cloud storage for certificates.</li>
+                </ul>
+                <h3>Netiquette</h3>
+                <p>Internet etiquette – respectful online behaviour, no spam, no abusive language, respect privacy.</p>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 7</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> What is Social Networking? Examples.</div><p>Connecting people via internet. Examples: Facebook, Instagram, LinkedIn, Twitter.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> What is Netiquette?</div><p>Internet etiquette – respectful online communication.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> Types of E-Commerce models.</div><p>B2B, B2C, C2C, C2B, B2A, C2A.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#ch6">← Previous</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch8">Next →</a>
+                </div>
+            </div>
+
+            <!-- ====================== CHAPTER 8 ====================== -->
+            <div class="chapter" id="ch8">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 8</span>
+                    <h2>Information Technology and Society – Cyber Law &amp; IPR</h2>
+                </div>
+                <p><strong>Information Technology (IT)</strong> <span class="term-hint">सूचना प्रौद्योगिकी</span> – use of computers to store, retrieve, transmit, manipulate data. IT has revolutionized banking, finance, communication, education.</p>
+                <h3>Advantages of IT</h3>
+                <ul class="check-list">
+                    <li>Cheaper, faster communication.</li>
+                    <li>Global connectivity.</li>
+                    <li>24×7 online business.</li>
+                    <li>Cost-effective processes.</li>
+                </ul>
+                <h3>Disadvantages of IT</h3>
+                <ul class="arrow-list">
+                    <li>Privacy issues.</li>
+                    <li>Hacking, data theft.</li>
+                    <li>Misuse of personal information.</li>
+                </ul>
+                <h3>Need for Cyber Law</h3>
+                <p>With growth of IT, cyber crimes have increased – hacking, identity theft, phishing. Cyber laws regulate activities in cyberspace.</p>
+                <h3>Indian IT Act 2000</h3>
+                <p>Passed on 17 Oct 2000, 94 sections, 13 chapters. Legal recognition of electronic documents and digital signatures. Penalties for cyber crimes.</p>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>Section</th><th>Offense</th><th>Punishment</th></tr>
+                        <tr><td>43</td><td>Unauthorized access, copying data, introducing virus</td><td>Compensation up to ₹1 Crore</td></tr>
+                        <tr><td>65</td><td>Tampering with source code</td><td>Imprisonment 3 years, fine ₹2 Lakh</td></tr>
+                        <tr><td>66</td><td>Hacking, altering data</td><td>Imprisonment 3 years, fine ₹5 Lakh</td></tr>
+                        <tr><td>66A</td><td>Sending offensive messages</td><td>Imprisonment 3 years, fine</td></tr>
+                        <tr><td>67</td><td>Publishing obscene material</td><td>Imprisonment 5 years, fine ₹10 Lakh</td></tr>
+                    </table>
+                </div>
+                <h3>Intellectual Property Rights (IPR)</h3>
+                <ul class="arrow-list">
+                    <li><strong>Patent</strong> – exclusive right to invention.</li>
+                    <li><strong>Copyright</strong> – protection for literary/artistic works.</li>
+                    <li><strong>Trademark</strong> – distinctive sign for goods/services.</li>
+                    <li><strong>Trade Secret</strong> – confidential business information.</li>
+                    <li><strong>Registered Design</strong> – visual design of objects.</li>
+                    <li><strong>Plant Varieties</strong> – rights for new plant breeds.</li>
+                </ul>
+                <h3>Applications of IT in Banking</h3>
+                <ul class="arrow-list">
+                    <li>Core Banking Solutions (CBS).</li>
+                    <li>ATMs, Net Banking, Mobile Banking.</li>
+                    <li>Electronic Clearing Service (ECS).</li>
+                    <li>RTGS, NEFT, IMPS.</li>
+                    <li>Prepaid Payment Systems (e-wallets).</li>
+                </ul>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 8</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> What is IT Act 2000?</div><p>Indian law to regulate e-commerce, e-governance, and cyber crimes. Provides legal recognition to digital signatures and documents.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> Types of Intellectual Property Rights.</div><p>Patents, Copyrights, Trademarks, Trade Secrets, Registered Designs, Plant Varieties.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> Role of IT in banking.</div><p>CBS, ATMs, ECS, RTGS, NEFT, IMPS, internet/mobile banking.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#ch7">← Previous</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch9">Next →</a>
+                </div>
+            </div>
+
+            <!-- ====================== CHAPTER 9 ====================== -->
+            <div class="chapter" id="ch9">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 9</span>
+                    <h2>Overview of Futureskills and Cyber Security</h2>
+                </div>
+                <p><strong>Futureskills</strong> – platform by NASSCOM for IT professionals to upgrade skills in emerging technologies (IoT, AI, Robotics, etc.). Launched 19 Feb 2018.</p>
+                <h3>Internet of Things (IoT)</h3>
+                <p>Physical objects connected via sensors and software. Examples: smart watch, smart TV. Advantages: easy tracking, home automation, remote access. Disadvantages: security, privacy, complexity.</p>
+                <h3>Big Data Analytics</h3>
+                <p>Large volume of data – structured, unstructured, semi-structured. Analyzing to find patterns and useful information.</p>
+                <h3>Cloud Computing</h3>
+                <p>Delivery of services (storage, servers, database, networking, software) over internet. Types: Public, Private, Hybrid. Services: IaaS, PaaS, SaaS. Advantages: cost, speed, scalability, security, reliability.</p>
+                <h3>Virtual Reality (VR)</h3>
+                <p>Computer-generated simulation of 3D environment. Used in gaming, education, engineering, medical.</p>
+                <h3>Artificial Intelligence (AI)</h3>
+                <p>Machines programmed to think and act like humans. Languages: LISP, Python, Java, Prolog. Applications: gaming, NLP, vision systems, expert systems, speech recognition, robotics.</p>
+                <h3>Blockchain Technology</h3>
+                <p>Distributed database for secure transactions. Backbone of Bitcoin. Uses digital signatures for security.</p>
+                <h3>3D Printing (Additive Manufacturing)</h3>
+                <p>Creates 3D objects layer by layer. Advantages: fast production, cost-effective, low waste. Applications: aerospace, education, biomedical, robotics.</p>
+                <h3>Robotics Process Automation (RPA)</h3>
+                <p>Software robots that automate tasks. Advantages: increased accuracy, speed, cost savings, productivity.</p>
+                <h3>Cyber Security</h3>
+                <p>Protection of systems, networks, data from cyber attacks. Goals: privacy, integrity, availability. Types of attacks: system-based (virus, worm, Trojan) and web-based (phishing, DNS spoofing, DoS, MiTM, brute force).</p>
+                <h4>Securing PC &amp; Smartphone</h4>
+                <ul class="check-list">
+                    <li>Keep OS/software updated.</li>
+                    <li>Use licensed software.</li>
+                    <li>Be careful online; avoid suspicious links.</li>
+                    <li>Backup regularly.</li>
+                    <li>Use strong passwords.</li>
+                    <li>Install antivirus, enable firewall.</li>
+                    <li>For smartphone: strong password, trusted apps, regular updates, backup, remote wipe, Wi-Fi security, understand app permissions.</li>
+                </ul>
+                <div class="questions">
+                    <h3>📌 Important Questions – Chapter 9</h3>
+                    <div class="q-item"><div class="q"><span class="q-label">Q1.</span> Advantages of Cloud Computing.</div><p>Cost, speed, scalability, security, reliability.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q2.</span> What is AI? Applications.</div><p>AI – machines with human-like intelligence. Applications: gaming, NLP, vision, expert systems, speech recognition, robotics.</p></div>
+                    <div class="q-item"><div class="q"><span class="q-label">Q3.</span> What is Blockchain?</div><p>Distributed database for secure transactions; backbone of Bitcoin.</p></div>
+                </div>
+                <div class="chapter-nav">
+                    <a href="#ch8">← Previous</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#" class="disabled">End</a>
+                </div>
+            </div>
+
+            <!-- CREDIT -->
+            <div class="note-credit">
+                <strong>🙏 नोट्स बनाने में बहुत मेहनत लगी है</strong><br />
+                यदि आप कुछ शुल्क (50, 100, 200 रूपए) जो आपको उचित लगता है, pay कर सकते हैं, तो धन्यवाद।<br />
+                <span style="font-size:0.85rem; opacity:0.6;">Copyright © 2021 UPCISS</span>
+            </div>
+
+        </div>
+        <!-- end content -->
+    </div>
+    <!-- end book-container -->
+
+</body>
+</html>

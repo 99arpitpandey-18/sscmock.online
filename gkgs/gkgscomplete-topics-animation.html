@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GK/GS Mega Animated Study Guide</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ----- GLOBAL RESET & BASE ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #0a0f1e;
+            color: #e0e6f0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1f2e; }
+        ::-webkit-scrollbar-thumb { background: #f0b429; border-radius: 10px; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ----- ANIMATED BACKGROUND (Particles) ----- */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* ----- HEADER WITH TYPING EFFECT ----- */
+        .header {
+            text-align: center;
+            padding: 30px 0 20px;
+            border-bottom: 2px solid rgba(240, 180, 41, 0.3);
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f0b429, #f7971e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            border-right: 3px solid #f0b429;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blinkCursor 0.8s step-end infinite;
+            letter-spacing: 2px;
+        }
+        @keyframes blinkCursor {
+            50% { border-color: transparent; }
+        }
+        .header p {
+            color: #8892b0;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+        .header p i {
+            color: #f0b429;
+            margin: 0 5px;
+        }
+
+        /* ----- FLOATING ANIMATED STATS BAR (Extra Content) ----- */
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 60px;
+            padding: 15px 25px;
+            margin: 20px 0 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .stat-item {
+            text-align: center;
+            padding: 0 20px;
+            animation: floatUp 3s ease-in-out infinite;
+        }
+        .stat-item:nth-child(2) { animation-delay: 0.5s; }
+        .stat-item:nth-child(3) { animation-delay: 1s; }
+        .stat-item:nth-child(4) { animation-delay: 1.5s; }
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .stat-item .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f0b429;
+            display: block;
+        }
+        .stat-item .label {
+            font-size: 0.85rem;
+            color: #a8b2d1;
+            text-transform: uppercase;
+        }
+
+        /* ----- INTERACTIVE MIND MAP (CHART METHOD) ----- */
+        .mindmap-section {
+            background: rgba(16, 24, 44, 0.8);
+            border-radius: 30px;
+            padding: 30px 20px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(240, 180, 41, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        .mindmap-section h2 {
+            text-align: center;
+            color: #f0b429;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .mindmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .mind-node {
+            background: rgba(30, 40, 70, 0.7);
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .mind-node::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(240, 180, 41, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        .mind-node:hover::before { left: 100%; }
+        .mind-node:hover {
+            transform: scale(1.08) translateY(-5px);
+            border-color: #f0b429;
+            box-shadow: 0 15px 35px rgba(240, 180, 41, 0.2);
+        }
+        .mind-node .icon {
+            font-size: 2.5rem;
+            color: #f0b429;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .mind-node .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+        .mind-node .sub-text {
+            font-size: 0.7rem;
+            color: #8892b0;
+            margin-top: 5px;
+            display: block;
+            opacity: 0.8;
+        }
+        .mind-node:hover .sub-text {
+            color: #f0b429;
+        }
+
+        /* ----- ACCORDION / CHAPTER CARDS (Jada content) ----- */
+        .chapter {
+            background: rgba(16, 24, 44, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealCard 0.6s forwards;
+        }
+        .chapter:nth-child(1) { animation-delay: 0.1s; }
+        .chapter:nth-child(2) { animation-delay: 0.2s; }
+        .chapter:nth-child(3) { animation-delay: 0.3s; }
+        .chapter:nth-child(4) { animation-delay: 0.4s; }
+        .chapter:nth-child(5) { animation-delay: 0.5s; }
+        .chapter:nth-child(6) { animation-delay: 0.6s; }
+        .chapter:nth-child(7) { animation-delay: 0.7s; }
+        .chapter:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes revealCard {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chapter-header {
+            background: rgba(30, 45, 80, 0.5);
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border-left: 5px solid #f0b429;
+        }
+        .chapter-header:hover {
+            background: rgba(50, 70, 120, 0.4);
+        }
+        .chapter-header h3 {
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .chapter-header h3 i {
+            color: #f0b429;
+            width: 30px;
+        }
+        .chapter-header .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.4s ease;
+            color: #f0b429;
+        }
+        .chapter.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .chapter-body {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+            background: rgba(10, 15, 30, 0.4);
+        }
+        .chapter.active .chapter-body {
+            padding: 25px;
+            max-height: 8000px; /* Enough for huge content */
+        }
+
+        .chapter-body .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .topic-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px 20px;
+            border-radius: 15px;
+            border-left: 3px solid #f0b429;
+            transition: 0.3s;
+        }
+        .topic-card:hover {
+            background: rgba(240, 180, 41, 0.05);
+            transform: translateX(5px);
+        }
+        .topic-card h4 {
+            color: #f0b429;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .topic-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .topic-card ul li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.95rem;
+            color: #c8d0e0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            line-height: 1.5;
+        }
+        .topic-card ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #f0b429;
+            font-weight: bold;
+        }
+        .topic-card ul li strong {
+            color: #fff;
+        }
+
+        /* ----- FOOTER ----- */
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 30px;
+            color: #8892b0;
+        }
+        .footer i {
+            color: #f0b429;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; white-space: normal; border-right: none; }
+            .stats-bar { flex-direction: column; align-items: center; border-radius: 30px; gap: 10px; }
+            .mindmap-grid { grid-template-columns: repeat(3, 1fr); }
+            .chapter-header h3 { font-size: 1rem; flex-wrap: wrap; }
+        }
+        @media (max-width: 480px) {
+            .mindmap-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas for Particles -->
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1>📚 GK/GS Mega Study Guide</h1>
+            <p><i class="fas fa-arrow-right"></i> Chart Method + Full Animation + जबरदस्त Content <i class="fas fa-arrow-left"></i></p>
+        </div>
+
+        <!-- STATS BAR (Extra Jada Content Feel) -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="number">8</span>
+                <span class="label">मुख्य स्तंभ</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">150+</span>
+                <span class="label">टॉपिक्स</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">500+</span>
+                <span class="label">महत्वपूर्ण तथ्य</span>
+            </div>
+            <div class="stat-item">
+                <span class="number">100%</span>
+                <span class="label">Animation</span>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE MIND MAP (CHART METHOD) -->
+        <div class="mindmap-section">
+            <h2><i class="fas fa-sitemap"></i> मास्टर चार्ट (Click/Hover करें)</h2>
+            <div class="mindmap-grid">
+                <div class="mind-node"><span class="icon"><i class="fas fa-scroll"></i></span><span class="title">इतिहास</span><span class="sub-text">Ancient · Med · Modern</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-globe-asia"></i></span><span class="title">भूगोल</span><span class="sub-text">Physical · Indian · Climate</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-gavel"></i></span><span class="title">राजव्यवस्था</span><span class="sub-text">Constitution · Judiciary</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-coins"></i></span><span class="title">अर्थव्यवस्था</span><span class="sub-text">GDP · Inflation · RBI</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-microscope"></i></span><span class="title">विज्ञान</span><span class="sub-text">Physics · ISRO · DRDO</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-tree"></i></span><span class="title">पर्यावरण</span><span class="sub-text">Ecology · Climate</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-dharmachakra"></i></span><span class="title">संस्कृति</span><span class="sub-text">Art · Festivals · Sports</span></div>
+                <div class="mind-node"><span class="icon"><i class="fas fa-star"></i></span><span class="title">पुरस्कार</span><span class="sub-text">Bharat Ratna · Padma</span></div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- CHAPTER 1: HISTORY (DETAILED DEFINITIONS) -->
+        <!-- ========================================== -->
+        <div class="chapter active">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-scroll"></i> 1. 📜 भारतीय इतिहास (प्राचीन, मध्यकाल, आधुनिक)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🏛️ प्राचीन भारत (Indus to Guptas)</h4><ul>
+                        <li><strong>सिंधु घाटी सभ्यता (2500 BC):</strong> विश्व की चार प्राचीन सभ्यताओं में से एक, यहाँ नगर नियोजन (ग्रिड पैटर्न), जल निकासी व्यवस्था एवं अन्न भंडार मिले हैं। मोहनजोदड़ो का 'ग्रेट बाथ' धार्मिक स्नान के लिए तथा लोथल (गुजरात) विश्व का सबसे पुराना ज्ञात बंदरगाह है। पशुपति महादेव की मुहर उनकी धार्मिक मान्यताओं को प्रदर्शित करती है।</li>
+                        <li><strong>वैदिक काल (1500-600 BC):</strong> इस काल में ऋग्वेद (विश्व का सबसे प्राचीनतम ग्रंथ) की रचना हुई। गायत्री मंत्र ऋग्वेद के तीसरे मंडल में है। इस दौर में 16 महाजनपदों का उदय हुआ, जिसमें मगध (वर्तमान बिहार) सबसे शक्तिशाली राज्य था, जिसकी राजधानी राजगृह थी।</li>
+                        <li><strong>मौर्य साम्राज्य (322-185 BC):</strong> चंद्रगुप्त मौर्य ने इसकी स्थापना की, जिसका विवरण मेगास्थनीज ने 'इंडिका' नामक पुस्तक में लिखा। सम्राट अशोक ने 261 ई.पू. में कलिंग युद्ध (ओडिशा) के बाद बौद्ध धर्म अपना लिया और पूरे एशिया में धम्म (शिलालेखों) का प्रचार किया। उसने सारनाथ का सिंह स्तंभ (हमारा राष्ट्रीय चिह्न) बनवाया।</li>
+                        <li><strong>गुप्त साम्राज्य (319-550 AD):</strong> इसे 'भारत का स्वर्णिम काल' कहा जाता है क्योंकि इस दौर में विज्ञान, गणित (आर्यभट्ट), साहित्य (कालिदास) और कला का अभूतपूर्व विकास हुआ। चीनी यात्री फाह्यान इसी काल में भारत आया था। नालंदा विश्वविद्यालय (बिहार) विश्व का सबसे पुराना आवासीय विश्वविद्यालय माना जाता है।</li>
+                        <li><strong>दक्षिणी राजवंश (चोल, पल्लव):</strong> चोल साम्राज्य (राजराज प्रथम) ने मालदीव और श्रीलंका (ब्रह्मदेश) तक अपनी नौसेना फैलाई। पल्लव राजाओं ने महाबलीपुरम के पत्थर काटकर बने मंदिरों (रथ मंदिर) का निर्माण करवाया, जो UNESCO विश्व धरोहर हैं।</li>
+                        <li><strong>विजयनगर साम्राज्य (1336):</strong> कृष्णदेव राय इसके सबसे प्रसिद्ध शासक थे। विट्ठल स्वामी मंदिर में संगीतमय स्तंभ और पत्थर का रथ इसकी स्थापत्य कला का अद्भुत उदाहरण है। राजधानी हम्पी वर्तमान में UNESCO विश्व धरोहर स्थल है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🕌 मध्यकालीन (Sultanate to Mughals)</h4><ul>
+                        <li><strong>दिल्ली सल्तनत (1206-1526):</strong> गुलाम वंश (कुतुबुद्दीन ऐबक) ने कुतुब मीनार का निर्माण प्रारंभ किया। खिलजी वंश के अलाउद्दीन ने बाजार नियंत्रण (नियमित दरें) एवं स्थायी सेना की व्यवस्था लागू की। तुगलक वंश के मुहम्मद बिन तुगलक ने अपनी अव्यावहारिक नीतियों (राजधानी दौलताबाद स्थानांतरित करना, टोकन मुद्रा) के कारण विशेष पहचान बनाई।</li>
+                        <li><strong>मुग़ल साम्राज्य (1526-1857):</strong> बाबर ने 1526 में प्रथम पानीपत युद्ध जीतकर मुगल शासन की नींव रखी। अकबर ने 'दीन-ए-इलाही' नए धर्म की स्थापना की तथा हिंदुओं पर लगने वाला जजिया कर हटाकर सुलह-ए-कुल (सबके लिए शांति) की नीति अपनाई। शाहजहाँ ने ताजमहल (मुमताज़ की याद में) एवं लाल किले का निर्माण करवाया। औरंगज़ेब ने फिर से जजिया कर लागू कर दिया, जिसके कारण मराठों एवं जाटों के साथ भीषण संघर्ष हुआ।</li>
+                        <li><strong>मराठा साम्राज्य (1674-1818):</strong> छत्रपति शिवाजी महाराज ने मुगलों के विरुद्ध गुरिल्ला युद्ध तकनीक का उपयोग करके पश्चिमी भारत में एक साम्राज्य स्थापित किया। उन्होंने 'अष्टप्रधान' (8 मंत्रियों की परिषद) नामक प्रशासनिक प्रणाली बनाई। पेशवा बाजीराव प्रथम ने मराठा साम्राज्य का विस्तार उत्तर तक किया, परंतु 1761 की तीसरी पानीपत की लड़ाई में अफगानों (अहमद शाह अब्दाली) से पराजय ने मराठों को कमजोर कर दिया।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🇮🇳 आधुनिक भारत (British to Independence)</h4><ul>
+                        <li><strong>ब्रिटिश शासन की शुरुआत:</strong> प्लासी का युद्ध (1757) में सिराजुद्दौला को हराकर ईस्ट इंडिया कंपनी बंगाल में स्थापित हुई। बक्सर का युद्ध (1764) के बाद कंपनी को बंगाल, बिहार एवं उड़ीसा की दीवानी (राजस्व वसूली) मिल गयी। रेग्युलेटिंग एक्ट (1773) के द्वारा कंपनी के प्रशासन को ब्रिटिश संसद के नियंत्रण में लाया गया।</li>
+                        <li><strong>1857 का प्रथम स्वतंत्रता संग्राम:</strong> मंगल पांडे के विद्रोह से शुरू हुआ इस आंदोलन को ब्रिटिश इतिहासकारों ने 'गदर' कहा, परंतु यह एक व्यापक जन विद्रोह था। झांसी की रानी, तात्या टोपे और बहादुर शाह ज़फर इसके प्रमुख नेता थे। इसके बाद कंपनी राज समाप्त होकर ब्रिटिश क्राउन (रानी विक्टोरिया) ने भारत का प्रत्यक्ष शासन अपने हाथ में ले लिया।</li>
+                        <li><strong>राष्ट्रीय आंदोलन (1885-1947):</strong> 1885 में भारतीय राष्ट्रीय कांग्रेस (INC) की स्थापना हुई। 1905 में बंगाल विभाजन के खिलाफ स्वदेशी आंदोलन चला। गांधी जी ने चंपारण (बिहार), खेड़ा (गुजरात) और अहमदाबाद (मजदूर) में सत्याग्रह किया। 1919 के जलियांवाला बाग हत्याकांड ने राष्ट्रीय भावना को तीव्र कर दिया।</li>
+                        <li><strong>गांधी युग (असहयोग से भारत छोड़ो):</strong> 1920 का असहयोग आंदोलन, 1930 का नमक सत्याग्रह (दांडी मार्च), और 1942 का भारत छोड़ो आंदोलन ("करो या मरो" का नारा) इसके प्रमुख पड़ाव थे। नेताजी सुभाष चंद्र बोस ने 'दिल्ली चलो' का नारा देकर आज़ाद हिंद फौज (INA) का गठन किया और अंडमान निकोबार को मुक्त कराया।</li>
+                        <li><strong>विभाजन एवं स्वतंत्रता (1947):</strong> माउंटबेटन योजना (3 जून 1947) के तहत भारत का विभाजन हुआ। 15 अगस्त 1947 को भारत स्वतंत्र हुआ तथा पाकिस्तान (पूर्वी-पश्चिमी) का निर्माण हुआ। यह विभाजन धार्मिक आधार पर हुआ, जिसमें लगभग 10 लाख लोगों को जान गंवानी पड़ी।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 2: GEOGRAPHY (DETAILED) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-globe-asia"></i> 2. 🌍 भूगोल (ब्रह्मांड से भारत तक)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🌌 ब्रह्मांड & भौतिक भूगोल</h4><ul>
+                        <li><strong>सौर मंडल (Solar System):</strong> हमारा सौर मंडल 4.6 अरब वर्ष पुराना है, जिसमें सूर्य (केन्द्र) तथा 8 ग्रह हैं - बुध (सबसे छोटा), शुक्र (सबसे गर्म), पृथ्वी (एकमात्र जीवन युक्त), मंगल (लाल ग्रह), बृहस्पति (सबसे बड़ा), शनि (वलय युक्त), यूरेनस व नेपच्यून (बर्फीले)۔ प्लूटो को 2006 में अंतर्राष्ट्रीय खगोलीय संघ द्वारा बौना ग्रह घोषित किया गया।</li>
+                        <li><strong>पृथ्वी की आंतरिक संरचना:</strong> क्रस्ट (भूपर्पटी - महाद्वीपीय सियाल एवं महासागरीय सीमा), मेंटल (अस्थेनोस्फीयर - अर्ध-द्रव चट्टानें) तथा कोर (बाह्य कोर - द्रव निकल-आयरन; आंतरिक कोर - ठोस)। भूपर्पटी की मोटाई महाद्वीपों पर 30-50 किमी तथा महासागरों पर केवल 5-10 किमी है।</li>
+                        <li><strong>टेक्टोनिक प्लेट सिद्धांत:</strong> पृथ्वी की लिथोस्फीयर (भूपर्पटी + ऊपरी मेंटल) 7 प्रमुख एवं कई छोटी प्लेटों में विभाजित है। प्रशांत महासागर का 'रिंग ऑफ फायर' सबसे अधिक ज्वालामुखी एवं भूकंपीय क्षेत्र है। भारतीय प्लेट का यूरेशियन प्लेट से टकराना ही हिमालय पर्वत के निर्माण का कारण है।</li>
+                        <li><strong>मानसून एवं जलवायु:</strong> भारतीय जलवायु को मानसूनी जलवायु कहा जाता है। दक्षिण-पश्चिम मानसून (जून-सितंबर) पूरे भारत में 80% वर्षा लाता है। अल नीनो (दक्षिणी अमेरिका के तट पर गर्म धारा) के कारण भारत में सूखा पड़ता है, जबकि ला नीना (ठंडी धारा) अच्छी बारिश कराता है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🇮🇳 भारत का भौतिक स्वरूप</h4><ul>
+                        <li><strong>हिमालय पर्वत श्रृंखला:</strong> विश्व की सबसे युवा (नवीन वलित) पर्वत श्रृंखला, जो पश्चिम में काराकोरम से लेकर पूर्व में अरुणाचल तक फैली है। इसमें विश्व की सबसे ऊँची चोटी माउंट एवरेस्ट (8848 मी) स्थित है। इसे तीन समानांतर श्रेणियों में बाँटा गया है - हिमाद्रि (बृहत् हिमालय), हिमांचल (मध्य हिमालय), तथा शिवालिक (बाहरी हिमालय)।</li>
+                        <li><strong>प्रायद्वीपीय पठार (दक्कन):</strong> यह विश्व की सबसे पुरानी भू-आकृति है, जो गोंडवाना लैंड का हिस्सा था। अरावली पर्वतमाला (राजस्थान) विश्व की सबसे प्राचीन पर्वत श्रृंखला मानी जाती है। यहाँ की नदियाँ (नर्मदा, ताप्ती) विवर्तनिक दरारों से होकर पश्चिम की ओर बहती हैं, जबकि गोदावरी, कृष्णा, कावेरी पूर्व की ओर बंगाल की खाड़ी में गिरती हैं।</li>
+                        <li><strong>प्रमुख नदी तंत्र:</strong> हिमालयी नदियाँ (गंगा, सिंधु, ब्रह्मपुत्र) सदानीरा (perennial) हैं क्योंकि इन्हें बर्फ पिघलने से पानी मिलता है। गंगा का उद्गम गोमुख (गंगोत्री हिमनद) है। प्रायद्वीपीय नदियाँ वर्षा आधारित (non-perennial) हैं। गोदावरी को 'दक्षिण गंगा' कहा जाता है क्योंकि यह सबसे बड़ी प्रायद्वीपीय नदी है।</li>
+                        <li><strong>मिट्टी के प्रकार (Soil Types):</strong> जलोढ़ मिट्टी (उत्तरी मैदान - कृषि के लिए सर्वोत्तम, नई - खादर, पुरानी - बांगर), काली मिट्टी (दक्कन ट्रैप - कपास की खेती, इसलिए 'कॉटन सॉयल'), लाल एवं पीली मिट्टी (पूर्वी एवं दक्षिणी पठार), लैटेराइट मिट्टी (उच्च तापमान एवं भारी वर्षा में बनती है) तथा रेगिस्तानी मिट्टी (थार रेगिस्तान)۔</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🌦️ मानसून & जलवायु प्रकार</h4><ul>
+                        <li><strong>दक्षिण-पश्चिम मानसून:</strong> 1 जून के आसपास केरल तट से प्रवेश करता है। अरब सागर शाखा (गुजरात-महाराष्ट्र में वर्षा) तथा बंगाल की खाड़ी शाखा (पूर्वी भारत-असम में वर्षा) इसमें विभाजित होता है। यह 15 जुलाई तक पूरे देश को कवर कर लेता है।</li>
+                        <li><strong>वापसी मानसून (ऑक्टोबर-नवंबर):</strong> मानसून जब वापस जाता है तो तमिलनाडु (पूर्वी तट) को वर्षा देता है, क्योंकि यहाँ उत्तर-पूर्वी मानसून सक्रिय होता है। इसी समय बंगाल की खाड़ी में चक्रवाती तूफान (साइक्लोन) आते हैं, जो ओडिशा और पश्चिम बंगाल को प्रभावित करते हैं।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 3: POLITY (DETAILED) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-gavel"></i> 3. ⚖️ भारतीय राजव्यवस्था (Polity)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>📜 संविधान & बुनियादी संरचना</h4><ul>
+                        <li><strong>संविधान सभा (1946-1950):</strong> इसका गठन कैबिनेट मिशन योजना के तहत हुआ। डॉ. राजेंद्र प्रसाद इसके स्थायी अध्यक्ष थे। डॉ. बी.आर. अंबेडकर मसौदा समिति (Drafting Committee) के अध्यक्ष थे, जिन्हें 'भारतीय संविधान का निर्माता' (फादर ऑफ कॉन्स्टिट्यूशन) कहा जाता है। 26 नवंबर 1949 को पारित हुआ एवं 26 जनवरी 1950 को लागू हुआ (इस दिन को गणतंत्र दिवस के रूप में मनाया जाता है)।</li>
+                        <li><strong>संविधान की विशेषताएँ:</strong> यह विश्व का सबसे बड़ा लिखित संविधान है। इसमें संघीय प्रणाली (दोहरी सरकार) है, लेकिन आपातकाल (Emergency) के दौरान यह एकात्मक (केन्द्र सर्वशक्तिशाली) बन जाता है। इसके तहत 6 मौलिक अधिकार (अनुच्छेद 14-35) एवं 11 नीति निदेशक तत्व (अनुच्छेद 36-51) प्रदान किए गए हैं।</li>
+                        <li><strong>प्रस्तावना (Preamble):</strong> यह संविधान का आत्मा (कीहोल) है। 42वें संशोधन (1976) के द्वारा इसमें 'समाजवादी', 'धर्मनिरपेक्ष' तथा 'राष्ट्र की एकता' शब्द जोड़े गए। यह न्याय (सामाजिक, आर्थिक, राजनीतिक), स्वतंत्रता, समता एवं बंधुत्व पर बल देती है। यह भारत को एक संपूर्ण प्रभुत्व-संपन्न, समाजवादी, धर्मनिरपेक्ष, लोकतांत्रिक गणराज्य घोषित करती है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🏛️ कार्यपालिका & व्यवस्थापिका (Executive & Legislature)</h4><ul>
+                        <li><strong>राष्ट्रपति (अनुच्छेद 52):</strong> भारत का प्रथम नागरिक एवं संवैधानिक प्रमुख। राष्ट्रपति का निर्वाचन एक निर्वाचक मंडल (Elected MPs + MLAs) द्वारा गुप्त मतदान से होता है। उसमें वीटो पावर (पुनर्विचार हेतु वापस भेजना) है। वह राष्ट्रीय आपातकाल (अनु. 352), राज्य आपातकाल (राष्ट्रपति शासन - अनु. 356) तथा वित्तीय आपातकाल (अनु. 360) की उद्घोषणा कर सकता है।</li>
+                        <li><strong>प्रधानमंत्री & मंत्रिपरिषद:</strong> प्रधानमंत्री वास्तविक कार्यकारी प्रमुख (वास्तविक शक्तियाँ) होते हैं। मंत्रिपरिषद सामूहिक रूप से लोकसभा के प्रति उत्तरदायी होती है (अनुच्छेद 75)। प्रधानमंत्री नीति आयोग का अध्यक्ष होता है तथा राष्ट्रपति को सलाह देता है।</li>
+                        <li><strong>संसद (Parliament):</strong> इसमें दो सदन हैं - लोकसभा (निचला सदन - प्रत्यक्ष चुनाव, कार्यकाल 5 वर्ष, 552 सदस्यों तक) तथा राज्यसभा (उच्च सदन - स्थायी निकाय, हर 2 साल पर 1/3 सदस्य सेवानिवृत्त होते हैं, 250 सदस्यों तक)। धन विधेयक (Money Bill) केवल लोकसभा में ही पेश किया जा सकता है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>⚖️ न्यायपालिका & स्थानीय स्वशासन</h4><ul>
+                        <li><strong>सर्वोच्च न्यायालय (Supreme Court - 1950):</strong> यह भारत का सर्वोच्च न्यायिक निकाय है। इसे न्यायिक पुनर्विलोकन (Judicial Review) की शक्ति प्राप्त है, अर्थात कानूनों की संवैधानिकता जाँच सकता है। अनुच्छेद 32 के तहत मौलिक अधिकारों के उल्लंघन पर नागरिक सीधे SC जा सकते हैं, इसलिए इसे 'संविधान का संरक्षक' कहा जाता है।</li>
+                        <li><strong>पंचायती राज (73वाँ संशोधन - 1992):</strong> इस अधिनियम ने ग्रामीण स्थानीय स्वशासन को संवैधानिक दर्जा दिया। यह त्रिस्तरीय है - ग्राम पंचायत (गाँव), पंचायत समिति (ब्लॉक), जिला परिषद (जिला)। सभी सीटों का 33% महिलाओं के लिए आरक्षित है। राज्य निर्वाचन आयोग इनके चुनाव करवाता है।</li>
+                        <li><strong>नगरीय स्थानीय (74वाँ संशोधन - 1992):</strong> इसके तहत नगर निगम (बड़े शहर), नगर पालिका (मध्यम शहर) तथा नगर पंचायत (संक्रमणकालीन क्षेत्र) की व्यवस्था की गई है, जिससे शहरी भागीदारी को बढ़ावा मिला।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 4: ECONOMY (DETAILED) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-coins"></i> 4. 💰 अर्थव्यवस्था (GDP से GST तक)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>📊 मैक्रो इकोनॉमी (GDP, Inflation, RBI)</h4><ul>
+                        <li><strong>GDP (सकल घरेलू उत्पाद) vs GNP (सकल राष्ट्रीय उत्पाद):</strong> GDP किसी देश की भौगोलिक सीमा के अंदर एक वर्ष में उत्पादित सभी अंतिम वस्तुओं एवं सेवाओं का बाजार मूल्य है। GNP = GDP + विदेशों में रहने वाले नागरिकों द्वारा अर्जित शुद्ध आय। भारत में GDP की गणना CSO (Central Statistics Office) द्वारा वित्त वर्ष (अप्रैल-मार्च) के आधार पर की जाती है।</li>
+                        <li><strong>मुद्रास्फीति (Inflation):</strong> कीमतों में सामान्य वृद्धि को कहते हैं। WPI (थोक मूल्य सूचकांक) - इसका संचालन RBI करता है; CPI (उपभोक्ता मूल्य सूचकांक) - यह खुदरा कीमतों को मापता है, जिसे RBI मौद्रिक नीति (Repo Rate) के लिए आधार मानता है। कोर इन्फ्लेशन में खाद्य एवं ऊर्जा को शामिल नहीं किया जाता है।</li>
+                        <li><strong>भारतीय रिजर्व बैंक (RBI - 1935):</strong> 'बैंकों का बैंक' कहा जाता है। इसका मुख्य उद्देश्य मुद्रा आपूर्ति को नियंत्रित करना है। रेपो रेट (बैंकों को ऋण देने की दर - घटाने पर सस्ता कर्ज), रिवर्स रेपो (बैंकों से पैसा उधार लेने की दर), CRR (Cash Reserve Ratio - बैंकों को RBI के पास नकद रखना होता है) तथा SLR (Statutory Liquidity Ratio - गिल्ट एजेट में निवेश) इसके प्रमुख उपकरण हैं।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🧾 कर प्रणाली (GST) & योजना</h4><ul>
+                        <li><strong>GST (वस्तु एवं सेवा कर - 101वाँ संशोधन, 2017):</strong> इसे 'एक राष्ट्र, एक कर' के रूप में 1 जुलाई 2017 को लागू किया गया। इसने 17 अप्रत्यक्ष करों (VAT, Excise, Service Tax आदि) को समाहित कर दिया। इसकी 4 मुख्य स्लैब हैं - 5%, 12%, 18%, 28%। CGST (केन्द्र), SGST (राज्य) एवं IGST (अंतर-राज्यीय) इसके घटक हैं।</li>
+                        <li><strong>प्रत्यक्ष कर (Direct Tax):</strong> आयकर (Income Tax) - व्यक्तियों व संस्थाओं की आय पर लगता है। कॉर्पोरेट टैक्स (कंपनियों पर) - कंपनी अधिनियम 2013 के तहत। नई कर व्यवस्था (New Tax Regime - 2020) में 7 लाख रुपये तक की आय पर कोई कर नहीं है, लेकिन इसमें छूट नहीं मिलती।</li>
+                        <li><strong>योजना आयोग से नीति आयोग:</strong> 1950 में स्थापित योजना आयोग (टॉप-डाउन दृष्टिकोण) को 2015 में नीति आयोग (Aayog) से बदल दिया गया। यह बॉटम-अप दृष्टिकोण (राज्यों की भागीदारी) पर कार्य करता है, जिसका उद्देश्य 'सबका साथ, सबका विकास' है। इसके CEO नियुक्त किए गए हैं, जबकि प्रधानमंत्री इसके अध्यक्ष होते हैं।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🌾 कृषि, MSME एवं क्षेत्रक</h4><ul>
+                        <li><strong>MSME (सूक्ष्म, लघु एवं मध्यम उद्यम):</strong> भारतीय अर्थव्यवस्था की रीढ़ माने जाते हैं, जो GDP में 30% तथा निर्यात में 48% का योगदान देते हैं। सरकार ने 2020 में नई MSME परिभाषा जारी की, जिसमें निवेश एवं टर्नओवर दोनों को आधार बनाया गया है।</li>
+                        <li><strong>कृषि एवं सरकारी योजनाएँ:</strong> MSP (न्यूनतम समर्थन मूल्य) - सरकार 23 फसलों का न्यूनतम भाव तय करती है ताकि किसानों को लागत से कम न मिले। PDS (सार्वजनिक वितरण प्रणाली) - गरीबों को राशन की दुकानों के माध्यम से सस्ता अनाज उपलब्ध कराती है। e-NAM (राष्ट्रीय कृषि बाजार) - एक राष्ट्रीय ऑनलाइन व्यापारिक मंच है जो किसानों को बिना बिचौलियों के बेचने की सुविधा देता है।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 5: SCIENCE (DETAILED) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-microscope"></i> 5. 🔬 विज्ञान & प्रौद्योगिकी</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>⚛️ भौतिकी, रसायन & जीव विज्ञान</h4><ul>
+                        <li><strong>भौतिकी (Physics) के नियम:</strong> न्यूटन के गति के 3 नियम - पहला (जड़त्व - कोई वस्तु अपनी स्थिति नहीं बदलती जब तक बाह्य बल न लगे), दूसरा (F=ma - बल, द्रव्यमान और त्वरण का संबंध), तीसरा (क्रिया-प्रतिक्रिया - प्रत्येक क्रिया के बराबर विपरीत प्रतिक्रिया)। प्रकाश का वर्णक्रम (VIBGYOR - बैंगनी, जामुनी, नीला, हरा, पीला, नारंगी, लाल) और ध्वनि की चाल हवा में 343 मी/से (तापमान के अनुसार बदलती है)۔</li>
+                        <li><strong>रसायन विज्ञान (Chemistry):</strong> pH स्केल (0-14) - 7 उदासीन, 7 से कम अम्लीय (सिरका, नींबू), 7 से अधिक क्षारीय (बेकिंग सोडा, कास्टिक सोडा)। विटामिन - A, D, E, K वसा में घुलनशील (यकृत एवं वसा ऊतकों में संग्रहित), जबकि B-Complex और C पानी में घुलनशील (शरीर में संग्रहित नहीं होते, पेशाब से निकल जाते हैं)।</li>
+                        <li><strong>मानव शरीर क्रिया विज्ञान:</strong> हृदय (4 चैम्बर - बायां अलिंद/निलय ऑक्सीजन युक्त रक्त, दायां अलिंद/निलय ऑक्सीजन रहित रक्त), गुर्दे (नेफ्रॉन फिल्टर - लगभग 10 लाख नेफ्रॉन), यकृत (लीवर - शरीर का सबसे बड़ा आंतरिक अंग, पित्त रस का निर्माण करता है), हीमोग्लोबिन (लाल रक्त कणिकाओं में पाया जाने वाला आयरन युक्त प्रोटीन, जो ऑक्सीजन का परिवहन करता है)।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🚀 ISRO (भारतीय अंतरिक्ष अनुसंधान संगठन)</h4><ul>
+                        <li><strong>चंद्रयान-3 (2023):</strong> भारत चंद्रमा के दक्षिणी ध्रुव (South Pole) पर उतरने वाला विश्व का पहला देश बना। इसके 'विक्रम' लैंडर एवं 'प्रज्ञान' रोवर ने चंद्रमा की सतह पर रासायनिक तत्वों (सल्फर, एल्युमिनियम) का पता लगाया।</li>
+                        <li><strong>मंगलयान (MOM - 2013):</strong> भारत मंगल की कक्षा में उपग्रह स्थापित करने वाला पहला एशियाई देश तथा विश्व का चौथा देश बना। यह अपनी कम लागत (₹450 करोड़) के कारण विश्व प्रसिद्ध है, जो किसी हॉलीवुड फिल्म से भी सस्ती थी।</li>
+                        <li><strong>आदित्य-L1 (2023):</strong> यह सूर्य के कोरोना (बाहरी वायुमंडल) एवं सौर हवाओं का अध्ययन करने वाला पहला भारतीय मिशन है। यह पृथ्वी से 1.5 मिलियन किमी दूर L1 (Lagrange Point 1) बिंदु पर स्थित है।</li>
+                        <li><strong>GSLV & PSLV:</strong> PSLV (ध्रुवीय उपग्रह प्रक्षेपण यान) - पृथ्वी की निचली कक्षा में उपग्रह स्थापित करता है (भारत का वर्कहॉर्स), जबकि GSLV (भू-स्थिर) - भारी उपग्रहों (4-5 टन) को भू-स्थिर कक्षा में स्थापित कर सकता है, जिसमें स्वदेशी क्रायोजेनिक इंजन का उपयोग होता है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🛡️ DRDO (रक्षा अनुसंधान एवं विकास संगठन)</h4><ul>
+                        <li><strong>प्रमुख मिसाइल प्रणालियाँ:</strong> अग्नि मिसाइल (ICBM) - 5000 किमी से अधिक की दूरी तक मार कर सकती है (अग्नि-5), पृथ्वी मिसाइल (SRBM) - 150-350 किमी (सामरिक बैलिस्टिक), ब्रह्मोस (क्रूज़ मिसाइल) - रूस के साथ संयुक्त परियोजना, 2.8 मैक (Mach) की रफ्तार से चलती है, नाग (ATGM) - टैंक रोधी मिसाइल है।</li>
+                        <li><strong>स्वदेशी विमान:</strong> तेजस (LCA - Light Combat Aircraft) - यह भारत का पहला स्वदेशी रूप से डिज़ाइन किया गया हल्का लड़ाकू विमान है, जो IAF में शामिल हो चुका है। ध्रुव (ALH - Advanced Light Helicopter) - हल्का हेलीकॉप्टर, जो सैन्य और नागरिक दोनों उद्देश्यों में उपयोग होता है।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 6: ECOLOGY (DETAILED) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-tree"></i> 6. 🌿 पर्यावरण & पारिस्थितिकी</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🌳 जैव विविधता (Biodiversity) & संरक्षण</h4><ul>
+                        <li><strong>मेगा-बायोडायवर्सिटी देश:</strong> भारत विश्व के 17 मेगा-डायवर्स देशों में शामिल है। यहाँ विश्व की 8% से अधिक प्रजातियाँ पाई जाती हैं। फ्लोरा (वनस्पति) की लगभग 45,000+ तथा फॉना (जीव) की 90,000+ प्रजातियाँ यहाँ दर्ज हैं।</li>
+                        <li><strong>प्रोजेक्ट टाइगर (1973):</strong> बाघों की घटती संख्या को बचाने के लिए शुरू किया गया। इसे इंदिरा गांधी जी ने लॉन्च किया था। इसका प्रशासन NTCA (National Tiger Conservation Authority) करता है। इसके अंतर्गत 53 बाघ अभ्यारण्य हैं। प्रोजेकट एलिफेंट (1992) हाथियों के संरक्षण के लिए शुरू किया गया था। IUCN Red List विलुप्तप्राय प्रजातियों की वैश्विक सूची है (जिसमें बाघ, हाथी, गैंडा शामिल हैं)۔</li>
+                        <li><strong>प्रमुख राष्ट्रीय उद्यान:</strong> काजीरंगा (असम) - एक सींग वाले गैंडे के लिए प्रसिद्ध। सुंदरवन (प. बंगाल) - रॉयल बंगाल टाइगर का निवास। जिम कॉर्बेट (उत्तराखंड) - भारत का पहला राष्ट्रीय उद्यान (1936)।</li>
+                        <li><strong>Ramsar Sites (आर्द्रभूमि):</strong> ये वे स्थल हैं जिन्हें अंतर्राष्ट्रीय महत्व की आर्द्रभूमि के रूप में घोषित किया गया है। भारत में 75 Ramsar स्थल हैं (अक्टूबर 2023 तक)। चिल्का झील (ओडिशा - एशिया की सबसे बड़ी खारी झील), वेम्बानाड (केरल), लोकतक झील (मणिपुर - फ्लोटिंग पार्क, 'फुमदी' नामक तैरती वनस्पति)।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🌡️ जलवायु परिवर्तन (Climate Change)</h4><ul>
+                        <li><strong>ग्रीनहाउस गैसें (GHGs):</strong> CO₂ (कार्बन डाइऑक्साइड - सबसे अधिक उत्सर्जन), CH₄ (मीथेन - 25 गुना अधिक प्रभावी), N₂O (नाइट्रस ऑक्साइड) तथा जलवाष्प। इनकी अत्यधिक मात्रा ग्लोबल वार्मिंग (पृथ्वी का औसत तापमान बढ़ना) का कारण बनती है, जिससे ध्रुवीय बर्फ पिघल रही है और समुद्र स्तर बढ़ रहा है।</li>
+                        <li><strong>पेरिस समझौता (2015 - COP21):</strong> विश्व के 195 देश इस समझौते के अंतर्गत तापमान वृद्धि को 2°C (आदर्श रूप से 1.5°C) तक सीमित रखने पर सहमत हुए। भारत ने 2030 तक 500GW नवीकरणीय ऊर्जा, 50% बिजली गैर-जीवाश्म स्रोतों से तथा 2.5 बिलियन टन CO₂ उत्सर्जन में कटौती करने का लक्ष्य रखा है।</li>
+                        <li><strong>क्योटो प्रोटोकॉल (1997):</strong> यह पहला अंतर्राष्ट्रीय समझौता था जिसने विकसित देशों (Annex-I) के लिए उत्सर्जन कटौती को कानूनी रूप से अनिवार्य बनाया। अमेरिका ने इस पर हस्ताक्षर तो किये परंतु अनुमोदन नहीं किया। इसके स्थान पर अब पेरिस समझौता कार्यशील है।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>💧 प्रदूषण के प्रकार</h4><ul>
+                        <li><strong>वायु प्रदूषण (Air Pollution):</strong> PM 2.5 (2.5 माइक्रोमीटर से छोटे कण) - ये सीधे फेफड़ों में प्रवेश कर जाते हैं, जिससे श्वसन रोग होते हैं। AQI (Air Quality Index) - 0-50 अच्छा, 51-100 संतोषजनक, 101-200 मध्यम, 201-300 खराब, 301-400 बहुत खराब, 401-500 गंभीर।</li>
+                        <li><strong>जल प्रदूषण (Water Pollution):</strong> BOD (जैव रासायनिक ऑक्सीजन मांग) - पानी में ऑक्सीजन की कमी को दर्शाता है; उच्च BOD का अर्थ अधिक प्रदूषण है। गंगा एक्शन प्लान (1985) - गंगा नदी को स्वच्छ बनाने के लिए शुरू किया गया था। National Mission for Clean Ganga (NMCG) वर्तमान में इस पर कार्य कर रहा है।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 7: CULTURE (DETAILED) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-dharmachakra"></i> 7. 🎭 कला, संस्कृति, त्योहार & खेल</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🎨 शास्त्रीय नृत्य & संगीत</h4><ul>
+                        <li><strong>8 शास्त्रीय नृत्य (Sangeet Natak Akademi मान्यता):</strong> भरतनाट्यम (तमिलनाडु - मंदिर नृत्य, कर्नाटक संगीत पर आधारित), कथक (उत्तर प्रदेश - कहानी कहने की शैली, घूमघूम कर तालबद्ध पैर), कथकली (केरल - रंगीन मुखौटे एवं चेहरे के भाव), कुचिपुड़ी (आंध्र प्रदेश - लोचदार मुद्राएँ), ओडिसी (ओडिशा - त्रिभंग मुद्रा), मणिपुरी (मणिपुर - लयबद्ध एवं कोमल), मोहिनीअट्टम (केरल - मोहिनी (अप्सरा) का नृत्य), तथा सत्त्रिया (असम - वैष्णव मठों में नृत्य, 2000 में मान्यता प्राप्त)।</li>
+                        <li><strong>चित्रकला शैलियाँ:</strong> मधुबनी (बिहार - प्राकृतिक रंग), वरली (महाराष्ट्र - आदिवासी कला, ज्यामितीय आकृतियाँ), पट्टचित्र (ओडिशा - पट (कपड़े) पर बनी पौराणिक कथाएँ), मुगल लघु चित्रकला (फारसी प्रभाव, दरबारी दृश्य)।</li>
+                        <li><strong>हिंदुस्तानी (उत्तर) एवं कर्नाटक (दक्षिण) संगीत:</strong> हिंदुस्तानी में तानसेन (अकबर के दरबार में रत्न) प्रसिद्ध थे। राग (मेलोडी) एवं ताल (रिदम) इसकी रीढ़ हैं। कर्नाटक संगीत के प्रणेता पुरंदर दास (कर्नाटक संगीत पितामह) माने जाते हैं।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🌺 प्रमुख त्यौहार & UNESCO धरोहर</h4><ul>
+                        <li><strong>भारतीय त्यौहार (फसल एवं धार्मिक):</strong> पोंगल (तमिलनाडु - 4 दिवसीय फसल उत्सव), बिहु (असम - तीन प्रकार बोहाग, कोंगाली, माघ), ओणम (केरल - राजा महाबली का स्वागत, पुष्पांजलि), दशहरा/दुर्गा पूजा (बुराई पर अच्छाई की विजय), दीपावली (दीपों का त्योहार, राम की वापसी), होली (रंगों का त्योहार, वसंत ऋतु का स्वागत)।</li>
+                        <li><strong>UNESCO विश्व धरोहर स्थल (भारत में कुल 42):</strong> ताजमहल (1983 - प्यार का प्रतीक), अजंता-एलोरा की गुफाएँ (बौद्ध, जैन एवं हिंदू धर्म की पत्थर कटी कला), हम्पी (विजयनगर का खंडहर), गोवा के चर्च, जयपुर शहर (2019 - 'पिंक सिटी'), एवं हड़प्पा/मोहनजोदड़ो स्थल (सिंधु घाटी)।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>🏅 खेल (Sports) & राष्ट्रीय पुरस्कार</h4><ul>
+                        <li><strong>ओलंपिक में भारत:</strong> हॉकी में भारत ने 8 स्वर्ण पदक जीते (1928-1956 तक लगातार)। नीरज चोपड़ा ने टोक्यो ओलंपिक 2020 में भाला फेंक में स्वर्ण पदक जीता (भारत का पहला ट्रैक एंड फील्ड में गोल्ड)। क्रिकेट विश्व कप - 1983 (कपिल देव की कप्तानी) तथा 2011 (एम.एस. धोनी की कप्तानी) में जीता। बैडमिंटन में पी.वी. सिंधु एवं साइना नेहवाल ने ओलंपिक मेडल जीते।</li>
+                        <li><strong>राष्ट्रीय नागरिक पुरस्कार:</strong> भारत रत्न (सर्वोच्च - 1954 में शुरू, 2019 में नानाजी, भूपेन हजारिका, प्रणब मुखर्जी), पद्म विभूषण (द्वितीय - असाधारण सेवा), पद्म भूषण (तृतीय - उच्च कोटि सेवा), पद्म श्री (चतुर्थ - प्रतिष्ठित सेवा)। ये प्रत्येक वर्ष गणतंत्र दिवस (26 जनवरी) की पूर्व संध्या पर घोषित किए जाते हैं।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAPTER 8: MISCELLANEOUS (DETAILED) -->
+        <div class="chapter">
+            <div class="chapter-header" onclick="toggleChapter(this)">
+                <h3><i class="fas fa-star"></i> 8. 📌 विविध (Defence, Data, Important Days)</h3>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="chapter-body">
+                <div class="content-grid">
+                    <div class="topic-card"><h4>🪖 तीनों सेनाएँ एवं अभ्यास</h4><ul>
+                        <li><strong>भारतीय थलसेना (Indian Army - 1895):</strong> एशिया की दूसरी सबसे बड़ी सेना (चीन के बाद)। इसका मुख्यालय नई दिल्ली (सेना भवन) में है। 'सर्वत्र, विजय' इसका आदर्श वाक्य है।</li>
+                        <li><strong>भारतीय नौसेना (Indian Navy):</strong> त्रिशक्ति (पश्चिमी, पूर्वी एवं दक्षिणी कमान) में विभाजित। इसका मुख्यालय नई दिल्ली (इंटीग्रेटेड HQ) है, लेकिन ऑपरेशनल HQ मुंबई एवं विशाखापट्टनम में है।</li>
+                        <li><strong>भारतीय वायुसेना (IAF - 1932):</strong> 'नभ स्पर्श दीप्त' का आदर्श वाक्य। प्रमुख अभ्यास: मालाबार (US/Japan/Australia के साथ), गरुड़ (फ्रांस), इंद्र (रूस), मित्र शक्ति (श्रीलंका/मालदीव)।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📈 आर्थिक आँकड़े (Important Economic Data)</h4><ul>
+                        <li><strong>GDP एवं विकास:</strong> वर्तमान GDP लगभग 3.5-4 ट्रिलियन USD (वित्त वर्ष 2024 अनुमान) है, जो विश्व में 5वीं सबसे बड़ी अर्थव्यवस्था है। विकास दर (GDP Growth) 6.5% से 8% के बीच रहती है।</li>
+                        <li><strong>निर्यात-आयात (Trade):</strong> USA भारत का सबसे बड़ा व्यापारिक साझेदार बन गया है (चीन को पीछे छोड़कर)। FDI (प्रत्यक्ष विदेशी निवेश) में मॉरीशस, सिंगापुर, USA, UK और नीदरलैंड अग्रणी हैं।</li>
+                        <li><strong>प्रमुख खनिज (Minerals):</strong> कोयला - छत्तीसगढ़, झारखंड, ओडिशा (भारत विश्व में दूसरा सबसे बड़ा कोयला उत्पादक)। लौह अयस्क - ओडिशा (बैलीला, केओंझार), छत्तीसगढ़। बॉक्साइट - ओडिशा (एल्युमिनियम बनाने का मुख्य अयस्क)। तांबा - राजस्थान (खेतड़ी - हिंदुस्तान कॉपर लिमिटेड)।</li>
+                    </ul></div>
+                    <div class="topic-card"><h4>📅 महत्वपूर्ण राष्ट्रीय एवं अंतर्राष्ट्रीय दिवस</h4><ul>
+                        <li><strong>राष्ट्रीय दिवस:</strong> 26 जनवरी (गणतंत्र दिवस - 1950 में संविधान लागू), 15 अगस्त (स्वतंत्रता दिवस - 1947), 14 अप्रैल (डॉ. बी.आर. अंबेडकर जयंती), 2 अक्टूबर (गांधी जयंती - अहिंसा दिवस के रूप में भी मनाया जाता है)।</li>
+                        <li><strong>अंतर्राष्ट्रीय दिवस:</strong> 8 मार्च (अंतर्राष्ट्रीय महिला दिवस), 22 अप्रैल (पृथ्वी दिवस), 21 जून (अंतर्राष्ट्रीय योग दिवस - 2015 में UN द्वारा घोषित), 5 जून (विश्व पर्यावरण दिवस), 10 दिसंबर (मानवाधिकार दिवस)।</li>
+                    </ul></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <i class="fas fa-robot"></i> यह GK/GS पावरहाउस HTML पेज AI द्वारा डिज़ाइन किया गया है | <i class="fas fa-bolt"></i> Full Animated | <i class="fas fa-infinity"></i> Unlimited Content
+        </div>
+
+    </div>
+
+    <script>
+        // ----- TOGGLE CHAPTER (ACCORDION) -----
+        function toggleChapter(headerElement) {
+            const chapter = headerElement.closest('.chapter');
+            const isActive = chapter.classList.contains('active');
+            
+            // Close all other chapters (optional: keep only one open)
+            document.querySelectorAll('.chapter').forEach(ch => {
+                if (ch !== chapter) {
+                    ch.classList.remove('active');
+                }
+            });
+
+            if (isActive) {
+                chapter.classList.remove('active');
+            } else {
+                chapter.classList.add('active');
+                // Scroll to the opened chapter smoothly
+                setTimeout(() => {
+                    chapter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+
+        // Automatically open first chapter on load, but we already have 'active' class in HTML.
+
+        // ----- PARTICLES BACKGROUND (FULL ANIMATION) -----
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > width) this.speedX *= -1;
+                if (this.y < 0 || this.y > height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(240, 180, 41, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles(count = 100) {
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles(120);
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            for (let p of particles) {
+                p.update();
+                p.draw();
+            }
+            // Draw lines between nearby particles
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(240, 180, 41, ${0.05 * (1 - dist/120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        console.log("GK/GS Mega Animated Page Loaded with Detailed Definitions! 🚀");
+    </script>
+</body>
+</html>

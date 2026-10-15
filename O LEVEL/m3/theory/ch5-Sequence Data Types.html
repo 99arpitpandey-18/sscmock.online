@@ -1,0 +1,3739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M3-R5 Chapter 5 | Sequence Data Types | NIELIT O Level Python</title>
+
+<meta name="description"
+content="NIELIT O Level M3-R5 Chapter 5 complete bilingual notes covering Python Lists, Tuples, Dictionaries, indexing, slicing, mutability, searching, maximum, minimum, average and frequency counting.">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+    --bg1:#07111f;
+    --bg2:#101a31;
+    --card:#101d34;
+    --card2:#162540;
+    --text:#eaf4ff;
+    --muted:#9aacbf;
+    --primary:#37ddff;
+    --secondary:#8b6cff;
+    --accent:#ff5fcf;
+    --success:#35e6a1;
+    --warning:#ffd166;
+    --danger:#ff6b7a;
+    --border:rgba(255,255,255,.10);
+    --code:#07101c;
+}
+
+body{
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(55,221,255,.13),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(139,108,255,.15),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(255,95,207,.08),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            var(--bg1),
+            var(--bg2)
+        );
+
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+    transition:
+        background .5s ease,
+        color .3s ease;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.7) 1px,
+            transparent 1px
+        ),
+        radial-gradient(
+            circle,
+            rgba(55,221,255,.45) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        140px 140px,
+        220px 220px;
+
+    background-position:
+        20px 30px,
+        100px 90px;
+
+    opacity:.12;
+    z-index:-2;
+}
+
+
+/* =========================================================
+   TOP HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:9999;
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    background:rgba(5,12,25,.78);
+
+    border-bottom:1px solid var(--border);
+
+    padding:12px 4%;
+}
+
+.header-inner{
+    max-width:1400px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    font-weight:900;
+    font-size:15px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:
+        0 0 25px rgba(55,221,255,.25);
+
+    animation:floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-3px)}
+}
+
+.brand-title{
+    font-size:16px;
+    font-weight:800;
+}
+
+.brand-sub{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:3px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.small-btn{
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.045);
+    color:var(--text);
+
+    padding:8px 12px;
+    border-radius:9px;
+
+    cursor:pointer;
+    font-size:11px;
+
+    transition:.3s;
+}
+
+.small-btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+    width:min(1400px,92%);
+    margin:auto;
+    padding:40px 0 80px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:48px;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18,38,68,.92),
+            rgba(12,24,45,.84)
+        );
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.05);
+
+    overflow:hidden;
+
+    margin-bottom:30px;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    right:-80px;
+    top:-80px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(55,221,255,.20),
+            transparent 68%
+        );
+
+    filter:blur(15px);
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    left:-90px;
+    bottom:-100px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,95,207,.14),
+            transparent 68%
+        );
+
+    filter:blur(15px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 13px;
+
+    border-radius:30px;
+
+    color:var(--primary);
+
+    background:rgba(55,221,255,.08);
+    border:1px solid rgba(55,221,255,.20);
+
+    font-size:11px;
+    font-weight:800;
+
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:
+        clamp(30px,5vw,58px);
+
+    line-height:1.05;
+
+    margin-bottom:14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            var(--primary),
+            #c9baff
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-desc{
+    max-width:900px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:13px;
+
+    margin-top:30px;
+}
+
+.stat{
+    padding:17px;
+
+    border-radius:15px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+}
+
+.stat:hover{
+    transform:translateY(-4px);
+    border-color:rgba(55,221,255,.3);
+}
+
+.stat strong{
+    display:block;
+
+    font-size:23px;
+
+    color:var(--primary);
+
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin:45px 0 18px;
+}
+
+.section-icon{
+    width:43px;
+    height:43px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(55,221,255,.13),
+            rgba(139,108,255,.13)
+        );
+
+    border:1px solid var(--border);
+
+    font-size:20px;
+}
+
+.section-title h2{
+    font-size:23px;
+}
+
+.section-title p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+
+/* =========================================================
+   LEARNING NAV
+========================================================= */
+
+.learning-nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+
+    padding:14px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    margin-bottom:28px;
+}
+
+.learning-nav a{
+    text-decoration:none;
+
+    color:#b9c8d9;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+    font-size:11px;
+
+    border:1px solid transparent;
+
+    transition:.3s;
+}
+
+.learning-nav a:hover{
+    color:var(--primary);
+
+    border-color:
+        rgba(55,221,255,.25);
+
+    background:
+        rgba(55,221,255,.05);
+}
+
+
+/* =========================================================
+   CONCEPT CARDS
+========================================================= */
+
+.grid-3{
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:17px;
+}
+
+.info-card{
+    padding:24px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19,38,66,.82),
+            rgba(10,22,40,.75)
+        );
+
+    border:1px solid var(--border);
+
+    transition:.35s;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.info-card::before{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:70px;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:
+        0 0 15px var(--primary);
+}
+
+.info-card:hover{
+    transform:translateY(-6px);
+
+    border-color:
+        rgba(55,221,255,.30);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.25);
+}
+
+.info-icon{
+    font-size:30px;
+    margin-bottom:14px;
+}
+
+.info-card h3{
+    margin-bottom:8px;
+    font-size:17px;
+}
+
+.info-card p{
+    color:var(--muted);
+    line-height:1.7;
+    font-size:12px;
+}
+
+
+/* =========================================================
+   NOTE BOX
+========================================================= */
+
+.note{
+    padding:20px;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(55,221,255,.08),
+            rgba(139,108,255,.07)
+        );
+
+    border:1px solid
+        rgba(55,221,255,.18);
+
+    margin:18px 0;
+
+    line-height:1.8;
+}
+
+.note strong{
+    color:var(--primary);
+}
+
+.warning{
+    border-color:
+        rgba(255,209,102,.22);
+
+    background:
+        rgba(255,209,102,.06);
+}
+
+.warning strong{
+    color:var(--warning);
+}
+
+.success{
+    border-color:
+        rgba(53,230,161,.20);
+
+    background:
+        rgba(53,230,161,.06);
+}
+
+.success strong{
+    color:var(--success);
+}
+
+
+/* =========================================================
+   BILINGUAL TEXT
+========================================================= */
+
+.en{
+    color:var(--text);
+    font-weight:600;
+}
+
+.hi{
+    color:#b5c6da;
+    margin-top:5px;
+}
+
+.label-en{
+    color:var(--primary);
+    font-weight:800;
+}
+
+.label-hi{
+    color:#d0aaff;
+    font-weight:700;
+}
+
+
+/* =========================================================
+   CONTENT SECTION
+========================================================= */
+
+.content-card{
+    padding:28px;
+
+    border-radius:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,35,60,.85),
+            rgba(9,21,37,.78)
+        );
+
+    border:1px solid var(--border);
+
+    margin-bottom:22px;
+}
+
+.content-card h3{
+    font-size:20px;
+    margin-bottom:12px;
+}
+
+.content-card h4{
+    font-size:15px;
+    margin:20px 0 8px;
+    color:var(--primary);
+}
+
+.content-card p,
+.content-card li{
+    color:#b6c4d4;
+    line-height:1.8;
+    font-size:13px;
+}
+
+.content-card ul{
+    padding-left:20px;
+}
+
+.content-card li{
+    margin:6px 0;
+}
+
+
+/* =========================================================
+   CODE + OUTPUT
+========================================================= */
+
+.example{
+    margin:22px 0;
+
+    border-radius:17px;
+
+    overflow:hidden;
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.20);
+}
+
+.example-head{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    padding:12px 15px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border-bottom:1px solid var(--border);
+
+    font-size:11px;
+}
+
+.example-title{
+    font-weight:800;
+}
+
+.copy-btn{
+    cursor:pointer;
+
+    border:1px solid
+        rgba(55,221,255,.20);
+
+    background:
+        rgba(55,221,255,.06);
+
+    color:var(--primary);
+
+    border-radius:7px;
+
+    padding:5px 9px;
+
+    font-size:10px;
+}
+
+pre{
+    margin:0;
+
+    padding:20px;
+
+    overflow:auto;
+
+    background:var(--code);
+
+    color:#dceaff;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+.output{
+    padding:16px 20px;
+
+    background:
+        rgba(53,230,161,.055);
+
+    border-top:
+        1px solid rgba(53,230,161,.14);
+}
+
+.output-title{
+    color:var(--success);
+
+    font-size:10px;
+
+    font-weight:800;
+
+    margin-bottom:7px;
+}
+
+.output pre{
+    padding:0;
+
+    background:transparent;
+
+    color:#d9fff0;
+}
+
+
+/* =========================================================
+   COMPARISON TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+
+    border-radius:15px;
+
+    border:1px solid var(--border);
+
+    margin:18px 0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th{
+    background:
+        rgba(55,221,255,.08);
+
+    color:var(--primary);
+
+    font-size:12px;
+
+    text-align:left;
+
+    padding:13px;
+}
+
+td{
+    padding:13px;
+
+    border-top:
+        1px solid rgba(255,255,255,.06);
+
+    color:#b7c5d6;
+
+    font-size:11px;
+}
+
+tr:hover td{
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+/* =========================================================
+   CHEAT SHEET
+========================================================= */
+
+.cheat-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+}
+
+.cheat{
+    padding:16px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.cheat code{
+    display:block;
+
+    color:var(--primary);
+
+    font-family:monospace;
+
+    margin-bottom:7px;
+
+    font-size:12px;
+}
+
+.cheat span{
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   EXAM BOX
+========================================================= */
+
+.exam-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+}
+
+.exam-card{
+    padding:21px;
+
+    border-radius:16px;
+
+    border:1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.035);
+}
+
+.exam-card h4{
+    color:var(--warning);
+    margin-bottom:9px;
+}
+
+.exam-card p{
+    color:#b5c3d3;
+    font-size:12px;
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:55px;
+
+    padding:28px;
+
+    text-align:center;
+
+    color:#70839b;
+
+    border-top:
+        1px solid var(--border);
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+.theme-panel{
+    position:fixed;
+
+    right:18px;
+    bottom:18px;
+
+    z-index:99999;
+
+    width:235px;
+
+    padding:17px;
+
+    border-radius:17px;
+
+    background:
+        rgba(7,15,28,.94);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.4);
+
+    display:none;
+}
+
+.theme-panel.show{
+    display:block;
+    animation:pop .25s ease;
+}
+
+@keyframes pop{
+    from{
+        opacity:0;
+        transform:scale(.95);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.theme-panel h4{
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.theme-colors{
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:7px;
+}
+
+.theme-color{
+    width:32px;
+    height:32px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    border:2px solid
+        rgba(255,255,255,.18);
+
+    transition:.25s;
+}
+
+.theme-color:hover{
+    transform:scale(1.1);
+}
+
+.cyan{
+    background:
+        linear-gradient(135deg,#37ddff,#7d68ff);
+}
+
+.purple{
+    background:
+        linear-gradient(135deg,#a66cff,#ff5ec8);
+}
+
+.green{
+    background:
+        linear-gradient(135deg,#35e6a1,#21b6ff);
+}
+
+.orange{
+    background:
+        linear-gradient(135deg,#ff9d4d,#ff4f81);
+}
+
+.blue{
+    background:
+        linear-gradient(135deg,#4d8dff,#44e0ff);
+}
+
+
+/* =========================================================
+   TEXT COLOR PANEL
+========================================================= */
+
+.text-panel{
+    position:fixed;
+
+    left:18px;
+    bottom:18px;
+
+    z-index:99999;
+
+    width:235px;
+
+    padding:17px;
+
+    border-radius:17px;
+
+    background:
+        rgba(7,15,28,.94);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.4);
+
+    display:none;
+}
+
+.text-panel.show{
+    display:block;
+}
+
+.text-panel h4{
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.text-options{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.text-option{
+    width:30px;
+    height:30px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    border:2px solid
+        rgba(255,255,255,.15);
+}
+
+.text-white{background:#eaf4ff}
+.text-yellow{background:#ffe477}
+.text-green{background:#64f0b2}
+.text-pink{background:#ff78cf}
+.text-blue{background:#5bdfff}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .grid-3{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .cheat-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .header-actions{
+        justify-content:flex-end;
+    }
+
+    .container{
+        width:94%;
+        padding-top:25px;
+    }
+
+    .hero{
+        padding:28px 20px;
+        border-radius:22px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .stats,
+    .grid-3,
+    .exam-grid,
+    .cheat-grid{
+        grid-template-columns:1fr;
+    }
+
+    .content-card{
+        padding:20px;
+    }
+
+    .theme-panel,
+    .text-panel{
+        width:calc(100% - 36px);
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            M3
+        </div>
+
+        <div>
+            <div class="brand-title">
+                M3-R5 Python Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Chapter 05 • Sequence Data Types
+            </div>
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button class="small-btn"
+                onclick="toggleTheme()">
+            🎨 Theme
+        </button>
+
+        <button class="small-btn"
+                onclick="toggleText()">
+            📝 Text
+        </button>
+
+        <button class="small-btn"
+                onclick="window.scrollTo({top:0,behavior:'smooth'})">
+            ↑ Top
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================================================
+     THEME PANEL
+========================================================= -->
+
+<div class="theme-panel" id="themePanel">
+
+    <h4>🎨 Choose Your Study Theme</h4>
+
+    <div class="theme-colors">
+
+        <div class="theme-color cyan"
+             onclick="setTheme('cyan')"></div>
+
+        <div class="theme-color purple"
+             onclick="setTheme('purple')"></div>
+
+        <div class="theme-color green"
+             onclick="setTheme('green')"></div>
+
+        <div class="theme-color orange"
+             onclick="setTheme('orange')"></div>
+
+        <div class="theme-color blue"
+             onclick="setTheme('blue')"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TEXT PANEL
+========================================================= -->
+
+<div class="text-panel" id="textPanel">
+
+    <h4>📝 Choose Text Colour</h4>
+
+    <div class="text-options">
+
+        <div class="text-option text-white"
+             onclick="setText('#eaf4ff')"></div>
+
+        <div class="text-option text-yellow"
+             onclick="setText('#ffe477')"></div>
+
+        <div class="text-option text-green"
+             onclick="setText('#64f0b2')"></div>
+
+        <div class="text-option text-pink"
+             onclick="setText('#ff78cf')"></div>
+
+        <div class="text-option text-blue"
+             onclick="setText('#5bdfff')"></div>
+
+    </div>
+
+</div>
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+    <div class="badge">
+        🐍 NIELIT O LEVEL • M3-R5.1
+    </div>
+
+    <h1>
+        Chapter 05<br>
+        Sequence Data Types
+    </h1>
+
+    <p class="hero-desc">
+
+        <span class="en">
+            Master Python Lists, Tuples and Dictionaries
+            with simple explanations, bilingual notes,
+            practical examples, outputs, exam tricks and
+            problem-solving programs.
+        </span>
+
+        <br><br>
+
+        <span class="hi">
+            Python की Lists, Tuples और Dictionaries को
+            आसान तरीके से सीखें। हर concept के साथ
+            examples, output, exam points और practical
+            programs दिए गए हैं।
+        </span>
+
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>03</strong>
+            <span>Core Data Structures</span>
+        </div>
+
+        <div class="stat">
+            <strong>20+</strong>
+            <span>Examples</span>
+        </div>
+
+        <div class="stat">
+            <strong>15+</strong>
+            <span>Exam Points</span>
+        </div>
+
+        <div class="stat">
+            <strong>2×</strong>
+            <span>Extra Practice</span>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<div class="learning-nav">
+
+    <a href="#intro">Introduction</a>
+    <a href="#list">Lists</a>
+    <a href="#tuple">Tuples</a>
+    <a href="#dictionary">Dictionary</a>
+    <a href="#problems">Problems</a>
+    <a href="#compare">Comparison</a>
+    <a href="#exam">Exam Zone</a>
+    <a href="#revision">Revision</a>
+
+</div>
+
+
+<!-- =========================================================
+     INTRODUCTION
+========================================================= -->
+
+<section id="intro">
+
+<div class="section-title">
+
+    <div class="section-icon">🧠</div>
+
+    <div>
+        <h2>1. Sequence Data Types क्या हैं?</h2>
+
+        <p>
+            Basic concept • मूल अवधारणा
+        </p>
+    </div>
+
+</div>
+
+
+<div class="content-card">
+
+    <h3>
+        <span class="label-en">
+            Sequence Data Types
+        </span>
+    </h3>
+
+    <p class="en">
+        A sequence is a collection in which elements
+        are arranged in a particular order and can
+        generally be accessed using positions or indexes.
+    </p>
+
+    <p class="hi">
+        Sequence एक ऐसा collection है जिसमें elements
+        एक निश्चित order में रखे जाते हैं और उन्हें
+        index की सहायता से access किया जा सकता है।
+    </p>
+
+
+    <div class="note">
+
+        <strong>💡 Easy Trick:</strong>
+
+        <br>
+
+        List → Change कर सकते हैं
+
+        <br>
+
+        Tuple → Change नहीं कर सकते
+
+        <br>
+
+        Dictionary → Key से value access
+
+    </div>
+
+</div>
+
+
+<div class="grid-3">
+
+    <div class="info-card">
+
+        <div class="info-icon">📋</div>
+
+        <h3>List</h3>
+
+        <p>
+            Ordered and mutable collection.
+            Square brackets [ ] are used.
+        </p>
+
+        <p class="hi">
+            List ordered और mutable होती है।
+            इसे [ ] में लिखा जाता है।
+        </p>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-icon">📦</div>
+
+        <h3>Tuple</h3>
+
+        <p>
+            Ordered but immutable collection.
+            Parentheses ( ) are commonly used.
+        </p>
+
+        <p class="hi">
+            Tuple ordered लेकिन immutable होती है।
+            इसे सामान्यतः ( ) में लिखा जाता है।
+        </p>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-icon">🗂️</div>
+
+        <h3>Dictionary</h3>
+
+        <p>
+            Stores information using key-value pairs.
+        </p>
+
+        <p class="hi">
+            Dictionary data को key-value pair में
+            store करती है।
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     LIST
+========================================================= -->
+
+<section id="list">
+
+<div class="section-title">
+
+    <div class="section-icon">📋</div>
+
+    <div>
+        <h2>2. Python List</h2>
+
+        <p>
+            Ordered • Mutable • Duplicate allowed
+        </p>
+    </div>
+
+</div>
+
+
+<div class="content-card">
+
+    <h3>
+        What is a List?
+    </h3>
+
+    <p class="en">
+        A list is an ordered and mutable collection
+        of objects. It is created using square brackets.
+    </p>
+
+    <p class="hi">
+        List एक ordered और mutable collection है।
+        इसमें अलग-अलग प्रकार के elements रख सकते हैं।
+    </p>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 1 — Creating a List
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>students = ["Amit", "Ravi", "Neha"]
+
+print(students)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>['Amit', 'Ravi', 'Neha']</pre>
+
+        </div>
+
+    </div>
+
+
+    <h4>
+        Mixed Data Types
+    </h4>
+
+    <p class="en">
+        Python lists can contain different data types.
+    </p>
+
+    <p class="hi">
+        एक ही list में integer, string, float और boolean
+        आदि रख सकते हैं।
+    </p>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 2 — Mixed List
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>data = [10, "Python", 3.14, True]
+
+print(data)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>[10, 'Python', 3.14, True]</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- LIST INDEXING -->
+
+<div class="content-card">
+
+    <h3>
+        2.1 List Indexing
+    </h3>
+
+    <p class="en">
+        Indexing is used to access individual elements.
+        Python indexing starts from 0.
+    </p>
+
+    <p class="hi">
+        Indexing से list के individual elements को access
+        करते हैं। Python में पहला index हमेशा 0 होता है।
+    </p>
+
+
+    <div class="note success">
+
+        <strong>⭐ Remember:</strong>
+
+        <br>
+
+        First element → index 0
+
+        <br>
+
+        Second element → index 1
+
+        <br>
+
+        Third element → index 2
+
+        <br>
+
+        Last element → index -1
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 3 — Positive & Negative Index
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>colors = ["Red", "Green", "Blue", "Yellow"]
+
+print(colors[0])
+print(colors[2])
+print(colors[-1])</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>Red
+Blue
+Yellow</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- LIST SLICING -->
+
+<div class="content-card">
+
+    <h3>
+        2.2 List Slicing
+    </h3>
+
+    <p class="en">
+        Slicing is used to extract a portion of a list.
+    </p>
+
+    <p class="hi">
+        Slicing की सहायता से list के किसी portion को
+        निकाल सकते हैं।
+    </p>
+
+
+    <div class="note">
+
+        <strong>Syntax:</strong>
+
+        <br><br>
+
+        list[start : stop : step]
+
+        <br><br>
+
+        <span class="hi">
+            stop index शामिल नहीं होता।
+        </span>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 4 — Slicing
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = [10, 20, 30, 40, 50]
+
+print(numbers[1:4])
+print(numbers[:3])
+print(numbers[2:])
+print(numbers[::-1])</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>[20, 30, 40]
+[10, 20, 30]
+[30, 40, 50]
+[50, 40, 30, 20, 10]</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- LIST METHODS -->
+
+<div class="content-card">
+
+    <h3>
+        2.3 Important List Methods
+    </h3>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <tr>
+                <th>Method</th>
+                <th>Meaning</th>
+                <th>Hindi</th>
+            </tr>
+
+            <tr>
+                <td>append()</td>
+                <td>Add item at end</td>
+                <td>अंत में जोड़ना</td>
+            </tr>
+
+            <tr>
+                <td>insert()</td>
+                <td>Add at specific position</td>
+                <td>विशेष position पर जोड़ना</td>
+            </tr>
+
+            <tr>
+                <td>remove()</td>
+                <td>Remove by value</td>
+                <td>Value से हटाना</td>
+            </tr>
+
+            <tr>
+                <td>pop()</td>
+                <td>Remove by index</td>
+                <td>Index से हटाना</td>
+            </tr>
+
+            <tr>
+                <td>sort()</td>
+                <td>Sort list</td>
+                <td>क्रम में लगाना</td>
+            </tr>
+
+            <tr>
+                <td>reverse()</td>
+                <td>Reverse list</td>
+                <td>उल्टा करना</td>
+            </tr>
+
+            <tr>
+                <td>count()</td>
+                <td>Count occurrences</td>
+                <td>कितनी बार आया</td>
+            </tr>
+
+            <tr>
+                <td>index()</td>
+                <td>Find first index</td>
+                <td>पहला index ढूँढना</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 5 — append(), insert(), remove(), pop()
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = [10, 20, 30]
+
+numbers.append(40)
+numbers.insert(1, 15)
+
+print(numbers)
+
+numbers.remove(20)
+numbers.pop()
+
+print(numbers)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>[10, 15, 20, 30, 40]
+[10, 15, 30]</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- APPEND VS EXTEND -->
+
+<div class="content-card">
+
+    <h3>
+        2.4 append() vs extend()
+    </h3>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Very Important Exam Example
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>a = [1, 2, 3]
+
+a.append([4, 5])
+
+print(a)
+
+b = [1, 2, 3]
+
+b.extend([4, 5])
+
+print(b)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>[1, 2, 3, [4, 5]]
+[1, 2, 3, 4, 5]</pre>
+
+        </div>
+
+    </div>
+
+
+    <div class="note warning">
+
+        <strong>⚠️ Exam Trap:</strong>
+
+        <br>
+
+        append() पूरी object को एक element की तरह add करता है।
+
+        <br>
+
+        extend() iterable के elements को individually add करता है।
+
+    </div>
+
+</div>
+
+
+<!-- LIST COMPREHENSION -->
+
+<div class="content-card">
+
+    <h3>
+        2.5 List Comprehension
+    </h3>
+
+    <p class="en">
+        List comprehension provides a short way to create
+        a new list from an existing iterable.
+    </p>
+
+    <p class="hi">
+        List comprehension से कम code में नई list
+        create की जा सकती है।
+    </p>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 6 — Squares
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = [1, 2, 3, 4, 5]
+
+squares = [n*n for n in numbers]
+
+print(squares)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>[1, 4, 9, 16, 25]</pre>
+
+        </div>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 7 — Even Numbers
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = [1, 2, 3, 4, 5, 6]
+
+even = [n for n in numbers if n % 2 == 0]
+
+print(even)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>[2, 4, 6]</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TUPLE
+========================================================= -->
+
+<section id="tuple">
+
+<div class="section-title">
+
+    <div class="section-icon">📦</div>
+
+    <div>
+        <h2>3. Python Tuple</h2>
+
+        <p>
+            Ordered • Immutable • Duplicates allowed
+        </p>
+    </div>
+
+</div>
+
+
+<div class="content-card">
+
+    <h3>
+        What is a Tuple?
+    </h3>
+
+    <p class="en">
+        A tuple is an ordered and immutable collection.
+    </p>
+
+    <p class="hi">
+        Tuple एक ordered लेकिन immutable collection है।
+        इसका मतलब है कि tuple बनने के बाद उसके elements
+        को directly change नहीं कर सकते।
+    </p>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 8 — Creating Tuple
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = (10, 20, 30, 40)
+
+print(numbers)
+print(numbers[1])</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>(10, 20, 30, 40)
+20</pre>
+
+        </div>
+
+    </div>
+
+
+    <div class="note warning">
+
+        <strong>⚠️ Important:</strong>
+
+        <br>
+
+        Tuple का element modify करने पर TypeError आएगा।
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 9 — Immutability
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>t = (10, 20, 30)
+
+# t[0] = 100
+# This will cause TypeError</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                RESULT
+            </div>
+
+<pre>TypeError</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SINGLE ELEMENT -->
+
+<div class="content-card">
+
+    <h3>
+        3.1 Single Element Tuple
+    </h3>
+
+    <p class="en">
+        A comma is required to create a single-element tuple.
+    </p>
+
+    <p class="hi">
+        Single element tuple बनाने के लिए comma लगाना जरूरी है।
+    </p>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 10
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>a = (10)
+
+b = (10,)
+
+print(type(a))
+print(type(b))</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>&lt;class 'int'&gt;
+&lt;class 'tuple'&gt;</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TUPLE METHODS -->
+
+<div class="content-card">
+
+    <h3>
+        3.2 Tuple Methods
+    </h3>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <tr>
+                <th>Method</th>
+                <th>Purpose</th>
+                <th>Hindi</th>
+            </tr>
+
+            <tr>
+                <td>count()</td>
+                <td>Counts occurrences</td>
+                <td>कितनी बार value आई</td>
+            </tr>
+
+            <tr>
+                <td>index()</td>
+                <td>Returns first index</td>
+                <td>पहला index</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 11
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>t = (10, 20, 20, 30, 20)
+
+print(t.count(20))
+print(t.index(30))</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>3
+3</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     DICTIONARY
+========================================================= -->
+
+<section id="dictionary">
+
+<div class="section-title">
+
+    <div class="section-icon">🗂️</div>
+
+    <div>
+        <h2>4. Python Dictionary</h2>
+
+        <p>
+            Key → Value • Fast lookup
+        </p>
+    </div>
+
+</div>
+
+
+<div class="content-card">
+
+    <h3>
+        What is a Dictionary?
+    </h3>
+
+    <p class="en">
+        A dictionary stores data in key-value pairs.
+    </p>
+
+    <p class="hi">
+        Dictionary data को key-value pair के रूप में
+        store करती है।
+    </p>
+
+
+    <div class="note">
+
+        <strong>Syntax:</strong>
+
+        <br><br>
+
+        dictionary = {
+
+        <br>
+
+        "key" : "value"
+
+        <br>
+
+        }
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 12 — Student Dictionary
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>student = {
+    "name": "Rahul",
+    "age": 20,
+    "marks": 85
+}
+
+print(student)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>{'name': 'Rahul', 'age': 20, 'marks': 85}</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ACCESS -->
+
+<div class="content-card">
+
+    <h3>
+        4.1 Access Dictionary Values
+    </h3>
+
+    <p class="en">
+        Dictionary values are normally accessed using keys.
+    </p>
+
+    <p class="hi">
+        Dictionary में value को उसके key से access किया जाता है।
+    </p>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 13
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>student = {
+    "name": "Amit",
+    "marks": 90
+}
+
+print(student["name"])
+print(student["marks"])</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>Amit
+90</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODIFY -->
+
+<div class="content-card">
+
+    <h3>
+        4.2 Add & Update Dictionary
+    </h3>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 14
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>student = {
+    "name": "Amit",
+    "marks": 80
+}
+
+student["marks"] = 95
+student["city"] = "Agra"
+
+print(student)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>{'name': 'Amit', 'marks': 95, 'city': 'Agra'}</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- DICTIONARY METHODS -->
+
+<div class="content-card">
+
+    <h3>
+        4.3 Important Dictionary Methods
+    </h3>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <tr>
+                <th>Method</th>
+                <th>Purpose</th>
+                <th>Hindi</th>
+            </tr>
+
+            <tr>
+                <td>keys()</td>
+                <td>Returns keys</td>
+                <td>सभी keys</td>
+            </tr>
+
+            <tr>
+                <td>values()</td>
+                <td>Returns values</td>
+                <td>सभी values</td>
+            </tr>
+
+            <tr>
+                <td>items()</td>
+                <td>Returns key-value pairs</td>
+                <td>pairs</td>
+            </tr>
+
+            <tr>
+                <td>get()</td>
+                <td>Gets value safely</td>
+                <td>value प्राप्त करना</td>
+            </tr>
+
+            <tr>
+                <td>pop()</td>
+                <td>Removes key</td>
+                <td>key हटाना</td>
+            </tr>
+
+            <tr>
+                <td>update()</td>
+                <td>Updates dictionary</td>
+                <td>dictionary update</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Example 15 — keys(), values(), items()
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>student = {
+    "name": "Ravi",
+    "marks": 88
+}
+
+print(student.keys())
+print(student.values())
+print(student.items())</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>dict_keys(['name', 'marks'])
+dict_values(['Ravi', 88])
+dict_items([('name', 'Ravi'), ('marks', 88)])</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     PRACTICAL PROBLEMS
+========================================================= -->
+
+<section id="problems">
+
+<div class="section-title">
+
+    <div class="section-icon">💻</div>
+
+    <div>
+        <h2>5. Important Problem-Solving Programs</h2>
+
+        <p>
+            NIELIT practical + theory focused
+        </p>
+    </div>
+
+</div>
+
+
+<!-- MAX MIN -->
+
+<div class="content-card">
+
+    <h3>
+        5.1 Find Maximum and Minimum
+    </h3>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Program 1
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = [45, 12, 89, 34, 67]
+
+print("Maximum =", max(numbers))
+print("Minimum =", min(numbers))</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>Maximum = 89
+Minimum = 12</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- AVERAGE -->
+
+<div class="content-card">
+
+    <h3>
+        5.2 Find Average / Mean
+    </h3>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Program 2
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>marks = [70, 80, 90, 60, 100]
+
+total = sum(marks)
+average = total / len(marks)
+
+print("Total =", total)
+print("Average =", average)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>Total = 400
+Average = 80.0</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- LINEAR SEARCH -->
+
+<div class="content-card">
+
+    <h3>
+        5.3 Linear Search
+    </h3>
+
+    <p class="en">
+        Linear search checks elements one by one
+        until the required element is found.
+    </p>
+
+    <p class="hi">
+        Linear search में elements को एक-एक करके check
+        किया जाता है।
+    </p>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Program 3 — Search an Element
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = [10, 25, 40, 55, 70]
+
+key = 40
+
+found = False
+
+for n in numbers:
+
+    if n == key:
+        found = True
+        break
+
+if found:
+    print("Element Found")
+else:
+    print("Element Not Found")</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>Element Found</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FREQUENCY -->
+
+<div class="content-card">
+
+    <h3>
+        5.4 Frequency of Elements using Dictionary
+    </h3>
+
+    <p class="en">
+        Frequency means how many times an element
+        appears in a collection.
+    </p>
+
+    <p class="hi">
+        Frequency का मतलब है कोई element कितनी बार
+        दिखाई देता है।
+    </p>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Program 4 — Frequency Counter
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = [1, 2, 2, 3, 3, 3, 4]
+
+frequency = {}
+
+for n in numbers:
+
+    if n in frequency:
+        frequency[n] += 1
+    else:
+        frequency[n] = 1
+
+print(frequency)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>{1: 1, 2: 2, 3: 3, 4: 1}</pre>
+
+        </div>
+
+    </div>
+
+
+    <div class="note success">
+
+        <strong>⭐ Exam Concept:</strong>
+
+        <br>
+
+        Dictionary frequency counting के लिए
+        बहुत useful होती है क्योंकि data को
+        key → count के रूप में store किया जा सकता है।
+
+    </div>
+
+</div>
+
+
+<!-- SUM -->
+
+<div class="content-card">
+
+    <h3>
+        5.5 Sum of List Elements
+    </h3>
+
+
+    <div class="example">
+
+        <div class="example-head">
+
+            <span class="example-title">
+                Program 5
+            </span>
+
+            <button class="copy-btn"
+                    onclick="copyCode(this)">
+                Copy
+            </button>
+
+        </div>
+
+<pre>numbers = [5, 10, 15, 20]
+
+total = 0
+
+for n in numbers:
+    total += n
+
+print("Sum =", total)</pre>
+
+        <div class="output">
+
+            <div class="output-title">
+                OUTPUT
+            </div>
+
+<pre>Sum = 50</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     COMPARISON
+========================================================= -->
+
+<section id="compare">
+
+<div class="section-title">
+
+    <div class="section-icon">⚖️</div>
+
+    <div>
+        <h2>6. List vs Tuple vs Dictionary</h2>
+
+        <p>
+            Most important comparison
+        </p>
+    </div>
+
+</div>
+
+
+<div class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+
+    <th>Feature</th>
+
+    <th>List</th>
+
+    <th>Tuple</th>
+
+    <th>Dictionary</th>
+
+</tr>
+
+<tr>
+
+    <td>Symbol</td>
+
+    <td>[ ]</td>
+
+    <td>( )</td>
+
+    <td>{key:value}</td>
+
+</tr>
+
+<tr>
+
+    <td>Ordered</td>
+
+    <td>Yes</td>
+
+    <td>Yes</td>
+
+    <td>Key-value mapping</td>
+
+</tr>
+
+<tr>
+
+    <td>Mutable</td>
+
+    <td>Yes</td>
+
+    <td>No</td>
+
+    <td>Yes</td>
+
+</tr>
+
+<tr>
+
+    <td>Duplicates</td>
+
+    <td>Allowed</td>
+
+    <td>Allowed</td>
+
+    <td>Keys unique</td>
+
+</tr>
+
+<tr>
+
+    <td>Access</td>
+
+    <td>Index</td>
+
+    <td>Index</td>
+
+    <td>Key</td>
+
+</tr>
+
+<tr>
+
+    <td>Example</td>
+
+    <td>[1,2,3]</td>
+
+    <td>(1,2,3)</td>
+
+    <td>{"a":1}</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="note">
+
+    <strong>🧠 Memory Trick:</strong>
+
+    <br><br>
+
+    <b>LIST = Change</b>
+
+    <br>
+
+    <b>TUPLE = Tight / Fixed</b>
+
+    <br>
+
+    <b>DICT = Key → Value</b>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     EXAM ZONE
+========================================================= -->
+
+<section id="exam">
+
+<div class="section-title">
+
+    <div class="section-icon">🎯</div>
+
+    <div>
+        <h2>7. NIELIT Exam Zone</h2>
+
+        <p>
+            Questions you should never forget
+        </p>
+    </div>
+
+</div>
+
+
+<div class="exam-grid">
+
+    <div class="exam-card">
+
+        <h4>Q1. List is mutable?</h4>
+
+        <p>
+            ✅ Yes. List elements can be changed
+            after creation.
+        </p>
+
+    </div>
+
+
+    <div class="exam-card">
+
+        <h4>Q2. Tuple is mutable?</h4>
+
+        <p>
+            ❌ No. Tuple is immutable.
+        </p>
+
+    </div>
+
+
+    <div class="exam-card">
+
+        <h4>Q3. First index of list?</h4>
+
+        <p>
+            ✅ 0
+        </p>
+
+    </div>
+
+
+    <div class="exam-card">
+
+        <h4>Q4. Last index?</h4>
+
+        <p>
+            Negative indexing can use -1
+            for the last element.
+        </p>
+
+    </div>
+
+
+    <div class="exam-card">
+
+        <h4>Q5. append() vs extend()</h4>
+
+        <p>
+            append() adds one object;
+            extend() adds elements from an iterable.
+        </p>
+
+    </div>
+
+
+    <div class="exam-card">
+
+        <h4>Q6. Dictionary stores?</h4>
+
+        <p>
+            ✅ Key-value pairs.
+        </p>
+
+    </div>
+
+
+    <div class="exam-card">
+
+        <h4>Q7. Tuple single item?</h4>
+
+        <p>
+            ✅ Use comma:
+            <b>(10,)</b>
+        </p>
+
+    </div>
+
+
+    <div class="exam-card">
+
+        <h4>Q8. Dictionary access?</h4>
+
+        <p>
+            ✅ Usually through keys:
+            <b>data["name"]</b>
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     QUICK CHEAT SHEET
+========================================================= -->
+
+<section id="revision">
+
+<div class="section-title">
+
+    <div class="section-icon">⚡</div>
+
+    <div>
+        <h2>8. One-Minute Revision</h2>
+
+        <p>
+            Exam से पहले यह जरूर पढ़ें
+        </p>
+    </div>
+
+</div>
+
+
+<div class="content-card">
+
+<div class="cheat-grid">
+
+    <div class="cheat">
+
+        <code>list = []</code>
+
+        <span>
+            Ordered + mutable collection
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>tuple = ()</code>
+
+        <span>
+            Ordered + immutable
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>dict = {}</code>
+
+        <span>
+            Key-value structure
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>a[0]</code>
+
+        <span>
+            First element
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>a[-1]</code>
+
+        <span>
+            Last element
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>a.append(x)</code>
+
+        <span>
+            Add x at end
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>a.remove(x)</code>
+
+        <span>
+            Remove value x
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>a.pop()</code>
+
+        <span>
+            Remove last element
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>len(a)</code>
+
+        <span>
+            Number of elements
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>max(a)</code>
+
+        <span>
+            Maximum value
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>min(a)</code>
+
+        <span>
+            Minimum value
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>sum(a)</code>
+
+        <span>
+            Sum of numeric elements
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>d.keys()</code>
+
+        <span>
+            Dictionary keys
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>d.values()</code>
+
+        <span>
+            Dictionary values
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>d.items()</code>
+
+        <span>
+            Key-value pairs
+        </span>
+
+    </div>
+
+
+    <div class="cheat">
+
+        <code>d.get(key)</code>
+
+        <span>
+            Safely get value
+        </span>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- FINAL SUMMARY -->
+
+<div class="content-card">
+
+    <h3>
+        🏆 Final Chapter Summary
+    </h3>
+
+    <p class="en">
+
+        In this chapter, you learned the three important
+        Python data structures: List, Tuple and Dictionary.
+        Lists are mutable and index-based, tuples are
+        immutable and index-based, while dictionaries
+        organize information using keys and values.
+
+    </p>
+
+    <p class="hi">
+
+        इस chapter में हमने Python की तीन important
+        data structures — List, Tuple और Dictionary —
+        को detail में सीखा। List mutable होती है,
+        Tuple immutable होती है और Dictionary
+        key-value pair में data store करती है।
+
+    </p>
+
+
+    <div class="note success">
+
+        <strong>
+            🎯 Target:
+        </strong>
+
+        <br>
+
+        List → Indexing → Slicing → Methods
+
+        <br>
+
+        Tuple → Immutable → count/index
+
+        <br>
+
+        Dictionary → Key/Value → Methods
+
+        <br>
+
+        Problems → Max/Min → Average → Search → Frequency
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <p>
+        🐍 M3-R5 • Programming & Problem Solving Through Python
+    </p>
+
+    <p style="margin-top:7px;">
+        Chapter 05 • Sequence Data Types • Bilingual Study Notes
+    </p>
+
+    <p style="margin-top:7px;">
+        Designed for focused NIELIT O Level preparation
+    </p>
+
+</footer>
+
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   THEME SYSTEM
+========================================================= */
+
+function toggleTheme(){
+
+    document
+        .getElementById("themePanel")
+        .classList.toggle("show");
+
+    document
+        .getElementById("textPanel")
+        .classList.remove("show");
+}
+
+
+function toggleText(){
+
+    document
+        .getElementById("textPanel")
+        .classList.toggle("show");
+
+    document
+        .getElementById("themePanel")
+        .classList.remove("show");
+}
+
+
+function setTheme(theme){
+
+    const root =
+        document.documentElement;
+
+    if(theme === "cyan"){
+
+        root.style.setProperty(
+            "--primary","#37ddff"
+        );
+
+        root.style.setProperty(
+            "--secondary","#8b6cff"
+        );
+
+        root.style.setProperty(
+            "--accent","#ff5fcf"
+        );
+    }
+
+
+    if(theme === "purple"){
+
+        root.style.setProperty(
+            "--primary","#b36cff"
+        );
+
+        root.style.setProperty(
+            "--secondary","#ff5ec8"
+        );
+
+        root.style.setProperty(
+            "--accent","#6c8cff"
+        );
+    }
+
+
+    if(theme === "green"){
+
+        root.style.setProperty(
+            "--primary","#35e6a1"
+        );
+
+        root.style.setProperty(
+            "--secondary","#21b6ff"
+        );
+
+        root.style.setProperty(
+            "--accent","#9cff6a"
+        );
+    }
+
+
+    if(theme === "orange"){
+
+        root.style.setProperty(
+            "--primary","#ff9d4d"
+        );
+
+        root.style.setProperty(
+            "--secondary","#ff4f81"
+        );
+
+        root.style.setProperty(
+            "--accent","#ffd166"
+        );
+    }
+
+
+    if(theme === "blue"){
+
+        root.style.setProperty(
+            "--primary","#4d8dff"
+        );
+
+        root.style.setProperty(
+            "--secondary","#44e0ff"
+        );
+
+        root.style.setProperty(
+            "--accent","#8f7cff"
+        );
+    }
+
+}
+
+
+/* =========================================================
+   TEXT COLOR
+========================================================= */
+
+function setText(color){
+
+    document.documentElement
+        .style.setProperty(
+            "--text",
+            color
+        );
+
+}
+
+
+/* =========================================================
+   COPY CODE
+========================================================= */
+
+function copyCode(button){
+
+    const example =
+        button.closest(".example");
+
+    const code =
+        example.querySelector("pre");
+
+    navigator.clipboard
+        .writeText(code.innerText)
+        .then(()=>{
+
+            const old =
+                button.innerText;
+
+            button.innerText =
+                "Copied ✓";
+
+            setTimeout(()=>{
+
+                button.innerText =
+                    old;
+
+            },1500);
+
+        });
+
+}
+
+
+/* =========================================================
+   CLOSE PANELS OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(e){
+
+        const theme =
+            document.getElementById(
+                "themePanel"
+            );
+
+        const text =
+            document.getElementById(
+                "textPanel"
+            );
+
+        if(
+            !theme.contains(e.target) &&
+            !e.target.closest(
+                ".small-btn"
+            )
+        ){
+            theme.classList.remove(
+                "show"
+            );
+        }
+
+        if(
+            !text.contains(e.target) &&
+            !e.target.closest(
+                ".small-btn"
+            )
+        ){
+            text.classList.remove(
+                "show"
+            );
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const observer =
+    new IntersectionObserver(
+        entries=>{
+
+            entries.forEach(
+                entry=>{
+
+                    if(entry.isIntersecting){
+
+                        entry.target.style.opacity =
+                            "1";
+
+                        entry.target.style.transform =
+                            "translateY(0)";
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:.08
+        }
+    );
+
+
+document
+    .querySelectorAll(
+        ".content-card,.info-card,.exam-card"
+    )
+    .forEach(
+        el=>{
+
+            el.style.opacity="0";
+
+            el.style.transform=
+                "translateY(18px)";
+
+            el.style.transition=
+                "opacity .6s ease, transform .6s ease";
+
+            observer.observe(el);
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

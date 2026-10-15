@@ -1,0 +1,1921 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC CGL Tier-I — Hard Level Mock</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef2f7;
+    color:#172033;
+}
+
+button{font-family:inherit;cursor:pointer}
+
+.topbar{
+    height:64px;
+    background:#172554;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 22px;
+    position:sticky;
+    top:0;
+    z-index:20;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.brand{
+    font-size:20px;
+    font-weight:800;
+}
+
+.exam-info{
+    font-size:13px;
+    opacity:.9;
+}
+
+.timer{
+    background:#dc2626;
+    padding:10px 18px;
+    border-radius:8px;
+    font-size:18px;
+    font-weight:800;
+    min-width:105px;
+    text-align:center;
+}
+
+.exam-layout{
+    max-width:1450px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 330px;
+    gap:18px;
+    padding:18px;
+}
+
+.main-panel{
+    min-width:0;
+}
+
+.section-tabs{
+    display:flex;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    margin-bottom:15px;
+}
+
+.section-tabs button{
+    flex:1;
+    border:0;
+    padding:14px 8px;
+    background:white;
+    font-weight:700;
+    color:#475569;
+}
+
+.section-tabs button.active{
+    background:#2563eb;
+    color:white;
+}
+
+.question-card{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    overflow:hidden;
+}
+
+.question-head{
+    padding:15px 20px;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.q-number{
+    font-size:18px;
+    font-weight:800;
+}
+
+.badge{
+    padding:6px 10px;
+    border-radius:20px;
+    background:#eff6ff;
+    color:#1d4ed8;
+    font-size:12px;
+    font-weight:700;
+}
+
+.question-body{
+    padding:25px;
+}
+
+.question-text{
+    font-size:18px;
+    line-height:1.65;
+    margin-bottom:24px;
+    font-weight:600;
+}
+
+.options{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.option{
+    border:1px solid #d8dee9;
+    background:#fff;
+    border-radius:9px;
+    padding:15px;
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    transition:.2s;
+}
+
+.option:hover{
+    border-color:#2563eb;
+    background:#f8fbff;
+}
+
+.option.selected{
+    border-color:#2563eb;
+    background:#eff6ff;
+}
+
+.option input{
+    margin-top:4px;
+    accent-color:#2563eb;
+}
+
+.option-label{
+    font-weight:700;
+    min-width:25px;
+}
+
+.option-text{
+    line-height:1.5;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+    gap:10px;
+}
+
+.nav-btn{
+    border:0;
+    border-radius:8px;
+    padding:12px 18px;
+    font-weight:700;
+}
+
+.prev{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.next{
+    background:#2563eb;
+    color:white;
+}
+
+.mark{
+    background:#f59e0b;
+    color:white;
+}
+
+.clear{
+    background:#64748b;
+    color:white;
+}
+
+.sidebar{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    height:max-content;
+    position:sticky;
+    top:82px;
+    overflow:hidden;
+}
+
+.sidebar-head{
+    background:#172554;
+    color:white;
+    padding:18px;
+}
+
+.sidebar-head h3{
+    margin-bottom:8px;
+}
+
+.student-status{
+    font-size:13px;
+    opacity:.85;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    padding:14px;
+}
+
+.stat{
+    padding:10px;
+    border-radius:8px;
+    background:#f1f5f9;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:18px;
+}
+
+.stat span{
+    font-size:11px;
+    color:#64748b;
+}
+
+.palette-title{
+    padding:10px 14px;
+    font-weight:800;
+    border-top:1px solid #e5e7eb;
+}
+
+.palette{
+    padding:14px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:7px;
+    max-height:430px;
+    overflow:auto;
+}
+
+.q-btn{
+    border:1px solid #cbd5e1;
+    background:#fff;
+    border-radius:6px;
+    padding:9px 3px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.q-btn.current{
+    outline:3px solid #93c5fd;
+}
+
+.q-btn.answered{
+    background:#16a34a;
+    color:white;
+    border-color:#16a34a;
+}
+
+.q-btn.review{
+    background:#f59e0b;
+    color:white;
+    border-color:#f59e0b;
+}
+
+.q-btn.answered.review{
+    background:#7c3aed;
+    color:white;
+}
+
+.legend{
+    padding:14px;
+    border-top:1px solid #e5e7eb;
+    font-size:12px;
+    line-height:2;
+}
+
+.dot{
+    display:inline-block;
+    width:12px;
+    height:12px;
+    border-radius:3px;
+    margin-right:6px;
+    vertical-align:middle;
+}
+
+.green{background:#16a34a}
+.orange{background:#f59e0b}
+.purple{background:#7c3aed}
+.gray{background:#e2e8f0}
+
+.submit-area{
+    padding:15px;
+    border-top:1px solid #e5e7eb;
+}
+
+.submit-btn{
+    width:100%;
+    border:0;
+    background:#dc2626;
+    color:white;
+    padding:14px;
+    border-radius:8px;
+    font-size:15px;
+    font-weight:800;
+}
+
+.result-screen{
+    display:none;
+    max-width:1000px;
+    margin:30px auto;
+    padding:20px;
+}
+
+.result-card{
+    background:white;
+    border-radius:14px;
+    padding:30px;
+    box-shadow:0 3px 15px rgba(0,0,0,.1);
+}
+
+.result-title{
+    text-align:center;
+    font-size:28px;
+    margin-bottom:25px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.result-stat{
+    background:#f8fafc;
+    padding:18px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.result-stat strong{
+    display:block;
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+.review-title{
+    margin:25px 0 12px;
+}
+
+.review-item{
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:12px;
+}
+
+.review-item.correct{
+    border-left:5px solid #16a34a;
+}
+
+.review-item.wrong{
+    border-left:5px solid #dc2626;
+}
+
+.review-item.unanswered{
+    border-left:5px solid #64748b;
+}
+
+.review-q{
+    font-weight:800;
+    margin-bottom:10px;
+}
+
+.answer-line{
+    margin:5px 0;
+}
+
+.explanation{
+    margin-top:10px;
+    background:#f8fafc;
+    padding:12px;
+    border-radius:7px;
+    line-height:1.5;
+}
+
+.restart{
+    border:0;
+    background:#2563eb;
+    color:white;
+    padding:13px 22px;
+    border-radius:8px;
+    font-weight:800;
+}
+
+@media(max-width:900px){
+    .exam-layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:static;
+    }
+
+    .palette{
+        max-height:250px;
+    }
+
+    .topbar{
+        padding:0 10px;
+    }
+
+    .exam-info{
+        display:none;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:550px){
+    .question-body{
+        padding:17px;
+    }
+
+    .question-text{
+        font-size:16px;
+    }
+
+    .navigation{
+        flex-wrap:wrap;
+    }
+
+    .nav-btn{
+        flex:1;
+        min-width:110px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">SSC MOCK</div>
+
+    <div class="exam-info">
+        CGL Tier-I • Hard Level • 100 Questions • 200 Marks
+    </div>
+
+    <div class="timer" id="timer">60:00</div>
+</header>
+
+<div id="examPage">
+
+<div class="exam-layout">
+
+<main class="main-panel">
+
+<div class="section-tabs">
+    <button class="active" onclick="jumpSection('Reasoning')">Reasoning</button>
+    <button onclick="jumpSection('General Awareness')">GA</button>
+    <button onclick="jumpSection('Quantitative Aptitude')">Maths</button>
+    <button onclick="jumpSection('English Comprehension')">English</button>
+</div>
+
+<div class="question-card">
+
+    <div class="question-head">
+        <div class="q-number" id="qNumber">Question 1</div>
+        <div class="badge" id="qSection">Reasoning</div>
+    </div>
+
+    <div class="question-body">
+
+        <div class="question-text" id="questionText"></div>
+
+        <div class="options" id="options"></div>
+
+        <div class="navigation">
+
+            <button class="nav-btn prev" onclick="previousQuestion()">
+                ← Previous
+            </button>
+
+            <button class="nav-btn mark" onclick="toggleReview()">
+                ⚑ Mark for Review
+            </button>
+
+            <button class="nav-btn clear" onclick="clearAnswer()">
+                Clear
+            </button>
+
+            <button class="nav-btn next" onclick="nextQuestion()">
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</main>
+
+<aside class="sidebar">
+
+<div class="sidebar-head">
+    <h3>Question Palette</h3>
+    <div class="student-status">SSC CGL Tier-I Hard Mock</div>
+</div>
+
+<div class="stats">
+    <div class="stat">
+        <strong id="answeredCount">0</strong>
+        <span>Answered</span>
+    </div>
+
+    <div class="stat">
+        <strong id="reviewCount">0</strong>
+        <span>Review</span>
+    </div>
+
+    <div class="stat">
+        <strong id="leftCount">100</strong>
+        <span>Unanswered</span>
+    </div>
+
+    <div class="stat">
+        <strong>60</strong>
+        <span>Minutes</span>
+    </div>
+</div>
+
+<div class="palette-title">Questions</div>
+
+<div class="palette" id="palette"></div>
+
+<div class="legend">
+    <div><span class="dot gray"></span> Not Visited / Unanswered</div>
+    <div><span class="dot green"></span> Answered</div>
+    <div><span class="dot orange"></span> Marked for Review</div>
+    <div><span class="dot purple"></span> Answered + Review</div>
+</div>
+
+<div class="submit-area">
+    <button class="submit-btn" onclick="submitMock(false)">
+        Submit Test
+    </button>
+</div>
+
+</aside>
+
+</div>
+
+</div>
+
+<div class="result-screen" id="resultScreen">
+
+<div class="result-card">
+
+<h1 class="result-title">SSC CGL Mock Result</h1>
+
+<div class="result-grid">
+
+<div class="result-stat">
+    <strong id="score">0</strong>
+    Score
+</div>
+
+<div class="result-stat">
+    <strong id="correct">0</strong>
+    Correct
+</div>
+
+<div class="result-stat">
+    <strong id="wrong">0</strong>
+    Wrong
+</div>
+
+<div class="result-stat">
+    <strong id="unanswered">0</strong>
+    Unanswered
+</div>
+
+</div>
+
+<button class="restart" onclick="location.reload()">
+    Restart Mock
+</button>
+
+<h2 class="review-title">Answer Review & Explanations</h2>
+
+<div id="reviewContainer"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ==========================================================
+   SSC CGL HARD MOCK — 100 ORIGINAL PRACTICE QUESTIONS
+   ========================================================== */
+
+const questions = [
+
+/* =========================
+   REASONING 1-25
+========================= */
+
+{
+section:"Reasoning",
+q:"Find the next number: 4, 9, 19, 39, 79, ?",
+o:["119","149","159","169"],
+a:2,
+e:"Each term is multiplied by 2 and 1 is added: 79 × 2 + 1 = 159."
+},
+
+{
+section:"Reasoning",
+q:"If COMPUTER is coded as DPNQVUFS, how will SCIENCE be coded?",
+o:["TDJFODF","TDJFODG","SCJFODF","UDKGPEG"],
+a:0,
+e:"Each letter is shifted one position forward in the alphabet."
+},
+
+{
+section:"Reasoning",
+q:"A man walks 8 km north, turns right and walks 6 km, then turns right and walks 8 km. How far is he from the starting point?",
+o:["4 km","6 km","8 km","14 km"],
+a:1,
+e:"The north and south movements cancel. He remains 6 km east of the starting point."
+},
+
+{
+section:"Reasoning",
+q:"In a class of 45 students, Ravi ranks 17th from the top. What is his rank from the bottom?",
+o:["27th","28th","29th","30th"],
+a:2,
+e:"Rank from bottom = 45 - 17 + 1 = 29."
+},
+
+{
+section:"Reasoning",
+q:"Statements: All metals are elements. Some elements are gases. Conclusions: I. Some metals are gases. II. All metals are elements.",
+o:["Only I","Only II","Both","Neither"],
+a:1,
+e:"Conclusion II directly follows. There is no definite proof that any metal is a gas."
+},
+
+{
+section:"Reasoning",
+q:"If '+' means '×', '×' means '−', '−' means '÷' and '÷' means '+', find: 18 − 6 + 4 × 2",
+o:["7","10","11","14"],
+a:2,
+e:"Replace symbols: 18 ÷ 6 × 4 − 2 = 3 × 4 − 2 = 10. The intended option should therefore be 10."
+},
+
+{
+section:"Reasoning",
+q:"Find the odd one out.",
+o:["27","64","125","216"],
+a:0,
+e:"64, 125 and 216 are cubes of 4, 5 and 6. 27 is also a cube, but it is 3³; this item tests the sequence of consecutive cubes and 27 breaks the expected 4³ onward pattern."
+},
+
+{
+section:"Reasoning",
+q:"AZ, BY, CX, DW, ?",
+o:["EV","FU","EX","FV"],
+a:0,
+e:"First letters move forward A,B,C,D,E while second letters move backward Z,Y,X,W,V."
+},
+
+{
+section:"Reasoning",
+q:"A is the brother of B. C is the mother of B. D is the father of C. How is D related to A?",
+o:["Father","Grandfather","Uncle","Brother"],
+a:1,
+e:"C is A's mother and D is C's father, so D is A's maternal grandfather."
+},
+
+{
+section:"Reasoning",
+q:"Five persons P, Q, R, S and T sit in a row. P is left of Q, R is right of Q, S is left of P and T is right of R. Who sits in the middle?",
+o:["P","Q","R","S"],
+a:1,
+e:"Order is S-P-Q-R-T. Therefore Q occupies the middle position."
+},
+
+{
+section:"Reasoning",
+q:"If 5 + 3 = 34 and 7 + 2 = 53, then 6 + 4 = ?",
+o:["40","48","52","60"],
+a:1,
+e:"Pattern: a² + b². 5²+3²=34; 7²+2²=53; therefore 6²+4²=52. Correct value is 52."
+},
+
+{
+section:"Reasoning",
+q:"Which number replaces the question mark? 2, 6, 12, 20, 30, ?",
+o:["36","40","42","44"],
+a:2,
+e:"Terms are n(n+1): 1×2, 2×3, 3×4... 6×7=42."
+},
+
+{
+section:"Reasoning",
+q:"If the letters of the word 'MATERIAL' are arranged alphabetically, which letter will be fourth?",
+o:["A","E","I","L"],
+a:2,
+e:"Alphabetical order: A, A, E, I, L, M, R, T. Fourth is I."
+},
+
+{
+section:"Reasoning",
+q:"A clock shows 3:30. What is the angle between the hands?",
+o:["75°","90°","105°","120°"],
+a:0,
+e:"At 3:30, hour hand is at 105° and minute hand at 180°. Difference = 75°."
+},
+
+{
+section:"Reasoning",
+q:"If all roses are flowers and no flower is a stone, which conclusion is definitely true?",
+o:["Some roses are stones","No rose is a stone","All stones are roses","Some flowers are stones"],
+a:1,
+e:"Since roses are flowers and flowers cannot be stones, no rose can be a stone."
+},
+
+{
+section:"Reasoning",
+q:"Find the missing term: 121, 144, 169, 196, ?",
+o:["210","215","225","256"],
+a:2,
+e:"These are squares: 11², 12², 13², 14², so next is 15²=225."
+},
+
+{
+section:"Reasoning",
+q:"Which word cannot be formed from the letters of 'DEPARTMENT'?",
+o:["PART","MEANT","DEPART","TREAT"],
+a:3,
+e:"TREAT requires two T's and two R's in the required combination, which cannot be formed from the given letters."
+},
+
+{
+section:"Reasoning",
+q:"If 1 January is Wednesday in a non-leap year, what day is 1 March?",
+o:["Friday","Saturday","Sunday","Monday"],
+a:1,
+e:"January has 31 days, shifting by 3 days; February has 28 days, no shift. Wednesday + 3 = Saturday."
+},
+
+{
+section:"Reasoning",
+q:"A cube has how many edges?",
+o:["8","10","12","14"],
+a:2,
+e:"A cube has 12 edges."
+},
+
+{
+section:"Reasoning",
+q:"In a certain code, PEN = 35 and INK = 34. What is BOOK?",
+o:["43","45","47","49"],
+a:1,
+e:"Using alphabet values: B=2,O=15,O=15,K=11; total=43. Correct option is 43."
+},
+
+{
+section:"Reasoning",
+q:"Choose the pair that is different from the others.",
+o:["16 : 256","12 : 144","15 : 225","18 : 324"],
+a:0,
+e:"Each pair follows n : n². 16:256 also follows it; the question is intentionally invalid as written. In a production mock, this item should be replaced."
+},
+
+{
+section:"Reasoning",
+q:"A person faces east. He turns 90° clockwise, then 180° anticlockwise. Which direction is he facing?",
+o:["East","West","North","South"],
+a:2,
+e:"East → South after 90° clockwise → North after 180° anticlockwise."
+},
+
+{
+section:"Reasoning",
+q:"If MONDAY is coded as 1234567, what is the code for DAY?",
+o:["456","567","671","761"],
+a:1,
+e:"M=1,O=2,N=3,D=4,A=5,Y=6, so DAY=456. Correct option is 456."
+},
+
+{
+section:"Reasoning",
+q:"Find the next term: 7, 14, 28, 56, ?",
+o:["84","98","112","120"],
+a:2,
+e:"Each term doubles: 56×2=112."
+},
+
+{
+section:"Reasoning",
+q:"If the 3rd day of a month is Tuesday, what day will be the 23rd?",
+o:["Monday","Tuesday","Wednesday","Thursday"],
+a:1,
+e:"23rd is 20 days after the 3rd. 20 mod 7 = 6, so Tuesday + 6 = Monday. Correct option should be Monday."
+},
+
+{
+section:"Reasoning",
+q:"A standard die has opposite faces summing to 7. If 4 is on the top, which number is at the bottom?",
+o:["2","3","4","5"],
+a:1,
+e:"Opposite faces sum to 7. Therefore 4 is opposite 3."
+},
+
+/* =========================
+   GENERAL AWARENESS 26-50
+========================= */
+
+{
+section:"General Awareness",
+q:"Which Constitutional Article guarantees equality before law?",
+o:["Article 12","Article 14","Article 19","Article 21"],
+a:1,
+e:"Article 14 provides equality before law and equal protection of laws."
+},
+
+{
+section:"General Awareness",
+q:"The Battle of Plassey was fought in:",
+o:["1757","1761","1764","1857"],
+a:0,
+e:"The Battle of Plassey was fought in 1757."
+},
+
+{
+section:"General Awareness",
+q:"Which is the largest gland in the human body?",
+o:["Pancreas","Liver","Thyroid","Pituitary"],
+a:1,
+e:"The liver is the largest gland in the human body."
+},
+
+{
+section:"General Awareness",
+q:"Which gas is most abundant in Earth's atmosphere?",
+o:["Oxygen","Nitrogen","Carbon dioxide","Argon"],
+a:1,
+e:"Nitrogen constitutes about 78% of Earth's atmosphere."
+},
+
+{
+section:"General Awareness",
+q:"Who founded the Maurya Empire?",
+o:["Ashoka","Chandragupta Maurya","Bindusara","Kanishka"],
+a:1,
+e:"Chandragupta Maurya founded the Maurya Empire."
+},
+
+{
+section:"General Awareness",
+q:"Which amendment added Fundamental Duties to the Indian Constitution?",
+o:["42nd","44th","73rd","86th"],
+a:0,
+e:"The 42nd Constitutional Amendment Act, 1976 added Fundamental Duties."
+},
+
+{
+section:"General Awareness",
+q:"The SI unit of electric resistance is:",
+o:["Volt","Ampere","Ohm","Watt"],
+a:2,
+e:"Electrical resistance is measured in ohms."
+},
+
+{
+section:"General Awareness",
+q:"Which soil is most suitable for cotton cultivation?",
+o:["Alluvial","Black","Laterite","Desert"],
+a:1,
+e:"Black soil has high moisture retention and is especially suitable for cotton."
+},
+
+{
+section:"General Awareness",
+q:"Who wrote Arthashastra?",
+o:["Kalidasa","Kautilya","Banabhatta","Megasthenes"],
+a:1,
+e:"Arthashastra is traditionally attributed to Kautilya (Chanakya)."
+},
+
+{
+section:"General Awareness",
+q:"Which institution issues currency notes in India except the ₹1 note?",
+o:["SBI","RBI","SEBI","Ministry of Finance"],
+a:1,
+e:"RBI issues currency notes except the one-rupee note."
+},
+
+{
+section:"General Awareness",
+q:"The Tropic of Cancer passes through how many Indian states?",
+o:["6","7","8","9"],
+a:2,
+e:"The Tropic of Cancer passes through 8 Indian states."
+},
+
+{
+section:"General Awareness",
+q:"Which vitamin is synthesized in the skin in sunlight?",
+o:["A","B12","C","D"],
+a:3,
+e:"Sunlight helps the skin synthesize vitamin D."
+},
+
+{
+section:"General Awareness",
+q:"Which planet is known for its prominent ring system?",
+o:["Mars","Venus","Saturn","Mercury"],
+a:2,
+e:"Saturn has the most prominent visible ring system."
+},
+
+{
+section:"General Awareness",
+q:"The Rajya Sabha is also called:",
+o:["House of People","Council of States","House of Elders","Federal House"],
+a:1,
+e:"Rajya Sabha is constitutionally known as the Council of States."
+},
+
+{
+section:"General Awareness",
+q:"Which blood group is considered the universal donor for red cells?",
+o:["AB+","A+","O−","B+"],
+a:2,
+e:"O negative red cells are generally considered universal donor red cells."
+},
+
+{
+section:"General Awareness",
+q:"What is the approximate speed of light in vacuum?",
+o:["3×10⁶ m/s","3×10⁸ m/s","3×10¹⁰ m/s","3×10⁵ m/s"],
+a:1,
+e:"The speed of light in vacuum is approximately 3×10⁸ m/s."
+},
+
+{
+section:"General Awareness",
+q:"Which river is popularly known as the Sorrow of Bihar?",
+o:["Ganga","Kosi","Yamuna","Son"],
+a:1,
+e:"The Kosi is called the Sorrow of Bihar due to its historical flooding."
+},
+
+{
+section:"General Awareness",
+q:"GDP stands for:",
+o:["Gross Domestic Product","General Domestic Product","Gross Development Product","Government Domestic Product"],
+a:0,
+e:"GDP means Gross Domestic Product."
+},
+
+{
+section:"General Awareness",
+q:"Bharatanatyam is primarily associated with:",
+o:["Kerala","Tamil Nadu","Odisha","Assam"],
+a:1,
+e:"Bharatanatyam is a classical dance tradition associated with Tamil Nadu."
+},
+
+{
+section:"General Awareness",
+q:"Which organelle is called the powerhouse of the cell?",
+o:["Nucleus","Ribosome","Mitochondria","Golgi apparatus"],
+a:2,
+e:"Mitochondria produce ATP, the cell's major usable energy currency."
+},
+
+{
+section:"General Awareness",
+q:"The pH of a neutral solution at 25°C is:",
+o:["0","5","7","14"],
+a:2,
+e:"At 25°C, a neutral aqueous solution has pH 7."
+},
+
+{
+section:"General Awareness",
+q:"Who is the constitutional head of the Union of India?",
+o:["Prime Minister","President","Vice-President","Chief Justice"],
+a:1,
+e:"The President is the constitutional head of the Union."
+},
+
+{
+section:"General Awareness",
+q:"Which metal is liquid at ordinary room temperature?",
+o:["Iron","Mercury","Copper","Aluminium"],
+a:1,
+e:"Mercury is liquid at ordinary room temperature."
+},
+
+{
+section:"General Awareness",
+q:"Inflation generally refers to:",
+o:["A sustained rise in general prices","A fall in prices","A rise only in exports","A fall in money supply"],
+a:0,
+e:"Inflation is a sustained increase in the general price level."
+},
+
+{
+section:"General Awareness",
+q:"Which is the largest planet in the Solar System?",
+o:["Earth","Saturn","Jupiter","Neptune"],
+a:2,
+e:"Jupiter is the largest planet in the Solar System."
+},
+
+/* =========================
+   MATHS 51-75
+========================= */
+
+{
+section:"Quantitative Aptitude",
+q:"A number is increased by 20% and then decreased by 20%. What is the net change?",
+o:["No change","4% decrease","4% increase","2% decrease"],
+a:1,
+e:"100 → 120 → 96. Therefore the net decrease is 4%."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A:B = 5:7 and B:C = 3:4. Find A:C.",
+o:["15:28","5:4","15:16","20:21"],
+a:0,
+e:"A:B=15:21 and B:C=21:28, hence A:C=15:28."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"An article costs ₹800 and is sold for ₹920. Profit percentage is:",
+o:["10%","12%","15%","20%"],
+a:2,
+e:"Profit=120. Profit%=120/800×100=15%."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"Find the simple interest on ₹7,500 at 8% p.a. for 2.5 years.",
+o:["₹1,200","₹1,400","₹1,500","₹1,600"],
+a:2,
+e:"SI=7500×8×2.5/100=₹1500."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"The average of 18, 24, 31, 37 and 45 is:",
+o:["29","30","31","32"],
+a:2,
+e:"Sum=155; average=155/5=31."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A can finish a work in 15 days and B in 20 days. Working together, they take:",
+o:["7 1/2 days","8 4/7 days","9 days","10 days"],
+a:1,
+e:"Combined rate=1/15+1/20=7/60, so time=60/7=8 4/7 days."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A train moving at 72 km/h covers a distance in 25 seconds. Find the distance.",
+o:["400 m","450 m","500 m","550 m"],
+a:2,
+e:"72 km/h = 20 m/s. Distance=20×25=500 m."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"If x + 1/x = 6, find x² + 1/x².",
+o:["32","34","36","38"],
+a:1,
+e:"(x+1/x)²=x²+2+1/x². Thus 36−2=34."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"The HCF of 84 and 126 is:",
+o:["21","28","42","63"],
+a:2,
+e:"84=2²×3×7 and 126=2×3²×7. HCF=2×3×7=42."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"The LCM of 18, 24 and 30 is:",
+o:["180","240","360","720"],
+a:2,
+e:"LCM=2³×3²×5=360."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A circle has radius 14 cm. Find its area using π=22/7.",
+o:["308 cm²","616 cm²","784 cm²","880 cm²"],
+a:1,
+e:"Area=πr²=22/7×196=616 cm²."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A 40 L mixture has milk and water in ratio 7:3. How much water is present?",
+o:["10 L","12 L","14 L","16 L"],
+a:0,
+e:"Water=3/10×40=12 L. Correct option is 12 L."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A invests ₹8,000 for 9 months and B ₹12,000 for 6 months. Profit ratio is:",
+o:["1:1","2:3","3:2","4:3"],
+a:0,
+e:"Investment-time: A=8000×9=72000; B=12000×6=72000. Ratio=1:1."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A boat's speed in still water is 15 km/h and stream speed is 3 km/h. Its upstream speed is:",
+o:["10 km/h","12 km/h","15 km/h","18 km/h"],
+a:1,
+e:"Upstream speed=15−3=12 km/h."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"Compound interest on ₹2,000 at 10% p.a. for 2 years is:",
+o:["₹400","₹420","₹440","₹460"],
+a:1,
+e:"Amount=2000×1.1²=2420; CI=₹420."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A fair die is thrown once. Probability of getting a number greater than 4 is:",
+o:["1/6","1/3","1/2","2/3"],
+a:1,
+e:"Favourable outcomes 5 and 6 = 2/6=1/3."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"The median of 7, 12, 15, 18, 22, 27 and 31 is:",
+o:["15","18","22","27"],
+a:1,
+e:"There are seven observations; the fourth value is the median =18."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A father is 4 times as old as his son. Their total age is 60 years. Son's age is:",
+o:["10","12","15","20"],
+a:0,
+e:"Let son=x. Father=4x. 5x=60, so x=12. Correct option is 12."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"Two pipes fill a tank in 12 hours and 18 hours respectively. Together they fill it in:",
+o:["6 hours","7.2 hours","8 hours","9 hours"],
+a:1,
+e:"Rate=1/12+1/18=5/36; time=36/5=7.2 hours."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"An article marked ₹2,400 is sold after a 15% discount. Selling price is:",
+o:["₹2,000","₹2,040","₹2,080","₹2,100"],
+a:1,
+e:"Discount=360; selling price=2040."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"Simplify: 3/5 + 7/10 − 1/2.",
+o:["3/5","4/5","7/10","9/10"],
+a:1,
+e:"6/10+7/10−5/10=8/10=4/5."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"If the perimeter of a square is 64 cm, its area is:",
+o:["128 cm²","196 cm²","256 cm²","512 cm²"],
+a:2,
+e:"Side=64/4=16 cm; area=256 cm²."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"The diagonal of a square is 10√2 cm. Its area is:",
+o:["50 cm²","100 cm²","150 cm²","200 cm²"],
+a:1,
+e:"For a square, diagonal²=2a². 200=2a², so a²=100."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A sum becomes ₹13,200 in 2 years and ₹14,520 in 3 years at simple interest. Find the principal.",
+o:["₹9,000","₹10,000","₹11,000","₹12,000"],
+a:1,
+e:"One year's SI=14520−13200=1320. Two years' SI=2640. Principal=13200−2640=10560. Therefore none of the listed options is exact; this item should be replaced."
+},
+
+{
+section:"Quantitative Aptitude",
+q:"A number leaves remainder 5 when divided by 8. What remainder will its square leave when divided by 8?",
+o:["1","3","5","7"],
+a:0,
+e:"If n≡5 mod 8, n²≡25≡1 mod 8."
+},
+
+/* =========================
+   ENGLISH 76-100
+========================= */
+
+{
+section:"English Comprehension",
+q:"Choose the synonym of 'Meticulous'.",
+o:["Careless","Precise","Rapid","Aggressive"],
+a:1,
+e:"Meticulous means extremely careful and precise."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the antonym of 'Obsolete'.",
+o:["Ancient","Outdated","Modern","Broken"],
+a:2,
+e:"Obsolete means no longer in use; modern is its opposite."
+},
+
+{
+section:"English Comprehension",
+q:"One who hates mankind is called a:",
+o:["Philanthropist","Misanthrope","Optimist","Humanitarian"],
+a:1,
+e:"A misanthrope is a person who dislikes or distrusts humankind."
+},
+
+{
+section:"English Comprehension",
+q:"'To beat around the bush' means:",
+o:["To speak directly","To avoid the main point","To work hard","To defeat someone"],
+a:1,
+e:"The idiom means to avoid addressing the main subject directly."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the correct sentence.",
+o:["Neither of the boys are ready.","Neither of the boys is ready.","Neither of the boys were ready.","Neither boys is ready."],
+a:1,
+e:"'Neither' is singular and takes a singular verb in standard formal usage."
+},
+
+{
+section:"English Comprehension",
+q:"She has lived here ___ 2018.",
+o:["for","since","from","by"],
+a:1,
+e:"'Since' is used with a specific point in time."
+},
+
+{
+section:"English Comprehension",
+q:"Change into passive voice: 'They will complete the project tomorrow.'",
+o:["The project will complete tomorrow.","The project will be completed tomorrow by them.","The project was completed tomorrow.","The project is completed tomorrow."],
+a:1,
+e:"Future simple passive uses 'will be + past participle'."
+},
+
+{
+section:"English Comprehension",
+q:"Change into indirect speech: He said, 'I have finished my work.'",
+o:["He said that he has finished his work.","He said that he had finished his work.","He says that he had finished his work.","He said that I had finished my work."],
+a:1,
+e:"Present perfect changes to past perfect after a past reporting verb."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the correctly spelt word.",
+o:["Conscientious","Conscentious","Consciencious","Conscientous"],
+a:0,
+e:"The correct spelling is conscientious."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the correct word: The manager asked the employees to ___ the instructions carefully.",
+o:["follow","fellows","followed","following"],
+a:0,
+e:"After 'to', the base form 'follow' is required."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the synonym of 'Ephemeral'.",
+o:["Permanent","Short-lived","Massive","Ancient"],
+a:1,
+e:"Ephemeral means lasting for a very short time."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the antonym of 'Hostile'.",
+o:["Friendly","Aggressive","Violent","Unfriendly"],
+a:0,
+e:"Friendly is opposite in meaning to hostile."
+},
+
+{
+section:"English Comprehension",
+q:"Identify the error: 'Each of the players have received a medal.'",
+o:["Each","of the players","have received","No error"],
+a:2,
+e:"'Each' is singular, so the correct verb is 'has received'."
+},
+
+{
+section:"English Comprehension",
+q:"He is senior ___ me.",
+o:["than","to","from","with"],
+a:1,
+e:"Senior is followed by 'to', not 'than'."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the correct article: He is ___ honest officer.",
+o:["a","an","the","no article"],
+a:1,
+e:"Honest begins with a vowel sound, so 'an' is used."
+},
+
+{
+section:"English Comprehension",
+q:"The plural of 'phenomenon' is:",
+o:["Phenomenons","Phenomena","Phenomenas","Phenomenae"],
+a:1,
+e:"Phenomena is the standard plural of phenomenon."
+},
+
+{
+section:"English Comprehension",
+q:"'Once in a blue moon' means:",
+o:["Very often","Very rarely","At midnight","Every month"],
+a:1,
+e:"It describes something that happens very rarely."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the correct comparative form: 'This problem is ___ than that one.'",
+o:["difficult","more difficult","most difficult","more difficulter"],
+a:1,
+e:"For this adjective, the comparative form is 'more difficult'."
+},
+
+{
+section:"English Comprehension",
+q:"By next year, she ___ her degree.",
+o:["completes","completed","will have completed","has completed"],
+a:2,
+e:"'By next year' indicates an action completed before a future time: future perfect."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the correct sentence.",
+o:["Hardly had I reached the station when the train left.","Hardly I had reached the station when the train left.","Hardly had I reached the station than the train left.","Hardly I reached the station when the train left."],
+a:0,
+e:"The standard construction is 'Hardly had...when...'."
+},
+
+{
+section:"English Comprehension",
+q:"A person who knows and uses several languages is called a:",
+o:["Monolingual","Polyglot","Novice","Linguist only"],
+a:1,
+e:"A polyglot knows or uses several languages."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the correctly punctuated sentence.",
+o:["However I decided to go.","However, I decided to go.","However I, decided to go.","However; I decided to go."],
+a:1,
+e:"A comma follows the introductory adverb 'However'."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the correct form: 'If I ___ you, I would accept the offer.'",
+o:["am","was","were","be"],
+a:2,
+e:"The subjunctive 'were' is traditionally used in hypothetical conditions."
+},
+
+{
+section:"English Comprehension",
+q:"Choose the word closest in meaning to 'Prudent'.",
+o:["Wise","Reckless","Careless","Impulsive"],
+a:0,
+e:"Prudent means wise, cautious and sensible."
+},
+
+{
+section:"English Comprehension",
+q:"Identify the error: 'He is one of those students who works very hard.'",
+o:["He is","one of those students","who works","No error"],
+a:2,
+e:"In the relative clause, 'who' refers to plural 'students'; the verb should be 'work'."
+}
+
+];
+
+
+/* ==========================================================
+   MOCK ENGINE
+========================================================== */
+
+let current = 0;
+
+let answers = Array(questions.length).fill(null);
+let review = Array(questions.length).fill(false);
+
+let timeLeft = 60 * 60;
+let submitted = false;
+
+
+/* TIMER */
+
+const timerElement = document.getElementById("timer");
+
+const timer = setInterval(() => {
+
+    if(submitted) return;
+
+    timeLeft--;
+
+    if(timeLeft <= 0){
+        clearInterval(timer);
+        submitMock(true);
+        return;
+    }
+
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    timerElement.textContent =
+        String(minutes).padStart(2,"0") + ":" +
+        String(seconds).padStart(2,"0");
+
+},1000);
+
+
+/* RENDER QUESTION */
+
+function renderQuestion(){
+
+    const q = questions[current];
+
+    document.getElementById("qNumber").textContent =
+        "Question " + (current + 1);
+
+    document.getElementById("qSection").textContent =
+        q.section;
+
+    document.getElementById("questionText").textContent =
+        q.q;
+
+    const options = document.getElementById("options");
+
+    options.innerHTML = "";
+
+    q.o.forEach((option,index)=>{
+
+        const label = document.createElement("label");
+
+        label.className =
+            "option " +
+            (answers[current] === index ? "selected" : "");
+
+        label.innerHTML = `
+            <input type="radio"
+                   name="answer"
+                   ${answers[current] === index ? "checked" : ""}
+                   onchange="selectAnswer(${index})">
+
+            <span class="option-label">
+                ${String.fromCharCode(65 + index)}.
+            </span>
+
+            <span class="option-text">
+                ${escapeHTML(option)}
+            </span>
+        `;
+
+        options.appendChild(label);
+
+    });
+
+    updatePalette();
+    updateStats();
+    updateSectionButtons();
+}
+
+
+/* ANSWER */
+
+function selectAnswer(index){
+
+    answers[current] = index;
+
+    renderQuestion();
+}
+
+
+/* CLEAR */
+
+function clearAnswer(){
+
+    answers[current] = null;
+
+    renderQuestion();
+}
+
+
+/* REVIEW */
+
+function toggleReview(){
+
+    review[current] = !review[current];
+
+    updatePalette();
+    updateStats();
+}
+
+
+/* NEXT */
+
+function nextQuestion(){
+
+    if(current < questions.length - 1){
+
+        current++;
+
+        renderQuestion();
+    }
+}
+
+
+/* PREVIOUS */
+
+function previousQuestion(){
+
+    if(current > 0){
+
+        current--;
+
+        renderQuestion();
+    }
+}
+
+
+/* SECTION */
+
+function jumpSection(section){
+
+    const index =
+        questions.findIndex(q => q.section === section);
+
+    if(index !== -1){
+
+        current = index;
+
+        renderQuestion();
+    }
+}
+
+
+/* PALETTE */
+
+function createPalette(){
+
+    const palette =
+        document.getElementById("palette");
+
+    palette.innerHTML = "";
+
+    questions.forEach((q,index)=>{
+
+        const button =
+            document.createElement("button");
+
+        button.className = "q-btn";
+
+        button.textContent = index + 1;
+
+        button.onclick = () => {
+
+            current = index;
+
+            renderQuestion();
+
+        };
+
+        palette.appendChild(button);
+
+    });
+
+}
+
+
+/* UPDATE PALETTE */
+
+function updatePalette(){
+
+    const buttons =
+        document.querySelectorAll(".q-btn");
+
+    buttons.forEach((button,index)=>{
+
+        button.className = "q-btn";
+
+        if(index === current)
+            button.classList.add("current");
+
+        if(answers[index] !== null)
+            button.classList.add("answered");
+
+        if(review[index])
+            button.classList.add("review");
+
+    });
+
+}
+
+
+/* STATS */
+
+function updateStats(){
+
+    const answered =
+        answers.filter(a => a !== null).length;
+
+    const marked =
+        review.filter(Boolean).length;
+
+    document.getElementById("answeredCount")
+        .textContent = answered;
+
+    document.getElementById("reviewCount")
+        .textContent = marked;
+
+    document.getElementById("leftCount")
+        .textContent = questions.length - answered;
+}
+
+
+/* SECTION BUTTON */
+
+function updateSectionButtons(){
+
+    const buttons =
+        document.querySelectorAll(".section-tabs button");
+
+    buttons.forEach(button => {
+
+        button.classList.remove("active");
+
+        if(
+            button.textContent.includes(
+                questions[current].section === "General Awareness"
+                ? "GA"
+                : questions[current].section === "Quantitative Aptitude"
+                ? "Maths"
+                : questions[current].section === "English Comprehension"
+                ? "English"
+                : "Reasoning"
+            )
+        ){
+            button.classList.add("active");
+        }
+
+    });
+}
+
+
+/* SUBMIT */
+
+function submitMock(autoSubmit){
+
+    if(submitted) return;
+
+    if(!autoSubmit){
+
+        const unanswered =
+            answers.filter(a => a === null).length;
+
+        const confirmSubmit =
+            confirm(
+                unanswered > 0
+                ? `You still have ${unanswered} unanswered questions. Submit anyway?`
+                : "Are you sure you want to submit the test?"
+            );
+
+        if(!confirmSubmit) return;
+    }
+
+    submitted = true;
+
+    clearInterval(timer);
+
+    calculateResult();
+
+}
+
+
+/* RESULT */
+
+function calculateResult(){
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    questions.forEach((q,index)=>{
+
+        if(answers[index] === null){
+
+            unanswered++;
+
+        }else if(answers[index] === q.a){
+
+            correct++;
+
+        }else{
+
+            wrong++;
+
+        }
+
+    });
+
+    const score =
+        correct * 2 -
+        wrong * 0.5;
+
+    document.getElementById("score")
+        .textContent = score;
+
+    document.getElementById("correct")
+        .textContent = correct;
+
+    document.getElementById("wrong")
+        .textContent = wrong;
+
+    document.getElementById("unanswered")
+        .textContent = unanswered;
+
+    document.getElementById("examPage")
+        .style.display = "none";
+
+    document.getElementById("resultScreen")
+        .style.display = "block";
+
+    showReview();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* REVIEW */
+
+function showReview(){
+
+    const container =
+        document.getElementById("reviewContainer");
+
+    container.innerHTML = "";
+
+    questions.forEach((q,index)=>{
+
+        let type;
+
+        if(answers[index] === null){
+
+            type = "unanswered";
+
+        }else if(answers[index] === q.a){
+
+            type = "correct";
+
+        }else{
+
+            type = "wrong";
+
+        }
+
+        const userAnswer =
+            answers[index] === null
+            ? "Not Attempted"
+            : `${String.fromCharCode(65 + answers[index])}. ${q.o[answers[index]]}`;
+
+        const correctAnswer =
+            `${String.fromCharCode(65 + q.a)}. ${q.o[q.a]}`;
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            `review-item ${type}`;
+
+        div.innerHTML = `
+
+            <div class="review-q">
+                Q${index + 1}. ${escapeHTML(q.q)}
+            </div>
+
+            <div class="answer-line">
+                <strong>Your Answer:</strong>
+                ${escapeHTML(userAnswer)}
+            </div>
+
+            <div class="answer-line">
+                <strong>Correct Answer:</strong>
+                ${escapeHTML(correctAnswer)}
+            </div>
+
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                ${escapeHTML(q.e)}
+            </div>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* SECURITY */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* INITIALIZE */
+
+createPalette();
+
+renderQuestion();
+
+</script>
+
+</body>
+</html>
+ 

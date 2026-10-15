@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC MOCK — Typing Test Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#03142c;--navy2:#061d3d;--blue:#1664ff;--blue2:#2d7dff;--white:#fff;--bg:#f3f7fd;--text:#0f2147;--border:#dfe7f3;--green:#28c840;--red:#ef4444;--purple:#7c3aed;--shadow:0 12px 35px rgba(5,30,70,.10);--shadow-hover:0 16px 45px rgba(5,30,70,.15);--radius:16px;--transition:.3s cubic-bezier(.4,0,.2,1);}
+body{font-family:"Poppins",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+.sidebar{position:fixed;top:0;left:0;width:270px;height:100vh;background:linear-gradient(180deg,var(--navy),#021026);color:#fff;padding:22px 16px;display:flex;flex-direction:column;z-index:1000;transition:transform .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
+.sidebar::-webkit-scrollbar{width:4px;}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:10px;}
+.sidebar.hidden{transform:translateX(-100%);}
+.logo{display:flex;align-items:center;gap:14px;margin-bottom:28px;flex-shrink:0;}
+.logo-box{width:56px;height:56px;background:linear-gradient(135deg,#1b76ff,#0d47ff);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.logo h1{font-size:18px;font-weight:700;letter-spacing:.5px;}
+.logo p{color:#9fb8df;font-size:12px;letter-spacing:.3px;}
+.menu{display:flex;flex-direction:column;gap:4px;flex:1;}
+.menu a{text-decoration:none;color:#b0c8e8;padding:12px 16px;border-radius:12px;display:flex;align-items:center;gap:14px;transition:var(--transition);font-size:14px;font-weight:500;cursor:pointer;}
+.menu a:hover{background:rgba(255,255,255,.07);color:#fff;transform:translateX(4px);}
+.menu a .icon-wrap{width:28px;text-align:center;font-size:17px;flex-shrink:0;}
+.menu .active{background:linear-gradient(90deg,#1a73ff,#0d56ff);color:#fff;box-shadow:0 6px 20px rgba(30,100,255,.30);}
+.menu .active:hover{transform:translateX(0);background:linear-gradient(90deg,#2a83ff,#1a66ff);}
+.menu .badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;animation:pulse-badge 2s ease-in-out infinite;}
+@keyframes pulse-badge{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.menu hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:10px 0;}
+.goal-card{background:linear-gradient(180deg,#082654,#04152e);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:18px;margin-top:12px;flex-shrink:0;}
+.goal-top{display:flex;justify-content:space-between;align-items:center;}
+.goal-card h3{font-size:14px;font-weight:600;}
+.goal-card .sub{color:#9fb8df;font-size:12px;}
+.goal-time{margin:12px 0 10px;color:#ffd35c;font-size:14px;font-weight:600;}
+.goal-card .progress-btn{width:100%;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#1b76ff,#0d56ff);color:#fff;cursor:pointer;font-weight:600;font-size:13px;transition:var(--transition);}
+.goal-card .progress-btn:hover{opacity:.85;transform:scale(.98);}
+.progress-circle{position:relative;width:64px;height:64px;flex-shrink:0;}
+.progress-circle svg{width:64px;height:64px;transform:rotate(-90deg);}
+.progress-circle circle{fill:none;stroke:#15345f;stroke-width:7;}
+.progress-circle .progress{stroke:#ffb400;stroke-linecap:round;stroke-dasharray:301;stroke-dashoffset:90;}
+.progress-circle span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#ffb400;}
+.sidebar-toggle{display:none;position:fixed;bottom:24px;left:24px;z-index:1100;background:var(--blue);color:#fff;border:none;border-radius:50%;width:56px;height:56px;font-size:24px;box-shadow:0 6px 24px rgba(22,100,255,.4);cursor:pointer;transition:var(--transition);}
+.sidebar-toggle:hover{transform:scale(1.05);}
+.main{margin-left:270px;min-height:100vh;transition:margin-left .35s cubic-bezier(.4,0,.2,1);}
+.topbar{background:linear-gradient(180deg,#05152e,#021026);color:#fff;padding:14px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;position:sticky;top:0;z-index:999;border-bottom:1px solid rgba(255,255,255,.04);}
+.mode-buttons{display:flex;gap:10px;}
+.mode-buttons button{padding:10px 20px;border:none;border-radius:10px;background:rgba(255,255,255,.05);color:#b0c8e8;cursor:pointer;font-weight:600;font-size:13px;transition:var(--transition);display:flex;align-items:center;gap:8px;}
+.mode-buttons button:hover{background:rgba(255,255,255,.10);color:#fff;}
+.mode-buttons .active{background:linear-gradient(135deg,#1b76ff,#0d56ff);color:#fff;box-shadow:0 4px 16px rgba(30,100,255,.25);}
+.top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.select-box{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);padding:10px 14px;border-radius:10px;transition:var(--transition);}
+.select-box:hover{background:rgba(255,255,255,.08);}
+.select-box select{background:transparent;border:none;color:#fff;outline:none;font-size:13px;font-weight:500;cursor:pointer;font-family:"Poppins",sans-serif;}
+.select-box select option{background:#071a35;color:#fff;}
+.select-box i{color:#8aacd8;font-size:14px;}
+.top-btn{background:rgba(255,255,255,.05);color:#b0c8e8;border:1px solid rgba(255,255,255,.06);padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:500;font-size:13px;transition:var(--transition);display:flex;align-items:center;gap:8px;font-family:"Poppins",sans-serif;}
+.top-btn:hover{background:rgba(255,255,255,.10);color:#fff;}
+.quit-btn{background:transparent;border:2px solid rgba(239,68,68,.4);color:#ff8d8d;padding:10px 18px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px;transition:var(--transition);font-family:"Poppins",sans-serif;display:flex;align-items:center;gap:8px;}
+.quit-btn:hover{background:rgba(239,68,68,.10);border-color:var(--red);}
+.dashboard{display:grid;grid-template-columns:1fr 290px;gap:22px;padding:22px;}
+.content{display:flex;flex-direction:column;gap:18px;}
+.timer-modes{display:flex;gap:8px;flex-wrap:wrap;padding:6px 10px;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.02);}
+.timer-mode-btn{padding:8px 18px;border:2px solid transparent;border-radius:10px;background:transparent;font-weight:600;font-size:14px;cursor:pointer;transition:var(--transition);color:#5d6f8d;font-family:"Poppins",sans-serif;}
+.timer-mode-btn:hover{background:#f0f4fa;color:var(--text);}
+.timer-mode-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 12px rgba(22,100,255,.25);}
+.timer-mode-btn .sub{font-size:10px;font-weight:400;opacity:.7;display:block;}
+.timer-mode-btn.active .sub{opacity:.85;}
+.timer-card{background:#fff;border-radius:var(--radius);padding:20px 26px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;border:1px solid rgba(0,0,0,.02);}
+.timer-card h2{font-size:17px;font-weight:500;color:var(--text);}
+.timer-card h2 i{color:var(--blue);margin-right:8px;}
+.timer-wrap{display:flex;align-items:center;gap:14px;}
+.timer-wrap .time-display{font-size:40px;font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums;min-width:100px;text-align:center;}
+.timer-wrap .time-display.warning{color:#f59e0b;}
+.timer-wrap .time-display.danger{color:var(--red);animation:pulse-danger .8s ease-in-out infinite;}
+@keyframes pulse-danger{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.05);}}
+.timer-wrap button{width:44px;height:44px;border:none;border-radius:12px;background:#edf4ff;cursor:pointer;font-size:18px;color:var(--blue);transition:var(--transition);display:flex;align-items:center;justify-content:center;}
+.timer-wrap button:hover{background:#d5e4ff;transform:scale(1.05);}
+.timer-wrap button:active{transform:scale(.92);}
+.passage-card{background:#fff;border-radius:var(--radius);padding:26px 30px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.02);transition:var(--transition);}
+.passage-card:hover{box-shadow:var(--shadow-hover);}
+#passage{font-size:21px;line-height:2.1;letter-spacing:.3px;min-height:160px;font-family:'Courier New',monospace;word-break:break-word;user-select:none;color:#1a2a4a;}
+#passage span{transition:background .08s,color .08s;border-radius:3px;padding:2px 2px;margin:0 -1px;}
+#passage span.correct{background:#d4edda;color:var(--green);}
+#passage span.incorrect{background:#f8d7da;color:var(--red);text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;}
+#passage span.current{background:#1664ff;color:#fff;border-radius:3px;animation:blink-cursor 1s step-end infinite;}
+#passage span.current.incorrect{background:var(--red);color:#fff;}
+@keyframes blink-cursor{0%,100%{opacity:1;}50%{opacity:.6;}}
+.legend{margin-top:20px;display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--border);}
+.legend .dot{width:14px;height:14px;border-radius:50%;display:inline-block;margin-right:4px;}
+.legend .dot.green{background:var(--green);}
+.legend .dot.red{background:var(--red);}
+.legend .dot.blue{background:#1664ff;}
+.legend span{font-size:14px;font-weight:500;color:#5d6f8d;display:inline-flex;align-items:center;gap:4px;}
+.typing-card{background:#fff;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.02);}
+.typing-card textarea{width:100%;height:160px;border:2px solid #d5e4ff;border-radius:12px;padding:18px 20px;font-size:20px;resize:none;outline:none;font-family:'Courier New',monospace;transition:var(--transition);background:#fafcff;color:var(--text);line-height:1.6;}
+.typing-card textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(22,100,255,.10);}
+.typing-card textarea:disabled{background:#f0f2f6;cursor:not-allowed;border-color:#d5dce6;}
+.typing-card textarea::placeholder{color:#aab8cc;font-size:18px;}
+.tip-card{background:linear-gradient(135deg,#eef4ff,#f7faff);border-radius:12px;padding:14px 20px;border:1px solid #dde8ff;color:#4a5f7a;display:flex;align-items:center;gap:14px;font-size:14px;}
+.tip-card i{color:var(--blue);font-size:20px;flex-shrink:0;}
+.action-buttons{display:flex;gap:12px;flex-wrap:wrap;}
+.action-buttons button{padding:12px 24px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;border:none;transition:var(--transition);display:flex;align-items:center;gap:10px;font-family:"Poppins",sans-serif;}
+.action-buttons button:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);}
+.action-buttons button:active{transform:scale(.96);}
+.btn-blue{background:var(--blue);color:#fff;}
+.btn-blue:hover{background:#0d56ff;}
+.btn-white{background:#fff;border:1px solid var(--border);color:var(--text);}
+.btn-white:hover{border-color:var(--blue);color:var(--blue);}
+.btn-red{background:#fff;border:2px solid var(--red);color:var(--red);}
+.btn-red:hover{background:#fef2f2;}
+.bottom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:4px;}
+.info-card{background:#fff;border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.02);transition:var(--transition);}
+.info-card:hover{box-shadow:var(--shadow-hover);}
+.info-card h3{margin-bottom:14px;font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;}
+.info-card h3 i{color:var(--blue);}
+.shortcut-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.shortcut-grid .item p{font-size:12px;color:#5d6f8d;margin-bottom:2px;}
+.shortcut-grid .item kbd{display:inline-block;background:#eef5ff;border:1px solid #dbe7ff;padding:4px 12px;border-radius:6px;font-weight:600;font-size:13px;font-family:"Poppins",sans-serif;color:var(--text);}
+.info-card ul{list-style:none;}
+.info-card ul li{position:relative;padding-left:24px;margin-bottom:10px;font-size:14px;color:#3d4f6a;}
+.info-card ul li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;}
+.info-card .meta-row{display:flex;justify-content:space-between;padding:6px 0;font-size:14px;border-bottom:1px solid #f0f4fa;}
+.info-card .meta-row:last-child{border-bottom:none;}
+.info-card .meta-row .label{color:#5d6f8d;font-weight:500;}
+.info-card .meta-row .value{font-weight:600;}
+.stats-panel{display:flex;flex-direction:column;gap:16px;}
+.live-header{background:linear-gradient(135deg,#1664ff,#0d56ff);color:#fff;padding:16px 20px;border-radius:var(--radius);font-weight:600;font-size:17px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(22,100,255,.2);}
+.live-header i{font-size:20px;}
+.stat{background:#fff;border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.02);transition:var(--transition);}
+.stat:hover{box-shadow:var(--shadow-hover);}
+.stat h2{font-size:40px;font-weight:800;color:var(--blue);line-height:1.1;font-variant-numeric:tabular-nums;}
+.stat h2.purple{color:var(--purple);}
+.stat h2.green-text{color:var(--green);}
+.stat h2.red-text{color:var(--red);}
+.stat p{color:#61728f;font-size:13px;font-weight:500;margin-top:2px;}
+.mini-line{margin-top:12px;height:5px;border-radius:20px;background:linear-gradient(90deg,#1664ff,#69a5ff);width:100%;}
+.mini-line.purple-line{background:linear-gradient(90deg,#7c3aed,#b287ff);}
+.mini-line.green-line{background:linear-gradient(90deg,#28c840,#8ae08d);}
+.mini-line.red-line{background:linear-gradient(90deg,#ef4444,#ff8b8b);}
+.progress-card{background:#fff;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.02);}
+.progress-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.progress-head h3{font-size:15px;font-weight:700;}
+.progress-head span{font-weight:700;color:var(--blue);font-size:18px;}
+.progress-bar{height:10px;background:#e8eef7;border-radius:20px;overflow:hidden;margin-bottom:12px;}
+#progressFill{width:0%;height:100%;background:linear-gradient(90deg,#1664ff,#0d56ff);transition:width .3s ease;border-radius:20px;}
+.progress-card p{color:#61728f;font-size:14px;}
+.progress-card p strong{color:var(--text);}
+footer{margin:22px;background:#03142c;color:#fff;border-radius:var(--radius);padding:16px 24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;opacity:.85;}
+footer p{opacity:.7;}
+@media(max-width:1200px){.dashboard{grid-template-columns:1fr;}.stats-panel{display:grid;grid-template-columns:repeat(4,1fr);}.stat h2{font-size:32px;}.bottom-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:992px){.stats-panel{grid-template-columns:repeat(2,1fr);}.bottom-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.main{margin-left:0;}.bottom-grid{grid-template-columns:1fr;}.stats-panel{grid-template-columns:1fr 1fr;}.timer-card{flex-direction:column;text-align:center;}.timer-wrap{justify-content:center;}.action-buttons{justify-content:center;}.sidebar-toggle{display:flex;align-items:center;justify-content:center;}.timer-modes{justify-content:center;}.topbar{padding:12px 16px;}.mode-buttons button{padding:8px 14px;font-size:12px;}.top-actions{width:100%;justify-content:center;}}
+@media(max-width:600px){.dashboard{padding:14px;}.timer-card h2{font-size:15px;}.timer-wrap .time-display{font-size:32px;min-width:80px;}#passage{font-size:17px;line-height:1.9;min-height:120px;}.passage-card{padding:18px 16px;}.typing-card textarea{height:130px;font-size:17px;padding:14px 16px;}.stat h2{font-size:28px;}.stats-panel{grid-template-columns:1fr 1fr;gap:12px;}.action-buttons button{font-size:13px;padding:10px 16px;}.bottom-grid{gap:12px;}.info-card{padding:16px 18px;}.shortcut-grid{grid-template-columns:1fr;}.timer-mode-btn{padding:6px 12px;font-size:12px;}footer{margin:14px;padding:14px 18px;font-size:12px;flex-direction:column;text-align:center;}.goal-card{display:none;}}
+@media(max-width:420px){.stats-panel{grid-template-columns:1fr 1fr;gap:10px;}.stat{padding:14px 12px;}.stat h2{font-size:24px;}.timer-wrap .time-display{font-size:28px;min-width:70px;}#passage{font-size:15px;}.typing-card textarea{font-size:15px;height:110px;}}
+</style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-box"><i class="fa-solid fa-keyboard"></i></div>
+    <div><h1>SSC MOCK</h1><p>Typing Test Platform</p></div>
+  </div>
+  <nav class="menu">
+    <a class="active" data-page="test"><span class="icon-wrap"><i class="fa-solid fa-keyboard"></i></span> Typing Test</a>
+    <a data-page="practice"><span class="icon-wrap"><i class="fa-solid fa-pen"></i></span> Practice</a>
+    <a data-page="exam"><span class="icon-wrap"><i class="fa-solid fa-shield-halved"></i></span> Exam Mode <span class="badge">New</span></a>
+    <a data-page="results"><span class="icon-wrap"><i class="fa-solid fa-chart-column"></i></span> Results</a>
+    <a data-page="history"><span class="icon-wrap"><i class="fa-solid fa-clock-rotate-left"></i></span> History</a>
+    <a data-page="leaderboard"><span class="icon-wrap"><i class="fa-solid fa-trophy"></i></span> Leaderboard</a>
+    <a data-page="challenge"><span class="icon-wrap"><i class="fa-solid fa-fire"></i></span> Daily Challenge</a>
+    <hr>
+    <a data-page="settings"><span class="icon-wrap"><i class="fa-solid fa-gear"></i></span> Settings</a>
+    <a data-page="help"><span class="icon-wrap"><i class="fa-solid fa-circle-question"></i></span> Help & Info</a>
+  </nav>
+  <div class="goal-card">
+    <div class="goal-top">
+      <div><h3>🔥 Daily Goal</h3><div class="sub">Practice 30 Minutes Today</div></div>
+      <div class="progress-circle">
+        <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="48"/><circle class="progress" cx="60" cy="60" r="48"/></svg>
+        <span>70%</span>
+      </div>
+    </div>
+    <div class="goal-time">21 / 30 Minutes</div>
+    <button class="progress-btn">View Progress</button>
+  </div>
+</aside>
+<button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+
+<!-- ===== MAIN ===== -->
+<main class="main">
+
+  <header class="topbar">
+    <div class="mode-buttons">
+      <button class="active" id="modePractice"><i class="fa-solid fa-pen"></i> Practice Mode</button>
+      <button id="modeExam"><i class="fa-solid fa-shield-halved"></i> Exam Mode</button>
+    </div>
+    <div class="top-actions">
+      <div class="select-box"><i class="fa-solid fa-globe"></i><select id="langSelect"><option value="en">English</option><option value="hi">Hindi</option></select></div>
+      <button class="top-btn" id="fullscreenBtn"><i class="fa-solid fa-expand"></i> Fullscreen</button>
+      <button class="quit-btn" id="quitBtn"><i class="fa-solid fa-xmark"></i> Quit Test</button>
+    </div>
+  </header>
+
+  <div class="dashboard">
+
+    <section class="content">
+
+      <div class="timer-modes" id="timerModes">
+        <button class="timer-mode-btn" data-time="60">1m <span class="sub">Sprint</span></button>
+        <button class="timer-mode-btn active" data-time="120">2m <span class="sub">Quick</span></button>
+        <button class="timer-mode-btn" data-time="300">5m <span class="sub">Standard</span></button>
+        <button class="timer-mode-btn" data-time="600">10m <span class="sub">Endurance</span></button>
+        <button class="timer-mode-btn" data-time="900">15m <span class="sub">Long</span></button>
+        <button class="timer-mode-btn" data-time="0">∞ <span class="sub">Unlimited</span></button>
+      </div>
+
+      <div class="timer-card">
+        <h2><i class="fa-regular fa-clock"></i> Type the passage below</h2>
+        <div class="timer-wrap">
+          <span class="time-display" id="timerDisplay">02:00</span>
+          <button id="pauseBtn" title="Pause / Resume"><i class="fa-solid fa-pause"></i></button>
+        </div>
+      </div>
+
+      <div class="passage-card">
+        <div id="passage"></div>
+        <div class="legend">
+          <span><span class="dot green"></span> Correct</span>
+          <span><span class="dot red"></span> Incorrect</span>
+          <span><span class="dot blue"></span> Current</span>
+        </div>
+      </div>
+
+      <div class="typing-card">
+        <textarea id="typingInput" placeholder="Start typing here..." spellcheck="false"></textarea>
+      </div>
+
+      <div class="tip-card">
+        <i class="fa-regular fa-lightbulb"></i> Tip: Focus on accuracy. Speed will improve automatically.
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-blue" id="restartBtn"><i class="fa-solid fa-rotate-right"></i> Restart</button>
+        <button class="btn-white" id="newPassageBtn"><i class="fa-regular fa-file-lines"></i> New Passage</button>
+        <button class="btn-red" id="endTestBtn"><i class="fa-solid fa-circle-stop"></i> End Test</button>
+      </div>
+
+      <div class="bottom-grid">
+        <div class="info-card">
+          <h3><i class="fa-regular fa-keyboard"></i> Keyboard Shortcuts</h3>
+          <div class="shortcut-grid">
+            <div class="item"><p>Start / Pause</p><kbd>Alt + P</kbd></div>
+            <div class="item"><p>Restart</p><kbd>Alt + R</kbd></div>
+            <div class="item"><p>New Passage</p><kbd>Alt + N</kbd></div>
+            <div class="item"><p>Exit / Fullscreen</p><kbd>Esc</kbd></div>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3><i class="fa-regular fa-circle-check"></i> Instructions</h3>
+          <ul>
+            <li>Don't look at the keyboard while typing.</li>
+            <li>Maintain correct posture and keep practicing.</li>
+            <li>The test auto-submits when time runs out.</li>
+            <li>Press <kbd style="background:#eef5ff;padding:0 8px;border-radius:4px;font-size:12px;">Alt+P</kbd> to pause.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fa-regular fa-circle-info"></i> Test Info</h3>
+          <div class="meta-row"><span class="label">Mode</span><span class="value" id="infoMode">Practice</span></div>
+          <div class="meta-row"><span class="label">Language</span><span class="value" id="infoLang">English</span></div>
+          <div class="meta-row"><span class="label">Duration</span><span class="value" id="infoDuration">2 Minutes</span></div>
+          <div class="meta-row"><span class="label">Passage</span><span class="value" id="infoPassage">Random</span></div>
+          <div class="meta-row"><span class="label">Total Passages</span><span class="value" id="infoTotalPassages">50+</span></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="stats-panel">
+      <div class="live-header"><i class="fa-solid fa-wave-square"></i> Live Stats</div>
+      <div class="stat"><h2 id="wpm">0</h2><p>Words Per Minute</p><div class="mini-line"></div></div>
+      <div class="stat"><h2 class="purple" id="cpm">0</h2><p>Characters Per Minute</p><div class="mini-line purple-line"></div></div>
+      <div class="stat"><h2 class="green-text" id="accuracy">100%</h2><p>Accuracy</p><div class="mini-line green-line"></div></div>
+      <div class="stat"><h2 class="red-text" id="errors">0</h2><p>Errors</p><div class="mini-line red-line"></div></div>
+      <div class="progress-card">
+        <div class="progress-head"><h3>Overall Progress</h3><span id="progressPercent">0%</span></div>
+        <div class="progress-bar"><div id="progressFill"></div></div>
+        <p>Typed: <strong id="typedCount">0</strong> / <strong id="totalCount">0</strong> Characters</p>
+      </div>
+    </aside>
+
+  </div>
+
+  <footer>
+    <p>© 2024 SSC MOCK Typing Test Platform. All rights reserved.</p>
+    <p>Made with ❤️ for SSC Aspirants</p>
+    <p>Version 3.0.0</p>
+  </footer>
+
+</main>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ============================================================
+  // 100+ UNIQUE PASSAGES (unlimited feel)
+  // ============================================================
+  const PASSAGE_POOL = [   "There is a sacred moment just before the sun breaks the horizon, where the world holds its breath. The sky transitions from the deep indigo of a sleepless night to delicate hues of rose, amber, and lavender. This is the dawn—nature’s most powerful metaphor for new beginnings. As you watch the first golden ray pierce the darkness, it does not ask for permission; it simply arrives, unwavering and full of purpose. This daily miracle is a reminder that no matter how long the night has been, no matter how heavy the shadows of yesterday feel, the light is always patient enough to return. The beauty of a sunrise lies not merely in its colors, but in its relentless promise of renewal. It whispers to the weary soul that every ending is merely a prelude to a fresh start. In the stillness of the early morning, the cool dew clings to the blades of grass, each droplet acting as a tiny prism, reflecting the entire spectrum of possibility. The birds, silent just moments before, erupt into a cacophony of hopeful song, as if they are celebrating the sheer audacity of a new day. This is nature’s motivational speech to humanity: *You are given a blank canvas every twenty-four hours.* The sunrise does not care about your failures of yesterday; it offers its warmth unconditionally. It reminds us that we, too, possess an inner light that can dispel the fog of doubt. When you feel trapped in a cycle of monotony or despair, rise early and watch the world ignite. Feel the chill of the morning air against your skin, and notice how it invigorates your lungs. The sun climbs with a deliberate, unhurried grace, teaching us that true progress is steady and consistent. It does not rush to the top, but it never stops moving. That is the essence of motivation—not frantic speed, but persistent motion. The beauty of the dawn is also its stark honesty; the light reveals everything—the dust, the cracks, the flaws—yet it also reveals the path forward. It illuminates the winding road ahead, the shimmering river, and the distant mountain peaks. It calls you to step out of the comfort of the shadow and into the warmth of action. As the golden light washes over the landscape, it transforms the ordinary into the extraordinary, painting the world with a brush of optimism. This is your invitation to begin again. Let the sunrise be your anchor, a visual oath that hope is not a passive feeling but an active choice. Embrace the morning, and let its beautiful, fiery energy ignite the dormant potential within you.",
+    "Walk into an old-growth forest, and you step into a cathedral of time. The towering giants that surround you have stood for centuries, perhaps millennia, witnessing the passage of empires, the fury of storms, and the gentle caress of a thousand seasons. These trees are the ultimate embodiment of resilience. Their bark is scarred, their branches twisted and gnarled, yet they reach for the sky with an indomitable will. The beauty of an ancient tree is not its perfection; it is its survival. Look closely at the base of a massive oak, and you will see the melted remnants of lightning strikes, healed over with new wood. You will see knots where limbs were torn away by hurricane winds, only for the tree to grow around the wound, incorporating the scar into its very structure. This is a powerful lesson: we are not meant to be unblemished; we are meant to be strong. The forest floor is a testament to the cycle of life and death, where fallen logs provide nourishment for the next generation of saplings. This interconnectedness teaches us that our struggles are not isolated; they contribute to the ecosystem of our lives, providing strength to our roots. The motivational call of the forest is one of deep grounding. When the world rushes past in a blur of anxiety and haste, the trees remain still. They do not worry about the future; they simply grow, slowly and deliberately, adding ring upon ring of experience. Each ring tells a story of a dry year, a wet year, a cold winter, or a warm summer. They carry their history within them, and yet they continue to sprout new leaves each spring, embracing change with grace. Consider the redwoods, which cannot grow without the fog that rolls in from the sea; they have adapted to draw moisture from the air. They teach us to adapt to our environment, to find nourishment even in the harshest conditions. The beautiful dappled sunlight filtering through the canopy is a mosaic of hope, reminding us that even in the densest thicket, light finds a way. The roots of these ancient trees often intertwine with their neighbors, creating a vast underground network that supports the entire grove. They do not compete in isolation; they thrive in community. This is a profound motivational truth: we are stronger together. When you feel uprooted or battered by the storms of life, remember the tree. Plant your feet firmly in the soil of your values. Stretch your arms toward the light of your goals. Allow the winds of challenge to shape you, not break you. The forest is a living library of endurance, and its beauty is a constant reminder that the deepest roots produce the tallest heights.",
+    "Stand at the edge of the sea, where the land relinquishes its dominion to the vast, rolling expanse of the ocean. The tide is a perpetual, cosmic breath—an eternal push and pull governed by the silent gravity of the moon. There is a hypnotic beauty in the way the waves build, crest, and collapse onto the shore, only to retreat and try again. This relentless rhythm is the heartbeat of our planet, and it offers one of the most powerful motivational lessons: persistence. The ocean does not attempt to move the mountain; it simply wears it down, grain by grain, wave by wave, over eons. The coastline is sculpted not by force, but by persistence. The water knows that it will eventually shape the granite cliffs, that its gentle, repeated touch is more powerful than any single, violent storm. When we face obstacles that seem insurmountable, we can look to the tide. It teaches us that consistent, small actions, repeated with faith, can move the largest boulders out of our path. The beauty of the tide is also its totality; it covers everything equally. The high tide does not discriminate; it fills every inlet, every cove, every hidden crevice. It is a representation of unlimited potential, flooding the dry sands with new life and possibility. As the water recedes, it leaves behind a glistening mirror, reflecting the sky, revealing the treasures hidden beneath—colorful shells, smooth stones, and tiny crabs scuttling about their business. This ebb and flow is a metaphor for our own energy levels; we must give and take, act and rest, push and retreat. The motivational wisdom of the ocean lies in its acceptance of the cycle. It does not fight the pull of the moon; it surrenders to it, yet in that surrender, it gains its immense power. The roar of the waves is a primal song that drowns out the noise of our anxious thoughts, centering us in the present moment. The salt spray on your face is a baptism of courage. When you stand before the ocean, you are reminded of your smallness in the grand scheme of the universe, yet that thought is not terrifying—it is liberating. It frees you from the prison of ego. The ocean challenges you to be fluid, to adapt your shape to the container you find yourself in, and to keep moving forward. Even on the calmest days, the tide is turning, the currents are flowing, and the deep water is teeming with unseen energy. Let that energy inspire you to keep pushing, keep flowing, and keep believing that your persistence, like the tide, will eventually reshape your world.",
+    "There is a reason why humans have always felt a spiritual pull toward the mountains. They are the earth’s proudest features, piercing the sky with an icy grandeur that humbles the soul. Climbing a mountain is the ultimate metaphor for the human struggle toward excellence. The base is lush and inviting, the path wide and easy, but as you ascend, the air grows thin, the terrain treacherous, and the goal seems impossibly far away. The beauty of the mountain peak is that it is never handed to you; it must be earned. Each step upward is a negotiation with your own limitations. Your muscles burn, your lungs ache for oxygen, and the summit often hides behind clouds, teasing you with its inaccessibility. Yet, the mountain teaches you that the struggle is where the transformation happens. You cannot reach the peak with the same mindset you had at the base. You must become lighter, more focused, more resilient. The panoramic view from the top is nature’s reward for your perseverance, a breathtaking vista of valleys, rivers, and forests stretching to the horizon, a visual representation of the breadth of your potential. The cold wind up high sharpens your senses, reminding you that you are alive and capable. The jagged rocks, the patches of stubborn snow, the fragile alpine flowers that bloom in the harshest conditions—these are testaments to survival against the odds. The mountain does not care about your excuses; it cares only about your effort. It stands as a silent challenge to the complacent, a beacon for the ambitious. When you reach the summit, you look down not at the world, but at the fears you conquered to get there. The mist that clears to reveal the vast landscape is like the clearing of confusion in your mind. The motivational message of the mountain is one of perspective. From the top, the problems that seemed so large in the valley become insignificant specks. The journey teaches you patience, for you cannot sprint up a steep slope; you must use a steady, rhythmic pace. The beauty of the mountain is its permanence; it has been there for millions of years, weathering ice ages and volcanic eruptions. It stands as a monument to time, reminding you that your current struggles are merely a fleeting moment in the grand tapestry of existence. Yet, in that fleeting moment, you have the power to reach the highest heights. Let the peak be your North Star. Let its sharp, crystalline silhouette against the blue sky be your motivation to climb higher, think bigger, and never settle for the comfortable foothills of mediocrity.",
+    "A river begins as a whisper, a thin trickle of meltwater high in the mountains. It is fragile, easily blocked by a fallen twig or absorbed by the dry earth. But as it descends, it gathers momentum, merging with other streams, growing in power and purpose. The beauty of a river is its unwavering commitment to the path of least resistance, yet it is also capable of carving the deepest canyons. It is the ultimate symbol of adaptability and silent strength. The water does not argue with the rocks it encounters; it flows around them, over them, or patiently wears them down into smooth pebbles over time. This is a profound motivational lesson: intelligence is often about navigation, not confrontation. When life presents you with an obstacle, you do not have to smash through it; you can flow around it, find a new way, or patiently wait for the opportunity to pass. The river is never static; it is a perpetual state of movement, carrying the sediments of its past into the ocean of the future. This reminds us that stagnation is the enemy of life. We must keep moving, keep evolving, and keep carrying our experiences with us, letting them shape us without weighing us down. The gentle murmur of the water is a soothing melody that speaks of peace, yet the undercurrents hold immense power. In the quiet stretches, the river reflects the sky, the trees, and the mountains, becoming a perfect mirror of the world around it. This teaches us the beauty of reflection, the importance of taking a moment to see ourselves clearly in the stillness of our minds. When the river cascades over a waterfall, it is not afraid of the fall; it embraces the plunge, transforming into a spectacular display of mist and rainbows. It turns a potential disaster into a thing of profound beauty. The motivational call of the river is to keep going, even when the path drops away from beneath you. The water that falls over the cliff does not cease to be a river; it becomes a waterfall, and then it continues on its journey as a stream again. The deep pools beneath the falls are places of rest and renewal, hidden sanctuaries where the water catches its breath before rushing forward. Let the river be your guide. Be fluid in your thinking, relentless in your movement, and calm in your demeanor. Know that your persistence, like the constant flow of water, can carve canyons through the mountains of doubt that stand in your way.",
+    "As the sun sinks below the horizon and the world is painted in shades of violet and deep blue, a quiet magic begins to stir in the meadows and woodlands. The fireflies emerge, each a tiny lantern carrying its own light into the encroaching darkness. The spectacle of their synchronized dance is one of nature’s most enchanting sights, a reminder that even the smallest among us can illuminate the night. The beauty of the firefly is its self-sufficiency; it does not borrow its light from the sun or the moon, it generates it from within. This is a powerful metaphor for inner motivation. We all possess an inherent light, a unique brilliance that does not depend on external validation. In a world that often feels overwhelmingly dark, it is easy to feel insignificant, to believe that our individual glow cannot possibly make a difference. Yet, the firefly teaches us that a single light, flickering in the void, can attract attention, guide a lost traveler, or simply bring joy to a lonely heart. The collective dance of hundreds of fireflies is a breathtaking display of synchronized intention. They communicate, they attract, and they create a living constellation right here on earth. This reminds us of the power of community and shared purpose. When we come together, our individual lights merge into a brilliant spectacle that can be seen for miles. The motivational lesson here is that you are never too small to shine. The firefly does not compare its brightness to the stars; it simply glows. It accepts its nature and fulfills its purpose perfectly. The cool evening air and the soft chorus of crickets provide the perfect backdrop for this luminous display, creating a moment of pure, unadulterated wonder. It invites us to slow down, to be present, and to appreciate the subtle beauties that are often overlooked. In the rush of our daily lives, we tend to ignore the dusk, but the fireflies command our attention. They remind us that some of the most profound beauty exists in the twilight moments—the transition periods of our lives. When you are in a transitional phase, feeling lost in the shadows, remember the firefly. You have the capacity to produce your own light. You have the ability to create your own hope. Your spark, no matter how faint it may seem to you, is a beacon of possibility to someone else. Let the dance of the fireflies be a beautiful, motivational push to embrace your unique gifts and share them with the world, knowing that collective illumination is the most powerful force against the darkness.",
+    "Listen to the sound of a mountain stream. It is a gurgling, laughing, babbling conversation between the water and the rocks. This stream begins its journey as a tiny spring, pushing up from deep within the earth, and it embarks on a long, winding journey to the sea. The beauty of this journey is its unpredictability. The stream never knows what is around the next bend—a steep drop, a tranquil pool, or a log jam. Yet, it does not fear the unknown; it simply flows into it. This is a masterclass in tackling the unknown. We often spend our lives paralyzed by the fear of what lies ahead, but the stream teaches us to meet each moment as it comes, trusting our ability to navigate. The playful splashing of the water over pebbles is a reminder that life is not meant to be a grim march, but a joyful dance. The stream carries leaves, twigs, and minerals, constantly transforming its composition, reminding us that we are changed by the places we pass through. The deep pools are places of quiet reflection, where the water slows down and gathers its strength before it continues. We need these pauses in our own lives—moments to collect ourselves before we rush into the next rapids. When the stream widens into a river, it carries the memory of the mountains with it, but it adapts to the flatlands, slowing its pace and meandering gracefully. This adaptability is a crucial motivational tool; we must learn to change our speed and style depending on the terrain of our lives. The sun glints off the ripples, creating thousands of sparkling diamonds, a beautiful display of optimism even amidst the mud of the riverbank. The water is always clear if you look deep enough, always moving forward despite the obstacles. The rocks that try to block its path are eventually polished into beautiful rounded stones, a testament to the power of gentle persistence. The stream does not fight the friction; it embraces it, smoothing its own edges in the process. The motivational wisdom of the stream is that the journey is the destination. The water that reaches the ocean is not the same water that left the mountain, just as you will not be the same person when you reach your goal. The beauty of the stream lies in its constant motion, its cheerful resilience, and its absolute faith in its own course.",
+ 
+    "It always seems impossible until it is done. The greatest accomplishments often begin with a simple decision to try. Have faith.",
+    "The only impossible journey is the one you never begin. Start today and you will be amazed at how far you can go. Every step counts.",
+    "Education is the most powerful weapon which you can use to change the world. Invest in learning and you will reap the rewards.",
+    "The best way to predict the future is to create it. Take control of your destiny by taking action today. Your future is in your hands.",
+    "Hard work beats talent when talent doesn't work hard. Consistency and dedication are the keys to success. Keep showing up.",
+    "The mind is everything. What you think you become. Cultivate positive thoughts and you will attract positive outcomes.",
+    "Life is what happens when you're busy making other plans. Stay present, focus on the moment, and make the most of every opportunity.",
+    "The only way to do great work is to love what you do. Find your passion and pursue it with all your heart. Love what you do.",
+    "Your time is limited, so don't waste it living someone else's life. Follow your own path and stay true to your values.",
+    "Stay hungry, stay foolish. Always be curious and never stop learning. The world is full of wonders waiting to be discovered.",
+    "You are braver than you believe, stronger than you seem, and smarter than you think. Believe in yourself and achieve the extraordinary.",
+    "The greatest glory in living lies not in never falling, but in rising every time we fall. Resilience is the key to overcoming any obstacle.",
+    "Don't let the noise of others' opinions drown out your own inner voice. Trust your instincts and have the courage to follow your heart.",
+    "Innovation distinguishes between a leader and a follower. Think differently, challenge the status quo, and create the change you want.",
+    "The best time to plant a tree was twenty years ago. The second best time is now. Start today and build the future you envision.",
+    "Quality is not an act, it is a habit. Excellence is achieved through consistent effort and attention to detail. Strive for greatness.",
+    "The greatest risk is not taking any risk. Step out of your comfort zone and embrace new challenges. Growth happens when you push boundaries.",
+    "Purpose is the reason you journey. Passion is the fire that lights your way. When purpose and passion align, you become unstoppable.",
+    "Courage is not the absence of fear, but the triumph over it. Face your fears with determination and discover strength you never knew.",
+    "The only person you are destined to become is the person you decide to be. Take ownership of your life and choose your own path.",
+    "Great minds discuss ideas. Average minds discuss events. Small minds discuss people. Focus on ideas and elevate your thinking.",
+    "The secret of success is to do the common thing uncommonly well. Excellence is achieved by mastering the fundamentals.",
+    "The future belongs to those who prepare for it today. Invest in your skills, build your knowledge, and be ready for what comes.",
+    "What you get by achieving your goals is not as important as what you become by achieving them. The journey shapes you.",
+    "In the middle of difficulty lies opportunity. Challenges are not obstacles but stepping stones to greater success.",
+    "The secret of change is to focus all of your energy not on fighting the old, but on building the new. Create the future with intention.",
+    "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.",
+    "The greatest test of courage on earth is to bear defeat without losing heart. Stand tall in the face of adversity and keep moving.",
+    "To live is the rarest thing in the world. Most people exist, that is all. Embrace life fully, pursue your passions, and make every moment count.",
+    "The purpose of life is a life of purpose. Find meaning in what you do and you will find fulfillment. Your purpose gives direction.",
+    "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+    "The future starts today, not tomorrow. Take action now and you will be grateful for the progress you make. Every step forward counts.",
+    "Don't be pushed around by the problems in your life. Be pushed by the dreams in your heart. Let your vision guide you.",
+    "The biggest adventure you can take is to live the life of your dreams. Dare to dream big and have the courage to pursue your passion.",
+    "Life is either a daring adventure or nothing at all. Step into the unknown with courage and discover wonders beyond imagination.",
+    "The only limit to our realization of tomorrow is our doubts of today. Let go of doubt and embrace the possibilities ahead.",
+    "Excellence is not a skill, it is an attitude. Approach every task with commitment and you will achieve remarkable results.",
+    "The greatest wealth is health. Take care of your body, mind, and spirit. A healthy lifestyle leads to a happy and productive life.",
+    "Kindness is the language which the deaf can hear and the blind can see. Spread kindness wherever you go.",
+    "The best and most beautiful things in the world cannot be seen or even touched. They must be felt with the heart.",
+    "Life is really simple, but we insist on making it complicated. Simplify your life and focus on what truly matters.",
+    "The only thing we have to fear is fear itself. Face your fears with courage and you will conquer them.",
+    "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+    "The unexamined life is not worth living. Reflect on your actions and strive to be a better person every day.",
+    "We are what we repeatedly do. Excellence, then, is not an act, but a habit. Build good habits and succeed.",
+    "The greatest glory in living lies not in never falling, but in rising every time we fall. Keep getting up.",
+    "In the end, it's not the years in your life that count. It's the life in your years. Make every moment meaningful.",
+    "The way to get started is to quit talking and begin doing. Take action and make your dreams a reality.",
+    "Don't watch the clock; do what it does. Keep going. Persistence is the key to achieving your goals.",
+    "The secret of getting ahead is getting started. Start today and make progress one step at a time.",
+    "The only way to do great work is to love what you do. Find your passion and pursue it relentlessly.",
+    "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.",
+    "The greatest test of courage on earth is to bear defeat without losing heart. Stand tall in the face of adversity.",
+    "To live is the rarest thing in the world. Most people exist, that is all. Embrace life fully and make every moment count.",
+    "The purpose of life is a life of purpose. Find meaning in what you do and you will find fulfillment.",
+    "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+    "The future starts today, not tomorrow. Take action now and you will be grateful for the progress you make.",
+    "Don't be pushed around by the problems in your life. Be pushed by the dreams in your heart. Let your vision guide you.",
+    "The biggest adventure you can take is to live the life of your dreams. Dare to dream big and have the courage to pursue your passion.",
+    "Life is either a daring adventure or nothing at all. Step into the unknown with courage and discover wonders beyond imagination.",
+    "The only limit to our realization of tomorrow is our doubts of today. Let go of doubt and embrace the possibilities ahead.",
+    "Excellence is not a skill, it is an attitude. Approach every task with commitment and you will achieve remarkable results.",
+    "The greatest wealth is health. Take care of your body, mind, and spirit. A healthy lifestyle leads to a happy and productive life.",
+    "Kindness is the language which the deaf can hear and the blind can see. Spread kindness wherever you go.",
+    "The best and most beautiful things in the world cannot be seen or even touched. They must be felt with the heart.",
+    "Life is really simple, but we insist on making it complicated. Simplify your life and focus on what truly matters.",
+    "The only thing we have to fear is fear itself. Face your fears with courage and you will conquer them.",
+    "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+    "The unexamined life is not worth living. Reflect on your actions and strive to be a better person every day.",
+    "We are what we repeatedly do. Excellence, then, is not an act, but a habit. Build good habits and succeed.",
+    "The greatest glory in living lies not in never falling, but in rising every time we fall. Keep getting up.",
+    "In the end, it's not the years in your life that count. It's the life in your years. Make every moment meaningful.",
+    "The way to get started is to quit talking and begin doing. Take action and make your dreams a reality.",
+    "Don't watch the clock; do what it does. Keep going. Persistence is the key to achieving your goals.",
+    "The secret of getting ahead is getting started. Start today and make progress one step at a time.",
+    "The only way to do great work is to love what you do. Find your passion and pursue it relentlessly.",
+    "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.",
+    "The greatest test of courage on earth is to bear defeat without losing heart. Stand tall in the face of adversity.",
+    "To live is the rarest thing in the world. Most people exist, that is all. Embrace life fully and make every moment count.",
+    "The purpose of life is a life of purpose. Find meaning in what you do and you will find fulfillment.",
+    "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+    "The future starts today, not tomorrow. Take action now and you will be grateful for the progress you make.",
+    "Don't be pushed around by the problems in your life. Be pushed by the dreams in your heart. Let your vision guide you.",
+    "The biggest adventure you can take is to live the life of your dreams. Dare to dream big and have the courage to pursue your passion.",
+    "Life is either a daring adventure or nothing at all. Step into the unknown with courage and discover wonders beyond imagination.",
+    "The only limit to our realization of tomorrow is our doubts of today. Let go of doubt and embrace the possibilities ahead.",
+    "Excellence is not a skill, it is an attitude. Approach every task with commitment and you will achieve remarkable results.",
+    "The greatest wealth is health. Take care of your body, mind, and spirit. A healthy lifestyle leads to a happy and productive life.",
+    "Kindness is the language which the deaf can hear and the blind can see. Spread kindness wherever you go.",
+    "The best and most beautiful things in the world cannot be seen or even touched. They must be felt with the heart.",
+    "Life is really simple, but we insist on making it complicated. Simplify your life and focus on what truly matters.",
+    "The only thing we have to fear is fear itself. Face your fears with courage and you will conquer them.",
+    "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+    "The unexamined life is not worth living. Reflect on your actions and strive to be a better person every day."
+ 
+  ];
+
+  // Shuffle and cycle for unlimited feel
+  let shuffled = [...PASSAGE_POOL];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  let passageIdx = 0;
+
+  function getNextPassage() {
+    if (passageIdx >= shuffled.length) {
+      shuffled = [...PASSAGE_POOL];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      passageIdx = 0;
+    }
+    return shuffled[passageIdx++];
+  }
+
+  // ---- Hindi passages ----
+  const HINDI_PASSAGES = [
+     "भारत एक विविधताओं से भरा देश है जहाँ अनेक भाषाएँ और संस्कृतियाँ मिलकर एकता का संदेश देती हैं। नियमित अभ्यास सफलता की कुंजी है।",
+    "प्रतिदिन टाइपिंग का अभ्यास करने से गति और शुद्धता दोनों में सुधार होता है। निरंतर प्रयास से प्रतियोगी परीक्षाओं में बेहतर प्रदर्शन किया जा सकता है।",
+    "सफलता किसी भी क्षेत्र में संभव है यदि आप निरंतर अभ्यास करते रहें। हर दिन थोड़ा सा सुधार आपको आपके लक्ष्य के करीब लाता है।",
+    "शिक्षा सबसे शक्तिशाली हथियार है जिसका उपयोग आप दुनिया को बदलने के लिए कर सकते हैं। ज्ञान में निवेश करें और आपको इसका लाभ मिलेगा।",
+    "जीवन की यात्रा में हमें अक्सर ऐसी बाधाओं का सामना करना पड़ता है जो दुर्गम लगती हैं। लेकिन ये चुनौतियाँ ही हमारे चरित्र का निर्माण करती हैं।",
+    "संचार की कला नेतृत्व की भाषा है। शब्दों में प्रेरित करने, उपचार करने, एकजुट करने और बदलाव लाने की शक्ति होती है।",
+    "अपनी मंजिल तक पहुँचने के लिए पहला कदम उठाना सबसे महत्वपूर्ण होता है। हर महान उपलब्धि एक साधारण निर्णय से शुरू होती है।",
+    "कठिन परिश्रम प्रतिभा को हरा देता है जब प्रतिभा कठिन परिश्रम नहीं करती। निरंतरता और समर्पण सफलता की कुंजी हैं।",
+    "मन ही सब कुछ है। आप जो सोचते हैं वही बनते हैं। सकारात्मक विचारों को विकसित करें और आप सकारात्मक परिणाम आकर्षित करेंगे।",
+    "सफलता अंतिम नहीं है, असफलता घातक नहीं है। निरंतर जारी रखने का साहस ही मायने रखता है। आगे बढ़ते रहें और विश्वास करते रहें।"
+  ];
+
+  function getHindiPassage() {
+    return HINDI_PASSAGES[Math.floor(Math.random() * HINDI_PASSAGES.length)];
+  }
+
+  // ---- DOM refs ----
+  const passageEl = document.getElementById('passage');
+  const input = document.getElementById('typingInput');
+  const timerDisplay = document.getElementById('timerDisplay');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const wpmEl = document.getElementById('wpm');
+  const cpmEl = document.getElementById('cpm');
+  const accEl = document.getElementById('accuracy');
+  const errorEl = document.getElementById('errors');
+  const progressFill = document.getElementById('progressFill');
+  const progressPercent = document.getElementById('progressPercent');
+  const typedCount = document.getElementById('typedCount');
+  const totalCount = document.getElementById('totalCount');
+  const restartBtn = document.getElementById('restartBtn');
+  const newPassageBtn = document.getElementById('newPassageBtn');
+  const endTestBtn = document.getElementById('endTestBtn');
+  const quitBtn = document.getElementById('quitBtn');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('sidebar');
+  const timerModeBtns = document.querySelectorAll('.timer-mode-btn');
+  const modeBtns = document.querySelectorAll('.mode-buttons button');
+  const langSelect = document.getElementById('langSelect');
+  const infoMode = document.getElementById('infoMode');
+  const infoLang = document.getElementById('infoLang');
+  const infoDuration = document.getElementById('infoDuration');
+  const infoPassage = document.getElementById('infoPassage');
+  const infoTotalPassages = document.getElementById('infoTotalPassages');
+
+  // ---- State ----
+  const state = {
+    currentText: '',
+    totalTime: 120,
+    timeLeft: 120,
+    timerInterval: null,
+    isPaused: false,
+    isFinished: false,
+    timerStarted: false,
+    errors: 0,
+    correct: 0,
+    totalTyped: 0,
+    startTimestamp: null,
+    pausedTimestamp: null,
+    activeTime: 0,
+    currentMode: 'practice',
+    currentLanguage: 'en',
+    totalPassages: PASSAGE_POOL.length + HINDI_PASSAGES.length,
+  };
+
+  // ---- Load Passage ----
+  function loadPassage() {
+    if (state.currentLanguage === 'hi') {
+      state.currentText = getHindiPassage();
+    } else {
+      state.currentText = getNextPassage();
+    }
+    passageEl.innerHTML = '';
+    state.currentText.split('').forEach(char => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      passageEl.appendChild(span);
+    });
+    totalCount.textContent = state.currentText.length;
+    typedCount.textContent = '0';
+    progressFill.style.width = '0%';
+    progressPercent.textContent = '0%';
+    input.value = '';
+    input.disabled = false;
+    input.focus();
+    state.errors = 0;
+    state.correct = 0;
+    state.totalTyped = 0;
+    state.isFinished = false;
+    state.isPaused = false;
+    state.timerStarted = false;
+    state.activeTime = 0;
+    state.startTimestamp = null;
+    state.pausedTimestamp = null;
+    if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    updateTimerDisplay();
+    updateStats();
+    updateProgress();
+    document.querySelectorAll('#passage span').forEach(span => {
+      span.classList.remove('correct', 'incorrect', 'current');
+    });
+    infoPassage.textContent = 'Random';
+    infoTotalPassages.textContent = state.totalPassages + '+';
+  }
+
+  // ---- Timer ----
+  function updateTimerDisplay() {
+    const min = Math.floor(state.timeLeft / 60);
+    const sec = state.timeLeft % 60;
+    timerDisplay.textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+    timerDisplay.classList.remove('warning', 'danger');
+    if (state.timeLeft <= 10) timerDisplay.classList.add('danger');
+    else if (state.timeLeft <= 30) timerDisplay.classList.add('warning');
+  }
+
+  function startTimer() {
+    if (state.timerStarted) return;
+    state.timerStarted = true;
+    state.startTimestamp = Date.now() - state.activeTime * 1000;
+    state.timerInterval = setInterval(() => {
+      if (state.isPaused || state.isFinished) return;
+      const now = Date.now();
+      const elapsed = (now - state.startTimestamp) / 1000;
+      const remaining = Math.max(0, state.totalTime - elapsed);
+      state.timeLeft = Math.floor(remaining);
+      state.activeTime = elapsed;
+      updateTimerDisplay();
+      if (state.timeLeft <= 0) endTest('⏰ Time\'s Up!');
+    }, 200);
+  }
+
+  function togglePause() {
+    if (state.isFinished) return;
+    if (!state.timerStarted) { input.focus(); startTimer(); return; }
+    state.isPaused = !state.isPaused;
+    if (state.isPaused) {
+      pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+      state.pausedTimestamp = Date.now();
+    } else {
+      pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+      const pauseDuration = (Date.now() - state.pausedTimestamp) / 1000;
+      state.startTimestamp += pauseDuration * 1000;
+    }
+  }
+
+  // ---- Typing Handler ----
+  function handleTyping() {
+    if (state.isFinished) return;
+    if (!state.timerStarted) startTimer();
+    const typed = input.value;
+    const chars = passageEl.querySelectorAll('span');
+    let newErrors = 0, newCorrect = 0;
+    for (let i = 0; i < chars.length; i++) {
+      const span = chars[i];
+      span.classList.remove('correct', 'incorrect', 'current');
+      if (i < typed.length) {
+        const typedChar = typed[i] || '';
+        if (typedChar === span.textContent) { span.classList.add('correct'); newCorrect++; }
+        else { span.classList.add('incorrect'); newErrors++; }
+      } else if (i === typed.length) {
+        span.classList.add('current');
+      }
+    }
+    const extra = Math.max(0, typed.length - chars.length);
+    newErrors += extra;
+    state.errors = newErrors;
+    state.correct = newCorrect;
+    state.totalTyped = typed.length;
+    updateStats();
+    updateProgress();
+    if (typed.length >= chars.length && chars.length > 0) {
+      state.isFinished = true;
+      input.disabled = true;
+      if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+      pauseBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+      setTimeout(() => {
+        const wpm = wpmEl.textContent;
+        const acc = accEl.textContent;
+        const err = errorEl.textContent;
+        alert(`🎉 You completed the passage!\n\nWPM: ${wpm}\nAccuracy: ${acc}\nErrors: ${err}`);
+      }, 300);
+    }
+  }
+
+  // ---- Stats ----
+  function updateStats() {
+    const elapsedMinutes = state.activeTime / 60 || 0.001;
+    const gross = Math.round((state.totalTyped / 5) / elapsedMinutes);
+    const cpm = Math.round(state.totalTyped / elapsedMinutes);
+    const accuracy = state.totalTyped === 0 ? 100 : Math.round((state.correct / state.totalTyped) * 100);
+    wpmEl.textContent = gross;
+    cpmEl.textContent = cpm;
+    accEl.textContent = accuracy + '%';
+    errorEl.textContent = state.errors;
+    typedCount.textContent = state.totalTyped;
+  }
+
+  function updateProgress() {
+    const total = state.currentText.length;
+    const typed = Math.min(state.totalTyped, total);
+    const percent = total === 0 ? 0 : Math.round((typed / total) * 100);
+    progressFill.style.width = percent + '%';
+    progressPercent.textContent = percent + '%';
+    typedCount.textContent = typed;
+  }
+
+  // ---- End Test ----
+  function endTest(message) {
+    if (state.isFinished) return;
+    state.isFinished = true;
+    input.disabled = true;
+    if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+    pauseBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+    const wpm = wpmEl.textContent;
+    const cpm = cpmEl.textContent;
+    const acc = accEl.textContent;
+    const err = errorEl.textContent;
+    alert(`${message || '⏹️ Test Completed!'}\n\n📊 Results:\nWPM: ${wpm}\nCPM: ${cpm}\nAccuracy: ${acc}\nErrors: ${err}\nCharacters: ${state.totalTyped}`);
+  }
+
+  // ---- Restart / New ----
+  function restartTest() {
+    if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+    state.timerStarted = false;
+    state.isPaused = false;
+    state.isFinished = false;
+    state.timeLeft = state.totalTime;
+    state.activeTime = 0;
+    state.startTimestamp = null;
+    state.pausedTimestamp = null;
+    input.disabled = false;
+    input.focus();
+    loadPassage();
+    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    updateTimerDisplay();
+    const mins = Math.floor(state.totalTime / 60);
+    infoDuration.textContent = state.totalTime === 0 ? '∞ (Unlimited)' : `${mins} Min${mins > 1 ? 's' : ''}`;
+  }
+
+  // ---- Timer Modes ----
+  timerModeBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      timerModeBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const time = parseInt(this.dataset.time);
+      state.totalTime = time;
+      state.timeLeft = time;
+      if (time === 0) infoDuration.textContent = '∞ (Unlimited)';
+      else {
+        const mins = Math.floor(time / 60);
+        infoDuration.textContent = `${mins} Min${mins > 1 ? 's' : ''}`;
+      }
+      restartTest();
+    });
+  });
+
+  // ---- Mode Toggle ----
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      modeBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      state.currentMode = this.id === 'modeExam' ? 'exam' : 'practice';
+      infoMode.textContent = state.currentMode === 'exam' ? 'Exam Mode' : 'Practice';
+      restartTest();
+    });
+  });
+
+  // ---- Language ----
+  langSelect.addEventListener('change', function() {
+    state.currentLanguage = this.value;
+    infoLang.textContent = this.value === 'en' ? 'English' : 'Hindi';
+    restartTest();
+  });
+
+  // ---- Sidebar Navigation ----
+  document.querySelectorAll('.menu a[data-page]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+      this.classList.add('active');
+      if (window.innerWidth <= 768) sidebar.classList.remove('open');
+      const page = this.dataset.page;
+      if (page === 'test') { /* already there */ }
+      else { alert(`📊 Navigating to: ${page.charAt(0).toUpperCase() + page.slice(1)}\n\nFull analytics will be displayed here.`); }
+    });
+  });
+
+  // ---- Sidebar Toggle ----
+  sidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      if (!sidebar.contains(e.target) && e.target !== sidebarToggle) sidebar.classList.remove('open');
+    }
+  });
+
+  // ---- Event Listeners ----
+  input.addEventListener('input', handleTyping);
+  pauseBtn.addEventListener('click', togglePause);
+  restartBtn.addEventListener('click', restartTest);
+  newPassageBtn.addEventListener('click', restartTest);
+  endTestBtn.addEventListener('click', () => { if (confirm('End test?')) endTest('⏹️ Test Ended'); });
+  quitBtn.addEventListener('click', () => { if (confirm('Quit test?')) restartTest(); });
+  fullscreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+    else document.exitFullscreen().catch(()=>{});
+  });
+
+  // ---- Keyboard Shortcuts ----
+  document.addEventListener('keydown', (e) => {
+    if (e.altKey && e.key.toLowerCase() === 'p') { e.preventDefault(); togglePause(); }
+    if (e.altKey && e.key.toLowerCase() === 'r') { e.preventDefault(); restartTest(); }
+    if (e.altKey && e.key.toLowerCase() === 'n') { e.preventDefault(); restartTest(); }
+    if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v') e.preventDefault();
+    if (e.key === 'ContextMenu') e.preventDefault();
+  });
+
+  // ---- Anti-Cheat ----
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && state.timerStarted && !state.isFinished && !state.isPaused) {
+      alert('⚠️ Tab switching detected! Stay focused.');
+    }
+  });
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // ---- Init ----
+  state.totalTime = 120;
+  state.timeLeft = 120;
+  state.totalPassages = PASSAGE_POOL.length + HINDI_PASSAGES.length;
+  infoDuration.textContent = '2 Minutes';
+  infoMode.textContent = 'Practice';
+  infoLang.textContent = 'English';
+  infoTotalPassages.textContent = state.totalPassages + '+';
+  loadPassage();
+  updateTimerDisplay();
+
+  console.log('🚀 SSC MOCK Typing Test Platform v3.0 loaded.');
+  console.log(`📚 ${state.totalPassages}+ passages available (unlimited).`);
+  console.log('⌨️ Shortcuts: Alt+P (Pause), Alt+R (Restart), Alt+N (New Passage)');
+});
+</script>
+</body>
+</html>

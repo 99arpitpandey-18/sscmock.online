@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Computer Fundamentals – कंप्यूटर मूलभूत</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #0b5e7c;
+            --accent-light: #4a90e2;
+            --accent-dark: #06455a;
+            --accent-gradient: linear-gradient(135deg, #06455a, #0b5e7c);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(11, 94, 124, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #0b5e7c;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(11,94,124,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.blue { background:#0b5e7c; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(11,94,124,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(11,94,124,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(11,94,124,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(11,94,124,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(11,94,124,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(11,94,124,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(11,94,124,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(11,94,124,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(11,94,124,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(11,94,124,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(11,94,124,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(11,94,124,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(11,94,124,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(11,94,124,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(11,94,124,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(11,94,124,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(11,94,124,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">💻 COMPUTER FUNDAMENTALS – कंप्यूटर मूलभूत • Generations • Hardware • Software • Memory • Input/Output • Number System • 250+ MCQs</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">💻</div>
+                <div><h1>COMPUTER FUNDAMENTALS</h1><span>कंप्यूटर मूलभूत – सम्पूर्ण</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot blue active" data-color="blue" title="Blue (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">💻 COMPUTER FUNDAMENTALS</div>
+            <h2>कंप्यूटर मूलभूत <strong>सम्पूर्ण अध्ययन</strong><br>Generations • Hardware • Software • Memory • I/O • Number System</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 250+ MCQs</div>
+            <div class="tags-line">
+                <span>📖 6 Topics</span>
+                <span>📌 250+ MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>💻 Complete Basics</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>6</b><span>Topics</span></div>
+            <div class="stat"><b>250+</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>Fundamentals</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Introduction</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> Hardware</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> Software</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Memory</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> I/O Devices</a>
+            <a class="tab-link" href="#ch6"><span class="num-badge">06</span> Number System</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: INTRODUCTION ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>कंप्यूटर – परिचय, इतिहास एवं पीढ़ियाँ</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 कंप्यूटर क्या है?</h4>
+                    <p>कंप्यूटर एक इलेक्ट्रॉनिक उपकरण है जो <strong>इनपुट (Input) → प्रोसेसिंग (Processing) → आउटपुट (Output) → भंडारण (Storage)</strong> के सिद्धांत पर कार्य करता है। यह डेटा को गति, सटीकता और विश्वसनीयता के साथ संसाधित करता है।</p>
+                    <p><strong>विशेषताएँ:</strong> गति (Speed), सटीकता (Accuracy), भंडारण क्षमता (Storage), बहुमुखी प्रतिभा (Versatility), आत्म-संचालन (Automation), लगन (Diligence)।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 कंप्यूटर की पीढ़ियाँ (Generations)</h4>
+                    <div class="table-wrap">
+                        <table>
+                            <tr><th>पीढ़ी</th><th>वर्ष</th><th>प्रमुख तकनीक</th><th>भाषा</th><th>उदाहरण</th></tr>
+                            <tr><td>प्रथम</td><td>1946-1959</td><td>वैक्यूम ट्यूब</td><td>मशीन भाषा</td><td>ENIAC, UNIVAC</td></tr>
+                            <tr><td>द्वितीय</td><td>1959-1965</td><td>ट्रांजिस्टर</td><td>असेंबली भाषा</td><td>IBM 7090</td></tr>
+                            <tr><td>तृतीय</td><td>1965-1971</td><td>IC (इंटीग्रेटेड सर्किट)</td><td>उच्च स्तरीय भाषा</td><td>IBM 360</td></tr>
+                            <tr><td>चतुर्थ</td><td>1971-1980</td><td>माइक्रोप्रोसेसर (VLSI)</td><td>उच्च स्तरीय</td><td>IBM PC, Apple</td></tr>
+                            <tr><td>पंचम</td><td>1980-वर्तमान</td><td>AI, NLP, समानांतर प्रसंस्करण</td><td>उच्च स्तरीय</td><td>सुपर कंप्यूटर, AI</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 कंप्यूटर के प्रकार</h4>
+                    <ul>
+                        <li><strong>सुपर कंप्यूटर:</strong> सबसे तेज़, वैज्ञानिक अनुसंधान, मौसम पूर्वानुमान (PARAM, CRAY)</li>
+                        <li><strong>मेनफ्रेम:</strong> बड़े संगठनों के लिए, बैंकिंग, डेटा प्रोसेसिंग (IBM Z)</li>
+                        <li><strong>मिनी कंप्यूटर:</strong> मध्यम आकार, छोटे संगठन</li>
+                        <li><strong>माइक्रो कंप्यूटर:</strong> PC, लैपटॉप, टैबलेट, स्मार्टफोन</li>
+                        <li><strong>एनालॉग कंप्यूटर:</strong> निरंतर डेटा (स्पीडोमीटर)</li>
+                        <li><strong>डिजिटल कंप्यूटर:</strong> असतत डेटा (0/1)</li>
+                        <li><strong>हाइब्रिड कंप्यूटर:</strong> एनालॉग + डिजिटल</li>
+                    </ul>
+                </div>
+
+                <div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: HARDWARE ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>Hardware – हार्डवेयर (भौतिक घटक)</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 हार्डवेयर क्या है?</h4>
+                    <p>हार्डवेयर कंप्यूटर के <strong>भौतिक एवं मूर्त (tangible)</strong> घटक हैं – जिन्हें छुआ, देखा और महसूस किया जा सकता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 CPU (Central Processing Unit) – कंप्यूटर का मस्तिष्क</h4>
+                    <ul>
+                        <li><strong>ALU (Arithmetic Logic Unit):</strong> अंकगणितीय (जोड़, घटाव, गुणा, भाग) एवं तार्किक (AND, OR, NOT) संक्रियाएँ करता है।</li>
+                        <li><strong>CU (Control Unit):</strong> निर्देशों को डिकोड करता है और नियंत्रण सिग्नल उत्पन्न करता है।</li>
+                        <li><strong>MU (Memory Unit):</strong> डेटा और निर्देशों को अस्थायी रूप से संग्रहीत करता है।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 प्रमुख हार्डवेयर घटक</h4>
+                    <div class="cards">
+                        <div class="word-card"><h4>मदरबोर्ड</h4><ul><li>सभी घटकों को जोड़ने वाला मुख्य सर्किट बोर्ड</li><li>CPU, RAM, ROM, I/O पोर्ट इसी पर स्थित</li></ul></div>
+                        <div class="word-card"><h4>पॉवर सप्लाई (PSU)</h4><ul><li>कंप्यूटर को विद्युत ऊर्जा प्रदान करता है</li><li>AC को DC में परिवर्तित करता है</li></ul></div>
+                        <div class="word-card"><h4>स्टोरेज डिवाइस</h4><ul><li>HDD (Hard Disk Drive) – यांत्रिक, बड़ी क्षमता</li><li>SSD (Solid State Drive) – इलेक्ट्रॉनिक, तेज़</li><li>Pendrive, Memory Card, CD/DVD</li></ul></div>
+                        <div class="word-card"><h4>ग्राफिक्स कार्ड (GPU)</h4><ul><li>छवि एवं वीडियो प्रसंस्करण</li><li>गेमिंग, डिज़ाइन, AI कार्यों में उपयोग</li></ul></div>
+                    </div>
+                </div>
+
+                <div id="hardware-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: SOFTWARE ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>Software – सॉफ्टवेयर (प्रोग्रामों का समूह)</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 सॉफ्टवेयर क्या है?</h4>
+                    <p>सॉफ्टवेयर <strong>निर्देशों (instructions)</strong> और <strong>डेटा</strong> का एक संग्रह है जो कंप्यूटर को बताता है कि क्या करना है। यह अमूर्त (intangible) होता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 सॉफ्टवेयर के प्रकार</h4>
+                    <ul>
+                        <li><strong>सिस्टम सॉफ्टवेयर:</strong> ऑपरेटिंग सिस्टम (Windows, Linux, macOS), डिवाइस ड्राइवर, उपयोगिता प्रोग्राम (एंटीवायरस, डिस्क क्लीनअप)</li>
+                        <li><strong>एप्लिकेशन सॉफ्टवेयर:</strong> MS Office, Adobe Photoshop, Chrome, VLC, गेम्स</li>
+                        <li><strong>प्रोग्रामिंग सॉफ्टवेयर:</strong> C, C++, Java, Python, Visual Studio, Eclipse</li>
+                        <li><strong>डेटाबेस सॉफ्टवेयर:</strong> MySQL, Oracle, MS Access, MongoDB</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 ऑपरेटिंग सिस्टम (OS) – महत्वपूर्ण</h4>
+                    <ul>
+                        <li>OS हार्डवेयर और उपयोगकर्ता के बीच इंटरफेस है।</li>
+                        <li>कार्य: प्रोसेस प्रबंधन, मेमोरी प्रबंधन, फाइल प्रबंधन, डिवाइस प्रबंधन, सुरक्षा</li>
+                        <li>उदाहरण: Windows, Linux, macOS, Android, iOS, Unix</li>
+                    </ul>
+                </div>
+
+                <div id="software-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: MEMORY ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Memory – कंप्यूटर मेमोरी (स्मृति)</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 मेमोरी क्या है?</h4>
+                    <p>मेमोरी कंप्यूटर का वह भाग है जो <strong>डेटा, निर्देशों और सूचनाओं</strong> को संग्रहीत करता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 मेमोरी के प्रकार</h4>
+                    <ul>
+                        <li><strong>प्राथमिक मेमोरी (Primary / Main Memory):</strong>
+                            <ul>
+                                <li><strong>RAM (Random Access Memory):</strong> अस्थिर (Volatile) – बिजली बंद होने पर डेटा खो जाता है। DRAM, SRAM</li>
+                                <li><strong>ROM (Read Only Memory):</strong> स्थायी (Non-Volatile) – बिजली बंद होने पर भी डेटा सुरक्षित। PROM, EPROM, EEPROM</li>
+                                <li><strong>कैश मेमोरी:</strong> CPU के निकट, सबसे तेज़ (SRAM) – L1, L2, L3</li>
+                                <li><strong>रजिस्टर:</strong> CPU के अंदर, सबसे तेज़ मेमोरी</li>
+                            </ul>
+                        </li>
+                        <li><strong>द्वितीयक मेमोरी (Secondary Storage):</strong> HDD, SSD, Pendrive, CD/DVD, Memory Card – स्थायी भंडारण</li>
+                        <li><strong>वर्चुअल मेमोरी:</strong> HDD को RAM की तरह उपयोग करना (पेजिंग / स्वैपिंग)</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 मेमोरी इकाइयाँ (Memory Units)</h4>
+                    <ul>
+                        <li><strong>1 बिट (Bit):</strong> 0 या 1 (सबसे छोटी इकाई)</li>
+                        <li><strong>1 बाइट (Byte):</strong> 8 बिट्स</li>
+                        <li><strong>1 किलोबाइट (KB):</strong> 1024 बाइट्स</li>
+                        <li><strong>1 मेगाबाइट (MB):</strong> 1024 KB</li>
+                        <li><strong>1 गीगाबाइट (GB):</strong> 1024 MB</li>
+                        <li><strong>1 टेराबाइट (TB):</strong> 1024 GB</li>
+                        <li><strong>1 पेटाबाइट (PB):</strong> 1024 TB</li>
+                    </ul>
+                </div>
+
+                <div id="memory-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: INPUT/OUTPUT DEVICES ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Input & Output Devices – इनपुट/आउटपुट डिवाइस</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 इनपुट डिवाइस (Input Devices)</h4>
+                    <p>ये डिवाइस डेटा और निर्देशों को कंप्यूटर में भेजते हैं।</p>
+                    <div class="cards">
+                        <div class="word-card"><h4>कीबोर्ड (Keyboard)</h4><ul><li>सबसे सामान्य इनपुट डिवाइस</li><li>टेक्स्ट, संख्याएँ, कमांड</li></ul></div>
+                        <div class="word-card"><h4>माउस (Mouse)</h4><ul><li>पॉइंटिंग डिवाइस</li><li>GUI में नेविगेशन</li></ul></div>
+                        <div class="word-card"><h4>स्कैनर (Scanner)</h4><ul><li>दस्तावेज़ों को डिजिटल छवि में बदलता है</li><li>OCR (Optical Character Recognition)</li></ul></div>
+                        <div class="word-card"><h4>माइक्रोफोन</h4><ul><li>ध्वनि इनपुट</li><li>वॉइस रिकॉर्डिंग, कॉलिंग</li></ul></div>
+                        <div class="word-card"><h4>वेबकैम (Webcam)</h4><ul><li>छवि/वीडियो इनपुट</li><li>वीडियो कॉन्फ्रेंसिंग</li></ul></div>
+                        <div class="word-card"><h4>टच स्क्रीन</h4><ul><li>स्पर्श इनपुट</li><li>स्मार्टफोन, टैबलेट, ATM</li></ul></div>
+                        <div class="word-card"><h4>बारकोड रीडर</h4><ul><li>बारकोड डेटा पढ़ता है</li><li>रिटेल, इन्वेंट्री</li></ul></div>
+                        <div class="word-card"><h4>बायोमेट्रिक डिवाइस</h4><ul><li>फिंगरप्रिंट, आईरिस, फेस रिकग्निशन</li><li>सुरक्षा प्रणाली</li></ul></div>
+                    </div>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 आउटपुट डिवाइस (Output Devices)</h4>
+                    <p>ये डिवाइस प्रोसेस किए गए डेटा को उपयोगकर्ता को प्रदर्शित/प्रस्तुत करते हैं।</p>
+                    <div class="cards">
+                        <div class="word-card"><h4>मॉनिटर (Monitor)</h4><ul><li>विजुअल आउटपुट</li><li>CRT, LCD, LED, OLED</li></ul></div>
+                        <div class="word-card"><h4>प्रिंटर (Printer)</h4><ul><li>हार्ड कॉपी आउटपुट</li><li>लेजर, इंकजेट, डॉट मैट्रिक्स, 3D</li></ul></div>
+                        <div class="word-card"><h4>स्पीकर (Speaker)</h4><ul><li>ऑडियो आउटपुट</li><li>संगीत, सूचनाएँ</li></ul></div>
+                        <div class="word-card"><h4>प्रोजेक्टर</h4><ul><li>बड़ा विजुअल आउटपुट</li><li>प्रेजेंटेशन, सिनेमा</li></ul></div>
+                        <div class="word-card"><h4>हेडफोन/इयरफोन</h4><ul><li>व्यक्तिगत ऑडियो आउटपुट</li></ul></div>
+                        <div class="word-card"><h4>प्लॉटर (Plotter)</h4><ul><li>वेक्टर ग्राफिक्स आउटपुट</li><li>इंजीनियरिंग, आर्किटेक्चर</li></ul></div>
+                    </div>
+                </div>
+
+                <div id="devices-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 6: NUMBER SYSTEM ===== -->
+            <section class="section" id="ch6">
+                <div class="section-heading"><div class="num">06</div><h3>Number System – संख्या पद्धति</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 संख्या पद्धति क्या है?</h4>
+                    <p>संख्या पद्धति संख्याओं को निरूपित करने का एक व्यवस्थित तरीका है। कंप्यूटर <strong>बाइनरी (0/1)</strong> पद्धति पर कार्य करता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 प्रमुख संख्या पद्धतियाँ</h4>
+                    <div class="table-wrap">
+                        <table>
+                            <tr><th>पद्धति</th><th>आधार (Base)</th><th>अंक</th><th>उदाहरण</th></tr>
+                            <tr><td><strong>बाइनरी</strong></td><td>2</td><td>0, 1</td><td>1010₂</td></tr>
+                            <tr><td><strong>ऑक्टल</strong></td><td>8</td><td>0-7</td><td>12₈</td></tr>
+                            <tr><td><strong>डेसिमल</strong></td><td>10</td><td>0-9</td><td>10₁₀</td></tr>
+                            <tr><td><strong>हेक्साडेसिमल</strong></td><td>16</td><td>0-9, A-F</td><td>1A₁₆</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 रूपांतरण (Conversion)</h4>
+                    <ul>
+                        <li><strong>बाइनरी → डेसिमल:</strong> (1010)₂ = 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8+0+2+0 = 10₁₀</li>
+                        <li><strong>डेसिमल → बाइनरी:</strong> 13₁₀ = 8+4+1 = 1101₂</li>
+                        <li><strong>बाइनरी → ऑक्टल:</strong> बाइनरी को 3-3 समूहों में (101101)₂ = 101 101 = 55₈</li>
+                        <li><strong>बाइनरी → हेक्सा:</strong> बाइनरी को 4-4 समूहों में (101101)₂ = 0010 1101 = 2D₁₆</li>
+                        <li><strong>डेसिमल → ऑक्टल/हेक्सा:</strong> बार-बार भाग देकर शेषफल लिखें</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 बाइनरी अंकगणित</h4>
+                    <ul>
+                        <li><strong>जोड़ (Addition):</strong> 0+0=0, 0+1=1, 1+0=1, 1+1=10 (कैरी 1)</li>
+                        <li><strong>घटाव (Subtraction):</strong> 0-0=0, 1-0=1, 1-1=0, 0-1=1 (बोरो 1)</li>
+                        <li><strong>गुणा (Multiplication):</strong> 0×0=0, 0×1=0, 1×0=0, 1×1=1</li>
+                    </ul>
+                </div>
+
+                <div id="numbersystem-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 50 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 50 मिश्रित प्रश्न दिए गए हैं – जो Introduction, Hardware, Software, Memory, I/O Devices, Number System – सभी टॉपिक्स को कवर करते हैं।</p>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> Computer Fundamentals में Generations, Memory Units, I/O Devices, Hardware/Software Types, और Number System Conversions पर फोकस करें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 💻</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>COMPUTER FUNDAMENTALS – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 6 Topics • 250+ MCQs • Exam Focused</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS -----
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            let html = '';
+            questions.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (Balanced A,B,C,D) ======
+
+        // ----- INTRODUCTION (50) -----
+        const introMCQs = [
+            { question: "कंप्यूटर की पहली पीढ़ी में किसका उपयोग किया गया था?", A: "ट्रांजिस्टर", B: "वैक्यूम ट्यूब", C: "इंटीग्रेटेड सर्किट", D: "माइक्रोप्रोसेसर", correct: "B", explanation: "पहली पीढ़ी (1946-1959) में वैक्यूम ट्यूब का उपयोग किया गया था।" },
+            { question: "कंप्यूटर का जनक किसे कहा जाता है?", A: "चार्ल्स बैबेज", B: "एलन ट्यूरिंग", C: "बिल गेट्स", D: "स्टीव जॉब्स", correct: "A", explanation: "चार्ल्स बैबेज को कंप्यूटर का जनक कहा जाता है।" },
+            { question: "कंप्यूटर की चौथी पीढ़ी में किसका उपयोग किया गया?", A: "VLSI", B: "माइक्रोप्रोसेसर", C: "ट्रांजिस्टर", D: "वैक्यूम ट्यूब", correct: "B", explanation: "चौथी पीढ़ी (1971-1980) में माइक्रोप्रोसेसर का उपयोग हुआ।" },
+            { question: "कंप्यूटर की तीसरी पीढ़ी में किसका उपयोग किया गया?", A: "IC", B: "ट्रांजिस्टर", C: "वैक्यूम ट्यूब", D: "माइक्रोप्रोसेसर", correct: "A", explanation: "तीसरी पीढ़ी (1965-1971) में IC (इंटीग्रेटेड सर्किट) का उपयोग हुआ।" },
+            { question: "कंप्यूटर की दूसरी पीढ़ी में किसका उपयोग किया गया?", A: "ट्रांजिस्टर", B: "वैक्यूम ट्यूब", C: "IC", D: "माइक्रोप्रोसेसर", correct: "A", explanation: "दूसरी पीढ़ी (1959-1965) में ट्रांजिस्टर का उपयोग हुआ।" },
+            { question: "पहला इलेक्ट्रॉनिक कंप्यूटर कौन सा था?", A: "ENIAC", B: "UNIVAC", C: "EDVAC", D: "ABC", correct: "A", explanation: "ENIAC (1946) पहला इलेक्ट्रॉनिक कंप्यूटर था।" },
+            { question: "निम्न में से कौन सा सुपर कंप्यूटर है?", A: "IBM PC", B: "Apple Mac", C: "PARAM", D: "Dell XPS", correct: "C", explanation: "PARAM भारत का सुपर कंप्यूटर है।" },
+            { question: "किस प्रकार का कंप्यूटर सबसे तेज़ होता है?", A: "मेनफ्रेम", B: "मिनी कंप्यूटर", C: "सुपर कंप्यूटर", D: "माइक्रो कंप्यूटर", correct: "C", explanation: "सुपर कंप्यूटर सबसे तेज़ होता है।" },
+            { question: "कंप्यूटर की पाँचवीं पीढ़ी किस पर आधारित है?", A: "AI", B: "माइक्रोप्रोसेसर", C: "VLSI", D: "ट्रांजिस्टर", correct: "A", explanation: "पाँचवीं पीढ़ी AI (Artificial Intelligence) पर आधारित है।" },
+            { question: "निम्न में से कौन सा माइक्रो कंप्यूटर नहीं है?", A: "लैपटॉप", B: "स्मार्टफोन", C: "सुपर कंप्यूटर", D: "टैबलेट", correct: "C", explanation: "सुपर कंप्यूटर माइक्रो कंप्यूटर नहीं है।" },
+            { question: "कंप्यूटर को 'भारत का सुपर कंप्यूटर' किसने विकसित किया?", A: "C-DAC", B: "ISRO", C: "DRDO", D: "IBM", correct: "A", explanation: "PARAM श्रृंखला C-DAC द्वारा विकसित की गई।" },
+            { question: "पहली पीढ़ी के कंप्यूटर किस भाषा का उपयोग करते थे?", A: "मशीन भाषा", B: "असेंबली भाषा", C: "FORTRAN", D: "COBOL", correct: "A", explanation: "पहली पीढ़ी के कंप्यूटर मशीन भाषा का उपयोग करते थे।" },
+            { question: "किस पीढ़ी के कंप्यूटर में ट्रांजिस्टर का उपयोग हुआ?", A: "पहली", B: "दूसरी", C: "तीसरी", D: "चौथी", correct: "B", explanation: "दूसरी पीढ़ी (1959-1965) में ट्रांजिस्टर का उपयोग हुआ।" },
+            { question: "किस पीढ़ी के कंप्यूटर में IC का उपयोग हुआ?", A: "पहली", B: "दूसरी", C: "तीसरी", D: "चौथी", correct: "C", explanation: "तीसरी पीढ़ी (1965-1971) में IC का उपयोग हुआ।" },
+            { question: "किस पीढ़ी के कंप्यूटर में माइक्रोप्रोसेसर का उपयोग हुआ?", A: "पहली", B: "दूसरी", C: "तीसरी", D: "चौथी", correct: "D", explanation: "चौथी पीढ़ी (1971-1980) में माइक्रोप्रोसेसर का उपयोग हुआ।" },
+            { question: "कंप्यूटर का मूल कार्य क्या है?", A: "डेटा प्रोसेसिंग", B: "डेटा संग्रह", C: "डेटा संचार", D: "सभी", correct: "D", explanation: "कंप्यूटर डेटा प्रोसेसिंग, संग्रह और संचार सभी करता है।" },
+            { question: "ENIAC का पूर्ण रूप क्या है?", A: "Electronic Numerical Integrator and Computer", B: "Electronic Number Integrator and Computer", C: "Electrical Numerical Integrator and Computer", D: "Electronic Numerical Integrator and Core", correct: "A", explanation: "ENIAC – Electronic Numerical Integrator and Computer" },
+            { question: "UNIVAC का पूर्ण रूप क्या है?", A: "Universal Automatic Computer", B: "United Automatic Computer", C: "Universal Array Computer", D: "United Array Computer", correct: "A", explanation: "UNIVAC – Universal Automatic Computer" },
+            { question: "कंप्यूटर की विशेषता नहीं है?", A: "गति", B: "सटीकता", C: "भावनात्मकता", D: "भंडारण", correct: "C", explanation: "कंप्यूटर में भावनात्मकता (Emotion) नहीं होती।" },
+            { question: "सुपर कंप्यूटर का उपयोग कहाँ किया जाता है?", A: "मौसम विज्ञान", B: "वैज्ञानिक गणना", C: "सैन्य अनुसंधान", D: "सभी", correct: "D", explanation: "सुपर कंप्यूटर का उपयोग सभी क्षेत्रों में किया जाता है।" },
+            { question: "किसे 'कंप्यूटर का पिता' कहा जाता है?", A: "चार्ल्स बैबेज", B: "एलन ट्यूरिंग", C: "बिल गेट्स", D: "स्टीव जॉब्स", correct: "A", explanation: "चार्ल्स बैबेज को कंप्यूटर का पिता कहा जाता है।" },
+            { question: "भारत का पहला सुपर कंप्यूटर कौन सा था?", A: "PARAM 8000", B: "PARAM 10000", C: "Agni", D: "SahasraT", correct: "A", explanation: "PARAM 8000 (1991) भारत का पहला सुपर कंप्यूटर था।" },
+            { question: "कंप्यूटर किस सिद्धांत पर कार्य करता है?", A: "Input → Process → Output", B: "Process → Input → Output", C: "Output → Input → Process", D: "Input → Output → Process", correct: "A", explanation: "कंप्यूटर Input → Process → Output के सिद्धांत पर कार्य करता है।" },
+            { question: "कंप्यूटर क्या है?", A: "इलेक्ट्रॉनिक उपकरण", B: "यांत्रिक उपकरण", C: "विद्युत उपकरण", D: "चुंबकीय उपकरण", correct: "A", explanation: "कंप्यूटर एक इलेक्ट्रॉनिक उपकरण है।" },
+            { question: "निम्न में से कौन सा कंप्यूटर का प्रकार नहीं है?", A: "डिजिटल", B: "एनालॉग", C: "हाइब्रिड", D: "मैकेनिकल", correct: "D", explanation: "मैकेनिकल कंप्यूटर का प्रकार नहीं है।" },
+            { question: "डिजिटल कंप्यूटर किस डेटा का उपयोग करता है?", A: "असतत (Discrete)", B: "निरंतर (Continuous)", C: "एनालॉग", D: "सभी", correct: "A", explanation: "डिजिटल कंप्यूटर असतत (0/1) डेटा का उपयोग करता है।" },
+            { question: "एनालॉग कंप्यूटर किस डेटा का उपयोग करता है?", A: "निरंतर", B: "असतत", C: "डिजिटल", D: "बाइनरी", correct: "A", explanation: "एनालॉग कंप्यूटर निरंतर (Continuous) डेटा का उपयोग करता है।" },
+            { question: "हाइब्रिड कंप्यूटर क्या है?", A: "डिजिटल + एनालॉग", B: "डिजिटल + सुपर", C: "एनालॉग + मेनफ्रेम", D: "माइक्रो + मिनी", correct: "A", explanation: "हाइब्रिड कंप्यूटर डिजिटल और एनालॉग का मिश्रण है।" },
+            { question: "कंप्यूटर की गति किसमें मापी जाती है?", A: "FLOPS", B: "MIPS", C: "GHz", D: "सभी", correct: "D", explanation: "कंप्यूटर की गति FLOPS, MIPS, GHz में मापी जाती है।" },
+            { question: "कंप्यूटर विज्ञान में 'बिट' का क्या अर्थ है?", A: "बाइनरी डिजिट", B: "बाइट", C: "डेटा", D: "प्रोसेस", correct: "A", explanation: "बिट (Bit) = Binary Digit (0 या 1)" },
+            { question: "कंप्यूटर का विकास किस क्षेत्र में सबसे अधिक हुआ?", A: "सैन्य", B: "व्यवसाय", C: "शिक्षा", D: "सभी", correct: "D", explanation: "कंप्यूटर का विकास सभी क्षेत्रों में हुआ है।" },
+            { question: "कंप्यूटर के इनपुट डेटा को क्या कहते हैं?", A: "इनपुट", B: "आउटपुट", C: "प्रोसेस", D: "स्टोरेज", correct: "A", explanation: "कंप्यूटर को दिया गया डेटा इनपुट कहलाता है।" },
+            { question: "कंप्यूटर का आउटपुट क्या होता है?", A: "परिणाम", B: "प्रक्रिया", C: "डेटा", D: "निर्देश", correct: "A", explanation: "कंप्यूटर का परिणाम आउटपुट कहलाता है।" },
+            { question: "कंप्यूटर की मेमोरी क्षमता किसमें मापी जाती है?", A: "बाइट", B: "बिट", C: "हर्ट्ज़", D: "मीटर", correct: "A", explanation: "मेमोरी क्षमता बाइट (KB, MB, GB, TB) में मापी जाती है।" },
+            { question: "निम्न में से कौन सा कंप्यूटर का यांत्रिक युग है?", A: "ENIAC", B: "UNIVAC", C: "डिफरेंस इंजन", D: "IBM 360", correct: "C", explanation: "डिफरेंस इंजन (चार्ल्स बैबेज) यांत्रिक युग का कंप्यूटर था।" },
+            { question: "एनालॉग कंप्यूटर का उदाहरण क्या है?", A: "स्पीडोमीटर", B: "लैपटॉप", C: "स्मार्टफोन", D: "सर्वर", correct: "A", explanation: "स्पीडोमीटर एक एनालॉग कंप्यूटर का उदाहरण है।" },
+            { question: "कंप्यूटर के विकास में किसका सबसे बड़ा योगदान है?", A: "चार्ल्स बैबेज", B: "एलन ट्यूरिंग", C: "बिल गेट्स", D: "स्टीव जॉब्स", correct: "A", explanation: "चार्ल्स बैबेज का सबसे बड़ा योगदान है।" },
+            { question: "कंप्यूटर किस गणितीय प्रणाली पर आधारित है?", A: "बाइनरी", B: "डेसिमल", C: "ऑक्टल", D: "हेक्साडेसिमल", correct: "A", explanation: "कंप्यूटर बाइनरी (0/1) प्रणाली पर आधारित है।" },
+            { question: "पहला प्रोग्राम योग्य कंप्यूटर कौन सा था?", A: "एनालिटिकल इंजन", B: "डिफरेंस इंजन", C: "ENIAC", D: "UNIVAC", correct: "A", explanation: "एनालिटिकल इंजन (चार्ल्स बैबेज) पहला प्रोग्राम योग्य कंप्यूटर था।" },
+            { question: "कंप्यूटर का 'प्रोसेस' भाग क्या करता है?", A: "डेटा को संसाधित", B: "डेटा को स्टोर", C: "डेटा को इनपुट", D: "डेटा को आउटपुट", correct: "A", explanation: "प्रोसेस भाग डेटा को संसाधित (गणना/तुलना) करता है।" },
+            { question: "कंप्यूटर के 'स्टोरेज' भाग का क्या कार्य है?", A: "डेटा संग्रह", B: "डेटा प्रोसेसिंग", C: "डेटा इनपुट", D: "डेटा आउटपुट", correct: "A", explanation: "स्टोरेज भाग डेटा को संग्रहीत करता है।" },
+            { question: "कंप्यूटर विज्ञान का जनक किसे कहा जाता है?", A: "एलन ट्यूरिंग", B: "चार्ल्स बैबेज", C: "बिल गेट्स", D: "स्टीव जॉब्स", correct: "A", explanation: "एलन ट्यूरिंग को कंप्यूटर विज्ञान का जनक कहा जाता है।" },
+            { question: "ट्यूरिंग टेस्ट किससे संबंधित है?", A: "AI", B: "हार्डवेयर", C: "सॉफ्टवेयर", D: "नेटवर्किंग", correct: "A", explanation: "ट्यूरिंग टेस्ट AI (कृत्रिम बुद्धिमत्ता) से संबंधित है।" },
+            { question: "कंप्यूटर का 'इनपुट' क्या है?", A: "डेटा/निर्देश", B: "परिणाम", C: "प्रोसेस", D: "स्टोरेज", correct: "A", explanation: "इनपुट डेटा या निर्देश होते हैं।" },
+            { question: "कंप्यूटर का 'आउटपुट' क्या है?", A: "प्रोसेस किया गया डेटा", B: "इनपुट डेटा", C: "निर्देश", D: "स्टोरेज डेटा", correct: "A", explanation: "आउटपुट प्रोसेस किया गया डेटा (परिणाम) है।" },
+            { question: "कंप्यूटर किस प्रकार की ऊर्जा का उपयोग करता है?", A: "विद्युत", B: "यांत्रिक", C: "चुंबकीय", D: "सौर", correct: "A", explanation: "कंप्यूटर विद्युत ऊर्जा का उपयोग करता है।" },
+            { question: "कंप्यूटर की मूल संरचना क्या है?", A: "CPU, मेमोरी, I/O", B: "कीबोर्ड, माउस, मॉनिटर", C: "OS, सॉफ्टवेयर, डेटा", D: "प्रिंटर, स्कैनर, स्पीकर", correct: "A", explanation: "कंप्यूटर की मूल संरचना CPU, मेमोरी, और I/O डिवाइस हैं।" },
+            { question: "भारत में सुपर कंप्यूटर का विकास किस संगठन ने किया?", A: "C-DAC", B: "ISRO", C: "DRDO", D: "BARC", correct: "A", explanation: "C-DAC ने PARAM श्रृंखला विकसित की।" },
+            { question: "कंप्यूटर का 'स्टोरेज' क्या है?", A: "डेटा संग्रहण", B: "डेटा प्रोसेसिंग", C: "डेटा इनपुट", D: "डेटा आउटपुट", correct: "A", explanation: "स्टोरेज डेटा को संग्रहीत करना है।" },
+            { question: "कंप्यूटर का 'प्रोसेसिंग' क्या है?", A: "गणना और तुलना", B: "डेटा संग्रह", C: "डेटा इनपुट", D: "डेटा आउटपुट", correct: "A", explanation: "प्रोसेसिंग गणना और तुलना करना है।" }
+        ];
+
+        // ----- HARDWARE (50) -----
+        const hardwareMCQs = [
+            { question: "CPU का पूर्ण रूप क्या है?", A: "Central Processing Unit", B: "Central Process Unit", C: "Computer Process Unit", D: "Control Process Unit", correct: "A", explanation: "CPU – Central Processing Unit" },
+            { question: "CPU के तीन मुख्य भाग कौन से हैं?", A: "ALU, CU, MU", B: "ALU, RAM, ROM", C: "CU, RAM, HDD", D: "MU, ROM, HDD", correct: "A", explanation: "CPU के ALU, CU, MU (Memory Unit) भाग हैं।" },
+            { question: "ALU का पूर्ण रूप क्या है?", A: "Arithmetic Logic Unit", B: "Arithmetic Logical Unit", C: "Array Logic Unit", D: "Advanced Logic Unit", correct: "A", explanation: "ALU – Arithmetic Logic Unit" },
+            { question: "मदरबोर्ड का क्या कार्य है?", A: "सभी घटकों को जोड़ना", B: "डेटा प्रोसेस करना", C: "डेटा स्टोर करना", D: "बिजली देना", correct: "A", explanation: "मदरबोर्ड सभी घटकों को जोड़ता है।" },
+            { question: "निम्न में से कौन सा हार्डवेयर है?", A: "Windows", B: "Linux", C: "RAM", D: "MS Word", correct: "C", explanation: "RAM हार्डवेयर है, बाकी सॉफ्टवेयर हैं।" },
+            { question: "निम्न में से कौन सा आउटपुट डिवाइस है?", A: "कीबोर्ड", B: "माउस", C: "मॉनिटर", D: "स्कैनर", correct: "C", explanation: "मॉनिटर एक आउटपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा इनपुट डिवाइस है?", A: "मॉनिटर", B: "प्रिंटर", C: "कीबोर्ड", D: "स्पीकर", correct: "C", explanation: "कीबोर्ड एक इनपुट डिवाइस है।" },
+            { question: "पॉवर सप्लाई यूनिट (PSU) का क्या कार्य है?", A: "बिजली प्रदान करना", B: "डेटा प्रोसेस करना", C: "डेटा स्टोर करना", D: "नेटवर्क जोड़ना", correct: "A", explanation: "PSU कंप्यूटर को बिजली प्रदान करता है।" },
+            { question: "निम्न में से कौन सा स्टोरेज डिवाइस है?", A: "RAM", B: "ROM", C: "HDD", D: "CPU", correct: "C", explanation: "HDD (Hard Disk Drive) एक स्टोरेज डिवाइस है।" },
+            { question: "निम्न में से कौन सा बाह्य हार्डवेयर है?", A: "CPU", B: "RAM", C: "कीबोर्ड", D: "मदरबोर्ड", correct: "C", explanation: "कीबोर्ड एक बाह्य हार्डवेयर है।" },
+            { question: "कंप्यूटर का मस्तिष्क किसे कहा जाता है?", A: "CPU", B: "RAM", C: "ROM", D: "HDD", correct: "A", explanation: "CPU को कंप्यूटर का मस्तिष्क कहा जाता है।" },
+            { question: "निम्न में से कौन सा आंतरिक हार्डवेयर है?", A: "कीबोर्ड", B: "माउस", C: "मदरबोर्ड", D: "मॉनिटर", correct: "C", explanation: "मदरबोर्ड एक आंतरिक हार्डवेयर है।" },
+            { question: "CPU में MU का क्या कार्य है?", A: "मेमोरी प्रबंधन", B: "गणना", C: "तुलना", D: "नियंत्रण", correct: "A", explanation: "MU (Memory Unit) मेमोरी प्रबंधन करता है।" },
+            { question: "CPU में CU का क्या कार्य है?", A: "नियंत्रण", B: "गणना", C: "मेमोरी", D: "इनपुट", correct: "A", explanation: "CU (Control Unit) नियंत्रण का कार्य करता है।" },
+            { question: "HDD का पूर्ण रूप क्या है?", A: "Hard Disk Drive", B: "Hard Drive Disk", C: "Hard Data Drive", D: "Hard Disk Data", correct: "A", explanation: "HDD – Hard Disk Drive" },
+            { question: "SSD का पूर्ण रूप क्या है?", A: "Solid State Drive", B: "Solid System Drive", C: "Solid State Disk", D: "System State Drive", correct: "A", explanation: "SSD – Solid State Drive" },
+            { question: "निम्न में से कौन सा हार्डवेयर सबसे तेज़ होता है?", A: "HDD", B: "SSD", C: "Pendrive", D: "CD", correct: "B", explanation: "SSD HDD से अधिक तेज़ होता है।" },
+            { question: "मदरबोर्ड पर कौन सा घटक स्थित होता है?", A: "CPU", B: "RAM", C: "ROM", D: "सभी", correct: "D", explanation: "CPU, RAM, ROM सभी मदरबोर्ड पर स्थित होते हैं।" },
+            { question: "ROM का पूर्ण रूप क्या है?", A: "Read Only Memory", B: "Random Only Memory", C: "Real Only Memory", D: "Raw Only Memory", correct: "A", explanation: "ROM – Read Only Memory" },
+            { question: "RAM का पूर्ण रूप क्या है?", A: "Random Access Memory", B: "Read Access Memory", C: "Real Access Memory", D: "Raw Access Memory", correct: "A", explanation: "RAM – Random Access Memory" },
+            { question: "हार्डवेयर क्या है?", A: "भौतिक घटक", B: "सॉफ्टवेयर", C: "डेटा", D: "प्रोग्राम", correct: "A", explanation: "हार्डवेयर कंप्यूटर के भौतिक घटक हैं।" },
+            { question: "निम्न में से कौन सा हार्डवेयर घटक नहीं है?", A: "RAM", B: "ROM", C: "OS", D: "HDD", correct: "C", explanation: "OS (ऑपरेटिंग सिस्टम) सॉफ्टवेयर है, हार्डवेयर नहीं।" },
+            { question: "कंप्यूटर में स्मृति (मेमोरी) किसे कहते हैं?", A: "भंडारण", B: "प्रोसेसिंग", C: "इनपुट", D: "आउटपुट", correct: "A", explanation: "स्मृति (मेमोरी) भंडारण का कार्य करती है।" },
+            { question: "निम्न में से कौन सा पोर्टेबल स्टोरेज डिवाइस है?", A: "HDD", B: "SSD", C: "Pendrive", D: "CD", correct: "C", explanation: "Pendrive एक पोर्टेबल स्टोरेज डिवाइस है।" },
+            { question: "कंप्यूटर की बिजली आपूर्ति के लिए क्या उपयोग होता है?", A: "PSU", B: "CPU", C: "RAM", D: "HDD", correct: "A", explanation: "PSU (Power Supply Unit) बिजली आपूर्ति करता है।" },
+            { question: "निम्न में से कौन सा कंप्यूटर घटक सबसे जटिल है?", A: "CPU", B: "RAM", C: "HDD", D: "मदरबोर्ड", correct: "A", explanation: "CPU सबसे जटिल घटक है।" },
+            { question: "कंप्यूटर हार्डवेयर को 'भौतिक' क्यों कहा जाता है?", A: "इसे छुआ जा सकता है", B: "यह सॉफ्टवेयर है", C: "यह डेटा है", D: "यह प्रोग्राम है", correct: "A", explanation: "हार्डवेयर को छुआ जा सकता है, इसलिए भौतिक है।" },
+            { question: "CPU की गति किसमें मापी जाती है?", A: "GHz", B: "MB", C: "GB", D: "TB", correct: "A", explanation: "CPU की गति GHz (Gigahertz) में मापी जाती है।" },
+            { question: "RAM और ROM में क्या अंतर है?", A: "RAM वोलेटाइल, ROM नॉन-वोलेटाइल", B: "RAM नॉन-वोलेटाइल, ROM वोलेटाइल", C: "दोनों वोलेटाइल", D: "दोनों नॉन-वोलेटाइल", correct: "A", explanation: "RAM वोलेटाइल (अस्थिर) है, ROM नॉन-वोलेटाइल (स्थायी) है।" },
+            { question: "कंप्यूटर में 'बस' क्या है?", A: "डेटा ट्रांसफर पथ", B: "कंप्यूटर बस", C: "डेटा स्टोरेज", D: "प्रोसेसर", correct: "A", explanation: "बस डेटा ट्रांसफर का मार्ग है।" },
+            { question: "निम्न में से कौन सा कंप्यूटर बस का प्रकार है?", A: "डेटा बस", B: "एड्रेस बस", C: "कंट्रोल बस", D: "सभी", correct: "D", explanation: "डेटा, एड्रेस, और कंट्रोल बस तीनों प्रकार हैं।" },
+            { question: "चिपसेट (Chipset) क्या है?", A: "मदरबोर्ड पर IC", B: "CPU", C: "RAM", D: "HDD", correct: "A", explanation: "चिपसेट मदरबोर्ड पर इंटीग्रेटेड सर्किट (IC) है।" },
+            { question: "कंप्यूटर हार्डवेयर में 'पेरिफेरल' का क्या अर्थ है?", A: "बाह्य डिवाइस", B: "आंतरिक डिवाइस", C: "CPU", D: "RAM", correct: "A", explanation: "पेरिफेरल बाह्य डिवाइस (जैसे - कीबोर्ड, माउस) हैं।" },
+            { question: "निम्न में से कौन सा कंप्यूटर हार्डवेयर है?", A: "Windows", B: "Linux", C: "CPU", D: "MS Office", correct: "C", explanation: "CPU हार्डवेयर है, बाकी सॉफ्टवेयर हैं।" },
+            { question: "HDD और SSD में क्या अंतर है?", A: "HDD यांत्रिक, SSD इलेक्ट्रॉनिक", B: "HDD इलेक्ट्रॉनिक, SSD यांत्रिक", C: "दोनों यांत्रिक", D: "दोनों इलेक्ट्रॉनिक", correct: "A", explanation: "HDD यांत्रिक (Mechanical) है, SSD इलेक्ट्रॉनिक है।" },
+            { question: "निम्न में से कौन सा मेमोरी प्रकार सबसे तेज़ है?", A: "रजिस्टर", B: "कैश", C: "RAM", D: "HDD", correct: "A", explanation: "रजिस्टर सबसे तेज़ मेमोरी है।" },
+            { question: "कंप्यूटर का कौन सा भाग डेटा को स्थायी रूप से संग्रहीत करता है?", A: "ROM", B: "RAM", C: "HDD", D: "A और C दोनों", correct: "D", explanation: "ROM और HDD दोनों डेटा को स्थायी रूप से संग्रहीत करते हैं।" },
+            { question: "RAM किस प्रकार की मेमोरी है?", A: "अस्थिर", B: "स्थायी", C: "नॉन-वोलेटाइल", D: "सभी", correct: "A", explanation: "RAM अस्थिर (Volatile) मेमोरी है।" },
+            { question: "कंप्यूटर का 'फॉर्म फैक्टर' क्या है?", A: "आकार और लेआउट", B: "गति", C: "मेमोरी", D: "प्रोसेसर", correct: "A", explanation: "फॉर्म फैक्टर कंप्यूटर का आकार और डिज़ाइन है।" },
+            { question: "ATX किससे संबंधित है?", A: "मदरबोर्ड फॉर्म फैक्टर", B: "CPU", C: "RAM", D: "HDD", correct: "A", explanation: "ATX मदरबोर्ड फॉर्म फैक्टर है।" },
+            { question: "निम्न में से कौन सा कंप्यूटर केस का प्रकार है?", A: "टॉवर", B: "डेस्कटॉप", C: "लैपटॉप", D: "सभी", correct: "D", explanation: "टॉवर, डेस्कटॉप, लैपटॉप सभी केस के प्रकार हैं।" },
+            { question: "कंप्यूटर का 'पावर बटन' क्या करता है?", A: "कंप्यूटर चालू/बंद करता है", B: "रीस्टार्ट करता है", C: "डेटा सेव करता है", D: "प्रिंट करता है", correct: "A", explanation: "पावर बटन कंप्यूटर को चालू/बंद करता है।" },
+            { question: "कंप्यूटर में 'रीसेट बटन' क्या करता है?", A: "सिस्टम रीबूट", B: "सिस्टम बंद", C: "सिस्टम स्लीप", D: "सिस्टम हाइबरनेट", correct: "A", explanation: "रीसेट बटन सिस्टम को रीबूट (पुनः प्रारंभ) करता है।" },
+            { question: "कंप्यूटर में 'USB पोर्ट' का क्या कार्य है?", A: "बाह्य डिवाइस कनेक्ट", B: "प्रिंटर कनेक्ट", C: "मॉनिटर कनेक्ट", D: "स्पीकर कनेक्ट", correct: "A", explanation: "USB पोर्ट बाह्य डिवाइस कनेक्ट करने के लिए है।" },
+            { question: "HDMI का उपयोग किस लिए होता है?", A: "ऑडियो/वीडियो ट्रांसफर", B: "डेटा ट्रांसफर", C: "बिजली आपूर्ति", D: "नेटवर्किंग", correct: "A", explanation: "HDMI ऑडियो/वीडियो ट्रांसफर के लिए है।" },
+            { question: "VGA पोर्ट का उपयोग किस लिए होता है?", A: "मॉनिटर कनेक्ट", B: "प्रिंटर कनेक्ट", C: "स्पीकर कनेक्ट", D: "नेटवर्क कनेक्ट", correct: "A", explanation: "VGA पोर्ट मॉनिटर कनेक्ट करने के लिए है।" }
+        ];
+
+        // ----- SOFTWARE (50) -----
+        const softwareMCQs = [
+            { question: "निम्न में से कौन सा ऑपरेटिंग सिस्टम है?", A: "Windows", B: "Linux", C: "macOS", D: "सभी", correct: "D", explanation: "Windows, Linux, macOS सभी OS हैं।" },
+            { question: "निम्न में से कौन सा सिस्टम सॉफ्टवेयर है?", A: "MS Word", B: "Windows", C: "Chrome", D: "VLC", correct: "B", explanation: "Windows एक सिस्टम सॉफ्टवेयर (OS) है।" },
+            { question: "निम्न में से कौन सा एप्लिकेशन सॉफ्टवेयर है?", A: "Windows", B: "Linux", C: "MS Excel", D: "macOS", correct: "C", explanation: "MS Excel एक एप्लिकेशन सॉफ्टवेयर है।" },
+            { question: "ऑपरेटिंग सिस्टम का मुख्य कार्य क्या है?", A: "हार्डवेयर प्रबंधन", B: "डेटा एंट्री", C: "वेब ब्राउज़िंग", D: "गेम खेलना", correct: "A", explanation: "OS हार्डवेयर और उपयोगकर्ता के बीच इंटरफेस है।" },
+            { question: "निम्न में से कौन सा डेटाबेस सॉफ्टवेयर है?", A: "MySQL", B: "Windows", C: "Chrome", D: "VLC", correct: "A", explanation: "MySQL एक डेटाबेस सॉफ्टवेयर है।" },
+            { question: "सॉफ्टवेयर क्या है?", A: "प्रोग्रामों का समूह", B: "हार्डवेयर", C: "डेटा", D: "डिवाइस", correct: "A", explanation: "सॉफ्टवेयर प्रोग्रामों का समूह है।" },
+            { question: "निम्न में से कौन सा प्रोग्रामिंग सॉफ्टवेयर है?", A: "C", B: "Java", C: "Python", D: "सभी", correct: "D", explanation: "C, Java, Python सभी प्रोग्रामिंग सॉफ्टवेयर हैं।" },
+            { question: "कंप्यूटर में सॉफ्टवेयर किसे कहते हैं?", A: "प्रोग्राम", B: "हार्डवेयर", C: "डिवाइस", D: "डेटा", correct: "A", explanation: "सॉफ्टवेयर प्रोग्राम (निर्देशों का समूह) है।" },
+            { question: "निम्न में से कौन सा OS नहीं है?", A: "Windows", B: "Linux", C: "MS Word", D: "macOS", correct: "C", explanation: "MS Word एक एप्लिकेशन है, OS नहीं।" },
+            { question: "OS का पूर्ण रूप क्या है?", A: "Operating System", B: "Open System", C: "Operative System", D: "Original System", correct: "A", explanation: "OS – Operating System" },
+            { question: "निम्न में से कौन सा मोबाइल OS है?", A: "Android", B: "iOS", C: "Windows Phone", D: "सभी", correct: "D", explanation: "Android, iOS, Windows Phone सभी मोबाइल OS हैं।" },
+            { question: "निम्न में से कौन सा उपयोगिता सॉफ्टवेयर है?", A: "एंटीवायरस", B: "MS Word", C: "Chrome", D: "VLC", correct: "A", explanation: "एंटीवायरस एक उपयोगिता सॉफ्टवेयर है।" },
+            { question: "सिस्टम सॉफ्टवेयर का उदाहरण क्या है?", A: "ड्राइवर", B: "OS", C: "उपयोगिता प्रोग्राम", D: "सभी", correct: "D", explanation: "ड्राइवर, OS, उपयोगिता प्रोग्राम सभी सिस्टम सॉफ्टवेयर हैं।" },
+            { question: "डिवाइस ड्राइवर क्या है?", A: "हार्डवेयर नियंत्रक", B: "एप्लिकेशन", C: "OS", D: "डेटा", correct: "A", explanation: "ड्राइवर हार्डवेयर को नियंत्रित करता है।" },
+            { question: "निम्न में से कौन सा एप्लिकेशन सॉफ्टवेयर नहीं है?", A: "MS Office", B: "Adobe Photoshop", C: "Windows", D: "VLC", correct: "C", explanation: "Windows OS है, एप्लिकेशन सॉफ्टवेयर नहीं।" },
+            { question: "कंप्यूटर प्रोग्राम क्या है?", A: "निर्देशों का समूह", B: "हार्डवेयर", C: "डेटा", D: "डिवाइस", correct: "A", explanation: "प्रोग्राम निर्देशों का समूह है।" },
+            { question: "निम्न में से कौन सा सॉफ्टवेयर विकास उपकरण है?", A: "Visual Studio", B: "Eclipse", C: "VS Code", D: "सभी", correct: "D", explanation: "ये सभी सॉफ्टवेयर विकास उपकरण हैं।" },
+            { question: "OS का मुख्य कार्य क्या है?", A: "हार्डवेयर प्रबंधन", B: "डेटा संग्रह", C: "गणना", D: "इंटरनेट", correct: "A", explanation: "OS हार्डवेयर प्रबंधन करता है।" },
+            { question: "निम्न में से कौन सा OS ओपन सोर्स है?", A: "Windows", B: "Linux", C: "macOS", D: "सभी", correct: "B", explanation: "Linux ओपन सोर्स OS है।" },
+            { question: "निम्न में से कौन सा क्लोज्ड सोर्स OS है?", A: "Windows", B: "Linux", C: "macOS", D: "A और C दोनों", correct: "D", explanation: "Windows और macOS क्लोज्ड सोर्स हैं।" },
+            { question: "सॉफ्टवेयर लाइसेंस क्या है?", A: "उपयोग की शर्तें", B: "हार्डवेयर", C: "डेटा", D: "प्रोग्राम", correct: "A", explanation: "सॉफ्टवेयर लाइसेंस उपयोग की शर्तें हैं।" },
+            { question: "फ्रीवेयर क्या है?", A: "मुफ्त सॉफ्टवेयर", B: "पेड सॉफ्टवेयर", C: "शेयरवेयर", D: "कस्टम", correct: "A", explanation: "फ्रीवेयर मुफ्त सॉफ्टवेयर है।" },
+            { question: "शेयरवेयर क्या है?", A: "मुफ्त परीक्षण सॉफ्टवेयर", B: "मुफ्त सॉफ्टवेयर", C: "पेड सॉफ्टवेयर", D: "ओपन सोर्स", correct: "A", explanation: "शेयरवेयर मुफ्त परीक्षण सॉफ्टवेयर है।" },
+            { question: "निम्न में से कौन सा ओपन सोर्स सॉफ्टवेयर है?", A: "Linux", B: "Windows", C: "macOS", D: "Adobe", correct: "A", explanation: "Linux ओपन सोर्स है।" },
+            { question: "अपडेट क्या है?", A: "नया संस्करण", B: "पुराना संस्करण", C: "डेटा", D: "हार्डवेयर", correct: "A", explanation: "अपडेट नया संस्करण होता है।" },
+            { question: "पैच (Patch) क्या है?", A: "बग फिक्स", B: "नया फीचर", C: "हार्डवेयर", D: "डेटा", correct: "A", explanation: "पैच बग (त्रुटि) को ठीक करता है।" },
+            { question: "निम्न में से कौन सा सर्वर सॉफ्टवेयर है?", A: "Apache", B: "Nginx", C: "IIS", D: "सभी", correct: "D", explanation: "Apache, Nginx, IIS सभी सर्वर सॉफ्टवेयर हैं।" },
+            { question: "क्लाइंट-सर्वर मॉडल क्या है?", A: "सेवा-अनुरोध मॉडल", B: "पीयर-टू-पीयर", C: "हाइब्रिड", D: "स्टैंडअलोन", correct: "A", explanation: "क्लाइंट-सर्वर सेवा-अनुरोध मॉडल है।" },
+            { question: "निम्न में से कौन सा वर्चुअल मशीन सॉफ्टवेयर है?", A: "VMware", B: "VirtualBox", C: "Hyper-V", D: "सभी", correct: "D", explanation: "ये सभी वर्चुअल मशीन सॉफ्टवेयर हैं।" },
+            { question: "कंटेनरीकरण सॉफ्टवेयर का उदाहरण क्या है?", A: "Docker", B: "VMware", C: "VirtualBox", D: "Hyper-V", correct: "A", explanation: "Docker कंटेनरीकरण सॉफ्टवेयर है।" },
+            { question: "निम्न में से कौन सा डेस्कटॉप पब्लिशिंग सॉफ्टवेयर है?", A: "Adobe InDesign", B: "MS Word", C: "CorelDRAW", D: "सभी", correct: "D", explanation: "ये सभी डेस्कटॉप पब्लिशिंग सॉफ्टवेयर हैं।" },
+            { question: "निम्न में से कौन सा ग्राफिक्स सॉफ्टवेयर है?", A: "Adobe Photoshop", B: "CorelDRAW", C: "GIMP", D: "सभी", correct: "D", explanation: "ये सभी ग्राफिक्स सॉफ्टवेयर हैं।" },
+            { question: "निम्न में से कौन सा वेब डेवलपमेंट सॉफ्टवेयर है?", A: "VS Code", B: "Sublime Text", C: "Atom", D: "सभी", correct: "D", explanation: "ये सभी वेब डेवलपमेंट सॉफ्टवेयर हैं।" },
+            { question: "निम्न में से कौन सा डेटा विश्लेषण सॉफ्टवेयर है?", A: "R", B: "Python", C: "Tableau", D: "सभी", correct: "D", explanation: "ये सभी डेटा विश्लेषण सॉफ्टवेयर हैं।" },
+            { question: "निम्न में से कौन सा ऑडियो/वीडियो संपादन सॉफ्टवेयर है?", A: "Adobe Premiere", B: "Audacity", C: "DaVinci Resolve", D: "सभी", correct: "D", explanation: "ये सभी ऑडियो/वीडियो संपादन सॉफ्टवेयर हैं।" },
+            { question: "निम्न में से कौन सा ब्राउज़र सॉफ्टवेयर है?", A: "Chrome", B: "Firefox", C: "Edge", D: "सभी", correct: "D", explanation: "ये सभी ब्राउज़र हैं।" },
+            { question: "निम्न में से कौन सा ई-मेल क्लाइंट सॉफ्टवेयर है?", A: "Outlook", B: "Thunderbird", C: "Gmail", D: "सभी", correct: "D", explanation: "ये सभी ई-मेल क्लाइंट हैं।" },
+            { question: "निम्न में से कौन सा फ़ाइल कम्प्रेशन सॉफ्टवेयर है?", A: "WinRAR", B: "7-Zip", C: "WinZip", D: "सभी", correct: "D", explanation: "ये सभी फ़ाइल कम्प्रेशन सॉफ्टवेयर हैं।" },
+            { question: "फर्मवेयर क्या है?", A: "स्थायी सॉफ्टवेयर", B: "अस्थायी सॉफ्टवेयर", C: "एप्लिकेशन", D: "डेटा", correct: "A", explanation: "फर्मवेयर स्थायी सॉफ्टवेयर (ROM में) है।" },
+            { question: "सॉफ्टवेयर डेवलपमेंट लाइफ साइकिल (SDLC) क्या है?", A: "सॉफ्टवेयर विकास प्रक्रिया", B: "हार्डवेयर", C: "डेटा", D: "नेटवर्क", correct: "A", explanation: "SDLC सॉफ्टवेयर विकास प्रक्रिया है।" },
+            { question: "निम्न में से SDLC का चरण कौन सा है?", A: "योजना", B: "डिज़ाइन", C: "परीक्षण", D: "सभी", correct: "D", explanation: "योजना, डिज़ाइन, परीक्षण सभी SDLC के चरण हैं।" },
+            { question: "एजाइल सॉफ्टवेयर विकास क्या है?", A: "चुस्त विकास विधि", B: "पारंपरिक विधि", C: "वॉटरफॉल", D: "स्पाइरल", correct: "A", explanation: "एजाइल चुस्त (लचीली) विकास विधि है।" },
+            { question: "वॉटरफॉल मॉडल क्या है?", A: "क्रमिक विकास", B: "चुस्त विकास", C: "स्पाइरल", D: "हाइब्रिड", correct: "A", explanation: "वॉटरफॉल क्रमिक (step-by-step) विकास है।" },
+            { question: "निम्न में से कौन सा संस्करण नियंत्रण सॉफ्टवेयर है?", A: "Git", B: "SVN", C: "Mercurial", D: "सभी", correct: "D", explanation: "ये सभी संस्करण नियंत्रण सॉफ्टवेयर हैं।" },
+            { question: "कंपाइलर क्या है?", A: "कोड को मशीन भाषा में बदलता है", B: "कोड को बदलता नहीं", C: "डेटा स्टोर करता है", D: "हार्डवेयर", correct: "A", explanation: "कंपाइलर कोड को मशीन भाषा में बदलता है।" },
+            { question: "इंटरप्रीटर क्या है?", A: "कोड को लाइन-बाय-लाइन चलाता है", B: "कोड को बदलता है", C: "डेटा स्टोर करता है", D: "हार्डवेयर", correct: "A", explanation: "इंटरप्रीटर कोड को लाइन-बाय-लाइन चलाता है।" },
+            { question: "निम्न में से कौन सा कंपाइल्ड भाषा है?", A: "C", B: "C++", C: "Java", D: "सभी", correct: "D", explanation: "C, C++, Java सभी कंपाइल्ड भाषाएँ हैं।" },
+            { question: "निम्न में से कौन सी इंटरप्रिटेड भाषा है?", A: "Python", B: "JavaScript", C: "Ruby", D: "सभी", correct: "D", explanation: "Python, JavaScript, Ruby सभी इंटरप्रिटेड भाषाएँ हैं।" }
+        ];
+
+        // ----- MEMORY (50) -----
+        const memoryMCQs = [
+            { question: "कंप्यूटर की सबसे छोटी मेमोरी इकाई क्या है?", A: "बिट", B: "बाइट", C: "KB", D: "MB", correct: "A", explanation: "बिट (0/1) सबसे छोटी इकाई है।" },
+            { question: "1 बाइट में कितने बिट होते हैं?", A: "4", B: "6", C: "8", D: "16", correct: "C", explanation: "1 बाइट = 8 बिट होते हैं।" },
+            { question: "1 KB में कितने बाइट होते हैं?", A: "512", B: "1000", C: "1024", D: "2048", correct: "C", explanation: "1 KB = 1024 बाइट होते हैं।" },
+            { question: "1 GB में कितने MB होते हैं?", A: "512", B: "1000", C: "1024", D: "2048", correct: "C", explanation: "1 GB = 1024 MB होते हैं।" },
+            { question: "1 TB में कितने GB होते हैं?", A: "512", B: "1000", C: "1024", D: "2048", correct: "C", explanation: "1 TB = 1024 GB होते हैं।" },
+            { question: "निम्न में से कौन सी मेमोरी सबसे तेज़ है?", A: "कैश", B: "RAM", C: "HDD", D: "SSD", correct: "A", explanation: "कैश मेमोरी सबसे तेज़ है।" },
+            { question: "RAM किस प्रकार की मेमोरी है?", A: "वोलेटाइल", B: "नॉन-वोलेटाइल", C: "स्थायी", D: "सभी", correct: "A", explanation: "RAM वोलेटाइल (अस्थिर) मेमोरी है।" },
+            { question: "ROM किस प्रकार की मेमोरी है?", A: "वोलेटाइल", B: "नॉन-वोलेटाइल", C: "अस्थिर", D: "सभी", correct: "B", explanation: "ROM नॉन-वोलेटाइल (स्थायी) मेमोरी है।" },
+            { question: "निम्न में से कौन सी प्राथमिक मेमोरी है?", A: "RAM", B: "ROM", C: "A और B दोनों", D: "HDD", correct: "C", explanation: "RAM और ROM दोनों प्राथमिक मेमोरी हैं।" },
+            { question: "निम्न में से कौन सी द्वितीयक मेमोरी है?", A: "HDD", B: "SSD", C: "Pendrive", D: "सभी", correct: "D", explanation: "HDD, SSD, Pendrive सभी द्वितीयक मेमोरी हैं।" },
+            { question: "कैश मेमोरी कहाँ स्थित होती है?", A: "CPU के निकट", B: "HDD में", C: "RAM में", D: "ROM में", correct: "A", explanation: "कैश मेमोरी CPU के निकट होती है।" },
+            { question: "SRAM का पूर्ण रूप क्या है?", A: "Static RAM", B: "System RAM", C: "Synchronous RAM", D: "Serial RAM", correct: "A", explanation: "SRAM – Static RAM" },
+            { question: "DRAM का पूर्ण रूप क्या है?", A: "Dynamic RAM", B: "Digital RAM", C: "Dual RAM", D: "Direct RAM", correct: "A", explanation: "DRAM – Dynamic RAM" },
+            { question: "निम्न में से कौन सी मेमोरी सबसे महंगी होती है?", A: "कैश", B: "RAM", C: "HDD", D: "SSD", correct: "A", explanation: "कैश मेमोरी सबसे महंगी होती है।" },
+            { question: "वर्चुअल मेमोरी क्या है?", A: "HDD पर RAM का विस्तार", B: "RAM", C: "ROM", D: "कैश", correct: "A", explanation: "वर्चुअल मेमोरी HDD पर RAM का विस्तार है।" },
+            { question: "ROM का पूर्ण रूप क्या है?", A: "Read Only Memory", B: "Random Only Memory", C: "Real Only Memory", D: "Raw Only Memory", correct: "A", explanation: "ROM – Read Only Memory" },
+            { question: "RAM का पूर्ण रूप क्या है?", A: "Random Access Memory", B: "Read Access Memory", C: "Real Access Memory", D: "Raw Access Memory", correct: "A", explanation: "RAM – Random Access Memory" },
+            { question: "किस मेमोरी में डेटा बिजली बंद होने पर भी सुरक्षित रहता है?", A: "RAM", B: "ROM", C: "Cache", D: "रजिस्टर", correct: "B", explanation: "ROM में डेटा बिजली बंद होने पर भी सुरक्षित रहता है।" },
+            { question: "किस मेमोरी में डेटा बिजली बंद होने पर खो जाता है?", A: "RAM", B: "ROM", C: "HDD", D: "SSD", correct: "A", explanation: "RAM में डेटा बिजली बंद होने पर खो जाता है।" },
+            { question: "निम्न में से कौन सी मेमोरी नॉन-वोलेटाइल है?", A: "RAM", B: "ROM", C: "Cache", D: "रजिस्टर", correct: "B", explanation: "ROM नॉन-वोलेटाइल मेमोरी है।" },
+            { question: "निम्न में से कौन सी मेमोरी वोलेटाइल है?", A: "RAM", B: "ROM", C: "HDD", D: "SSD", correct: "A", explanation: "RAM वोलेटाइल मेमोरी है।" },
+            { question: "कंप्यूटर की मेमोरी क्षमता किसमें मापी जाती है?", A: "बाइट", B: "बिट", C: "हर्ट्ज़", D: "मीटर", correct: "A", explanation: "मेमोरी क्षमता बाइट (KB, MB, GB, TB) में मापी जाती है।" },
+            { question: "रजिस्टर किस प्रकार की मेमोरी है?", A: "सबसे तेज़", B: "सबसे धीमी", C: "सबसे बड़ी", D: "सबसे सस्ती", correct: "A", explanation: "रजिस्टर सबसे तेज़ मेमोरी है।" },
+            { question: "कैश मेमोरी कितने स्तर (Level) की होती है?", A: "L1, L2, L3", B: "L1, L2", C: "L1, L2, L3, L4", D: "केवल L1", correct: "A", explanation: "कैश मेमोरी L1, L2, L3 स्तर की होती है।" },
+            { question: "L1 कैश कहाँ स्थित होता है?", A: "CPU कोर के अंदर", B: "CPU के बाहर", C: "RAM में", D: "HDD में", correct: "A", explanation: "L1 कैश CPU कोर के अंदर होता है।" },
+            { question: "निम्न में से कौन सी मेमोरी CPU से सबसे निकट होती है?", A: "रजिस्टर", B: "कैश", C: "RAM", D: "HDD", correct: "A", explanation: "रजिस्टर CPU से सबसे निकट होता है।" },
+            { question: "निम्न में से कौन सी मेमोरी CPU से सबसे दूर होती है?", A: "रजिस्टर", B: "कैश", C: "RAM", D: "HDD", correct: "D", explanation: "HDD CPU से सबसे दूर होती है।" },
+            { question: "फ्लैश मेमोरी किस प्रकार की मेमोरी है?", A: "नॉन-वोलेटाइल", B: "वोलेटाइल", C: "अस्थिर", D: "सभी", correct: "A", explanation: "फ्लैश मेमोरी नॉन-वोलेटाइल (स्थायी) है।" },
+            { question: "निम्न में से कौन सा फ्लैश मेमोरी का उदाहरण है?", A: "Pendrive", B: "SSD", C: "Memory Card", D: "सभी", correct: "D", explanation: "Pendrive, SSD, Memory Card सभी फ्लैश मेमोरी हैं।" },
+            { question: "ROM का उदाहरण क्या है?", A: "BIOS", B: "OS", C: "RAM", D: "HDD", correct: "A", explanation: "BIOS ROM में स्थित होता है।" },
+            { question: "निम्न में से कौन सा मेमोरी प्रकार सबसे धीमा है?", A: "HDD", B: "SSD", C: "RAM", D: "कैश", correct: "A", explanation: "HDD सबसे धीमी मेमोरी है।" },
+            { question: "मेमोरी का 'एक्सेस टाइम' क्या है?", A: "डेटा पढ़ने/लिखने का समय", B: "मेमोरी का आकार", C: "मेमोरी का प्रकार", D: "मेमोरी की गति", correct: "A", explanation: "एक्सेस टाइम डेटा पढ़ने/लिखने का समय है।" },
+            { question: "निम्न में से कौन सा मेमोरी प्रकार सबसे तेज़ एक्सेस टाइम रखता है?", A: "रजिस्टर", B: "कैश", C: "RAM", D: "HDD", correct: "A", explanation: "रजिस्टर का एक्सेस टाइम सबसे कम होता है।" },
+            { question: "कंप्यूटर की मुख्य मेमोरी क्या है?", A: "RAM", B: "ROM", C: "HDD", D: "SSD", correct: "A", explanation: "RAM कंप्यूटर की मुख्य (प्राथमिक) मेमोरी है।" },
+            { question: "निम्न में से कौन सी मेमोरी 'रैम' कहलाती है?", A: "RAM", B: "ROM", C: "कैश", D: "रजिस्टर", correct: "A", explanation: "RAM को रैम कहा जाता है।" },
+            { question: "निम्न में से कौन सी मेमोरी 'रीड-ओनली' है?", A: "RAM", B: "ROM", C: "कैश", D: "HDD", correct: "B", explanation: "ROM रीड-ओनली (केवल पढ़ने योग्य) है।" },
+            { question: "निम्न में से कौन सी मेमोरी 'राइट-ओनली' है?", A: "RAM", B: "ROM", C: "कैश", D: "इनमें से कोई नहीं", correct: "D", explanation: "कोई भी मेमोरी राइट-ओनली नहीं है।" },
+            { question: "EPROM क्या है?", A: "मिटाने योग्य ROM", B: "स्थायी ROM", C: "RAM", D: "HDD", correct: "A", explanation: "EPROM मिटाने योग्य (Erasable) ROM है।" },
+            { question: "EEPROM क्या है?", A: "विद्युत मिटाने योग्य ROM", B: "स्थायी ROM", C: "RAM", D: "HDD", correct: "A", explanation: "EEPROM विद्युत मिटाने योग्य ROM है।" },
+            { question: "निम्न में से कौन सी मेमोरी उच्च गति की होती है?", A: "SRAM", B: "DRAM", C: "HDD", D: "SSD", correct: "A", explanation: "SRAM उच्च गति की होती है।" },
+            { question: "निम्न में से कौन सी मेमोरी सस्ती होती है?", A: "SRAM", B: "DRAM", C: "कैश", D: "रजिस्टर", correct: "B", explanation: "DRAM सस्ती होती है।" },
+            { question: "निम्न में से कौन सी मेमोरी कैश मेमोरी में उपयोग होती है?", A: "SRAM", B: "DRAM", C: "HDD", D: "SSD", correct: "A", explanation: "कैश मेमोरी SRAM का उपयोग करती है।" },
+            { question: "निम्न में से कौन सी मेमोरी मुख्य मेमोरी में उपयोग होती है?", A: "SRAM", B: "DRAM", C: "HDD", D: "SSD", correct: "B", explanation: "मुख्य मेमोरी DRAM का उपयोग करती है।" },
+            { question: "निम्न में से कौन सा मेमोरी पदानुक्रम का सही क्रम है?", A: "रजिस्टर > कैश > RAM > HDD", B: "HDD > RAM > कैश > रजिस्टर", C: "RAM > कैश > रजिस्टर > HDD", D: "कैश > RAM > HDD > रजिस्टर", correct: "A", explanation: "रजिस्टर > कैश > RAM > HDD सही क्रम है।" }
+        ];
+
+        // ----- I/O DEVICES (50) -----
+        const devicesMCQs = [
+            { question: "निम्न में से कौन सा इनपुट डिवाइस है?", A: "कीबोर्ड", B: "मॉनिटर", C: "प्रिंटर", D: "स्पीकर", correct: "A", explanation: "कीबोर्ड एक इनपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा आउटपुट डिवाइस है?", A: "मॉनिटर", B: "कीबोर्ड", C: "माउस", D: "स्कैनर", correct: "A", explanation: "मॉनिटर एक आउटपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा पॉइंटिंग डिवाइस है?", A: "माउस", B: "कीबोर्ड", C: "स्कैनर", D: "प्रिंटर", correct: "A", explanation: "माउस एक पॉइंटिंग डिवाइस है।" },
+            { question: "स्कैनर किस प्रकार का डिवाइस है?", A: "इनपुट", B: "आउटपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "स्कैनर एक इनपुट डिवाइस है।" },
+            { question: "प्रिंटर किस प्रकार का डिवाइस है?", A: "आउटपुट", B: "इनपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "प्रिंटर एक आउटपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा इनपुट डिवाइस नहीं है?", A: "माइक्रोफोन", B: "वेबकैम", C: "स्पीकर", D: "स्कैनर", correct: "C", explanation: "स्पीकर एक आउटपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा आउटपुट डिवाइस नहीं है?", A: "मॉनिटर", B: "प्रिंटर", C: "स्पीकर", D: "कीबोर्ड", correct: "D", explanation: "कीबोर्ड एक इनपुट डिवाइस है।" },
+            { question: "टच स्क्रीन किस प्रकार का डिवाइस है?", A: "इनपुट + आउटपुट", B: "केवल इनपुट", C: "केवल आउटपुट", D: "स्टोरेज", correct: "A", explanation: "टच स्क्रीन इनपुट और आउटपुट दोनों है।" },
+            { question: "निम्न में से कौन सा स्टोरेज डिवाइस है?", A: "HDD", B: "SSD", C: "Pendrive", D: "सभी", correct: "D", explanation: "HDD, SSD, Pendrive सभी स्टोरेज डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा बाह्य भंडारण डिवाइस है?", A: "Pendrive", B: "HDD", C: "SSD", D: "RAM", correct: "A", explanation: "Pendrive एक बाह्य भंडारण डिवाइस है।" },
+            { question: "निम्न में से कौन सा नेटवर्किंग डिवाइस है?", A: "राउटर", B: "स्विच", C: "मॉडेम", D: "सभी", correct: "D", explanation: "राउटर, स्विच, मॉडेम सभी नेटवर्किंग डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा पोर्टेबल डिवाइस है?", A: "लैपटॉप", B: "डेस्कटॉप", C: "सर्वर", D: "मेनफ्रेम", correct: "A", explanation: "लैपटॉप एक पोर्टेबल डिवाइस है।" },
+            { question: "निम्न में से कौन सा मल्टीमीडिया डिवाइस है?", A: "स्पीकर", B: "माइक्रोफोन", C: "वेबकैम", D: "सभी", correct: "D", explanation: "स्पीकर, माइक्रोफोन, वेबकैम सभी मल्टीमीडिया डिवाइस हैं।" },
+            { question: "माइक्रोफोन किस प्रकार का डिवाइस है?", A: "इनपुट", B: "आउटपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "माइक्रोफोन एक इनपुट डिवाइस है।" },
+            { question: "स्पीकर किस प्रकार का डिवाइस है?", A: "आउटपुट", B: "इनपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "स्पीकर एक आउटपुट डिवाइस है।" },
+            { question: "वेबकैम किस प्रकार का डिवाइस है?", A: "इनपुट", B: "आउटपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "वेबकैम एक इनपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा प्रोजेक्टर से संबंधित है?", A: "आउटपुट", B: "इनपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "प्रोजेक्टर एक आउटपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा बायोमेट्रिक डिवाइस है?", A: "फिंगरप्रिंट स्कैनर", B: "आईरिस स्कैनर", C: "फेस रिकग्निशन", D: "सभी", correct: "D", explanation: "ये सभी बायोमेट्रिक डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा ऑप्टिकल डिवाइस है?", A: "स्कैनर", B: "प्रिंटर", C: "मॉनिटर", D: "कीबोर्ड", correct: "A", explanation: "स्कैनर एक ऑप्टिकल डिवाइस है।" },
+            { question: "निम्न में से कौन सा मैकेनिकल डिवाइस है?", A: "कीबोर्ड", B: "माउस", C: "HDD", D: "सभी", correct: "D", explanation: "कीबोर्ड, माउस, HDD सभी मैकेनिकल डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा इलेक्ट्रॉनिक डिवाइस है?", A: "SSD", B: "RAM", C: "ROM", D: "सभी", correct: "D", explanation: "SSD, RAM, ROM सभी इलेक्ट्रॉनिक डिवाइस हैं。}" },
+            { question: "निम्न में से कौन सा हाइब्रिड डिवाइस है?", A: "टच स्क्रीन", B: "कीबोर्ड", C: "माउस", D: "स्कैनर", correct: "A", explanation: "टच स्क्रीन एक हाइब्रिड (इनपुट+आउटपुट) डिवाइस है।" },
+            { question: "निम्न में से कौन सा मानक इनपुट डिवाइस है?", A: "कीबोर्ड", B: "माउस", C: "स्कैनर", D: "सभी", correct: "D", explanation: "कीबोर्ड, माउस, स्कैनर सभी मानक इनपुट डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा मानक आउटपुट डिवाइस है?", A: "मॉनिटर", B: "प्रिंटर", C: "स्पीकर", D: "सभी", correct: "D", explanation: "मॉनिटर, प्रिंटर, स्पीकर सभी मानक आउटपुट डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा ऑडियो डिवाइस है?", A: "स्पीकर", B: "माइक्रोफोन", C: "हेडफोन", D: "सभी", correct: "D", explanation: "स्पीकर, माइक्रोफोन, हेडफोन सभी ऑडियो डिवाइस हैं。}" },
+            { question: "निम्न में से कौन सा वीडियो डिवाइस है?", A: "मॉनिटर", B: "प्रोजेक्टर", C: "वेबकैम", D: "सभी", correct: "D", explanation: "मॉनिटर, प्रोजेक्टर, वेबकैम सभी वीडियो डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा पेरिफेरल डिवाइस है?", A: "कीबोर्ड", B: "माउस", C: "प्रिंटर", D: "सभी", correct: "D", explanation: "कीबोर्ड, माउस, प्रिंटर सभी पेरिफेरल डिवाइस हैं。" },
+            { question: "निम्न में से कौन सा कंप्यूटर में प्लग एंड प्ले (Plug and Play) डिवाइस है?", A: "USB डिवाइस", B: "PS/2 डिवाइस", C: "सीरियल डिवाइस", D: "सभी", correct: "A", explanation: "USB डिवाइस प्लग एंड प्ले है。" },
+            { question: "निम्न में से कौन सा USB डिवाइस है?", A: "Pendrive", B: "कीबोर्ड", C: "माउस", D: "सभी", correct: "D", explanation: "Pendrive, कीबोर्ड, माउस सभी USB डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा वायरलेस डिवाइस है?", A: "ब्लूटूथ किबोर्ड", B: "वायरलेस माउस", C: "Wi-Fi प्रिंटर", D: "सभी", correct: "D", explanation: "ये सभी वायरलेस डिवाइस हैं。" },
+            { question: "निम्न में से कौन सा ब्लूटूथ डिवाइस है?", A: "ब्लूटूथ स्पीकर", B: "ब्लूटूथ हेडफोन", C: "ब्लूटूथ माउस", D: "सभी", correct: "D", explanation: "ये सभी ब्लूटूथ डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा वायर्ड डिवाइस है?", A: "USB कीबोर्ड", B: "वायरलेस माउस", C: "ब्लूटूथ स्पीकर", D: "Wi-Fi प्रिंटर", correct: "A", explanation: "USB कीबोर्ड एक वायर्ड डिवाइस है।" },
+            { question: "निम्न में से कौन सा डेटा संचार डिवाइस है?", A: "मॉडेम", B: "राउटर", C: "स्विच", D: "सभी", correct: "D", explanation: "मॉडेम, राउटर, स्विच सभी डेटा संचार डिवाइस हैं。" },
+            { question: "मॉडेम का क्या कार्य है?", A: "डिजिटल-एनालॉग परिवर्तन", B: "डेटा संग्रह", C: "डेटा प्रोसेसिंग", D: "डेटा आउटपुट", correct: "A", explanation: "मॉडेम डिजिटल-एनालॉग सिग्नल परिवर्तन करता है。" },
+            { question: "राउटर का क्या कार्य है?", A: "नेटवर्क जोड़ना", B: "डेटा स्टोर", C: "डेटा प्रिंट", D: "डेटा इनपुट", correct: "A", explanation: "राउटर विभिन्न नेटवर्क को जोड़ता है。" },
+            { question: "स्विच का क्या कार्य है?", A: "LAN में डिवाइस जोड़ना", B: "नेटवर्क जोड़ना", C: "डेटा स्टोर", D: "डेटा प्रिंट", correct: "A", explanation: "स्विच LAN में डिवाइसों को जोड़ता है।" },
+            { question: "निम्न में से कौन सा हब (Hub) से संबंधित है?", A: "नेटवर्किंग", B: "स्टोरेज", C: "प्रोसेसिंग", D: "इनपुट", correct: "A", explanation: "हब एक नेटवर्किंग डिवाइस है。" },
+            { question: "निम्न में से कौन सा गेटवे से संबंधित है?", A: "नेटवर्किंग", B: "स्टोरेज", C: "प्रोसेसिंग", D: "इनपुट", correct: "A", explanation: "गेटवे एक नेटवर्किंग डिवाइस है।" },
+            { question: "निम्न में से कौन सा ब्रिज (Bridge) से संबंधित है?", A: "नेटवर्किंग", B: "स्टोरेज", C: "प्रोसेसिंग", D: "इनपुट", correct: "A", explanation: "ब्रिज एक नेटवर्किंग डिवाइस है。" },
+            { question: "निम्न में से कौन सा प्रिंटर का प्रकार है?", A: "लेजर प्रिंटर", B: "इंकजेट प्रिंटर", C: "डॉट मैट्रिक्स प्रिंटर", D: "सभी", correct: "D", explanation: "लेजर, इंकजेट, डॉट मैट्रिक्स सभी प्रिंटर के प्रकार हैं。" },
+            { question: "निम्न में से कौन सा स्कैनर का प्रकार है?", A: "फ्लैटबेड स्कैनर", B: "शीट-फीड स्कैनर", C: "हैंडहेल्ड स्कैनर", D: "सभी", correct: "D", explanation: "ये सभी स्कैनर के प्रकार हैं।" },
+            { question: "निम्न में से कौन सा मॉनिटर का प्रकार है?", A: "CRT", B: "LCD", C: "LED", D: "सभी", correct: "D", explanation: "CRT, LCD, LED सभी मॉनिटर के प्रकार हैं。" },
+            { question: "निम्न में से कौन सा टच स्क्रीन का प्रकार है?", A: "कैपेसिटिव", B: "रेसिस्टिव", C: "SAW", D: "सभी", correct: "D", explanation: "ये सभी टच स्क्रीन के प्रकार हैं।" },
+            { question: "निम्न में से कौन सा बारकोड रीडर से संबंधित है?", A: "इनपुट", B: "आउटपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "बारकोड रीडर एक इनपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा QR कोड स्कैनर से संबंधित है?", A: "इनपुट", B: "आउटपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "QR कोड स्कैनर एक इनपुट डिवाइस है。" },
+            { question: "निम्न में से कौन सा RFID रीडर से संबंधित है?", A: "इनपुट", B: "आउटपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "RFID रीडर एक इनपुट डिवाइस है。" }
+        ];
+
+        // ----- NUMBER SYSTEM (50) -----
+        const numbersystemMCQs = [
+            { question: "बाइनरी संख्या 1010₂ का डेसिमल मान क्या है?", A: "8", B: "9", C: "10", D: "12", correct: "C", explanation: "1010₂ = 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8+0+2+0 = 10₁₀" },
+            { question: "डेसिमल संख्या 13₁₀ का बाइनरी मान क्या है?", A: "1101₂", B: "1110₂", C: "1011₂", D: "1001₂", correct: "A", explanation: "13₁₀ = 8+4+1 = 1101₂" },
+            { question: "बाइनरी 110110₂ का ऑक्टल मान क्या है?", A: "64₈", B: "66₈", C: "72₈", D: "56₈", correct: "B", explanation: "110110₂ = 110 110 = 6 6 = 66₈" },
+            { question: "बाइनरी 101101₂ का हेक्साडेसिमल मान क्या है?", A: "2D₁₆", B: "2B₁₆", C: "3A₁₆", D: "1C₁₆", correct: "A", explanation: "101101₂ = 0010 1101 = 2 D = 2D₁₆" },
+            { question: "ऑक्टल 47₈ का डेसिमल मान क्या है?", A: "37₁₀", B: "39₁₀", C: "41₁₀", D: "43₁₀", correct: "B", explanation: "47₈ = 4×8¹ + 7×8⁰ = 32+7 = 39₁₀" },
+            { question: "हेक्साडेसिमल 2A₁₆ का डेसिमल मान क्या है?", A: "40₁₀", B: "42₁₀", C: "44₁₀", D: "46₁₀", correct: "B", explanation: "2A₁₆ = 2×16¹ + 10×16⁰ = 32+10 = 42₁₀" },
+            { question: "बाइनरी संख्या 1111₂ का डेसिमल मान क्या है?", A: "13", B: "14", C: "15", D: "16", correct: "C", explanation: "1111₂ = 1×8+1×4+1×2+1×1 = 15₁₀" },
+            { question: "डेसिमल संख्या 255₁₀ का बाइनरी मान क्या है?", A: "11111111₂", B: "10000000₂", C: "11000000₂", D: "10101010₂", correct: "A", explanation: "255₁₀ = 128+64+32+16+8+4+2+1 = 11111111₂" },
+            { question: "बाइनरी 1000₂ का डेसिमल मान क्या है?", A: "6", B: "7", C: "8", D: "9", correct: "C", explanation: "1000₂ = 1×2³ = 8₁₀" },
+            { question: "डेसिमल 32₁₀ का बाइनरी मान क्या है?", A: "100000₂", B: "10000₂", C: "1000000₂", D: "100010₂", correct: "A", explanation: "32₁₀ = 2⁵ = 100000₂" },
+            { question: "बाइनरी 101010₂ का डेसिमल मान क्या है?", A: "40", B: "42", C: "44", D: "46", correct: "B", explanation: "101010₂ = 32+8+2 = 42₁₀" },
+            { question: "डेसिमल 50₁₀ का बाइनरी मान क्या है?", A: "110010₂", B: "110100₂", C: "111000₂", D: "101010₂", correct: "A", explanation: "50₁₀ = 32+16+2 = 110010₂" },
+            { question: "ऑक्टल 77₈ का डेसिमल मान क्या है?", A: "61", B: "62", C: "63", D: "65", correct: "C", explanation: "77₈ = 7×8+7 = 56+7 = 63₁₀" },
+            { question: "हेक्साडेसिमल F₁₆ का डेसिमल मान क्या है?", A: "13", B: "14", C: "15", D: "16", correct: "C", explanation: "F₁₆ = 15₁₀" },
+            { question: "बाइनरी 111000₂ का ऑक्टल मान क्या है?", A: "70₈", B: "72₈", C: "74₈", D: "76₈", correct: "A", explanation: "111000₂ = 111 000 = 7 0 = 70₈" },
+            { question: "बाइनरी 111000₂ का हेक्साडेसिमल मान क्या है?", A: "38₁₆", B: "2C₁₆", C: "3A₁₆", D: "3C₁₆", correct: "A", explanation: "111000₂ = 0011 1000 = 3 8 = 38₁₆" },
+            { question: "बाइनरी में 1+1 का परिणाम क्या होगा?", A: "0 (कैरी 1)", B: "1 (कैरी 1)", C: "10 (कैरी 1)", D: "11 (कैरी 1)", correct: "C", explanation: "1+1 = 10 (कैरी 1)" },
+            { question: "बाइनरी में 10-1 का परिणाम क्या होगा?", A: "0", B: "1", C: "10", D: "11", correct: "B", explanation: "10-1 = 1" },
+            { question: "बाइनरी में 11×11 का परिणाम क्या होगा?", A: "101", B: "110", C: "1001", D: "1111", correct: "C", explanation: "11×11 = 3×3 = 9 = 1001₂" },
+            { question: "बाइनरी संख्या 1011₂ को 2 से गुणा करने पर क्या प्राप्त होगा?", A: "10110₂", B: "11010₂", C: "10101₂", D: "11110₂", correct: "A", explanation: "बाइनरी को 2 से गुणा = एक 0 जोड़ें → 10110₂" },
+            { question: "बाइनरी संख्या 1100₂ को 2 से भाग देने पर क्या प्राप्त होगा?", A: "100₂", B: "110₂", C: "101₂", D: "111₂", correct: "B", explanation: "1100₂ ÷ 2 = 110₂" },
+            { question: "डेसिमल संख्या 10₁₀ का बाइनरी मान क्या है?", A: "1000₂", B: "1001₂", C: "1010₂", D: "1011₂", correct: "C", explanation: "10₁₀ = 1010₂" },
+            { question: "डेसिमल संख्या 100₁₀ का बाइनरी मान क्या है?", A: "1100100₂", B: "1100010₂", C: "1111000₂", D: "1010000₂", correct: "A", explanation: "100₁₀ = 64+32+4 = 1100100₂" },
+            { question: "ऑक्टल 100₈ का डेसिमल मान क्या है?", A: "60", B: "62", C: "64", D: "68", correct: "C", explanation: "100₈ = 1×64 = 64₁₀" },
+            { question: "हेक्साडेसिमल 10₁₆ का डेसिमल मान क्या है?", A: "10", B: "14", C: "16", D: "18", correct: "C", explanation: "10₁₆ = 1×16 = 16₁₀" },
+            { question: "बाइनरी 1010₂ + 1101₂ का योग क्या है?", A: "10101₂", B: "10111₂", C: "11001₂", D: "11011₂", correct: "B", explanation: "1010₂ + 1101₂ = 10 + 13 = 23 = 10111₂" },
+            { question: "बाइनरी 1010₂ - 0110₂ का अंतर क्या है?", A: "0100₂", B: "0010₂", C: "0110₂", D: "1000₂", correct: "A", explanation: "1010₂ - 0110₂ = 10 - 6 = 4 = 0100₂" },
+            { question: "डेसिमल 15₁₀ का ऑक्टल मान क्या है?", A: "15₈", B: "16₈", C: "17₈", D: "20₈", correct: "C", explanation: "15₁₀ = 8+7 = 17₈" },
+            { question: "डेसिमल 255₁₀ का हेक्साडेसिमल मान क्या है?", A: "FF₁₆", B: "FE₁₆", C: "FD₁₆", D: "FC₁₆", correct: "A", explanation: "255₁₀ = 15×16+15 = FF₁₆" },
+            { question: "बाइनरी 11111111₂ का डेसिमल मान क्या है?", A: "255", B: "256", C: "254", D: "253", correct: "A", explanation: "11111111₂ = 128+64+32+16+8+4+2+1 = 255₁₀" },
+            { question: "बाइनरी 10000000₂ का डेसिमल मान क्या है?", A: "126", B: "127", C: "128", D: "129", correct: "C", explanation: "10000000₂ = 2⁷ = 128₁₀" },
+            { question: "ऑक्टल 777₈ का डेसिमल मान क्या है?", A: "503", B: "511", C: "519", D: "527", correct: "B", explanation: "777₈ = 7×64+7×8+7 = 448+56+7 = 511₁₀" },
+            { question: "हेक्साडेसिमल 1A₁₆ का डेसिमल मान क्या है?", A: "24", B: "26", C: "28", D: "30", correct: "B", explanation: "1A₁₆ = 1×16+10 = 26₁₀" },
+            { question: "बाइनरी 1011011₂ का डेसिमल मान क्या है?", A: "89", B: "91", C: "93", D: "95", correct: "B", explanation: "1011011₂ = 64+16+8+2+1 = 91₁₀" },
+            { question: "डेसिमल 127₁₀ का बाइनरी मान क्या है?", A: "1111111₂", B: "1000000₂", C: "1111110₂", D: "1010101₂", correct: "A", explanation: "127₁₀ = 64+32+16+8+4+2+1 = 1111111₂" },
+            { question: "बाइनरी 101101₂ + 110011₂ का योग क्या है?", A: "1011110₂", B: "1100000₂", C: "1100110₂", D: "1110000₂", correct: "B", explanation: "101101₂=45, 110011₂=51, योग=96=1100000₂" },
+            { question: "बाइनरी 1100₂ × 101₂ का गुणनफल क्या है?", A: "111100₂", B: "110000₂", C: "101100₂", D: "111000₂", correct: "A", explanation: "1100₂=12, 101₂=5, गुणा=60=111100₂" },
+            { question: "डेसिमल 0.5₁₀ का बाइनरी मान क्या है?", A: "0.1₂", B: "0.01₂", C: "0.001₂", D: "0.11₂", correct: "A", explanation: "0.5₁₀ = 1/2 = 0.1₂" },
+            { question: "बाइनरी 0.11₂ का डेसिमल मान क्या है?", A: "0.5", B: "0.6", C: "0.7", D: "0.75", correct: "D", explanation: "0.11₂ = 1/2 + 1/4 = 0.5+0.25 = 0.75₁₀" },
+            { question: "ऑक्टल 123₈ का डेसिमल मान क्या है?", A: "81", B: "83", C: "85", D: "87", correct: "B", explanation: "123₈ = 1×64+2×8+3 = 64+16+3 = 83₁₀" },
+            { question: "हेक्साडेसिमल 3F₁₆ का डेसिमल मान क्या है?", A: "61", B: "63", C: "65", D: "67", correct: "B", explanation: "3F₁₆ = 3×16+15 = 48+15 = 63₁₀" },
+            { question: "बाइनरी 110110₂ का डेसिमल मान क्या है?", A: "52", B: "54", C: "56", D: "58", correct: "B", explanation: "110110₂ = 32+16+4+2 = 54₁₀" },
+            { question: "डेसिमल 64₁₀ का बाइनरी मान क्या है?", A: "1000000₂", B: "1100000₂", C: "1010000₂", D: "1110000₂", correct: "A", explanation: "64₁₀ = 2⁶ = 1000000₂" },
+            { question: "बाइनरी 1111₂ का हेक्साडेसिमल मान क्या है?", A: "D₁₆", B: "E₁₆", C: "F₁₆", D: "G₁₆", correct: "C", explanation: "1111₂ = F₁₆ (15)" },
+            { question: "बाइनरी 1111₂ का ऑक्टल मान क्या है?", A: "15₈", B: "16₈", C: "17₈", D: "20₈", correct: "C", explanation: "1111₂ = 001 111 = 1 7 = 17₈" },
+            { question: "डेसिमल 8₁₀ का बाइनरी मान क्या है?", A: "1000₂", B: "1001₂", C: "1010₂", D: "1011₂", correct: "A", explanation: "8₁₀ = 2³ = 1000₂" },
+            { question: "बाइनरी 1001₂ का डेसिमल मान क्या है?", A: "7", B: "8", C: "9", D: "10", correct: "C", explanation: "1001₂ = 8+1 = 9₁₀" },
+            { question: "हेक्साडेसिमल 1F₁₆ का डेसिमल मान क्या है?", A: "29", B: "31", C: "33", D: "35", correct: "B", explanation: "1F₁₆ = 1×16+15 = 31₁₀" },
+            { question: "ऑक्टल 10₈ का डेसिमल मान क्या है?", A: "6", B: "7", C: "8", D: "9", correct: "C", explanation: "10₈ = 1×8 = 8₁₀" },
+            { question: "बाइनरी 11011₂ का डेसिमल मान क्या है?", A: "25", B: "27", C: "29", D: "31", correct: "B", explanation: "11011₂ = 16+8+2+1 = 27₁₀" },
+            { question: "डेसिमल 12₁₀ का बाइनरी मान क्या है?", A: "1100₂", B: "1101₂", C: "1110₂", D: "1010₂", correct: "A", explanation: "12₁₀ = 8+4 = 1100₂" }
+        ];
+
+        // ----- PRACTICE (50 MIXED) -----
+        const practiceMCQs = [
+            { question: "कंप्यूटर की पहली पीढ़ी में किसका उपयोग किया गया था?", A: "ट्रांजिस्टर", B: "वैक्यूम ट्यूब", C: "IC", D: "माइक्रोप्रोसेसर", correct: "B", explanation: "पहली पीढ़ी में वैक्यूम ट्यूब का उपयोग किया गया था।" },
+            { question: "CPU का पूर्ण रूप क्या है?", A: "Central Process Unit", B: "Central Processing Unit", C: "Computer Process Unit", D: "Control Process Unit", correct: "B", explanation: "CPU – Central Processing Unit" },
+            { question: "1 बाइट में कितने बिट होते हैं?", A: "4", B: "6", C: "8", D: "16", correct: "C", explanation: "1 बाइट = 8 बिट होते हैं।" },
+            { question: "निम्न में से कौन सा इनपुट डिवाइस है?", A: "कीबोर्ड", B: "मॉनिटर", C: "प्रिंटर", D: "स्पीकर", correct: "A", explanation: "कीबोर्ड एक इनपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सा आउटपुट डिवाइस है?", A: "मॉनिटर", B: "कीबोर्ड", C: "माउस", D: "स्कैनर", correct: "A", explanation: "मॉनिटर एक आउटपुट डिवाइस है।" },
+            { question: "कंप्यूटर का जनक किसे कहा जाता है?", A: "चार्ल्स बैबेज", B: "एलन ट्यूरिंग", C: "बिल गेट्स", D: "स्टीव जॉब्स", correct: "A", explanation: "चार्ल्स बैबेज को कंप्यूटर का जनक कहा जाता है।" },
+            { question: "1 GB में कितने MB होते हैं?", A: "512", B: "1000", C: "1024", D: "2048", correct: "C", explanation: "1 GB = 1024 MB होते हैं।" },
+            { question: "निम्न में से कौन सा ऑपरेटिंग सिस्टम है?", A: "Windows", B: "Linux", C: "macOS", D: "सभी", correct: "D", explanation: "Windows, Linux, macOS सभी OS हैं。" },
+            { question: "RAM का पूर्ण रूप क्या है?", A: "Random Access Memory", B: "Read Access Memory", C: "Real Access Memory", D: "Raw Access Memory", correct: "A", explanation: "RAM – Random Access Memory" },
+            { question: "ROM का पूर्ण रूप क्या है?", A: "Read Only Memory", B: "Random Only Memory", C: "Real Only Memory", D: "Raw Only Memory", correct: "A", explanation: "ROM – Read Only Memory" },
+            { question: "निम्न में से कौन सा एप्लिकेशन सॉफ्टवेयर है?", A: "Windows", B: "Linux", C: "MS Excel", D: "macOS", correct: "C", explanation: "MS Excel एक एप्लिकेशन सॉफ्टवेयर है।" },
+            { question: "ALU का पूर्ण रूप क्या है?", A: "Arithmetic Logic Unit", B: "Arithmetic Logical Unit", C: "Array Logic Unit", D: "Advanced Logic Unit", correct: "A", explanation: "ALU – Arithmetic Logic Unit" },
+            { question: "निम्न में से कौन सा स्टोरेज डिवाइस है?", A: "RAM", B: "ROM", C: "HDD", D: "CPU", correct: "C", explanation: "HDD (Hard Disk Drive) एक स्टोरेज डिवाइस है。" },
+            { question: "कंप्यूटर की चौथी पीढ़ी में किसका उपयोग किया गया?", A: "VLSI", B: "माइक्रोप्रोसेसर", C: "ट्रांजिस्टर", D: "वैक्यूम ट्यूब", correct: "B", explanation: "चौथी पीढ़ी में माइक्रोप्रोसेसर का उपयोग हुआ。" },
+            { question: "निम्न में से कौन सा सिस्टम सॉफ्टवेयर है?", A: "MS Word", B: "Windows", C: "Chrome", D: "VLC", correct: "B", explanation: "Windows एक सिस्टम सॉफ्टवेयर है।" },
+            { question: "कैश मेमोरी कहाँ स्थित होती है?", A: "CPU के निकट", B: "HDD में", C: "RAM में", D: "ROM में", correct: "A", explanation: "कैश मेमोरी CPU के निकट होती है।" },
+            { question: "निम्न में से कौन सा पॉइंटिंग डिवाइस है?", A: "माउस", B: "कीबोर्ड", C: "स्कैनर", D: "प्रिंटर", correct: "A", explanation: "माउस एक पॉइंटिंग डिवाइस है।" },
+            { question: "स्कैनर किस प्रकार का डिवाइस है?", A: "इनपुट", B: "आउटपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "स्कैनर एक इनपुट डिवाइस है।" },
+            { question: "प्रिंटर किस प्रकार का डिवाइस है?", A: "आउटपुट", B: "इनपुट", C: "स्टोरेज", D: "प्रोसेसिंग", correct: "A", explanation: "प्रिंटर एक आउटपुट डिवाइस है।" },
+            { question: "निम्न में से कौन सी मेमोरी सबसे तेज़ है?", A: "कैश", B: "RAM", C: "HDD", D: "SSD", correct: "A", explanation: "कैश मेमोरी सबसे तेज़ है।" },
+            { question: "बाइनरी 1010₂ का डेसिमल मान क्या है?", A: "8", B: "9", C: "10", D: "12", correct: "C", explanation: "1010₂ = 1×8+0×4+1×2+0×1 = 10₁₀" },
+            { question: "कंप्यूटर का मस्तिष्क किसे कहा जाता है?", A: "CPU", B: "RAM", C: "ROM", D: "HDD", correct: "A", explanation: "CPU को कंप्यूटर का मस्तिष्क कहा जाता है。" },
+            { question: "निम्न में से कौन सा OS नहीं है?", A: "Windows", B: "Linux", C: "MS Word", D: "macOS", correct: "C", explanation: "MS Word एक एप्लिकेशन है, OS नहीं।" },
+            { question: "USB का पूर्ण रूप क्या है?", A: "Universal Serial Bus", B: "Universal System Bus", C: "Unified Serial Bus", D: "United Serial Bus", correct: "A", explanation: "USB – Universal Serial Bus" },
+            { question: "निम्न में से कौन सा बाह्य हार्डवेयर है?", A: "CPU", B: "RAM", C: "कीबोर्ड", D: "मदरबोर्ड", correct: "C", explanation: "कीबोर्ड एक बाह्य हार्डवेयर है।" },
+            { question: "ROM किस प्रकार की मेमोरी है?", A: "वोलेटाइल", B: "नॉन-वोलेटाइल", C: "अस्थिर", D: "सभी", correct: "B", explanation: "ROM नॉन-वोलेटाइल (स्थायी) मेमोरी है।" },
+            { question: "निम्न में से कौन सा प्रोग्रामिंग सॉफ्टवेयर है?", A: "C", B: "Java", C: "Python", D: "सभी", correct: "D", explanation: "C, Java, Python सभी प्रोग्रामिंग सॉफ्टवेयर हैं。" },
+            { question: "निम्न में से कौन सी मेमोरी CPU से सबसे निकट होती है?", A: "रजिस्टर", B: "कैश", C: "RAM", D: "HDD", correct: "A", explanation: "रजिस्टर CPU से सबसे निकट होता है।" },
+            { question: "निम्न में से कौन सा नेटवर्किंग डिवाइस है?", A: "राउटर", B: "स्विच", C: "मॉडेम", D: "सभी", correct: "D", explanation: "राउटर, स्विच, मॉडेम सभी नेटवर्किंग डिवाइस हैं।" },
+            { question: "वर्चुअल मेमोरी क्या है?", A: "HDD पर RAM का विस्तार", B: "RAM", C: "ROM", D: "कैश", correct: "A", explanation: "वर्चुअल मेमोरी HDD पर RAM का विस्तार है।" },
+            { question: "निम्न में से कौन सा इनपुट डिवाइस नहीं है?", A: "माइक्रोफोन", B: "वेबकैम", C: "स्पीकर", D: "स्कैनर", correct: "C", explanation: "स्पीकर एक आउटपुट डिवाइस है।" },
+            { question: "ऑपरेटिंग सिस्टम का मुख्य कार्य क्या है?", A: "हार्डवेयर प्रबंधन", B: "डेटा एंट्री", C: "वेब ब्राउज़िंग", D: "गेम खेलना", correct: "A", explanation: "OS हार्डवेयर प्रबंधन करता है。" },
+            { question: "निम्न में से कौन सा मानक इनपुट डिवाइस है?", A: "कीबोर्ड", B: "माउस", C: "स्कैनर", D: "सभी", correct: "D", explanation: "कीबोर्ड, माउस, स्कैनर सभी मानक इनपुट डिवाइस हैं。" },
+            { question: "1 KB में कितने बाइट होते हैं?", A: "512", B: "1000", C: "1024", D: "2048", correct: "C", explanation: "1 KB = 1024 बाइट होते हैं।" },
+            { question: "निम्न में से कौन सा मानक आउटपुट डिवाइस है?", A: "मॉनिटर", B: "प्रिंटर", C: "स्पीकर", D: "सभी", correct: "D", explanation: "मॉनिटर, प्रिंटर, स्पीकर सभी मानक आउटपुट डिवाइस हैं।" },
+            { question: "कंप्यूटर की पाँचवीं पीढ़ी किस पर आधारित है?", A: "AI", B: "माइक्रोप्रोसेसर", C: "VLSI", D: "ट्रांजिस्टर", correct: "A", explanation: "पाँचवीं पीढ़ी AI पर आधारित है।" },
+            { question: "निम्न में से कौन सा ऑडियो डिवाइस है?", A: "स्पीकर", B: "माइक्रोफोन", C: "हेडफोन", D: "सभी", correct: "D", explanation: "स्पीकर, माइक्रोफोन, हेडफोन सभी ऑडियो डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा वीडियो डिवाइस है?", A: "मॉनिटर", B: "प्रोजेक्टर", C: "वेबकैम", D: "सभी", correct: "D", explanation: "मॉनिटर, प्रोजेक्टर, वेबकैम सभी वीडियो डिवाइस हैं。" },
+            { question: "कंप्यूटर की मेमोरी क्षमता किसमें मापी जाती है?", A: "बाइट", B: "बिट", C: "हर्ट्ज़", D: "मीटर", correct: "A", explanation: "मेमोरी क्षमता बाइट में मापी जाती है。" },
+            { question: "निम्न में से कौन सा पोर्टेबल डिवाइस है?", A: "लैपटॉप", B: "डेस्कटॉप", C: "सर्वर", D: "मेनफ्रेम", correct: "A", explanation: "लैपटॉप एक पोर्टेबल डिवाइस है।" },
+            { question: "निम्न में से कौन सा पेरिफेरल डिवाइस है?", A: "कीबोर्ड", B: "माउस", C: "प्रिंटर", D: "सभी", correct: "D", explanation: "कीबोर्ड, माउस, प्रिंटर सभी पेरिफेरल डिवाइस हैं।" },
+            { question: "निम्न में से कौन सा OS ओपन सोर्स है?", A: "Windows", B: "Linux", C: "macOS", D: "सभी", correct: "B", explanation: "Linux ओपन सोर्स OS है।" },
+            { question: "मॉडेम का क्या कार्य है?", A: "डिजिटल-एनालॉग परिवर्तन", B: "डेटा संग्रह", C: "डेटा प्रोसेसिंग", D: "डेटा आउटपुट", correct: "A", explanation: "मॉडेम डिजिटल-एनालॉग सिग्नल परिवर्तन करता है。" },
+            { question: "राउटर का क्या कार्य है?", A: "नेटवर्क जोड़ना", B: "डेटा स्टोर", C: "डेटा प्रिंट", D: "डेटा इनपुट", correct: "A", explanation: "राउटर विभिन्न नेटवर्क को जोड़ता है。}" },
+            { question: "फ्लैश मेमोरी किस प्रकार की मेमोरी है?", A: "नॉन-वोलेटाइल", B: "वोलेटाइल", C: "अस्थिर", D: "सभी", correct: "A", explanation: "फ्लैश मेमोरी नॉन-वोलेटाइल (स्थायी) है।" },
+            { question: "निम्न में से कौन सा प्रिंटर का प्रकार है?", A: "लेजर प्रिंटर", B: "इंकजेट प्रिंटर", C: "डॉट मैट्रिक्स प्रिंटर", D: "सभी", correct: "D", explanation: "लेजर, इंकजेट, डॉट मैट्रिक्स सभी प्रिंटर के प्रकार हैं।" },
+            { question: "निम्न में से कौन सा मॉनिटर का प्रकार है?", A: "CRT", B: "LCD", C: "LED", D: "सभी", correct: "D", explanation: "CRT, LCD, LED सभी मॉनिटर के प्रकार हैं।" },
+            { question: "कंप्यूटर की तीसरी पीढ़ी में किसका उपयोग किया गया?", A: "IC", B: "ट्रांजिस्टर", C: "वैक्यूम ट्यूब", D: "माइक्रोप्रोसेसर", correct: "A", explanation: "तीसरी पीढ़ी में IC का उपयोग हुआ।" },
+            { question: "निम्न में से कौन सा स्कैनर का प्रकार है?", A: "फ्लैटबेड स्कैनर", B: "शीट-फीड स्कैनर", C: "हैंडहेल्ड स्कैनर", D: "सभी", correct: "D", explanation: "ये सभी स्कैनर के प्रकार हैं।" },
+            { question: "1 TB में कितने GB होते हैं?", A: "512", B: "1000", C: "1024", D: "2048", correct: "C", explanation: "1 TB = 1024 GB होते हैं。" }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('hardware-mcq', hardwareMCQs);
+            renderMCQs('software-mcq', softwareMCQs);
+            renderMCQs('memory-mcq', memoryMCQs);
+            renderMCQs('devices-mcq', devicesMCQs);
+            renderMCQs('numbersystem-mcq', numbersystemMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

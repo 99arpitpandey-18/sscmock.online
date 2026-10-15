@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Head Constable – Computer Oriented Preparation</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #0b5e7c;
+            --accent-light: #4a90e2;
+            --accent-dark: #06455a;
+            --accent-gradient: linear-gradient(135deg, #06455a, #0b5e7c);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(11, 94, 124, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #0b5e7c;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(11,94,124,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.blue { background:#0b5e7c; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(11,94,124,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(11,94,124,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(11,94,124,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(11,94,124,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(11,94,124,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(11,94,124,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+
+        .info { background:rgba(11,94,124,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(11,94,124,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(11,94,124,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(11,94,124,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(11,94,124,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(11,94,124,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(11,94,124,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(11,94,124,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(11,94,124,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(11,94,124,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">👮 HEAD CONSTABLE – Computer Oriented Preparation • Fundamentals • MS Office • Internet • Practice • Open Preparation • 250+ MCQs • UP Police, SSC, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">👮</div>
+                <div><h1>HEAD CONSTABLE</h1><span>Computer Oriented Preparation</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot blue active" data-color="blue" title="Blue (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">👮 HEAD CONSTABLE – COMPUTER</div>
+            <h2>हेड कांस्टेबल <strong>कंप्यूटर अभ्यास</strong><br>Fundamentals • Office • Internet • Practice</h2>
+            <div class="subtitle">UP Police Head Constable • Computer Operator • Technical Exams • Fundamentals + 250+ MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics</span>
+                <span>📌 250+ MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>👮 HC Level</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>250+</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>HC Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Technical Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Fundamentals</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> MS Office</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> Internet</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Open Preparation</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: FUNDAMENTALS ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>Computer Fundamentals – कंप्यूटर मूलभूत</h3></div>
+                <p><strong>Computer Fundamentals</strong> कंप्यूटर विज्ञान की आधारशिला है। Head Constable परीक्षा में कंप्यूटर के इतिहास, जनरेशन, हार्डवेयर, सॉफ्टवेयर, मेमोरी, CPU, इनपुट-आउटपुट डिवाइस, स्टोरेज डिवाइस, नंबर सिस्टम, ऑपरेटिंग सिस्टम, और बुनियादी प्रोग्रामिंग अवधारणाओं से प्रश्न पूछे जाते हैं।</p>
+                <h4>🔹 प्रमुख अवधारणाएँ</h4>
+                <ul>
+                    <li><strong>कंप्यूटर जनरेशन:</strong> वैक्यूम ट्यूब → ट्रांजिस्टर → IC → माइक्रोप्रोसेसर → AI</li>
+                    <li><strong>मेमोरी इकाइयाँ:</strong> बिट (0/1) → बाइट (8 बिट) → KB → MB → GB → TB</li>
+                    <li><strong>CPU (सेंट्रल प्रोसेसिंग यूनिट):</strong> ALU + CU + MU – कंप्यूटर का मस्तिष्क</li>
+                    <li><strong>इनपुट डिवाइस:</strong> कीबोर्ड, माउस, स्कैनर, माइक्रोफोन</li>
+                    <li><strong>आउटपुट डिवाइस:</strong> मॉनिटर, प्रिंटर, स्पीकर, प्रोजेक्टर</li>
+                    <li><strong>OS (ऑपरेटिंग सिस्टम):</strong> Windows, Linux, macOS – हार्डवेयर और उपयोगकर्ता के बीच इंटरफेस</li>
+                </ul>
+                <div id="fundamentals-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: MS OFFICE ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>MS Office – एमएस ऑफिस (Word, Excel, PowerPoint, Access)</h3></div>
+                <p><strong>MS Office</strong> Microsoft का ऑफिस सुइट है। Head Constable परीक्षा में MS Word (दस्तावेज़ प्रसंस्करण), MS Excel (स्प्रेडशीट), MS PowerPoint (प्रेजेंटेशन), MS Access (डेटाबेस), और MS Outlook (ई-मेल) से संबंधित शॉर्टकट, फार्मूला, फंक्शन, और मेनू विकल्पों पर प्रश्न पूछे जाते हैं।</p>
+                <h4>🔹 MS Excel महत्वपूर्ण फार्मूला</h4>
+                <ul>
+                    <li><strong>SUM:</strong> योग निकालना =SUM(A1:A10)</li>
+                    <li><strong>AVERAGE:</strong> औसत निकालना =AVERAGE(B1:B10)</li>
+                    <li><strong>COUNT:</strong> सेल गिनना =COUNT(C1:C10)</li>
+                    <li><strong>VLOOKUP:</strong> ऊर्ध्वाधर खोज =VLOOKUP(lookup_value, table_array, col_index, [range_lookup])</li>
+                    <li><strong>IF:</strong> शर्त जाँच =IF(D1>50, "PASS", "FAIL")</li>
+                </ul>
+                <div id="office-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: INTERNET ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>Internet – इंटरनेट (Web, Email, Protocols, Security)</h3></div>
+                <p><strong>Internet</strong> दुनिया भर के कंप्यूटरों का नेटवर्क है। Head Constable परीक्षा में वेब ब्राउज़र, सर्च इंजन, ई-मेल प्रोटोकॉल (SMTP, POP3, IMAP), HTTP/HTTPS, FTP, DNS, URL, साइबर सुरक्षा, फ़िशिंग, ransomware, और क्लाउड कंप्यूटिंग से प्रश्न पूछे जाते हैं।</p>
+                <h4>🔹 महत्वपूर्ण प्रोटोकॉल</h4>
+                <ul>
+                    <li><strong>HTTP/HTTPS:</strong> वेब पेज ट्रांसफर (पोर्ट 80/443)</li>
+                    <li><strong>FTP:</strong> फ़ाइल ट्रांसफर (पोर्ट 21)</li>
+                    <li><strong>SMTP:</strong> ई-मेल भेजना (पोर्ट 25)</li>
+                    <li><strong>POP3/IMAP:</strong> ई-मेल प्राप्त करना (पोर्ट 110/143)</li>
+                    <li><strong>DNS:</strong> डोमेन नाम को IP में बदलना (पोर्ट 53)</li>
+                </ul>
+                <div id="internet-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: OPEN PREPARATION ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Open Preparation – सामान्य कंप्यूटर जागरूकता</h3></div>
+                <p><strong>Open Preparation</strong> में कंप्यूटर से संबंधित सामान्य ज्ञान, प्रमुख व्यक्तित्व (चार्ल्स बैबेज, बिल गेट्स, स्टीव जॉब्स), IT कंपनियाँ, महत्वपूर्ण तिथियाँ, नवीनतम तकनीक (AI, ML, 5G, IoT), कंप्यूटर शब्दावली, डिजिटल इंडिया, मेक इन इंडिया, स्टार्टअप इंडिया, और साइबर सुरक्षा जागरूकता शामिल हैं।</p>
+                <div id="openprep-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 50 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 50 मिश्रित प्रश्न दिए गए हैं – जो Fundamentals, MS Office, Internet, Open Preparation – सभी टॉपिक्स को कवर करते हैं।</p>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> Head Constable परीक्षा में Computer Fundamentals, MS Office शॉर्टकट, Internet Protocols, और Technical Awareness पर फोकस करें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 👮</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>HEAD CONSTABLE – Computer Oriented E-Book</strong></p>
+        <p>UP Police Head Constable • SSC • Technical Exams • 250+ Practice Questions</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 4 Topics • 250+ MCQs • Exam Focused</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS -----
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            let html = '';
+            questions.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (Balanced A,B,C,D) ======
+
+        // ----- FUNDAMENTALS (50) -----
+        const fundamentalsMCQs = [
+            { question: "कंप्यूटर की पहली पीढ़ी में किसका उपयोग किया गया था?", A: "ट्रांजिस्टर", B: "वैक्यूम ट्यूब", C: "इंटीग्रेटेड सर्किट", D: "माइक्रोप्रोसेसर", correct: "B", explanation: "पहली पीढ़ी (1946-1959) में वैक्यूम ट्यूब का उपयोग किया गया था।" },
+            { question: "CPU का पूर्ण रूप क्या है?", A: "Central Process Unit", B: "Central Processing Unit", C: "Computer Process Unit", D: "Control Process Unit", correct: "B", explanation: "CPU – Central Processing Unit" },
+            { question: "निम्न में से कौन सा इनपुट डिवाइस है?", A: "मॉनिटर", B: "प्रिंटर", C: "कीबोर्ड", D: "स्पीकर", correct: "C", explanation: "कीबोर्ड एक इनपुट डिवाइस है, बाकी आउटपुट हैं।" },
+            { question: "1 बाइट में कितने बिट होते हैं?", A: "4", B: "6", C: "8", D: "16", correct: "C", explanation: "1 बाइट = 8 बिट होते हैं।" },
+            { question: "कंप्यूटर का जनक किसे कहा जाता है?", A: "एलन ट्यूरिंग", B: "बिल गेट्स", C: "चार्ल्स बैबेज", D: "स्टीव जॉब्स", correct: "C", explanation: "चार्ल्स बैबेज को कंप्यूटर का जनक कहा जाता है।" },
+            { question: "निम्न में से कौन सा आउटपुट डिवाइस है?", A: "माउस", B: "कीबोर्ड", C: "मॉनिटर", D: "स्कैनर", correct: "C", explanation: "मॉनिटर एक आउटपुट डिवाइस है।" },
+            { question: "कंप्यूटर की सबसे छोटी मेमोरी इकाई क्या है?", A: "बाइट", B: "KB", C: "MB", D: "बिट", correct: "D", explanation: "बिट (0 या 1) सबसे छोटी इकाई है।" },
+            { question: "1 GB में कितने MB होते हैं?", A: "512", B: "1000", C: "1024", D: "2048", correct: "C", explanation: "1 GB = 1024 MB होते हैं।" },
+            { question: "ALU का पूर्ण रूप क्या है?", A: "Arithmetic Logic Unit", B: "Arithmetic Logical Unit", C: "Array Logic Unit", D: "Advanced Logic Unit", correct: "A", explanation: "ALU – Arithmetic Logic Unit" },
+            { question: "निम्न में से कौन सा ऑपरेटिंग सिस्टम है?", A: "Windows", B: "Linux", C: "macOS", D: "सभी", correct: "D", explanation: "Windows, Linux, macOS सभी OS हैं।" },
+            { question: "ROM का पूर्ण रूप क्या है?", A: "Read Only Memory", B: "Random Only Memory", C: "Real Only Memory", D: "Raw Only Memory", correct: "A", explanation: "ROM – Read Only Memory" },
+            { question: "निम्न में से कौन सा पोर्टेबल स्टोरेज डिवाइस है?", A: "HDD", B: "SSD", C: "Pendrive", D: "CD", correct: "C", explanation: "Pendrive एक पोर्टेबल स्टोरेज डिवाइस है।" },
+            { question: "BIOS का पूर्ण रूप क्या है?", A: "Basic Input Output System", B: "Binary Input Output System", C: "Basic Integrated Output System", D: "Binary Integrated Output System", correct: "A", explanation: "BIOS – Basic Input Output System" },
+            { question: "कंप्यूटर की चौथी पीढ़ी में किसका उपयोग किया गया?", A: "VLSI", B: "Microprocessor", C: "Transistor", D: "Vacuum Tube", correct: "B", explanation: "चौथी पीढ़ी (1971-1980) में माइक्रोप्रोसेसर का उपयोग हुआ।" },
+            { question: "निम्न में से कौन सा हार्डवेयर है?", A: "Windows", B: "Linux", C: "RAM", D: "MS Word", correct: "C", explanation: "RAM हार्डवेयर है, बाकी सॉफ्टवेयर हैं।" },
+            { question: "SQL का पूर्ण रूप क्या है?", A: "Simple Query Language", B: "Structured Query Language", C: "Standard Query Language", D: "System Query Language", correct: "B", explanation: "SQL – Structured Query Language" },
+            { question: "निम्न में से कौन सा सिस्टम सॉफ्टवेयर है?", A: "MS Word", B: "Windows", C: "VLC", D: "Chrome", correct: "B", explanation: "Windows एक सिस्टम सॉफ्टवेयर (OS) है, बाकी एप्लिकेशन हैं।" },
+            { question: "कंप्यूटर की दूसरी पीढ़ी में किसका उपयोग किया गया?", A: "ट्रांजिस्टर", B: "वैक्यूम ट्यूब", C: "इंटीग्रेटेड सर्किट", D: "माइक्रोप्रोसेसर", correct: "A", explanation: "दूसरी पीढ़ी (1959-1965) में ट्रांजिस्टर का उपयोग किया गया।" },
+            { question: "RAM का पूर्ण रूप क्या है?", A: "Random Access Memory", B: "Read Access Memory", C: "Real Access Memory", D: "Raw Access Memory", correct: "A", explanation: "RAM – Random Access Memory" },
+            { question: "USB का पूर्ण रूप क्या है?", A: "Universal Serial Bus", B: "Universal System Bus", C: "Unified Serial Bus", D: "United Serial Bus", correct: "A", explanation: "USB – Universal Serial Bus" },
+            { question: "किसे 'कंप्यूटर का पिता' कहा जाता है?", A: "एलन ट्यूरिंग", B: "चार्ल्स बैबेज", C: "बिल गेट्स", D: "स्टीव जॉब्स", correct: "B", explanation: "चार्ल्स बैबेज को कंप्यूटर का पिता कहा जाता है।" },
+            { question: "CPU के तीन मुख्य भाग कौन से हैं?", A: "ALU, CU, MU", B: "ALU, RAM, ROM", C: "CU, RAM, HDD", D: "MU, ROM, HDD", correct: "A", explanation: "CPU के तीन मुख्य भाग हैं – ALU, CU, MU (Memory Unit)।" },
+            { question: "निम्न में से कौन सा डेटाबेस सॉफ्टवेयर है?", A: "MySQL", B: "Windows", C: "Chrome", D: "VLC", correct: "A", explanation: "MySQL एक डेटाबेस सॉफ्टवेयर है।" },
+            { question: "LAN का पूर्ण रूप क्या है?", A: "Local Area Network", B: "Large Area Network", C: "Long Area Network", D: "Limited Area Network", correct: "A", explanation: "LAN – Local Area Network" },
+            { question: "सुपर कंप्यूटर का उपयोग किस क्षेत्र में किया जाता है?", A: "मौसम विज्ञान", B: "वैज्ञानिक गणना", C: "सैन्य अनुसंधान", D: "सभी", correct: "D", explanation: "सुपर कंप्यूटर का उपयोग सभी क्षेत्रों में किया जाता है।" },
+            { question: "पहला इलेक्ट्रॉनिक कंप्यूटर कौन सा था?", A: "ENIAC", B: "UNIVAC", C: "EDVAC", D: "ABC", correct: "A", explanation: "ENIAC (1946) पहला इलेक्ट्रॉनिक कंप्यूटर था।" },
+            { question: "माइक्रोसॉफ्ट के संस्थापक कौन हैं?", A: "बिल गेट्स और पॉल एलन", B: "स्टीव जॉब्स", C: "लिनुस टोरवाल्ड्स", D: "जेम्स गोस्लिंग", correct: "A", explanation: "Microsoft की स्थापना 1975 में बिल गेट्स और पॉल एलन ने की।" },
+            { question: "Apple के संस्थापक कौन हैं?", A: "बिल गेट्स", B: "स्टीव जॉब्स और स्टीव वोज्नियाक", C: "लिनुस टोरवाल्ड्स", D: "जेम्स गोस्लिंग", correct: "B", explanation: "Apple की स्थापना 1976 में स्टीव जॉब्स और स्टीव वोज्नियाक ने की।" },
+            { question: "Linux OS किसने विकसित किया?", A: "बिल गेट्स", B: "स्टीव जॉब्स", C: "लिनुस टोरवाल्ड्स", D: "जेम्स गोस्लिंग", correct: "C", explanation: "Linux OS को लिनुस टोरवाल्ड्स ने 1991 में विकसित किया।" },
+            { question: "C भाषा किसने विकसित की?", A: "डेनिस रिची", B: "ब्याज स्ट्राउस्ट्रप", C: "जेम्स गोस्लिंग", D: "गुइडो वान रोस्सम", correct: "A", explanation: "C भाषा डेनिस रिची ने 1972 में विकसित की।" },
+            { question: "Java भाषा किसने विकसित की?", A: "डेनिस रिची", B: "ब्याज स्ट्राउस्ट्रप", C: "जेम्स गोस्लिंग", D: "गुइडो वान रोस्सम", correct: "C", explanation: "Java जेम्स गोस्लिंग ने Sun Microsystems में विकसित किया।" },
+            { question: "Python भाषा किसने विकसित की?", A: "डेनिस रिची", B: "ब्याज स्ट्राउस्ट्रप", C: "जेम्स गोस्लिंग", D: "गुइडो वान रोस्सम", correct: "D", explanation: "Python गुइडो वान रोस्सम ने 1991 में विकसित किया।" },
+            { question: "C++ भाषा किसने विकसित की?", A: "डेनिस रिची", B: "ब्याज स्ट्राउस्ट्रप", C: "जेम्स गोस्लिंग", D: "गुइडो वान रोस्सम", correct: "B", explanation: "C++ ब्याज स्ट्राउस्ट्रप ने 1983 में विकसित किया।" },
+            { question: "AI का पूर्ण रूप क्या है?", A: "Advanced Intelligence", B: "Artificial Intelligence", C: "Automated Intelligence", D: "Augmented Intelligence", correct: "B", explanation: "AI – Artificial Intelligence" },
+            { question: "कंप्यूटर फाइल क्या है?", A: "डेटा का संग्रह", B: "एक प्रोग्राम", C: "एक फोल्डर", D: "एक ड्राइव", correct: "A", explanation: "फाइल डेटा का एक संग्रह है।" },
+            { question: "फोल्डर क्या है?", A: "फाइलों का समूह", B: "एक प्रोग्राम", C: "एक ड्राइव", D: "एक फाइल", correct: "A", explanation: "फोल्डर फाइलों का समूह है।" },
+            { question: "पासवर्ड क्या है?", A: "एक सुरक्षा कोड", B: "एक प्रोग्राम", C: "एक फाइल", D: "एक फोल्डर", correct: "A", explanation: "पासवर्ड एक सुरक्षा कोड है जो उपयोगकर्ता को प्रमाणित करता है।" },
+            { question: "एंटीवायरस का उपयोग किस लिए है?", A: "वायरस से बचाव", B: "ब्राउज़िंग", C: "ई-मेल भेजने", D: "फाइल डाउनलोड", correct: "A", explanation: "एंटीवायरस वायरस और मैलवेयर से बचाव करता है।" },
+            { question: "स्पैम क्या है?", A: "अवांछित ई-मेल", B: "एक वायरस", C: "एक ब्राउज़र", D: "एक सर्च इंजन", correct: "A", explanation: "स्पैम अवांछित एवं अनचाहे ई-मेल हैं।" },
+            { question: "फ़िशिंग क्या है?", A: "धोखाधड़ी का एक प्रकार", B: "एक वायरस", C: "एक ब्राउज़र", D: "एक सर्च इंजन", correct: "A", explanation: "फ़िशिंग व्यक्तिगत जानकारी चुराने के लिए धोखाधड़ी का एक प्रकार है।" },
+            { question: "HTML का पूर्ण रूप क्या है?", A: "Hyper Text Markup Language", B: "High Text Markup Language", C: "Hyper Text Marking Language", D: "Hyper Text Management Language", correct: "A", explanation: "HTML – Hyper Text Markup Language" },
+            { question: "HTTP का पूर्ण रूप क्या है?", A: "Hyper Text Transfer Protocol", B: "High Tech Transfer Protocol", C: "Hyper Text Transport Protocol", D: "High Text Transfer Protocol", correct: "A", explanation: "HTTP – Hyper Text Transfer Protocol" },
+            { question: "URL का पूर्ण रूप क्या है?", A: "Uniform Resource Locator", B: "Unified Resource Locator", C: "Universal Resource Locator", D: "Uniform Resource Link", correct: "A", explanation: "URL – Uniform Resource Locator" },
+            { question: "निम्न में से कौन सा ब्राउज़र है?", A: "Chrome", B: "Firefox", C: "Edge", D: "सभी", correct: "D", explanation: "Chrome, Firefox, Edge सभी ब्राउज़र हैं।" },
+            { question: "ई-मेल का पूर्ण रूप क्या है?", A: "Electric Mail", B: "Electronic Mail", C: "Electron Mail", D: "Electrical Mail", correct: "B", explanation: "ई-मेल – Electronic Mail" },
+            { question: "SMTP का पूर्ण रूप क्या है?", A: "Simple Mail Transfer Protocol", B: "Simple Message Transfer Protocol", C: "System Mail Transfer Protocol", D: "System Message Transfer Protocol", correct: "A", explanation: "SMTP – Simple Mail Transfer Protocol" },
+            { question: "DNS का पूर्ण रूप क्या है?", A: "Domain Name Server", B: "Domain Name System", C: "Data Name System", D: "Domain Number System", correct: "B", explanation: "DNS – Domain Name System" },
+            { question: "निम्न में से कौन सा सर्च इंजन है?", A: "Google", B: "Bing", C: "Yahoo", D: "सभी", correct: "D", explanation: "Google, Bing, Yahoo सभी सर्च इंजन हैं।" }
+        ];
+
+        // ----- MS OFFICE (50) -----
+        const officeMCQs = [
+            { question: "MS Word में पेज ब्रेक जोड़ने का शॉर्टकट क्या है?", A: "Shift + Enter", B: "Ctrl + Enter", C: "Alt + Enter", D: "Ctrl + Shift + Enter", correct: "B", explanation: "Ctrl + Enter से पेज ब्रेक जोड़ा जाता है।" },
+            { question: "MS Excel में कितने कॉलम होते हैं?", A: "256", B: "1024", C: "16384", D: "65536", correct: "C", explanation: "MS Excel में 16384 कॉलम (A से XFD) हैं।" },
+            { question: "MS Excel में SUM फार्मूला का उपयोग किस लिए है?", A: "औसत", B: "योग", C: "गुणा", D: "भाग", correct: "B", explanation: "SUM फार्मूला योग निकालने के लिए है।" },
+            { question: "MS Word में टेक्स्ट Bold करने का शॉर्टकट?", A: "Ctrl + I", B: "Ctrl + U", C: "Ctrl + B", D: "Ctrl + K", correct: "C", explanation: "Ctrl + B से Bold किया जाता है।" },
+            { question: "MS PowerPoint में स्लाइड जोड़ने का शॉर्टकट?", A: "Ctrl + N", B: "Ctrl + M", C: "Ctrl + Shift + N", D: "Alt + M", correct: "B", explanation: "Ctrl + M से नई स्लाइड जोड़ी जाती है।" },
+            { question: "MS Word में फाइल सेव करने का शॉर्टकट?", A: "Ctrl + S", B: "Ctrl + Shift + S", C: "Alt + S", D: "Ctrl + F", correct: "A", explanation: "Ctrl + S से फाइल सेव की जाती है।" },
+            { question: "MS Excel में VLOOKUP का उपयोग किस लिए है?", A: "डेटा ढूंढने", B: "सॉर्ट करने", C: "फिल्टर करने", D: "चार्ट बनाने", correct: "A", explanation: "VLOOKUP डेटा ढूंढने के लिए है।" },
+            { question: "MS Word में हाइपरलिंक जोड़ने का शॉर्टकट?", A: "Ctrl + H", B: "Ctrl + K", C: "Ctrl + L", D: "Alt + K", correct: "B", explanation: "Ctrl + K से हाइपरलिंक जोड़ा जाता है।" },
+            { question: "MS Excel में फॉर्मूला लिखने के लिए कौन सा चिह्न?", A: "=", B: "+", C: "-", D: "*", correct: "A", explanation: "MS Excel में फॉर्मूला '=' से शुरू होता है।" },
+            { question: "MS PowerPoint में स्लाइड शो शुरू करने का शॉर्टकट?", A: "F5", B: "F10", C: "F12", D: "Ctrl + F5", correct: "A", explanation: "F5 से स्लाइड शो शुरू होता है।" },
+            { question: "MS Word में टेक्स्ट Italic करने का शॉर्टकट?", A: "Ctrl + B", B: "Ctrl + I", C: "Ctrl + U", D: "Ctrl + K", correct: "B", explanation: "Ctrl + I से Italic किया जाता है।" },
+            { question: "MS Excel में AVERAGE फार्मूला का उपयोग?", A: "योग", B: "औसत", C: "गुणा", D: "भाग", correct: "B", explanation: "AVERAGE फार्मूला औसत निकालने के लिए है।" },
+            { question: "MS Word में स्पेल चेक करने का शॉर्टकट?", A: "F5", B: "F7", C: "F12", D: "F10", correct: "B", explanation: "F7 से स्पेल चेक किया जाता है।" },
+            { question: "MS Excel में MAX फार्मूला का उपयोग?", A: "न्यूनतम", B: "अधिकतम", C: "योग", D: "औसत", correct: "B", explanation: "MAX फार्मूला अधिकतम मान निकालता है।" },
+            { question: "MS PowerPoint में एनीमेशन कहाँ से जोड़ें?", A: "Design Tab", B: "Animations Tab", C: "Transitions Tab", D: "Slide Show Tab", correct: "B", explanation: "Animations Tab से एनीमेशन जोड़ा जाता है।" },
+            { question: "MS Word में फाइल प्रिंट करने का शॉर्टकट?", A: "Ctrl + P", B: "Ctrl + Print", C: "Alt + P", D: "Shift + P", correct: "A", explanation: "Ctrl + P से फाइल प्रिंट की जाती है।" },
+            { question: "MS Excel में MIN फार्मूला का उपयोग?", A: "अधिकतम", B: "न्यूनतम", C: "योग", D: "औसत", correct: "B", explanation: "MIN फार्मूला न्यूनतम मान निकालता है।" },
+            { question: "MS Word में टेक्स्ट को सेंटर करने का शॉर्टकट?", A: "Ctrl + L", B: "Ctrl + E", C: "Ctrl + R", D: "Ctrl + J", correct: "B", explanation: "Ctrl + E से टेक्स्ट सेंटर किया जाता है।" },
+            { question: "MS Excel में चार्ट कहाँ से बनाएँ?", A: "Home Tab", B: "Insert Tab", C: "Data Tab", D: "Formulas Tab", correct: "B", explanation: "Insert Tab → Charts से चार्ट बनाया जाता है।" },
+            { question: "MS Word में अन्डरलाइन करने का शॉर्टकट?", A: "Ctrl + B", B: "Ctrl + I", C: "Ctrl + U", D: "Ctrl + K", correct: "C", explanation: "Ctrl + U से Underline किया जाता है।" },
+            { question: "MS Excel में COUNT फार्मूला का उपयोग?", A: "सेल गिनने", B: "योग", C: "औसत", D: "अधिकतम", correct: "A", explanation: "COUNT फार्मूला सेल गिनने के लिए है।" },
+            { question: "MS PowerPoint में ट्रांज़िशन कहाँ से जोड़ें?", A: "Animations Tab", B: "Transitions Tab", C: "Design Tab", D: "Slide Show Tab", correct: "B", explanation: "Transitions Tab से ट्रांज़िशन जोड़ा जाता है।" },
+            { question: "MS Word में फ़ॉन्ट साइज़ बढ़ाने का शॉर्टकट?", A: "Ctrl + Shift + >", B: "Ctrl + Shift + <", C: "Ctrl + ]", D: "सभी", correct: "D", explanation: "ये सभी शॉर्टकट फ़ॉन्ट साइज़ बदलने के लिए हैं।" },
+            { question: "MS Excel में IF फार्मूला का उपयोग?", A: "शर्त जाँच", B: "योग", C: "औसत", D: "गुणा", correct: "A", explanation: "IF फार्मूला शर्त जाँच के लिए है।" },
+            { question: "MS Word में नई फाइल बनाने का शॉर्टकट?", A: "Ctrl + N", B: "Ctrl + O", C: "Ctrl + S", D: "Ctrl + P", correct: "A", explanation: "Ctrl + N से नई फाइल बनाई जाती है।" },
+            { question: "MS Excel में सॉर्टिंग कहाँ से करें?", A: "Home Tab", B: "Data Tab", C: "Insert Tab", D: "Formulas Tab", correct: "B", explanation: "Data Tab से सॉर्टिंग और फिल्टरिंग की जाती है।" },
+            { question: "MS Word में टेबल कैसे बनाएँ?", A: "Insert → Table", B: "Draw → Table", C: "View → Table", D: "Format → Table", correct: "A", explanation: "Insert → Table से टेबल बनाया जाता है।" },
+            { question: "MS Excel में पिवट टेबल कहाँ से बनाएँ?", A: "Insert → PivotTable", B: "Data → PivotTable", C: "Formulas → PivotTable", D: "Home → PivotTable", correct: "A", explanation: "Insert → PivotTable से पिवट टेबल बनाया जाता है।" },
+            { question: "MS PowerPoint में स्लाइड डिज़ाइन कहाँ से बदलें?", A: "Home Tab", B: "Design Tab", C: "Insert Tab", D: "Transitions Tab", correct: "B", explanation: "Design Tab से स्लाइड का डिज़ाइन बदला जाता है।" },
+            { question: "MS Word में फाइल खोलने का शॉर्टकट?", A: "Ctrl + O", B: "Ctrl + N", C: "Ctrl + S", D: "Ctrl + P", correct: "A", explanation: "Ctrl + O से फाइल खोली जाती है।" },
+            { question: "MS Excel में सेल मर्ज कैसे करें?", A: "Home → Merge & Center", B: "Data → Merge", C: "Insert → Merge", D: "Formulas → Merge", correct: "A", explanation: "Home → Merge & Center से सेल मर्ज किए जाते हैं।" },
+            { question: "MS Word में पेज लेआउट कहाँ से बदलें?", A: "Home Tab", B: "Layout Tab", C: "Design Tab", D: "Insert Tab", correct: "B", explanation: "Layout Tab से पेज लेआउट बदला जाता है।" },
+            { question: "MS Excel में फ़िल्टर कहाँ से लगाएँ?", A: "Home Tab", B: "Data Tab → Filter", C: "Insert Tab", D: "Formulas Tab", correct: "B", explanation: "Data Tab → Filter से फ़िल्टर लगाया जाता है।" },
+            { question: "MS PowerPoint में स्लाइड लेआउट कहाँ से बदलें?", A: "Design Tab", B: "Home Tab → Layout", C: "Insert Tab", D: "Transitions Tab", correct: "B", explanation: "Home Tab → Layout से स्लाइड का लेआउट बदला जाता है।" },
+            { question: "MS Word में मार्जिन कहाँ से बदलें?", A: "Home Tab", B: "Layout → Margins", C: "Design Tab", D: "Insert Tab", correct: "B", explanation: "Layout → Margins से मार्जिन बदला जाता है।" },
+            { question: "MS Excel में किसी सेल को Absolute Reference बनाने के लिए क्या करें?", A: "F4 दबाएँ", B: "$ लगाएँ", C: "A और B दोनों", D: "Ctrl + Shift", correct: "C", explanation: "F4 दबाने या $ लगाने से Absolute Reference बनता है।" },
+            { question: "MS Word में बुलेटेड लिस्ट कैसे बनाएँ?", A: "Home → Bullets", B: "Insert → Bullets", C: "Design → Bullets", D: "Layout → Bullets", correct: "A", explanation: "Home → Bullets से बुलेटेड लिस्ट बनाई जाती है।" },
+            { question: "MS Excel में डेटा ट्रांसपोज़ कैसे करें?", A: "कॉपी → Paste Special → Transpose", B: "कॉपी → Transpose", C: "Insert → Transpose", D: "Data → Transpose", correct: "A", explanation: "कॉपी → Paste Special → Transpose से डेटा ट्रांसपोज़ किया जाता है।" },
+            { question: "MS PowerPoint में ऑब्जेक्ट को ग्रुप कैसे करें?", A: "Select → Right Click → Group", B: "Insert → Group", C: "Design → Group", D: "Home → Group", correct: "A", explanation: "Select → Right Click → Group से ऑब्जेक्ट को ग्रुप किया जाता है।" },
+            { question: "MS Word में फुटनोट कैसे डालें?", A: "Insert → Footnote", B: "References → Insert Footnote", C: "View → Footnote", D: "Review → Footnote", correct: "B", explanation: "References → Insert Footnote से फुटनोट डाला जाता है।" },
+            { question: "MS Excel में #VALUE! त्रुटि का क्या अर्थ है?", A: "मान त्रुटि", B: "नाम त्रुटि", C: "संदर्भ त्रुटि", D: "सिंटैक्स त्रुटि", correct: "A", explanation: "#VALUE! का अर्थ मान त्रुटि (गलत प्रकार का डेटा) है।" },
+            { question: "MS Word में स्टाइल कहाँ से लागू करें?", A: "Home Tab → Styles", B: "Design Tab → Styles", C: "Insert Tab → Styles", D: "Layout Tab → Styles", correct: "A", explanation: "Home Tab → Styles से स्टाइल लागू किया जाता है।" },
+            { question: "MS Excel में पाई चार्ट का उपयोग किस लिए है?", A: "प्रतिशत दिखाने", B: "रुझान दिखाने", C: "तुलना करने", D: "वितरण दिखाने", correct: "A", explanation: "पाई चार्ट प्रतिशत दिखाने के लिए उपयोग किया जाता है।" },
+            { question: "MS Word में पेज नंबर कैसे डालें?", A: "Insert → Page Number", B: "View → Page Number", C: "Format → Page Number", D: "Tools → Page Number", correct: "A", explanation: "Insert → Page Number से पेज नंबर डाला जाता है।" },
+            { question: "MS Excel में बार चार्ट का उपयोग किस लिए है?", A: "तुलना", B: "प्रतिशत", C: "रुझान", D: "संबंध", correct: "A", explanation: "बार चार्ट विभिन्न वस्तुओं की तुलना के लिए है।" },
+            { question: "MS PowerPoint में स्लाइड शो से बाहर निकलने का शॉर्टकट?", A: "F5", B: "Esc", C: "F10", D: "Ctrl + S", correct: "B", explanation: "Esc से स्लाइड शो से बाहर निकला जाता है।" },
+            { question: "MS Word में कट (Cut) करने का शॉर्टकट?", A: "Ctrl + C", B: "Ctrl + X", C: "Ctrl + V", D: "Ctrl + Z", correct: "B", explanation: "Ctrl + X से Cut किया जाता है।" },
+            { question: "MS Excel में कॉपी (Copy) करने का शॉर्टकट?", A: "Ctrl + C", B: "Ctrl + X", C: "Ctrl + V", D: "Ctrl + Z", correct: "A", explanation: "Ctrl + C से Copy किया जाता है।" },
+            { question: "MS Word में पेस्ट (Paste) करने का शॉर्टकट?", A: "Ctrl + C", B: "Ctrl + X", C: "Ctrl + V", D: "Ctrl + Z", correct: "C", explanation: "Ctrl + V से Paste किया जाता है।" }
+        ];
+
+        // ----- INTERNET (50) -----
+        const internetMCQs = [
+            { question: "Internet का पूर्ण रूप क्या है?", A: "International Network", B: "Interconnected Network", C: "Inter-network", D: "Internal Network", correct: "A", explanation: "Internet – International Network" },
+            { question: "HTTP का पूर्ण रूप क्या है?", A: "Hyper Text Transfer Protocol", B: "High Tech Transfer Protocol", C: "Hyper Text Transport Protocol", D: "High Text Transfer Protocol", correct: "A", explanation: "HTTP – Hyper Text Transfer Protocol" },
+            { question: "HTTPS किस पोर्ट का उपयोग करता है?", A: "80", B: "443", C: "21", D: "25", correct: "B", explanation: "HTTPS पोर्ट 443 का उपयोग करता है।" },
+            { question: "HTML का पूर्ण रूप क्या है?", A: "Hyper Text Markup Language", B: "High Text Markup Language", C: "Hyper Text Marking Language", D: "Hyper Text Management Language", correct: "A", explanation: "HTML – Hyper Text Markup Language" },
+            { question: "URL का पूर्ण रूप क्या है?", A: "Uniform Resource Locator", B: "Unified Resource Locator", C: "Universal Resource Locator", D: "Uniform Resource Link", correct: "A", explanation: "URL – Uniform Resource Locator" },
+            { question: "निम्न में से कौन सा ब्राउज़र है?", A: "Chrome", B: "Firefox", C: "Edge", D: "सभी", correct: "D", explanation: "Chrome, Firefox, Edge सभी ब्राउज़र हैं।" },
+            { question: "SMTP का पूर्ण रूप क्या है?", A: "Simple Mail Transfer Protocol", B: "Simple Message Transfer Protocol", C: "System Mail Transfer Protocol", D: "System Message Transfer Protocol", correct: "A", explanation: "SMTP – Simple Mail Transfer Protocol" },
+            { question: "DNS का पूर्ण रूप क्या है?", A: "Domain Name System", B: "Domain Name Server", C: "Data Name System", D: "Domain Number System", correct: "A", explanation: "DNS – Domain Name System" },
+            { question: "निम्न में से कौन सा सर्च इंजन है?", A: "Google", B: "Bing", C: "Yahoo", D: "सभी", correct: "D", explanation: "Google, Bing, Yahoo सभी सर्च इंजन हैं।" },
+            { question: "ई-मेल भेजने के लिए किस प्रोटोकॉल का उपयोग होता है?", A: "POP3", B: "IMAP", C: "SMTP", D: "HTTP", correct: "C", explanation: "ई-मेल भेजने के लिए SMTP का उपयोग होता है।" },
+            { question: "ई-मेल प्राप्त करने के लिए किस प्रोटोकॉल का उपयोग होता है?", A: "SMTP", B: "POP3/IMAP", C: "HTTP", D: "FTP", correct: "B", explanation: "ई-मेल प्राप्त करने के लिए POP3 या IMAP का उपयोग होता है।" },
+            { question: "FTP का पूर्ण रूप क्या है?", A: "File Transfer Protocol", B: "File Transfer Procedure", C: "Fast Transfer Protocol", D: "File Transfer Process", correct: "A", explanation: "FTP – File Transfer Protocol" },
+            { question: "FTP किस पोर्ट का उपयोग करता है?", A: "80", B: "443", C: "21", D: "25", correct: "C", explanation: "FTP पोर्ट 21 का उपयोग करता है।" },
+            { question: "SMTP किस पोर्ट का उपयोग करता है?", A: "80", B: "443", C: "21", D: "25", correct: "D", explanation: "SMTP पोर्ट 25 का उपयोग करता है।" },
+            { question: "POP3 किस पोर्ट का उपयोग करता है?", A: "110", B: "143", C: "993", D: "995", correct: "A", explanation: "POP3 पोर्ट 110 का उपयोग करता है।" },
+            { question: "IMAP किस पोर्ट का उपयोग करता है?", A: "110", B: "143", C: "993", D: "995", correct: "B", explanation: "IMAP पोर्ट 143 का उपयोग करता है।" },
+            { question: "कुकी (Cookie) क्या है?", A: "वेबसाइट द्वारा ब्राउज़र में संग्रहीत डेटा", B: "एक वायरस", C: "एक ब्राउज़र", D: "एक सर्च इंजन", correct: "A", explanation: "कुकी वेबसाइट द्वारा ब्राउज़र में संग्रहीत डेटा है।" },
+            { question: "VPN का पूर्ण रूप क्या है?", A: "Virtual Private Network", B: "Virtual Public Network", C: "Virtual Protocol Network", D: "Virtual Private Net", correct: "A", explanation: "VPN – Virtual Private Network" },
+            { question: "राउटर का कार्य क्या है?", A: "नेटवर्क को जोड़ना", B: "डेटा भेजना", C: "वेबसाइट बनाना", D: "ई-मेल भेजना", correct: "A", explanation: "राउटर विभिन्न नेटवर्क को आपस में जोड़ता है।" },
+            { question: "इंटरनेट पर डेटा किस रूप में भेजा जाता है?", A: "पैकेट", B: "बिट", C: "बाइट", D: "फाइल", correct: "A", explanation: "इंटरनेट पर डेटा पैकेट के रूप में भेजा जाता है।" },
+            { question: "वेब सर्वर का उदाहरण क्या है?", A: "Apache", B: "Nginx", C: "IIS", D: "सभी", correct: "D", explanation: "Apache, Nginx, IIS सभी वेब सर्वर हैं।" },
+            { question: "IPv4 Address कितने बिट का होता है?", A: "8", B: "16", C: "32", D: "64", correct: "C", explanation: "IPv4 32 बिट का होता है।" },
+            { question: "IPv6 Address कितने बिट का होता है?", A: "32", B: "64", C: "128", D: "256", correct: "C", explanation: "IPv6 128 बिट का होता है।" },
+            { question: "MAC Address कितने बिट का होता है?", A: "32", B: "48", C: "64", D: "128", correct: "B", explanation: "MAC Address 48 बिट का होता है।" },
+            { question: "फायरवॉल का उपयोग किस लिए किया जाता है?", A: "नेटवर्क सुरक्षा", B: "ब्राउज़िंग", C: "ई-मेल", D: "फाइल डाउनलोड", correct: "A", explanation: "फायरवॉल नेटवर्क सुरक्षा के लिए है।" },
+            { question: "क्लाउड स्टोरेज का उदाहरण क्या है?", A: "Google Drive", B: "Dropbox", C: "OneDrive", D: "सभी", correct: "D", explanation: "Google Drive, Dropbox, OneDrive सभी क्लाउड स्टोरेज हैं।" },
+            { question: "वायरस क्या है?", A: "मैलवेयर", B: "एक ब्राउज़र", C: "एक सर्च इंजन", D: "एक ई-मेल प्रोटोकॉल", correct: "A", explanation: "वायरस एक प्रकार का मैलवेयर है।" },
+            { question: "निम्न में से कौन सा सोशल मीडिया प्लेटफ़ॉर्म है?", A: "Facebook", B: "Twitter", C: "Instagram", D: "सभी", correct: "D", explanation: "Facebook, Twitter, Instagram सभी सोशल मीडिया हैं।" },
+            { question: "वेब होस्टिंग का क्या अर्थ है?", A: "वेबसाइट को सर्वर पर रखना", B: "वेबसाइट बनाना", C: "वेबसाइट डिज़ाइन", D: "वेबसाइट का प्रचार", correct: "A", explanation: "वेब होस्टिंग वेबसाइट को सर्वर पर रखना है।" },
+            { question: "ई-कॉमर्स का क्या अर्थ है?", A: "इंटरनेट पर खरीदारी", B: "ई-मेल", C: "ई-लर्निंग", D: "ई-गवर्नेंस", correct: "A", explanation: "ई-कॉमर्स इंटरनेट पर खरीदारी एवं विक्रय है।" },
+            { question: "DNS का मुख्य कार्य क्या है?", A: "डोमेन नाम को IP में बदलना", B: "वेब पेज बनाना", C: "ई-मेल भेजना", D: "फाइल ट्रांसफर", correct: "A", explanation: "DNS डोमेन नाम को IP एड्रेस में बदलता है।" },
+            { question: "HTTP किस पोर्ट का उपयोग करता है?", A: "80", B: "443", C: "21", D: "25", correct: "A", explanation: "HTTP पोर्ट 80 का उपयोग करता है।" },
+            { question: "SSH किस पोर्ट का उपयोग करता है?", A: "21", B: "22", C: "23", D: "25", correct: "B", explanation: "SSH पोर्ट 22 का उपयोग करता है।" },
+            { question: "Telnet किस पोर्ट का उपयोग करता है?", A: "21", B: "22", C: "23", D: "25", correct: "C", explanation: "Telnet पोर्ट 23 का उपयोग करता है।" },
+            { question: "DNS किस पोर्ट का उपयोग करता है?", A: "53", B: "80", C: "443", D: "25", correct: "A", explanation: "DNS पोर्ट 53 का उपयोग करता है।" },
+            { question: "DHCP का पूर्ण रूप क्या है?", A: "Dynamic Host Configuration Protocol", B: "Domain Host Configuration Protocol", C: "Dynamic Host Control Protocol", D: "Domain Host Control Protocol", correct: "A", explanation: "DHCP – Dynamic Host Configuration Protocol" },
+            { question: "NAT का पूर्ण रूप क्या है?", A: "Network Address Translation", B: "Network Address Transfer", C: "Network Access Translation", D: "Network Address Transformation", correct: "A", explanation: "NAT – Network Address Translation" },
+            { question: "ARP का पूर्ण रूप क्या है?", A: "Address Resolution Protocol", B: "Address Routing Protocol", C: "Advanced Resolution Protocol", D: "Address Request Protocol", correct: "A", explanation: "ARP – Address Resolution Protocol" },
+            { question: "ping कमांड किस प्रोटोकॉल का उपयोग करता है?", A: "TCP", B: "UDP", C: "ICMP", D: "HTTP", correct: "C", explanation: "ping ICMP प्रोटोकॉल का उपयोग करता है।" },
+            { question: "tracert कमांड का उपयोग किस लिए होता है?", A: "नेटवर्क पथ का पता लगाने", B: "IP एड्रेस प्राप्त करने", C: "DNS रिकॉर्ड जाँचने", D: "MAC एड्रेस प्राप्त करने", correct: "A", explanation: "tracert नेटवर्क पथ (रूट) का पता लगाने के लिए है।" },
+            { question: "netstat कमांड का उपयोग किस लिए होता है?", A: "नेटवर्क कनेक्शन दिखाने", B: "IP एड्रेस दिखाने", C: "MAC एड्रेस दिखाने", D: "DNS रिकॉर्ड दिखाने", correct: "A", explanation: "netstat नेटवर्क कनेक्शन दिखाता है।" },
+            { question: "nslookup कमांड का उपयोग किस लिए होता है?", A: "DNS क्वेरी करने", B: "IP एड्रेस प्राप्त करने", C: "MAC एड्रेस प्राप्त करने", D: "नेटवर्क पथ जाँचने", correct: "A", explanation: "nslookup DNS क्वेरी करने के लिए है।" },
+            { question: "वेब पेज किस भाषा में लिखा जाता है?", A: "HTML", B: "XML", C: "CSS", D: "JavaScript", correct: "A", explanation: "वेब पेज HTML में लिखा जाता है।" },
+            { question: "CSS का पूर्ण रूप क्या है?", A: "Cascading Style Sheets", B: "Cascading Style System", C: "Computer Style Sheets", D: "Creative Style Sheets", correct: "A", explanation: "CSS – Cascading Style Sheets" },
+            { question: "JavaScript का उपयोग किस लिए होता है?", A: "वेब पेज को इंटरैक्टिव बनाने", B: "डेटाबेस प्रबंधन", C: "नेटवर्किंग", D: "ऑपरेटिंग सिस्टम", correct: "A", explanation: "JavaScript वेब पेज को इंटरैक्टिव बनाने के लिए है।" },
+            { question: "वेबसाइट की पहचान के लिए क्या उपयोग होता है?", A: "Domain Name", B: "IP Address", C: "URL", D: "सभी", correct: "D", explanation: "Domain Name, IP Address, URL सभी वेबसाइट की पहचान के लिए हैं।" },
+            { question: "क्लाउड कंप्यूटिंग का मुख्य लाभ क्या है?", A: "स्केलेबिलिटी", B: "लागत बचत", C: "कहीं से भी एक्सेस", D: "सभी", correct: "D", explanation: "क्लाउड कंप्यूटिंग के ये सभी लाभ हैं।" }
+        ];
+
+        // ----- OPEN PREPARATION (50) -----
+        const openprepMCQs = [
+            { question: "Microsoft की स्थापना कब हुई थी?", A: "1975", B: "1980", C: "1985", D: "1990", correct: "A", explanation: "Microsoft की स्थापना 1975 में हुई थी।" },
+            { question: "Google की स्थापना कब हुई थी?", A: "1998", B: "1995", C: "2000", D: "2005", correct: "A", explanation: "Google की स्थापना 1998 में हुई थी।" },
+            { question: "Apple की स्थापना कब हुई थी?", A: "1976", B: "1980", C: "1970", D: "1985", correct: "A", explanation: "Apple की स्थापना 1976 में हुई थी।" },
+            { question: "Facebook का लॉन्च किस वर्ष हुआ था?", A: "2004", B: "2005", C: "2006", D: "2007", correct: "A", explanation: "Facebook 2004 में लॉन्च हुआ था।" },
+            { question: "Amazon का लॉन्च किस वर्ष हुआ था?", A: "1994", B: "1995", C: "1996", D: "1997", correct: "A", explanation: "Amazon 1994 में लॉन्च हुआ था।" },
+            { question: "YouTube का लॉन्च किस वर्ष हुआ था?", A: "2005", B: "2004", C: "2006", D: "2007", correct: "A", explanation: "YouTube 2005 में लॉन्च हुआ था।" },
+            { question: "Twitter (X) का लॉन्च किस वर्ष हुआ था?", A: "2006", B: "2005", C: "2007", D: "2008", correct: "A", explanation: "Twitter 2006 में लॉन्च हुआ था।" },
+            { question: "Instagram का लॉन्च किस वर्ष हुआ था?", A: "2010", B: "2009", C: "2011", D: "2012", correct: "A", explanation: "Instagram 2010 में लॉन्च हुआ था।" },
+            { question: "WhatsApp का लॉन्च किस वर्ष हुआ था?", A: "2009", B: "2008", C: "2010", D: "2011", correct: "A", explanation: "WhatsApp 2009 में लॉन्च हुआ था।" },
+            { question: "LinkedIn का लॉन्च किस वर्ष हुआ था?", A: "2003", B: "2002", C: "2004", D: "2005", correct: "A", explanation: "LinkedIn 2003 में लॉन्च हुआ था।" },
+            { question: "डिजिटल इंडिया मिशन कब शुरू हुआ?", A: "2015", B: "2014", C: "2016", D: "2017", correct: "A", explanation: "डिजिटल इंडिया 1 जुलाई 2015 को शुरू हुआ।" },
+            { question: "मेक इन इंडिया अभियान कब शुरू हुआ?", A: "2014", B: "2015", C: "2016", D: "2013", correct: "A", explanation: "मेक इन इंडिया 25 सितंबर 2014 को शुरू हुआ।" },
+            { question: "स्टार्टअप इंडिया अभियान कब शुरू हुआ?", A: "2016", B: "2015", C: "2017", D: "2018", correct: "A", explanation: "स्टार्टअप इंडिया 16 जनवरी 2016 को शुरू हुआ।" },
+            { question: "स्किल इंडिया मिशन कब शुरू हुआ?", A: "2015", B: "2014", C: "2016", D: "2017", correct: "A", explanation: "स्किल इंडिया 15 जुलाई 2015 को शुरू हुआ।" },
+            { question: "IT Act 2000 कब पारित हुआ?", A: "2000", B: "1999", C: "2001", D: "2002", correct: "A", explanation: "IT Act 2000 में पारित हुआ।" },
+            { question: "भारत का पहला सुपर कंप्यूटर कौन सा है?", A: "PARAM 8000", B: "PARAM 10000", C: "Agni", D: "SahasraT", correct: "A", explanation: "PARAM 8000 (1991) भारत का पहला सुपर कंप्यूटर है।" },
+            { question: "भारत का सबसे तेज़ सुपर कंप्यूटर कौन सा है?", A: "PARAM Siddhi", B: "PARAM 8000", C: "Agni", D: "SahasraT", correct: "A", explanation: "PARAM Siddhi भारत का सबसे तेज़ सुपर कंप्यूटर है।" },
+            { question: "राष्ट्रीय साइबर सुरक्षा नीति किस वर्ष आई?", A: "2013", B: "2012", C: "2014", D: "2015", correct: "A", explanation: "राष्ट्रीय साइबर सुरक्षा नीति 2013 में आई।" },
+            { question: "भारत में 5G सेवा कब शुरू हुई?", A: "2022", B: "2021", C: "2023", D: "2020", correct: "A", explanation: "5G सेवा अक्टूबर 2022 में शुरू हुई।" },
+            { question: "भारत में 4G सेवा कब शुरू हुई?", A: "2012", B: "2010", C: "2013", D: "2014", correct: "A", explanation: "4G सेवा 2012 में शुरू हुई।" },
+            { question: "DPDP Act 2023 का पूर्ण रूप क्या है?", A: "Digital Personal Data Protection Act", B: "Digital Public Data Protection Act", C: "Data Privacy and Protection Act", D: "Digital Privacy and Data Protection Act", correct: "A", explanation: "DPDP Act – Digital Personal Data Protection Act, 2023" },
+            { question: "भारत का IT सेवा निर्यात 2025 में लगभग कितना है?", A: "200 अरब डॉलर", B: "150 अरब डॉलर", C: "250 अरब डॉलर", D: "300 अरब डॉलर", correct: "A", explanation: "IT सेवा निर्यात ~200 अरब डॉलर है।" },
+            { question: "भारत का पहला यूनिकोर्न स्टार्टअप कौन सा था?", A: "Flipkart", B: "Paytm", C: "Ola", D: "Zomato", correct: "A", explanation: "Flipkart भारत का पहला यूनिकोर्न था।" },
+            { question: "राष्ट्रीय क्वांटम मिशन कब शुरू हुआ?", A: "2023", B: "2022", C: "2024", D: "2021", correct: "A", explanation: "राष्ट्रीय क्वांटम मिशन 2023 में शुरू हुआ।" },
+            { question: "सुपर कंप्यूटर की गति मापने की इकाई क्या है?", A: "FLOPS", B: "MIPS", C: "GHz", D: "MBps", correct: "A", explanation: "सुपर कंप्यूटर की गति FLOPS में मापी जाती है।" },
+            { question: "विश्व की पहली वेबसाइट कब बनी?", A: "1991", B: "1990", C: "1992", D: "1993", correct: "A", explanation: "पहली वेबसाइट 1991 में बनी थी।" },
+            { question: "HTML 5 कब रिलीज़ हुआ?", A: "2014", B: "2012", C: "2013", D: "2015", correct: "A", explanation: "HTML 5 2014 में रिलीज़ हुआ।" },
+            { question: "Python 3.0 कब रिलीज़ हुआ?", A: "2008", B: "2007", C: "2009", D: "2010", correct: "A", explanation: "Python 3.0 2008 में रिलीज़ हुआ।" },
+            { question: "Windows 10 कब रिलीज़ हुआ?", A: "2015", B: "2014", C: "2016", D: "2017", correct: "A", explanation: "Windows 10 2015 में रिलीज़ हुआ।" },
+            { question: "Linux Kernel 1.0 कब रिलीज़ हुआ?", A: "1994", B: "1993", C: "1995", D: "1996", correct: "A", explanation: "Linux Kernel 1.0 1994 में रिलीज़ हुआ।" },
+            { question: "Git कब रिलीज़ हुआ?", A: "2005", B: "2004", C: "2006", D: "2007", correct: "A", explanation: "Git 2005 में रिलीज़ हुआ।" },
+            { question: "Docker कब रिलीज़ हुआ?", A: "2013", B: "2012", C: "2014", D: "2015", correct: "A", explanation: "Docker 2013 में रिलीज़ हुआ।" },
+            { question: "Kubernetes कब रिलीज़ हुआ?", A: "2015", B: "2014", C: "2016", D: "2017", correct: "A", explanation: "Kubernetes 2015 में रिलीज़ हुआ।" },
+            { question: "Android 1.0 कब रिलीज़ हुआ?", A: "2008", B: "2007", C: "2009", D: "2010", correct: "A", explanation: "Android 1.0 2008 में रिलीज़ हुआ।" },
+            { question: "iOS 1.0 कब रिलीज़ हुआ?", A: "2007", B: "2006", C: "2008", D: "2009", correct: "A", explanation: "iOS 1.0 2007 में रिलीज़ हुआ।" },
+            { question: "macOS X कब रिलीज़ हुआ?", A: "2001", B: "2000", C: "2002", D: "2003", correct: "A", explanation: "macOS X 2001 में रिलीज़ हुआ।" },
+            { question: "Ubuntu का पहला रिलीज़ कब हुआ?", A: "2004", B: "2003", C: "2005", D: "2006", correct: "A", explanation: "Ubuntu 4.10 2004 में रिलीज़ हुआ।" },
+            { question: "Debian का पहला रिलीज़ कब हुआ?", A: "1993", B: "1994", C: "1995", D: "1996", correct: "A", explanation: "Debian 0.01 1993 में रिलीज़ हुआ।" },
+            { question: "राष्ट्रीय ई-गवर्नेंस योजना (NeGP) कब शुरू हुई?", A: "2006", B: "2005", C: "2007", D: "2008", correct: "A", explanation: "NeGP 2006 में शुरू हुई।" },
+            { question: "भारत में इंटरनेट सेवा कब शुरू हुई?", A: "1995", B: "1994", C: "1996", D: "1997", correct: "A", explanation: "इंटरनेट सेवा 1995 में शुरू हुई।" },
+            { question: "भारत का पहला मोबाइल नेटवर्क कब शुरू हुआ?", A: "1995", B: "1994", C: "1996", D: "1997", correct: "A", explanation: "पहला मोबाइल नेटवर्क 1995 में शुरू हुआ।" },
+            { question: "क्वांटम कंप्यूटिंग में किसका उपयोग होता है?", A: "क्यूबिट्स", B: "बिट्स", C: "बाइट्स", D: "ट्रांजिस्टर", correct: "A", explanation: "क्वांटम कंप्यूटिंग में क्यूबिट्स का उपयोग होता है।" },
+            { question: "IoT का पूर्ण रूप क्या है?", A: "Internet of Things", B: "Internet of Technology", C: "Integration of Things", D: "Internet of Tools", correct: "A", explanation: "IoT – Internet of Things" },
+            { question: "5G तकनीक किस बैंड का उपयोग करती है?", A: "mmWave", B: "2.4 GHz", C: "5 GHz", D: "900 MHz", correct: "A", explanation: "5G mmWave (मिलीमीटर वेव) बैंड का उपयोग करती है।" },
+            { question: "ब्लॉकचेन किस तकनीक पर आधारित है?", A: "वितरित खाता", B: "केंद्रीकृत डेटाबेस", C: "क्लाउड स्टोरेज", D: "पारंपरिक डेटाबेस", correct: "A", explanation: "ब्लॉकचेन एक वितरित खाता (Distributed Ledger) है।" },
+            { question: "PARAM सुपर कंप्यूटर किसने विकसित किया?", A: "C-DAC", B: "ISRO", C: "DRDO", D: "IBM", correct: "A", explanation: "PARAM C-DAC द्वारा विकसित किया गया।" },
+            { question: "नवीनतम पीढ़ी (5वीं) का कंप्यूटर किस पर आधारित है?", A: "AI", B: "माइक्रोप्रोसेसर", C: "VLSI", D: "ट्रांजिस्टर", correct: "A", explanation: "5वीं पीढ़ी AI (Artificial Intelligence) पर आधारित है।" },
+            { question: "CERT-In की स्थापना कब हुई?", A: "2004", B: "2000", C: "2008", D: "2010", correct: "A", explanation: "CERT-In की स्थापना 2004 में हुई।" }
+        ];
+
+        // ----- PRACTICE (50 MIXED) -----
+        const practiceMCQs = [
+            { question: "कंप्यूटर की तीसरी पीढ़ी में किसका उपयोग हुआ?", A: "IC", B: "ट्रांजिस्टर", C: "वैक्यूम ट्यूब", D: "माइक्रोप्रोसेसर", correct: "A", explanation: "तीसरी पीढ़ी (1965-1971) में IC का उपयोग हुआ।" },
+            { question: "MS Excel में VLOOKUP का क्या अर्थ है?", A: "Vertical Lookup", B: "Value Lookup", C: "Variable Lookup", D: "Virtual Lookup", correct: "A", explanation: "VLOOKUP – Vertical Lookup" },
+            { question: "HTTP किस पोर्ट पर काम करता है?", A: "80", B: "443", C: "21", D: "25", correct: "A", explanation: "HTTP पोर्ट 80 पर काम करता है।" },
+            { question: "भारत का पहला यूनिकोर्न कौन सा था?", A: "Flipkart", B: "Paytm", C: "Ola", D: "Zomato", correct: "A", explanation: "Flipkart भारत का पहला यूनिकोर्न था।" },
+            { question: "RAM का पूर्ण रूप क्या है?", A: "Random Access Memory", B: "Read Access Memory", C: "Real Access Memory", D: "Raw Access Memory", correct: "A", explanation: "RAM – Random Access Memory" },
+            { question: "SMTP किस पोर्ट पर काम करता है?", A: "25", B: "110", C: "143", D: "993", correct: "A", explanation: "SMTP पोर्ट 25 पर काम करता है।" },
+            { question: "DNS का मुख्य कार्य क्या है?", A: "डोमेन नाम को IP में बदलना", B: "वेब पेज बनाना", C: "ई-मेल भेजना", D: "फाइल ट्रांसफर", correct: "A", explanation: "DNS डोमेन नाम को IP एड्रेस में बदलता है।" },
+            { question: "Windows किस प्रकार का सॉफ्टवेयर है?", A: "सिस्टम सॉफ्टवेयर", B: "एप्लिकेशन सॉफ्टवेयर", C: "डेटाबेस", D: "नेटवर्किंग", correct: "A", explanation: "Windows ऑपरेटिंग सिस्टम (सिस्टम सॉफ्टवेयर) है।" },
+            { question: "MS Word में हाइपरलिंक जोड़ने का शॉर्टकट?", A: "Ctrl + K", B: "Ctrl + H", C: "Ctrl + L", D: "Alt + K", correct: "A", explanation: "Ctrl + K से हाइपरलिंक जोड़ा जाता है।" },
+            { question: "इंटरनेट पर डेटा किस रूप में भेजा जाता है?", A: "पैकेट", B: "बिट", C: "बाइट", D: "फाइल", correct: "A", explanation: "डेटा पैकेट के रूप में भेजा जाता है।" },
+            { question: "Google की स्थापना कब हुई?", A: "1998", B: "1995", C: "2000", D: "2005", correct: "A", explanation: "Google की स्थापना 1998 में हुई।" },
+            { question: "CPU का पूर्ण रूप क्या है?", A: "Central Processing Unit", B: "Central Process Unit", C: "Computer Process Unit", D: "Control Process Unit", correct: "A", explanation: "CPU – Central Processing Unit" },
+            { question: "FTP किस पोर्ट पर काम करता है?", A: "21", B: "22", C: "23", D: "25", correct: "A", explanation: "FTP पोर्ट 21 पर काम करता है।" },
+            { question: "वायरस क्या है?", A: "मैलवेयर", B: "एक ब्राउज़र", C: "एक सर्च इंजन", D: "एक ई-मेल प्रोटोकॉल", correct: "A", explanation: "वायरस एक प्रकार का मैलवेयर है।" },
+            { question: "MS Excel में SUM फार्मूला का उपयोग किस लिए है?", A: "योग", B: "औसत", C: "गुणा", D: "भाग", correct: "A", explanation: "SUM योग निकालने के लिए है।" },
+            { question: "SSL किस प्रोटोकॉल से संबंधित है?", A: "सुरक्षा", B: "डेटा ट्रांसफर", C: "ई-मेल", D: "नेटवर्किंग", correct: "A", explanation: "SSL (Secure Sockets Layer) सुरक्षा प्रोटोकॉल है।" },
+            { question: "भारत का सबसे तेज़ सुपर कंप्यूटर कौन सा है?", A: "PARAM Siddhi", B: "PARAM 8000", C: "Agni", D: "SahasraT", correct: "A", explanation: "PARAM Siddhi सबसे तेज़ है।" },
+            { question: "MS PowerPoint में स्लाइड शो शुरू करने का शॉर्टकट?", A: "F5", B: "F10", C: "F12", D: "Ctrl + F5", correct: "A", explanation: "F5 से स्लाइड शो शुरू होता है।" },
+            { question: "डिजिटल इंडिया मिशन कब शुरू हुआ?", A: "2015", B: "2014", C: "2016", D: "2017", correct: "A", explanation: "डिजिटल इंडिया 2015 में शुरू हुआ।" },
+            { question: "BIOS का पूर्ण रूप क्या है?", A: "Basic Input Output System", B: "Binary Input Output System", C: "Basic Integrated Output System", D: "Binary Integrated Output System", correct: "A", explanation: "BIOS – Basic Input Output System" },
+            { question: "HTML का पूर्ण रूप क्या है?", A: "Hyper Text Markup Language", B: "High Text Markup Language", C: "Hyper Text Marking Language", D: "Hyper Text Management Language", correct: "A", explanation: "HTML – Hyper Text Markup Language" },
+            { question: "निम्न में से कौन सा इनपुट डिवाइस है?", A: "कीबोर्ड", B: "मॉनिटर", C: "प्रिंटर", D: "स्पीकर", correct: "A", explanation: "कीबोर्ड इनपुट डिवाइस है।" },
+            { question: "VPN का पूर्ण रूप क्या है?", A: "Virtual Private Network", B: "Virtual Public Network", C: "Virtual Protocol Network", D: "Virtual Private Net", correct: "A", explanation: "VPN – Virtual Private Network" },
+            { question: "MS Word में टेक्स्ट Bold करने का शॉर्टकट?", A: "Ctrl + B", B: "Ctrl + I", C: "Ctrl + U", D: "Ctrl + K", correct: "A", explanation: "Ctrl + B से Bold किया जाता है।" },
+            { question: "Apple की स्थापना कब हुई?", A: "1976", B: "1980", C: "1970", D: "1985", correct: "A", explanation: "Apple 1976 में स्थापित हुआ।" },
+            { question: "CPU के तीन मुख्य भाग कौन से हैं?", A: "ALU, CU, MU", B: "ALU, RAM, ROM", C: "CU, RAM, HDD", D: "MU, ROM, HDD", correct: "A", explanation: "CPU के ALU, CU, MU भाग हैं।" },
+            { question: "SMTP किस पोर्ट पर काम करता है?", A: "25", B: "110", C: "143", D: "993", correct: "A", explanation: "SMTP पोर्ट 25 है।" },
+            { question: "फ़िशिंग क्या है?", A: "धोखाधड़ी का एक प्रकार", B: "एक वायरस", C: "एक ब्राउज़र", D: "एक सर्च इंजन", correct: "A", explanation: "फ़िशिंग धोखाधड़ी का एक प्रकार है।" },
+            { question: "MS Excel में AVERAGE फार्मूला का उपयोग किस लिए है?", A: "औसत", B: "योग", C: "गुणा", D: "भाग", correct: "A", explanation: "AVERAGE औसत निकालने के लिए है।" },
+            { question: "कंप्यूटर का जनक किसे कहा जाता है?", A: "चार्ल्स बैबेज", B: "एलन ट्यूरिंग", C: "बिल गेट्स", D: "स्टीव जॉब्स", correct: "A", explanation: "चार्ल्स बैबेज को कंप्यूटर का जनक कहा जाता है।" },
+            { question: "HTTP का पूर्ण रूप क्या है?", A: "Hyper Text Transfer Protocol", B: "High Tech Transfer Protocol", C: "Hyper Text Transport Protocol", D: "High Text Transfer Protocol", correct: "A", explanation: "HTTP – Hyper Text Transfer Protocol" },
+            { question: "निम्न में से कौन सा आउटपुट डिवाइस है?", A: "मॉनिटर", B: "माउस", C: "कीबोर्ड", D: "स्कैनर", correct: "A", explanation: "मॉनिटर आउटपुट डिवाइस है।" },
+            { question: "Facebook का लॉन्च किस वर्ष हुआ?", A: "2004", B: "2005", C: "2006", D: "2007", correct: "A", explanation: "Facebook 2004 में लॉन्च हुआ।" },
+            { question: "MS Word में फाइल सेव करने का शॉर्टकट?", A: "Ctrl + S", B: "Ctrl + Shift + S", C: "Alt + S", D: "Ctrl + F", correct: "A", explanation: "Ctrl + S से सेव किया जाता है।" },
+            { question: "NAT का पूर्ण रूप क्या है?", A: "Network Address Translation", B: "Network Address Transfer", C: "Network Access Translation", D: "Network Address Transformation", correct: "A", explanation: "NAT – Network Address Translation" },
+            { question: "कंप्यूटर की सबसे छोटी मेमोरी इकाई क्या है?", A: "बिट", B: "बाइट", C: "KB", D: "MB", correct: "A", explanation: "बिट (0/1) सबसे छोटी इकाई है।" },
+            { question: "MS Excel में COUNT फार्मूला का उपयोग किस लिए है?", A: "सेल गिनने", B: "योग", C: "औसत", D: "अधिकतम", correct: "A", explanation: "COUNT सेल गिनने के लिए है।" },
+            { question: "Cloud Computing का उदाहरण क्या है?", A: "Google Drive", B: "Dropbox", C: "OneDrive", D: "सभी", correct: "D", explanation: "ये सभी क्लाउड स्टोरेज हैं।" },
+            { question: "Linux OS किसने विकसित किया?", A: "लिनुस टोरवाल्ड्स", B: "बिल गेट्स", C: "स्टीव जॉब्स", D: "जेम्स गोस्लिंग", correct: "A", explanation: "Linux लिनुस टोरवाल्ड्स ने विकसित किया।" },
+            { question: "MS PowerPoint में एनीमेशन कहाँ से जोड़ें?", A: "Animations Tab", B: "Design Tab", C: "Transitions Tab", D: "Slide Show Tab", correct: "A", explanation: "Animations Tab से एनीमेशन जोड़ा जाता है।" },
+            { question: "Internet का पूर्ण रूप क्या है?", A: "International Network", B: "Interconnected Network", C: "Inter-network", D: "Internal Network", correct: "A", explanation: "Internet – International Network" },
+            { question: "असिमेट्रिक एन्क्रिप्शन का उदाहरण क्या है?", A: "RSA", B: "AES", C: "DES", D: "3DES", correct: "A", explanation: "RSA असिमेट्रिक एन्क्रिप्शन है।" },
+            { question: "Python भाषा किसने विकसित की?", A: "गुइडो वान रोस्सम", B: "जेम्स गोस्लिंग", C: "डेनिस रिची", D: "ब्याज स्ट्राउस्ट्रप", correct: "A", explanation: "Python गुइडो वान रोस्सम ने विकसित की।" },
+            { question: "1 GB में कितने MB होते हैं?", A: "1024", B: "1000", C: "512", D: "2048", correct: "A", explanation: "1 GB = 1024 MB" },
+            { question: "Wi-Fi का पूर्ण रूप क्या है?", A: "Wireless Fidelity", B: "Wireless Frequency", C: "Wireless Fiber", D: "Wired Fidelity", correct: "A", explanation: "Wi-Fi – Wireless Fidelity" },
+            { question: "C++ भाषा किसने विकसित की?", A: "ब्याज स्ट्राउस्ट्रप", B: "डेनिस रिची", C: "जेम्स गोस्लिंग", D: "गुइडो वान रोस्सम", correct: "A", explanation: "C++ ब्याज स्ट्राउस्ट्रप ने विकसित की।" },
+            { question: "MAC Address कितने बिट का होता है?", A: "48", B: "32", C: "64", D: "128", correct: "A", explanation: "MAC Address 48 बिट का होता है।" },
+            { question: "MS Word में फाइल प्रिंट करने का शॉर्टकट?", A: "Ctrl + P", B: "Ctrl + Print", C: "Alt + P", D: "Shift + P", correct: "A", explanation: "Ctrl + P से प्रिंट किया जाता है।" },
+            { question: "AI का पूर्ण रूप क्या है?", A: "Artificial Intelligence", B: "Advanced Intelligence", C: "Automated Intelligence", D: "Augmented Intelligence", correct: "A", explanation: "AI – Artificial Intelligence" },
+            { question: "IPv6 Address कितने बिट का होता है?", A: "128", B: "32", C: "64", D: "48", correct: "A", explanation: "IPv6 128 बिट का होता है।" }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('fundamentals-mcq', fundamentalsMCQs);
+            renderMCQs('office-mcq', officeMCQs);
+            renderMCQs('internet-mcq', internetMCQs);
+            renderMCQs('openprep-mcq', openprepMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

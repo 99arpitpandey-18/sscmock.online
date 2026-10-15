@@ -1,0 +1,3429 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M3 Chapter 7 | File Processing | NIELIT O Level | Python Notes</title>
+
+<meta name="description"
+content="NIELIT O Level M3 Chapter 7 File Processing complete bilingual Hindi English notes with Python file handling examples, outputs, file modes, read write append, exam points and practice.">
+
+<meta name="keywords"
+content="NIELIT M3 Chapter 7, File Processing Python, Python File Handling Notes Hindi English, O Level M3 File Processing, read write append Python">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+    Inter,
+    Segoe UI,
+    Arial,
+    sans-serif;
+
+    background:
+    radial-gradient(circle at 8% 8%,rgba(0,229,255,.15),transparent 25%),
+    radial-gradient(circle at 92% 12%,rgba(255,0,153,.13),transparent 25%),
+    radial-gradient(circle at 50% 100%,rgba(115,80,255,.14),transparent 30%),
+    linear-gradient(135deg,#07111f,#0c1020 45%,#090d19);
+
+    color:#edf6ff;
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   ANIMATED BACKGROUND
+========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background-image:
+    radial-gradient(circle,#00eaff 1px,transparent 1px),
+    radial-gradient(circle,#a855f7 1px,transparent 1px),
+    radial-gradient(circle,#ff4ecd 1px,transparent 1px);
+
+    background-size:
+    120px 120px,
+    180px 180px,
+    220px 220px;
+
+    background-position:
+    10px 30px,
+    70px 100px,
+    120px 40px;
+
+    opacity:.12;
+
+    z-index:-1;
+
+    animation:
+    starsMove 25s linear infinite;
+}
+
+@keyframes starsMove{
+
+    from{
+        background-position:
+        10px 30px,
+        70px 100px,
+        120px 40px;
+    }
+
+    to{
+        background-position:
+        150px 160px,
+        250px 260px,
+        300px 180px;
+    }
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:999;
+
+    padding:13px 5%;
+
+    background:rgba(5,10,20,.78);
+
+    backdrop-filter:blur(22px);
+
+    border-bottom:
+    1px solid rgba(255,255,255,.08);
+}
+
+.header-inner{
+
+    max-width:1250px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.logo-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.logo{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:900;
+
+    font-size:16px;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00d9ff,
+        #6957ff,
+        #ff3fa4
+    );
+
+    box-shadow:
+    0 0 30px rgba(0,217,255,.22);
+}
+
+.brand-title{
+
+    font-size:17px;
+
+    font-weight:800;
+}
+
+.brand-sub{
+
+    font-size:11px;
+
+    color:#8190a8;
+
+    margin-top:3px;
+}
+
+.back-btn{
+
+    text-decoration:none;
+
+    color:#dcecff;
+
+    padding:9px 15px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.09);
+
+    font-size:12px;
+
+    transition:.3s;
+}
+
+.back-btn:hover{
+
+    color:#00eaff;
+
+    border-color:#00eaff;
+
+    transform:translateY(-2px);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:40px 5% 80px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    padding:45px;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(16,34,58,.92),
+        rgba(23,14,43,.88)
+    );
+
+    border:
+    1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+    0 25px 80px rgba(0,0,0,.38);
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+
+    height:4px;
+
+    left:0;
+
+    top:0;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00eaff,
+        #7757ff,
+        #ff42aa
+    );
+
+    box-shadow:
+    0 0 25px #00eaff;
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+
+    height:280px;
+
+    right:-120px;
+
+    top:-130px;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,234,255,.15),
+        rgba(255,55,180,.08)
+    );
+
+    filter:blur(30px);
+}
+
+.badge{
+
+    display:inline-flex;
+
+    padding:7px 13px;
+
+    border-radius:30px;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    color:#5eeeff;
+
+    background:rgba(0,220,255,.08);
+
+    border:1px solid rgba(0,220,255,.20);
+
+    margin-bottom:18px;
+}
+
+.hero h1{
+
+    font-size:
+    clamp(30px,5vw,52px);
+
+    line-height:1.1;
+
+    margin-bottom:12px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ffffff,
+        #5eeeff,
+        #bd8cff,
+        #ff64bb
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.hero h2{
+
+    color:#b5c5d9;
+
+    font-size:18px;
+
+    margin-bottom:15px;
+}
+
+.hero p{
+
+    max-width:850px;
+
+    color:#8fa2bb;
+
+    line-height:1.8;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+
+    margin-top:28px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:12px;
+}
+
+.stat{
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat strong{
+
+    display:block;
+
+    font-size:22px;
+
+    margin-bottom:5px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00eaff,
+        #b16cff,
+        #ff54b5
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.stat span{
+
+    color:#8192a9;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin:42px 0 20px;
+}
+
+.section-icon{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(0,220,255,.12),
+        rgba(180,80,255,.10)
+    );
+
+    border:
+    1px solid rgba(0,220,255,.20);
+
+    font-size:19px;
+}
+
+.section-title h2{
+
+    font-size:22px;
+}
+
+.section-title p{
+
+    color:#71839d;
+
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+
+/* =========================================================
+   NOTE CARD
+========================================================= */
+
+.note-card{
+
+    padding:26px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(19,37,62,.82),
+        rgba(18,15,38,.78)
+    );
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    margin-bottom:18px;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.16);
+}
+
+.note-card h3{
+
+    font-size:18px;
+
+    margin-bottom:13px;
+
+    color:#f2f8ff;
+}
+
+.note-card h4{
+
+    margin-top:20px;
+
+    margin-bottom:9px;
+
+    color:#62eaff;
+
+    font-size:14px;
+}
+
+.note-card p{
+
+    color:#a2b1c4;
+
+    font-size:13px;
+
+    line-height:1.8;
+
+    margin-bottom:10px;
+}
+
+.hindi{
+
+    color:#ffd6f3 !important;
+}
+
+
+/* =========================================================
+   IMPORTANT BOXES
+========================================================= */
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:16px;
+}
+
+.info-box{
+
+    padding:20px;
+
+    border-radius:17px;
+
+    background:rgba(255,255,255,.035);
+
+    border:
+    1px solid rgba(255,255,255,.07);
+}
+
+.info-box h3{
+
+    font-size:15px;
+
+    margin-bottom:9px;
+}
+
+.info-box p{
+
+    color:#96a8bd;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+.blue{
+    border-left:4px solid #00d9ff;
+}
+
+.pink{
+    border-left:4px solid #ff45aa;
+}
+
+.purple{
+    border-left:4px solid #9b62ff;
+}
+
+.green{
+    border-left:4px solid #30e0a1;
+}
+
+
+/* =========================================================
+   CODE BOX
+========================================================= */
+
+.code-card{
+
+    margin:17px 0;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    border:
+    1px solid rgba(255,255,255,.09);
+
+    background:#060a12;
+
+    box-shadow:
+    0 12px 30px rgba(0,0,0,.25);
+}
+
+.code-head{
+
+    padding:10px 14px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+        90deg,
+        rgba(0,220,255,.10),
+        rgba(160,80,255,.10)
+    );
+
+    color:#91eaff;
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+pre{
+
+    padding:19px;
+
+    overflow-x:auto;
+
+    color:#e7f8ff;
+
+    font-family:
+    Consolas,
+    "Courier New",
+    monospace;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+code{
+    color:#e9faff;
+}
+
+
+/* =========================================================
+   OUTPUT
+========================================================= */
+
+.output{
+
+    margin-top:10px;
+
+    padding:17px;
+
+    border-radius:13px;
+
+    background:
+    rgba(0,0,0,.30);
+
+    border:
+    1px dashed rgba(0,220,255,.20);
+}
+
+.output-title{
+
+    color:#47eaff;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    margin-bottom:8px;
+}
+
+.output pre{
+
+    padding:0;
+
+    color:#c8d5e5;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   FILE MODES TABLE
+========================================================= */
+
+.table-wrap{
+
+    overflow-x:auto;
+
+    border-radius:17px;
+
+    border:
+    1px solid rgba(255,255,255,.08);
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:650px;
+}
+
+th{
+
+    padding:14px;
+
+    text-align:left;
+
+    background:
+    linear-gradient(
+        90deg,
+        rgba(0,220,255,.13),
+        rgba(155,80,255,.12)
+    );
+
+    color:#72ebff;
+
+    font-size:12px;
+}
+
+td{
+
+    padding:13px;
+
+    border-top:
+    1px solid rgba(255,255,255,.06);
+
+    color:#a9b8ca;
+
+    font-size:12px;
+}
+
+tr:hover td{
+
+    background:rgba(255,255,255,.025);
+
+    color:#ffffff;
+}
+
+.mode{
+
+    color:#ff76c3;
+
+    font-weight:800;
+
+    font-family:monospace;
+}
+
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.list{
+
+    list-style:none;
+
+    margin-top:12px;
+}
+
+.list li{
+
+    padding:10px 12px;
+
+    margin-bottom:7px;
+
+    border-radius:9px;
+
+    background:rgba(255,255,255,.025);
+
+    color:#9eafc2;
+
+    font-size:12px;
+}
+
+.list li::before{
+
+    content:"✓";
+
+    color:#40e7bd;
+
+    font-weight:bold;
+
+    margin-right:9px;
+}
+
+
+/* =========================================================
+   MEMORY TRICKS
+========================================================= */
+
+.trick{
+
+    padding:21px;
+
+    border-radius:17px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,60,170,.08),
+        rgba(115,80,255,.08)
+    );
+
+    border:
+    1px solid rgba(255,80,190,.15);
+
+    margin-top:16px;
+}
+
+.trick strong{
+
+    display:block;
+
+    color:#ff79c9;
+
+    margin-bottom:8px;
+}
+
+.trick p{
+
+    color:#a7b5c7;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   MCQ
+========================================================= */
+
+.mcq{
+
+    padding:20px;
+
+    margin-bottom:14px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:
+    1px solid rgba(255,255,255,.07);
+}
+
+.mcq-question{
+
+    font-size:13px;
+
+    color:#f1f7ff;
+
+    font-weight:700;
+
+    line-height:1.7;
+
+    margin-bottom:11px;
+}
+
+.option{
+
+    padding:9px 12px;
+
+    margin:5px 0;
+
+    border-radius:8px;
+
+    color:#9cacc0;
+
+    background:rgba(255,255,255,.025);
+
+    font-size:11px;
+}
+
+.answer{
+
+    margin-top:11px;
+
+    color:#48e7b5;
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+   EXAM ALERT
+========================================================= */
+
+.exam-alert{
+
+    padding:23px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,174,0,.10),
+        rgba(255,70,140,.07)
+    );
+
+    border:
+    1px solid rgba(255,174,0,.18);
+}
+
+.exam-alert h3{
+
+    color:#ffc85b;
+
+    margin-bottom:10px;
+
+    font-size:16px;
+}
+
+.exam-alert p{
+
+    color:#b1bdcc;
+
+    line-height:1.7;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.chapter-nav{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:9px;
+
+    margin-top:20px;
+}
+
+.chapter-nav a{
+
+    text-decoration:none;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+    color:#a9bbd0;
+
+    font-size:10px;
+
+    background:rgba(255,255,255,.035);
+
+    border:
+    1px solid rgba(255,255,255,.07);
+
+    transition:.3s;
+}
+
+.chapter-nav a:hover{
+
+    color:#00eaff;
+
+    border-color:#00eaff;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    margin-top:50px;
+
+    padding:28px;
+
+    text-align:center;
+
+    color:#64768f;
+
+    font-size:11px;
+
+    border-top:
+    1px solid rgba(255,255,255,.06);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:850px){
+
+    .stats,
+    .info-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+
+    .container{
+
+        padding:
+        28px 4% 60px;
+    }
+
+    .hero{
+
+        padding:28px 20px;
+    }
+
+    .hero h1{
+
+        font-size:31px;
+    }
+
+    .stats,
+    .info-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .header-inner{
+
+        align-items:flex-start;
+    }
+
+    .brand-title{
+
+        font-size:14px;
+    }
+
+    .back-btn{
+
+        padding:8px 10px;
+
+        font-size:10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+<div class="logo-area">
+
+<div class="logo">
+M3
+</div>
+
+<div>
+
+<div class="brand-title">
+M3 Study Zone
+</div>
+
+<div class="brand-sub">
+Chapter 7 • File Processing
+</div>
+
+</div>
+
+</div>
+
+
+<a href="m3.html" class="back-btn">
+← Back to M3
+</a>
+
+</div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="badge">
+✦ NIELIT O LEVEL • M3 • PYTHON
+</div>
+
+<h1>
+Chapter 7 — File Processing
+</h1>
+
+<h2>
+File Handling in Python • फ़ाइल प्रोसेसिंग
+</h2>
+
+<p>
+Learn how Python can create, open, read, write, append and
+manage files. This chapter explains file modes, file methods,
+text files, reading techniques, writing techniques, the
+<strong>with</strong> statement and common examination mistakes
+with practical examples and outputs.
+</p>
+
+
+<div class="stats">
+
+<div class="stat">
+<strong>01</strong>
+<span>File Concept</span>
+</div>
+
+<div class="stat">
+<strong>08+</strong>
+<span>Important Methods</span>
+</div>
+
+<div class="stat">
+<strong>10+</strong>
+<span>Practical Examples</span>
+</div>
+
+<div class="stat">
+<strong>20+</strong>
+<span>Exam Points</span>
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CHAPTER NAVIGATION
+========================================================= -->
+
+<div class="chapter-nav">
+
+<a href="#intro">
+Introduction
+</a>
+
+<a href="#open">
+open()
+</a>
+
+<a href="#modes">
+File Modes
+</a>
+
+<a href="#read">
+Reading
+</a>
+
+<a href="#write">
+Writing
+</a>
+
+<a href="#append">
+Append
+</a>
+
+<a href="#with">
+with
+</a>
+
+<a href="#methods">
+Methods
+</a>
+
+<a href="#errors">
+Mistakes
+</a>
+
+<a href="#mcq">
+MCQs
+</a>
+
+</div>
+
+
+
+<!-- =========================================================
+     1 INTRODUCTION
+========================================================= -->
+
+<div class="section-title" id="intro">
+
+<div class="section-icon">
+📂
+</div>
+
+<div>
+
+<h2>
+1. What is File Processing?
+</h2>
+
+<p>
+Basic concept • मूल अवधारणा
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+File Processing / फ़ाइल प्रोसेसिंग
+</h3>
+
+<p>
+<strong>English:</strong>
+File processing means performing operations on files such as
+creating, opening, reading, writing, updating and closing files.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+File Processing का अर्थ files पर अलग-अलग operations करना है,
+जैसे file बनाना, खोलना, पढ़ना, लिखना, data जोड़ना और file को
+बंद करना।
+</p>
+
+
+<div class="info-grid">
+
+<div class="info-box blue">
+
+<h3>📄 File</h3>
+
+<p>
+A file is a collection of data stored permanently on a storage
+device. Examples: TXT, CSV, PDF, JPG etc.
+</p>
+
+<p class="hindi">
+File data को permanently store करने का माध्यम है।
+</p>
+
+</div>
+
+
+<div class="info-box pink">
+
+<h3>🐍 Why Python Files?</h3>
+
+<p>
+Python provides simple built-in functions and methods for
+working with files.
+</p>
+
+<p class="hindi">
+Python में files के साथ काम करना बहुत आसान है क्योंकि
+built-in functions उपलब्ध हैं।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     2 FILE WORKFLOW
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🔄
+</div>
+
+<div>
+
+<h2>
+2. Basic File Processing Workflow
+</h2>
+
+<p>
+File handling का basic flow
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="info-grid">
+
+<div class="info-box blue">
+
+<h3>Step 1 — Open</h3>
+
+<p>
+First open the file using the <strong>open()</strong> function.
+</p>
+
+<p class="hindi">
+सबसे पहले file को <strong>open()</strong> function से खोलते हैं।
+</p>
+
+</div>
+
+
+<div class="info-box purple">
+
+<h3>Step 2 — Process</h3>
+
+<p>
+Read, write or append data according to the requirement.
+</p>
+
+<p class="hindi">
+Requirement के अनुसार data को read, write या append करते हैं।
+</p>
+
+</div>
+
+
+<div class="info-box pink">
+
+<h3>Step 3 — Close</h3>
+
+<p>
+Close the file after completing the operation.
+</p>
+
+<p class="hindi">
+काम पूरा होने के बाद file को close करना चाहिए।
+</p>
+
+</div>
+
+
+<div class="info-box green">
+
+<h3>Step 4 — Verify</h3>
+
+<p>
+Check whether the required data has been correctly processed.
+</p>
+
+<p class="hindi">
+Check करें कि data सही तरीके से process हुआ या नहीं।
+</p>
+
+</div>
+
+</div>
+
+
+<div class="trick">
+
+<strong>🧠 Memory Trick</strong>
+
+<p>
+<strong>O → P → C</strong>
+<br>
+Open → Process → Close
+<br><br>
+याद रखें: <strong>“Open → Work → Close”</strong>
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     3 OPEN FUNCTION
+========================================================= -->
+
+<div class="section-title" id="open">
+
+<div class="section-icon">
+🔓
+</div>
+
+<div>
+
+<h2>
+3. open() Function
+</h2>
+
+<p>
+File खोलने का सबसे important function
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+Syntax
+</h3>
+
+<div class="code-card">
+
+<div class="code-head">
+PYTHON
+</div>
+
+<pre><code>file_object = open("filename", "mode")</code></pre>
+
+</div>
+
+
+<p>
+<strong>English:</strong>
+The <strong>open()</strong> function opens a file and returns a
+file object.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>open()</strong> function file को खोलता है और एक
+file object return करता है।
+</p>
+
+
+<h4>Example</h4>
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 01
+</div>
+
+<pre><code>f = open("student.txt", "r")
+
+print(f)
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+EXPECTED OUTPUT
+</div>
+
+<pre>&lt;_io.TextIOWrapper name='student.txt' mode='r' ...&gt;</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     4 FILE MODES
+========================================================= -->
+
+<div class="section-title" id="modes">
+
+<div class="section-icon">
+⚙️
+</div>
+
+<div>
+
+<h2>
+4. File Modes
+</h2>
+
+<p>
+Exam का सबसे important हिस्सा
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Mode
+</th>
+
+<th>
+Meaning
+</th>
+
+<th>
+Use
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td class="mode">
+r
+</td>
+
+<td>
+Read
+</td>
+
+<td>
+Existing file को पढ़ने के लिए
+</td>
+
+</tr>
+
+<tr>
+
+<td class="mode">
+w
+</td>
+
+<td>
+Write
+</td>
+
+<td>
+Writing; existing content can be overwritten
+</td>
+
+</tr>
+
+<tr>
+
+<td class="mode">
+a
+</td>
+
+<td>
+Append
+</td>
+
+<td>
+Existing file के end में data जोड़ने के लिए
+</td>
+
+</tr>
+
+<tr>
+
+<td class="mode">
+x
+</td>
+
+<td>
+Create
+</td>
+
+<td>
+New file create करने के लिए
+</td>
+
+</tr>
+
+<tr>
+
+<td class="mode">
+r+
+</td>
+
+<td>
+Read + Write
+</td>
+
+<td>
+Read और write दोनों
+</td>
+
+</tr>
+
+<tr>
+
+<td class="mode">
+w+
+</td>
+
+<td>
+Write + Read
+</td>
+
+<td>
+Write और read दोनों
+</td>
+
+</tr>
+
+<tr>
+
+<td class="mode">
+a+
+</td>
+
+<td>
+Append + Read
+</td>
+
+<td>
+Append और read दोनों
+</td>
+
+</tr>
+
+<tr>
+
+<td class="mode">
+b
+</td>
+
+<td>
+Binary
+</td>
+
+<td>
+Binary data के लिए
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="trick">
+
+<strong>🔥 Super Important Exam Trick</strong>
+
+<p>
+
+<strong>r = Read</strong><br>
+<strong>w = Write</strong><br>
+<strong>a = Add at end</strong><br>
+<strong>x = eXclusive creation</strong><br>
+<strong>b = Binary</strong>
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     5 READ
+========================================================= -->
+
+<div class="section-title" id="read">
+
+<div class="section-icon">
+📖
+</div>
+
+<div>
+
+<h2>
+5. Reading a File
+</h2>
+
+<p>
+read(), readline(), readlines()
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+read()
+</h3>
+
+<p>
+<strong>English:</strong>
+The <strong>read()</strong> method reads the contents of a file.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>read()</strong> method पूरी file या specified number of
+characters पढ़ सकता है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 02 — read()
+</div>
+
+<pre><code>f = open("student.txt", "r")
+
+data = f.read()
+
+print(data)
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+student.txt
+</div>
+
+<pre>Arpit
+NIELIT O Level
+M3 Python</pre>
+
+<div class="output-title" style="margin-top:12px;">
+OUTPUT
+</div>
+
+<pre>Arpit
+NIELIT O Level
+M3 Python</pre>
+
+</div>
+
+
+<h4>Reading limited characters</h4>
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 03
+</div>
+
+<pre><code>f = open("student.txt", "r")
+
+data = f.read(5)
+
+print(data)
+
+f.close()</code></pre>
+
+</div>
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>Arpit</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     READLINE
+========================================================= -->
+
+<section class="note-card">
+
+<h3>
+readline()
+</h3>
+
+<p>
+<strong>English:</strong>
+<strong>readline()</strong> reads one line at a time.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>readline()</strong> एक समय में एक line पढ़ता है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 04
+</div>
+
+<pre><code>f = open("student.txt", "r")
+
+line1 = f.readline()
+line2 = f.readline()
+
+print(line1)
+print(line2)
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>Arpit
+NIELIT O Level</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     READLINES
+========================================================= -->
+
+<section class="note-card">
+
+<h3>
+readlines()
+</h3>
+
+<p>
+<strong>English:</strong>
+<strong>readlines()</strong> reads all lines and returns them as a
+list.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>readlines()</strong> सभी lines को पढ़कर एक list के रूप में
+return करता है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 05
+</div>
+
+<pre><code>f = open("student.txt", "r")
+
+lines = f.readlines()
+
+print(lines)
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>['Arpit\n', 'NIELIT O Level\n', 'M3 Python\n']</pre>
+
+</div>
+
+
+<div class="trick">
+
+<strong>🧠 Difference याद रखें</strong>
+
+<p>
+<strong>read()</strong> → content पढ़ता है<br>
+<strong>readline()</strong> → एक line पढ़ता है<br>
+<strong>readlines()</strong> → lines की list देता है
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     6 WRITE
+========================================================= -->
+
+<div class="section-title" id="write">
+
+<div class="section-icon">
+✍️
+</div>
+
+<div>
+
+<h2>
+6. Writing to a File
+</h2>
+
+<p>
+write() और writelines()
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+write()
+</h3>
+
+<p>
+<strong>English:</strong>
+The <strong>write()</strong> method writes a string into a file.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>write()</strong> method file में string data लिखता है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 06 — write()
+</div>
+
+<pre><code>f = open("student.txt", "w")
+
+f.write("Arpit\n")
+f.write("NIELIT O Level\n")
+f.write("Python Programming")
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+FILE CONTENT
+</div>
+
+<pre>Arpit
+NIELIT O Level
+Python Programming</pre>
+
+</div>
+
+
+<div class="exam-alert">
+
+<h3>
+⚠️ Important
+</h3>
+
+<p>
+<strong>w mode</strong> existing file का old content overwrite कर
+सकता है। इसलिए existing data को बचाकर रखने की आवश्यकता हो तो
+<strong>a mode</strong> का concept समझें।
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     7 APPEND
+========================================================= -->
+
+<div class="section-title" id="append">
+
+<div class="section-icon">
+➕
+</div>
+
+<div>
+
+<h2>
+7. Append Mode
+</h2>
+
+<p>
+Existing data के end में नया data जोड़ना
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+'a' Mode
+</h3>
+
+<p>
+<strong>English:</strong>
+Append mode adds new data at the end of an existing file.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+Append mode existing file के पुराने data के end में नया data
+add करता है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 07 — APPEND
+</div>
+
+<pre><code>f = open("student.txt", "a")
+
+f.write("\nHTML")
+f.write("\nCSS")
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+BEFORE
+</div>
+
+<pre>Arpit
+NIELIT O Level
+Python Programming</pre>
+
+<div class="output-title" style="margin-top:14px;">
+AFTER
+</div>
+
+<pre>Arpit
+NIELIT O Level
+Python Programming
+HTML
+CSS</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     8 CLOSE
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🔒
+</div>
+
+<div>
+
+<h2>
+8. close() Method
+</h2>
+
+<p>
+File बंद करना
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<p>
+<strong>English:</strong>
+The <strong>close()</strong> method closes an opened file.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>close()</strong> method opened file को बंद करता है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 08
+</div>
+
+<pre><code>f = open("student.txt", "r")
+
+print(f.read())
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="trick">
+
+<strong>⭐ Exam Point</strong>
+
+<p>
+File के साथ काम पूरा होने के बाद file को close करना good practice
+है। इससे resources properly release होते हैं।
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     9 WITH STATEMENT
+========================================================= -->
+
+<div class="section-title" id="with">
+
+<div class="section-icon">
+🛡️
+</div>
+
+<div>
+
+<h2>
+9. with Statement
+</h2>
+
+<p>
+Safe और convenient file handling
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+Why use with?
+</h3>
+
+<p>
+<strong>English:</strong>
+The <strong>with</strong> statement automatically handles closing
+the file after the block is completed.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>with</strong> statement का उपयोग करने पर block complete
+होने के बाद file automatically close हो जाती है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 09 — WITH
+</div>
+
+<pre><code>with open("student.txt", "r") as f:
+
+    data = f.read()
+
+    print(data)</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>Arpit
+NIELIT O Level
+Python Programming</pre>
+
+</div>
+
+
+<div class="trick">
+
+<strong>🔥 Remember</strong>
+
+<p>
+<strong>open → use → automatically close</strong>
+<br><br>
+Modern Python file handling में <strong>with open()</strong>
+बहुत useful pattern है।
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     10 FILE METHODS
+========================================================= -->
+
+<div class="section-title" id="methods">
+
+<div class="section-icon">
+🧰
+</div>
+
+<div>
+
+<h2>
+10. Important File Methods
+</h2>
+
+<p>
+Exam और practical दोनों के लिए
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Method
+</th>
+
+<th>
+Purpose
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td class="mode">read()</td>
+<td>File content read करता है</td>
+</tr>
+
+<tr>
+<td class="mode">read(n)</td>
+<td>n characters read करता है</td>
+</tr>
+
+<tr>
+<td class="mode">readline()</td>
+<td>एक line read करता है</td>
+</tr>
+
+<tr>
+<td class="mode">readlines()</td>
+<td>All lines को list में देता है</td>
+</tr>
+
+<tr>
+<td class="mode">write()</td>
+<td>String data write करता है</td>
+</tr>
+
+<tr>
+<td class="mode">writelines()</td>
+<td>Strings की sequence write करता है</td>
+</tr>
+
+<tr>
+<td class="mode">close()</td>
+<td>File close करता है</td>
+</tr>
+
+<tr>
+<td class="mode">tell()</td>
+<td>Current file position बताता है</td>
+</tr>
+
+<tr>
+<td class="mode">seek()</td>
+<td>File position बदलता है</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     11 TELL
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+📍
+</div>
+
+<div>
+
+<h2>
+11. tell() Method
+</h2>
+
+<p>
+Current file position
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<p>
+<strong>English:</strong>
+<strong>tell()</strong> returns the current position of the file
+pointer.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>tell()</strong> file pointer की current position बताता है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 10
+</div>
+
+<pre><code>f = open("student.txt", "r")
+
+print(f.tell())
+
+data = f.read(5)
+
+print(data)
+
+print(f.tell())
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>0
+Arpit
+5</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     12 SEEK
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🎯
+</div>
+
+<div>
+
+<h2>
+12. seek() Method
+</h2>
+
+<p>
+File pointer की position बदलना
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<p>
+<strong>English:</strong>
+<strong>seek()</strong> changes the current position of the file
+pointer.
+</p>
+
+<p class="hindi">
+<strong>हिन्दी:</strong>
+<strong>seek()</strong> file pointer को किसी specified position पर
+ले जाने के लिए use होता है।
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 11
+</div>
+
+<pre><code>f = open("student.txt", "r")
+
+print(f.read(5))
+
+f.seek(0)
+
+print(f.read(5))
+
+f.close()</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>Arpit
+Arpit</pre>
+
+</div>
+
+
+<div class="trick">
+
+<strong>🧠 Easy Trick</strong>
+
+<p>
+<strong>tell()</strong> → “Where am I?”<br>
+<strong>seek()</strong> → “Go there!”
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     13 WRITELINES
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+📝
+</div>
+
+<div>
+
+<h2>
+13. writelines()
+</h2>
+
+<p>
+Multiple strings लिखना
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 12
+</div>
+
+<pre><code>lines = [
+    "HTML\n",
+    "CSS\n",
+    "JavaScript\n"
+]
+
+with open("web.txt", "w") as f:
+
+    f.writelines(lines)</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+web.txt
+</div>
+
+<pre>HTML
+CSS
+JavaScript</pre>
+
+</div>
+
+
+<p class="hindi">
+<strong>ध्यान दें:</strong>
+writelines() automatically हर string के बीच newline नहीं लगाता।
+यदि अलग lines चाहिए तो strings में <strong>\n</strong> देना पड़ सकता है।
+</p>
+
+</section>
+
+
+
+<!-- =========================================================
+     14 LOOP THROUGH FILE
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🔁
+</div>
+
+<div>
+
+<h2>
+14. File को Loop से Read करना
+</h2>
+
+<p>
+Practical और programming दोनों में useful
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 13
+</div>
+
+<pre><code>with open("student.txt", "r") as f:
+
+    for line in f:
+
+        print(line.strip())</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>Arpit
+NIELIT O Level
+Python Programming</pre>
+
+</div>
+
+
+<p class="hindi">
+<strong>strip()</strong> का उपयोग line के आसपास मौजूद unnecessary
+whitespace/newline को हटाने के लिए किया जा सकता है।
+</p>
+
+</section>
+
+
+
+<!-- =========================================================
+     15 FILE EXISTENCE
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🔍
+</div>
+
+<div>
+
+<h2>
+15. File Existence Check
+</h2>
+
+<p>
+os module का basic use
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 14
+</div>
+
+<pre><code>import os
+
+if os.path.exists("student.txt"):
+
+    print("File exists")
+
+else:
+
+    print("File does not exist")</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>File exists</pre>
+
+</div>
+
+
+<p class="hindi">
+<strong>os.path.exists()</strong> check करता है कि specified path पर
+file मौजूद है या नहीं।
+</p>
+
+</section>
+
+
+
+<!-- =========================================================
+     16 DELETE FILE
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🗑️
+</div>
+
+<div>
+
+<h2>
+16. File Delete करना
+</h2>
+
+<p>
+os.remove()
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="code-card">
+
+<div class="code-head">
+EXAMPLE 15
+</div>
+
+<pre><code>import os
+
+if os.path.exists("old.txt"):
+
+    os.remove("old.txt")
+
+    print("File deleted")</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>File deleted</pre>
+
+</div>
+
+
+<div class="exam-alert">
+
+<h3>
+⚠️ याद रखें
+</h3>
+
+<p>
+<strong>os.remove()</strong> file delete करने के लिए use होता है।
+किसी file को delete करने से पहले existence check करना useful
+हो सकता है।
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     17 COMPLETE PROGRAM
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🚀
+</div>
+
+<div>
+
+<h2>
+17. Complete File Processing Program
+</h2>
+
+<p>
+Exam-style practical example
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="code-card">
+
+<div class="code-head">
+COMPLETE EXAMPLE
+</div>
+
+<pre><code># Create and write data
+
+with open("marks.txt", "w") as f:
+
+    f.write("Rahul - 85\n")
+    f.write("Aman - 78\n")
+    f.write("Neha - 92\n")
+
+
+# Read data
+
+with open("marks.txt", "r") as f:
+
+    data = f.read()
+
+    print(data)
+
+
+# Append data
+
+with open("marks.txt", "a") as f:
+
+    f.write("Priya - 88\n")</code></pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+OUTPUT
+</div>
+
+<pre>Rahul - 85
+Aman - 78
+Neha - 92</pre>
+
+<div class="output-title" style="margin-top:14px;">
+AFTER APPEND
+</div>
+
+<pre>Rahul - 85
+Aman - 78
+Neha - 92
+Priya - 88</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     18 COMMON MISTAKES
+========================================================= -->
+
+<div class="section-title" id="errors">
+
+<div class="section-icon">
+🚨
+</div>
+
+<div>
+
+<h2>
+18. Common Mistakes
+</h2>
+
+<p>
+Students अक्सर यहाँ गलती करते हैं
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<ul class="list">
+
+<li>
+File open करके close करना भूल जाना
+</li>
+
+<li>
+r, w और a modes में confusion करना
+</li>
+
+<li>
+w mode से existing content overwrite होने की possibility भूल जाना
+</li>
+
+<li>
+read(), readline() और readlines() को same समझना
+</li>
+
+<li>
+writelines() में newline automatically expect करना
+</li>
+
+<li>
+File name/path गलत लिखना
+</li>
+
+<li>
+File को wrong mode में open करना
+</li>
+
+<li>
+FileNotFoundError को ignore करना
+</li>
+
+<li>
+seek() और tell() को confuse करना
+</li>
+
+<li>
+String और file object के बीच difference भूलना
+</li>
+
+</ul>
+
+</section>
+
+
+
+<!-- =========================================================
+     19 EXAM CAPSULE
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🎯
+</div>
+
+<div>
+
+<h2>
+19. Exam Revision Capsule
+</h2>
+
+<p>
+Last-minute revision
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="info-grid">
+
+<div class="info-box blue">
+
+<h3>
+open()
+</h3>
+
+<p>
+File खोलने के लिए।
+</p>
+
+</div>
+
+<div class="info-box green">
+
+<h3>
+read()
+</h3>
+
+<p>
+File content पढ़ने के लिए।
+</p>
+
+</div>
+
+<div class="info-box pink">
+
+<h3>
+write()
+</h3>
+
+<p>
+File में data लिखने के लिए।
+</p>
+
+</div>
+
+<div class="info-box purple">
+
+<h3>
+append
+</h3>
+
+<p>
+Existing data के end में data जोड़ने के लिए।
+</p>
+
+</div>
+
+<div class="info-box blue">
+
+<h3>
+close()
+</h3>
+
+<p>
+File बंद करने के लिए।
+</p>
+
+</div>
+
+<div class="info-box green">
+
+<h3>
+tell()
+</h3>
+
+<p>
+Current pointer position।
+</p>
+
+</div>
+
+<div class="info-box pink">
+
+<h3>
+seek()
+</h3>
+
+<p>
+Pointer position बदलना।
+</p>
+
+</div>
+
+<div class="info-box purple">
+
+<h3>
+with
+</h3>
+
+<p>
+File handling को convenient और safer बनाता है।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     20 MCQ
+========================================================= -->
+
+<div class="section-title" id="mcq">
+
+<div class="section-icon">
+🧠
+</div>
+
+<div>
+
+<h2>
+20. Exam Practice MCQs
+</h2>
+
+<p>
+Chapter 7 quick test
+</p>
+
+</div>
+
+</div>
+
+
+<section class="mcq">
+
+<div class="mcq-question">
+Q1. Which function is used to open a file in Python?
+<br>
+Python में file खोलने के लिए कौन-सा function use होता है?
+</div>
+
+<div class="option">
+A. start()
+</div>
+
+<div class="option">
+B. open()
+</div>
+
+<div class="option">
+C. file()
+</div>
+
+<div class="option">
+D. read()
+</div>
+
+<div class="answer">
+✓ Answer: B. open()
+</div>
+
+</section>
+
+
+
+<section class="mcq">
+
+<div class="mcq-question">
+Q2. Which mode is used for reading a file?
+<br>
+File को read करने के लिए कौन-सा mode use होता है?
+</div>
+
+<div class="option">A. w</div>
+<div class="option">B. a</div>
+<div class="option">C. r</div>
+<div class="option">D. x</div>
+
+<div class="answer">
+✓ Answer: C. r
+</div>
+
+</section>
+
+
+
+<section class="mcq">
+
+<div class="mcq-question">
+Q3. Which mode is used to append data to a file?
+<br>
+File के end में data जोड़ने के लिए कौन-सा mode use होता है?
+</div>
+
+<div class="option">A. r</div>
+<div class="option">B. w</div>
+<div class="option">C. a</div>
+<div class="option">D. x</div>
+
+<div class="answer">
+✓ Answer: C. a
+</div>
+
+</section>
+
+
+
+<section class="mcq">
+
+<div class="mcq-question">
+Q4. Which method reads one line from a file?
+<br>
+File से एक line पढ़ने के लिए कौन-सा method use होता है?
+</div>
+
+<div class="option">A. read()</div>
+<div class="option">B. readline()</div>
+<div class="option">C. readlines()</div>
+<div class="option">D. line()</div>
+
+<div class="answer">
+✓ Answer: B. readline()
+</div>
+
+</section>
+
+
+
+<section class="mcq">
+
+<div class="mcq-question">
+Q5. Which method returns the current position of the file pointer?
+<br>
+File pointer की current position कौन-सा method बताता है?
+</div>
+
+<div class="option">A. seek()</div>
+<div class="option">B. position()</div>
+<div class="option">C. tell()</div>
+<div class="option">D. pointer()</div>
+
+<div class="answer">
+✓ Answer: C. tell()
+</div>
+
+</section>
+
+
+
+<section class="mcq">
+
+<div class="mcq-question">
+Q6. Which method changes the file pointer position?
+<br>
+File pointer की position बदलने के लिए कौन-सा method use होता है?
+</div>
+
+<div class="option">A. tell()</div>
+<div class="option">B. seek()</div>
+<div class="option">C. change()</div>
+<div class="option">D. move()</div>
+
+<div class="answer">
+✓ Answer: B. seek()
+</div>
+
+</section>
+
+
+
+<section class="mcq">
+
+<div class="mcq-question">
+Q7. What does readlines() return?
+<br>
+readlines() क्या return करता है?
+</div>
+
+<div class="option">
+A. Integer
+</div>
+
+<div class="option">
+B. String only
+</div>
+
+<div class="option">
+C. List of lines
+</div>
+
+<div class="option">
+D. Boolean
+</div>
+
+<div class="answer">
+✓ Answer: C. List of lines
+</div>
+
+</section>
+
+
+
+<section class="mcq">
+
+<div class="mcq-question">
+Q8. Which method is used to close an opened file?
+<br>
+Opened file को बंद करने के लिए कौन-सा method use होता है?
+</div>
+
+<div class="option">A. stop()</div>
+<div class="option">B. close()</div>
+<div class="option">C. end()</div>
+<div class="option">D. exit()</div>
+
+<div class="answer">
+✓ Answer: B. close()
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FINAL REVISION
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🏆
+</div>
+
+<div>
+
+<h2>
+21. One-Minute Revision
+</h2>
+
+<p>
+Chapter 7 को एक बार में revise करें
+</p>
+
+</div>
+
+</div>
+
+
+<section class="exam-alert">
+
+<h3>
+🔥 FILE PROCESSING — SUPER REVISION
+</h3>
+
+<p>
+
+<strong>open()</strong> → file open<br>
+<strong>r</strong> → read<br>
+<strong>w</strong> → write / overwrite possibility<br>
+<strong>a</strong> → append<br>
+<strong>x</strong> → create new file<br>
+<strong>read()</strong> → content<br>
+<strong>readline()</strong> → one line<br>
+<strong>readlines()</strong> → list of lines<br>
+<strong>write()</strong> → write string<br>
+<strong>writelines()</strong> → write multiple strings<br>
+<strong>close()</strong> → close file<br>
+<strong>tell()</strong> → current pointer position<br>
+<strong>seek()</strong> → change pointer position<br>
+<strong>with</strong> → automatic resource handling
+
+</p>
+
+</section>
+
+
+
+<footer class="footer">
+
+<p>
+M3-R5 • Chapter 7 • File Processing
+</p>
+
+<p style="margin-top:7px;">
+NIELIT O Level Python Programming — Bilingual Study Notes
+</p>
+
+</footer>
+
+
+</main>
+
+</body>
+</html>
+ 

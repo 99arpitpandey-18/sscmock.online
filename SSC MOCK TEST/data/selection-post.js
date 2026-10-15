@@ -1,0 +1,186 @@
+window.MOCK_DATA = window.MOCK_DATA || {};
+window.MOCK_DATA["selection-post"] = {
+    title: "SSC Selection Post",
+    duration: 60,
+    marks: 200,
+    negative: 0.5,
+    tests: [
+        {
+            id: "selection-post-t1",
+            title: "Mock Test 1",
+            difficulty: "Easy",
+            questions: [
+                {section:"Reasoning",qEn:"Find next: 3, 6, 12, 24, ?",qHi:"अगला: 3, 6, 12, 24, ?",oEn:["36","42","48","60"],oHi:["36","42","48","60"],a:2,eEn:"Each doubles: 48.",eHi:"प्रत्येक दोगुना: 48।"},
+                {section:"Reasoning",qEn:"If BOOK = CPPL, then PEN = ?",qHi:"BOOK = CPPL, तो PEN = ?",oEn:["QFO","QFN","PFO","QGO"],oHi:["QFO","QFN","PFO","QGO"],a:0,eEn:"Each +1: PEN → QFO.",eHi:"प्रत्येक +1: QFO।"},
+                {section:"Reasoning",qEn:"A is B's sister. B is C's father. How is A related to C?",qHi:"A, B की बहन; B, C का पिता। A, C से?",oEn:["Mother","Aunt","Sister","Grandmother"],oHi:["माँ","चाची","बहन","दादी"],a:1,eEn:"A is C's aunt.",eHi:"A, C की चाची है।"},
+                {section:"General Awareness",qEn:"Who is the 'Father of the Indian Constitution'?",qHi:"'भारतीय संविधान के जनक'?",oEn:["Nehru","Dr. B. R. Ambedkar","Gandhi","Patel"],oHi:["नेहरू","डॉ. आम्बेडकर","गांधी","पटेल"],a:1,eEn:"Dr. B. R. Ambedkar.",eHi:"डॉ. बी. आर. आम्बेडकर।"},
+                {section:"General Awareness",qEn:"National animal of India?",qHi:"भारत का राष्ट्रीय पशु?",oEn:["Lion","Tiger","Elephant","Peacock"],oHi:["शेर","बाघ","हाथी","मोर"],a:1,eEn:"Bengal Tiger.",eHi:"बंगाल टाइगर।"},
+                {section:"General Awareness",qEn:"Battle of Plassey fought in:",qHi:"प्लासी का युद्ध?",oEn:["1757","1761","1764","1857"],oHi:["1757","1761","1764","1857"],a:0,eEn:"1757.",eHi:"1757।"},
+                {section:"Quantitative Aptitude",qEn:"25% of 400 = ?",qHi:"400 का 25% = ?",oEn:["50","75","100","125"],oHi:["50","75","100","125"],a:2,eEn:"100.",eHi:"100।"},
+                {section:"Quantitative Aptitude",qEn:"If 2x + 5 = 15, then x = ?",qHi:"2x + 5 = 15, x = ?",oEn:["3","4","5","6"],oHi:["3","4","5","6"],a:2,eEn:"x = 5.",eHi:"x = 5।"},
+                {section:"English Comprehension",qEn:"Choose the synonym of 'Brave'.",qHi:"Choose the synonym of 'Brave'.",oEn:["Coward","Courageous","Weak","Timid"],oHi:["Coward","Courageous","Weak","Timid"],a:1,eEn:"Brave = courageous.",eHi:"Brave = courageous."},
+                {section:"English Comprehension",qEn:"Fill: He ___ to school every day.",qHi:"Fill: He ___ to school every day.",oEn:["go","goes","going","gone"],oHi:["go","goes","going","gone"],a:1,eEn:"'He goes'.",eHi:"'He goes'."}
+            ]
+        },
+        {
+            id: "selection-post-t2",
+            title: "Mock Test 2",
+            difficulty: "Easy",
+            questions: [
+                {section:"Reasoning",qEn:"Find odd one: 4, 9, 16, 20, 25",qHi:"विषम: 4, 9, 16, 20, 25",oEn:["4","9","16","20"],oHi:["4","9","16","20"],a:3,eEn:"20 not perfect square.",eHi:"20 पूर्ण वर्ग नहीं।"},
+                {section:"Reasoning",qEn:"If A=1, B=2, then 'CAT' sum = ?",qHi:"A=1, B=2, 'CAT' योग = ?",oEn:["22","24","26","28"],oHi:["22","24","26","28"],a:1,eEn:"3+1+20 = 24.",eHi:"3+1+20 = 24।"},
+                {section:"Reasoning",qEn:"In 25 students, A is 10th from top. Rank from bottom?",qHi:"25 में A ऊपर से 10वाँ। नीचे से?",oEn:["15th","16th","17th","18th"],oHi:["15वाँ","16वाँ","17वाँ","18वाँ"],a:1,eEn:"25 − 10 + 1 = 16.",eHi:"16।"},
+                {section:"General Awareness",qEn:"Who wrote 'Discovery of India'?",qHi:"'डिस्कवरी ऑफ इंडिया' के लेखक?",oEn:["Gandhi","Nehru","Tagore","Patel"],oHi:["गांधी","नेहरू","टैगोर","पटेल"],a:1,eEn:"Jawaharlal Nehru.",eHi:"जवाहरलाल नेहरू।"},
+                {section:"General Awareness",qEn:"Capital of Australia?",qHi:"ऑस्ट्रेलिया की राजधानी?",oEn:["Sydney","Melbourne","Canberra","Perth"],oHi:["सिडनी","मेलबर्न","कैनबरा","पर्थ"],a:2,eEn:"Canberra.",eHi:"कैनबरा।"},
+                {section:"General Awareness",qEn:"Largest gland in human body?",qHi:"सबसे बड़ी ग्रंथि?",oEn:["Pancreas","Liver","Thyroid","Pituitary"],oHi:["अग्न्याशय","यकृत","थायरॉइड","पीयूष"],a:1,eEn:"Liver.",eHi:"यकृत।"},
+                {section:"Quantitative Aptitude",qEn:"LCM of 12 and 18:",qHi:"12 और 18 का LCM:",oEn:["24","36","48","72"],oHi:["24","36","48","72"],a:1,eEn:"36.",eHi:"36।"},
+                {section:"Quantitative Aptitude",qEn:"Average of 10, 20, 30, 40, 50:",qHi:"10, 20, 30, 40, 50 का औसत:",oEn:["25","30","35","40"],oHi:["25","30","35","40"],a:1,eEn:"30.",eHi:"30।"},
+                {section:"English Comprehension",qEn:"Antonym of 'Big':",qHi:"'Big' का विलोम:",oEn:["Large","Huge","Small","Tall"],oHi:["Large","Huge","Small","Tall"],a:2,eEn:"Small.",eHi:"Small."},
+                {section:"English Comprehension",qEn:"Fill: The police ___ investigating.",qHi:"Fill: The police ___ investigating.",oEn:["is","are","was","has"],oHi:["is","are","was","has"],a:1,eEn:"'are'.",eHi:"'are'."}
+            ]
+        },
+        {
+            id: "selection-post-t3",
+            title: "Mock Test 3",
+            difficulty: "Medium",
+            questions: [
+                {section:"Reasoning",qEn:"Complete: 5, 10, 20, ?, 80",qHi:"पूर्ण: 5, 10, 20, ?, 80",oEn:["30","40","50","60"],oHi:["30","40","50","60"],a:1,eEn:"40.",eHi:"40।"},
+                {section:"Reasoning",qEn:"If MADRAS = NBESBT, then DELHI = ?",qHi:"MADRAS = NBESBT, DELHI = ?",oEn:["EFMIJ","EFMJI","EEMIJ","EFMIK"],oHi:["EFMIJ","EFMJI","EEMIJ","EFMIK"],a:0,eEn:"Each +1: EFMIJ.",eHi:"EFMIJ।"},
+                {section:"Reasoning",qEn:"How many rectangles in 3×2 grid?",qHi:"3×2 ग्रिड में आयत?",oEn:["6","9","12","18"],oHi:["6","9","12","18"],a:3,eEn:"18.",eHi:"18।"},
+                {section:"General Awareness",qEn:"42nd Amendment is called:",qHi:"42वाँ संशोधन?",oEn:["Mini Constitution","Great Charter","FR","Basic Structure"],oHi:["लघु संविधान","महान अधिकार पत्र","मौलिक अधिकार","आधारभूत संरचना"],a:0,eEn:"Mini Constitution.",eHi:"लघु संविधान।"},
+                {section:"General Awareness",qEn:"Largest ocean?",qHi:"सबसे बड़ा महासागर?",oEn:["Atlantic","Indian","Arctic","Pacific"],oHi:["अटलांटिक","हिंद","आर्कटिक","प्रशांत"],a:3,eEn:"Pacific.",eHi:"प्रशांत।"},
+                {section:"General Awareness",qEn:"Quit India Movement started:",qHi:"'भारत छोड़ो आंदोलन'?",oEn:["1930","1942","1945","1947"],oHi:["1930","1942","1945","1947"],a:1,eEn:"1942.",eHi:"1942।"},
+                {section:"Quantitative Aptitude",qEn:"SI on ₹2,000 at 5% for 3 years:",qHi:"₹2,000 पर 5% 3 वर्ष SI:",oEn:["₹200","₹250","₹300","₹350"],oHi:["₹200","₹250","₹300","₹350"],a:2,eEn:"₹300.",eHi:"₹300।"},
+                {section:"Quantitative Aptitude",qEn:"(15)² − (12)² = ?",qHi:"(15)² − (12)² = ?",oEn:["81","91","100","121"],oHi:["81","91","100","121"],a:0,eEn:"81.",eHi:"81।"},
+                {section:"English Comprehension",qEn:"Idiom: 'Once in a blue moon' means:",qHi:"Idiom: 'Once in a blue moon' means:",oEn:["Very often","Very rarely","Every week","At midnight"],oHi:["Very often","Very rarely","Every week","At midnight"],a:1,eEn:"Very rarely.",eHi:"Very rarely."},
+                {section:"English Comprehension",qEn:"Correct spelling:",qHi:"Correct spelling:",oEn:["Definitely","Definately","Definitly","Defenitely"],oHi:["Definitely","Definately","Definitly","Defenitely"],a:0,eEn:"Definitely.",eHi:"Definitely."}
+            ]
+        },
+        {
+            id: "selection-post-t4",
+            title: "Mock Test 4",
+            difficulty: "Medium",
+            questions: [
+                {section:"Reasoning",qEn:"Find odd: 121, 144, 169, 200",qHi:"विषम: 121, 144, 169, 200",oEn:["121","144","169","200"],oHi:["121","144","169","200"],a:3,eEn:"200 not perfect square.",eHi:"200 पूर्ण वर्ग नहीं।"},
+                {section:"Reasoning",qEn:"If 15 Aug is Monday, what day is 15 Sep?",qHi:"15 अगस्त सोमवार, 15 सितंबर?",oEn:["Tuesday","Wednesday","Thursday","Friday"],oHi:["मंगलवार","बुधवार","गुरुवार","शुक्रवार"],a:2,eEn:"Thursday.",eHi:"गुरुवार।"},
+                {section:"Reasoning",qEn:"'He is my brother's son' — relationship?",qHi:"'वह मेरे भाई का बेटा है' — संबंध?",oEn:["Son","Nephew","Brother","Uncle"],oHi:["पुत्र","भतीजा","भाई","चाचा"],a:1,eEn:"Nephew.",eHi:"भतीजा।"},
+                {section:"General Awareness",qEn:"Most abundant gas in atmosphere?",qHi:"वायुमंडल में सबसे अधिक गैस?",oEn:["Oxygen","Nitrogen","CO₂","Argon"],oHi:["ऑक्सीजन","नाइट्रोजन","CO₂","आर्गन"],a:1,eEn:"Nitrogen (78%).",eHi:"नाइट्रोजन (78%)।"},
+                {section:"General Awareness",qEn:"'Iron Man of India'?",qHi:"'भारत का लौह पुरुष'?",oEn:["Gandhi","Sardar Patel","Nehru","Bhagat Singh"],oHi:["गांधी","सरदार पटेल","नेहरू","भगत सिंह"],a:1,eEn:"Sardar Patel.",eHi:"सरदार पटेल।"},
+                {section:"General Awareness",qEn:"Chemical symbol of Sodium?",qHi:"सोडियम का प्रतीक?",oEn:["So","Na","S","Sn"],oHi:["So","Na","S","Sn"],a:1,eEn:"Na.",eHi:"Na।"},
+                {section:"Quantitative Aptitude",qEn:"CI on ₹1,000 at 10% for 2 years:",qHi:"₹1,000 पर 10% 2 वर्ष CI:",oEn:["₹200","₹210","₹220","₹230"],oHi:["₹200","₹210","₹220","₹230"],a:1,eEn:"₹210.",eHi:"₹210।"},
+                {section:"Quantitative Aptitude",qEn:"If x/3 = 4, then x = ?",qHi:"x/3 = 4, x = ?",oEn:["7","10","12","15"],oHi:["7","10","12","15"],a:2,eEn:"12.",eHi:"12।"},
+                {section:"English Comprehension",qEn:"Passive: 'She reads a book.'",qHi:"Passive: 'She reads a book.'",oEn:["A book is read by her.","A book was read by her.","A book is being read.","A book has been read."],oHi:["A book is read by her.","A book was read by her.","A book is being read.","A book has been read."],a:0,eEn:"Simple present passive.",eHi:"Simple present passive."},
+                {section:"English Comprehension",qEn:"Synonym of 'Meticulous':",qHi:"Synonym of 'Meticulous':",oEn:["Careless","Precise","Rapid","Aggressive"],oHi:["Careless","Precise","Rapid","Aggressive"],a:1,eEn:"Precise.",eHi:"Precise."}
+            ]
+        },
+        {
+            id: "selection-post-t5",
+            title: "Mock Test 5",
+            difficulty: "Hard",
+            questions: [
+                {section:"Reasoning",qEn:"Find next: 2, 6, 12, 20, 30, ?",qHi:"अगला: 2, 6, 12, 20, 30, ?",oEn:["40","42","44","46"],oHi:["40","42","44","46"],a:1,eEn:"n(n+1): 42.",eHi:"42।"},
+                {section:"Reasoning",qEn:"All A are B, All B are C. Conclusion: All A are C.",qHi:"सभी A, B; सभी B, C. निष्कर्ष: All A are C.",oEn:["True","False","Cannot say","Partially true"],oHi:["सत्य","असत्य","कह नहीं सकते","आंशिक सत्य"],a:0,eEn:"True.",eHi:"सत्य।"},
+                {section:"Reasoning",qEn:"If A=+, B=−, C=×, D=÷, then 6 A 4 C 2 B 3 = ?",qHi:"A=+, B=−, C=×, D=÷, 6 A 4 C 2 B 3 = ?",oEn:["7","8","10","11"],oHi:["7","8","10","11"],a:3,eEn:"6 + 8 − 3 = 11.",eHi:"11।"},
+                {section:"General Awareness",qEn:"Which vitamin from sunlight?",qHi:"सूर्य से कौन-सा विटामिन?",oEn:["A","B12","C","D"],oHi:["A","B12","C","D"],a:3,eEn:"Vitamin D.",eHi:"विटामिन D।"},
+                {section:"General Awareness",qEn:"Sun rises in the:",qHi:"सूर्य कहाँ उगता है?",oEn:["West","North","East","South"],oHi:["पश्चिम","उत्तर","पूर्व","दक्षिण"],a:2,eEn:"East.",eHi:"पूर्व।"},
+                {section:"General Awareness",qEn:"Tropic of Cancer — how many Indian states?",qHi:"कर्क रेखा — राज्य?",oEn:["6","7","8","9"],oHi:["6","7","8","9"],a:2,eEn:"8.",eHi:"8।"},
+                {section:"Quantitative Aptitude",qEn:"If x + 1/x = 5, then x² + 1/x² = ?",qHi:"x + 1/x = 5, x² + 1/x² = ?",oEn:["23","25","27","29"],oHi:["23","25","27","29"],a:0,eEn:"25 − 2 = 23.",eHi:"23।"},
+                {section:"Quantitative Aptitude",qEn:"A 10 days, B 15 days. Together?",qHi:"A 10 दिन, B 15 दिन। साथ में?",oEn:["5 days","6 days","7 days","8 days"],oHi:["5 दिन","6 दिन","7 दिन","8 दिन"],a:1,eEn:"6 days.",eHi:"6 दिन।"},
+                {section:"English Comprehension",qEn:"Fill: By next year, she ___ her degree.",qHi:"Fill: By next year, she ___ her degree.",oEn:["completes","completed","will have completed","has completed"],oHi:["completes","completed","will have completed","has completed"],a:2,eEn:"Future perfect.",eHi:"Future perfect."},
+                {section:"English Comprehension",qEn:"Correctly punctuated:",qHi:"Correctly punctuated:",oEn:["However I decided to go.","However, I decided to go.","However I, decided to go.","However; I decided to go."],oHi:["However I decided to go.","However, I decided to go.","However I, decided to go.","However; I decided to go."],a:1,eEn:"Comma after 'However'.",eHi:"'However' के बाद comma।"}
+            ]
+        }
+    ],
+    pyqs: [
+        {
+            id: "selection-post-pyq-2024",
+            title: "SSC Selection Post 2024",
+            year: 2024,
+            difficulty: "Medium",
+            questions: [
+                {section:"Reasoning",qEn:"[SP 2024] Next: 3, 6, 12, 24, ?",qHi:"[SP 2024] अगला: 3, 6, 12, 24, ?",oEn:["36","42","48","60"],oHi:["36","42","48","60"],a:2,eEn:"48.",eHi:"48।"},
+                {section:"Reasoning",qEn:"[SP 2024] If BIRD = CJSE, then FISH = ?",qHi:"[SP 2024] BIRD = CJSE, FISH = ?",oEn:["GJTI","GITJ","GJSI","GJTI"],oHi:["GJTI","GITJ","GJSI","GJTI"],a:0,eEn:"GJTI.",eHi:"GJTI।"},
+                {section:"Reasoning",qEn:"[SP 2024] Odd: 4, 9, 16, 20, 25",qHi:"[SP 2024] विषम: 4, 9, 16, 20, 25",oEn:["4","9","16","20"],oHi:["4","9","16","20"],a:3,eEn:"20 not perfect square.",eHi:"20 पूर्ण वर्ग नहीं।"},
+                {section:"General Awareness",qEn:"[SP 2024] National bird of India?",qHi:"[SP 2024] भारत का राष्ट्रीय पक्षी?",oEn:["Peacock","Parrot","Crow","Sparrow"],oHi:["मोर","तोता","कौआ","गौरैया"],a:0,eEn:"Peacock.",eHi:"मोर।"},
+                {section:"General Awareness",qEn:"[SP 2024] Capital of France?",qHi:"[SP 2024] फ्रांस की राजधानी?",oEn:["London","Berlin","Paris","Rome"],oHi:["लंदन","बर्लिन","पेरिस","रोम"],a:2,eEn:"Paris.",eHi:"पेरिस।"},
+                {section:"General Awareness",qEn:"[SP 2024] Who invented the telephone?",qHi:"[SP 2024] टेलीफोन किसने बनाया?",oEn:["Edison","Graham Bell","Tesla","Marconi"],oHi:["एडिसन","ग्राहम बेल","टेस्ला","मार्कोनी"],a:1,eEn:"Graham Bell.",eHi:"ग्राहम बेल।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2024] 40% of 250 = ?",qHi:"[SP 2024] 250 का 40% = ?",oEn:["75","90","100","125"],oHi:["75","90","100","125"],a:2,eEn:"100.",eHi:"100।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2024] 3x + 4 = 19, x = ?",qHi:"[SP 2024] 3x + 4 = 19, x = ?",oEn:["3","4","5","6"],oHi:["3","4","5","6"],a:2,eEn:"5.",eHi:"5।"},
+                {section:"English Comprehension",qEn:"[SP 2024] Synonym of 'Alert'.",qHi:"[SP 2024] Synonym of 'Alert'.",oEn:["Sleepy","Vigilant","Lazy","Dull"],oHi:["Sleepy","Vigilant","Lazy","Dull"],a:1,eEn:"Vigilant.",eHi:"Vigilant."},
+                {section:"English Comprehension",qEn:"[SP 2024] Antonym of 'Guilty'.",qHi:"[SP 2024] Antonym of 'Guilty'.",oEn:["Innocent","Criminal","Accused","Wrong"],oHi:["Innocent","Criminal","Accused","Wrong"],a:0,eEn:"Innocent.",eHi:"Innocent."}
+            ]
+        },
+        {
+            id: "selection-post-pyq-2023",
+            title: "SSC Selection Post 2023",
+            year: 2023,
+            difficulty: "Medium",
+            questions: [
+                {section:"Reasoning",qEn:"[SP 2023] Complete: 1, 4, 9, 16, ?",qHi:"[SP 2023] पूर्ण: 1, 4, 9, 16, ?",oEn:["20","25","30","36"],oHi:["20","25","30","36"],a:1,eEn:"25.",eHi:"25।"},
+                {section:"Reasoning",qEn:"[SP 2023] A=1, B=2, 'BAG' sum?",qHi:"[SP 2023] A=1, B=2, 'BAG' योग?",oEn:["7","9","10","12"],oHi:["7","9","10","12"],a:2,eEn:"10.",eHi:"10।"},
+                {section:"Reasoning",qEn:"[SP 2023] In 20, Priya is 8th from left. Rank from right?",qHi:"[SP 2023] 20 में प्रिया बाएँ 8वीं। दाएँ?",oEn:["12th","13th","14th","15th"],oHi:["12वाँ","13वाँ","14वाँ","15वाँ"],a:1,eEn:"13.",eHi:"13।"},
+                {section:"General Awareness",qEn:"[SP 2023] Constitution came into effect:",qHi:"[SP 2023] संविधान कब लागू?",oEn:["15 Aug 1947","26 Jan 1950","26 Nov 1949","2 Oct 1950"],oHi:["15 अग 1947","26 जन 1950","26 नवं 1949","2 अक्टू 1950"],a:1,eEn:"26 Jan 1950.",eHi:"26 जनवरी 1950।"},
+                {section:"General Awareness",qEn:"[SP 2023] Largest desert?",qHi:"[SP 2023] सबसे बड़ा रेगिस्तान?",oEn:["Gobi","Sahara","Antarctic","Thar"],oHi:["गोबी","सहारा","अंटार्कटिक","थार"],a:2,eEn:"Antarctic.",eHi:"अंटार्कटिक।"},
+                {section:"General Awareness",qEn:"[SP 2023] Supreme Commander of Indian Armed Forces?",qHi:"[SP 2023] सर्वोच्च कमांडर?",oEn:["PM","President","Defence Minister","Chief of Army"],oHi:["प्रधानमंत्री","राष्ट्रपति","रक्षा मंत्री","सेना प्रमुख"],a:1,eEn:"President.",eHi:"राष्ट्रपति।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2023] √225 = ?",qHi:"[SP 2023] √225 = ?",oEn:["10","12","15","18"],oHi:["10","12","15","18"],a:2,eEn:"15.",eHi:"15।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2023] SI on ₹1,500 at 4% for 2 years:",qHi:"[SP 2023] ₹1,500 पर 4% 2 वर्ष SI:",oEn:["₹100","₹120","₹140","₹150"],oHi:["₹100","₹120","₹140","₹150"],a:1,eEn:"₹120.",eHi:"₹120।"},
+                {section:"English Comprehension",qEn:"[SP 2023] Fill: 'The team ___ playing well.'",qHi:"[SP 2023] Fill: 'The team ___ playing well.'",oEn:["are","is","were","have"],oHi:["are","is","were","have"],a:1,eEn:"'is'.",eHi:"'is'."},
+                {section:"English Comprehension",qEn:"[SP 2023] Meaning of 'Break the ice'.",qHi:"[SP 2023] Meaning of 'Break the ice'.",oEn:["To destroy","To start a conversation","To feel cold","To end"],oHi:["To destroy","To start a conversation","To feel cold","To end"],a:1,eEn:"Start a conversation.",eHi:"Start a conversation."}
+            ]
+        },
+        {
+            id: "selection-post-pyq-2022",
+            title: "SSC Selection Post 2022",
+            year: 2022,
+            difficulty: "Hard",
+            questions: [
+                {section:"Reasoning",qEn:"[SP 2022] Complete: 2, 5, 10, 17, 26, ?",qHi:"[SP 2022] पूर्ण: 2, 5, 10, 17, 26, ?",oEn:["35","37","39","41"],oHi:["35","37","39","41"],a:1,eEn:"37.",eHi:"37।"},
+                {section:"Reasoning",qEn:"[SP 2022] Odd: 121, 361, 529, 739",qHi:"[SP 2022] विषम: 121, 361, 529, 739",oEn:["121","361","529","739"],oHi:["121","361","529","739"],a:3,eEn:"739 not perfect square.",eHi:"739 पूर्ण वर्ग नहीं।"},
+                {section:"Reasoning",qEn:"[SP 2022] A=1, B=2, 'POLICE' sum:",qHi:"[SP 2022] A=1, B=2, 'POLICE' योग?",oEn:["58","60","62","64"],oHi:["58","60","62","64"],a:1,eEn:"Sum = 60.",eHi:"योग = 60।"},
+                {section:"General Awareness",qEn:"[SP 2022] Who founded Maurya Empire?",qHi:"[SP 2022] मौर्य साम्राज्य?",oEn:["Ashoka","Chandragupta Maurya","Bindusara","Kanishka"],oHi:["अशोक","चंद्रगुप्त मौर्य","बिंदुसार","कनिष्क"],a:1,eEn:"Chandragupta Maurya.",eHi:"चंद्रगुप्त मौर्य।"},
+                {section:"General Awareness",qEn:"[SP 2022] Which vitamin from sunlight?",qHi:"[SP 2022] सूर्य से कौन-सा विटामिन?",oEn:["A","B12","C","D"],oHi:["A","B12","C","D"],a:3,eEn:"Vitamin D.",eHi:"विटामिन D।"},
+                {section:"General Awareness",qEn:"[SP 2022] Battle of Panipat (First)?",qHi:"[SP 2022] पानीपत का प्रथम युद्ध?",oEn:["1526","1556","1761","1857"],oHi:["1526","1556","1761","1857"],a:0,eEn:"1526.",eHi:"1526।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2022] If x + 1/x = 4, then x² + 1/x² = ?",qHi:"[SP 2022] x + 1/x = 4, x² + 1/x² = ?",oEn:["12","14","16","18"],oHi:["12","14","16","18"],a:1,eEn:"14.",eHi:"14।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2022] A 120 m train at 54 km/h crosses pole in:",qHi:"[SP 2022] 120 मी ट्रेन 54 किमी/घंटा, खंभा:",oEn:["6 sec","8 sec","10 sec","12 sec"],oHi:["6 सेकंड","8 सेकंड","10 सेकंड","12 सेकंड"],a:1,eEn:"8 sec.",eHi:"8 सेकंड।"},
+                {section:"English Comprehension",qEn:"[SP 2022] Passive: 'The police have arrested him.'",qHi:"[SP 2022] Passive: 'The police have arrested him.'",oEn:["He is arrested.","He has been arrested by the police.","He was arrested.","He will be arrested."],oHi:["He is arrested.","He has been arrested by the police.","He was arrested.","He will be arrested."],a:1,eEn:"Present perfect passive.",eHi:"Present perfect passive."},
+                {section:"English Comprehension",qEn:"[SP 2022] Synonym of 'Candid'.",qHi:"[SP 2022] Synonym of 'Candid'.",oEn:["Secretive","Frank","Dishonest","Shy"],oHi:["Secretive","Frank","Dishonest","Shy"],a:1,eEn:"Frank.",eHi:"Frank."}
+            ]
+        },
+        {
+            id: "selection-post-pyq-2021",
+            title: "SSC Selection Post 2021",
+            year: 2021,
+            difficulty: "Medium",
+            questions: [
+                {section:"Reasoning",qEn:"[SP 2021] Complete: AZ, CX, EV, ?",qHi:"[SP 2021] पूर्ण: AZ, CX, EV, ?",oEn:["GT","FT","GU","FU"],oHi:["GT","FT","GU","FU"],a:0,eEn:"GT.",eHi:"GT।"},
+                {section:"Reasoning",qEn:"[SP 2021] If 5 θ 3 = 28 and 8 θ 4 = 60, then 7 θ 5 = ?",qHi:"[SP 2021] 5 θ 3 = 28, 8 θ 4 = 60, 7 θ 5 = ?",oEn:["60","62","64","66"],oHi:["60","62","64","66"],a:1,eEn:"62.",eHi:"62।"},
+                {section:"Reasoning",qEn:"[SP 2021] Complete: 100, 81, 64, 49, ?",qHi:"[SP 2021] पूर्ण: 100, 81, 64, 49, ?",oEn:["30","36","42","48"],oHi:["30","36","42","48"],a:1,eEn:"36.",eHi:"36।"},
+                {section:"General Awareness",qEn:"[SP 2021] Tropic of Cancer — how many Indian states?",qHi:"[SP 2021] कर्क रेखा — राज्य?",oEn:["6","7","8","9"],oHi:["6","7","8","9"],a:2,eEn:"8.",eHi:"8।"},
+                {section:"General Awareness",qEn:"[SP 2021] Which planet has ring system?",qHi:"[SP 2021] रिंग किस ग्रह में?",oEn:["Mars","Venus","Saturn","Mercury"],oHi:["मंगल","शुक्र","शनि","बुध"],a:2,eEn:"Saturn.",eHi:"शनि।"},
+                {section:"General Awareness",qEn:"[SP 2021] Right to Education Article?",qHi:"[SP 2021] शिक्षा का अधिकार अनुच्छेद?",oEn:["Article 19","Article 21","Article 21A","Article 32"],oHi:["अनुच्छेद 19","अनुच्छेद 21","अनुच्छेद 21A","अनुच्छेद 32"],a:2,eEn:"Article 21A.",eHi:"अनुच्छेद 21A।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2021] Average of first 10 odd numbers:",qHi:"[SP 2021] प्रथम 10 विषम का औसत:",oEn:["8","9","10","11"],oHi:["8","9","10","11"],a:2,eEn:"10.",eHi:"10।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2021] (12)² + (5)² = ?",qHi:"[SP 2021] (12)² + (5)² = ?",oEn:["144","159","169","189"],oHi:["144","159","169","189"],a:2,eEn:"169.",eHi:"169।"},
+                {section:"English Comprehension",qEn:"[SP 2021] Idiom: 'Behind bars' means:",qHi:"[SP 2021] 'Behind bars' means:",oEn:["In a bar","In prison","At a party","In a shop"],oHi:["In a bar","In prison","At a party","In a shop"],a:1,eEn:"In prison.",eHi:"In prison."},
+                {section:"English Comprehension",qEn:"[SP 2021] Antonym of 'Legal':",qHi:"[SP 2021] Antonym of 'Legal':",oEn:["Lawful","Illegal","Valid","Right"],oHi:["Lawful","Illegal","Valid","Right"],a:1,eEn:"Illegal.",eHi:"Illegal."}
+            ]
+        },
+        {
+            id: "selection-post-pyq-2020",
+            title: "SSC Selection Post 2020",
+            year: 2020,
+            difficulty: "Medium",
+            questions: [
+                {section:"Reasoning",qEn:"[SP 2020] Find next: 10, 20, 30, 40, ?",qHi:"[SP 2020] अगला: 10, 20, 30, 40, ?",oEn:["45","50","55","60"],oHi:["45","50","55","60"],a:1,eEn:"50.",eHi:"50।"},
+                {section:"Reasoning",qEn:"[SP 2020] A=1, B=2, 'HI' = ?",qHi:"[SP 2020] A=1, B=2, 'HI' = ?",oEn:["15","16","17","18"],oHi:["15","16","17","18"],a:2,eEn:"17.",eHi:"17।"},
+                {section:"Reasoning",qEn:"[SP 2020] If PEN = 35, BOOK = ?",qHi:"[SP 2020] PEN = 35, BOOK = ?",oEn:["41","43","45","47"],oHi:["41","43","45","47"],a:1,eEn:"43.",eHi:"43।"},
+                {section:"General Awareness",qEn:"[SP 2020] Rajya Sabha also called:",qHi:"[SP 2020] राज्यसभा को और क्या?",oEn:["House of People","Council of States","House of Elders","Federal House"],oHi:["लोकसभा","राज्य परिषद","वरिष्ठ सदन","संघीय सदन"],a:1,eEn:"Council of States.",eHi:"राज्य परिषद।"},
+                {section:"General Awareness",qEn:"[SP 2020] SI unit of force?",qHi:"[SP 2020] बल की SI इकाई?",oEn:["Joule","Newton","Watt","Pascal"],oHi:["जूल","न्यूटन","वाट","पास्कल"],a:1,eEn:"Newton.",eHi:"न्यूटन।"},
+                {section:"General Awareness",qEn:"[SP 2020] National song of India?",qHi:"[SP 2020] राष्ट्रीय गीत?",oEn:["Jana Gana Mana","Vande Mataram","Sare Jahan Se Achha","Ae Mere Watan"],oHi:["जन गण मन","वंदे मातरम्","सारे जहाँ से अच्छा","ऐ मेरे वतन"],a:1,eEn:"Vande Mataram.",eHi:"वंदे मातरम्।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2020] 17 × 17 − 13 × 13 = ?",qHi:"[SP 2020] 17 × 17 − 13 × 13 = ?",oEn:["120","130","140","150"],oHi:["120","130","140","150"],a:0,eEn:"120.",eHi:"120।"},
+                {section:"Quantitative Aptitude",qEn:"[SP 2020] 2x − 3 = 7, x = ?",qHi:"[SP 2020] 2x − 3 = 7, x = ?",oEn:["3","4","5","6"],oHi:["3","4","5","6"],a:2,eEn:"5.",eHi:"5।"},
+                {section:"English Comprehension",qEn:"[SP 2020] Antonym of 'Hostile':",qHi:"[SP 2020] Antonym of 'Hostile':",oEn:["Friendly","Aggressive","Violent","Unfriendly"],oHi:["Friendly","Aggressive","Violent","Unfriendly"],a:0,eEn:"Friendly.",eHi:"Friendly."},
+                {section:"English Comprehension",qEn:"[SP 2020] 'One of my friends ___ a doctor.'",qHi:"[SP 2020] 'One of my friends ___ a doctor.'",oEn:["are","is","were","have"],oHi:["are","is","were","have"],a:1,eEn:"'is'.",eHi:"'is'."}
+            ]
+        }
+    ]
+};

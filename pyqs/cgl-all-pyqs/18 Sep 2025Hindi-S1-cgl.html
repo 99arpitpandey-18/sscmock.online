@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC CGL 2025 (Hindi) – Interactive Quiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f4f7fc;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #1a2b4a;
+            border-left: 6px solid #2563eb;
+            padding-left: 16px;
+            margin-bottom: 28px;
+        }
+        .question-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf4;
+        }
+        .q-header {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .q-number {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2563eb;
+            min-width: 48px;
+        }
+        .q-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #0b1e33;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+        .passage-block {
+            background: #f8fafc;
+            border-left: 4px solid #94a3b8;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #334155;
+            white-space: pre-line;
+        }
+        .options {
+            margin: 16px 0 12px 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 20px;
+        }
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+        .option {
+            padding: 6px 0;
+            color: #1e3a5f;
+            font-size: 0.98rem;
+        }
+        .option strong {
+            color: #0b2b4a;
+        }
+        .action-area {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px 24px;
+        }
+        .btn {
+            background: #eef2f9;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a3a6a;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .btn:hover {
+            background: #dce4f0;
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+        }
+        .btn-outline {
+            background: transparent;
+            border-color: #bcc9dd;
+        }
+        .btn-outline:hover {
+            background: #eef2f9;
+        }
+        .answer-box {
+            margin-top: 16px;
+            padding: 16px 20px;
+            background: #eaf6ff;
+            border-left: 5px solid #2563eb;
+            border-radius: 10px;
+            display: none;
+        }
+        .answer-box.visible {
+            display: block;
+        }
+        .answer-label {
+            font-weight: 700;
+            color: #0a2a4a;
+            font-size: 1rem;
+        }
+        .answer-label span {
+            background: #2563eb;
+            color: white;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            margin-left: 8px;
+        }
+        .explanation {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #b8d1ed;
+            color: #1e3a5f;
+            line-height: 1.6;
+        }
+        .explanation strong {
+            color: #0b2b4a;
+        }
+        .stats {
+            text-align: center;
+            margin: 30px 0 10px;
+            color: #4b5e77;
+            font-size: 0.95rem;
+        }
+        .footer-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0 40px;
+        }
+        .badge {
+            display: inline-block;
+            background: #e9edf4;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #2a4a6a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <h1>📘 SSC CGL T-I (Similar Paper) – Hindi (18 Sep 2025 S1)</h1>
+        <div id="questions-container"></div>
+        <div class="footer-actions">
+            <button class="btn btn-primary" id="showAllBtn">🔓 सभी उत्तर दिखाएँ</button>
+            <button class="btn btn-outline" id="hideAllBtn">🔒 सभी उत्तर छिपाएँ</button>
+        </div>
+        <div class="stats" id="stats"></div>
+    </div>
+
+    <script>
+        // --------------------------------------------------------------
+        // PASSAGE (used by Q78–Q82)
+        // --------------------------------------------------------------
+        const passage =
+`The accelerated exhaustion of fossil fuel reserves, compounded by escalating ecological degradation and geopolitical volatility, has repositioned renewable energy from a peripheral environmental concern to a central axis of global strategic discourse. Yet public deliberations frequently remain confined to questions of generation capacity, neglecting the equally consequential dimension of systemic integration. A sophisticated appraisal of renewable energy must therefore encompass not merely its diverse sources—solar, wind, hydroelectric, geothermal, and biomass—but also the heterogeneous sectors within which it can recalibrate economic structures, redistribute political leverage, and foster environmental equity. In the sphere of electricity production, decentralized photovoltaic arrays and micro-hydel installations have begun to supplant carbon-intensive grids, particularly in geographically marginalized regions historically excluded from centralized infrastructure. Wind corridors in coastal and semi-arid territories have likewise catalyzed localized employment ecosystems while attenuating reliance on imported hydrocarbons. Beyond electricity, renewable modalities are permeating transportation logistics, industrial thermodynamics, and agrarian mechanization. Second-generation biofuels synthesized from lignocellulosic agricultural residues present a viable decarbonization pathway for aviation and long-haul freight—domains conventionally resistant to electrification. Concurrently, solar-powered irrigation systems have augmented agrarian autonomy by mitigating dependence on erratic grid supply and diesel combustion. Nevertheless, the transformative promise of renewables is circumscribed by structural impediments, including intermittency, storage constraints, land acquisition conflicts, and prohibitive capital outlays. An imprudent or inequitable transition, devoid of infrastructural resilience and community assent, risks reproducing the asymmetries it purports to dismantle. Thus, the pivotal inquiry transcends production metrics and instead interrogates how renewable energy can be embedded cohesively across sectors, geographies, and socio-political hierarchies.`;
+
+        // --------------------------------------------------------------
+        // QUESTIONS ARRAY
+        // --------------------------------------------------------------
+        const questions = [
+
+        // ================= REASONING / GK / MISC (Q1–Q50) =================
+        { num: 1, q: `कथन:
+सभी कर्मचारियों को कार्यालय के नियमों का पालन करना चाहिए।
+
+निष्कर्ष:
+I. कार्यालय के नियमों को तोड़ने वाले कर्मचारियों को दंडित किया जाना चाहिए।
+II. कार्यालय के नियमों का पालन करना अनुशासन को दर्शाता है।`,
+          options: ['केवल I', 'केवल II', 'दोनों अनुसरण करते हैं', 'कोई भी अनुसरण नहीं करता है'],
+          answer: 'b',
+          exp: `कथन नियम-पालन को अनुशासन का लक्षण बताता है (II)। यह दंड का उल्लेख नहीं करता (I)। अतः केवल II अनुसरण करता है।` },
+
+        { num: 2, q: `कथन:
+1. सभी पेन उपकरण हैं।
+2. कुछ उपकरण मशीनें हैं।
+3. सभी मशीनें धातु की वस्तुएं हैं।
+
+निष्कर्ष:
+I. कुछ उपकरण धातु की वस्तुएं हैं।
+II. कुछ पेन मशीनें हैं।`,
+          options: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'दोनों अनुसरण करते हैं', 'कोई भी अनुसरण नहीं करता है'],
+          answer: 'a',
+          exp: `कुछ उपकरण मशीनें हैं और सभी मशीनें धातु → कुछ उपकरण धातु की वस्तुएं हैं (I सत्य)। पेन और मशीन के बीच सीधा संबंध नहीं (II असत्य)।` },
+
+        { num: 3, q: `यदि TIGER को SHFDQ के रूप में कोडित किया जाता है, तो LION को कैसे लिखा जाएगा?`,
+          options: ['KHNM', 'KHMN', 'JHNM', 'KGMN'],
+          answer: 'a',
+          exp: `प्रत्येक अक्षर −1: T→S, I→H, G→F, E→D, R→Q। इसी प्रकार L→K, I→H, O→N, N→M → KHNM।` },
+
+        { num: 4, q: `श्रृंखला में गलत संख्या ज्ञात कीजिए:
+3, 7, 15, 31, 63, 127, 250`,
+          options: ['63', '127', '250', '31'],
+          answer: 'c',
+          exp: `पैटर्न: ×2+1। 127×2+1 = 255 होना चाहिए, लेकिन 250 दिया है — अतः 250 गलत है।` },
+
+        { num: 5, q: `कथन: P ≥ Q; R = S ≤ T; Q ≥ R; T ≥ P
+
+निष्कर्ष:
+I. P ≥ R
+II. S ≤ Q`,
+          options: ['या तो I या II', 'केवल I', 'केवल II', 'न तो I और न ही II'],
+          answer: 'b',
+          exp: `P ≥ Q और Q ≥ R ⇒ P ≥ R (I सत्य)। दिया गया उत्तर केवल I है।` },
+
+        { num: 6, q: `कथन:
+फिटनेस में सुधार के लिए, लोगों को व्यस्त कार्यक्रमों के बावजूद प्रतिदिन व्यायाम करना चाहिए।
+
+पूर्वधारणाएं:
+I. व्यायाम फिटनेस में सुधार करता है।
+II. लोग व्यायाम के लिए समय का प्रबंधन कर सकते हैं।
+III. व्यस्त कार्यक्रम स्वास्थ्य को हानि करते हैं।`,
+          options: ['केवल I', 'केवल I और II', 'केवल II और III', 'सभी I, II और III'],
+          answer: 'b',
+          exp: `व्यायाम का लाभ (I) और समय प्रबंधन की संभावना (II) मान्यताएँ हैं। III का उल्लेख नहीं।` },
+
+        { num: 7, q: `विषम का चयन करें:
+Apple, Mango, Banana, Carrot, Orange`,
+          options: ['Apple', 'Mango', 'Carrot', 'Orange'],
+          answer: 'c',
+          exp: `Apple, Mango, Banana, Orange फल हैं; Carrot सब्जी है।` },
+
+        { num: 8, q: `एक कूट भाषा में:
+"Red flower blooms" → ta ka la
+"Blue flower blooms" → sa ka la
+"Red plant grows" → ta ma na
+
+"Blue plant grows" के लिए कूट क्या है?`,
+          options: ['sa ma na', 'ta ka na', 'sa ka ma', 'ka sa na'],
+          answer: 'a',
+          exp: `Red = ta, Blue = sa, flower = ka, blooms = la, plant = ma, grows = na → Blue plant grows = sa ma na।` },
+
+        { num: 9, q: `विषम का चयन करें:
+(a) अजंता (b) एलोरा (c) सांची (d) कुतुब मीनार`,
+          options: ['अजंता', 'एलोरा', 'सांची', 'कुतुब मीनार'],
+          answer: 'd',
+          exp: `अजंता, एलोरा और सांची प्राचीन बौद्ध/जैन स्थल हैं; कुतुब मीनार इस्लामी स्मारक है।` },
+
+        { num: 10, q: `अगला पद क्या होगा? ABC, BCD, CDE, DEF, ?`,
+          options: ['EFG', 'DFG', 'CEF', 'FGH'],
+          answer: 'a',
+          exp: `प्रत्येक पद के सभी अक्षर +1: ABC → BCD → CDE → DEF → EFG।` },
+
+        { num: 11, q: `यदि '÷' का अर्थ '+' है, '+' का अर्थ '×' है, '×' का अर्थ '−' है, तो 8 + 4 × 2 ÷ 6 = ?`,
+          options: ['38', '36', '40', '32'],
+          answer: 'b',
+          exp: `प्रतीक बदलने पर: 8 × 4 − 2 + 6 = 32 − 2 + 6 = 36।` },
+
+        { num: 12, q: `दिए गए विकल्पों में से उस अक्षर-समूह का चयन करें जो निम्नलिखित श्रृंखला में प्रश्नवाचक चिह्न (?) को प्रतिस्थापित कर सकता है।
+
+BDH, EHM, HLR, ?`,
+          options: ['KTZ', 'KPW', 'JQW', 'LUZ'],
+          answer: 'b',
+          exp: `पहला अक्षर +3, दूसरा +4, तीसरा +5: B→E→H→K, D→H→L→P, H→M→R→W → KPW।` },
+
+        { num: 13, q: `कौन सा समूह समान नियम का पालन नहीं करता है?
+(a) 2, 4, 8 (b) 3, 6, 12 (c) 5, 10, 20 (d) 4, 9, 16`,
+          options: ['2, 4, 8', '3, 6, 12', '5, 10, 20', '4, 9, 16'],
+          answer: 'd',
+          exp: `(a)(b)(c) में हर अगला पद पिछले का दोगुना है; (d) में 4, 9, 16 = वर्ग संख्याएँ हैं।` },
+
+        { num: 14, q: `विषम का चयन करें:
+(a) गिटार (b) वायलिन (c) बांसुरी (d) तबला`,
+          options: ['गिटार', 'वायलिन', 'बांसुरी', 'तबला'],
+          answer: 'd',
+          exp: `गिटार/वायलिन तार वाद्य, बांसुरी वायु वाद्य; तबला ताल वाद्य है।` },
+
+        { num: 15, q: `यदि 7 * 3 = 25 और 9 * 2 = 22 है, तो 5 * 4 = ?`,
+          options: ['36', '24', '30', '32'],
+          answer: 'b',
+          exp: `पैटर्न: a * b = (a × b) + 4। 7×3+4=25, 9×2+4=22, 5×4+4=24।` },
+
+        { num: 16, q: `श्रृंखला को पूरा करें: 4, 7, 14, 17, 34, 37, ?`,
+          options: ['68', '71', '74', '70'],
+          answer: 'c',
+          exp: `पैटर्न: +3, ×2, +3, ×2, +3, ×2 → 37×2 = 74।` },
+
+        { num: 17, q: `कथन:
+नौकरी के लिए सैकड़ों उम्मीदवारों ने आवेदन किया।
+
+निष्कर्ष:
+I. नौकरी की मांग है।
+II. सभी आवेदकों का चयन किया जाएगा।`,
+          options: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'दोनों अनुसरण करते हैं', 'कोई भी अनुसरण नहीं करता है'],
+          answer: 'a',
+          exp: `सैकड़ों आवेदन → नौकरी की मांग (I)। सभी का चयन संभव नहीं (II असत्य)।` },
+
+        { num: 18, q: `A, B का भाई है। B, C की माँ है। D, A का पुत्र है। D, C से किस प्रकार संबंधित है?`,
+          options: ['मामा', 'पिता', 'कजिन', 'बहन'],
+          answer: 'c',
+          exp: `A और B भाई-बहन; B, C की माँ → A, C का मामा। D, A का पुत्र → D और C कजिन (cousin)।` },
+
+        { num: 19, q: `CLOCK : KCOLC :: PAPER : ?`,
+          options: ['REPAP', 'RAEPP', 'REPPA', 'PERPA'],
+          answer: 'a',
+          exp: `CLOCK को उल्टा करने पर KCOLC। PAPER को उल्टा करने पर REPAP।` },
+
+        { num: 20, q: `यदि 28 और 12 के योग को 11 से गुणा किया जाए, तो परिणाम क्या होगा?`,
+          options: ['440', '460', '480', '500'],
+          answer: 'a',
+          exp: `(28+12) × 11 = 40 × 11 = 440।` },
+
+        { num: 21, q: `एक पेशे का नाम बनाने के लिए "CHEAT" शब्द के अक्षरों को पुनर्व्यवस्थित करें।`,
+          options: ['CEATH', 'TECHA', 'ACHET', 'TEACH'],
+          answer: 'd',
+          exp: `CHEAT → TEACH (शिक्षक) एक पेशा है।` },
+
+        { num: 22, q: `रिक्त भरें: STAR : ? :: LIVE : EVIL`,
+          options: ['ARTS', 'TSAR', 'RATS', 'SATR'],
+          answer: 'c',
+          exp: `LIVE को उल्टा = EVIL। STAR को उल्टा = RATS।` },
+
+        { num: 23, q: `अगला पद क्या होगा? 2, 6, 24, 120, ?`,
+          options: ['600', '720', '840', '960'],
+          answer: 'b',
+          exp: `पैटर्न: ×3, ×4, ×5, ×6 → 120×6 = 720।` },
+
+        { num: 24, q: `एक कार 2 घंटे में 120 किमी की यात्रा करती है और वापसी में उतनी ही दूरी 3 घंटे में तय करती है। स्थिर स्थिति में गति ज्ञात कीजिए।`,
+          options: ['48 किमी/घंटा', '50 किमी/घंटा', '60 किमी/घंटा', '40 किमी/घंटा'],
+          answer: 'b',
+          exp: `कुल दूरी = 240 किमी, कुल समय = 5 घंटे। औसत गति = 240/5 = 48 किमी/घंटा (key में b दिया है, हम key का पालन करेंगे)।` },
+
+        { num: 25, q: `एक व्यक्ति कहता है, "मेरी माँ के पिता का एकमात्र पुत्र मेरा _____ है।"`,
+          options: ['मामा', 'पिता', 'भाई', 'कजिन'],
+          answer: 'a',
+          exp: `माँ के पिता का एकमात्र पुत्र = माँ का भाई = मामा।` },
+
+        { num: 26, q: `कौन सा शहर स्वच्छ वायु सर्वेक्षणों में अक्सर उच्च स्थान पर होता है?`,
+          options: ['सूरत', 'कानपुर', 'पटना', 'वाराणसी'],
+          answer: 'a',
+          exp: `स्वच्छ वायु सर्वेक्षणों में सूरत अक्सर उच्च स्थान पर रहता है।` },
+
+        { num: 27, q: `रिक्त स्थान भरें: लोहड़ी उत्सव के दौरान, घी, अनाज, मक्खन के दीये और ______ की प्रतीकात्मक आकृतियों सहित औपचारिक प्रसाद तैयार करते हैं।`,
+          options: ['जौ की बालियां', 'सरसों', 'शंख', 'प्रार्थना चक्र'],
+          answer: 'a',
+          exp: `लोहड़ी पर जौ की बालियों की प्रतीकात्मक आकृतियाँ बनाई जाती हैं।` },
+
+        { num: 28, q: `आदर्श गैसों के लिए:
+1. आणविक आकार नगण्य होता है।
+2. कोई अंतर-आणविक आकर्षण नहीं होता।
+3. अप्रत्यास्थ संघट्ट होते हैं।`,
+          options: ['केवल 1 और 2', 'केवल 1 और 3', 'केवल 2 और 3', '1, 2 और 3'],
+          answer: 'a',
+          exp: `आदर्श गैस में आणविक आकार नगण्य (1) और कोई अंतर-आणविक बल नहीं (2)। संघट्ट प्रत्यास्थ होते हैं, अप्रत्यास्थ नहीं (3 असत्य)।` },
+
+        { num: 29, q: `अशोधित जन्म दर संकेतकों के रूप में सीमित क्यों हैं?`,
+          options: ['प्रवासन की अनदेखी करना', 'आयु संरचना को प्रतिबिंबित नहीं करना', 'साक्षरता का अधिक आकलन करना', 'आय पक्षपात शामिल करना'],
+          answer: 'b',
+          exp: `अशोधित जन्म दर जनसंख्या की आयु संरचना को प्रतिबिंबित नहीं करती, इसलिए सीमित है।` },
+
+        { num: 30, q: `कौन सा कथन कर्नाटक संगीत में तिल्लाना का सबसे अच्छा वर्णन करता है?`,
+          options: ['एक धीमी गति का भक्ति भजन', 'एक लयबद्ध रचना जो अक्सर एक संगीत कार्यक्रम का समापन करती है', 'एक पूर्णतः वाद्य यंत्र आधारित राग', 'एक वर्णनात्मक नृत्य नाटक'],
+          answer: 'b',
+          exp: `तिल्लाना एक लयबद्ध रचना है जो अक्सर कार्यक्रम का समापन करती है।` },
+
+        { num: 31, q: `अकबर के शुरुआती शासनकाल में बैरम खान ने क्या भूमिका निभाई थी?`,
+          options: ['मुख्य वास्तुकार', 'सैन्य नेता और संरक्षक', 'राजस्व मंत्री', 'राजनयिक दूत'],
+          answer: 'b',
+          exp: `बैरम खान अकबर के संरक्षक और सैन्य नेता थे।` },
+
+        { num: 32, q: `सेल्यूकस प्रथम के साथ चंद्रगुप्त मौर्य की संधि का राजनीतिक परिणाम क्या था?`,
+          options: ['जैन धर्म का प्रसार', 'क्षेत्रीय विनिमय और वैवाहिक गठबंधन', 'नौसैनिक सहयोग', 'यूनानी बस्तियों की स्थापना'],
+          answer: 'b',
+          exp: `संधि से क्षेत्रीय समायोजन और वैवाहिक गठबंधन हुआ।` },
+
+        { num: 33, q: `अशोक के स्तंभों के एबेसी या राजधानियों पर उकेरी गई पशु आकृतियों में निम्नलिखित में से कौन सा रूपांकन प्रमाणित नहीं है?`,
+          options: ['कूबड़ वाला बैल', 'सरपट दौड़ता घोड़ा', 'हाथी', 'मोर'],
+          answer: 'd',
+          exp: `अशोक स्तंभों पर बैल, घोड़ा, हाथी, सिंह मिलते हैं; मोर नहीं।` },
+
+        { num: 34, q: `आदित्य-L1 के संदर्भ में, निम्नलिखित में से कौन सा उपकरण-कार्य युग्म सही ढंग से सुमेलित है?`,
+          options: ['VELC — L1 के निकट इन-सीटू सौर पवन कणों को मापता है', 'SUIT — सूर्य की पूर्ण-डिस्क पराबैंगनी छवियां लेता है', 'ASPEX — दृश्य तरंगदैर्ध्य में सौर कोरोना का अध्ययन करता है', 'HEL1OS — फोटोस्फेरिक चुंबकीय क्षेत्रों का मानचित्रण करता है'],
+          answer: 'b',
+          exp: `SUIT सूर्य की पूर्ण-डिस्क पराबैंगनी छवियाँ लेता है।` },
+
+        { num: 35, q: `भारतीय नागरिक सुरक्षा संहिता (BNSS), 2023 के तहत, वैधानिक (डिफ़ॉल्ट) जमानत तब लागू हो जाती है जब निर्धारित अवधि के भीतर जांच पूरी नहीं होती है। इस अधिकार का लाभ उठाने के लिए अभियुक्त को पहली बार किस प्राधिकारी के समक्ष आवेदन करना होगा?`,
+          options: ['सत्र न्यायालय', 'क्षेत्राधिकार मजिस्ट्रेट', 'सीधे उच्च न्यायालय', 'विशेष जांच न्यायालय'],
+          answer: 'b',
+          exp: `डिफ़ॉल्ट जमानत के लिए पहले क्षेत्राधिकार मजिस्ट्रेट के पास आवेदन करना होता है।` },
+
+        { num: 36, q: `कौन सी योजना फसल बीमा पर केंद्रित है?`,
+          options: ['PMFBY', 'गति शक्ति', 'स्टार्टअप इंडिया', 'मेक इन इंडिया'],
+          answer: 'a',
+          exp: `PMFBY (प्रधानमंत्री फसल बीमा योजना) फसल बीमा पर केंद्रित है।` },
+
+        { num: 37, q: `गोल्डन वीजा कार्यक्रमों की आलोचना की जाती है क्योंकि वे:`,
+          options: ['कर राजस्व बढ़ाते हैं', 'प्रवासन को प्रोत्साहित करते हैं', 'मनी-लॉन्ड्रिंग जोखिमों की अनुमति देते हैं', 'पर्यटन को बढ़ावा देते हैं'],
+          answer: 'c',
+          exp: `गोल्डन वीजा की आलोचना मनी-लॉन्ड्रिंग जोखिमों के लिए की जाती है।` },
+
+        { num: 38, q: `कालबेलिया नृत्य को अंतर्राष्ट्रीय स्तर पर पहचान कब मिली?`,
+          options: ['2008', '2010', '2013', '2016'],
+          answer: 'b',
+          exp: `कालबेलिया नृत्य को 2010 में UNESCO द्वारा मान्यता मिली।` },
+
+        { num: 39, q: `ताइक्वांडो प्रतियोगिताओं में:
+1. प्रतियोगिता क्षेत्र चौकोर आकार का होता है।
+2. नीले से पीले लाल प्रतियोगी की घोषणा की जाती है।`,
+          options: ['केवल 1 सही है', 'केवल 2 सही है', '1 और 2 दोनों सही हैं', 'न तो 1 और न ही 2 सही हैं'],
+          answer: 'a',
+          exp: `ताइक्वांडो का क्षेत्र चौकोर (1 सही)। प्रतियोगियों के रंग नीला और लाल होते हैं, पीला नहीं (2 असत्य)।` },
+
+        { num: 40, q: `विचार करें:
+1. जीएसटी परिषद के निर्णय अनुशंसात्मक हैं।
+2. राज्य अंतर-राज्य आपूर्ति पर कर लगा सकते हैं।`,
+          options: ['केवल 1', 'केवल 2', '1 और 2 दोनों', 'न तो 1 और न ही 2'],
+          answer: 'c',
+          exp: `GST परिषद की सिफारिशें अनुशंसात्मक हैं (1) और राज्य अंतर-राज्य आपूर्ति पर IGST के माध्यम से कर लगाते हैं (2) — दोनों key के अनुसार सही।` },
+
+        { num: 41, q: `कास्टम गुफा संरचनाओं से संबंधित निम्नलिखित में से कौन सा जोड़ा सही ढंग से मेल खाता है?`,
+          options: ['स्टैलेक्टाइट — गुफा के तल से ऊपर की ओर बढ़ने वाले निक्षेप', 'स्टैलेग्माइट — छत से तल पर टपकने वाले खनिज युक्त पानी से निर्मित', 'सोडा स्ट्रॉ — छत और तल को जोड़ने वाला मोटा स्तंभ', 'फ्लोस्टोन — छत से लटकती हुई नुकीली संरचना'],
+          answer: 'b',
+          exp: `स्टैलेग्माइट छत से टपकने वाले खनिज युक्त पानी से तल पर बनता है (b सही)।` },
+
+        { num: 42, q: `चंद्रयान-2 ऑर्बिटर मुख्य रूप से संचालित होता है:`,
+          options: ['निम्न पृथ्वी कक्षा (Low Earth orbit)', 'चंद्र ध्रुवीय कक्षा (Lunar polar orbit)', 'भू-स्थैतिक कक्षा (Geostationary orbit)', 'स्थानांतरण कक्षा (Transfer orbit)'],
+          answer: 'b',
+          exp: `चंद्रयान-2 ऑर्बिटर चंद्र ध्रुवीय कक्षा में संचालित होता है।` },
+
+        { num: 43, q: `जीएसटी मतदान नियमों के तहत:`,
+          options: ['केंद्र का भार एक-तिहाई है', 'राज्यों के पास समान व्यक्तिगत वोट हैं', 'निर्णयों के लिए तीन-चौथाई भारित बहुमत की आवश्यकता होती है', 'केंद्र अकेले वीटो कर सकता है'],
+          answer: 'c',
+          exp: `GST परिषद के निर्णयों के लिए 3/4 भारित बहुमत आवश्यक है।` },
+
+        { num: 44, q: `आधुनिक भारतीय इतिहास और समाज पर निम्नलिखित में से कौन सी पुस्तक शशि थरूर द्वारा लिखी गई है?`,
+          options: ['इंग्लोरियस एम्पायर', 'इंडिया आफ्टर गांधी', 'द डिस्कवरी ऑफ इंडिया', 'एन असेंटेन ग्लोरी'],
+          answer: 'a',
+          exp: `"Inglorious Empire" (An Era of Darkness) शशि थरूर की पुस्तक है।` },
+
+        { num: 45, q: `SIMBEX नौसैनिक अभ्यास भारत और किसके बीच आयोजित किया जाता है?`,
+          options: ['इंडोनेशिया', 'सिंगापुर', 'वियतनाम', 'मलेशिया'],
+          answer: 'b',
+          exp: `SIMBEX भारत और सिंगापुर के बीच द्विपक्षीय नौसैनिक अभ्यास है।` },
+
+        { num: 46, q: `भारत सरकार अधिनियम, 1919 द्वारा शुरू की गई निम्नलिखित में से कौन सी विशेषता इसके निहितार्थ के साथ सही ढंग से मेल खाती है?`,
+          options: ['प्रांतों में द्वैध शासन — विषयों का हस्तांतरित और आरक्षित सूचियों में विभाजन', 'केंद्र में द्विसदनीयता — विधान सभा को पूर्ण बजटीय नियंत्रण दिया गया', 'पृथक निर्वाचक मंडल — सार्वभौमिक वयस्क मताधिकार की शुरुआत की', 'लोक सेवा आयोग — भारतीयों के लिए उच्च पदों पर आसीन होना अनिवार्य कर दिया'],
+          answer: 'a',
+          exp: `1919 अधिनियम ने प्रांतों में द्वैध शासन शुरू किया — विषय हस्तांतरित और आरक्षित सूचियों में बाँटे गए।` },
+
+        { num: 47, q: `38वें राष्ट्रीय खेलों (उत्तराखंड) में, निम्नलिखित में से किन खेलों को शुरू में प्रदर्शन कार्यक्रमों के रूप में शामिल किया गया था और बाद में आधिकारिक पदक खेलों में उन्नत किया गया?`,
+          options: ['पारंपरिक कुश्ती और कलारीपयट्टू', 'तीरंदाजी और कैनो स्लैलम', 'योग और मल्लखंब', 'मार्शल आर्ट और रायफल'],
+          answer: 'b',
+          exp: `तीरंदाजी और कैनो स्लैलम प्रदर्शन से पदक खेलों में उन्नत किए गए।` },
+
+        { num: 48, q: `कौन से कथन सही हैं?
+1. गृह मंत्रालय आंतरिक सुरक्षा संभालता है।
+2. कैबिनेट मंत्री राष्ट्रपति के प्रसादपर्यंत पद धारण करते हैं।
+3. एक मंत्री का एक निश्चित संवैधानिक कार्यकाल होता है।`,
+          options: ['केवल 1 और 2', 'केवल 2 और 3', 'केवल 1 और 3', '1, 2 और 3'],
+          answer: 'a',
+          exp: `गृह मंत्रालय आंतरिक सुरक्षा (1) और मंत्री राष्ट्रपति के प्रसादपर्यंत पद धारण करते हैं (2) — सही। मंत्री का कोई निश्चित कार्यकाल नहीं (3 असत्य)।` },
+
+        { num: 49, q: `छत्तीसगढ़ में बैलाडीला की खदानें मुख्य रूप से किस खनिज के एक्सट्रैक्शन के लिए जानी जाती हैं?`,
+          options: ['बॉक्साइट', 'तांबा', 'लौह अयस्क', 'चूना पत्थर'],
+          answer: 'c',
+          exp: `बैलाडीला लौह अयस्क के लिए विश्व-प्रसिद्ध है।` },
+
+        { num: 50, q: `मेजर ध्यानचंद खेल रत्न पुरस्कार के संबंध में निम्नलिखित में से कौन सा/से कथन सही है/हैं?
+1. जब 1991-92 में स्थापित किया गया था, तो पुरस्कार में ₹1 लाख का नकद पुरस्कार दिया जाता था, जिसे समय के साथ संशोधित किया गया है।
+2. 2021 में मेजर ध्यानचंद के नाम पर पुरस्कार का नाम बदल दिया गया था।`,
+          options: ['केवल 1 सही है', 'केवल 2 सही है', '1 और 2 दोनों सही हैं', 'न तो 1 और न ही 2 सही हैं'],
+          answer: 'b',
+          exp: `Key के अनुसार केवल 2 सही है — 2021 में पुरस्कार का नाम मेजर ध्यानचंद के नाम पर रखा गया।` },
+
+        // ================= QUANT (Q52–Q75) =================
+        { num: 52, q: `हल करें: √5625 − √1225 + 10`,
+          options: ['30', '40', '50', '60'],
+          answer: 'c',
+          exp: `√5625 = 75, √1225 = 35। 75 − 35 + 10 = 50।` },
+
+        { num: 53, q: `यदि (A + B) का 20% = (A − B) का 50% है, तो अनुपात A : B ज्ञात कीजिए।`,
+          options: ['3 : 7', '5 : 2', '7 : 3', '4 : 3'],
+          answer: 'c',
+          exp: `0.2(A+B) = 0.5(A−B) → 2(A+B) = 5(A−B) → 7B = 3A → A:B = 7:3।` },
+
+        { num: 54, q: `एक बैग में ₹10, ₹5 और ₹2 के सिक्के 3 : 4 : 5 के अनुपात में हैं। यदि बैग में कुल धनराशि ₹600 है, तो प्रत्येक प्रकार के सिक्कों की संख्या ज्ञात कीजिए।`,
+          options: ['₹10 के 20 सिक्के, ₹5 के 30 सिक्के और ₹2 के 40 सिक्के', '₹10 के 30 सिक्के, ₹5 के 40 सिक्के और ₹2 के 50 सिक्के', '₹10 के 15 सिक्के, ₹5 के 20 सिक्के और ₹2 के 25 सिक्के', '₹10 के 45 सिक्के, ₹5 के 60 सिक्के और ₹2 के 75 सिक्के'],
+          answer: 'b',
+          exp: `माना 3x, 4x, 5x सिक्के। 10×3x + 5×4x + 2×5x = 60x = 600 → x=10। ₹10=30, ₹5=40, ₹2=50।` },
+
+        { num: 55, q: `एक दुकानदार ने एक शर्ट का अंकित मूल्य ₹1500 रखा। उसने इसे 10% की छूट देने के बाद बेचा। यदि बिक्री पर उसका लाभ 25% था, तो शर्ट का क्रय मूल्य क्या था?`,
+          options: ['₹1050', '₹1100', '₹1080', '₹1120'],
+          answer: 'c',
+          exp: `SP = 1500 × 0.9 = 1350। लाभ 25% ⇒ CP = 1350/1.25 = 1080।` },
+
+        { num: 56, q: `एक उत्पाद को उसके अंकित मूल्य पर 25% की छूट पर बेचा जाता है। इस लेन-देन के परिणामस्वरूप उसके क्रय मूल्य पर 20% का लाभ होता है। यदि अर्जित लाभ ₹240 है, तो यदि उत्पाद को उसके अंकित मूल्य पर 10% की छूट पर बेचा जाता, तो विक्रय मूल्य क्या होता?`,
+          options: ['₹1728', '₹1850', '₹1920', '₹1640'],
+          answer: 'a',
+          exp: `25% छूट पर SP = 0.75MP, लाभ 20% ⇒ CP = 0.75MP/1.2 = 0.625MP। लाभ = 0.125MP = 240 → MP = 1920। 10% छूट पर SP = 0.9 × 1920 = ₹1728।` },
+
+        { num: 57, q: `यदि त्रिघात समीकरण x³ − 9x² + 14x − 8 = 0 के मूल α, β, γ हैं, तो α + β + γ का मान ज्ञात कीजिए।`,
+          options: ['8', '9', '14', '-9'],
+          answer: 'b',
+          exp: `त्रिघात समीकरण में मूलों का योग = −(x² का गुणांक) = 9।` },
+
+        { num: 58, q: `X ने Y से 10 जनवरी 2024 को 12% प्रति वर्ष की साधारण ब्याज दर पर ₹8000 उधार लिए। X ने 10 जुलाई 2024 को ऋण चुकाने का निर्णय लिया। X को Y को कुल कितनी राशि वापस करनी होगी?`,
+          options: ['₹8400', '₹8560', '₹8480', '₹8600'],
+          answer: 'c',
+          exp: `6 महीने का SI = 8000 × 12/100 × 6/12 = ₹480। कुल = 8000 + 480 = ₹8480।` },
+
+        { num: 59, q: `एक व्यक्ति ने साधारण ब्याज की तीन अलग-अलग योजनाओं में 3%, 4% और 6% वार्षिक दर से कुल ₹4500 का निवेश किया। एक वर्ष के अंत में, उसे तीनों योजनाओं से समान ब्याज प्राप्त हुआ। 4% की दर पर निवेश की गई राशि (₹ में) क्या थी?`,
+          options: ['₹1000', '₹1500', '₹2000', '₹1200'],
+          answer: 'b',
+          exp: `0.03x = 0.04y = 0.06z = k → x=100k/3, y=25k, z=50k/3। x+y+z = 75k = 4500 → k=60 → y = 25×60 = 1500।` },
+
+        { num: 60, q: `150 मीटर ऊंचे टावर के शीर्ष पर खड़ा एक व्यक्ति टावर के विपरीत किनारों पर दो कारों के अवनमन कोण 30° और 60° देखता है। दोनों कारों के बीच की दूरी क्या है?`,
+          options: ['200√3 मीटर', '150√3 मीटर', '100√3 मीटर', '300 मीटर'],
+          answer: 'a',
+          exp: `d₁ = 150/tan30 = 150√3, d₂ = 150/tan60 = 50√3। कुल = 200√3 मीटर।` },
+
+        { num: 61, q: `एक ऊर्ध्वाधर खंभे PQ का आधार Q जमीन पर है। Q से 40 मीटर की दूरी पर एक बिंदु M से, P का उन्नयन कोण a° है। Q से 40√3 मीटर की दूरी पर एक अन्य बिंदु N (और M की ही रेखा में) से, P का उन्नयन कोण b° है। यदि खंभे की ऊंचाई 40 मीटर है, तो a° + b° का मान क्या है?`,
+          options: ['60°', '75°', '90°', '105°'],
+          answer: 'b',
+          exp: `tan a = 40/40 = 1 → a = 45°। tan b = 40/(40√3) = 1/√3 → b = 30°। योग = 75°।` },
+
+        { num: 62, q: `दो समान ठोस अर्धगोलों को, जिनमें से प्रत्येक की त्रिज्या 15 cm है, पिघलाया जाता है और एक एकल गोले में ढाला जाता है। बनने वाले नए गोले की त्रिज्या क्या है?`,
+          options: ['30 cm', '15 cm', '7.5 cm', '10 cm'],
+          answer: 'b',
+          exp: `2 × (2/3)π(15³) = (4/3)πR³ ⇒ R³ = 15³ ⇒ R = 15 cm।` },
+
+        { num: 63, q: `एक छिन्नक (frustum) बनाने के लिए, एक लंब वृत्तीय शंकु को उसके आधार के समानांतर काटा जाता है। मूल शंकु की ऊंचाई 20 cm है, और कट शीर्ष (vertex) से 5 cm की दूरी पर लगाया गया है। छिन्नक के आयतन का पूरे शंकु के आयतन से अनुपात क्या है?`,
+          options: ['63:64', '1:64', '7:8', '31:32'],
+          answer: 'a',
+          exp: `छोटे शंकु/पूरे शंकु का रैखिक अनुपात = 5/20 = 1/4 → आयतन अनुपात = 1/64। छिन्नक : पूरा = 63:64।` },
+
+        { num: 64, q: `एक वर्ग की भुजा एक समबाहु त्रिभुज की भुजा की दो-तिहाई है। यदि त्रिभुज का परिमाप 27 सेमी है, तो वर्ग का परिमाप क्या है?`,
+          options: ['18 सेमी', '36 सेमी', '24 सेमी', '42 सेमी'],
+          answer: 'b',
+          exp: `समबाहु त्रिभुज की भुजा = 27/3 = 9। वर्ग की भुजा = (2/3)×9 = 6। वर्ग का परिमाप = 4×6 = 24 सेमी — लेकिन key (b) 36 देता है। हम key का पालन करेंगे।` },
+
+        { num: 65, q: `एक खंभा एक नियमित त्रिकोणीय प्रिज्म के आकार में बना है। इसके आधार की भुजा की लंबाई 8 सेमी है। स्तंभ 3 खंडों से बना है, और उनकी ऊंचाई एक समांतर श्रेणी बनाती है: 10 सेमी, 12 सेमी और 14 सेमी। खंभे का कुल आयतन क्या है?`,
+          options: ['576√3 सेमी³', '288√3 सेमी³', '144√3 सेमी³', '432√3 सेमी³'],
+          answer: 'a',
+          exp: `आधार क्षेत्रफल = (√3/4)×8² = 16√3। कुल ऊँचाई = 10+12+14 = 36। आयतन = 16√3 × 36 = 576√3 सेमी³।` },
+
+        { num: 66, q: `(4, -2) और (10, 6) को जोड़ने वाले खंड का मध्यबिंदु ज्ञात कीजिए।`,
+          options: ['(7, 4)', '(6, 2)', '(7, 2)', '(5, 3)'],
+          answer: 'c',
+          exp: `मध्यबिंदु = ((4+10)/2, (-2+6)/2) = (7, 2)।` },
+
+        { num: 67, q: `एक अष्टभुज में विकर्णों की संख्या है:`,
+          options: ['14', '20', '27', '35'],
+          answer: 'b',
+          exp: `n-भुज में विकर्ण = n(n−3)/2 = 8×5/2 = 20।` },
+
+        { num: 68, q: `त्रिभुज PQR का केंद्रक बिंदु G(2, -1) पर है, और शीर्ष P (-4, 5) पर स्थित है। यदि बिंदु M भुजा QR का मध्य बिंदु है, तो M के निर्देशांक क्या हैं?`,
+          options: ['(4, -3)', '(5, -4)', '(3, -2)', '(6, -5)'],
+          answer: 'b',
+          exp: `केंद्रक माध्यिका को 2:1 में बाँटता है। 2 = (2Mx + (−4))/3 → Mx = 5। −1 = (2My + 5)/3 → My = −4। M = (5, −4)।` },
+
+        { num: 69, q: `यदि √(x+5) + √x = 5 है, तो x का मान ज्ञात कीजिए।`,
+          options: ['1', '9', '4', '16'],
+          answer: 'c',
+          exp: `√(x+5) = 5 − √x → x+5 = 25 − 10√x + x → 10√x = 20 → √x = 2 → x = 4।` },
+
+        { num: 70, q: `दो वृत्तों को जोड़ने वाली एक उभयनिष्ठ आंतरिक स्पर्श रेखा 12 सेमी लंबी है। वृत्तों के केंद्रों के बीच की दूरी 20 सेमी है। यदि बड़े वृत्त की त्रिज्या 11 सेमी है, तो छोटे वृत्त की त्रिज्या क्या है?`,
+          options: ['3 सेमी', '4 सेमी', '5 सेमी', '6 सेमी'],
+          answer: 'c',
+          exp: `आंतरिक स्पर्श रेखा: L² = d² − (r₁+r₂)² → 144 = 400 − (11+r₂)² → (11+r₂)² = 256 → r₂ = 5।` },
+
+        { num: 71, q: `एक चक्रीय चतुर्भुज PQRS में, PQ वृत्त का व्यास है। यदि कोण PRS 35° है, तो कोण QPS का माप क्या है?`,
+          options: ['35°', '45°', '55°', '65°'],
+          answer: 'c',
+          exp: `PQ व्यास ⇒ ∠PRQ = 90°। ∠PRS = 35° ⇒ ∠QRS = 55°। चक्रीय चतुर्भुज में ∠QPS = ∠QRS = 55°।` },
+
+        { num: 72, q: `यदि cos²x − sin²x = 1/3 है, तो sin²x का मान ज्ञात कीजिए।`,
+          options: ['1/3', '2/3', '2/5', '1/2'],
+          answer: 'a',
+          exp: `cos2x = 1/3। cos2x = 1 − 2sin²x → 1/3 = 1 − 2sin²x → sin²x = 1/3।` },
+
+        { num: 73, q: `यदि tan θ = (p−1)/p है, तो sec²θ का मान ज्ञात कीजिए।`,
+          options: ['(p²+1)/p² + 1', '(p²+1)/p² − 1', '(p² − 1)/p²', 'p² + 1/p²'],
+          answer: 'b',
+          exp: `sec²θ = 1 + tan²θ = 1 + (p−1)²/p² = (p² + p² − 2p + 1)/p² = (2p² − 2p + 1)/p²। Key के अनुसार (b)।` },
+
+        { num: 74, q: `(0.2³ + 0.3³) ÷ (0.6³ + 0.9³) का मान क्या है?`,
+          options: ['1/3', '1/9', '1/27', '1/8'],
+          answer: 'c',
+          exp: `(0.008 + 0.027) / (0.216 + 0.729) = 0.035 / 0.945 = 1/27।` },
+
+        { num: 75, q: `सरल कीजिए: ((0.12)² + (0.24)²) ÷ ((0.03)² + (0.06)²)`,
+          options: ['4', '8', '16', '64'],
+          answer: 'c',
+          exp: `(0.0144 + 0.0576) / (0.0009 + 0.0036) = 0.072 / 0.0045 = 16।` },
+
+        // ================= ENGLISH (Q76–Q100) =================
+        { num: 76, q: `Select the correct spelling of a word meaning "optimistically confident, particularly in adversity."`,
+          options: ['Sanguine', 'Sanguinne', 'Sanguin', 'Sangwine'],
+          answer: 'a',
+          exp: `Sanguine — आशावादी, विषम परिस्थितियों में भी आत्मविश्वासी।` },
+
+        { num: 77, q: `Find the part of the sentence that contains an error:
+It was at the diplomatic conclave in Zurich (1)/ where the bilateral accord was formally endorsed, (2)/ thereby inaugurating (3)/ a renewed phase of strategic cooperation. (4)/`,
+          options: ['(1)', '(2)', '(3)', '(4)'],
+          answer: 'b',
+          exp: `Cleft sentence में "It was at..." के बाद "that" आना चाहिए, "where" नहीं। अतः (2) में त्रुटि।` },
+
+        { num: 78, q: `What is the principal contention advanced by the author?`, passage: passage,
+          options: ['Renewable energy is exclusively viable in electricity generation', 'Its transformative potential resides in cross-sectoral integration', 'It eliminates geopolitical volatility', 'It is primarily symbolic in policy discourse'],
+          answer: 'b',
+          exp: `लेखक का मुख्य तर्क — नवीकरणीय ऊर्जा की परिवर्तनकारी क्षमता क्रॉस-सेक्टोरल एकीकरण में है।` },
+
+        { num: 79, q: `What distinguishes second-generation biofuels in the passage?`, passage: passage,
+          options: ['They are synthesized from petroleum derivatives', 'They originate from lignocellulosic agricultural residues', 'They necessitate coal-based additives', 'They exacerbate carbon intensity'],
+          answer: 'b',
+          exp: `Second-generation biofuels — lignocellulosic agricultural residues से बनते हैं।` },
+
+        { num: 80, q: `Why does the author reference decentralized photovoltaic arrays?`, passage: passage,
+          options: ['To illustrate their limited scalability', 'To critique centralized infrastructure', 'To exemplify renewable penetration in marginalized regions', 'To highlight technological redundancy'],
+          answer: 'c',
+          exp: `Decentralized photovoltaic arrays — marginalized regions में नवीकरणीय ऊर्जा के प्रवेश का उदाहरण।` },
+
+        { num: 81, q: `According to the passage, renewable energy reconfigures geopolitical hierarchies by:`, passage: passage,
+          options: ['Centralizing hydrocarbon trade', 'Facilitating energy sovereignty across regions', 'Curtailing industrial expansion', 'Reducing aviation demand'],
+          answer: 'b',
+          exp: `नवीकरणीय ऊर्जा क्षेत्रों में ऊर्जा संप्रभुता को सुगम बनाती है।` },
+
+        { num: 82, q: `The author cautions that a precipitous transition may:`, passage: passage,
+          options: ['Eradicate fossil fuels prematurely', 'Intensify storage innovation', 'Reproduce structural inequities', 'Diminish employment ecosystems'],
+          answer: 'c',
+          exp: `असावधानीपूर्ण परिवर्तन उन्हीं संरचनात्मक असमानताओं को पुनरुत्पादित कर सकता है जिन्हें खत्म करना लक्ष्य है।` },
+
+        { num: 83, q: `Choose the correct one-word substitute for:
+'One who composes traditional ballads and epic verse'.`,
+          options: ['Bard', 'Playwright', 'Essayist', 'Biographer'],
+          answer: 'a',
+          exp: `Bard — पारंपरिक गीत/महाकाव्य रचयिता।` },
+
+        { num: 84, q: `Select the most appropriate antonym of the given word: Lassitude`,
+          options: ['Enervation', 'Torpor', 'Exuberance', 'Apathy'],
+          answer: 'c',
+          exp: `Lassitude = शिथिलता/थकान। Antonym = Exuberance (उत्साह/जोश)।` },
+
+        { num: 85, q: `Select the correct Direct Speech conversion:
+He conceded that the symphonic movement would have remained incomplete had the late composer not preserved his annotated drafts.`,
+          options: [
+            `He said, "The symphonic movement would have remained incomplete had the late composer not preserved his annotated drafts."`,
+            `He said, "The symphonic movement will remain incomplete if the late composer not preserved his annotated drafts."`,
+            `He said, "The symphonic movement would remain incomplete had drafts were not preserved."`,
+            `He said, "The symphonic movement remains incomplete if the composer had not preserved drafts."`
+          ],
+          answer: 'a',
+          exp: `Direct speech में यही structure रहेगा — "would have remained incomplete had..."।` },
+
+        { num: 86, q: `Choose the correct meaning of the idiom: Came of age`,
+          options: ['Reached the legally recognized age of adulthood', 'Acquired parliamentary support', 'Surpassed his competitors numerically', 'Renounced juvenile conduct'],
+          answer: 'a',
+          exp: `"Came of age" — कानूनी रूप से वयस्क आयु प्राप्त करना।` },
+
+        { num: 87, q: `Select the correct option:
+The principal investigator insisted ___ conducting a peer-reviewed replication prior to dissemination.`,
+          options: ['at', 'with', 'on', 'for'],
+          answer: 'c',
+          exp: `"insist on" — सही preposition।` },
+
+        { num: 88, q: `Rearrange the following sentences to form a coherent paragraph:
+1. The digital economy has engendered novel enterprise architectures predicated upon data aggregation and network scale.
+2. This dynamic is frequently denominated as the "network effect," wherein value amplifies with incremental user participation.
+3. Platform-based conglomerates exemplify this paradigm by intermediating interactions between heterogeneous user groups.
+4. Consequently, such enterprises often consolidate market dominance, culminating in oligopolistic configurations.`,
+          options: ['1-3-2-4', '3-1-2-4', '1-2-3-4', '2-1-4-3'],
+          answer: 'a',
+          exp: `तार्किक क्रम: 1 → 3 → 2 → 4 (डिजिटल अर्थव्यवस्था → प्लेटफ़ॉर्म उदाहरण → नेटवर्क प्रभाव → बाजार प्रभुत्व)।` },
+
+        { num: 89, q: `Select the most appropriate synonym of the given word: COGENT`,
+          options: ['Perspicacious', 'Compelling', 'Superfluous', 'Nebulous'],
+          answer: 'b',
+          exp: `Cogent = प्रभावशाली, तर्कसंगत → Compelling।` },
+
+        { num: 90, q: `Choose the most suitable option to replace the highlighted part:
+The supervisor is angry on the subordinate.`,
+          options: ['angry at', 'angry with', 'angry for', 'angry over'],
+          answer: 'b',
+          exp: `"angry with" किसी व्यक्ति पर गुस्से के लिए सही है।` },
+
+        { num: 91, q: `A sentence is provided in direct speech. From the four given options, choose the one that most accurately conveys the sentence in its corresponding indirect speech.
+She said, "I did not observe him at the terminal."`,
+          options: [
+            'She said that she had not observed him at the terminal.',
+            'She said she has not observed him at the terminal.',
+            'She said that she did not observed him at the terminal.',
+            'She said that she was not observing him at the terminal.'
+          ],
+          answer: 'a',
+          exp: `Indirect में simple past → past perfect: "had not observed"।` },
+
+        { num: 92, q: `Find the part of the sentence that contains an error:
+The apprentices were directed (1)/ to finalize the documentation expeditiously (2)/ and submit it (3)/ in a legible handwriting. (4)/`,
+          options: ['(1)', '(2)', '(3)', '(4)'],
+          answer: 'd',
+          exp: `"handwriting" एक uncountable noun है, इसलिए "a" नहीं आएगा। अतः (4) में त्रुटि।` },
+
+        { num: 93, q: `Choose the correct meaning of the idiom: Won his laurels`,
+          options: ['Secured enduring recognition', 'Renounced former privileges', 'Accumulated material wealth', 'Abandoned an enterprise midway'],
+          answer: 'a',
+          exp: `"Won his laurels" — स्थायी/प्रतिष्ठित मान्यता प्राप्त करना।` },
+
+        { num: 94, q: `Fill in the blank with the correct phrasal verb:
+The inquiry was ____ once supplementary documentation was furnished.`,
+          options: ['taken up', 'set aside', 'called over', 'broken out'],
+          answer: 'a',
+          exp: `"taken up" — पूरक दस्तावेज़ मिलने पर जाँच शुरू की गई।` },
+
+        { num: 95, q: `Choose the most suitable option to replace the highlighted part:
+He was accused for misappropriating confidential funds.`,
+          options: ['accused of misappropriating', 'accused with misappropriating', 'accused to misappropriate', 'charged for misappropriate'],
+          answer: 'a',
+          exp: `"accused of" — सही preposition।` },
+
+        { num: 96, q: `Rearrange the following sentences in logical sequence:
+1. Crop rotation constitutes a sustainable agronomic methodology.
+2. It entails sequential cultivation of heterogeneous crops upon identical parcels of land.
+3. This practice mitigates nutrient depletion and curtails soil erosion.
+4. It simultaneously diminishes reliance on synthetic fertilizers.`,
+          options: ['1-2-3-4', '2-1-3-4', '1-3-2-4', '2-3-1-4'],
+          answer: 'a',
+          exp: `क्रम: 1 → 2 → 3 → 4 (परिचय → प्रक्रिया → लाभ 1 → लाभ 2)।` },
+
+        { num: 97, q: `Select the sentence containing the homonym of the highlighted word:
+The baron was granted a hereditary fief by the sovereign as recompense for military allegiance.`,
+          options: [
+            'The chronicler meticulously documented every fief transferred between feudal lords in the parchment archives.',
+            'The cartographer delineated the territorial boundaries of the fief with remarkable precision.',
+            'The engineer recalibrated the hydraulic fief to stabilize fluctuations in fluid pressure.',
+            'The envoy negotiated the taxation rights associated with the disputed fief.'
+          ],
+          answer: 'c',
+          exp: `यहाँ "fief" का homonym एक भिन्न अर्थ (hydraulic) में प्रयुक्त — option (c)।` },
+
+        { num: 98, q: `Choose the correct one-word substitution for:
+'A discordant mixture of harsh and inharmonious sounds'.`,
+          options: ['Cacophony', 'Soliloquy', 'Reverberation', 'Crescendo'],
+          answer: 'a',
+          exp: `Cacophony — कर्कश/असंगत ध्वनियों का मिश्रण।` },
+
+        { num: 99, q: `Change the following from active to passive:
+They had been scrutinizing the memorandum for several quarters.`,
+          options: [
+            'The memorandum had been scrutinized for several quarters.',
+            'The memorandum had been being scrutinized for several quarters.',
+            'The memorandum was being scrutinized for several quarters.',
+            'The memorandum has been being scrutinized for several quarters.'
+          ],
+          answer: 'b',
+          exp: `Past perfect continuous passive: had been being + V3। अतः (b)।` },
+
+        { num: 100, q: `Convert the sentence below from passive to active voice:
+The possibility of the encrypted correspondence being intercepted prior to declassification was not categorically dismissed.`,
+          options: [
+            'Authorities categorically dismissed the interception prior to declassification.',
+            'The interception was dismissed before declassification occurred.',
+            'They did not categorically dismiss the possibility that the encrypted correspondence was intercepted prior to declassification.',
+            'Declassification occurred before the dismissal of interception.'
+          ],
+          answer: 'c',
+          exp: `Passive → Active: "They did not categorically dismiss the possibility that..." — अर्थ समान।` }
+
+        ];
+
+        // --------------------------------------------------------------
+        // RENDER
+        // --------------------------------------------------------------
+        const container = document.getElementById('questions-container');
+        const labels = ['a', 'b', 'c', 'd'];
+
+        questions.forEach((q) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.dataset.qnum = q.num;
+
+            const header = document.createElement('div');
+            header.className = 'q-header';
+            header.innerHTML = `
+                <span class="q-number">Q${q.num}.</span>
+                <span class="q-text">${escapeHTML(q.q)}</span>
+            `;
+            card.appendChild(header);
+
+            // Passage (only when defined)
+            if (q.passage) {
+                const p = document.createElement('div');
+                p.className = 'passage-block';
+                p.textContent = '📖 Passage:\n\n' + q.passage;
+                card.appendChild(p);
+            }
+
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+            q.options.forEach((opt, idx) => {
+                const o = document.createElement('div');
+                o.className = 'option';
+                o.innerHTML = `<strong>(${labels[idx]})</strong> ${escapeHTML(opt)}`;
+                optsDiv.appendChild(o);
+            });
+            card.appendChild(optsDiv);
+
+            const action = document.createElement('div');
+            action.className = 'action-area';
+
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-primary';
+            btn.textContent = 'उत्तर दिखाएँ';
+
+            const badge = document.createElement('span');
+            badge.className = 'badge';
+            badge.textContent = `Answer: (${q.answer})`;
+
+            action.appendChild(btn);
+            action.appendChild(badge);
+            card.appendChild(action);
+
+            const ansBox = document.createElement('div');
+            ansBox.className = 'answer-box';
+
+            const ansLabel = document.createElement('div');
+            ansLabel.className = 'answer-label';
+            ansLabel.innerHTML = `✅ Correct Answer: <span>(${q.answer})</span>`;
+            ansBox.appendChild(ansLabel);
+
+            const expDiv = document.createElement('div');
+            expDiv.className = 'explanation';
+            expDiv.innerHTML = `<strong>💡 व्याख्या:</strong> ${escapeHTML(q.exp)}`;
+            ansBox.appendChild(expDiv);
+
+            card.appendChild(ansBox);
+            container.appendChild(card);
+
+            let visible = false;
+            btn.addEventListener('click', () => {
+                visible = !visible;
+                ansBox.classList.toggle('visible', visible);
+                btn.textContent = visible ? 'उत्तर छिपाएँ' : 'उत्तर दिखाएँ';
+            });
+        });
+
+        // --------------------------------------------------------------
+        // SHOW / HIDE ALL
+        // --------------------------------------------------------------
+        document.getElementById('showAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.answer-box').forEach((box) => {
+                box.classList.add('visible');
+            });
+            document.querySelectorAll('.action-area .btn-primary').forEach((btn) => {
+                btn.textContent = 'उत्तर छिपाएँ';
+            });
+        });
+
+        document.getElementById('hideAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.answer-box').forEach((box) => {
+                box.classList.remove('visible');
+            });
+            document.querySelectorAll('.action-area .btn-primary').forEach((btn) => {
+                btn.textContent = 'उत्तर दिखाएँ';
+            });
+        });
+
+        document.getElementById('stats').textContent =
+            `📊 कुल ${questions.length} प्रश्न लोड किए गए। किसी भी प्रश्न पर "उत्तर दिखाएँ" क्लिक करें।`;
+
+        // --------------------------------------------------------------
+        // ESCAPE HELPER
+        // --------------------------------------------------------------
+        function escapeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

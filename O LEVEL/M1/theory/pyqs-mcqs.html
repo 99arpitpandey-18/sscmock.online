@@ -1,0 +1,769 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M1 10 Tests (30 Qs Each) | NIELIT O Level</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+            line-height: 1.6;
+        }
+        .header {
+            background: #111827;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, .15);
+        }
+        .header h1 {
+            font-size: 25px;
+            color: #36dfff;
+        }
+        .header p {
+            margin-top: 5px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 25px 15px 60px;
+        }
+        #testMenu {
+            display: block;
+        }
+        #testMenu h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .test-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .test-card:hover {
+            border-color: #36dfff;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .test-card h3 {
+            font-size: 22px;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+        .test-card p {
+            color: #475569;
+            margin: 5px 0;
+        }
+        .module-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .module-btn:hover {
+            background: #1d4ed8;
+        }
+        .back-btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .back-btn:hover {
+            background: #475569;
+        }
+        .info {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .info strong {
+            color: #2563eb;
+        }
+        .question {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 18px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .05);
+        }
+        .question-number {
+            color: #2563eb;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .hindi {
+            display: block;
+            color: #475569;
+            font-weight: normal;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        .option {
+            display: block;
+            padding: 11px 13px;
+            margin: 8px 0;
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .option:hover {
+            background: #eef7ff;
+            border-color: #36dfff;
+        }
+        .option input {
+            margin-right: 8px;
+        }
+        .correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+        }
+        .wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+        .explanation {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        .submit-area {
+            text-align: center;
+            margin: 30px 0;
+        }
+        button {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        #submitBtn {
+            background: #2563eb;
+            color: white;
+        }
+        #submitBtn:hover {
+            background: #1d4ed8;
+        }
+        #resetBtn {
+            background: #64748b;
+            color: white;
+            margin-left: 8px;
+        }
+        .result {
+            display: none;
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 2px solid #36dfff;
+        }
+        .result h2 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .score {
+            font-size: 30px;
+            font-weight: bold;
+            color: #16a34a;
+        }
+        .progress {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #2563eb;
+            width: 0%;
+        }
+        #quizForm {
+            display: none;
+        }
+        @media (max-width:600px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            .container {
+                padding: 15px 10px;
+            }
+            .question {
+                padding: 15px;
+            }
+            .question-text {
+                font-size: 15px;
+            }
+            .option {
+                font-size: 14px;
+            }
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>📘300+ Questions | Practice + PYQs | Bilingual</h1> 
+               <h2><p> M1 10 Tests (30 MCQs Each Set)</p></h2>  
+    </header>
+
+    <main class="container">
+
+        <div id="testMenu">
+            <h2>📚 Select Your Test (30 Questions Each)</h2>
+            <p style="text-align:center; color:#64748b; margin-bottom:20px;">10 Full-Length Tests • Real Exam Pattern • Instant Results</p>
+            <div class="test-grid" id="testGrid"></div>
+        </div>
+
+        <div id="quizForm">
+            <button class="back-btn" onclick="showMenu()">⬅ Back to Tests</button>
+            <div class="info" id="testInfo">
+                <strong id="testTitle">Test 1</strong><br>
+                <span id="testRange">Questions 1 to 30</span>
+            </div>
+            <div id="result" class="result">
+                <h2>🎯 Test Result</h2>
+                <div class="score" id="score"></div>
+                <p id="resultText"></p>
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p id="attempted"></p>
+            </div>
+            <div id="quiz"></div>
+            <div class="submit-area">
+                <button type="button" id="submitBtn" onclick="submitTest()">✅ Submit Test</button>
+                <button type="button" id="resetBtn" onclick="resetTest()">🔄 Reset</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ================================================================
+        // 300 QUESTIONS (Practice + PYQs) – Compact Format
+        // Each: [eng, hindi, opt1|opt2|opt3|opt4, correctIndex]
+        // ================================================================
+        const allQuestions = [
+            // -------- Computer Fundamentals (30) --------
+            ["What is a computer?", "कंप्यूटर क्या है?", "Electronic device|Mechanical device|Chemical device|None", 0],
+            ["Which part is the brain of the computer?", "कंप्यूटर का मस्तिष्क किसे कहते हैं?", "Monitor|CPU|Keyboard|Printer", 1],
+            ["What does CPU stand for?", "CPU का पूरा नाम?", "Central Processing Unit|Central Program Unit|Computer Processing Unit|Central Power Unit", 0],
+            ["Which unit performs arithmetic & logic?", "अंकगणित और तर्क कौन करता है?", "CU|ALU|RAM|ROM", 1],
+            ["What does ALU stand for?", "ALU का पूरा नाम?", "Arithmetic Logic Unit|Advanced Logic Unit|Arithmetic Local Unit|Application Logic Unit", 0],
+            ["What is an input device?", "इनपुट डिवाइस कौन है?", "Monitor|Printer|Keyboard|Speaker", 2],
+            ["What is an output device?", "आउटपुट डिवाइस कौन है?", "Keyboard|Mouse|Scanner|Monitor", 3],
+            ["Which memory is volatile?", "वोलेटाइल मेमोरी कौन सी है?", "ROM|RAM|DVD|Hard Disk", 1],
+            ["Which memory is non-volatile?", "नॉन-वोलेटाइल मेमोरी कौन सी है?", "RAM|Cache|ROM|Register", 2],
+            ["What does RAM stand for?", "RAM का फुल फॉर्म?", "Random Access Memory|Read Access Memory|Random Application Memory|Rapid Access Module", 0],
+            ["What is the smallest data unit?", "डेटा की सबसे छोटी इकाई?", "Byte|Bit|KB|MB", 1],
+            ["1 KB = ?", "1 KB = ?", "100 bytes|1024 bytes|1000 bits|1024 bits", 1],
+            ["Which number system does computer use?", "कंप्यूटर कौन सा नंबर सिस्टम use करता है?", "Decimal|Binary|Octal|Roman", 1],
+            ["Base of Binary?", "बाइनरी का आधार?", "2|8|10|16", 0],
+            ["Base of Octal?", "ऑक्टल का आधार?", "2|8|10|16", 1],
+            ["Which is secondary storage?", "सेकेंडरी स्टोरेज कौन है?", "RAM|Cache|Hard Disk|Register", 2],
+            ["Which is fastest memory?", "सबसे तेज़ मेमोरी?", "Hard Disk|RAM|Cache Memory|DVD", 2],
+            ["Which device displays visual output?", "विजुअल आउटपुट कौन देता है?", "Monitor|Keyboard|Mouse|Scanner", 0],
+            ["Which device produces hard copy?", "हार्ड कॉपी कौन बनाता है?", "Scanner|Printer|Keyboard|Mouse", 1],
+            ["What is hardware?", "हार्डवेयर क्या है?", "Physical parts|Programs|Data|Internet", 0],
+            ["What is software?", "सॉफ्टवेयर क्या है?", "Physical parts|Set of programs|Cables|Electricity", 1],
+            ["Which is system software?", "सिस्टम सॉफ्टवेयर कौन है?", "MS Word|Operating System|Calculator|Paint", 1],
+            ["Which is application software?", "एप्लीकेशन सॉफ्टवेयर कौन है?", "Windows|Linux Kernel|MS Word|BIOS", 2],
+            ["What is firmware?", "फर्मवेयर क्या है?", "Software in hardware|Games|Documents|Internet", 0],
+            ["What is GUI?", "GUI क्या है?", "Graphical User Interface|General User Internet|Graphical Utility Input|General Utility Interface", 0],
+            ["What is CLI?", "CLI क्या है?", "Command Line Interface|Computer Link Interface|Common Logic Input|Control Line Internet", 0],
+            ["Which interface uses commands?", "कमांड किस इंटरफेस में use होते हैं?", "CLI|GUI|Touch UI|Icon UI", 0],
+            ["Which interface uses icons?", "आइकन किस इंटरफेस में होते हैं?", "GUI|CLI|BIOS|DOS", 0],
+            ["What is booting?", "बूटिंग क्या है?", "Starting computer|Printing|Deleting|Formatting", 0],
+            ["Cold boot means?", "कोल्ड बूट का मतलब?", "Start from power-off|Restart only|Open browser|Close file", 0],
+            // -------- OS (30) --------
+            ["What is an OS?", "OS क्या है?", "System software|Application|Hardware|Virus", 0],
+            ["OS acts as interface between?", "OS किसके बीच interface है?", "User & hardware|Printer & paper|Mouse & keyboard|Internet & cable", 0],
+            ["Which is an OS?", "OS कौन है?", "Windows|MS Word|Excel|PowerPoint", 0],
+            ["Who develops Windows?", "Windows कौन develop करता है?", "Microsoft|Google|IBM|Intel", 0],
+            ["Linux is?", "Linux क्या है?", "Open-source OS|Printer|Database|Browser", 0],
+            ["Which OS is for Mac?", "Mac के लिए OS?", "macOS|Android|DOS|Linux", 0],
+            ["Which is mobile OS?", "मोबाइल OS कौन है?", "Android|Windows 3.1|DOS|BIOS", 0],
+            ["Which is open source OS?", "ओपन सोर्स OS कौन है?", "Linux|Windows|MS-DOS|macOS", 0],
+            ["Which manages resources?", "रिसोर्स मैनेज कौन करता है?", "OS|Paint|Word|Browser", 0],
+            ["Which is OS function?", "OS का function कौन है?", "Memory management|Typing only|Printing|Drawing", 0],
+            ["Which manages files?", "फाइलें कौन मैनेज करता है?", "OS|Monitor|Keyboard|Speaker", 0],
+            ["Process management is done by?", "प्रोसेस मैनेजमेंट कौन करता है?", "OS|Printer|Mouse|Scanner", 0],
+            ["Memory management is done by?", "मेमोरी मैनेजमेंट कौन करता है?", "OS|Keyboard|Monitor|Printer", 0],
+            ["Device management is done by?", "डिवाइस मैनेजमेंट कौन करता है?", "OS|Word|Browser|Spreadsheet", 0],
+            ["What is booting?", "बूटिंग क्या है?", "Starting computer|Printing|Deleting|Formatting", 0],
+            ["Warm boot means?", "वार्म बूट का मतलब?", "Restart running PC|Turn off monitor|Install printer|Delete OS", 0],
+            ["What is multitasking?", "मल्टीटास्किंग क्या है?", "Running multiple tasks|Running one task|Deleting|Formatting", 0],
+            ["What is a process?", "प्रोसेस क्या है?", "Program in execution|Stored photo|Keyboard key|Printer command", 0],
+            ["What is device driver?", "डिवाइस ड्राइवर क्या है?", "Helps OS talk to hardware|Antivirus|Game|Document", 0],
+            ["What is kernel?", "कर्नेल क्या है?", "Core of OS|Keyboard|Monitor|Printer", 0],
+            ["Which component manages hardware?", "हार्डवेयर कौन मैनेज करता है?", "Kernel|Browser|Word|Paint", 0],
+            ["Which OS is common on servers?", "सर्वर पर कौन सा OS common है?", "Linux|Paint|PowerPoint|Calculator", 0],
+            ["What is user account?", "यूजर अकाउंट क्या है?", "Identity to access system|Printer|Folder|Monitor", 0],
+            ["What is password used for?", "पासवर्ड का उपयोग?", "Authentication|Printing|Scanning|Formatting", 0],
+            ["What is Desktop?", "डेस्कटॉप क्या है?", "Main working area|Printer|CPU|Storage", 0],
+            ["What is Taskbar?", "टास्कबार क्या है?", "Bar to access apps|Hard disk|Keyboard|Printer", 0],
+            ["What is Start Menu?", "स्टार्ट मेनू क्या है?", "Menu for apps & settings|File format|Storage|Virus", 0],
+            ["What is an icon?", "आइकन क्या है?", "Graphical representation|Keyboard|Printer|Memory", 0],
+            ["What is File Explorer?", "फाइल एक्सप्लोरर क्या है?", "Tool to manage files|Game|Antivirus|Compiler", 0],
+            ["What is Recycle Bin?", "रीसायकल बिन क्या है?", "Temporary storage for deleted files|Permanent storage|RAM|CPU", 0],
+            // -------- Shortcuts & Files (30) --------
+            ["Can files be restored from Recycle Bin?", "क्या रीसायकल बिन से restore कर सकते हैं?", "Yes|No|Never|Only RAM", 0],
+            ["What happens when Recycle Bin emptied?", "रीसायकल बिन empty करने पर क्या होता है?", "Deleted items removed|Computer shuts down|RAM increases|Windows updates", 0],
+            ["Shortcut to open File Explorer?", "File Explorer खोलने की shortcut?", "Windows+E|Ctrl+E|Alt+E|Shift+E", 0],
+            ["Shortcut to show desktop?", "डेस्कटॉप दिखाने की shortcut?", "Windows+D|Ctrl+D|Alt+D|Shift+D", 0],
+            ["Shortcut to switch apps?", "Apps के बीच switch करने की shortcut?", "Alt+Tab|Ctrl+Tab|Shift+Tab|Windows+A", 0],
+            ["Key to open Start Menu?", "Start Menu खोलने की key?", "Windows key|F1|Esc|Ctrl", 0],
+            ["Key to rename a file?", "File rename करने की key?", "F2|F1|F5|F12", 0],
+            ["Key to refresh desktop?", "Desktop refresh करने की key?", "F5|F2|F4|F8", 0],
+            ["Ctrl+C does?", "Ctrl+C क्या करता है?", "Copy|Cut|Paste|Undo", 0],
+            ["Ctrl+X does?", "Ctrl+X क्या करता है?", "Cut|Copy|Paste|Save", 0],
+            ["Ctrl+V does?", "Ctrl+V क्या करता है?", "Paste|Copy|Cut|Undo", 0],
+            ["Ctrl+Z does?", "Ctrl+Z क्या करता है?", "Undo|Redo|Save|Copy", 0],
+            ["Ctrl+Y does?", "Ctrl+Y क्या करता है?", "Redo|Undo|Copy|Paste", 0],
+            ["Ctrl+A does?", "Ctrl+A क्या करता है?", "Select All|Save|Copy|Cut", 0],
+            ["Ctrl+S does?", "Ctrl+S क्या करता है?", "Save|Search|Select|Shutdown", 0],
+            ["Ctrl+P does?", "Ctrl+P क्या करता है?", "Print|Paste|Preview|Power", 0],
+            ["Alt+F4 generally does?", "Alt+F4 क्या करता है?", "Close window|Copy|Paste|Save", 0],
+            ["What is a window?", "विंडो क्या है?", "Rectangular area|Printer|Keyboard|CPU", 0],
+            ["What is notification area?", "नोटिफिकेशन एरिया क्या है?", "System status & notifications|Hard disk|RAM|CPU", 0],
+            ["What is a shortcut icon?", "शॉर्टकट आइकन क्या है?", "Link to item|Actual CPU|RAM chip|Printer", 0],
+            ["What is personalization?", "पर्सनलाइज़ेशन क्या है?", "Change appearance|Delete Windows|Format disk|Install RAM", 0],
+            ["What is Control Panel for?", "कंट्रोल पैनल किसलिए?", "Manage system settings|Typing|Audio|Scanning", 0],
+            ["What is Settings app?", "Settings app किसलिए?", "Configure preferences|Printing|Gaming|Drawing", 0],
+            ["What is Task Manager?", "Task Manager क्या है?", "Monitor apps & processes|Text editor|Browser|Printer driver", 0],
+            ["What is a file?", "फ़ाइल क्या है?", "Collection of related data|Screen|Keyboard|CPU", 0],
+            ["What is a folder?", "फोल्डर क्या है?", "Container to organize|RAM|CPU|Printer", 0],
+            ["Which operation creates duplicate?", "Duplicate बनाने वाला operation?", "Copy|Move|Rename|Delete", 0],
+            ["Which operation changes location?", "Location बदलने वाला operation?", "Move|Copy|Rename|Open", 0],
+            ["Which operation changes name?", "Name बदलने वाला operation?", "Rename|Copy|Move|Delete", 0],
+            ["Which operation deletes?", "Delete करने वाला operation?", "Delete|Copy|Move|Open", 0],
+            // -------- Files Extensions & Internet (30) --------
+            ["What is file extension?", "File extension क्या है?", "Suffix indicating type|Size only|Folder name|Password", 0],
+            ["Extension for text file?", "Text file की extension?", ".txt|.jpg|.mp3|.exe", 0],
+            ["Extension for Word document?", "Word document की extension?", ".docx|.xlsx|.pptx|.jpg", 0],
+            ["Extension for Excel?", "Excel की extension?", ".xlsx|.docx|.pptx|.txt", 0],
+            ["Extension for PowerPoint?", "PowerPoint की extension?", ".pptx|.xlsx|.docx|.jpg", 0],
+            ["Extension for PDF?", "PDF की extension?", ".pdf|.doc|.txt|.exe", 0],
+            ["Image extension?", "Image extension?", ".jpg|.docx|.xlsx|.pptx", 0],
+            ["Audio extension?", "Audio extension?", ".mp3|.docx|.xlsx|.pptx", 0],
+            ["Video extension?", "Video extension?", ".mp4|.docx|.xlsx|.txt", 0],
+            ["What is a file path?", "File path क्या है?", "Location of file|Password|Size|Color", 0],
+            ["What is a drive?", "Drive क्या है?", "Storage location|Keyboard|Monitor|Mouse", 0],
+            ["What is a subfolder?", "Subfolder क्या है?", "Folder inside another folder|File in RAM|Printer folder|Desktop only", 0],
+            ["What is root directory?", "Root directory क्या है?", "Top-level directory|Last file|Recycle Bin|RAM", 0],
+            ["Double-click usually?", "Double-click क्या करता है?", "Opens item|Deletes|Copies|Renames", 0],
+            ["Right-click opens?", "Right-click क्या खोलता है?", "Context menu|Start Menu|BIOS|Recycle Bin", 0],
+            ["Drag and drop means?", "Drag and drop क्या है?", "Move/select with mouse|Print|Save|Format", 0],
+            ["What is file compression?", "File compression क्या है?", "Reduce size|Increase monitor size|Delete|Change password", 0],
+            ["Compressed archive format?", "Compressed archive format?", ".zip|.docx|.jpg|.pptx", 0],
+            ["What is the Internet?", "Internet क्या है?", "Global network|Single computer|Printer|OS", 0],
+            ["WWW stands for?", "WWW का फुल फॉर्म?", "World Wide Web|World Web Window|Wide World Work|Web World Wide", 0],
+            ["What is a website?", "Website क्या है?", "Collection of web pages|Keyboard|Printer|CPU", 0],
+            ["What is a web page?", "Web page क्या है?", "Document in browser|Hard disk|RAM|Printer", 0],
+            ["What is a web browser?", "Web browser क्या है?", "Software to access web|OS|Printer|Database", 0],
+            ["Which is a web browser?", "Web browser कौन है?", "Google Chrome|Windows|Linux|Excel", 0],
+            ["What is a search engine?", "Search engine क्या है?", "Find info on web|Printer|OS|File extension", 0],
+            ["Which is a search engine?", "Search engine कौन है?", "Google|Windows|Linux|Excel", 0],
+            ["URL stands for?", "URL का फुल फॉर्म?", "Uniform Resource Locator|Universal Record Link|Uniform Router Link|User Resource Locator", 0],
+            ["HTTP stands for?", "HTTP का फुल फॉर्म?", "HyperText Transfer Protocol|High Text Transfer Program|Hyper Transfer Text Process|Home Text Transfer Protocol", 0],
+            ["HTTPS provides?", "HTTPS क्या provide करता है?", "Encrypted/secure communication|More RAM|Printer access|Offline storage", 0],
+            ["What is IP address?", "IP address क्या है?", "Address of device on network|Password|File extension|Printer name", 0],
+            // -------- DNS, Email, Social (30) --------
+            ["What does DNS do?", "DNS क्या करता है?", "Translates domain to IP|Prints|Stores|Creates RAM", 0],
+            ["What is domain name?", "Domain name क्या है?", "Human-readable name|CPU name|RAM address|File size", 0],
+            ["What is email?", "Email क्या है?", "Electronic mail|Electric machine|Electronic memory|External mail", 0],
+            ["What is email attachment?", "Email attachment क्या है?", "File sent with email|Password|Subject|Browser", 0],
+            ["What is spam email?", "Spam email क्या है?", "Unwanted email|Important email|Official OS|System file", 0],
+            ["What is phishing?", "Phishing क्या है?", "Fraud attempt to get info|Compression|Programming|Backup", 0],
+            ["What is a hyperlink?", "Hyperlink क्या है?", "Clickable link to resource|Printer|CPU|RAM", 0],
+            ["Cloud computing is?", "Cloud computing क्या है?", "Using services over network|Local storage|Typing|Printing", 0],
+            ["Downloading means?", "Downloading क्या है?", "Receive data from remote|Send only|Delete|Format", 0],
+            ["Uploading means?", "Uploading क्या है?", "Send data to remote|Receive only|Delete|Print", 0],
+            ["What is a modem?", "Modem क्या है?", "Device for connectivity|Monitor|Keyboard|Printer", 0],
+            ["What is Wi-Fi?", "Wi-Fi क्या है?", "Wireless networking|OS|File format|Printer", 0],
+            ["What is Bluetooth?", "Bluetooth क्या है?", "Short-range wireless|Web browser|OS|File system", 0],
+            ["What is bandwidth?", "Bandwidth क्या है?", "Data transfer capacity|Hard disk size|CPU speed|Monitor size", 0],
+            ["What is a network?", "Network क्या है?", "Connected devices|Single computer|Paper|Software", 0],
+            ["CC in email means?", "Email में CC का मतलब?", "Carbon Copy|Computer Copy|Central Copy|Common Contact", 0],
+            ["BCC in email means?", "BCC का मतलब?", "Blind Carbon Copy|Basic Carbon Copy|Browser Carbon Copy|Backup Copy", 0],
+            ["Main recipient field?", "मुख्य recipient किस field में?", "To|CC|BCC|Subject", 0],
+            ["Which field hides recipients?", "Recipients छुपाने के लिए कौन सा field?", "BCC|CC|To|Subject", 0],
+            ["Subject field is for?", "Subject field किसलिए?", "Brief topic|Password|Attachment|Recipient address", 0],
+            ["What is social networking?", "Social networking क्या है?", "Connect interact online|Formatting|OS|Printing", 0],
+            ["Which is a social network?", "Social network कौन है?", "Facebook|Windows|Excel|BIOS", 0],
+            ["What is a social media profile?", "Social media profile क्या है?", "User's online identity|Hard disk|Printer|CPU", 0],
+            ["What is an online post?", "Online post क्या है?", "Content shared online|RAM|Printer|File extension", 0],
+            ["What is a hashtag?", "Hashtag क्या है?", "Keyword preceded by #|Password|Email address|File extension", 0],
+            ["What is a follower?", "Follower कौन है?", "User who follows another|Virus|Printer|Browser", 0],
+            ["What is privacy setting?", "Privacy setting क्या है?", "Controls who can access|CPU setting|Printer setting|File extension", 0],
+            ["What is cyberbullying?", "Cyberbullying क्या है?", "Harassment using digital tech|Cloud storage|Programming|Copying", 0],
+            ["What is digital footprint?", "Digital footprint क्या है?", "Trace of online activity|Keyboard mark|Printer mark|CPU data", 0],
+            ["What is netiquette?", "Netiquette क्या है?", "Good manners online|Network cable|Antivirus|Browser", 0],
+            // -------- e-Governance (30) --------
+            ["What is e-Governance?", "e-Governance क्या है?", "Use ICT for govt services|Gaming|Compression|Repair", 0],
+            ["Main purpose of e-Governance?", "e-Governance का मुख्य उद्देश्य?", "Better delivery of services|Gaming|Entertainment|Hardware manufacturing", 0],
+            ["What is digital govt service?", "Digital govt service क्या है?", "Service via digital platforms|Printer service|Gaming|Offline typing", 0],
+            ["What is e-District?", "e-District क्या है?", "Digital platform for district services|Video game|Browser|OS", 0],
+            ["What is DigiLocker?", "DigiLocker क्या है?", "Digital document storage|Antivirus|Search engine|OS", 0],
+            ["What is Aadhaar?", "Aadhaar क्या है?", "Unique identity system in India|Browser|OS|Email service", 0],
+            ["What is digital signature?", "Digital signature क्या है?", "Electronic authentication|Image|Password|Printer", 0],
+            ["OTP stands for?", "OTP का फुल फॉर्म?", "One Time Password|Online Transfer Protocol|One Type Password|Official Transfer Password", 0],
+            ["OTP is valid for?", "OTP कितनी बार valid है?", "Limited/one-time use|Unlimited|Permanent|Only offline", 0],
+            ["What is e-payment?", "e-Payment क्या है?", "Electronic payment|Email printing|Electronic programming|Emergency payment", 0],
+            ["UPI stands for?", "UPI का फुल फॉर्म?", "Unified Payments Interface|Universal Payment Internet|United Payment Interface|User Payment Integration", 0],
+            ["What is QR code?", "QR code क्या है?", "2D machine-readable code|OS|Keyboard|Printer", 0],
+            ["What is online banking?", "Online banking क्या है?", "Banking via internet|Printing|Gaming|Editing", 0],
+            ["What is e-commerce?", "e-Commerce क्या है?", "Buying/selling electronically|Email|Govt|Programming", 0],
+            ["What is digital literacy?", "Digital literacy क्या है?", "Ability to use digital tech effectively|Typing only|Programming only|Gaming only", 0],
+            ["What is digital wallet?", "Digital wallet क्या है?", "Store payment info|Printer|Browser|OS", 0],
+            ["Contactless payment technology?", "Contactless payment के लिए कौन सी tech?", "NFC|CPU|RAM|ROM", 0],
+            ["What is debit card?", "Debit card क्या है?", "Linked to bank account|Credit doc|Printer card|OS", 0],
+            ["What is credit card?", "Credit card क्या है?", "Allows credit purchases|RAM card|Printer card|SIM card", 0],
+            ["IFSC stands for?", "IFSC का फुल फॉर्म?", "Indian Financial System Code|Indian Finance Service Code|International Financial System Code|Indian Fund Security Code", 0],
+            ["What is bank statement?", "Bank statement क्या है?", "Record of transactions|Password|QR code|Browser", 0],
+            ["What is transaction ID?", "Transaction ID क्या है?", "Unique identifier for transaction|Bank password|ATM PIN|Email ID", 0],
+            ["ATM stands for?", "ATM का फुल फॉर्म?", "Automated Teller Machine|Automatic Transfer Mail|Advanced Teller Mode|Automatic Transaction Manager", 0],
+            ["PIN stands for?", "PIN का फुल फॉर्म?", "Personal Identification Number|Private Internet Number|Personal Internet Name|Public Identification Number", 0],
+            ["Why keep ATM PIN secret?", "ATM PIN secret क्यों रखें?", "Prevent unauthorized transactions|Increase speed|Improve screen|Save battery", 0],
+            ["What is net banking?", "Net banking क्या है?", "Banking via internet|Network cable|Bank hardware|Printer", 0],
+            ["What is mobile banking?", "Mobile banking क्या है?", "Banking via mobile|Games|Phone repair|Typing", 0],
+            ["What is payment gateway?", "Payment gateway क्या है?", "Facilitates online payments|Printer|Browser extension|OS", 0],
+            ["Secure payment practice?", "Secure payment practice कौन सी है?", "Never share OTP/PIN|Share OTP|Use public passwords|Save PIN publicly", 0],
+            ["Two-factor authentication is?", "Two-factor authentication क्या है?", "Authentication using two factors|Two passwords|Two browsers|Two computers", 0],
+            // -------- Future Skills & Cyber Security (30) --------
+            ["What are Future Skills?", "Future Skills क्या हैं?", "Skills for digital workplaces|Typing only|Handwriting|Gaming", 0],
+            ["What is AI?", "AI क्या है?", "Machines perform human intelligence tasks|Printer tech|File system|Keyboard", 0],
+            ["What is Machine Learning?", "Machine Learning क्या है?", "Systems learn from data|Manual typing|Printing|File deletion", 0],
+            ["What is IoT?", "IoT क्या है?", "Network of physical devices|Websites only|Computers only|Phones only", 0],
+            ["What is Big Data?", "Big Data क्या है?", "Very large/complex datasets|Small text file|Keyboard data|Printer output", 0],
+            ["What is data analytics?", "Data analytics क्या है?", "Examine data for insights|Deleting data|Printing data|Formatting keyboard", 0],
+            ["What is blockchain?", "Blockchain क्या है?", "Distributed ledger|Printer tech|Browser|OS", 0],
+            ["What is robotics?", "Robotics क्या है?", "Design and use of robots|Email service|File system|Spreadsheet", 0],
+            ["What is automation?", "Automation क्या है?", "Use tech to reduce manual work|Manual typing|Printing only|Deleting", 0],
+            ["What is a chatbot?", "Chatbot क्या है?", "Software that converses|Printer|Keyboard|RAM", 0],
+            ["What is cyber security?", "Cyber security क्या है?", "Protection from digital threats|Decoration|Printing|Typing", 0],
+            ["What is malware?", "Malware क्या है?", "Malicious software|Useful hardware|Printer|Keyboard", 0],
+            ["What is computer virus?", "Computer virus क्या है?", "Malicious program that spreads|Hardware|Monitor|Printer", 0],
+            ["What is ransomware?", "Ransomware क्या है?", "Locks/encrypts data and demands payment|Antivirus|Browser|OS", 0],
+            ["What is spyware?", "Spyware क्या है?", "Secretly monitors information|Printer driver|Keyboard|Monitor", 0],
+            ["What is a strong password?", "Strong password क्या है?", "Long and hard-to-guess|123456|password|abc123", 0],
+            ["Good password practice?", "Good password practice?", "Use unique passwords|Share password|Use same everywhere|Write publicly", 0],
+            ["What is smishing?", "Smishing क्या है?", "Phishing via SMS|Phishing via printer|Formatting|Cloud backup", 0],
+            ["What is vishing?", "Vishing क्या है?", "Phishing via phone calls|Video editing|File sharing|Printing", 0],
+            ["What is firewall?", "Firewall क्या है?", "Monitors/controls network traffic|Printer|Keyboard|File extension", 0],
+            ["What is antivirus?", "Antivirus क्या है?", "Detects/removes malware|OS|Browser|Printer", 0],
+            ["Why update software?", "Software update क्यों करें?", "For security fixes|Reduce security|Delete RAM|Remove keyboard", 0],
+            ["What is encryption?", "Encryption क्या है?", "Convert data to protect it|Deleting|Printing|Copying", 0],
+            ["What is decryption?", "Decryption क्या है?", "Convert encrypted to readable|Deleting|Formatting|Installing RAM", 0],
+            ["What is backup?", "Backup क्या है?", "Copy of data for recovery|Virus|Password|Browser", 0],
+            ["Why is backup important?", "Backup important क्यों है?", "Helps recover data|Increases monitor size|Removes keyboard|Slows CPU", 0],
+            ["What is authentication?", "Authentication क्या है?", "Verifying identity|Deleting|Printing|Formatting", 0],
+            ["What is authorization?", "Authorization क्या है?", "Determines access rights|Verifying printer|Deleting|Changing screen", 0],
+            ["What is confidentiality?", "Confidentiality क्या है?", "Prevent unauthorized disclosure|Faster typing|Printing|Formatting", 0],
+            ["What is integrity?", "Integrity क्या है?", "Maintaining accuracy of data|Deleting|Printing|Downloading", 0],
+            // -------- More Cyber & General (30) --------
+            ["What is availability?", "Availability क्या है?", "Accessible when needed|Deleting|Password sharing|Printing", 0],
+            ["What is cyber crime?", "Cyber crime क्या है?", "Crime using computers/networks|Repair|Typing|Gaming", 0],
+            ["What is identity theft?", "Identity theft क्या है?", "Unauthorized use of identity|Backup|Encryption|Printing", 0],
+            ["What to do with suspicious email link?", "Suspicious email link पर क्या करें?", "Avoid clicking|Click immediately|Share it|Enter password", 0],
+            ["What is social engineering?", "Social engineering क्या है?", "Manipulate people for info|Hardware|Programming language|Printer", 0],
+            ["Secure website indicator?", "Secure website indicator?", "HTTPS/lock indicator|HTTP only|Pop-up|Unknown extension", 0],
+            ["What to do on public computer?", "Public computer पर क्या करें?", "Log out after use|Save passwords|Leave account open|Share OTP", 0],
+            ["Should OTP be shared?", "क्या OTP share करना चाहिए?", "No|Yes|Only strangers|Always", 0],
+            ["Should ATM PIN be shared?", "क्या ATM PIN share करना चाहिए?", "No|Yes|With everyone|Online publicly", 0],
+            ["What is a word processor?", "Word processor क्या है?", "Create/edit documents|OS|Antivirus|Browser", 0],
+            ["Which is a word processor?", "Word processor कौन है?", "MS Word|MS Excel|PowerPoint|Paint", 0],
+            ["What is formatting?", "Formatting क्या है?", "Change appearance of text|Delete computer|Install RAM|Browse", 0],
+            ["What is bold?", "Bold क्या है?", "Thicker/darker text|Smaller text|Delete text|Copy text", 0],
+            ["What is italic?", "Italic क्या है?", "Slanted text|Delete text|Print text|Copy text", 0],
+            ["What is underline?", "Underline क्या है?", "Line below text|Text deletion|Text copying|File saving", 0],
+            ["Shortcut for bold?", "Bold की shortcut?", "Ctrl+B|Ctrl+I|Ctrl+U|Ctrl+P", 0],
+            ["Shortcut for italic?", "Italic की shortcut?", "Ctrl+I|Ctrl+B|Ctrl+U|Ctrl+S", 0],
+            ["Shortcut for underline?", "Underline की shortcut?", "Ctrl+U|Ctrl+B|Ctrl+I|Ctrl+P", 0],
+            ["Shortcut for save?", "Save की shortcut?", "Ctrl+S|Ctrl+C|Ctrl+V|Ctrl+X", 0],
+            ["Shortcut for open?", "Open की shortcut?", "Ctrl+O|Ctrl+P|Ctrl+S|Ctrl+N", 0],
+            ["Shortcut for new document?", "New document की shortcut?", "Ctrl+N|Ctrl+O|Ctrl+S|Ctrl+P", 0],
+            ["Shortcut for print?", "Print की shortcut?", "Ctrl+P|Ctrl+S|Ctrl+O|Ctrl+N", 0],
+            ["What is spell check?", "Spell check क्या है?", "Check spelling errors|Hardware|RAM|Internet speed", 0],
+            ["What is a paragraph?", "Paragraph क्या है?", "Group of related sentences|Single character|File extension|Keyboard key", 0],
+            ["What is a spreadsheet?", "Spreadsheet क्या है?", "Organize/calculate data in cells|Browser|Antivirus|OS", 0],
+            ["Which is spreadsheet software?", "Spreadsheet software कौन है?", "MS Excel|MS Word|Paint|Notepad", 0],
+            ["What is a cell?", "Cell क्या है?", "Intersection of row & column|Entire workbook|Printer|File", 0],
+            ["Rows are identified by?", "Rows किससे identify होते हैं?", "Numbers|Letters|Symbols|Colors", 0],
+            ["Columns are identified by?", "Columns किससे identify होते हैं?", "Letters|Numbers|Colors|Symbols", 0],
+            ["What is a formula?", "Formula क्या है?", "Expression for calculations|File name|Folder|Printer", 0],
+            // -------- Excel & Presentation (30) --------
+            ["Symbol starts Excel formula?", "Excel formula किस symbol से शुरू होता है?", "=|+|#|@", 0],
+            ["Function to add numbers?", "Numbers जोड़ने का function?", "SUM|COUNT|MAX|MIN", 0],
+            ["Function for average?", "Average का function?", "AVERAGE|SUM|COUNT|MAX", 0],
+            ["Function for largest value?", "Largest value का function?", "MAX|MIN|SUM|COUNT", 0],
+            ["Function for smallest value?", "Smallest value का function?", "MIN|MAX|SUM|COUNT", 0],
+            ["Function to count numbers?", "Count का function?", "COUNT|SUM|MAX|MIN", 0],
+            ["What is a workbook?", "Workbook क्या है?", "Excel file with worksheets|Single cell|Printer|Browser", 0],
+            ["What is a worksheet?", "Worksheet क्या है?", "Spreadsheet page in workbook|Keyboard|CPU|Printer", 0],
+            ["What is a chart?", "Chart क्या है?", "Graphical representation of data|File system|Password|OS", 0],
+            ["What is presentation software?", "Presentation software क्या है?", "Create slide presentations|Antivirus|OS|Browser", 0],
+            ["Which is presentation software?", "Presentation software कौन है?", "MS PowerPoint|MS Word|Excel|Notepad", 0],
+            ["What is a slide?", "Slide क्या है?", "Individual page in presentation|Keyboard|CPU|Printer", 0],
+            ["What is a slide show?", "Slide show क्या है?", "Display slides sequentially|Printing|Deletion|Typing", 0],
+            ["What is presentation template?", "Template क्या है?", "Pre-designed layout|Printer|RAM|Virus", 0],
+            ["What is animation in presentation?", "Animation क्या है?", "Visual effect on objects|Deletion|Internet|Keyboard", 0],
+            ["What is a transition?", "Transition क्या है?", "Effect when moving slides|Compression|Password|Printer", 0],
+            ["Shortcut to start slideshow from beginning?", "Slideshow beginning से start करने की key?", "F5|F2|F7|F12", 0],
+            ["What is a database?", "Database क्या है?", "Organized collection of data|Keyboard|Monitor|Printer", 0],
+            ["DBMS stands for?", "DBMS का फुल फॉर्म?", "Database Management System|Data Backup Management System|Digital Base Management Software|Database Machine Service", 0],
+            ["What is a table in database?", "Table क्या है?", "Rows and columns of data|Printer|Browser|Keyboard", 0],
+            ["What is a record?", "Record क्या है?", "A row of data|Column only|Software|Printer", 0],
+            ["What is a field?", "Field क्या है?", "A column/attribute|Complete database|Printer|Browser", 0],
+            ["What is a primary key?", "Primary key क्या है?", "Uniquely identifies a record|Password|Printer|File extension", 0],
+            ["SQL stands for?", "SQL का फुल फॉर्म?", "Structured Query Language|Simple Query Language|System Question Language|Structured Quick Link", 0],
+            ["What is a query?", "Query क्या है?", "Request for information|Printer|Keyboard|File extension", 0],
+            ["LAN stands for?", "LAN का फुल फॉर्म?", "Local Area Network|Large Area Network|Local Access Node|Long Area Network", 0],
+            ["WAN stands for?", "WAN का फुल फॉर्म?", "Wide Area Network|Wireless Area Node|Web Area Network|Wide Access Network", 0],
+            ["Which device connects different networks?", "Different networks connect करने वाला device?", "Router|Keyboard|Monitor|Printer", 0],
+            ["Which device connects devices within LAN?", "LAN में devices connect करने वाला device?", "Switch|Monitor|Printer|Scanner", 0],
+            ["What is topology?", "Topology क्या है?", "Arrangement of network devices|Password|File extension|Browser", 0],
+            // -------- HTML & More (30) --------
+            ["HTML stands for?", "HTML का फुल फॉर्म?", "HyperText Markup Language|HighText Machine Language|Hyper Tool Markup Language|Home Text Markup Language", 0],
+            ["What is HTML used for?", "HTML का उपयोग?", "Creating web page structure|Hardware|RAM|Printing", 0],
+            ["Tag for main HTML document?", "Main HTML document का tag?", "<html>|<body>|<head>|<title>", 0],
+            ["Tag for visible page content?", "Visible content का tag?", "<body>|<head>|<title>|<meta>", 0],
+            ["Tag for paragraph?", "Paragraph का tag?", "<p>|<h1>|<br>|<a>", 0],
+            ["Tag for hyperlink?", "Hyperlink का tag?", "<a>|<p>|<img>|<table>", 0],
+            ["Tag for image?", "Image का tag?", "<img>|<image>|<pic>|<photo>", 0],
+            ["Largest heading tag?", "Largest heading tag?", "<h1>|<h6>|<head>|<title>", 0],
+            ["CSS is used for?", "CSS का उपयोग?", "Styling web pages|Database|OS|Virus scanning", 0],
+            ["CSS stands for?", "CSS का फुल फॉर्म?", "Cascading Style Sheets|Computer Style System|Creative Style Sheet|Colorful Style System", 0],
+            ["JavaScript on web pages for?", "JavaScript का उपयोग?", "Adding interactivity|Hardware|Printer|CPU", 0],
+            ["What is CAPTCHA?", "CAPTCHA क्या है?", "Test to distinguish humans from bots|Virus|OS|Database", 0],
+            ["What is a backup medium?", "Backup medium क्या है?", "Device/location to store backup|Keyboard|Monitor|Mouse", 0],
+            ["What is data loss?", "Data loss क्या है?", "Unavailability or destruction of data|Faster internet|Printing|Typing", 0],
+            ["What is recycle operation?", "Recycle operation क्या है?", "Move deleted files to temporary area|Installing software|Creating RAM|Open browser", 0],
+            ["Computer network used for?", "Computer network का उपयोग?", "Sharing data & communication|Printing only|Gaming only|Typing only", 0],
+            ["What is resource sharing?", "Resource sharing क्या है?", "Share devices/data over network|Deleting|Formatting|Installing OS", 0],
+            ["What is remote access?", "Remote access क्या है?", "Access system from another location|Printing|Typing|Deletion", 0],
+            ["What is username?", "Username क्या है?", "Identifier for user|Password|File extension|IP address", 0],
+            ["What is logout?", "Logout क्या है?", "End authenticated session|Start computer|Printing|Downloading", 0],
+            ["What is login?", "Login क्या है?", "Enter credentials to access|Delete account|Printing|Formatting", 0],
+            ["What is digital communication?", "Digital communication क्या है?", "Exchange info using digital tech|Paper only|Keyboard repair|Printing only", 0],
+            ["What is video conferencing?", "Video conferencing क्या है?", "Real-time audio/video over network|Compression|Printing|Database", 0],
+            ["What is instant messaging?", "Instant messaging क्या है?", "Real-time text chat|OS|Hardware|Spreadsheet", 0],
+            ["What is online collaboration?", "Online collaboration क्या है?", "Work together using digital tools|Printing|Deletion|Offline typing", 0],
+            ["What is e-learning?", "e-Learning क्या है?", "Learning via electronic platforms|Hardware|Gaming|Printing", 0],
+            ["What is a digital document?", "Digital document क्या है?", "Document in electronic form|Paper only|Keyboard|Printer", 0],
+            ["PDF stands for?", "PDF का फुल फॉर्म?", "Portable Document Format|Public Document File|Personal Data Format|Printed Document Format", 0],
+            ["OCR stands for?", "OCR का फुल फॉर्म?", "Optical Character Recognition|Online Character Reader|Optical Computer Recognition|Official Character Record", 0],
+            ["OCR does?", "OCR क्या करता है?", "Converts text from images/scans to editable text|Prints|Deletes|Encrypts", 0]
+        ];
+
+        // ============================================================
+        // SPLIT INTO 10 TESTS (30 Questions Each)
+        // ============================================================
+        const TESTS = [];
+        for (let i = 0; i < allQuestions.length; i += 30) {
+            TESTS.push(allQuestions.slice(i, i + 30));
+        }
+
+        // ============================================================
+        // STATE & DOM
+        // ============================================================
+        let currentTestIndex = -1;
+        let currentQuestions = [];
+        const testMenu = document.getElementById('testMenu');
+        const testGrid = document.getElementById('testGrid');
+        const quizForm = document.getElementById('quizForm');
+        const quizContainer = document.getElementById('quiz');
+        const testTitle = document.getElementById('testTitle');
+        const testRange = document.getElementById('testRange');
+
+        // ============================================================
+        // RENDER MENU
+        // ============================================================
+        function renderMenu() {
+            testGrid.innerHTML = '';
+            TESTS.forEach((test, idx) => {
+                const start = idx * 30 + 1;
+                const end = Math.min((idx + 1) * 30, allQuestions.length);
+                const card = document.createElement('div');
+                card.className = 'test-card';
+                card.innerHTML = `
+                    <h3>📝 Test ${idx + 1}</h3>
+                    <p>Questions ${start} - ${end}</p>
+                    <p style="font-size:13px; color:#2563eb; font-weight:bold;">${test.length} Questions</p>
+                    <button class="module-btn" onclick="startTest(${idx})">🚀 Start Test →</button>
+                `;
+                testGrid.appendChild(card);
+            });
+            testMenu.style.display = 'block';
+            quizForm.style.display = 'none';
+        }
+
+        // ============================================================
+        // START TEST
+        // ============================================================
+        function startTest(index) {
+            currentTestIndex = index;
+            currentQuestions = TESTS[index];
+            const start = index * 30 + 1;
+            const end = Math.min((index + 1) * 30, allQuestions.length);
+            testTitle.innerText = `📖 Test ${index + 1}`;
+            testRange.innerText = `Questions ${start} to ${end} (Total: ${currentQuestions.length} Questions)`;
+            testMenu.style.display = 'none';
+            quizForm.style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            loadQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // BACK TO MENU
+        // ============================================================
+        function showMenu() {
+            quizForm.style.display = 'none';
+            testMenu.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // LOAD QUIZ
+        // ============================================================
+        function loadQuiz() {
+            quizContainer.innerHTML = '';
+            currentQuestions.forEach((q, index) => {
+                const opts = q[2].split('|');
+                const qBox = document.createElement('div');
+                qBox.className = 'question';
+                qBox.id = 'question-' + index;
+                let html = `
+                    <div class="question-number">Question ${index+1} / ${currentQuestions.length}</div>
+                    <div class="question-text">${q[0]}<span class="hindi">${q[1]}</span></div>
+                `;
+                opts.forEach((opt, i) => {
+                    html += `
+                        <label class="option">
+                            <input type="radio" name="q${index}" value="${i}">
+                            <b>${String.fromCharCode(65+i)}.</b> ${opt}
+                        </label>
+                    `;
+                });
+                html += `
+                    <div class="explanation" id="exp-${index}">
+                        <b>Correct Answer:</b> ${opts[q[3]]}
+                    </div>
+                `;
+                qBox.innerHTML = html;
+                quizContainer.appendChild(qBox);
+            });
+        }
+
+        // ============================================================
+        // SUBMIT TEST
+        // ============================================================
+        function submitTest() {
+            let score = 0, attempted = 0;
+            currentQuestions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const box = document.getElementById('question-' + index);
+                const options = box.querySelectorAll('.option');
+                options.forEach((opt, i) => {
+                    opt.classList.remove('correct', 'wrong');
+                    if (i === q[3]) opt.classList.add('correct');
+                });
+                if (selected) {
+                    attempted++;
+                    const val = parseInt(selected.value);
+                    if (val === q[3]) score++;
+                    else options[val].classList.add('wrong');
+                }
+                document.getElementById('exp-' + index).style.display = 'block';
+            });
+            const total = currentQuestions.length;
+            const pct = ((score / total) * 100).toFixed(2);
+            const res = document.getElementById('result');
+            res.style.display = 'block';
+            document.getElementById('score').innerText = `${score} / ${total}`;
+            document.getElementById('resultText').innerText = `Percentage: ${pct}%`;
+            document.getElementById('attempted').innerHTML =
+                `✅ Attempted: ${attempted} | ❌ Unattempted: ${total-attempted} | ⚠️ Wrong: ${attempted-score}`;
+            document.getElementById('progressBar').style.width = pct + '%';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // RESET TEST
+        // ============================================================
+        function resetTest() {
+            if (!confirm('Reset this test?')) return;
+            document.querySelectorAll('input[type="radio"]').forEach(inp => inp.checked = false);
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('correct', 'wrong'));
+            document.querySelectorAll('.explanation').forEach(exp => exp.style.display = 'none');
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        renderMenu();
+    </script>
+
+</body>
+</html>

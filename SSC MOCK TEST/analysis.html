@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Analysis — SSC MOCK</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,"Segoe UI",sans-serif;background:#eef2f7;color:#172033;min-height:100vh}
+
+/* ===== NAVBAR ===== */
+.navbar{width:100%;min-height:78px;background:linear-gradient(135deg,#E0E7FF,#C7D2FE,#A5B4FC);color:#172554;box-shadow:0 4px 18px rgba(79,70,229,.15);display:flex;align-items:center;justify-content:space-between;gap:22px;padding:9px 4.5%;border-bottom:1px solid rgba(79,70,229,.14);position:sticky;top:0;z-index:9999}
+.logo{display:flex;align-items:center;gap:10px;min-width:205px;flex-shrink:0}
+.logo-icon{width:52px;height:52px;border-radius:50%;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid rgba(79,70,229,.18);box-shadow:0 4px 12px rgba(30,41,59,.12)}
+.logo-icon img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.logo h2{font-size:21px;line-height:1.05;white-space:nowrap;color:#172554}
+.logo h2 span{color:#4f46e5}
+.logo p{margin-top:4px;font-size:10px;color:#667085;white-space:nowrap}
+.navbar nav{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 13px;flex:1}
+.navbar nav a{text-decoration:none;color:#374151;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:5px;padding:8px 5px;border-radius:8px;white-space:nowrap;transition:.2s}
+.navbar nav a:hover,.navbar nav a.active{color:#4f46e5;background:rgba(255,255,255,.42)}
+.menu-toggle{display:none;width:40px;height:40px;border:1px solid rgba(79,70,229,.35);border-radius:9px;background:#fff;color:#4f46e5;font-size:21px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+.sidebar-toggle{display:none;width:42px;height:42px;border:1px solid rgba(79,70,229,.35);border-radius:10px;background:#fff;color:#4f46e5;font-size:20px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;transition:.2s}
+.sidebar-toggle:hover{background:#f3f0ff;border-color:#4f46e5}
+.sidebar-toggle:active{transform:scale(.94)}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:9998;opacity:0;transition:opacity .3s ease}
+.sidebar-backdrop.show{display:block;opacity:1}
+.sidebar-close{display:none;position:absolute;top:14px;right:14px;width:34px;height:34px;border:none;border-radius:9px;background:#f1edff;color:#301b7c;font-size:15px;font-weight:800;cursor:pointer;align-items:center;justify-content:center;transition:.2s;z-index:2;font-family:inherit}
+.sidebar-close:hover{background:#301b7c;color:#fff}
+
+/* ===== LAYOUT ===== */
+.main-layout{display:flex;min-height:calc(100vh - 78px)}
+.sidebar{width:250px;height:calc(100vh - 78px);position:fixed;left:0;top:78px;border-right:1px solid #ddd;background:#fff;overflow-y:auto;padding-bottom:30px;z-index:100}
+.profile{display:flex;align-items:center;gap:10px;padding:12px 15px;margin:5px 8px;border:1px solid transparent;border-radius:9px;transition:.3s}
+.profile:hover{background:linear-gradient(90deg,#f0ebff,#e9f0ff);border-color:#7c68e8;box-shadow:0 4px 12px rgba(48,27,124,.15)}
+.profile-image{width:38px;height:38px;background:#eee;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.3s}
+.profile:hover .profile-image{background:#301b7c;color:#fff;transform:scale(1.08)}
+.profile-name{font-size:16px;font-weight:600;color:#252525}
+.menu-title{margin:18px 8px 8px;padding:9px 12px;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#301b7c;background:linear-gradient(90deg,#f1edff 0%,#faf9ff 65%,transparent 100%);border:1px solid #ddd5ff;border-left:4px solid #301b7c;border-radius:8px}
+.menu-item{position:relative;display:flex;align-items:center;gap:9px;text-decoration:none;color:#333;font-size:14px;padding:9px 12px;margin:3px 8px;border:1px solid transparent;border-radius:8px;transition:all .3s}
+.menu-item:hover{color:#fff!important;background:linear-gradient(90deg,#301b7c,#5b3fc4,#3b82f6);border-color:#7058e8;padding-left:17px;transform:translateX(4px);box-shadow:0 5px 15px rgba(48,27,124,.30)}
+.menu-item.active{color:#fff!important;background:linear-gradient(90deg,#301b7c,#5b3fc4);border-color:#7058e8;box-shadow:0 4px 12px rgba(48,27,124,.25);font-weight:600}
+.content{margin-left:250px;width:calc(100% - 250px);padding:30px 35px 50px}
+
+/* ===== PAGE HEAD ===== */
+.wrap{max-width:1080px;margin:0 auto;padding:22px 16px 60px}
+.page-head{text-align:center;margin-bottom:22px}
+.page-head h1{color:#172554;font-size:23px;font-weight:800;margin-bottom:5px}
+.page-head p{color:#64748b;font-size:13px}
+
+.status-hero{background:#fff;border-radius:16px;padding:28px 24px;margin-bottom:20px;text-align:center;border:3px solid;position:relative;overflow:hidden}
+.status-hero.cleared{border-color:#16a34a;background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
+.status-hero.not-cleared{border-color:#dc2626;background:linear-gradient(135deg,#fef2f2,#fee2e2)}
+.status-hero.borderline{border-color:#f59e0b;background:linear-gradient(135deg,#fffbeb,#fef3c7)}
+.status-hero .badge{display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border-radius:40px;font-size:20px;font-weight:900;letter-spacing:1.5px;margin-bottom:16px}
+.status-hero.cleared .badge{background:#16a34a;color:#fff;box-shadow:0 8px 24px rgba(22,163,74,.35)}
+.status-hero.not-cleared .badge{background:#dc2626;color:#fff;box-shadow:0 8px 24px rgba(220,38,38,.35)}
+.status-hero.borderline .badge{background:#f59e0b;color:#fff;box-shadow:0 8px 24px rgba(245,158,11,.35)}
+.status-hero .sub-title{font-size:12.5px;color:#64748b;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.status-hero .test-name{font-size:16px;color:#172554;font-weight:800;margin-bottom:22px}
+.number-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:620px;margin:0 auto;position:relative}
+.number-box{background:#fff;border-radius:12px;padding:16px 10px;border:1.5px solid #e2e8f0;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.number-box .label{font-size:11px;color:#64748b;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.number-box .value{font-size:26px;font-weight:900;line-height:1;color:#172554}
+.number-box.cleared .value{color:#16a34a}
+.number-box.not-cleared .value{color:#dc2626}
+.number-box .foot{font-size:10.5px;color:#94a3b8;margin-top:5px;font-weight:700}
+.status-hero .difference{font-size:15px;font-weight:800;margin-top:18px;padding:10px 20px;border-radius:10px;display:inline-block}
+.status-hero.cleared .difference{background:#16a34a;color:#fff}
+.status-hero.not-cleared .difference{background:#dc2626;color:#fff}
+.status-hero.borderline .difference{background:#f59e0b;color:#fff}
+
+.section-cutoft-card{background:#fff;border-radius:14px;padding:22px;margin-bottom:20px;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.section-cutoft-card h2{font-size:15px;color:#172554;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.section-cutoft-card .card-sub{font-size:12.5px;color:#64748b;margin-bottom:18px}
+.section-status-row{display:grid;grid-template-columns:180px 1fr 130px;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid #f1f5f9}
+.section-status-row:last-child{border-bottom:none}
+.section-status-row .sec-name{font-size:13.5px;font-weight:800;color:#172554;display:flex;align-items:center;gap:8px}
+.section-status-row .sec-icon{font-size:15px}
+.section-status-row .sec-bar-wrap{position:relative}
+.section-status-row .sec-bar{height:22px;background:#e2e8f0;border-radius:8px;overflow:hidden;position:relative}
+.section-status-row .sec-bar-fill{height:100%;transition:width 1.2s ease;border-radius:8px}
+.section-status-row .sec-bar-fill.cleared{background:linear-gradient(90deg,#22c55e,#16a34a)}
+.section-status-row .sec-bar-fill.failed{background:linear-gradient(90deg,#ef4444,#dc2626)}
+.section-status-row .sec-bar-fill.borderline{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+.section-status-row .cutoff-marker{position:absolute;top:-4px;height:30px;width:2px;background:#172554;border-radius:2px;z-index:2}
+.section-status-row .cutoff-marker::after{content:"Cutoff";position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:800;color:#172554;background:#fff;padding:1px 4px;border-radius:3px;white-space:nowrap}
+.section-status-row .sec-status{text-align:right}
+.section-status-row .sec-score{font-size:15px;font-weight:900;color:#172554;display:block;line-height:1.1}
+.section-status-row .sec-score .cut{color:#94a3b8;font-size:12px;font-weight:700}
+.section-status-row .sec-tag{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;margin-top:4px}
+.section-status-row .sec-tag.pass{background:#dcfce7;color:#15803d}
+.section-status-row .sec-tag.fail{background:#fee2e2;color:#b91c1c}
+.section-status-row .sec-tag.border{background:#fef3c7;color:#b45309}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:#fff;padding:18px 14px;border-radius:12px;text-align:center;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(0,0,0,.04);transition:.2s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(23,37,84,.1)}
+.stat-card .icon{font-size:22px;margin-bottom:6px}
+.stat-card strong{display:block;font-size:24px;font-weight:800;color:#243b64;margin-bottom:4px}
+.stat-card.green strong{color:#16a34a}
+.stat-card.red strong{color:#dc2626}
+.stat-card.orange strong{color:#d97706}
+.stat-card.purple strong{color:#7c3aed}
+.stat-card span{font-size:11px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+
+.card{background:#fff;border-radius:14px;padding:22px;margin-bottom:18px;border:1px solid #e2e8f0;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.card h2{font-size:15px;color:#172554;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #e2e8f0;display:flex;align-items:center;gap:8px;font-weight:800}
+.card .card-sub{font-size:12.5px;color:#64748b;margin-bottom:14px;margin-top:-10px}
+.suggestion{display:flex;gap:12px;padding:14px;background:#f8fafc;border-radius:10px;margin-bottom:10px;border-left:4px solid #2563eb;transition:.2s}
+.suggestion:hover{background:#f1f5f9;transform:translateX(3px)}
+.suggestion.warn{border-left-color:#dc2626;background:#fef2f2}
+.suggestion.good{border-left-color:#16a34a;background:#f0fdf4}
+.suggestion.tip{border-left-color:#f59e0b;background:#fffbeb}
+.suggestion .s-icon{font-size:22px;flex-shrink:0}
+.suggestion .s-text{flex:1}
+.suggestion .s-text strong{display:block;color:#172554;font-size:13.5px;margin-bottom:3px;font-weight:800}
+.suggestion .s-text small{color:#475569;font-size:12.5px;line-height:1.5;display:block}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.insight-box{padding:16px;border-radius:10px;border:1.5px solid}
+.insight-box.weak{background:#fef2f2;border-color:#fecaca}
+.insight-box.strong{background:#f0fdf4;border-color:#bbf7d0}
+.insight-box h3{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.insight-box.weak h3{color:#b91c1c}
+.insight-box.strong h3{color:#15803d}
+.insight-box ul{list-style:none;padding:0}
+.insight-box li{display:flex;justify-content:space-between;padding:7px 0;font-size:12.5px;color:#334155;border-bottom:1px dashed rgba(0,0,0,.06);font-weight:600;gap:10px}
+.insight-box li:last-child{border-bottom:none}
+.insight-box li .pct-val{font-weight:900;flex-shrink:0}
+.insight-box.weak li .pct-val{color:#dc2626}
+.insight-box.strong li .pct-val{color:#16a34a}
+.bw-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bw-box{padding:18px;border-radius:12px;border:1.5px solid}
+.bw-box.best{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac}
+.bw-box.worst{background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#fca5a5}
+.bw-box .bw-icon{font-size:24px;margin-bottom:8px}
+.bw-box .bw-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.bw-box.best .bw-label{color:#15803d}
+.bw-box.worst .bw-label{color:#b91c1c}
+.bw-box .bw-title{font-size:14px;font-weight:800;color:#172554;margin-bottom:4px;line-height:1.3}
+.bw-box .bw-meta{font-size:11.5px;color:#64748b;margin-bottom:10px}
+.bw-box .bw-score{font-size:22px;font-weight:900;line-height:1}
+.bw-box.best .bw-score{color:#16a34a}
+.bw-box.worst .bw-score{color:#dc2626}
+.bw-box .bw-score small{font-size:11px;color:#94a3b8;font-weight:700;margin-left:4px}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.diff-box{padding:16px 12px;border-radius:10px;text-align:center;border:1.5px solid}
+.diff-box.easy{background:#f0fdf4;border-color:#bbf7d0}
+.diff-box.medium{background:#fffbeb;border-color:#fde68a}
+.diff-box.hard{background:#fef2f2;border-color:#fecaca}
+.diff-box .d-icon{font-size:18px;margin-bottom:6px}
+.diff-box .d-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.diff-box.easy .d-label{color:#15803d}
+.diff-box.medium .d-label{color:#b45309}
+.diff-box.hard .d-label{color:#b91c1c}
+.diff-box .d-pct{font-size:24px;font-weight:900;line-height:1}
+.diff-box.easy .d-pct{color:#16a34a}
+.diff-box.medium .d-pct{color:#d97706}
+.diff-box.hard .d-pct{color:#dc2626}
+.diff-box .d-detail{font-size:11px;color:#64748b;margin-top:6px;font-weight:700}
+.chart{display:flex;align-items:flex-end;gap:6px;height:150px;padding:10px 4px 0;margin-bottom:10px;overflow-x:auto;border-bottom:2px solid #e2e8f0}
+.chart-bar{flex:1;min-width:24px;border-radius:4px 4px 0 0;position:relative;transition:.3s;cursor:pointer}
+.chart-bar:hover{opacity:.85;transform:scaleY(1.02)}
+.chart-bar.cleared{background:linear-gradient(180deg,#22c55e,#15803d)}
+.chart-bar.failed{background:linear-gradient(180deg,#ef4444,#b91c1c)}
+.chart-bar span{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:9px;color:#64748b;font-weight:700;white-space:nowrap}
+.chart-wrap{position:relative;padding-bottom:28px}
+.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.row:last-child{border-bottom:none}
+.row .name{flex:1;font-weight:700;color:#334155;min-width:0;word-wrap:break-word}
+.row .bar{flex:1.5;height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden;min-width:80px}
+.row .fill{height:100%;border-radius:5px;transition:width 1s ease}
+.row .val{min-width:76px;text-align:right;font-weight:800;color:#172554;font-size:12.5px}
+.row .pct{min-width:48px;text-align:right;font-weight:800;font-size:12.5px}
+.attempt{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#fff;border-radius:12px;margin-bottom:10px;border:1.5px solid;transition:.2s;gap:12px}
+.attempt.cleared{border-color:#bbf7d0;background:#f0fdf4}
+.attempt.not-cleared{border-color:#fecaca;background:#fef2f2}
+.attempt:hover{transform:translateX(4px);box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.attempt .left{flex:1;min-width:0}
+.attempt .left .title{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.attempt .left .title strong{color:#172554;font-size:13.5px;font-weight:800}
+.attempt .left .status-tag{font-size:10px;font-weight:900;padding:3px 8px;border-radius:20px;letter-spacing:.5px}
+.attempt .left .status-tag.pass{background:#16a34a;color:#fff}
+.attempt .left .status-tag.fail{background:#dc2626;color:#fff}
+.attempt .left small{color:#64748b;font-size:11.5px;line-height:1.5}
+.attempt .right{text-align:right;flex-shrink:0}
+.attempt .right .score{font-size:20px;font-weight:900;line-height:1}
+.attempt.cleared .right .score{color:#16a34a}
+.attempt.not-cleared .right .score{color:#dc2626}
+.attempt .right .score small{font-size:10px;color:#94a3b8;font-weight:700;display:block;margin-top:2px}
+.attempt .right .acc{font-size:11px;color:#64748b;margin-top:3px;font-weight:700}
+.center-state{text-align:center;padding:70px 20px;color:#94a3b8}
+.center-state h2{font-size:20px;color:#172554;margin-bottom:10px;font-weight:800}
+.center-state p{font-size:14px;line-height:1.6;margin-bottom:20px}
+.btn{display:inline-block;padding:12px 26px;background:linear-gradient(135deg,#243b64,#17233c);color:#fff;text-decoration:none;border-radius:8px;font-size:13px;font-weight:800;border:none;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(36,59,100,.3)}
+.btn-primary{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+.spinner{width:52px;height:52px;border:5px solid #dbeafe;border-top-color:#2563eb;border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.motivation-card{border-radius:16px;padding:26px 24px;margin-bottom:20px;text-align:center;position:relative;overflow:hidden;border:2px solid;animation:motivationFadeIn .5s ease}
+@keyframes motivationFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.motivation-card .m-emoji{font-size:52px;line-height:1;margin-bottom:12px;display:inline-block;animation:mEmojiPop .6s ease}
+@keyframes mEmojiPop{0%{transform:scale(0)rotate(-30deg)}60%{transform:scale(1.15)rotate(10deg)}100%{transform:scale(1)rotate(0)}}
+.motivation-card .m-quote{font-size:18px;font-weight:900;margin-bottom:12px;line-height:1.35;letter-spacing:.2px}
+.motivation-card .m-sub{font-size:14px;line-height:1.7;font-weight:600;max-width:760px;margin:0 auto}
+.motivation-card .m-bonus{margin-top:16px;padding:12px 16px;background:rgba(255,255,255,.6);border-radius:10px;font-size:13px;font-weight:800;display:inline-block;max-width:100%}
+.motivation-gold{background:linear-gradient(135deg,#fff7ed,#fef3c7);border-color:#fbbf24}
+.motivation-gold .m-quote{color:#92400e}
+.motivation-gold .m-sub{color:#78350f}
+.motivation-gold .m-bonus{color:#92400e}
+.motivation-green{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#22c55e}
+.motivation-green .m-quote{color:#15803d}
+.motivation-green .m-sub{color:#166534}
+.motivation-green .m-bonus{color:#15803d}
+.motivation-orange{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#f59e0b}
+.motivation-orange .m-quote{color:#b45309}
+.motivation-orange .m-sub{color:#92400e}
+.motivation-orange .m-bonus{color:#b45309}
+.motivation-blue{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#3b82f6}
+.motivation-blue .m-quote{color:#1e40af}
+.motivation-blue .m-sub{color:#1e3a8a}
+.motivation-blue .m-bonus{color:#1e40af}
+.motivation-purple{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-color:#8b5cf6}
+.motivation-purple .m-quote{color:#6d28d9}
+.motivation-purple .m-sub{color:#5b21b6}
+.motivation-purple .m-bonus{color:#6d28d9}
+
+.reattempt-btn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:8px 16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;text-decoration:none;border-radius:8px;font-size:11.5px;font-weight:800;letter-spacing:.3px;transition:.2s;box-shadow:0 3px 10px rgba(37,99,235,.25);border:none;cursor:pointer;font-family:inherit;white-space:nowrap}
+.reattempt-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(37,99,235,.45);background:linear-gradient(135deg,#1d4ed8,#1e40af)}
+.reattempt-btn:active{transform:translateY(0) scale(.97)}
+.reattempt-btn .icon{font-size:13px;line-height:1}
+.reattempt-row{margin-top:8px;display:flex;justify-content:flex-end}
+.reattempt-row.no-btn{display:none}
+.bw-box .reattempt-row{margin-top:12px;justify-content:flex-start}
+.bw-box .reattempt-btn{background:linear-gradient(135deg,#15803d,#166534);box-shadow:0 3px 10px rgba(21,128,61,.3)}
+.bw-box.worst .reattempt-btn{background:linear-gradient(135deg,#dc2626,#b91c1c);box-shadow:0 3px 10px rgba(220,38,38,.3)}
+
+@media(max-width:1100px){
+    .navbar{padding:9px 3%;gap:12px}
+    .logo{min-width:185px}
+    .navbar nav{gap:3px 7px}
+    .navbar nav a{font-size:12px;padding:7px 4px}
+    .sidebar{width:220px}
+    .content{margin-left:220px;width:calc(100% - 220px)}
+}
+@media(max-width:850px){
+    .navbar{min-height:66px;padding:8px 3.5%;gap:8px;flex-wrap:wrap}
+    .sidebar-toggle{display:flex!important}
+    .menu-toggle{display:flex!important}
+    .logo{min-width:0;flex:1;gap:8px}
+    .logo-icon{width:43px;height:43px}
+    .logo h2{font-size:18px}
+    .logo p{font-size:9px;margin-top:3px}
+    .navbar nav{display:none!important;width:100%;order:10;flex:none;padding:10px;margin-top:3px;background:#fff;border:1px solid rgba(79,70,229,.18);border-radius:12px;box-shadow:0 10px 30px rgba(15,23,42,.15);grid-template-columns:repeat(2,1fr);gap:7px}
+    .navbar nav.show{display:grid!important}
+    .navbar nav a{width:100%;min-height:42px;display:flex;align-items:center;justify-content:flex-start;padding:10px 9px;font-size:13px;background:#f8fafc;border-radius:9px}
+    .sidebar{display:block!important;position:fixed;left:-290px;top:0;width:265px;height:100vh;z-index:10001;background:#fff;border-right:none;border-radius:0 18px 18px 0;overflow-y:auto;padding:60px 0 30px;transition:left .32s cubic-bezier(.4,0,.2,1);box-shadow:6px 0 28px rgba(15,23,42,.22)}
+    .sidebar.open{left:0}
+    .sidebar-close{display:flex}
+    .content{margin-left:0;width:100%;padding:24px 12px 40px}
+    .wrap{padding:16px 12px 40px}
+    .status-hero{padding:22px 16px}
+    .status-hero .badge{font-size:17px;padding:10px 22px}
+    .number-row{grid-template-columns:1fr 1fr;gap:8px}
+    .number-box{padding:12px 8px}
+    .number-box .value{font-size:22px}
+    .section-status-row{grid-template-columns:1fr;gap:8px}
+    .section-status-row .sec-status{text-align:left}
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+    .stat-card{padding:14px 10px}
+    .stat-card strong{font-size:20px}
+    .stat-card span{font-size:10px}
+    .card{padding:16px}
+    .chart{height:120px}
+    .insight-grid{grid-template-columns:1fr}
+    .bw-grid{grid-template-columns:1fr}
+    .diff-grid{grid-template-columns:1fr;gap:10px}
+    .page-head h1{font-size:19px}
+    .attempt{padding:12px;flex-wrap:wrap}
+    .attempt .right{text-align:left;margin-left:auto}
+    .motivation-card{padding:20px 16px}
+    .motivation-card .m-emoji{font-size:42px}
+    .motivation-card .m-quote{font-size:15.5px}
+    .motivation-card .m-sub{font-size:12.5px}
+    .motivation-card .m-bonus{font-size:11.5px;padding:10px 12px}
+    .reattempt-btn{font-size:11px;padding:7px 13px}
+    .attempt .right .reattempt-row{justify-content:flex-start;margin-top:8px}
+}
+@media(max-width:600px){
+    .navbar{min-height:62px;padding:7px 3%}
+    .logo-icon{width:39px;height:39px}
+    .logo h2{font-size:16px}
+    .logo p{font-size:8px}
+    .sidebar-toggle{width:38px;height:38px;font-size:18px}
+    .menu-toggle{width:36px;height:36px;font-size:19px}
+    .navbar nav{grid-template-columns:1fr 1fr;padding:8px;gap:6px}
+    .navbar nav a{min-height:40px;font-size:12px;padding:9px 8px}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+    <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Open menu">☰</button>
+    <div class="logo">
+        <div class="logo-icon">
+            <img src="../images/WhatsApp Image 2026-09-09 at 12.46.43 PM.jpeg" alt="SSC MOCK Logo" onerror="this.onerror=null;this.src='../images/WhatsApp Image 2026-09-09 at 12.46.43 PM.jpeg';">
+        </div>
+        <div>
+            <h2>SSC <span>MOCK</span></h2>
+            <p>Practice • Analyze • Succeed</p>
+        </div>
+    </div>
+    <nav id="mainNav">
+        <a href="../new.html">🏠 Home</a>
+        <a href="../mock.html">📝 Mock Tests</a>
+        <a href="analysis.html" class="active">📊 Analysis</a>
+        <a href="../previous.html">📄 PYQ</a>
+        <a href="../quiz.html">✏️ Daily Quiz</a>
+        <a href="../E-Book/E-book.html">📖 E-Books</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" type="button">☰</button>
+</header>
+
+<div class="main-layout">
+    <aside class="sidebar" id="appSidebar">
+        <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">✕</button>
+        <div class="profile">
+            <div class="profile-image">👤</div>
+            <div class="profile-name">Arpit Pandey</div>
+        </div>
+
+        <div class="menu-title">Tests</div>
+        <a href="../mock.html" class="menu-item">▣ <span>Mock Test</span></a>
+        <a href="analysis.html" class="menu-item active">📊 <span>My Analysis</span></a>
+        <a href="../quiz.html" class="menu-item">📝 <span>Daily Quiz</span></a>
+        <a href="../typing-test.html" class="menu-item">⌨ <span>Typing Test</span></a>
+
+        <div class="menu-title">Daily Study</div>
+        <a href="../previous.html" class="menu-item">📁 <span>PYQ Papers</span></a>
+        <a href="../current.html" class="menu-item">📰 <span>Current Affairs</span></a>
+        <a href="../E-Book/E-book.html" class="menu-item">📚 <span>E-Books</span></a>
+
+        <div class="menu-title">Account</div>
+        <a href="../new.html" class="menu-item">👤 <span>My Profile</span></a>
+        <a href="#" class="menu-item">🚪 <span>Logout</span></a>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <main class="content">
+        <div class="wrap">
+            <div class="page-head">
+                <h1>Aapki Complete Preparation Report</h1>
+                <p>Cutoff status, section-wise analysis aur AI suggestions</p>
+            </div>
+            <div id="content">
+                <div class="center-state">
+                    <div class="spinner"></div>
+                    <p>Loading your performance data...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAR94WOt3A8b0ss_VUBVuxwjNAJV8vaO_U",
+    authDomain: "ssc-mock-18arpit.firebaseapp.com",
+    projectId: "ssc-mock-18arpit",
+    storageBucket: "ssc-mock-18arpit.firebasestorage.app",
+    messagingSenderId: "1022683826614",
+    appId: "1:1022683826614:web:f4e94b4e1be8e5d2325917"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const content = document.getElementById("content");
+
+/* ===== SIDEBAR DRAWER ===== */
+const sidebarToggle = document.getElementById("sidebarToggle");
+const sidebarClose = document.getElementById("sidebarClose");
+const appSidebar = document.getElementById("appSidebar");
+const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+
+function openSidebar(){ appSidebar.classList.add("open"); sidebarBackdrop.classList.add("show"); document.body.style.overflow="hidden"; }
+function closeSidebar(){ appSidebar.classList.remove("open"); sidebarBackdrop.classList.remove("show"); document.body.style.overflow=""; }
+
+if (sidebarToggle) sidebarToggle.addEventListener("click", openSidebar);
+if (sidebarClose) sidebarClose.addEventListener("click", closeSidebar);
+if (sidebarBackdrop) sidebarBackdrop.addEventListener("click", closeSidebar);
+
+appSidebar.querySelectorAll(".menu-item").forEach(function(item){
+    item.addEventListener("click", function(){
+        if (window.innerWidth <= 850) closeSidebar();
+    });
+});
+
+window.addEventListener("resize", function(){
+    if (window.innerWidth > 850 && appSidebar.classList.contains("open")) closeSidebar();
+});
+
+document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeSidebar();
+});
+
+/* ===== TOP NAV TOGGLE ===== */
+const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.getElementById("mainNav");
+if (menuToggle) {
+    menuToggle.addEventListener("click", function(){
+        mainNav.classList.toggle("show");
+        menuToggle.textContent = mainNav.classList.contains("show") ? "✕" : "☰";
+    });
+    mainNav.querySelectorAll("a").forEach(function(a){
+        a.addEventListener("click", function(){
+            if (window.innerWidth <= 850) {
+                mainNav.classList.remove("show");
+                menuToggle.textContent = "☰";
+            }
+        });
+    });
+}
+
+/* ===== CUTOFF CONFIG ===== */
+const EXAM_CUTOFFS = {
+    "cgl-tier1":      { name: "SSC CGL Tier 1",     maxMarks: 200, overallCutoff: 140, sectionPct: 50 },
+    "cgl-tier2":      { name: "SSC CGL Tier 2",     maxMarks: 390, overallCutoff: 260, sectionPct: 50 },
+    "cpo-paper1":     { name: "SSC CPO Paper 1",    maxMarks: 100, overallCutoff: 50,  sectionPct: 40 },
+    "cpo-paper2":     { name: "SSC CPO Paper 2",    maxMarks: 320, overallCutoff: 160, sectionPct: 50 },
+    "chsl-tier1":     { name: "SSC CHSL Tier 1",    maxMarks: 200, overallCutoff: 130, sectionPct: 50 },
+    "chsl-tier2":     { name: "SSC CHSL Tier 2",    maxMarks: 200, overallCutoff: 130, sectionPct: 50 },
+    "mts":            { name: "SSC MTS",            maxMarks: 270, overallCutoff: 130, sectionPct: 45 },
+    "gd":             { name: "SSC GD",             maxMarks: 160, overallCutoff: 70,  sectionPct: 40 },
+    "selection-post": { name: "SSC Selection Post", maxMarks: 200, overallCutoff: 130, sectionPct: 50 },
+    "steno":          { name: "SSC STENO",          maxMarks: 200, overallCutoff: 120, sectionPct: 45 }
+};
+const DEFAULT_CUTOFF = { maxMarks: 200, overallCutoff: 130, sectionPct: 50 };
+
+function getExamCutoff(examKey, examTitle){
+    if (examKey && EXAM_CUTOFFS[examKey]) return EXAM_CUTOFFS[examKey];
+    const keys = Object.keys(EXAM_CUTOFFS);
+    for (let i = 0; i < keys.length; i++){
+        if (examTitle && examTitle.toLowerCase().indexOf(EXAM_CUTOFFS[keys[i]].name.toLowerCase()) !== -1){
+            return EXAM_CUTOFFS[keys[i]];
+        }
+    }
+    return DEFAULT_CUTOFF;
+}
+
+/* ✅ Re-attempt URL — test-interface is in same folder (SSC MOCK TEST) */
+function buildReattemptUrl(a){
+    if (!a.examKey || !a.testId) return null;
+    return "test-interface.html?exam=" +
+        encodeURIComponent(a.examKey) +
+        "&test=" + encodeURIComponent(a.testId);
+}
+
+onAuthStateChanged(auth, async function(user){
+    if (!user) {
+        content.innerHTML =
+            '<div class="center-state">' +
+                '<h2>🔒 Login Required</h2>' +
+                '<p>Analysis dekhne ke liye pehle login karein.</p>' +
+                '<a href="../mock.html" class="btn btn-primary">← Go to Mock Tests</a>' +
+            '</div>';
+        return;
+    }
+    await loadAnalysis(user);
+});
+
+async function loadAnalysis(user){
+    try {
+        const q = query(collection(db, "testAttempts"), where("uid", "==", user.uid));
+        const snap = await getDocs(q);
+        if (snap.empty) {
+            content.innerHTML =
+                '<div class="center-state">' +
+                    '<h2>📝 Abhi Tak Koi Test Nahi Diya</h2>' +
+                    '<p>Koi bhi mock test attempt karein, uska analysis yahan dikhega.</p>' +
+                    '<a href="../mock.html" class="btn btn-primary">Start Mock Test →</a>' +
+                '</div>';
+            return;
+        }
+        const attempts = [];
+        snap.forEach(function(doc){
+            const data = doc.data();
+            data._id = doc.id;
+            attempts.push(data);
+        });
+        attempts.sort(function(a, b){
+            const tA = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
+            const tB = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
+            return tB - tA;
+        });
+        render(attempts);
+    } catch (e) {
+        console.error(e);
+        content.innerHTML =
+            '<div class="center-state">' +
+                '<h2>⚠️ Error</h2>' +
+                '<p>' + e.message + '</p>' +
+            '</div>';
+    }
+}
+
+function escapeHTML(t){
+    return String(t)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function buildMotivationCard(latest, cutoff, total, clearedCount, clearRate, avgScore, avgAccuracy, bestScore){
+    const score = latest.score || 0;
+    const diff = score - cutoff.overallCutoff;
+    let quote = "", subQuote = "", emoji = "", themeClass = "";
+
+    if (score >= cutoff.overallCutoff + 20) { emoji = "🏆"; themeClass = "motivation-gold"; quote = "Shandaar! Aapne cutoff ko " + diff.toFixed(0) + " marks se paar kiya!"; subQuote = "Ye wahi mehnat hai jo selection dilati hai. Isi rhythm ko banaye rakho — next attempt aur bhi solid hoga. Topper banne ka sapna door nahi! 💪"; }
+    else if (score >= cutoff.overallCutoff) { emoji = "🎉"; themeClass = "motivation-green"; quote = "Cutoff clear! Aap winner ho!"; subQuote = "Bas " + diff.toFixed(0) + " marks se clear hua — matlab abhi bhi room hai improvement ka. Agli baar bigger margin ke saath jeeto! Keep going, topper! 🔥"; }
+    else if (score >= cutoff.overallCutoff - 10) { emoji = "💪"; themeClass = "motivation-orange"; quote = "Bas thoda sa reh gaya! Ye haar nahi, practice hai."; subQuote = "Sirf " + Math.abs(diff).toFixed(0) + " marks ki baat hai. Aapki mehnat dikh rahi hai — 1-2 topic aur strong karo, agli baar cutoff cross ho jayega. Believe in yourself! 🌟"; }
+    else if (score >= cutoff.overallCutoff - 30) { emoji = "🔥"; themeClass = "motivation-blue"; quote = "Bahut kareeb ho bhai! " + Math.abs(diff).toFixed(0) + " marks door ho."; subQuote = "Rome ek din mein nahi bana tha. Aap sahi direction mein ho. Weak sections identify karo (upar dekho), roz practice karo — agli baar 100% cross. Aap kar sakte ho! 💯"; }
+    else if (score >= cutoff.overallCutoff - 60) { emoji = "🚀"; themeClass = "motivation-purple"; quote = "Struggle aaj ka, success kal ka — continue!"; subQuote = "Cutoff se " + Math.abs(diff).toFixed(0) + " marks door ho. Ye gap bada nahi hai. Consistency + right strategy = selection. Roz 1 mock, aur weak topic solve karo. Aap definitely kar sakte ho! 🎯"; }
+    else { emoji = "💡"; themeClass = "motivation-purple"; quote = "Better luck next time — but next time nahi, next ATTEMPT!"; subQuote = "Har failure ek lesson hai. Aapne " + total + " tests diye — ye himmat ki baat hai. Weak sections pe focus karo, basics strong karo, aur padhai mat chhodo. Aapki mehnat zaroor rang layegi! 🌱"; }
+
+    let bonus = "";
+    if (clearRate >= 70) bonus = "📊 Aap " + clearRate + "% tests clear kar rahe ho — Top performer category mein ho!";
+    else if (total < 3) bonus = "📚 Abhi sirf " + total + " test diye ho. Kam se kam 10 tests do — asli analysis tab hoga.";
+    else if (avgAccuracy >= 70) bonus = "🎯 " + avgAccuracy + "% average accuracy — excellent consistency!";
+    else if (avgAccuracy < 40) bonus = "💡 Tip: Pehle accuracy badhao, speed baad mein. Sahi jagah focus karo.";
+    else if (bestScore > avgScore + 30) bonus = "⭐ Best score " + bestScore.toFixed(0) + " hai — matlab potential to hai, bas consistency chahiye!";
+
+    return '<div class="motivation-card ' + themeClass + '">' +
+        '<div class="m-emoji">' + emoji + '</div>' +
+        '<div class="m-quote">' + escapeHTML(quote) + '</div>' +
+        '<div class="m-sub">' + escapeHTML(subQuote) + '</div>' +
+        (bonus ? '<div class="m-bonus">' + escapeHTML(bonus) + '</div>' : '') +
+    '</div>';
+}
+
+function buildReattemptBtn(a){
+    const url = buildReattemptUrl(a);
+    if (!url) return '<div class="reattempt-row no-btn"></div>';
+    return '<div class="reattempt-row">' +
+        '<a class="reattempt-btn" href="' + url + '" title="Isi test ko dobara attempt karo">' +
+            '<span class="icon">🔄</span> Re-attempt' +
+        '</a>' +
+    '</div>';
+}
+
+function render(attempts){
+    const total = attempts.length;
+    const latest = attempts[0];
+
+    let totalCorrect = 0, totalWrong = 0;
+    let totalScore = 0, bestScore = 0, totalAccuracy = 0, totalTime = 0;
+    let clearedCount = 0;
+
+    attempts.forEach(function(a){
+        totalCorrect += a.correct || 0;
+        totalWrong += a.wrong || 0;
+        totalScore += a.score || 0;
+        totalAccuracy += a.accuracy || 0;
+        totalTime += a.timeTakenMin || 0;
+        if ((a.score || 0) > bestScore) bestScore = a.score || 0;
+        const cutoff = getExamCutoff(a.examKey, a.examTitle);
+        if ((a.score || 0) >= cutoff.overallCutoff) clearedCount++;
+    });
+
+    const avgScore = (totalScore / total).toFixed(1);
+    const avgAccuracy = Math.round(totalAccuracy / total);
+    const avgTime = Math.round(totalTime / total);
+    const clearRate = Math.round((clearedCount / total) * 100);
+
+    let html = "";
+
+    const latestCutoff = getExamCutoff(latest.examKey, latest.examTitle);
+    const latestScore = latest.score || 0;
+    const diff = latestScore - latestCutoff.overallCutoff;
+    let statusClass = "not-cleared", statusIcon = "❌", statusText = "NOT CLEARED";
+    let diffText = diff.toFixed(1) + " marks short";
+
+    if (latestScore >= latestCutoff.overallCutoff) { statusClass = "cleared"; statusIcon = "✅"; statusText = "CLEARED"; diffText = "+" + diff.toFixed(1) + " marks above cutoff 🎉"; }
+    else if (latestScore >= latestCutoff.overallCutoff - 10) { statusClass = "borderline"; statusIcon = "⚠️"; statusText = "BORDERLINE"; diffText = "Sirf " + Math.abs(diff).toFixed(1) + " marks short — improve karo!"; }
+
+    html += '<div class="status-hero ' + statusClass + '">' +
+        '<div class="badge">' + statusIcon + ' ' + statusText + '</div>' +
+        '<div class="sub-title">Latest Attempt</div>' +
+        '<div class="test-name">' + escapeHTML(latest.examTitle || "Mock Test") + ' — ' + escapeHTML(latest.testTitle || "") + '</div>' +
+        '<div class="number-row">' +
+            '<div class="number-box ' + statusClass + '"><div class="label">Your Score</div><div class="value">' + latestScore.toFixed(1) + '</div><div class="foot">out of ' + latestCutoff.maxMarks + '</div></div>' +
+            '<div class="number-box"><div class="label">Cutoff</div><div class="value">' + latestCutoff.overallCutoff + '</div><div class="foot">marks needed</div></div>' +
+            '<div class="number-box ' + statusClass + '"><div class="label">Difference</div><div class="value">' + (diff >= 0 ? "+" : "") + diff.toFixed(1) + '</div><div class="foot">marks</div></div>' +
+        '</div>' +
+        '<div class="difference">' + diffText + '</div>' +
+        (function(){ const url = buildReattemptUrl(latest); if (!url) return ''; return '<div style="margin-top:20px"><a class="reattempt-btn" href="' + url + '" style="padding:11px 24px;font-size:13px"><span class="icon">🔄</span> Re-attempt This Test</a></div>'; })() +
+    '</div>';
+
+    html += buildMotivationCard(latest, latestCutoff, total, clearedCount, clearRate, avgScore, avgAccuracy, bestScore);
+
+    if (latest.sectionResults && latest.sectionResults.length > 0) {
+        html += '<div class="section-cutoft-card"><h2>🎯 Section-wise Cutoff Status</h2><p class="card-sub">Har section mein minimum ' + latestCutoff.sectionPct + '% marks zaroori hain</p>';
+        latest.sectionResults.forEach(function(s){
+            const sectionMax = (s.total || 0) * 2;
+            const sectionScore = s.correct * 2 - s.wrong * 0.5;
+            const sectionCutoff = Math.round(sectionMax * (latestCutoff.sectionPct / 100));
+            const pct = sectionMax > 0 ? Math.max(0, Math.min(100, (sectionScore / sectionMax) * 100)) : 0;
+            const cutoffPct = latestCutoff.sectionPct;
+            let tagClass = "fail", tagText = "Not Cleared", barClass = "failed", icon = "❌";
+            if (sectionScore >= sectionCutoff) { tagClass = "pass"; tagText = "Cleared"; barClass = "cleared"; icon = "✅"; }
+            else if (sectionScore >= sectionCutoff - (sectionMax * 0.1)) { tagClass = "border"; tagText = "Borderline"; barClass = "borderline"; icon = "⚠️"; }
+            html += '<div class="section-status-row">' +
+                '<div class="sec-name"><span class="sec-icon">' + icon + '</span>' + escapeHTML(s.name) + '</div>' +
+                '<div class="sec-bar-wrap"><div class="sec-bar"><div class="sec-bar-fill ' + barClass + '" style="width:' + pct + '%"></div></div><div class="cutoff-marker" style="left:' + cutoffPct + '%"></div></div>' +
+                '<div class="sec-status"><span class="sec-score">' + sectionScore.toFixed(1) + ' <span class="cut">/ ' + sectionMax + '</span></span><span class="sec-tag ' + tagClass + '">' + tagText + ' (' + sectionCutoff + ')</span></div>' +
+            '</div>';
+        });
+        html += '</div>';
+    }
+
+    html += '<div class="stats-grid">' +
+        '<div class="stat-card"><div class="icon">📝</div><strong>' + total + '</strong><span>Total Tests</span></div>' +
+        '<div class="stat-card green"><div class="icon">✅</div><strong>' + clearedCount + '</strong><span>Cleared</span></div>' +
+        '<div class="stat-card purple"><div class="icon">📊</div><strong>' + clearRate + '%</strong><span>Clear Rate</span></div>' +
+        '<div class="stat-card orange"><div class="icon">🏆</div><strong>' + bestScore.toFixed(1) + '</strong><span>Best Score</span></div>' +
+    '</div>';
+    html += '<div class="stats-grid">' +
+        '<div class="stat-card"><div class="icon">📈</div><strong>' + avgScore + '</strong><span>Avg Score</span></div>' +
+        '<div class="stat-card green"><div class="icon">🎯</div><strong>' + avgAccuracy + '%</strong><span>Avg Accuracy</span></div>' +
+        '<div class="stat-card red"><div class="icon">❌</div><strong>' + totalWrong + '</strong><span>Total Wrong</span></div>' +
+        '<div class="stat-card"><div class="icon">⏱</div><strong>' + avgTime + ' min</strong><span>Avg Time</span></div>' +
+    '</div>';
+
+    const sectionAgg = {};
+    attempts.forEach(function(a){
+        (a.sectionResults || []).forEach(function(s){
+            if (!sectionAgg[s.name]) sectionAgg[s.name] = { correct: 0, wrong: 0, total: 0 };
+            sectionAgg[s.name].correct += s.correct || 0;
+            sectionAgg[s.name].wrong += s.wrong || 0;
+            sectionAgg[s.name].total += s.total || 0;
+        });
+    });
+    const sectionList = Object.keys(sectionAgg).map(function(name){
+        const s = sectionAgg[name];
+        const acc = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
+        return { name: name, acc: acc, correct: s.correct, total: s.total };
+    }).sort(function(a, b){ return a.acc - b.acc; });
+    const weakSections = sectionList.filter(function(s){ return s.acc < 55; }).slice(0, 3);
+    const strongSections = sectionList.filter(function(s){ return s.acc >= 60; }).slice(-3).reverse();
+
+    const suggestions = [];
+    if (weakSections.length > 0) { const w = weakSections[0]; suggestions.push({ type: "warn", icon: "⚠️", title: w.name + " sabse weak hai (" + w.acc + "%)", text: "Roz 30 minute sirf " + w.name + " practice karo. Sectional cutoff bhi clear karna zaroori hai." }); }
+    if (strongSections.length > 0) { const st = strongSections[0]; suggestions.push({ type: "good", icon: "💪", title: st.name + " aapki strength hai (" + st.acc + "%)", text: "Is section mein aap achha kar rahe ho. Yahan se score bachao aur weak sections pe time do." }); }
+    if (clearRate >= 70) { suggestions.push({ type: "good", icon: "🎉", title: "Aap " + clearRate + "% tests clear kar rahe ho", text: "Aap sahi track pe ho. Consistency maintain karo, real exam mein bhi clear karo ge." }); }
+    else if (clearRate < 30 && total >= 3) { suggestions.push({ type: "warn", icon: "🚨", title: "Clear rate kam hai (" + clearRate + "%)", text: "Cutoff se " + Math.abs(latestCutoff.overallCutoff - avgScore).toFixed(0) + " marks door ho (avg). Weak sections pe focus karo — phir score apne aap badhega." }); }
+    if (totalWrong > totalCorrect * 0.5) { suggestions.push({ type: "tip", icon: "💡", title: "Negative marking se bacho", text: totalWrong + " wrong answers diye ho. Jis question pe 50% se kam confidence ho, use skip karo." }); }
+    if (total < 5) { suggestions.push({ type: "tip", icon: "📚", title: "Zyada tests do", text: "Sirf " + total + " test diye ho. Kam se kam 10 tests do taaki real analysis ho." }); }
+    if (avgTime < 15 && total >= 3) { suggestions.push({ type: "tip", icon: "⏱", title: "Time properly use karo", text: "Average " + avgTime + " min — bahut jaldi submit kar rahe ho. Poora time use karo." }); }
+
+    if (suggestions.length > 0) {
+        html += '<div class="card"><h2>🤖 AI Suggestions — Kya Karna Chahiye</h2>';
+        suggestions.slice(0, 6).forEach(function(s){
+            html += '<div class="suggestion ' + s.type + '"><div class="s-icon">' + s.icon + '</div><div class="s-text"><strong>' + escapeHTML(s.title) + '</strong><small>' + escapeHTML(s.text) + '</small></div></div>';
+        });
+        html += '</div>';
+    }
+
+    if (sectionList.length > 0) {
+        html += '<div class="card"><h2>🔍 Weak & Strong Areas (All Tests Combined)</h2><div class="insight-grid">';
+        html += '<div class="insight-box weak"><h3>⚠️ Weak Areas — Focus Here</h3>';
+        if (weakSections.length === 0) html += '<ul><li><span>Koi weak area nahi! 🎉</span><span class="pct-val">—</span></li></ul>';
+        else { html += '<ul>'; weakSections.forEach(function(s){ html += '<li><span>' + escapeHTML(s.name) + '</span><span class="pct-val">' + s.acc + '%</span></li>'; }); html += '</ul>'; }
+        html += '</div>';
+        html += '<div class="insight-box strong"><h3>💪 Strong Areas — Score From Here</h3>';
+        if (strongSections.length === 0) html += '<ul><li><span>Abhi koi strong area nahi</span><span class="pct-val">—</span></li></ul>';
+        else { html += '<ul>'; strongSections.forEach(function(s){ html += '<li><span>' + escapeHTML(s.name) + '</span><span class="pct-val">' + s.acc + '%</span></li>'; }); html += '</ul>'; }
+        html += '</div></div></div>';
+    }
+
+    if (total >= 2) {
+        const sorted = attempts.slice().sort(function(a, b){ return (b.score || 0) - (a.score || 0); });
+        const best = sorted[0], worst = sorted[sorted.length - 1];
+        const bestCutoff = getExamCutoff(best.examKey, best.examTitle);
+        const worstCutoff = getExamCutoff(worst.examKey, worst.examTitle);
+        html += '<div class="card"><h2>⭐ Best & Worst Attempts</h2><div class="bw-grid">' +
+            '<div class="bw-box best"><div class="bw-icon">🏆</div><div class="bw-label">Best Score</div><div class="bw-title">' + escapeHTML(best.examTitle || "Mock Test") + '</div><div class="bw-meta">' + escapeHTML(best.testTitle || "") + ' · ' + (best.accuracy || 0) + '% accuracy</div><div class="bw-score">' + (best.score || 0).toFixed(1) + '<small>/ ' + bestCutoff.maxMarks + ' (cutoff ' + bestCutoff.overallCutoff + ')</small></div>' + buildReattemptBtn(best) + '</div>' +
+            '<div class="bw-box worst"><div class="bw-icon">📉</div><div class="bw-label">Needs Improvement</div><div class="bw-title">' + escapeHTML(worst.examTitle || "Mock Test") + '</div><div class="bw-meta">' + escapeHTML(worst.testTitle || "") + ' · ' + (worst.accuracy || 0) + '% accuracy</div><div class="bw-score">' + (worst.score || 0).toFixed(1) + '<small>/ ' + worstCutoff.maxMarks + ' (cutoff ' + worstCutoff.overallCutoff + ')</small></div>' + buildReattemptBtn(worst) + '</div>' +
+        '</div></div>';
+    }
+
+    const recent15 = attempts.slice(0, 15).reverse();
+    if (recent15.length >= 2) {
+        const maxScore = Math.max.apply(null, recent15.map(function(a){ return a.score || 0; }).concat([1]));
+        html += '<div class="card"><h2>📈 Score Trend (Last ' + recent15.length + ' Attempts)</h2><p class="card-sub">🟢 Green bars = cutoff cleared · 🔴 Red bars = not cleared</p><div class="chart-wrap"><div class="chart">';
+        recent15.forEach(function(a, i){
+            const pct = ((a.score || 0) / maxScore) * 100;
+            const c = getExamCutoff(a.examKey, a.examTitle);
+            const cleared = (a.score || 0) >= c.overallCutoff;
+            html += '<div class="chart-bar ' + (cleared ? "cleared" : "failed") + '" style="height:' + Math.max(15, pct) + '%" title="' + (a.examTitle || "") + ' — Score: ' + (a.score || 0).toFixed(1) + ' / Cutoff: ' + c.overallCutoff + '"><span>' + (i+1) + '</span></div>';
+        });
+        html += '</div></div></div>';
+    }
+
+    let easyCount = 0, medCount = 0, hardCount = 0;
+    let easyCorrect = 0, easyTotal = 0, medCorrect = 0, medTotal = 0, hardCorrect = 0, hardTotal = 0;
+    attempts.forEach(function(a){
+        const acc = a.accuracy || 0;
+        if (acc >= 65) { easyCount++; easyCorrect += a.correct || 0; easyTotal += a.totalQuestions || 0; }
+        else if (acc >= 40) { medCount++; medCorrect += a.correct || 0; medTotal += a.totalQuestions || 0; }
+        else { hardCount++; hardCorrect += a.correct || 0; hardTotal += a.totalQuestions || 0; }
+    });
+    const easyPct = easyTotal > 0 ? Math.round((easyCorrect / easyTotal) * 100) : 0;
+    const medPct = medTotal > 0 ? Math.round((medCorrect / medTotal) * 100) : 0;
+    const hardPct = hardTotal > 0 ? Math.round((hardCorrect / hardTotal) * 100) : 0;
+
+    html += '<div class="card"><h2>📊 Attempt Quality Breakdown</h2><p class="card-sub">Aapke attempts ko 3 categories mein baanta gaya hai</p><div class="diff-grid">' +
+        '<div class="diff-box easy"><div class="d-icon">🟢</div><div class="d-label">Strong Attempts</div><div class="d-pct">' + easyPct + '%</div><div class="d-detail">' + easyCount + ' attempts (65%+)</div></div>' +
+        '<div class="diff-box medium"><div class="d-icon">🟡</div><div class="d-label">Average Attempts</div><div class="d-pct">' + medPct + '%</div><div class="d-detail">' + medCount + ' attempts (40-64%)</div></div>' +
+        '<div class="diff-box hard"><div class="d-icon">🔴</div><div class="d-label">Weak Attempts</div><div class="d-pct">' + hardPct + '%</div><div class="d-detail">' + hardCount + ' attempts (&lt;40%)</div></div>' +
+    '</div></div>';
+
+    const examAgg = {};
+    attempts.forEach(function(a){
+        const key = a.examTitle || "Unknown";
+        if (!examAgg[key]) examAgg[key] = { count: 0, cleared: 0, bestScore: 0, examKey: a.examKey };
+        examAgg[key].count++;
+        const c = getExamCutoff(a.examKey, a.examTitle);
+        if ((a.score || 0) >= c.overallCutoff) examAgg[key].cleared++;
+        if ((a.score || 0) > examAgg[key].bestScore) examAgg[key].bestScore = a.score || 0;
+    });
+    const examKeys = Object.keys(examAgg);
+    if (examKeys.length > 0) {
+        html += '<div class="card"><h2>📚 Exam-wise Cutoff Tracker</h2>';
+        examKeys.forEach(function(name){
+            const e = examAgg[name];
+            const c = getExamCutoff(e.examKey, name);
+            const pct = Math.min(100, Math.round((e.bestScore / c.maxMarks) * 100));
+            const cutoffPct = Math.round((c.overallCutoff / c.maxMarks) * 100);
+            const isCleared = e.bestScore >= c.overallCutoff;
+            const fillColor = isCleared ? "linear-gradient(90deg,#22c55e,#16a34a)" : "linear-gradient(90deg,#ef4444,#dc2626)";
+            html += '<div class="row">' +
+                '<span class="name">' + escapeHTML(name) + '<br><small style="font-weight:600;color:#94a3b8;font-size:10.5px">Best: ' + e.bestScore.toFixed(1) + ' / Cutoff: ' + c.overallCutoff + ' · ' + e.cleared + '/' + e.count + ' cleared</small></span>' +
+                '<div class="bar" style="position:relative"><div class="fill" style="width:' + pct + '%;background:' + fillColor + '"></div><div style="position:absolute;top:-3px;left:' + cutoffPct + '%;height:16px;width:2px;background:#172554;border-radius:2px"></div></div>' +
+                '<span class="pct" style="color:' + (isCleared ? '#16a34a' : '#dc2626') + '">' + (isCleared ? "✅" : "❌") + '</span>' +
+            '</div>';
+        });
+        html += '</div>';
+    }
+
+    html += '<div class="card"><h2>🕒 Recent Attempts</h2><p class="card-sub">Har attempt ka cutoff status · Click Re-attempt to improve</p>';
+    attempts.slice(0, 15).forEach(function(a){
+        let dateStr = "—";
+        try {
+            const date = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate() : new Date();
+            dateStr = date.toLocaleDateString("en-IN", { day:"2-digit", month:"short", year:"numeric" }) + " · " + date.toLocaleTimeString("en-IN", { hour:"2-digit", minute:"2-digit" });
+        } catch(e){}
+        const c = getExamCutoff(a.examKey, a.examTitle);
+        const cleared = (a.score || 0) >= c.overallCutoff;
+
+        html += '<div class="attempt ' + (cleared ? "cleared" : "not-cleared") + '">' +
+            '<div class="left">' +
+                '<div class="title"><strong>' + escapeHTML(a.examTitle || "Mock Test") + '</strong><span class="status-tag ' + (cleared ? "pass" : "fail") + '">' + (cleared ? "✅ CLEARED" : "❌ NOT CLEARED") + '</span></div>' +
+                '<small>' + escapeHTML(a.testTitle || "") + ' · ' + dateStr + ' · Cutoff: ' + c.overallCutoff + '</small>' +
+            '</div>' +
+            '<div class="right">' +
+                '<div class="score">' + (a.score || 0).toFixed(1) + '<small>out of ' + c.maxMarks + '</small></div>' +
+                '<div class="acc">' + (a.accuracy || 0) + '% accuracy</div>' +
+                buildReattemptBtn(a) +
+            '</div>' +
+        '</div>';
+    });
+    html += '</div>';
+
+    content.innerHTML = html;
+}
+</script>
+
+</body>
+</html>

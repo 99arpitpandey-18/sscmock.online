@@ -1,0 +1,3232 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M4-R5 Chapter 4 | Building IoT Applications | NIELIT O Level</title>
+
+<meta name="description"
+content="NIELIT O Level M4-R5 Chapter 4 Building IoT Applications complete bilingual notes with examples, IoT architecture, sensors, actuators, cloud, applications, practical concepts, exam points and MCQs.">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+    --primary:#00e5ff;
+    --secondary:#7c4dff;
+    --accent:#00ffa3;
+    --danger:#ff4d8d;
+
+    --bg:#06101d;
+    --bg2:#0b1728;
+    --card:rgba(17,32,53,.78);
+    --card2:rgba(255,255,255,.045);
+
+    --text:#eef8ff;
+    --muted:#9aacbf;
+    --border:rgba(255,255,255,.10);
+}
+
+
+/* =========================================================
+   THEMES
+========================================================= */
+
+body.theme-ocean{
+    --primary:#00e5ff;
+    --secondary:#536dfe;
+    --accent:#00ffa3;
+    --danger:#ff4d8d;
+}
+
+body.theme-purple{
+    --primary:#c77dff;
+    --secondary:#7b2cff;
+    --accent:#00e5ff;
+    --danger:#ff6b9d;
+}
+
+body.theme-green{
+    --primary:#00ff9d;
+    --secondary:#00b894;
+    --accent:#c6ff00;
+    --danger:#ff7675;
+}
+
+body.theme-sunset{
+    --primary:#ffb347;
+    --secondary:#ff5f6d;
+    --accent:#ffe66d;
+    --danger:#ff3d71;
+}
+
+body.theme-royal{
+    --primary:#64b5ff;
+    --secondary:#8e7dff;
+    --accent:#4dffcc;
+    --danger:#ff6bcb;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(circle at 8% 8%,color-mix(in srgb,var(--primary) 13%,transparent),transparent 27%),
+        radial-gradient(circle at 92% 15%,color-mix(in srgb,var(--secondary) 15%,transparent),transparent 30%),
+        radial-gradient(circle at 50% 90%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 28%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+
+    transition:
+        background .5s ease,
+        color .3s ease;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background-image:
+        radial-gradient(circle,var(--primary) 1px,transparent 1px),
+        radial-gradient(circle,var(--secondary) 1px,transparent 1px);
+
+    background-size:130px 130px,190px 190px;
+    background-position:20px 30px,100px 90px;
+
+    opacity:.12;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    right:-250px;
+    bottom:-250px;
+
+    background:var(--secondary);
+    filter:blur(160px);
+    opacity:.08;
+
+    pointer-events:none;
+    z-index:-1;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    background:rgba(5,13,25,.82);
+
+    border-bottom:1px solid var(--border);
+
+    padding:13px 4%;
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    color:var(--primary);
+
+    font-weight:900;
+    font-size:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb,var(--primary) 16%,transparent),
+            color-mix(in srgb,var(--secondary) 12%,transparent)
+        );
+
+    border:1px solid color-mix(in srgb,var(--primary) 35%,transparent);
+
+    box-shadow:
+        0 0 28px color-mix(in srgb,var(--primary) 14%,transparent);
+}
+
+.brand-title{
+    font-size:16px;
+    font-weight:800;
+}
+
+.brand-sub{
+    color:#8293a9;
+    font-size:10px;
+    margin-top:3px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.back-btn,
+.theme-btn{
+    text-decoration:none;
+
+    color:#dff4ff;
+
+    padding:9px 13px;
+
+    border-radius:9px;
+
+    font-size:11px;
+    font-weight:700;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.back-btn:hover,
+.theme-btn:hover{
+    color:var(--primary);
+
+    border-color:var(--primary);
+
+    transform:translateY(-2px);
+}
+
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+.theme-panel{
+    position:fixed;
+
+    top:80px;
+    right:20px;
+
+    z-index:2000;
+
+    width:230px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(14,29,48,.97),
+            rgba(7,17,30,.97)
+        );
+
+    border:1px solid var(--border);
+
+    box-shadow:0 25px 60px rgba(0,0,0,.45);
+
+    display:none;
+}
+
+.theme-panel.show{
+    display:block;
+    animation:panelIn .25s ease;
+}
+
+@keyframes panelIn{
+    from{
+        opacity:0;
+        transform:translateY(-10px) scale(.97);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.theme-panel h4{
+    margin-bottom:13px;
+    font-size:13px;
+}
+
+.theme-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+}
+
+.theme-option{
+    padding:11px 8px;
+
+    border-radius:10px;
+
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.035);
+
+    color:#dcecff;
+
+    font-size:10px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.theme-option:hover{
+    border-color:var(--primary);
+    transform:translateY(-2px);
+}
+
+.theme-dot{
+    width:15px;
+    height:15px;
+
+    display:block;
+
+    margin:0 auto 6px;
+
+    border-radius:50%;
+}
+
+.dot-ocean{
+    background:linear-gradient(135deg,#00e5ff,#536dfe);
+}
+
+.dot-purple{
+    background:linear-gradient(135deg,#c77dff,#7b2cff);
+}
+
+.dot-green{
+    background:linear-gradient(135deg,#00ff9d,#00b894);
+}
+
+.dot-sunset{
+    background:linear-gradient(135deg,#ffb347,#ff5f6d);
+}
+
+.dot-royal{
+    background:linear-gradient(135deg,#64b5ff,#8e7dff);
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+
+    padding:42px 4% 80px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:42px;
+
+    border-radius:26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(17,37,61,.91),
+            rgba(8,20,36,.78)
+        );
+
+    border:1px solid var(--border);
+
+    overflow:hidden;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.32),
+        inset 0 1px rgba(255,255,255,.05);
+
+    margin-bottom:35px;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:190px;
+    height:3px;
+
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary),
+        transparent
+    );
+
+    box-shadow:0 0 25px var(--primary);
+}
+
+.hero-glow{
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    right:-100px;
+    top:-120px;
+
+    background:var(--primary);
+
+    filter:blur(80px);
+    opacity:.08;
+
+    border-radius:50%;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 12px;
+
+    border-radius:30px;
+
+    color:var(--primary);
+
+    background:color-mix(in srgb,var(--primary) 9%,transparent);
+
+    border:1px solid color-mix(in srgb,var(--primary) 25%,transparent);
+
+    font-size:11px;
+    font-weight:800;
+
+    margin-bottom:17px;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,46px);
+
+    line-height:1.15;
+
+    margin-bottom:13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            var(--primary),
+            var(--secondary)
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero h2{
+    font-size:16px;
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.hero p{
+    max-width:900px;
+
+    color:#94a7bc;
+
+    font-size:13px;
+
+    line-height:1.8;
+}
+
+.stats{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:12px;
+
+    margin-top:27px;
+}
+
+.stat{
+    padding:16px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.stat strong{
+    display:block;
+
+    font-size:21px;
+
+    color:var(--primary);
+
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:#8193aa;
+    font-size:10px;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin:42px 0 19px;
+}
+
+.section-icon{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    color:var(--primary);
+
+    background:color-mix(in srgb,var(--primary) 9%,transparent);
+
+    border:1px solid color-mix(in srgb,var(--primary) 20%,transparent);
+
+    font-size:18px;
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:#73869d;
+    font-size:11px;
+    margin-top:4px;
+}
+
+
+/* =========================================================
+   LEARNING OBJECTIVES
+========================================================= */
+
+.objectives{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.objective{
+    padding:20px;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,36,58,.78),
+            rgba(9,21,36,.70)
+        );
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+}
+
+.objective:hover{
+    transform:translateY(-5px);
+    border-color:color-mix(in srgb,var(--primary) 40%,transparent);
+}
+
+.objective-icon{
+    font-size:25px;
+    margin-bottom:12px;
+}
+
+.objective h3{
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.objective p{
+    color:#899bb0;
+    font-size:11px;
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   NOTE CARD
+========================================================= */
+
+.note-card{
+    padding:26px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,36,59,.84),
+            rgba(9,20,35,.76)
+        );
+
+    border:1px solid var(--border);
+
+    margin-bottom:17px;
+}
+
+.note-card h3{
+    font-size:18px;
+    margin-bottom:13px;
+
+    color:var(--primary);
+}
+
+.note-card h4{
+    font-size:14px;
+    margin:18px 0 9px;
+
+    color:#eaf6ff;
+}
+
+.note-card p{
+    color:#a0b0c3;
+    font-size:12px;
+    line-height:1.85;
+}
+
+.note-card ul{
+    margin:10px 0 0 19px;
+}
+
+.note-card li{
+    color:#9cacbf;
+    font-size:12px;
+    line-height:1.8;
+    padding:2px 0;
+}
+
+.note-card li::marker{
+    color:var(--primary);
+}
+
+
+/* =========================================================
+   BILINGUAL
+========================================================= */
+
+.bilingual{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+
+    margin-top:15px;
+}
+
+.lang-box{
+    padding:17px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.lang-label{
+    display:inline-block;
+
+    padding:4px 8px;
+
+    border-radius:6px;
+
+    color:var(--primary);
+
+    background:color-mix(in srgb,var(--primary) 8%,transparent);
+
+    font-size:9px;
+    font-weight:800;
+
+    margin-bottom:8px;
+}
+
+.lang-box p{
+    font-size:11px;
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   DEFINITION BOX
+========================================================= */
+
+.definition{
+    margin-top:15px;
+
+    padding:18px;
+
+    border-left:4px solid var(--primary);
+
+    border-radius:0 13px 13px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb,var(--primary) 9%,transparent),
+            rgba(255,255,255,.025)
+        );
+}
+
+.definition strong{
+    color:var(--primary);
+}
+
+.definition p{
+    margin-top:7px;
+}
+
+
+/* =========================================================
+   APPLICATION FLOW
+========================================================= */
+
+.flow{
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    gap:10px;
+
+    align-items:stretch;
+}
+
+.flow-step{
+    position:relative;
+
+    padding:18px 10px;
+
+    text-align:center;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+}
+
+.flow-step:hover{
+    transform:translateY(-5px);
+
+    border-color:var(--primary);
+}
+
+.flow-number{
+    width:30px;
+    height:30px;
+
+    margin:0 auto 9px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:var(--primary);
+
+    background:color-mix(in srgb,var(--primary) 10%,transparent);
+
+    border:1px solid color-mix(in srgb,var(--primary) 25%,transparent);
+
+    font-size:11px;
+    font-weight:900;
+}
+
+.flow-step h4{
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.flow-step p{
+    color:#788ba2;
+    font-size:9px;
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   EXAMPLE CARDS
+========================================================= */
+
+.examples{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:17px;
+}
+
+.example{
+    padding:23px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,38,61,.80),
+            rgba(9,22,38,.72)
+        );
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+}
+
+.example:hover{
+    transform:translateY(-5px);
+
+    border-color:
+        color-mix(in srgb,var(--secondary) 40%,transparent);
+}
+
+.example-head{
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    margin-bottom:12px;
+}
+
+.example-icon{
+    width:38px;
+    height:38px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb,var(--primary) 10%,transparent),
+            color-mix(in srgb,var(--secondary) 12%,transparent)
+        );
+
+    font-size:18px;
+}
+
+.example h3{
+    font-size:14px;
+}
+
+.example p{
+    color:#94a6bb;
+    font-size:11px;
+    line-height:1.75;
+}
+
+.example .tag{
+    display:inline-block;
+
+    margin-top:11px;
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--border);
+
+    color:var(--primary);
+
+    font-size:9px;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+
+    border-radius:17px;
+
+    border:1px solid var(--border);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th{
+    padding:13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            color-mix(in srgb,var(--primary) 10%,transparent),
+            color-mix(in srgb,var(--secondary) 8%,transparent)
+        );
+
+    color:var(--primary);
+
+    font-size:11px;
+
+    text-align:left;
+}
+
+td{
+    padding:12px 13px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+    color:#9dafc3;
+
+    font-size:11px;
+    line-height:1.6;
+}
+
+tr:hover td{
+    background:rgba(255,255,255,.025);
+}
+
+
+/* =========================================================
+   IMPORTANT EXAM BOX
+========================================================= */
+
+.exam-box{
+    padding:25px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb,var(--danger) 8%,transparent),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid color-mix(in srgb,var(--danger) 20%,transparent);
+}
+
+.exam-box h3{
+    color:var(--danger);
+
+    font-size:17px;
+
+    margin-bottom:13px;
+}
+
+.exam-list{
+    list-style:none;
+}
+
+.exam-list li{
+    padding:9px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+    color:#a6b5c7;
+
+    font-size:11px;
+    line-height:1.6;
+}
+
+.exam-list li::before{
+    content:"★";
+
+    color:var(--danger);
+
+    margin-right:8px;
+}
+
+
+/* =========================================================
+   MEMORY TRICKS
+========================================================= */
+
+.trick-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.trick{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.trick strong{
+    display:block;
+
+    color:var(--accent);
+
+    font-size:13px;
+
+    margin-bottom:7px;
+}
+
+.trick p{
+    color:#8799ae;
+    font-size:10px;
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   MCQ
+========================================================= */
+
+.mcq-container{
+    display:grid;
+    gap:13px;
+}
+
+.mcq{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,35,57,.80),
+            rgba(8,20,35,.73)
+        );
+
+    border:1px solid var(--border);
+}
+
+.question{
+    font-size:13px;
+    line-height:1.65;
+    margin-bottom:13px;
+}
+
+.options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.option{
+    padding:10px 12px;
+
+    border-radius:9px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+
+    color:#a3b2c4;
+
+    font-size:10px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.option:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.option.correct{
+    border-color:var(--accent);
+    color:var(--accent);
+    background:color-mix(in srgb,var(--accent) 8%,transparent);
+}
+
+.option.wrong{
+    border-color:var(--danger);
+    color:var(--danger);
+    background:color-mix(in srgb,var(--danger) 8%,transparent);
+}
+
+.answer{
+    display:none;
+
+    margin-top:12px;
+
+    padding:11px;
+
+    border-radius:9px;
+
+    color:#9fead1;
+
+    background:rgba(0,255,163,.05);
+
+    border:1px solid rgba(0,255,163,.13);
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+.answer.show{
+    display:block;
+}
+
+
+/* =========================================================
+   QUICK REVISION
+========================================================= */
+
+.revision{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:11px;
+}
+
+.revision-item{
+    padding:15px;
+
+    border-radius:13px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.revision-item strong{
+    display:block;
+
+    color:var(--primary);
+
+    font-size:12px;
+
+    margin-bottom:6px;
+}
+
+.revision-item span{
+    color:#8092a8;
+
+    font-size:9px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:55px;
+
+    padding:27px;
+
+    text-align:center;
+
+    border-top:1px solid var(--border);
+
+    color:#687b93;
+
+    font-size:10px;
+}
+
+.footer strong{
+    color:var(--primary);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .flow{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .objectives,
+    .trick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .revision{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .hero{
+        padding:28px 20px;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .stats,
+    .objectives,
+    .examples,
+    .bilingual,
+    .trick-grid,
+    .revision{
+        grid-template-columns:1fr;
+    }
+
+    .flow{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .header-inner{
+        flex-wrap:wrap;
+    }
+
+    .header-actions{
+        width:100%;
+    }
+
+    .back-btn,
+    .theme-btn{
+        flex:1;
+        text-align:center;
+    }
+
+    .theme-panel{
+        right:10px;
+        left:10px;
+        width:auto;
+    }
+}
+
+@media(max-width:430px){
+
+    .container{
+        padding:27px 4% 60px;
+    }
+
+    .flow{
+        grid-template-columns:1fr;
+    }
+
+    .section-title h2{
+        font-size:18px;
+    }
+}
+
+</style>
+</head>
+
+<body class="theme-ocean">
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            M4
+        </div>
+
+        <div>
+            <div class="brand-title">
+                M4-R5 Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Internet of Things • Chapter 04
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button class="theme-btn" onclick="toggleThemes()">
+            🎨 Themes
+        </button>
+
+        <a href="m4.html" class="back-btn">
+            ← M4 Home
+        </a>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================================================
+     THEME PANEL
+========================================================= -->
+
+<div class="theme-panel" id="themePanel">
+
+    <h4>🎨 Choose Your Study Theme</h4>
+
+    <div class="theme-grid">
+
+        <button class="theme-option"
+        onclick="setTheme('theme-ocean')">
+            <span class="theme-dot dot-ocean"></span>
+            Ocean
+        </button>
+
+        <button class="theme-option"
+        onclick="setTheme('theme-purple')">
+            <span class="theme-dot dot-purple"></span>
+            Purple
+        </button>
+
+        <button class="theme-option"
+        onclick="setTheme('theme-green')">
+            <span class="theme-dot dot-green"></span>
+            Green
+        </button>
+
+        <button class="theme-option"
+        onclick="setTheme('theme-sunset')">
+            <span class="theme-dot dot-sunset"></span>
+            Sunset
+        </button>
+
+        <button class="theme-option"
+        onclick="setTheme('theme-royal')">
+            <span class="theme-dot dot-royal"></span>
+            Royal
+        </button>
+
+    </div>
+
+</div>
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-glow"></div>
+
+<div class="hero-content">
+
+    <div class="badge">
+        ✦ NIELIT O LEVEL • M4-R5 • CHAPTER 04
+    </div>
+
+    <h1>
+        Building IoT Applications
+    </h1>
+
+    <h2>
+        IoT Application Development — From Sensor to Cloud
+    </h2>
+
+    <p>
+        In this chapter you will learn how different IoT components
+        are combined to build a complete Internet of Things
+        application. The focus is on sensors, actuators,
+        microcontrollers, communication, data processing,
+        cloud services, dashboards and real-world applications.
+    </p>
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>01</strong>
+            <span>Application Flow</span>
+        </div>
+
+        <div class="stat">
+            <strong>06</strong>
+            <span>Core Building Blocks</span>
+        </div>
+
+        <div class="stat">
+            <strong>10+</strong>
+            <span>Real Examples</span>
+        </div>
+
+        <div class="stat">
+            <strong>Exam</strong>
+            <span>Focused Notes</span>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     LEARNING OBJECTIVES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🎯</div>
+
+    <div>
+        <h2>What You Will Learn</h2>
+        <p>Chapter ke end tak ye concepts clear hone chahiye</p>
+    </div>
+
+</div>
+
+
+<section class="objectives">
+
+    <div class="objective">
+        <div class="objective-icon">📡</div>
+        <h3>IoT Architecture</h3>
+        <p>
+            Understand how sensors, processing units,
+            communication networks and cloud services work together.
+        </p>
+    </div>
+
+    <div class="objective">
+        <div class="objective-icon">🔧</div>
+        <h3>Application Building</h3>
+        <p>
+            Learn the basic sequence used to convert
+            a real-world problem into an IoT solution.
+        </p>
+    </div>
+
+    <div class="objective">
+        <div class="objective-icon">☁️</div>
+        <h3>Cloud & Dashboard</h3>
+        <p>
+            Understand how collected data can be transmitted,
+            stored, processed and displayed.
+        </p>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     1. INTRODUCTION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🌐</div>
+
+    <div>
+        <h2>1. Introduction to Building IoT Applications</h2>
+        <p>IoT application ka basic concept</p>
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>What is an IoT Application?</h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-label">ENGLISH</span>
+
+            <p>
+                An IoT application is a system in which physical
+                devices collect data from the environment, process
+                or transmit that data through a network and may
+                perform an action based on the received information.
+            </p>
+
+        </div>
+
+        <div class="lang-box">
+
+            <span class="lang-label">हिंदी</span>
+
+            <p>
+                IoT Application ek aisi system hoti hai jisme
+                physical devices environment se data collect karte
+                hain, us data ko process ya network ke through
+                transmit karte hain aur zarurat ke according action
+                perform kar sakte hain.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="definition">
+
+        <strong>⭐ Exam Definition</strong>
+
+        <p>
+            IoT application = <b>Device + Sensing + Processing +
+            Communication + Data/Cloud + Action</b>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     2. BUILDING BLOCKS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🧩</div>
+
+    <div>
+        <h2>2. Building Blocks of an IoT Application</h2>
+        <p>Most important conceptual section</p>
+    </div>
+
+</div>
+
+
+<section class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+    <th>Component</th>
+    <th>English</th>
+    <th>हिंदी</th>
+    <th>Example</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td><b>Sensor</b></td>
+    <td>Collects physical information</td>
+    <td>Environment se data leta hai</td>
+    <td>Temperature Sensor</td>
+</tr>
+
+<tr>
+    <td><b>Actuator</b></td>
+    <td>Performs physical action</td>
+    <td>Physical action perform karta hai</td>
+    <td>Motor / Relay</td>
+</tr>
+
+<tr>
+    <td><b>Controller</b></td>
+    <td>Processes device data</td>
+    <td>Data ko process/control karta hai</td>
+    <td>Arduino / ESP32</td>
+</tr>
+
+<tr>
+    <td><b>Network</b></td>
+    <td>Transfers information</td>
+    <td>Data transfer karta hai</td>
+    <td>Wi-Fi / Bluetooth</td>
+</tr>
+
+<tr>
+    <td><b>Cloud</b></td>
+    <td>Stores and processes data</td>
+    <td>Data store/process karta hai</td>
+    <td>Cloud Platform</td>
+</tr>
+
+<tr>
+    <td><b>Application</b></td>
+    <td>Displays or uses information</td>
+    <td>Data ko user ke liye useful banata hai</td>
+    <td>Mobile App / Dashboard</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+<!-- =========================================================
+     3. APPLICATION FLOW
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🔄</div>
+
+    <div>
+        <h2>3. IoT Application Development Flow</h2>
+        <p>Ye sequence exam + practical dono ke liye important hai</p>
+    </div>
+
+</div>
+
+
+<section class="flow">
+
+    <div class="flow-step">
+        <div class="flow-number">1</div>
+        <h4>Problem</h4>
+        <p>Identify the real-world problem.</p>
+    </div>
+
+    <div class="flow-step">
+        <div class="flow-number">2</div>
+        <h4>Sensor</h4>
+        <p>Collect required data.</p>
+    </div>
+
+    <div class="flow-step">
+        <div class="flow-number">3</div>
+        <h4>Controller</h4>
+        <p>Process the collected data.</p>
+    </div>
+
+    <div class="flow-step">
+        <div class="flow-number">4</div>
+        <h4>Network</h4>
+        <p>Send data to destination.</p>
+    </div>
+
+    <div class="flow-step">
+        <div class="flow-number">5</div>
+        <h4>Cloud</h4>
+        <p>Store/process information.</p>
+    </div>
+
+    <div class="flow-step">
+        <div class="flow-number">6</div>
+        <h4>Action</h4>
+        <p>Show result or control device.</p>
+    </div>
+
+</section>
+
+
+<section class="note-card" style="margin-top:17px;">
+
+    <h3>🔑 Easy Memory Formula</h3>
+
+    <div class="definition">
+
+        <strong>Remember:</strong>
+
+        <p>
+            <b>P → S → C → N → D → A</b>
+        </p>
+
+        <p style="margin-top:7px;">
+            Problem → Sensor → Controller → Network →
+            Data/Cloud → Action
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     4. EXAMPLES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">💡</div>
+
+    <div>
+        <h2>4. Real-World IoT Application Examples</h2>
+        <p>Concept ko examples se samjho</p>
+    </div>
+
+</div>
+
+
+<section class="examples">
+
+    <div class="example">
+
+        <div class="example-head">
+            <div class="example-icon">🏠</div>
+            <h3>Smart Home</h3>
+        </div>
+
+        <p>
+            Sensors can detect temperature, motion or light.
+            A controller processes the information and can control
+            lights, fans or other appliances.
+        </p>
+
+        <span class="tag">
+            Sensor → Controller → Actuator
+        </span>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+            <div class="example-icon">🌾</div>
+            <h3>Smart Agriculture</h3>
+        </div>
+
+        <p>
+            Soil moisture can be measured using a sensor.
+            If the soil becomes too dry, the controller can activate
+            an irrigation system.
+        </p>
+
+        <span class="tag">
+            Moisture → Controller → Pump
+        </span>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+            <div class="example-icon">❤️</div>
+            <h3>Health Monitoring</h3>
+        </div>
+
+        <p>
+            Wearable or connected devices can collect health-related
+            readings and transmit them to an application for monitoring.
+        </p>
+
+        <span class="tag">
+            Device → Network → Application
+        </span>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+            <div class="example-icon">🏭</div>
+            <h3>Industrial IoT</h3>
+        </div>
+
+        <p>
+            Industrial sensors can monitor machine conditions,
+            temperature, vibration and other parameters to support
+            maintenance and monitoring.
+        </p>
+
+        <span class="tag">
+            Sensors → Data → Monitoring
+        </span>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+            <div class="example-icon">🚦</div>
+            <h3>Smart Traffic</h3>
+        </div>
+
+        <p>
+            Connected sensors can provide information about traffic
+            conditions. Data can be processed to support intelligent
+            traffic management.
+        </p>
+
+        <span class="tag">
+            Detection → Data → Decision
+        </span>
+
+    </div>
+
+
+    <div class="example">
+
+        <div class="example-head">
+            <div class="example-icon">💧</div>
+            <h3>Water Monitoring</h3>
+        </div>
+
+        <p>
+            Sensors can monitor parameters such as water level or
+            quality-related measurements and transmit information
+            to a monitoring system.
+        </p>
+
+        <span class="tag">
+            Sensor → Network → Dashboard
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     5. SENSOR + ACTUATOR
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">⚙️</div>
+
+    <div>
+        <h2>5. Sensors and Actuators in Applications</h2>
+        <p>Very important difference</p>
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>Sensor vs Actuator</h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-label">SENSOR</span>
+
+            <p>
+                <b>English:</b> A sensor detects or measures a
+                physical quantity and converts it into usable data.
+            </p>
+
+            <p style="margin-top:8px;">
+                <b>हिंदी:</b> Sensor physical quantity ko detect
+                ya measure karke data provide karta hai.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-label">ACTUATOR</span>
+
+            <p>
+                <b>English:</b> An actuator receives a control signal
+                and performs a physical action.
+            </p>
+
+            <p style="margin-top:8px;">
+                <b>हिंदी:</b> Actuator control signal receive karke
+                physical action perform karta hai.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     6. DATA PROCESSING
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🧠</div>
+
+    <div>
+        <h2>6. Data Collection & Processing</h2>
+        <p>Raw data ko useful information mein convert karna</p>
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>How IoT Data is Processed</h3>
+
+    <ul>
+
+        <li>
+            Sensor generates or measures raw data.
+        </li>
+
+        <li>
+            Controller receives the sensor reading.
+        </li>
+
+        <li>
+            Data may be filtered, calculated or checked against
+            predefined conditions.
+        </li>
+
+        <li>
+            Important data can be transmitted through a network.
+        </li>
+
+        <li>
+            Cloud/server may store and further process the data.
+        </li>
+
+        <li>
+            User can view information through a dashboard or application.
+        </li>
+
+    </ul>
+
+
+    <div class="definition">
+
+        <strong>Example:</strong>
+
+        <p>
+            Temperature Sensor = 38°C →
+            Controller checks threshold →
+            Data sent to cloud →
+            Dashboard shows temperature →
+            Fan/cooling system may be controlled.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     7. COMMUNICATION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">📶</div>
+
+    <div>
+        <h2>7. Communication in IoT Applications</h2>
+        <p>Devices data kaise exchange karte hain</p>
+    </div>
+
+</div>
+
+
+<section class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+    <th>Technology</th>
+    <th>Typical Use</th>
+    <th>Key Idea</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td><b>Wi-Fi</b></td>
+    <td>Home/office connected devices</td>
+    <td>Wireless network connectivity</td>
+</tr>
+
+<tr>
+    <td><b>Bluetooth</b></td>
+    <td>Short-range device communication</td>
+    <td>Low-distance wireless communication</td>
+</tr>
+
+<tr>
+    <td><b>Cellular</b></td>
+    <td>Wide-area connectivity</td>
+    <td>Mobile network based communication</td>
+</tr>
+
+<tr>
+    <td><b>LoRa/LoRaWAN</b></td>
+    <td>Long-range IoT applications</td>
+    <td>Long-range, low-power communication</td>
+</tr>
+
+<tr>
+    <td><b>Ethernet</b></td>
+    <td>Wired network applications</td>
+    <td>Reliable wired connectivity</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+<!-- =========================================================
+     8. CLOUD
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">☁️</div>
+
+    <div>
+        <h2>8. Cloud in IoT Applications</h2>
+        <p>Data storage, processing and remote monitoring</p>
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>Why is Cloud Useful in IoT?</h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-label">ENGLISH</span>
+
+            <p>
+                Cloud services can provide remote data storage,
+                processing, analytics and access to IoT information
+                through web or mobile applications.
+            </p>
+
+        </div>
+
+        <div class="lang-box">
+
+            <span class="lang-label">हिंदी</span>
+
+            <p>
+                Cloud IoT data ko remotely store, process aur
+                analyze karne mein help karta hai. User web ya
+                mobile application se data access kar sakta hai.
+            </p>
+
+        </div>
+
+    </div>
+
+    <h4>Typical IoT Cloud Flow</h4>
+
+    <p>
+        IoT Device → Internet → Cloud Server → Database →
+        Processing/Analytics → Dashboard
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     9. DASHBOARD
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">📊</div>
+
+    <div>
+        <h2>9. IoT Dashboard</h2>
+        <p>User-friendly monitoring interface</p>
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>What is an IoT Dashboard?</h3>
+
+    <p>
+        An IoT dashboard is a user interface that presents
+        IoT device data in an understandable form such as
+        numbers, charts, graphs, indicators and status cards.
+    </p>
+
+    <div class="definition">
+
+        <strong>Hindi:</strong>
+
+        <p>
+            IoT Dashboard ek visual interface hai jahan user
+            connected devices ka data easily dekh aur monitor kar sakta hai.
+        </p>
+
+    </div>
+
+    <h4>Dashboard may show:</h4>
+
+    <ul>
+
+        <li>Temperature</li>
+        <li>Humidity</li>
+        <li>Device status</li>
+        <li>Energy consumption</li>
+        <li>Sensor readings</li>
+        <li>Alerts and notifications</li>
+
+    </ul>
+
+</section>
+
+
+<!-- =========================================================
+     10. TWO COMPLETE EXAMPLES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🚀</div>
+
+    <div>
+        <h2>10. Complete Application Examples</h2>
+        <p>Step-by-step examples — exam + practical understanding</p>
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>Example 1 — Smart Irrigation System 🌱</h3>
+
+    <h4>Problem</h4>
+
+    <p>
+        Plants need proper water, but manually checking soil
+        moisture every time is inconvenient.
+    </p>
+
+    <h4>Solution</h4>
+
+    <p>
+        A soil moisture sensor measures the moisture level.
+        The controller checks the value. If moisture is below
+        the required level, a pump can be activated.
+    </p>
+
+    <div class="definition">
+
+        <strong>Application Flow</strong>
+
+        <p>
+            Soil → Moisture Sensor → Controller →
+            Decision → Relay → Water Pump
+        </p>
+
+    </div>
+
+    <h4>Important Components</h4>
+
+    <ul>
+        <li>Soil moisture sensor</li>
+        <li>Microcontroller</li>
+        <li>Relay module</li>
+        <li>Water pump</li>
+        <li>Power supply</li>
+        <li>Optional Wi-Fi/cloud module</li>
+    </ul>
+
+</section>
+
+
+<section class="note-card">
+
+    <h3>Example 2 — Smart Room Temperature Monitoring 🌡️</h3>
+
+    <h4>Problem</h4>
+
+    <p>
+        User wants to monitor room temperature remotely.
+    </p>
+
+    <h4>Solution</h4>
+
+    <p>
+        A temperature sensor measures the room temperature.
+        The controller reads the value and sends it through
+        a network to a cloud service. The user views the value
+        on a dashboard.
+    </p>
+
+    <div class="definition">
+
+        <strong>Application Flow</strong>
+
+        <p>
+            Temperature → Sensor → Controller →
+            Wi-Fi → Cloud → Dashboard
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     11. MORE EXAMPLES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🌍</div>
+
+    <div>
+        <h2>11. More Application Ideas</h2>
+        <p>Extra examples for better understanding</p>
+    </div>
+
+</div>
+
+
+<section class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+    <th>Application</th>
+    <th>Sensor</th>
+    <th>Action / Output</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td>Smart Home</td>
+    <td>Motion / Light</td>
+    <td>Control lights</td>
+</tr>
+
+<tr>
+    <td>Smart Agriculture</td>
+    <td>Soil Moisture</td>
+    <td>Control irrigation</td>
+</tr>
+
+<tr>
+    <td>Weather Monitoring</td>
+    <td>Temperature / Humidity</td>
+    <td>Display environmental data</td>
+</tr>
+
+<tr>
+    <td>Smart Parking</td>
+    <td>Distance / Occupancy</td>
+    <td>Show parking availability</td>
+</tr>
+
+<tr>
+    <td>Industrial Monitoring</td>
+    <td>Temperature / Vibration</td>
+    <td>Machine monitoring</td>
+</tr>
+
+<tr>
+    <td>Water Level Monitoring</td>
+    <td>Level Sensor</td>
+    <td>Alert / Pump control</td>
+</tr>
+
+<tr>
+    <td>Smart Energy</td>
+    <td>Current / Energy Sensor</td>
+    <td>Energy monitoring</td>
+</tr>
+
+<tr>
+    <td>Fleet Tracking</td>
+    <td>GPS</td>
+    <td>Location monitoring</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+<!-- =========================================================
+     12. SECURITY
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🔐</div>
+
+    <div>
+        <h2>12. Security in IoT Applications</h2>
+        <p>IoT application banate waqt security important hai</p>
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>Important Security Measures</h3>
+
+    <ul>
+
+        <li>
+            Use strong authentication for devices and users.
+        </li>
+
+        <li>
+            Protect sensitive data during transmission.
+        </li>
+
+        <li>
+            Keep device and software configurations updated.
+        </li>
+
+        <li>
+            Restrict unnecessary access to IoT devices.
+        </li>
+
+        <li>
+            Monitor devices for unusual activity.
+        </li>
+
+    </ul>
+
+    <div class="definition">
+
+        <strong>Exam Point:</strong>
+
+        <p>
+            IoT security aims to protect devices, networks,
+            applications and data from unauthorized access
+            and misuse.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     13. CHALLENGES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">⚠️</div>
+
+    <div>
+        <h2>13. Challenges in Building IoT Applications</h2>
+        <p>Important theory points</p>
+    </div>
+
+</div>
+
+
+<section class="objectives">
+
+    <div class="objective">
+        <div class="objective-icon">🔒</div>
+        <h3>Security</h3>
+        <p>
+            Connected devices can become targets for unauthorized
+            access if they are not properly secured.
+        </p>
+    </div>
+
+    <div class="objective">
+        <div class="objective-icon">📡</div>
+        <h3>Connectivity</h3>
+        <p>
+            Network availability and reliability can affect
+            IoT communication.
+        </p>
+    </div>
+
+    <div class="objective">
+        <div class="objective-icon">🔋</div>
+        <h3>Power</h3>
+        <p>
+            Battery-powered devices need efficient power usage.
+        </p>
+    </div>
+
+    <div class="objective">
+        <div class="objective-icon">📈</div>
+        <h3>Scalability</h3>
+        <p>
+            Large IoT deployments may contain thousands of
+            connected devices and large volumes of data.
+        </p>
+    </div>
+
+    <div class="objective">
+        <div class="objective-icon">💾</div>
+        <h3>Data Management</h3>
+        <p>
+            IoT systems may generate large amounts of data
+            requiring storage and processing.
+        </p>
+    </div>
+
+    <div class="objective">
+        <div class="objective-icon">🔗</div>
+        <h3>Interoperability</h3>
+        <p>
+            Devices and platforms from different vendors may
+            need to communicate with each other.
+        </p>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     14. EXAM ORIENTED
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🎯</div>
+
+    <div>
+        <h2>14. Most Important Exam Points</h2>
+        <p>Revision se pehle in points ko zaroor padho</p>
+    </div>
+
+</div>
+
+
+<section class="exam-box">
+
+    <h3>🔥 HIGH PRIORITY POINTS</h3>
+
+    <ul class="exam-list">
+
+        <li>
+            IoT application combines physical devices,
+            sensing, processing, communication and applications.
+        </li>
+
+        <li>
+            Sensor is used to detect or measure physical conditions.
+        </li>
+
+        <li>
+            Actuator converts control signals into physical action.
+        </li>
+
+        <li>
+            Controller processes sensor data and controls devices.
+        </li>
+
+        <li>
+            Network provides communication between IoT components.
+        </li>
+
+        <li>
+            Cloud can provide storage, processing and remote access.
+        </li>
+
+        <li>
+            Dashboard provides a visual representation of IoT data.
+        </li>
+
+        <li>
+            Smart agriculture is a common IoT application.
+        </li>
+
+        <li>
+            Security, connectivity, power and scalability are
+            important IoT challenges.
+        </li>
+
+        <li>
+            A complete IoT solution should be designed according
+            to the actual problem and required output.
+        </li>
+
+    </ul>
+
+</section>
+
+
+<!-- =========================================================
+     15. MEMORY TRICKS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🧠</div>
+
+    <div>
+        <h2>15. Memory Tricks</h2>
+        <p>Fast revision ke liye</p>
+    </div>
+
+</div>
+
+
+<section class="trick-grid">
+
+    <div class="trick">
+
+        <strong>SENSOR = SENSE</strong>
+
+        <p>
+            Sensor environment ko sense/measure karta hai.
+        </p>
+
+    </div>
+
+
+    <div class="trick">
+
+        <strong>ACTUATOR = ACTION</strong>
+
+        <p>
+            Actuator actual physical action perform karta hai.
+        </p>
+
+    </div>
+
+
+    <div class="trick">
+
+        <strong>CLOUD = STORE + PROCESS</strong>
+
+        <p>
+            Cloud IoT data ko store aur process karne mein useful hai.
+        </p>
+
+    </div>
+
+
+    <div class="trick">
+
+        <strong>DASHBOARD = DISPLAY</strong>
+
+        <p>
+            Dashboard user ko IoT information visual form mein dikhata hai.
+        </p>
+
+    </div>
+
+
+    <div class="trick">
+
+        <strong>IoT FLOW</strong>
+
+        <p>
+            Sense → Process → Communicate → Store/Analyze → Act.
+        </p>
+
+    </div>
+
+
+    <div class="trick">
+
+        <strong>SECURITY</strong>
+
+        <p>
+            Device + Network + Data + User — sabki protection important hai.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     16. QUICK REVISION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">⚡</div>
+
+    <div>
+        <h2>16. One-Minute Quick Revision</h2>
+        <p>Exam hall se pehle quick recall</p>
+    </div>
+
+</div>
+
+
+<section class="revision">
+
+    <div class="revision-item">
+        <strong>Sensor</strong>
+        <span>Physical data collect karta hai.</span>
+    </div>
+
+    <div class="revision-item">
+        <strong>Actuator</strong>
+        <span>Physical action perform karta hai.</span>
+    </div>
+
+    <div class="revision-item">
+        <strong>Controller</strong>
+        <span>Data process/control karta hai.</span>
+    </div>
+
+    <div class="revision-item">
+        <strong>Network</strong>
+        <span>Data communication provide karta hai.</span>
+    </div>
+
+    <div class="revision-item">
+        <strong>Cloud</strong>
+        <span>Storage and processing.</span>
+    </div>
+
+    <div class="revision-item">
+        <strong>Dashboard</strong>
+        <span>Data ko visual form mein show karta hai.</span>
+    </div>
+
+    <div class="revision-item">
+        <strong>Smart Farm</strong>
+        <span>Moisture sensor + irrigation.</span>
+    </div>
+
+    <div class="revision-item">
+        <strong>Security</strong>
+        <span>Device and data protection.</span>
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     17. MCQs
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">📝</div>
+
+    <div>
+        <h2>17. Chapter 4 Exam MCQs</h2>
+        <p>Click an option to check your answer</p>
+    </div>
+
+</div>
+
+
+<section class="mcq-container">
+
+
+<!-- MCQ 1 -->
+
+<div class="mcq">
+
+    <div class="question">
+        <b>Q1.</b> Which component is primarily used to measure
+        a physical quantity in an IoT system?
+        <br>
+        <span style="color:#8193aa;">
+            IoT system mein physical quantity measure karne ke liye
+            primarily kya use hota hai?
+        </span>
+    </div>
+
+    <div class="options">
+
+        <div class="option" onclick="check(this,false,'a1')">
+            A. Actuator
+        </div>
+
+        <div class="option" onclick="check(this,true,'a1')">
+            B. Sensor
+        </div>
+
+        <div class="option" onclick="check(this,false,'a1')">
+            C. Dashboard
+        </div>
+
+        <div class="option" onclick="check(this,false,'a1')">
+            D. Database
+        </div>
+
+    </div>
+
+    <div class="answer" id="a1">
+        ✓ Correct Answer: <b>Sensor</b> — Sensor physical
+        conditions ko detect/measure karta hai.
+    </div>
+
+</div>
+
+
+<!-- MCQ 2 -->
+
+<div class="mcq">
+
+    <div class="question">
+        <b>Q2.</b> Which component performs a physical action
+        based on a control signal?
+        <br>
+        <span style="color:#8193aa;">
+            Control signal ke basis par physical action kaun perform karta hai?
+        </span>
+    </div>
+
+    <div class="options">
+
+        <div class="option" onclick="check(this,false,'a2')">
+            A. Sensor
+        </div>
+
+        <div class="option" onclick="check(this,true,'a2')">
+            B. Actuator
+        </div>
+
+        <div class="option" onclick="check(this,false,'a2')">
+            C. Cloud
+        </div>
+
+        <div class="option" onclick="check(this,false,'a2')">
+            D. Dashboard
+        </div>
+
+    </div>
+
+    <div class="answer" id="a2">
+        ✓ Correct Answer: <b>Actuator</b>.
+    </div>
+
+</div>
+
+
+<!-- MCQ 3 -->
+
+<div class="mcq">
+
+    <div class="question">
+        <b>Q3.</b> What is the main purpose of an IoT dashboard?
+    </div>
+
+    <div class="options">
+
+        <div class="option" onclick="check(this,false,'a3')">
+            A. Generate electricity
+        </div>
+
+        <div class="option" onclick="check(this,true,'a3')">
+            B. Visualize IoT data
+        </div>
+
+        <div class="option" onclick="check(this,false,'a3')">
+            C. Replace sensors
+        </div>
+
+        <div class="option" onclick="check(this,false,'a3')">
+            D. Provide physical power
+        </div>
+
+    </div>
+
+    <div class="answer" id="a3">
+        ✓ Correct Answer: <b>Visualize IoT data</b>.
+    </div>
+
+</div>
+
+
+<!-- MCQ 4 -->
+
+<div class="mcq">
+
+    <div class="question">
+        <b>Q4.</b> Which of the following can be used for
+        wireless IoT communication?
+    </div>
+
+    <div class="options">
+
+        <div class="option" onclick="check(this,true,'a4')">
+            A. Wi-Fi
+        </div>
+
+        <div class="option" onclick="check(this,false,'a4')">
+            B. Paper
+        </div>
+
+        <div class="option" onclick="check(this,false,'a4')">
+            C. Keyboard only
+        </div>
+
+        <div class="option" onclick="check(this,false,'a4')">
+            D. Printer ink
+        </div>
+
+    </div>
+
+    <div class="answer" id="a4">
+        ✓ Correct Answer: <b>Wi-Fi</b>.
+    </div>
+
+</div>
+
+
+<!-- MCQ 5 -->
+
+<div class="mcq">
+
+    <div class="question">
+        <b>Q5.</b> In a smart irrigation system,
+        which sensor can be used to determine soil moisture?
+    </div>
+
+    <div class="options">
+
+        <div class="option" onclick="check(this,true,'a5')">
+            A. Soil moisture sensor
+        </div>
+
+        <div class="option" onclick="check(this,false,'a5')">
+            B. Speaker
+        </div>
+
+        <div class="option" onclick="check(this,false,'a5')">
+            C. Display
+        </div>
+
+        <div class="option" onclick="check(this,false,'a5')">
+            D. Keyboard
+        </div>
+
+    </div>
+
+    <div class="answer" id="a5">
+        ✓ Correct Answer: <b>Soil moisture sensor</b>.
+    </div>
+
+</div>
+
+
+<!-- MCQ 6 -->
+
+<div class="mcq">
+
+    <div class="question">
+        <b>Q6.</b> Which technology can provide long-range,
+        low-power communication for suitable IoT applications?
+    </div>
+
+    <div class="options">
+
+        <div class="option" onclick="check(this,false,'a6')">
+            A. LoRa/LoRaWAN
+        </div>
+
+        <div class="option" onclick="check(this,false,'a6')">
+            B. HDMI
+        </div>
+
+        <div class="option" onclick="check(this,true,'a6')">
+            C. LoRa/LoRaWAN
+        </div>
+
+        <div class="option" onclick="check(this,false,'a6')">
+            D. VGA
+        </div>
+
+    </div>
+
+    <div class="answer" id="a6">
+        ✓ Correct Answer: <b>LoRa/LoRaWAN</b>.
+    </div>
+
+</div>
+
+
+<!-- MCQ 7 -->
+
+<div class="mcq">
+
+    <div class="question">
+        <b>Q7.</b> Which of the following is an important
+        challenge in IoT?
+    </div>
+
+    <div class="options">
+
+        <div class="option" onclick="check(this,true,'a7')">
+            A. Security
+        </div>
+
+        <div class="option" onclick="check(this,false,'a7')">
+            B. Font size
+        </div>
+
+        <div class="option" onclick="check(this,false,'a7')">
+            C. Page margin
+        </div>
+
+        <div class="option" onclick="check(this,false,'a7')">
+            D. Screen brightness only
+        </div>
+
+    </div>
+
+    <div class="answer" id="a7">
+        ✓ Correct Answer: <b>Security</b>.
+    </div>
+
+</div>
+
+
+<!-- MCQ 8 -->
+
+<div class="mcq">
+
+    <div class="question">
+        <b>Q8.</b> Which component can store and process
+        IoT data remotely?
+    </div>
+
+    <div class="options">
+
+        <div class="option" onclick="check(this,false,'a8')">
+            A. Cloud
+        </div>
+
+        <div class="option" onclick="check(this,true,'a8')">
+            B. Cloud
+        </div>
+
+        <div class="option" onclick="check(this,false,'a8')">
+            C. Sensor wire only
+        </div>
+
+        <div class="option" onclick="check(this,false,'a8')">
+            D. LED only
+        </div>
+
+    </div>
+
+    <div class="answer" id="a8">
+        ✓ Correct Answer: <b>Cloud</b>.
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL REVISION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🏆</div>
+
+    <div>
+        <h2>Chapter 4 Final Takeaway</h2>
+        <p>Remember this before moving to the next chapter</p>
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>⭐ The Complete IoT Application Picture</h3>
+
+    <div class="definition">
+
+        <p style="font-size:14px;text-align:center;line-height:2;">
+
+            <b>REAL WORLD</b>
+            ↓
+            <b>SENSOR</b>
+            ↓
+            <b>CONTROLLER</b>
+            ↓
+            <b>NETWORK</b>
+            ↓
+            <b>CLOUD / SERVER</b>
+            ↓
+            <b>DASHBOARD</b>
+            ↓
+            <b>DECISION / ACTION</b>
+
+        </p>
+
+    </div>
+
+    <p style="margin-top:17px;">
+        <b style="color:var(--primary);">
+            Exam Tip:
+        </b>
+        Kisi bhi IoT application ko samajhne ke liye sabse pehle
+        identify karo — <b>data kahan se aa raha hai, kaun process
+        kar raha hai, data kaise transfer ho raha hai aur final
+        output/action kya hai.</b>
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <p>
+        <strong>M4-R5 • Chapter 04</strong>
+        — Building IoT Applications
+    </p>
+
+    <p style="margin-top:7px;">
+        Bilingual • Exam Oriented • Examples • Quick Revision • MCQs
+    </p>
+
+</footer>
+
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   THEME SYSTEM
+========================================================= */
+
+function toggleThemes(){
+
+    const panel =
+        document.getElementById("themePanel");
+
+    panel.classList.toggle("show");
+
+}
+
+
+function setTheme(theme){
+
+    document.body.className = theme;
+
+    localStorage.setItem(
+        "m4Chapter4Theme",
+        theme
+    );
+
+    document
+        .getElementById("themePanel")
+        .classList.remove("show");
+
+}
+
+
+/* LOAD SAVED THEME */
+
+const savedTheme =
+    localStorage.getItem("m4Chapter4Theme");
+
+if(savedTheme){
+
+    document.body.className =
+        savedTheme;
+
+}
+
+
+/* =========================================================
+   MCQ SYSTEM
+========================================================= */
+
+function check(element,isCorrect,id){
+
+    const parent =
+        element.parentElement;
+
+    const options =
+        parent.querySelectorAll(".option");
+
+    options.forEach(function(option){
+
+        option.classList.remove(
+            "correct",
+            "wrong"
+        );
+
+    });
+
+    if(isCorrect){
+
+        element.classList.add("correct");
+
+    }else{
+
+        element.classList.add("wrong");
+
+    }
+
+    const answer =
+        document.getElementById(id);
+
+    answer.classList.add("show");
+
+}
+
+
+/* =========================================================
+   CLOSE THEME PANEL WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const panel =
+            document.getElementById("themePanel");
+
+        const button =
+            document.querySelector(".theme-btn");
+
+        if(
+            panel.classList.contains("show") &&
+            !panel.contains(event.target) &&
+            !button.contains(event.target)
+        ){
+
+            panel.classList.remove("show");
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+ 

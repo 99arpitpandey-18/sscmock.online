@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Non-Verbal Reasoning Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #0b1a33;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .controls input, .controls select {
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .controls button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+        }
+        .controls button.green {
+            background: #16a34a;
+        }
+        .controls button.gray {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+        .bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #4f46e5);
+            width: 0%;
+            transition: 0.3s;
+        }
+        .q-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+            background: #fafcff;
+        }
+        .q-top {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+        .q-top span:first-child {
+            font-weight: bold;
+            color: #2563eb;
+        }
+        .q-text {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 14px;
+            line-height: 1.6;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .options button {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 10px 12px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.15s;
+        }
+        .options button:hover {
+            background: #eef2ff;
+            border-color: #2563eb;
+        }
+        .options button.correct {
+            background: #d1fae5;
+            border-color: #16a34a;
+            color: #065f46;
+        }
+        .options button.wrong {
+            background: #fecaca;
+            border-color: #dc2626;
+            color: #991b1b;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .explanation {
+            display: none;
+            margin-top: 12px;
+            background: #f3f4f6;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .explanation.show {
+            display: block;
+        }
+        .footer {
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+        @media(max-width:600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔷 Non-Verbal Reasoning</h1>
+
+    <!-- Controls -->
+    <div class="controls">
+        <input type="text" id="searchBox" placeholder="Search question...">
+        <select id="filterBox">
+            <option value="all">All Topics</option>
+            <option value="Mirror Image">Mirror Image</option>
+            <option value="Water Image">Water Image</option>
+            <option value="Paper Folding">Paper Folding</option>
+            <option value="Figure Completion">Figure Completion</option>
+        </select>
+        <button onclick="showAllExplanations()">📖 Show All</button>
+        <button class="green" onclick="resetQuiz()">🔄 Reset</button>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="progressFill"></div></div>
+
+    <!-- Questions -->
+    <div id="questionContainer"></div>
+
+    <div class="footer">Non-Verbal Reasoning · SSC Practice</div>
+</div>
+
+<script>
+// ============================================================
+//  VERY SIMPLE NON-VERBAL REASONING GENERATOR
+//  No arrow functions, no template literals, no map/reduce
+//  Uses only var, for loops, and basic string concat
+// ============================================================
+
+// ---- GLOBAL STATE ----
+var allQuestions = [];
+var attemptedSet = new Set();
+var score = 0;
+var currentLang = 'en'; // 'en' or 'hi'
+
+// ---- SHUFFLE FUNCTION ----
+function shuffleArray(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+
+// ---- SHAPES ----
+var shapeSymbols = ['▲', '■', '●', '★', '◆', '⬟', '♦', '♥'];
+
+// ---- 1. MIRROR IMAGE ----
+function generateMirror() {
+    var count = Math.floor(Math.random() * 4) + 3; // 3 to 6
+    var seq = [];
+    for (var i = 0; i < count; i++) {
+        seq.push(shapeSymbols[Math.floor(Math.random() * shapeSymbols.length)]);
+    }
+    var original = seq.join(' ');
+    // Reverse
+    var rev = [];
+    for (var i = seq.length - 1; i >= 0; i--) {
+        rev.push(seq[i]);
+    }
+    var mirror = rev.join(' ');
+
+    var qEn = 'Find the mirror image of: ' + original;
+    var qHi = 'दर्पण प्रतिबिम्ब ज्ञात करें: ' + original;
+
+    // Options: mirror + 3 distractors
+    var opts = [mirror];
+    var attempts = 0;
+    while (opts.length < 4 && attempts < 30) {
+        var shuffled = shuffleArray(seq.slice(0));
+        var cand = shuffled.join(' ');
+        if (cand !== mirror && opts.indexOf(cand) === -1) {
+            opts.push(cand);
+        }
+        attempts++;
+    }
+    while (opts.length < 4) {
+        var fallback = seq.slice(0, count-1).join(' ') + ' ' + seq[0];
+        if (opts.indexOf(fallback) === -1) opts.push(fallback);
+        else opts.push(seq.join(' ') + ' ★');
+    }
+    shuffleArray(opts);
+    var ansIdx = opts.indexOf(mirror);
+
+    var expEn = '🔍 Mirror: Reverse left-to-right order.<br>Original: ' + original + '<br>Mirror: ' + mirror + '<br>✅ Answer: ' + mirror;
+    var expHi = '🔍 दर्पण: बाएँ-दाएँ क्रम उलटें।<br>मूल: ' + original + '<br>दर्पण: ' + mirror + '<br>✅ उत्तर: ' + mirror;
+
+    return { qEn: qEn, qHi: qHi, opts: opts, answer: ansIdx, type: 'Mirror Image', expEn: expEn, expHi: expHi };
+}
+
+// ---- 2. WATER IMAGE ----
+function generateWater() {
+    var count = Math.floor(Math.random() * 4) + 3;
+    var seq = [];
+    for (var i = 0; i < count; i++) {
+        seq.push(shapeSymbols[Math.floor(Math.random() * shapeSymbols.length)]);
+    }
+    var original = seq.join(' ');
+
+    // Flip upside down: reverse order + flip each symbol
+    var flipMap = { '▲':'▼', '▼':'▲', '■':'■', '●':'●', '★':'★', '◆':'◆', '⬟':'⬟', '♦':'♦', '♥':'♥' };
+    var rev = [];
+    for (var i = seq.length - 1; i >= 0; i--) {
+        var s = seq[i];
+        rev.push(flipMap[s] || s);
+    }
+    var water = rev.join(' ');
+
+    var qEn = 'Find the water image (upside-down) of: ' + original;
+    var qHi = 'जल प्रतिबिम्ब (उल्टा) ज्ञात करें: ' + original;
+
+    var opts = [water];
+    var attempts = 0;
+    while (opts.length < 4 && attempts < 30) {
+        var shuffled = shuffleArray(seq.slice(0));
+        var cand = shuffled.join(' ');
+        if (cand !== water && opts.indexOf(cand) === -1) {
+            opts.push(cand);
+        }
+        attempts++;
+    }
+    while (opts.length < 4) {
+        var fallback = seq.slice(0, count-1).join(' ') + ' ' + seq[0];
+        if (opts.indexOf(fallback) === -1) opts.push(fallback);
+        else opts.push(seq.join(' ') + ' ◆');
+    }
+    shuffleArray(opts);
+    var ansIdx = opts.indexOf(water);
+
+    var expEn = '🔍 Water: Reverse order and flip each shape.<br>Original: ' + original + '<br>Water: ' + water + '<br>✅ Answer: ' + water;
+    var expHi = '🔍 जल: क्रम उलटें और प्रत्येक आकृति उल्टी करें।<br>मूल: ' + original + '<br>जल: ' + water + '<br>✅ उत्तर: ' + water;
+
+    return { qEn: qEn, qHi: qHi, opts: opts, answer: ansIdx, type: 'Water Image', expEn: expEn, expHi: expHi };
+}
+
+// ---- 3. PAPER FOLDING ----
+function generatePaperFolding() {
+    var row = Math.floor(Math.random() * 3);
+    var col = Math.floor(Math.random() * 3);
+    var foldTypes = ['horizontal', 'vertical', 'quarter'];
+    var fold = foldTypes[Math.floor(Math.random() * 3)];
+
+    var grid = [ ['·','·','·'], ['·','·','·'], ['·','·','·'] ];
+
+    if (fold === 'horizontal') {
+        grid[row][col] = '●';
+        grid[2 - row][col] = '●';
+    } else if (fold === 'vertical') {
+        grid[row][col] = '●';
+        grid[row][2 - col] = '●';
+    } else {
+        // quarter
+        var positions = [[row,col], [row,2-col], [2-row,col], [2-row,2-col]];
+        for (var p = 0; p < positions.length; p++) {
+            grid[positions[p][0]][positions[p][1]] = '●';
+        }
+    }
+
+    var pattern = grid[0].join(' ') + ' | ' + grid[1].join(' ') + ' | ' + grid[2].join(' ');
+
+    var qEn = 'Paper folded, hole at (' + (row+1) + ',' + (col+1) + '). Unfolded pattern? (· = no hole)';
+    var qHi = 'कागज मोड़ा, छेद (' + (row+1) + ',' + (col+1) + ') पर। खोलने पर पैटर्न? (· = कोई छेद)';
+
+    var opts = [pattern];
+    var attempts = 0;
+    while (opts.length < 4 && attempts < 30) {
+        var fake = [ ['·','·','·'], ['·','·','·'], ['·','·','·'] ];
+        var holes = Math.floor(Math.random() * 3) + 1;
+        for (var h = 0; h < holes; h++) {
+            var r = Math.floor(Math.random() * 3);
+            var c = Math.floor(Math.random() * 3);
+            fake[r][c] = '●';
+        }
+        var cand = fake[0].join(' ') + ' | ' + fake[1].join(' ') + ' | ' + fake[2].join(' ');
+        if (cand !== pattern && opts.indexOf(cand) === -1) {
+            opts.push(cand);
+        }
+        attempts++;
+    }
+    while (opts.length < 4) {
+        var fallback = '● · ● | · ● · | ● · ●';
+        if (opts.indexOf(fallback) === -1) opts.push(fallback);
+        else opts.push('· ● · | ● · ● | · ● ·');
+    }
+    shuffleArray(opts);
+    var ansIdx = opts.indexOf(pattern);
+
+    var expEn = '🔍 Paper Folding: Fold: ' + fold + ', hole at (' + (row+1) + ',' + (col+1) + ').<br>Symmetric holes appear.<br>Pattern:<br>' + grid[0].join(' ') + '<br>' + grid[1].join(' ') + '<br>' + grid[2].join(' ') + '<br>✅ Answer: ' + pattern;
+    var expHi = '🔍 कागज मोड़: मोड़: ' + fold + ', छेद (' + (row+1) + ',' + (col+1) + ')<br>सममित छेद दिखते हैं।<br>पैटर्न:<br>' + grid[0].join(' ') + '<br>' + grid[1].join(' ') + '<br>' + grid[2].join(' ') + '<br>✅ उत्तर: ' + pattern;
+
+    return { qEn: qEn, qHi: qHi, opts: opts, answer: ansIdx, type: 'Paper Folding', expEn: expEn, expHi: expHi };
+}
+
+// ---- 4. FIGURE COMPLETION ----
+function generateFigureCompletion() {
+    var base = shuffleArray(shapeSymbols.slice(0)).slice(0, 3);
+    var seq = [];
+    for (var i = 0; i < 4; i++) {
+        var row = [];
+        for (var j = 0; j < 3; j++) {
+            row.push(base[(j + i) % 3]);
+        }
+        seq.push(row.join(' '));
+    }
+    var next = [];
+    for (var j = 0; j < 3; j++) {
+        next.push(base[(j + 4) % 3]);
+    }
+    var correct = next.join(' ');
+
+    var qEn = 'Next figure in sequence:<br>' + seq[0] + '<br>' + seq[1] + '<br>' + seq[2] + '<br>' + seq[3] + '<br>5. ?';
+    var qHi = 'अनुक्रम में अगली आकृति:<br>' + seq[0] + '<br>' + seq[1] + '<br>' + seq[2] + '<br>' + seq[3] + '<br>5. ?';
+
+    var opts = [correct];
+    var attempts = 0;
+    while (opts.length < 4 && attempts < 30) {
+        var shuffled = shuffleArray(base.slice(0));
+        var cand = shuffled.join(' ');
+        if (cand !== correct && opts.indexOf(cand) === -1) {
+            opts.push(cand);
+        }
+        attempts++;
+    }
+    while (opts.length < 4) {
+        var fallback = base.slice(0, 3).join(' ');
+        if (opts.indexOf(fallback) === -1) opts.push(fallback);
+        else opts.push(base.slice(0, 2).join(' ') + ' ' + base[0]);
+    }
+    shuffleArray(opts);
+    var ansIdx = opts.indexOf(correct);
+
+    var expEn = '🔍 Figure Completion: Rotation pattern.<br>Cycle: ' + base.join(' → ') + '<br>Next: ' + correct + '<br>✅ Answer: ' + correct;
+    var expHi = '🔍 आकृति पूर्णता: घूर्णन पैटर्न।<br>चक्र: ' + base.join(' → ') + '<br>अगली: ' + correct + '<br>✅ उत्तर: ' + correct;
+
+    return { qEn: qEn, qHi: qHi, opts: opts, answer: ansIdx, type: 'Figure Completion', expEn: expEn, expHi: expHi };
+}
+
+// ---- GENERATE 510 QUESTIONS ----
+var generators = [generateMirror, generateWater, generatePaperFolding, generateFigureCompletion];
+while (allQuestions.length < 510) {
+    var gen = generators[Math.floor(Math.random() * generators.length)];
+    var q = gen();
+    // Avoid exact duplicates
+    var dup = false;
+    for (var k = 0; k < allQuestions.length; k++) {
+        if (allQuestions[k].qEn === q.qEn && allQuestions[k].type === q.type) {
+            dup = true;
+            break;
+        }
+    }
+    if (!dup) allQuestions.push(q);
+}
+shuffleArray(allQuestions);
+
+// ---- DOM REFERENCES ----
+var container = document.getElementById('questionContainer');
+var searchBox = document.getElementById('searchBox');
+var filterBox = document.getElementById('filterBox');
+var attemptText = document.getElementById('attemptText');
+var scoreText = document.getElementById('scoreText');
+var progressFill = document.getElementById('progressFill');
+
+// ---- RENDER FUNCTION ----
+function renderQuestions() {
+    var keyword = searchBox.value.toLowerCase().trim();
+    var selectedType = filterBox.value;
+    var html = '';
+    var total = allQuestions.length;
+
+    for (var idx = 0; idx < total; idx++) {
+        var q = allQuestions[idx];
+        if (selectedType !== 'all' && q.type !== selectedType) continue;
+
+        var qText = (currentLang === 'en') ? q.qEn : q.qHi;
+        var opts = q.opts;
+        var exp = (currentLang === 'en') ? q.expEn : q.expHi;
+
+        var fullText = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && fullText.indexOf(keyword) === -1) continue;
+
+        var optHtml = '';
+        for (var oi = 0; oi < opts.length; oi++) {
+            var label = String.fromCharCode(65 + oi);
+            optHtml += '<button class="option" onclick="checkAnswer(' + idx + ',' + oi + ',this)">(' + label + ') ' + opts[oi] + '</button>';
+        }
+
+        var expTitle = (currentLang === 'en') ? '💡 Detailed Explanation' : '💡 विस्तृत व्याख्या';
+
+        html += '<div class="q-card" id="qcard-' + idx + '">';
+        html += '<div class="q-top"><span>Q' + (idx+1) + '</span><span>' + q.type + '</span></div>';
+        html += '<div class="q-text">' + qText + '</div>';
+        html += '<div class="options">' + optHtml + '</div>';
+        html += '<div class="result" id="result-' + idx + '"></div>';
+        html += '<div class="explanation" id="explanation-' + idx + '"><strong>' + expTitle + '</strong><br>' + exp + '</div>';
+        html += '</div>';
+    }
+
+    container.innerHTML = html;
+    updateProgress();
+}
+
+// ---- CHECK ANSWER ----
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attemptedSet.has(qIdx)) return;
+    attemptedSet.add(qIdx);
+
+    var q = allQuestions[qIdx];
+    var card = document.getElementById('qcard-' + qIdx);
+    var btns = card.querySelectorAll('.option');
+    for (var i = 0; i < btns.length; i++) {
+        if (i === q.answer) btns[i].classList.add('correct');
+    }
+
+    var res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) {
+        score++;
+        res.innerHTML = (currentLang === 'en') ? '✅ Correct!' : '✅ सही!';
+        res.style.color = '#16a34a';
+    } else {
+        btn.classList.add('wrong');
+        res.innerHTML = (currentLang === 'en') ? '❌ Incorrect. See explanation.' : '❌ गलत। व्याख्या देखें।';
+        res.style.color = '#dc2626';
+    }
+
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+// ---- UPDATE PROGRESS ----
+function updateProgress() {
+    var total = allQuestions.length;
+    var done = attemptedSet.size;
+    attemptText.textContent = 'Attempted: ' + done + ' / ' + total;
+    scoreText.textContent = 'Score: ' + score;
+    var pct = (done / total) * 100;
+    progressFill.style.width = pct + '%';
+}
+
+// ---- SHOW ALL EXPLANATIONS ----
+function showAllExplanations() {
+    var exps = document.querySelectorAll('.explanation');
+    for (var i = 0; i < exps.length; i++) {
+        exps[i].classList.add('show');
+    }
+}
+
+// ---- RESET QUIZ ----
+function resetQuiz() {
+    attemptedSet.clear();
+    score = 0;
+    renderQuestions();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ---- SEARCH & FILTER ----
+searchBox.addEventListener('input', renderQuestions);
+filterBox.addEventListener('change', renderQuestions);
+
+// ---- LANGUAGE TOGGLE (Simple) ----
+function toggleLang() {
+    currentLang = (currentLang === 'en') ? 'hi' : 'en';
+    renderQuestions();
+}
+
+// ---- ADD LANGUAGE BUTTON ----
+var header = document.querySelector('.container h1');
+var langBtn = document.createElement('button');
+langBtn.textContent = '🇮🇳 हिंदी';
+langBtn.style.cssText = 'float:right; background:#e5e7eb; border:none; padding:6px 16px; border-radius:20px; font-weight:bold; cursor:pointer; font-size:14px;';
+langBtn.onclick = toggleLang;
+header.appendChild(langBtn);
+
+// ---- INIT ----
+renderQuestions();
+</script>
+
+</body>
+</html>

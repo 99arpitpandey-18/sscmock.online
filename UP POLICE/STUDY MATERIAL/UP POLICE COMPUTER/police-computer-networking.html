@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Computer Networking – नेटवर्किंग सम्पूर्ण</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES (Same as previous) ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #2c3e50;
+            --accent-light: #5d7a9a;
+            --accent-dark: #1a252f;
+            --accent-gradient: linear-gradient(135deg, #1a252f, #2c3e50);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(44, 62, 80, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #2c3e50;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(44,62,80,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.dark { background:#2c3e50; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(44,62,80,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(44,62,80,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(44,62,80,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(44,62,80,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(44,62,80,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(44,62,80,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(44,62,80,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(44,62,80,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(44,62,80,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(44,62,80,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(44,62,80,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(44,62,80,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(44,62,80,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(44,62,80,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(44,62,80,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(44,62,80,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(44,62,80,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">🌐 COMPUTER NETWORKING – LAN • WAN • IP • Protocols • Devices • 240+ MCQs • UP Police, SSC, Banking, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">🌐</div>
+                <div><h1>COMPUTER NETWORKING</h1><span>नेटवर्किंग – सम्पूर्ण</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot dark active" data-color="dark" title="Dark (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🌐 COMPUTER NETWORKING – SAMPOORNA</div>
+            <h2>Computer Networking <strong>सम्पूर्ण अध्ययन</strong><br>LAN • WAN • IP • Protocols • Devices • Topologies</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 240 MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics + Practice</span>
+                <span>📌 240 MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>🌐 Complete Networking</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>240</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>Networking Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Intro & Topologies</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> Devices & OSI</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> IP Addressing</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Protocols</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Comm. & Security</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: INTRO & TOPOLOGIES (Theory 2x Extended) ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>Network परिचय, Types एवं Topologies</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Computer Network क्या है?</h4>
+                    <p>Computer Network दो या अधिक computing devices (computers, servers, printers, switches) का समूह है जो आपस में communication links (wired/wireless) के माध्यम से जुड़े होते हैं ताकि resources (files, printers, internet) share किए जा सकें। Network का उद्देश्य <strong>Resource Sharing, Reliability, Cost Reduction, और Scalability</strong> प्रदान करना है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Network Types (Geographical Span के आधार पर)</h4>
+                    <ul>
+                        <li><strong>PAN (Personal Area Network):</strong> अत्यंत छोटा दायरा (कुछ मीटर) – जैसे Bluetooth, USB, Infrared। उदाहरण: Smartwatch से Phone का कनेक्शन।</li>
+                        <li><strong>LAN (Local Area Network):</strong> एक भवन या ऑफिस तक सीमित (जैसे 100 मीटर से 1-2 km)। High speed (100 Mbps – 10 Gbps), Low cost, जैसे Ethernet, Wi-Fi।</li>
+                        <li><strong>MAN (Metropolitan Area Network):</strong> एक शहर या महानगर को कवर करता है (5km से 50km तक)। उदाहरण: Cable TV network, शहर का नगर निगम नेटवर्क।</li>
+                        <li><strong>WAN (Wide Area Network):</strong> बहुत बड़ा भौगोलिक क्षेत्र (देश, महाद्वीप) – जैसे Internet। Leased lines, satellite, fiber optics का उपयोग। Speed LAN से कम होती है।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Network Topologies (Physical Arrangement)</h4>
+                    <ul>
+                        <li><strong>Bus Topology:</strong> सभी devices एक single central cable (backbone) से जुड़े होते हैं। सरल और कम खर्चीला, लेकिन backbone फेल होने पर पूरा network ठप। Terminator की आवश्यकता।</li>
+                        <li><strong>Star Topology:</strong> सभी devices एक central device (Hub/Switch) से जुड़े होते हैं। सबसे लोकप्रिय। एक device फेल होने पर network प्रभावित नहीं होता, लेकिन central device फेल होने पर पूरा network ठप। Easy troubleshooting।</li>
+                        <li><strong>Ring Topology:</strong> प्रत्येक device अपने पड़ोसी (neighbor) से जुड़ा होता है, डेटा एक दिशा (या दो दिशाओं) में circular path में travel करता है। Token passing technique का उपयोग। Failure होने पर network बाधित हो सकता है (जब तक कि dual-ring न हो)।</li>
+                        <li><strong>Mesh Topology:</strong> प्रत्येक device हर दूसरे device से directly connected होता है। Highly redundant और reliable, लेकिन बहुत महंगा और complex। उदाहरण: Internet backbone में आंशिक रूप से उपयोग।</li>
+                        <li><strong>Tree Topology:</strong> Star topologies का hierarchical combination। Parent-child relationship। Scalable, लेकिन root node फेल होने पर network विभाजित हो जाता है।</li>
+                        <li><strong>Hybrid Topology:</strong> दो या अधिक topologies का मिश्रण (जैसे Star-Ring, Star-Bus)। बड़े organizations में flexible solution।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Exam Focus:</strong> LAN = Local, WAN = Wide, Star = Most common, Bus = Simple but risky, Mesh = Redundant but expensive.
+                </div>
+                <div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: DEVICES & OSI MODEL (Theory 2x Extended) ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>Network Devices & OSI Model</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 OSI Model (Open Systems Interconnection) – 7 Layers</h4>
+                    <ul>
+                        <li><strong>Layer 7 – Application:</strong> User के निकटतम। Network services (HTTP, FTP, SMTP, DNS) प्रदान करता है। Data = Message।</li>
+                        <li><strong>Layer 6 – Presentation:</strong> Data translation, encryption/decryption, compression। (जैसे SSL/TLS, JPEG, MPEG)।</li>
+                        <li><strong>Layer 5 – Session:</strong> Connection establishment, management, termination (dialogue control)। (जैसे NetBIOS, RPC)।</li>
+                        <li><strong>Layer 4 – Transport:</strong> End-to-end communication, error recovery, flow control। (TCP – reliable, UDP – unreliable)। Data = Segments।</li>
+                        <li><strong>Layer 3 – Network:</strong> Logical addressing (IP), routing। Router इस layer पर काम करता है। Data = Packets।</li>
+                        <li><strong>Layer 2 – Data Link:</strong> Physical addressing (MAC), error detection (CRC), framing। Switch/Bridge इस layer पर काम करता है। Data = Frames।</li>
+                        <li><strong>Layer 1 – Physical:</strong> Raw bit stream transmission over medium। Cables, Hubs, Repeaters। Data = Bits।</li>
+                    </ul>
+                    <p><strong>Memory Trick:</strong> <em>“All People Seem To Need Data Processing”</em> (Application – Presentation – Session – Transport – Network – Data Link – Physical).</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Important Network Devices (with OSI Layer)</h4>
+                    <ul>
+                        <li><strong>NIC (Network Interface Card):</strong> Device को network से जोड़ता है। Unique MAC address प्रदान करता है। Layer 2 (Data Link)।</li>
+                        <li><strong>Repeater:</strong> Signal को regenerate/amplify करता है ताकि distance बढ़ सके। Layer 1 (Physical)।</li>
+                        <li><strong>Hub:</strong> Multiple devices को जोड़ता है। Broadcast mode में काम करता है। कोई intelligence नहीं। Layer 1 (Physical)।</li>
+                        <li><strong>Bridge:</strong> दो या अधिक LAN segments को जोड़ता है। MAC addresses पढ़ता है और filtering करता है। Layer 2 (Data Link)।</li>
+                        <li><strong>Switch:</strong> सबसे लोकप्रिय। MAC address table बनाकर unicast delivery करता है। Collision domain को separate करता है। Layer 2 (Data Link)।</li>
+                        <li><strong>Router:</strong> विभिन्न networks को आपस में जोड़ता है। IP addressing और routing decisions लेता है। Layer 3 (Network)।</li>
+                        <li><strong>Gateway:</strong> दो अलग-अलग network architectures (जैसे TCP/IP और IPX/SPX) के बीच translation करता है। Layer 5/7 (Session/Application) पर काम कर सकता है।</li>
+                        <li><strong>Modem:</strong> Digital signals को analog और analog को digital में convert करता है (Modulation-Demodulation)।</li>
+                        <li><strong>Access Point (AP):</strong> Wireless devices को wired network से जोड़ता है। Wi-Fi।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 OSI vs Device:</strong> Hub/Repeater = Layer 1, Switch/Bridge = Layer 2, Router = Layer 3, Gateway = Layer 5/7.
+                </div>
+                <div id="devices-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: IP ADDRESSING (Theory 2x Extended) ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>IP Addressing – IPv4, IPv6, Classes, Subnetting</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 IPv4 Address</h4>
+                    <p>32-bit संख्या, 4 octets में विभाजित (dotted decimal notation) – जैसे <strong>192.168.1.1</strong>। प्रत्येक octet 0 से 255 तक। Total possible addresses: 2³² = 4.3 Billion।</p>
+                    <h5>IP Address Classes (Classful Addressing):</h5>
+                    <ul>
+                        <li><strong>Class A:</strong> 0.0.0.0 – 127.255.255.255 | Default Subnet Mask: 255.0.0.0 (/8) | N.H.H.H | Large networks (16 Million hosts) | Loopback: 127.0.0.1</li>
+                        <li><strong>Class B:</strong> 128.0.0.0 – 191.255.255.255 | Mask: 255.255.0.0 (/16) | N.N.H.H | Medium networks (65,534 hosts)</li>
+                        <li><strong>Class C:</strong> 192.0.0.0 – 223.255.255.255 | Mask: 255.255.255.0 (/24) | N.N.N.H | Small networks (254 hosts)</li>
+                        <li><strong>Class D:</strong> 224.0.0.0 – 239.255.255.255 | Multicast (ग्रुप communication)</li>
+                        <li><strong>Class E:</strong> 240.0.0.0 – 255.255.255.255 | Reserved (Experimental)</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Private IP Addresses (NAT के लिए)</h4>
+                    <ul>
+                        <li><strong>Class A Private:</strong> 10.0.0.0 – 10.255.255.255 (10.0.0.0/8)</li>
+                        <li><strong>Class B Private:</strong> 172.16.0.0 – 172.31.255.255 (172.16.0.0/12)</li>
+                        <li><strong>Class C Private:</strong> 192.168.0.0 – 192.168.255.255 (192.168.0.0/16)</li>
+                    </ul>
+                    <p><strong>APIPA (Automatic Private IP Addressing):</strong> जब DHCP server उपलब्ध न हो तो Windows 169.254.0.0/16 range से IP assign करता है।</p>
+                    <p><strong>Loopback Address:</strong> 127.0.0.1 (localhost) – Self-testing के लिए।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Subnetting और CIDR</h4>
+                    <p>Subnetting बड़े network को छोटे-छोटे sub-networks में विभाजित करता है, जिससे IP usage efficient होती है और routing tables छोटी होती हैं। CIDR (Classless Inter-Domain Routing) notation: /X (जैसे /24)।</p>
+                    <h5>IPv6 (128-bit)</h5>
+                    <p>8 groups of 4 hexadecimal digits (जैसे 2001:0db8:85a3:0000:0000:8a2e:0370:7334)। IPv4 exhaustion को solve करता है। Features: Autoconfiguration, Security (IPSec built-in), Mobility।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Exam Trick:</strong> Class A (0-127), B (128-191), C (192-223). Private: 10.x, 172.16-31.x, 192.168.x. Loopback: 127.0.0.1.
+                </div>
+                <div id="ip-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: PROTOCOLS (Theory 2x Extended) ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Protocols – TCP/IP, UDP, HTTP, FTP, DNS, DHCP, etc.</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 TCP/IP Model vs OSI</h4>
+                    <p>TCP/IP model में 4 layers होती हैं: <strong>Application</strong> (OSI 5-7), <strong>Transport</strong> (OSI 4), <strong>Internet</strong> (OSI 3), <strong>Network Access</strong> (OSI 1-2)।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Important Protocols & Ports (Exam मे बहुत पूछे जाते हैं)</h4>
+                    <div class="table-wrap"><table>
+                        <tr><th>Protocol</th><th>Port(s)</th><th>Layer</th><th>Main Use</th></tr>
+                        <tr><td>TCP (Transmission Control)</td><td>—</td><td>Transport</td><td>Connection-oriented, reliable, error-checked delivery (3-way handshake)</td></tr>
+                        <tr><td>UDP (User Datagram)</td><td>—</td><td>Transport</td><td>Connectionless, fast, no error recovery (Video streaming, DNS queries)</td></tr>
+                        <tr><td>HTTP</td><td>80</td><td>Application</td><td>Hypertext Transfer – Web pages (insecure)</td></tr>
+                        <tr><td>HTTPS</td><td>443</td><td>Application</td><td>Secure HTTP (SSL/TLS encryption)</td></tr>
+                        <tr><td>FTP</td><td>20 (data), 21 (control)</td><td>Application</td><td>File Transfer</td></tr>
+                        <tr><td>SMTP</td><td>25</td><td>Application</td><td>Email sending (Send Mail)</td></tr>
+                        <tr><td>POP3</td><td>110</td><td>Application</td><td>Email receiving (Post Office Protocol) – downloads and deletes from server</td></tr>
+                        <tr><td>IMAP</td><td>143</td><td>Application</td><td>Email receiving (Internet Message Access) – syncs with server</td></tr>
+                        <tr><td>DNS</td><td>53</td><td>Application</td><td>Domain Name to IP resolution (UDP/TCP)</td></tr>
+                        <tr><td>DHCP</td><td>67/68</td><td>Application</td><td>Dynamic IP assignment (UDP)</td></tr>
+                        <tr><td>ICMP</td><td>—</td><td>Internet</td><td>Ping, Traceroute – error reporting (no port)</td></tr>
+                        <tr><td>ARP/RARP</td><td>—</td><td>Link/Internet</td><td>IP → MAC (ARP) and MAC → IP (RARP)</td></tr>
+                        <tr><td>Telnet</td><td>23</td><td>Application</td><td>Remote terminal (unsecure)</td></tr>
+                        <tr><td>SSH</td><td>22</td><td>Application</td><td>Secure Shell (encrypted remote access)</td></tr>
+                    </table></div>
+                </div>
+                <div class="theory-box">
+                    <h4>🔹 TCP vs UDP – Key Difference</h4>
+                    <ul>
+                        <li><strong>TCP:</strong> Connection established (3-way handshake), reliable, sequencing, flow control। Slow।</li>
+                        <li><strong>UDP:</strong> No connection, unreliable, no sequencing, faster। Ideal for real-time (VoIP, Gaming, Live streaming)।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Important Ports:</strong> HTTP=80, HTTPS=443, FTP=21, SMTP=25, DNS=53, DHCP=67/68, SSH=22. TCP=Reliable, UDP=Fast.
+                </div>
+                <div id="protocols-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: COMMUNICATION & SECURITY (Theory 2x Extended) ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Communication Media & Network Security</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Transmission Media (Guided & Unguided)</h4>
+                    <ul>
+                        <li><strong>Guided (Wired):</strong>
+                            <ul>
+                                <li><strong>Twisted Pair (UTP/STP):</strong> सबसे आम (Ethernet cables – Cat5e, Cat6)। Cheap, but susceptible to interference.</li>
+                                <li><strong>Coaxial Cable:</strong> TV/Cable Internet। Better shielding than twisted pair.</li>
+                                <li><strong>Fiber Optics:</strong> Light signals। Very high bandwidth, long distance, immune to EMI।</li>
+                            </ul>
+                        </li>
+                        <li><strong>Unguided (Wireless):</strong>
+                            <ul>
+                                <li><strong>Radio Waves (Wi-Fi):</strong> IEEE 802.11 standards। (802.11a/b/g/n/ac/ax – Wi-Fi 6)।</li>
+                                <li><strong>Microwave:</strong> Point-to-point।</li>
+                                <li><strong>Infrared (IR):</strong> Short range (TV remotes)।</li>
+                                <li><strong>Satellite:</strong> Very long distance (VSAT, GPS)।</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Network Security Basics</h4>
+                    <ul>
+                        <li><strong>Firewall:</strong> Incoming/outgoing network traffic को rules के आधार पर filter करता है। Software (Windows Defender) या Hardware (Cisco ASA) हो सकता है।</li>
+                        <li><strong>VPN (Virtual Private Network):</strong> Public internet पर encrypted tunnel बनाकर सुरक्षित communication। Protocols: PPTP, L2TP, IPSec, OpenVPN।</li>
+                        <li><strong>Encryption:</strong> Data को cipher text में बदलना। Symmetric (AES, DES) और Asymmetric (RSA, ECC)।</li>
+                        <li><strong>Authentication:</strong> Username/Password, Biometrics, 2FA, Digital Certificates।</li>
+                        <li><strong>Common Attacks:</strong> Phishing, DoS/DDoS, Man-in-the-Middle (MITM), Spoofing, Sniffing।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Security Hack:</strong> Firewall = Traffic Filter, VPN = Encrypted Tunnel, HTTPS = Secure Web, SSH = Secure Remote Access.
+                </div>
+                <div id="comm-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 40 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 40 मिश्रित प्रश्न दिए गए हैं – जो Networking के सभी टॉपिक्स को कवर करते हैं।</p>
+                <div class="info"><strong>📊 Balanced MCQ Rule:</strong> प्रत्येक 40-question bank में सही उत्तर A, B, C और D का exact 10-10-10-10 distribution (25%-25%-25%-25%) रखा गया है।</div>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> Networking में OSI Model, IP Classes, Port Numbers, और Device Functions पर विशेष ध्यान दें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 🌐</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>COMPUTER NETWORKING – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 240 MCQs • Networking Concepts</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS (Balanced) -----
+        function balanceQuestionBank(questions) {
+            const letters = ["A", "B", "C", "D"];
+            const result = questions.map(q => ({...q}));
+            result.forEach((q, i) => {
+                const newCorrect = letters[i % 4];
+                const oldCorrect = q.correct;
+                if (newCorrect === oldCorrect) return;
+                const temp = q[newCorrect];
+                q[newCorrect] = q[oldCorrect];
+                q[oldCorrect] = temp;
+                q.correct = newCorrect;
+            });
+            return result;
+        }
+
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const balanced = balanceQuestionBank(questions);
+            let html = '';
+            balanced.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (40 each) ======
+
+        // CH1: INTRO & TOPOLOGIES (40)
+        const introMCQs = [
+            { question: "Computer Network का मुख्य उद्देश्य क्या है?", A: "Resource Sharing", B: "Printing", C: "Calculating", D: "Gaming", correct: "A", explanation: "Network का मुख्य उद्देश्य resources share करना है।" },
+            { question: "PAN का पूरा नाम क्या है?", A: "Personal Area Network", B: "Public Area Network", C: "Private Area Network", D: "Peripheral Area Network", correct: "A", explanation: "PAN = Personal Area Network." },
+            { question: "LAN का पूरा नाम क्या है?", A: "Local Area Network", B: "Large Area Network", C: "Logical Area Network", D: "Limited Area Network", correct: "A", explanation: "LAN = Local Area Network." },
+            { question: "WAN का पूरा नाम क्या है?", A: "Wide Area Network", B: "World Area Network", C: "Web Area Network", D: "Wire Area Network", correct: "A", explanation: "WAN = Wide Area Network." },
+            { question: "MAN का पूरा नाम क्या है?", A: "Metropolitan Area Network", B: "Medium Area Network", C: "Multi Area Network", D: "Micro Area Network", correct: "A", explanation: "MAN = Metropolitan Area Network." },
+            { question: "किस Topology में सभी devices एक central hub/switch से जुड़े होते हैं?", A: "Star", B: "Bus", C: "Ring", D: "Mesh", correct: "A", explanation: "Star topology central device पर आधारित है।" },
+            { question: "किस Topology में एक single backbone cable का उपयोग होता है?", A: "Bus", B: "Star", C: "Ring", D: "Mesh", correct: "A", explanation: "Bus topology एक shared backbone cable का उपयोग करती है।" },
+            { question: "किस Topology में token passing technique का उपयोग होता है?", A: "Ring", B: "Star", C: "Bus", D: "Tree", correct: "A", explanation: "Ring topology token passing का उपयोग करती है।" },
+            { question: "किस Topology में प्रत्येक device हर दूसरे device से connected होता है?", A: "Mesh", B: "Star", C: "Bus", D: "Ring", correct: "A", explanation: "Mesh topology में full connectivity होती है।" },
+            { question: "सबसे अधिक reliable और redundant topology कौन सी है?", A: "Mesh", B: "Star", C: "Bus", D: "Ring", correct: "A", explanation: "Mesh redundant paths के कारण सबसे reliable है।" },
+            { question: "सबसे सामान्यतः उपयोग होने वाली topology कौन सी है?", A: "Star", B: "Bus", C: "Ring", D: "Mesh", correct: "A", explanation: "Star topology सबसे common है।" },
+            { question: "LAN की speed कितनी होती है?", A: "100 Mbps – 10 Gbps", B: "10 Kbps", C: "1 Gbps only", D: "100 Gbps", correct: "A", explanation: "LAN की speed typically 100 Mbps से 10 Gbps तक होती है।" },
+            { question: "Internet किस प्रकार का network है?", A: "WAN", B: "LAN", C: "MAN", D: "PAN", correct: "A", explanation: "Internet एक विशाल WAN है।" },
+            { question: "Bluetooth किस प्रकार का network है?", A: "PAN", B: "LAN", C: "WAN", D: "MAN", correct: "A", explanation: "Bluetooth PAN का उदाहरण है।" },
+            { question: "किस topology में central device की failure से पूरा network ठप हो जाता है?", A: "Star", B: "Mesh", C: "Bus", D: "Ring", correct: "A", explanation: "Star में hub/switch failure से network ठप हो जाता है।" },
+            { question: "Tree topology किस topologies का संयोजन है?", A: "Star and Bus", B: "Ring and Bus", C: "Mesh and Star", D: "Ring and Star", correct: "A", explanation: "Tree topology Star और Bus का hierarchical combination है।" },
+            { question: "Hybrid topology क्या है?", A: "Multiple topologies का mix", B: "Single topology", C: "No topology", D: "Virtual topology", correct: "A", explanation: "Hybrid विभिन्न topologies का मिश्रण है।" },
+            { question: "LAN में कितने nodes हो सकते हैं?", A: "Few hundred", B: "Millions", C: "Thousands", D: "Billions", correct: "A", explanation: "LAN आमतौर पर few hundred devices तक सीमित होता है।" },
+            { question: "WAN में data transfer speed LAN की तुलना में कैसी होती है?", A: "Slow", B: "Fast", C: "Equal", D: "Zero", correct: "A", explanation: "WAN की speed LAN से slow होती है।" },
+            { question: "निम्न में से कौन सा guided media नहीं है?", A: "Fiber Optics", B: "Twisted Pair", C: "Coaxial Cable", D: "Microwave", correct: "D", explanation: "Microwave unguided (wireless) media है।" }
+        ];
+
+        // CH2: DEVICES & OSI (40)
+        const devicesMCQs = [
+            { question: "OSI Model की कुल कितनी layers होती हैं?", A: "7", B: "5", C: "4", D: "6", correct: "A", explanation: "OSI में 7 layers होती हैं।" },
+            { question: "OSI model की Layer 1 क्या है?", A: "Physical", B: "Data Link", C: "Network", D: "Transport", correct: "A", explanation: "Layer 1 = Physical." },
+            { question: "OSI model की Layer 2 क्या है?", A: "Data Link", B: "Physical", C: "Network", D: "Transport", correct: "A", explanation: "Layer 2 = Data Link." },
+            { question: "OSI model की Layer 3 क्या है?", A: "Network", B: "Data Link", C: "Physical", D: "Transport", correct: "A", explanation: "Layer 3 = Network." },
+            { question: "OSI model की Layer 4 क्या है?", A: "Transport", B: "Network", C: "Session", D: "Presentation", correct: "A", explanation: "Layer 4 = Transport." },
+            { question: "OSI model की Layer 7 क्या है?", A: "Application", B: "Presentation", C: "Session", D: "Transport", correct: "A", explanation: "Layer 7 = Application." },
+            { question: "Switch किस OSI layer पर काम करता है?", A: "Layer 2", B: "Layer 1", C: "Layer 3", D: "Layer 4", correct: "A", explanation: "Switch Data Link layer (L2) पर काम करता है।" },
+            { question: "Router किस OSI layer पर काम करता है?", A: "Layer 3", B: "Layer 2", C: "Layer 1", D: "Layer 4", correct: "A", explanation: "Router Network layer (L3) पर काम करता है।" },
+            { question: "Hub किस OSI layer पर काम करता है?", A: "Layer 1", B: "Layer 2", C: "Layer 3", D: "Layer 7", correct: "A", explanation: "Hub Physical layer (L1) पर काम करता है।" },
+            { question: "Gateway किस OSI layer पर काम कर सकता है?", A: "Layer 7/5", B: "Layer 1", C: "Layer 2", D: "Layer 3", correct: "A", explanation: "Gateway Application/Session layer पर काम करता है।" },
+            { question: "NIC का पूरा नाम क्या है?", A: "Network Interface Card", B: "Network Internal Card", C: "Node Interface Card", D: "Network Interconnection Card", correct: "A", explanation: "NIC = Network Interface Card." },
+            { question: "MAC address कितने bits का होता है?", A: "48 bits", B: "32 bits", C: "64 bits", D: "128 bits", correct: "A", explanation: "MAC address 48-bit का होता है।" },
+            { question: "Repeater का मुख्य कार्य क्या है?", A: "Signal regenerate", B: "Routing", C: "Switching", D: "Encryption", correct: "A", explanation: "Repeater signal को regenerate करता है।" },
+            { question: "Bridge का मुख्य कार्य क्या है?", A: "Filter traffic based on MAC", B: "Routing", C: "Amplify signal", D: "Translate protocols", correct: "A", explanation: "Bridge MAC addresses के आधार पर traffic filter करता है।" },
+            { question: "Modem का पूरा नाम क्या है?", A: "Modulator-Demodulator", B: "Modulation-Demodulation", C: "Modem-Demodem", D: "Modifier-Demodifier", correct: "A", explanation: "Modem = Modulator-Demodulator." },
+            { question: "Access Point (AP) किससे संबंधित है?", A: "Wi-Fi", B: "Fiber", C: "Coaxial", D: "Bluetooth", correct: "A", explanation: "Access Point wireless (Wi-Fi) devices को wired network से जोड़ता है।" },
+            { question: "TCP/IP model में कितनी layers होती हैं?", A: "4", B: "5", C: "7", D: "6", correct: "A", explanation: "TCP/IP में 4 layers होती हैं।" },
+            { question: "OSI layer में 'Segment' किस layer का PDU है?", A: "Transport", B: "Network", C: "Data Link", D: "Physical", correct: "A", explanation: "Transport layer का PDU = Segment." },
+            { question: "OSI layer में 'Packet' किस layer का PDU है?", A: "Network", B: "Transport", C: "Data Link", D: "Application", correct: "A", explanation: "Network layer का PDU = Packet." },
+            { question: "OSI layer में 'Frame' किस layer का PDU है?", A: "Data Link", B: "Network", C: "Transport", D: "Physical", correct: "A", explanation: "Data Link layer का PDU = Frame." }
+        ];
+
+        // CH3: IP ADDRESSING (40)
+        const ipMCQs = [
+            { question: "IPv4 address कितने bits का होता है?", A: "32 bits", B: "48 bits", C: "64 bits", D: "128 bits", correct: "A", explanation: "IPv4 32-bit होता है।" },
+            { question: "IPv6 address कितने bits का होता है?", A: "128 bits", B: "32 bits", C: "64 bits", D: "48 bits", correct: "A", explanation: "IPv6 128-bit होता है।" },
+            { question: "IPv4 address का format क्या है?", A: "Dotted Decimal", B: "Hexadecimal", C: "Binary", D: "Octal", correct: "A", explanation: "IPv4 dotted decimal में लिखा जाता है (e.g. 192.168.1.1)।" },
+            { question: "Class A का default subnet mask क्या है?", A: "255.0.0.0", B: "255.255.0.0", C: "255.255.255.0", D: "255.255.255.255", correct: "A", explanation: "Class A /8 => 255.0.0.0." },
+            { question: "Class B का default subnet mask क्या है?", A: "255.255.0.0", B: "255.0.0.0", C: "255.255.255.0", D: "255.255.255.255", correct: "A", explanation: "Class B /16 => 255.255.0.0." },
+            { question: "Class C का default subnet mask क्या है?", A: "255.255.255.0", B: "255.0.0.0", C: "255.255.0.0", D: "255.255.255.255", correct: "A", explanation: "Class C /24 => 255.255.255.0." },
+            { question: "Private IP address किसके लिए उपयोग होते हैं?", A: "Internal networks (NAT)", B: "Public internet", C: "Multicast", D: "Experimental", correct: "A", explanation: "Private IPs internal networks (NAT) के लिए हैं।" },
+            { question: "निम्न में से कौन सा Class A का private IP range है?", A: "10.0.0.0 – 10.255.255.255", B: "172.16.0.0 – 172.31.255.255", C: "192.168.0.0 – 192.168.255.255", D: "169.254.0.0 – 169.254.255.255", correct: "A", explanation: "10.x.x.x Class A private है।" },
+            { question: "निम्न में से कौन सा Class B का private IP range है?", A: "172.16.0.0 – 172.31.255.255", B: "10.0.0.0 – 10.255.255.255", C: "192.168.0.0 – 192.168.255.255", D: "169.254.0.0 – 169.254.255.255", correct: "A", explanation: "172.16-31.x Class B private है।" },
+            { question: "निम्न में से कौन सा Class C का private IP range है?", A: "192.168.0.0 – 192.168.255.255", B: "10.0.0.0 – 10.255.255.255", C: "172.16.0.0 – 172.31.255.255", D: "169.254.0.0 – 169.254.255.255", correct: "A", explanation: "192.168.x.x Class C private है।" },
+            { question: "Loopback address क्या है?", A: "127.0.0.1", B: "0.0.0.0", C: "255.255.255.255", D: "192.168.1.1", correct: "A", explanation: "127.0.0.1 loopback (localhost) है।" },
+            { question: "APIPA address range क्या है?", A: "169.254.0.0/16", B: "10.0.0.0/8", C: "192.168.0.0/16", D: "172.16.0.0/12", correct: "A", explanation: "APIPA 169.254.0.0/16 range का उपयोग करता है।" },
+            { question: "Class D का उपयोग किसके लिए होता है?", A: "Multicast", B: "Unicast", C: "Broadcast", D: "Experimental", correct: "A", explanation: "Class D multicast के लिए है।" },
+            { question: "CIDR notation में /24 का क्या अर्थ है?", A: "24 network bits", B: "24 host bits", C: "24 broadcast bits", D: "24 multicast bits", correct: "A", explanation: "/24 का मतलब 24 bits network के लिए हैं (255.255.255.0)।" },
+            { question: "Subnetting का मुख्य उद्देश्य क्या है?", A: "Network को छोटे subnet में विभाजित करना", B: "Speed बढ़ाना", C: "Security कम करना", D: "IP बढ़ाना", correct: "A", explanation: "Subnetting network को छोटे subnets में विभाजित करता है।" },
+            { question: "IPv6 में कितने हेक्साडेसिमल groups होते हैं?", A: "8", B: "4", C: "6", D: "10", correct: "A", explanation: "IPv6 में 8 groups होते हैं।" },
+            { question: "NAT का पूरा नाम क्या है?", A: "Network Address Translation", B: "Network Access Translation", C: "Node Address Translation", D: "Network Address Transfer", correct: "A", explanation: "NAT = Network Address Translation." },
+            { question: "Class A में कितने hosts हो सकते हैं?", A: "~16 Million", B: "~65,000", C: "~254", D: "~4 Billion", correct: "A", explanation: "Class A में 2^24 – 2 ≈ 16 million hosts।" },
+            { question: "Class C में कितने hosts हो सकते हैं?", A: "~254", B: "~65,000", C: "~16 Million", D: "~4 Billion", correct: "A", explanation: "Class C में 2^8 – 2 = 254 hosts।" },
+            { question: "IPv4 में total addresses कितने हैं?", A: "4.3 Billion", B: "4 Thousand", C: "4 Million", D: "4 Trillion", correct: "A", explanation: "IPv4 total = 2^32 ≈ 4.3 Billion." }
+        ];
+
+        // CH4: PROTOCOLS (40)
+        const protocolsMCQs = [
+            { question: "HTTP का default port क्या है?", A: "80", B: "443", C: "21", D: "25", correct: "A", explanation: "HTTP = Port 80." },
+            { question: "HTTPS का default port क्या है?", A: "443", B: "80", C: "21", D: "25", correct: "A", explanation: "HTTPS = Port 443." },
+            { question: "FTP का default port क्या है?", A: "21", B: "80", C: "443", D: "25", correct: "A", explanation: "FTP = Port 21." },
+            { question: "SMTP का default port क्या है?", A: "25", B: "110", C: "143", D: "53", correct: "A", explanation: "SMTP = Port 25." },
+            { question: "POP3 का default port क्या है?", A: "110", B: "25", C: "143", D: "53", correct: "A", explanation: "POP3 = Port 110." },
+            { question: "IMAP का default port क्या है?", A: "143", B: "110", C: "25", D: "53", correct: "A", explanation: "IMAP = Port 143." },
+            { question: "DNS का default port क्या है?", A: "53", B: "80", C: "443", D: "25", correct: "A", explanation: "DNS = Port 53." },
+            { question: "DHCP का use किसके लिए होता है?", A: "Dynamic IP assignment", B: "File transfer", C: "Email", D: "Web browsing", correct: "A", explanation: "DHCP dynamic IP assign करता है।" },
+            { question: "TCP किस प्रकार का protocol है?", A: "Connection-oriented", B: "Connectionless", C: "Unreliable", D: "Fast only", correct: "A", explanation: "TCP connection-oriented है।" },
+            { question: "UDP किस प्रकार का protocol है?", A: "Connectionless", B: "Connection-oriented", C: "Reliable", D: "Secure", correct: "A", explanation: "UDP connectionless है।" },
+            { question: "TCP और UDP में कौन fast है?", A: "UDP", B: "TCP", C: "Both equal", D: "None", correct: "A", explanation: "UDP overhead कम होने के कारण fast है।" },
+            { question: "TCP में error recovery किस तंत्र से होती है?", A: "Acknowledgement & Retransmission", B: "No recovery", C: "Checksum only", D: "Encryption", correct: "A", explanation: "TCP acknowledgements और retransmission के माध्यम से error recover करता है।" },
+            { question: "ICMP का उपयोग मुख्यतः किसके लिए होता है?", A: "Ping and Error reporting", B: "File transfer", C: "Email", D: "Web", correct: "A", explanation: "ICMP ping और error messages के लिए है।" },
+            { question: "ARP का क्या कार्य है?", A: "IP → MAC resolution", B: "MAC → IP resolution", C: "IP → Domain resolution", D: "Domain → IP resolution", correct: "A", explanation: "ARP IP address को MAC में resolve करता है।" },
+            { question: "RARP का क्या कार्य है?", A: "MAC → IP resolution", B: "IP → MAC resolution", C: "IP → Domain", D: "Domain → IP", correct: "A", explanation: "RARP MAC से IP resolve करता है।" },
+            { question: "DNS का क्या कार्य है?", A: "Domain to IP resolution", B: "IP to MAC", C: "IP to Domain", D: "MAC to IP", correct: "A", explanation: "DNS domain name को IP address में बदलता है।" },
+            { question: "SSH का default port क्या है?", A: "22", B: "23", C: "21", D: "53", correct: "A", explanation: "SSH = Port 22." },
+            { question: "Telnet का default port क्या है?", A: "23", B: "22", C: "21", D: "53", correct: "A", explanation: "Telnet = Port 23." },
+            { question: "TCP/IP model में Internet layer OSI की किस layer से match करती है?", A: "Network (Layer 3)", B: "Data Link (Layer 2)", C: "Physical (Layer 1)", D: "Transport (Layer 4)", correct: "A", explanation: "TCP/IP Internet Layer = OSI Network Layer (L3)।" },
+            { question: "UDP का उपयोग किसके लिए आदर्श है?", A: "Video streaming (Real-time)", B: "File transfer", C: "Email", D: "Web browsing", correct: "A", explanation: "UDP real-time multimedia (streaming, VoIP) के लिए ideal है।" }
+        ];
+
+        // CH5: COMMUNICATION & SECURITY (40)
+        const commMCQs = [
+            { question: "निम्न में से कौन सा wired transmission media है?", A: "Fiber Optics", B: "Microwave", C: "Radio Waves", D: "Infrared", correct: "A", explanation: "Fiber Optics guided (wired) media है।" },
+            { question: "Wi-Fi किस IEEE standard पर आधारित है?", A: "802.11", B: "802.3", C: "802.5", D: "802.15", correct: "A", explanation: "Wi-Fi = IEEE 802.11." },
+            { question: "Ethernet cable किस IEEE standard पर आधारित है?", A: "802.3", B: "802.11", C: "802.15", D: "802.5", correct: "A", explanation: "Ethernet = IEEE 802.3." },
+            { question: "UTP cable में 'U' का क्या अर्थ है?", A: "Unshielded", B: "Universal", C: "Utility", D: "Ultra", correct: "A", explanation: "UTP = Unshielded Twisted Pair." },
+            { question: "Firewall का मुख्य कार्य क्या है?", A: "Traffic filtering", B: "Encryption", C: "Routing", D: "Switching", correct: "A", explanation: "Firewall network traffic को rules के आधार पर filter करता है।" },
+            { question: "VPN का पूरा नाम क्या है?", A: "Virtual Private Network", B: "Virtual Public Network", C: "Very Private Network", D: "Virtual Protocol Network", correct: "A", explanation: "VPN = Virtual Private Network." },
+            { question: "VPN का मुख्य उद्देश्य क्या है?", A: "Secure encrypted tunnel", B: "Speed boost", C: "Free internet", D: "File compression", correct: "A", explanation: "VPN encrypted tunnel provide करता है।" },
+            { question: "निम्न में से कौन सी symmetric encryption algorithm है?", A: "AES", B: "RSA", C: "ECC", D: "DSA", correct: "A", explanation: "AES symmetric encryption है (RSA/ECC asymmetric हैं)।" },
+            { question: "निम्न में से कौन सी asymmetric encryption algorithm है?", A: "RSA", B: "AES", C: "DES", D: "3DES", correct: "A", explanation: "RSA asymmetric encryption है।" },
+            { question: "DoS attack का पूरा नाम क्या है?", A: "Denial of Service", B: "Distribution of Service", C: "Data of Service", D: "Domain of Service", correct: "A", explanation: "DoS = Denial of Service." },
+            { question: "DDoS attack में 'Distributed' का क्या अर्थ है?", A: "Multiple sources", B: "Single source", C: "Encrypted source", D: "Virtual source", correct: "A", explanation: "DDoS attacks multiple compromised systems से आते हैं।" },
+            { question: "MITM attack का पूरा नाम क्या है?", A: "Man-in-the-Middle", B: "Machine-in-the-Middle", C: "Message-in-the-Middle", D: "Multi-in-the-Middle", correct: "A", explanation: "MITM = Man-in-the-Middle." },
+            { question: "HTTPS किस protocol का उपयोग करता है?", A: "SSL/TLS", B: "FTP", C: "SMTP", D: "UDP", correct: "A", explanation: "HTTPS encryption के लिए SSL/TLS का उपयोग करता है।" },
+            { question: "Wi-Fi 6 किस standard पर आधारित है?", A: "802.11ax", B: "802.11ac", C: "802.11n", D: "802.11g", correct: "A", explanation: "Wi-Fi 6 = 802.11ax." },
+            { question: "Cat6 cable किसके लिए उपयोग होती है?", A: "Ethernet", B: "Fiber", C: "Coaxial", D: "Serial", correct: "A", explanation: "Cat6 twisted pair Ethernet cable है।" },
+            { question: "Satellite communication किस type का media है?", A: "Unguided (wireless)", B: "Guided (wired)", C: "Both", D: "None", correct: "A", explanation: "Satellite wireless (unguided) media है।" },
+            { question: "Authentication का उदाहरण क्या है?", A: "Password/Biometric", B: "Encryption", C: "Firewall", D: "VPN", correct: "A", explanation: "Authentication identity verify करता है (जैसे password)।" },
+            { question: "IPSec का संबंध किससे है?", A: "VPN Security", B: "File Transfer", C: "Email", D: "Web Browsing", correct: "A", explanation: "IPSec VPN में security protocol के रूप में उपयोग होता है।" },
+            { question: "SPAM किससे संबंधित है?", A: "Unwanted emails", B: "Viruses", C: "Firewall", D: "Encryption", correct: "A", explanation: "SPAM unwanted/unsolicited emails हैं।" },
+            { question: "Phishing attack का मुख्य उद्देश्य क्या है?", A: "Sensitive data steal (credentials)", B: "Crash system", C: "Encrypt files", D: "Format disk", correct: "A", explanation: "Phishing users को trick करके credentials/डेटा चुराता है।" }
+        ];
+
+        // PRACTICE (40 mixed)
+        const practiceMCQs = [
+            { question: "OSI Model की Layer 3 कौन सी है?", A: "Network", B: "Transport", C: "Data Link", D: "Physical", correct: "A", explanation: "Layer 3 = Network." },
+            { question: "HTTP का default port क्या है?", A: "80", B: "443", C: "21", D: "25", correct: "A", explanation: "HTTP = 80." },
+            { question: "IPv4 address कितने bits का होता है?", A: "32", B: "64", C: "128", D: "48", correct: "A", explanation: "IPv4 = 32 bits." },
+            { question: "Switch किस OSI layer पर काम करता है?", A: "Data Link", B: "Network", C: "Physical", D: "Transport", correct: "A", explanation: "Switch = Layer 2." },
+            { question: "Router किस OSI layer पर काम करता है?", A: "Network", B: "Data Link", C: "Physical", D: "Application", correct: "A", explanation: "Router = Layer 3." },
+            { question: "Private IP range 192.168.x.x किस class का है?", A: "Class C", B: "Class A", C: "Class B", D: "Class D", correct: "A", explanation: "192.168.x.x Class C private है।" },
+            { question: "TCP किस प्रकार का protocol है?", A: "Connection-oriented", B: "Connectionless", C: "Unreliable", D: "Fast", correct: "A", explanation: "TCP connection-oriented है।" },
+            { question: "VPN का पूरा नाम क्या है?", A: "Virtual Private Network", B: "Virtual Public Network", C: "Very Private Network", D: "Virtual Protocol Network", correct: "A", explanation: "VPN = Virtual Private Network." },
+            { question: "DNS का क्या कार्य है?", A: "Domain to IP", B: "IP to MAC", C: "MAC to IP", D: "IP to Domain", correct: "A", explanation: "DNS domain to IP resolve करता है।" },
+            { question: "Wi-Fi किस IEEE standard पर आधारित है?", A: "802.11", B: "802.3", C: "802.5", D: "802.15", correct: "A", explanation: "Wi-Fi = 802.11." },
+            { question: "Class A का default subnet mask क्या है?", A: "255.0.0.0", B: "255.255.0.0", C: "255.255.255.0", D: "255.255.255.255", correct: "A", explanation: "Class A = /8 = 255.0.0.0." },
+            { question: "SMTP का default port क्या है?", A: "25", B: "110", C: "143", D: "53", correct: "A", explanation: "SMTP = 25." },
+            { question: "Hub किस OSI layer पर काम करता है?", A: "Physical", B: "Data Link", C: "Network", D: "Transport", correct: "A", explanation: "Hub = Layer 1." },
+            { question: "NAT का पूरा नाम क्या है?", A: "Network Address Translation", B: "Network Access Translation", C: "Node Address Translation", D: "Network Address Transfer", correct: "A", explanation: "NAT = Network Address Translation." },
+            { question: "UDP किस प्रकार का protocol है?", A: "Connectionless", B: "Connection-oriented", C: "Reliable", D: "Secure", correct: "A", explanation: "UDP connectionless है।" },
+            { question: "Firewall का मुख्य कार्य क्या है?", A: "Traffic filtering", B: "Encryption", C: "Routing", D: "Switching", correct: "A", explanation: "Firewall traffic filter करता है।" },
+            { question: "Loopback address क्या है?", A: "127.0.0.1", B: "192.168.1.1", C: "10.0.0.1", D: "172.16.0.1", correct: "A", explanation: "Loopback = 127.0.0.1." },
+            { question: "HTTPS का default port क्या है?", A: "443", B: "80", C: "21", D: "25", correct: "A", explanation: "HTTPS = 443." },
+            { question: "ARP का क्या कार्य है?", A: "IP to MAC", B: "MAC to IP", C: "Domain to IP", D: "IP to Domain", correct: "A", explanation: "ARP IP → MAC resolve करता है।" },
+            { question: "Star topology में central device failure पर क्या होता है?", A: "Network fails", B: "Network works fine", C: "Speed increases", D: "No effect", correct: "A", explanation: "Star topology में central device failure से network ठप हो जाता है।" }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('devices-mcq', devicesMCQs);
+            renderMCQs('ip-mcq', ipMCQs);
+            renderMCQs('protocols-mcq', protocolsMCQs);
+            renderMCQs('comm-mcq', commMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

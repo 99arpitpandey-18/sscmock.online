@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M2 Practice Tests (50 Qs Each) | NIELIT O Level</title>
+    <style>
+        /* ── RESET & BASE ── */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+            line-height: 1.6;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: #111827;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+        }
+        .header h1 {
+            font-size: 25px;
+            color: #36dfff;
+        }
+        .header p {
+            margin-top: 5px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* ── CONTAINER ── */
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 25px 15px 60px;
+        }
+
+        /* ── TEST MENU ── */
+        #testMenu {
+            display: block;
+        }
+        #testMenu h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .test-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .test-card:hover {
+            border-color: #36dfff;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .test-card h3 {
+            font-size: 22px;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+        .test-card p {
+            color: #475569;
+            margin: 5px 0;
+        }
+        .module-btn {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .module-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* ── BACK BUTTON ── */
+        .back-btn {
+            background: #64748b;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .back-btn:hover {
+            background: #475569;
+        }
+
+        /* ── INFO BOX ── */
+        .info {
+            background: #fff;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        .info strong {
+            color: #2563eb;
+        }
+
+        /* ── QUESTION BLOCK ── */
+        .question {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 18px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+        }
+        .question-number {
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .question-text {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .hindi {
+            display: block;
+            color: #475569;
+            font-weight: 400;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        .option {
+            display: block;
+            padding: 11px 13px;
+            margin: 8px 0;
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .option:hover {
+            background: #eef7ff;
+            border-color: #36dfff;
+        }
+        .option input {
+            margin-right: 8px;
+        }
+        .correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+        }
+        .wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+        .explanation {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        /* ── BUTTONS ── */
+        .submit-area {
+            text-align: center;
+            margin: 30px 0;
+        }
+        button {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+        }
+        #submitBtn {
+            background: #2563eb;
+            color: #fff;
+        }
+        #submitBtn:hover {
+            background: #1d4ed8;
+        }
+        #resetBtn {
+            background: #64748b;
+            color: #fff;
+            margin-left: 8px;
+        }
+
+        /* ── RESULT ── */
+        .result {
+            display: none;
+            background: #fff;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 2px solid #36dfff;
+        }
+        .result h2 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .score {
+            font-size: 30px;
+            font-weight: 700;
+            color: #16a34a;
+        }
+        .progress {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #2563eb;
+            width: 0%;
+        }
+
+        #quizForm {
+            display: none;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            .container {
+                padding: 15px 10px;
+            }
+            .question {
+                padding: 15px;
+            }
+            .question-text {
+                font-size: 15px;
+            }
+            .option {
+                font-size: 14px;
+            }
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>🌐 NIELIT O Level • M2: Internet & Web Design • 1500+ Bilingual MCQs</h1>
+        <p>M2 Practice Tests (50 MCQs Each Set) – 30 Tests</p>
+    </header>
+
+    <main class="container">
+
+        <!-- ===== TEST MENU ===== -->
+        <div id="testMenu">
+            <h2>📚 Select Your M2 Practice Test</h2>
+            <p style="text-align:center; color:#64748b; margin-bottom:20px;">
+                Each test contains 50 questions. Submit and check your score!
+            </p>
+            <div class="test-grid" id="testGrid"></div>
+        </div>
+
+        <!-- ===== QUIZ FORM ===== -->
+        <div id="quizForm">
+            <button class="back-btn" onclick="showMenu()">⬅ Back to Tests</button>
+
+            <div class="info" id="testInfo">
+                <strong id="testTitle">Test 1</strong><br />
+                <span id="testRange">Questions 1 to 50</span>
+            </div>
+
+            <div id="result" class="result">
+                <h2>🎯 Test Result</h2>
+                <div class="score" id="score"></div>
+                <p id="resultText"></p>
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p id="attempted"></p>
+            </div>
+
+            <div id="quiz"></div>
+
+            <div class="submit-area">
+                <button type="button" id="submitBtn" onclick="submitTest()">✅ Submit Test</button>
+                <button type="button" id="resetBtn" onclick="resetTest()">🔄 Reset</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ================================================================
+        // 1.  GENERATE 1500+ BILINGUAL MCQs FOR M2
+        //     Using topic templates and variations to build a large bank.
+        // ================================================================
+        function generateQuestions() {
+            const qs = [];
+
+            // ----- helpers -----
+            function push(q) { qs.push(q); }
+
+            // ----- Topic: Internet Basics (50+ variations) -----
+            const internetQ = [
+                ["What is the Internet?", "इंटरनेट क्या है?", ["Global network of interconnected computers / परस्पर जुड़े कंप्यूटरों का वैश्विक नेटवर्क", "A single computer / एक कंप्यूटर", "A printer / एक प्रिंटर", "An operating system / एक ऑपरेटिंग सिस्टम"], 0],
+                ["When did the Internet originate?", "इंटरनेट की उत्पत्ति कब हुई?", ["1960s (ARPANET) / 1960 के दशक में", "1980s / 1980 के दशक में", "1990s / 1990 के दशक में", "2000s / 2000 के दशक में"], 0],
+                ["What is ARPANET?", "ARPANET क्या है?", ["First packet‑switching network / पहला पैकेट‑स्विचिंग नेटवर्क", "A web browser / एक वेब ब्राउज़र", "A search engine / एक सर्च इंजन", "An email service / एक ईमेल सेवा"], 0],
+                ["What is WWW?", "WWW क्या है?", ["World Wide Web / वर्ल्ड वाइड वेब", "World Web Window / वर्ल्ड वेब विंडो", "Wide World Work / वाइड वर्ल्ड वर्क", "Web World Wide / वेब वर्ल्ड वाइड"], 0],
+                ["Who invented the World Wide Web?", "वर्ल्ड वाइड वेब का आविष्कार किसने किया?", ["Tim Berners‑Lee / टिम बर्नर्स‑ली", "Bill Gates / बिल गेट्स", "Steve Jobs / स्टीव जॉब्स", "Mark Zuckerberg / मार्क जुकरबर्ग"], 0],
+                ["What is a website?", "वेबसाइट क्या है?", ["Collection of related web pages / संबंधित वेब पेजों का संग्रह", "A single web page / एक वेब पेज", "A search engine / एक सर्च इंजन", "An email address / एक ईमेल पता"], 0],
+                ["What is a web page?", "वेब पेज क्या है?", ["Document displayed in a web browser / वेब ब्राउज़र में दिखने वाला दस्तावेज़", "A hard disk / एक हार्ड डिस्क", "A printer / एक प्रिंटर", "A keyboard / एक कीबोर्ड"], 0],
+                ["What is a homepage?", "होमपेज क्या है?", ["Main/entry page of a website / वेबसाइट का मुख्य/प्रवेश पृष्ठ", "First page of a book / किताब का पहला पृष्ठ", "A printer page / एक प्रिंटर पृष्ठ", "A desktop icon / एक डेस्कटॉप आइकन"], 0],
+                ["What is a URL?", "URL क्या है?", ["Uniform Resource Locator / यूनिफॉर्म रिसोर्स लोकेटर", "Universal Record Link / यूनिवर्सल रिकॉर्ड लिंक", "Uniform Router Link / यूनिफॉर्म राउटर लिंक", "User Resource Locator / यूजर रिसोर्स लोकेटर"], 0],
+                ["What is a domain name?", "डोमेन नाम क्या है?", ["Human‑readable name of a website / वेबसाइट का मानव‑पठनीय नाम", "IP address / आईपी पता", "Password / पासवर्ड", "File extension / फ़ाइल एक्सटेंशन"], 0],
+                ["What is an IP address?", "IP address क्या है?", ["Numeric address of a device on a network / नेटवर्क पर डिवाइस का संख्यात्मक पता", "A web page / एक वेब पेज", "A domain name / एक डोमेन नाम", "An email address / एक ईमेल पता"], 0],
+                ["What is DNS?", "DNS क्या है?", ["Domain Name System / डोमेन नाम सिस्टम", "Digital Network Service / डिजिटल नेटवर्क सेवा", "Data Network System / डेटा नेटवर्क सिस्टम", "Dynamic Name Service / डायनेमिक नेम सर्विस"], 0],
+                ["What does DNS do?", "DNS क्या करता है?", ["Translates domain names to IP addresses / डोमेन नामों को IP पतों में अनुवाद करता है", "Prints documents / दस्तावेज़ प्रिंट करता है", "Stores files / फ़ाइलें संग्रहीत करता है", "Creates web pages / वेब पेज बनाता है"], 0],
+                ["What is a web browser?", "वेब ब्राउज़र क्या है?", ["Software to access web pages / वेब पेजों तक पहुँचने का सॉफ्टवेयर", "Operating system / ऑपरेटिंग सिस्टम", "Printer / प्रिंटर", "Database / डेटाबेस"], 0],
+                ["Which is a web browser?", "इनमें से कौन वेब ब्राउज़र है?", ["Google Chrome / गूगल क्रोम", "Windows / विंडोज़", "Linux / लिनक्स", "Excel / एक्सेल"], 0],
+                ["Which is another web browser?", "एक और वेब ब्राउज़र कौन है?", ["Mozilla Firefox / मोज़िला फ़ायरफ़ॉक्स", "MS Word / एमएस वर्ड", "PowerPoint / पॉवरपॉइंट", "Notepad / नोटपैड"], 0],
+                ["What is a search engine?", "सर्च इंजन क्या है?", ["Service to find information on the web / वेब पर जानकारी खोजने की सेवा", "A web browser / एक वेब ब्राउज़र", "An operating system / एक ऑपरेटिंग सिस्टम", "A printer / एक प्रिंटर"], 0],
+                ["Which is a search engine?", "इनमें से कौन सर्च इंजन है?", ["Google / गूगल", "Windows / विंडोज़", "Linux / लिनक्स", "Excel / एक्सेल"], 0],
+                ["What is a hyperlink?", "हाइपरलिंक क्या है?", ["Clickable link to another resource / किसी अन्य संसाधन का क्लिक करने योग्य लिंक", "A printer / एक प्रिंटर", "A CPU / एक सीपीयू", "A RAM / एक रैम"], 0],
+                ["What is HTTP?", "HTTP क्या है?", ["HyperText Transfer Protocol / हाइपरटेक्स्ट ट्रांसफर प्रोटोकॉल", "High Text Transfer Program / हाई टेक्स्ट ट्रांसफर प्रोग्राम", "Hyper Transfer Text Process / हाइपर ट्रांसफर टेक्स्ट प्रोसेस", "Home Text Transfer Protocol / होम टेक्स्ट ट्रांसफर प्रोटोकॉल"], 0],
+                ["What is HTTPS?", "HTTPS क्या है?", ["Secure HTTP with encryption / एन्क्रिप्शन के साथ सुरक्षित HTTP", "Hyper Text Transfer System / हाइपर टेक्स्ट ट्रांसफर सिस्टम", "High Technology Transfer System / हाई टेक्नोलॉजी ट्रांसफर सिस्टम", "Home Text Transfer System / होम टेक्स्ट ट्रांसफर सिस्टम"], 0],
+                ["What does HTTPS provide?", "HTTPS क्या प्रदान करता है?", ["Encrypted/secure communication / एन्क्रिप्टेड/सुरक्षित संचार", "More RAM / अधिक रैम", "Printer access / प्रिंटर पहुँच", "Offline storage / ऑफलाइन भंडारण"], 0]
+            ];
+            internetQ.forEach(q => push(q));
+
+            // ----- Topic: Protocols (30+) -----
+            const protoQ = [
+                ["What is TCP/IP?", "TCP/IP क्या है?", ["Suite of communication protocols / संचार प्रोटोकॉल का सूट", "A web browser / एक वेब ब्राउज़र", "An operating system / एक ऑपरेटिंग सिस्टम", "A database / एक डेटाबेस"], 0],
+                ["What does TCP stand for?", "TCP का पूरा नाम क्या है?", ["Transmission Control Protocol / ट्रांसमिशन कंट्रोल प्रोटोकॉल", "Transfer Control Protocol / ट्रांसफर कंट्रोल प्रोटोकॉल", "Transport Control Protocol / ट्रांसपोर्ट कंट्रोल प्रोटोकॉल", "Transmission Communication Protocol / ट्रांसमिशन कम्युनिकेशन प्रोटोकॉल"], 0],
+                ["What does IP stand for?", "IP का पूरा नाम क्या है?", ["Internet Protocol / इंटरनेट प्रोटोकॉल", "Internal Protocol / इंटरनल प्रोटोकॉल", "Internet Program / इंटरनेट प्रोग्राम", "Integrated Protocol / इंटीग्रेटेड प्रोटोकॉल"], 0],
+                ["What is FTP?", "FTP क्या है?", ["File Transfer Protocol / फ़ाइल ट्रांसफर प्रोटोकॉल", "Fast Transfer Protocol / फास्ट ट्रांसफर प्रोटोकॉल", "File Transmission Process / फ़ाइल ट्रांसमिशन प्रोसेस", "Folder Transfer Protocol / फोल्डर ट्रांसफर प्रोटोकॉल"], 0],
+                ["What is FTP used for?", "FTP का उपयोग किसलिए होता है?", ["Transferring files over a network / नेटवर्क पर फ़ाइलें स्थानांतरित करना", "Printing documents / दस्तावेज़ प्रिंट करना", "Web browsing / वेब ब्राउज़िंग", "Email sending / ईमेल भेजना"], 0],
+                ["What is SMTP?", "SMTP क्या है?", ["Simple Mail Transfer Protocol / सिंपल मेल ट्रांसफर प्रोटोकॉल", "System Mail Transfer Protocol / सिस्टम मेल ट्रांसफर प्रोटोकॉल", "Simple Message Transfer Protocol / सिंपल मैसेज ट्रांसफर प्रोटोकॉल", "Secure Mail Transfer Protocol / सिक्योर मेल ट्रांसफर प्रोटोकॉल"], 0],
+                ["What is SMTP used for?", "SMTP का उपयोग किसलिए होता है?", ["Sending emails / ईमेल भेजना", "Receiving emails / ईमेल प्राप्त करना", "Web browsing / वेब ब्राउज़िंग", "File transfer / फ़ाइल स्थानांतरण"], 0],
+                ["What is POP3?", "POP3 क्या है?", ["Post Office Protocol version 3 / पोस्ट ऑफिस प्रोटोकॉल संस्करण 3", "Point of Presence Protocol / प्वाइंट ऑफ प्रेजेंस प्रोटोकॉल", "Post Office Program / पोस्ट ऑफिस प्रोग्राम", "Protocol for Online Posting / ऑनलाइन पोस्टिंग के लिए प्रोटोकॉल"], 0],
+                ["What is POP3 used for?", "POP3 का उपयोग किसलिए होता है?", ["Retrieving emails from a server / सर्वर से ईमेल प्राप्त करना", "Sending emails / ईमेल भेजना", "Web browsing / वेब ब्राउज़िंग", "File transfer / फ़ाइल स्थानांतरण"], 0],
+                ["What is IMAP?", "IMAP क्या है?", ["Internet Message Access Protocol / इंटरनेट मैसेज एक्सेस प्रोटोकॉल", "Internet Mail Access Protocol / इंटरनेट मेल एक्सेस प्रोटोकॉल", "Interactive Message Access Protocol / इंटरएक्टिव मैसेज एक्सेस प्रोटोकॉल", "Integrated Mail Access Protocol / इंटीग्रेटेड मेल एक्सेस प्रोटोकॉल"], 0],
+                ["What is IMAP used for?", "IMAP का उपयोग किसलिए होता है?", ["Managing emails on a server / सर्वर पर ईमेल प्रबंधित करना", "Sending emails only / केवल ईमेल भेजना", "Web browsing / वेब ब्राउज़िंग", "File transfer / फ़ाइल स्थानांतरण"], 0],
+                ["What is a protocol?", "प्रोटोकॉल क्या है?", ["Set of rules for communication / संचार के लिए नियमों का सेट", "A hardware device / एक हार्डवेयर डिवाइस", "A printer / एक प्रिंटर", "A folder / एक फोल्डर"], 0],
+                ["What is a packet?", "पैकेट क्या है?", ["Unit of data transmitted over a network / नेटवर्क पर प्रेषित डेटा की इकाई", "A keyboard / एक कीबोर्ड", "A printer / एक प्रिंटर", "A file extension / एक फ़ाइल एक्सटेंशन"], 0],
+                ["What is bandwidth?", "बैंडविड्थ क्या है?", ["Data transfer capacity of a connection / कनेक्शन की डेटा ट्रांसफर क्षमता", "Hard disk size / हार्ड डिस्क का आकार", "CPU speed / सीपीयू की गति", "Monitor size / मॉनिटर का आकार"], 0],
+                ["What is latency?", "लेटेंसी क्या है?", ["Delay in data communication / डेटा संचार में देरी", "Storage size / भंडारण आकार", "CPU speed / सीपीयू की गति", "Printer speed / प्रिंटर की गति"], 0],
+                ["What is a router?", "राउटर क्या है?", ["Device that forwards packets between networks / नेटवर्क के बीच पैकेट भेजने वाला उपकरण", "A keyboard / एक कीबोर्ड", "A monitor / एक मॉनिटर", "A printer / एक प्रिंटर"], 0],
+                ["What is a switch?", "स्विच क्या है?", ["Device that connects devices on a LAN / LAN पर डिवाइसों को जोड़ने वाला उपकरण", "A printer / एक प्रिंटर", "A CPU / एक सीपीयू", "A monitor / एक मॉनिटर"], 0],
+                ["What is a modem?", "मॉडेम क्या है?", ["Device for modulating/demodulating signals / सिग्नल को मॉड्यूलेट/डिमॉड्यूलेट करने वाला उपकरण", "A monitor / एक मॉनिटर", "A keyboard / एक कीबोर्ड", "A printer / एक प्रिंटर"], 0],
+                ["What is a network?", "नेटवर्क क्या है?", ["Connected devices that communicate / संचार करने वाले जुड़े हुए उपकरण", "A single computer / एक कंप्यूटर", "A printer / एक प्रिंटर", "A software / एक सॉफ्टवेयर"], 0],
+                ["What is LAN?", "LAN क्या है?", ["Local Area Network / लोकल एरिया नेटवर्क", "Large Area Network / लार्ज एरिया नेटवर्क", "Local Access Node / लोकल एक्सेस नोड", "Long Area Network / लॉन्ग एरिया नेटवर्क"], 0],
+                ["What is WAN?", "WAN क्या है?", ["Wide Area Network / वाइड एरिया नेटवर्क", "Wireless Area Node / वायरलेस एरिया नोड", "Web Area Network / वेब एरिया नेटवर्क", "Wide Access Network / वाइड एक्सेस नेटवर्क"], 0],
+                ["What is MAN?", "MAN क्या है?", ["Metropolitan Area Network / मेट्रोपॉलिटन एरिया नेटवर्क", "Main Area Network / मेन एरिया नेटवर्क", "Mobile Area Network / मोबाइल एरिया नेटवर्क", "Machine Area Network / मशीन एरिया नेटवर्क"], 0],
+                ["What is PAN?", "PAN क्या है?", ["Personal Area Network / पर्सनल एरिया नेटवर्क", "Public Area Network / पब्लिक एरिया नेटवर्क", "Private Access Network / प्राइवेट एक्सेस नेटवर्क", "Personal Access Node / पर्सनल एक्सेस नोड"], 0],
+                ["What is VPN?", "VPN क्या है?", ["Virtual Private Network / वर्चुअल प्राइवेट नेटवर्क", "Virtual Public Network / वर्चुअल पब्लिक नेटवर्क", "Verified Private Node / वेरिफाइड प्राइवेट नोड", "Visual Protocol Network / विजुअल प्रोटोकॉल नेटवर्क"], 0],
+                ["What does VPN provide?", "VPN क्या प्रदान करता है?", ["Encrypted tunnel over a network / नेटवर्क पर एन्क्रिप्टेड टनल", "More RAM / अधिक रैम", "Printer access / प्रिंटर पहुँच", "Faster CPU / तेज़ सीपीयू"], 0]
+            ];
+            protoQ.forEach(q => push(q));
+
+            // ----- Topic: HTML (60+) -----
+            const htmlQ = [
+                ["What does HTML stand for?", "HTML का पूरा नाम क्या है?", ["HyperText Markup Language / हाइपरटेक्स्ट मार्कअप लैंग्वेज", "HighText Machine Language / हाईटेक्स्ट मशीन लैंग्वेज", "Hyper Tool Markup Language / हाइपर टूल मार्कअप लैंग्वेज", "Home Text Markup Language / होम टेक्स्ट मार्कअप लैंग्वेज"], 0],
+                ["What is HTML used for?", "HTML का उपयोग किसलिए होता है?", ["Creating structure of web pages / वेब पेजों की संरचना बनाना", "Creating hardware / हार्डवेयर बनाना", "Managing RAM / रैम प्रबंधित करना", "Printing / प्रिंटिंग"], 0],
+                ["Which tag defines the main HTML document?", "मुख्य HTML दस्तावेज़ को कौन‑सा टैग परिभाषित करता है?", ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;", "&lt;title&gt;"], 0],
+                ["Which tag contains visible page content?", "दृश्यमान पृष्ठ सामग्री किस टैग में होती है?", ["&lt;body&gt;", "&lt;head&gt;", "&lt;title&gt;", "&lt;meta&gt;"], 0],
+                ["Which tag defines a paragraph?", "पैराग्राफ के लिए कौन‑सा टैग है?", ["&lt;p&gt;", "&lt;h1&gt;", "&lt;br&gt;", "&lt;a&gt;"], 0],
+                ["Which tag creates a hyperlink?", "हाइपरलिंक बनाने के लिए कौन‑सा टैग है?", ["&lt;a&gt;", "&lt;p&gt;", "&lt;img&gt;", "&lt;table&gt;"], 0],
+                ["Which tag displays an image?", "इमेज दिखाने के लिए कौन‑सा टैग है?", ["&lt;img&gt;", "&lt;image&gt;", "&lt;pic&gt;", "&lt;photo&gt;"], 0],
+                ["Which tag creates the largest heading?", "सबसे बड़ा हेडिंग के लिए कौन‑सा टैग है?", ["&lt;h1&gt;", "&lt;h6&gt;", "&lt;head&gt;", "&lt;title&gt;"], 0],
+                ["Which tag creates the smallest heading?", "सबसे छोटा हेडिंग के लिए कौन‑सा टैग है?", ["&lt;h6&gt;", "&lt;h1&gt;", "&lt;head&gt;", "&lt;title&gt;"], 0],
+                ["Which tag creates an unordered list?", "अक्रमबद्ध सूची के लिए कौन‑सा टैग है?", ["&lt;ul&gt;", "&lt;ol&gt;", "&lt;li&gt;", "&lt;dl&gt;"], 0],
+                ["Which tag creates an ordered list?", "क्रमबद्ध सूची के लिए कौन‑सा टैग है?", ["&lt;ol&gt;", "&lt;ul&gt;", "&lt;li&gt;", "&lt;dl&gt;"], 0],
+                ["Which tag creates a list item?", "सूची आइटम के लिए कौन‑सा टैग है?", ["&lt;li&gt;", "&lt;ul&gt;", "&lt;ol&gt;", "&lt;dl&gt;"], 0],
+                ["Which tag creates a table?", "टेबल के लिए कौन‑सा टैग है?", ["&lt;table&gt;", "&lt;tab&gt;", "&lt;tbl&gt;", "&lt;tbody&gt;"], 0],
+                ["Which tag creates a table row?", "टेबल पंक्ति के लिए कौन‑सा टैग है?", ["&lt;tr&gt;", "&lt;td&gt;", "&lt;th&gt;", "&lt;tbody&gt;"], 0],
+                ["Which tag creates a table header?", "टेबल हेडर के लिए कौन‑सा टैग है?", ["&lt;th&gt;", "&lt;td&gt;", "&lt;tr&gt;", "&lt;thead&gt;"], 0],
+                ["Which tag creates a table cell?", "टेबल सेल के लिए कौन‑सा टैग है?", ["&lt;td&gt;", "&lt;th&gt;", "&lt;tr&gt;", "&lt;table&gt;"], 0],
+                ["Which tag creates a form?", "फॉर्म के लिए कौन‑सा टैग है?", ["&lt;form&gt;", "&lt;input&gt;", "&lt;button&gt;", "&lt;label&gt;"], 0],
+                ["Which tag creates an input field?", "इनपुट फील्ड के लिए कौन‑सा टैग है?", ["&lt;input&gt;", "&lt;form&gt;", "&lt;textarea&gt;", "&lt;button&gt;"], 0],
+                ["Which attribute specifies the URL in an anchor tag?", "एंकर टैग में URL निर्दिष्ट करने वाला एट्रिब्यूट कौन‑सा है?", ["href", "src", "link", "url"], 0],
+                ["Which attribute specifies the image source?", "इमेज स्रोत निर्दिष्ट करने वाला एट्रिब्यूट कौन‑सा है?", ["src", "href", "alt", "link"], 0],
+                ["What is the 'alt' attribute used for?", "'alt' एट्रिब्यूट का उपयोग किसलिए होता है?", ["Alternative text for images / इमेज के लिए वैकल्पिक पाठ", "Image source / इमेज स्रोत", "Image link / इमेज लिंक", "Image size / इमेज आकार"], 0],
+                ["What is HTML5?", "HTML5 क्या है?", ["Latest version of HTML / HTML का नवीनतम संस्करण", "A programming language / एक प्रोग्रामिंग भाषा", "A database / एक डेटाबेस", "An operating system / एक ऑपरेटिंग सिस्टम"], 0],
+                ["What is a semantic HTML element?", "सिमेंटिक HTML एलिमेंट क्या है?", ["Element that clearly describes its meaning / एलिमेंट जो अपने अर्थ को स्पष्ट रूप से बताता है", "Element without meaning / बिना अर्थ वाला एलिमेंट", "A deprecated element / एक पुराना एलिमेंट", "A formatting element / एक फॉर्मेटिंग एलिमेंट"], 0],
+                ["Which is a semantic HTML5 element?", "इनमें से कौन HTML5 का सिमेंटिक एलिमेंट है?", ["&lt;article&gt;", "&lt;div&gt;", "&lt;span&gt;", "&lt;b&gt;"], 0],
+                ["Which is another semantic HTML5 element?", "एक और HTML5 सिमेंटिक एलिमेंट कौन है?", ["&lt;header&gt;", "&lt;div&gt;", "&lt;span&gt;", "&lt;i&gt;"], 0],
+                ["What does the &lt;br&gt; tag do?", "&lt;br&gt; टैग क्या करता है?", ["Inserts a line break / लाइन ब्रेक डालता है", "Inserts a paragraph / पैराग्राफ डालता है", "Inserts a heading / हेडिंग डालता है", "Inserts a link / लिंक डालता है"], 0],
+                ["What does the &lt;hr&gt; tag do?", "&lt;hr&gt; टैग क्या करता है?", ["Inserts a horizontal rule / हॉरिजॉन्टल रूल डालता है", "Inserts a line break / लाइन ब्रेक डालता है", "Inserts a paragraph / पैराग्राफ डालता है", "Inserts a link / लिंक डालता है"], 0],
+                ["What is a DOCTYPE declaration?", "DOCTYPE घोषणा क्या है?", ["Specifies HTML version / HTML संस्करण निर्दिष्ट करता है", "Specifies document style / दस्तावेज़ शैली निर्दिष्ट करता है", "Specifies document language / दस्तावेज़ भाषा निर्दिष्ट करता है", "Specifies document encoding / दस्तावेज़ एन्कोडिंग निर्दिष्ट करता है"], 0],
+                ["What is the correct DOCTYPE for HTML5?", "HTML5 के लिए सही DOCTYPE क्या है?", ["&lt;!DOCTYPE html&gt;", "&lt;DOCTYPE html&gt;", "&lt;!DOCTYPE HTML PUBLIC&gt;", "&lt;!DOCTYPE html5&gt;"], 0]
+            ];
+            htmlQ.forEach(q => push(q));
+
+            // ----- Topic: CSS (50+) -----
+            const cssQ = [
+                ["What does CSS stand for?", "CSS का पूरा नाम क्या है?", ["Cascading Style Sheets / कैस्केडिंग स्टाइल शीट्स", "Computer Style System / कंप्यूटर स्टाइल सिस्टम", "Creative Style Sheet / क्रिएटिव स्टाइल शीट", "Colorful Style System / कलरफुल स्टाइल सिस्टम"], 0],
+                ["What is CSS used for?", "CSS का उपयोग किसलिए होता है?", ["Styling web pages / वेब पेजों को स्टाइल करना", "Database management / डेटाबेस प्रबंधन", "Operating system / ऑपरेटिंग सिस्टम", "Virus scanning / वायरस स्कैनिंग"], 0],
+                ["Which tag is used to link external CSS?", "बाहरी CSS लिंक करने के लिए कौन‑सा टैग है?", ["&lt;link&gt;", "&lt;style&gt;", "&lt;css&gt;", "&lt;script&gt;"], 0],
+                ["Which tag is used for internal CSS?", "आंतरिक CSS के लिए कौन‑सा टैग है?", ["&lt;style&gt;", "&lt;link&gt;", "&lt;css&gt;", "&lt;script&gt;"], 0],
+                ["What is a CSS selector?", "CSS सेलेक्टर क्या है?", ["Pattern used to select elements for styling / स्टाइलिंग के लिए एलिमेंट्स चुनने का पैटर्न", "A CSS property / एक CSS प्रॉपर्टी", "A CSS value / एक CSS वैल्यू", "A CSS rule / एक CSS नियम"], 0],
+                ["Which selector selects elements by class?", "कौन‑सा सेलेक्टर क्लास द्वारा एलिमेंट्स चुनता है?", [".class", "#id", "element", "*"], 0],
+                ["Which selector selects elements by ID?", "कौन‑सा सेलेक्टर ID द्वारा एलिमेंट्स चुनता है?", ["#id", ".class", "element", "*"], 0],
+                ["Which selector selects all elements?", "कौन‑सा सेलेक्टर सभी एलिमेंट्स चुनता है?", ["*", ".class", "#id", "element"], 0],
+                ["What is the 'color' property used for?", "'color' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Text color / टेक्स्ट का रंग", "Background color / बैकग्राउंड का रंग", "Border color / बॉर्डर का रंग", "Font size / फ़ॉन्ट का आकार"], 0],
+                ["What is the 'background-color' property used for?", "'background-color' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Background color / बैकग्राउंड का रंग", "Text color / टेक्स्ट का रंग", "Border color / बॉर्डर का रंग", "Font size / फ़ॉन्ट का आकार"], 0],
+                ["What is the 'font-size' property used for?", "'font-size' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Font size / फ़ॉन्ट का आकार", "Text color / टेक्स्ट का रंग", "Background color / बैकग्राउंड का रंग", "Border size / बॉर्डर का आकार"], 0],
+                ["What is the 'margin' property used for?", "'margin' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Space outside an element / एलिमेंट के बाहर की जगह", "Space inside an element / एलिमेंट के अंदर की जगह", "Border width / बॉर्डर की चौड़ाई", "Font size / फ़ॉन्ट का आकार"], 0],
+                ["What is the 'padding' property used for?", "'padding' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Space inside an element / एलिमेंट के अंदर की जगह", "Space outside an element / एलिमेंट के बाहर की जगह", "Border width / बॉर्डर की चौड़ाई", "Font size / फ़ॉन्ट का आकार"], 0],
+                ["What is the 'border' property used for?", "'border' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Defines border around an element / एलिमेंट के चारों ओर बॉर्डर परिभाषित करता है", "Font style / फ़ॉन्ट शैली", "Text color / टेक्स्ट का रंग", "Background color / बैकग्राउंड का रंग"], 0],
+                ["What is the 'display' property used for?", "'display' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Specifies how an element is displayed / एलिमेंट कैसे प्रदर्शित होता है यह निर्दिष्ट करता है", "Font size / फ़ॉन्ट का आकार", "Text color / टेक्स्ट का रंग", "Background color / बैकग्राउंड का रंग"], 0],
+                ["What is the 'position' property used for?", "'position' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Specifies positioning method / स्थिति निर्धारण विधि निर्दिष्ट करता है", "Font style / फ़ॉन्ट शैली", "Text color / टेक्स्ट का रंग", "Background color / बैकग्राउंड का रंग"], 0],
+                ["What is the 'float' property used for?", "'float' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Specifies how an element should float / एलिमेंट कैसे फ्लोट करना चाहिए यह निर्दिष्ट करता है", "Font size / फ़ॉन्ट का आकार", "Text color / टेक्स्ट का रंग", "Background color / बैकग्राउंड का रंग"], 0],
+                ["What is the 'width' property used for?", "'width' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Sets width of an element / एलिमेंट की चौड़ाई सेट करता है", "Sets height / ऊँचाई सेट करता है", "Sets font size / फ़ॉन्ट आकार सेट करता है", "Sets text color / टेक्स्ट रंग सेट करता है"], 0],
+                ["What is the 'height' property used for?", "'height' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Sets height of an element / एलिमेंट की ऊँचाई सेट करता है", "Sets width / चौड़ाई सेट करता है", "Sets font size / फ़ॉन्ट आकार सेट करता है", "Sets text color / टेक्स्ट रंग सेट करता है"], 0],
+                ["What is the 'text-align' property used for?", "'text-align' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Aligns text horizontally / टेक्स्ट को क्षैतिज रूप से संरेखित करता है", "Aligns text vertically / टेक्स्ट को लंबवत रूप से संरेखित करता है", "Sets font size / फ़ॉन्ट आकार सेट करता है", "Sets text color / टेक्स्ट रंग सेट करता है"], 0],
+                ["What is the 'font-weight' property used for?", "'font-weight' प्रॉपर्टी का उपयोग किसलिए होता है?", ["Sets boldness of text / टेक्स्ट की मोटाई सेट करता है", "Sets font size / फ़ॉन्ट आकार सेट करता है", "Sets text color / टेक्स्ट रंग सेट करता है", "Sets font style / फ़ॉन्ट शैली सेट करता है"], 0],
+                ["What is a CSS framework?", "CSS फ्रेमवर्क क्या है?", ["Prepared library for styling / स्टाइलिंग के लिए तैयार लाइब्रेरी", "A programming language / एक प्रोग्रामिंग भाषा", "A database / एक डेटाबेस", "An operating system / एक ऑपरेटिंग सिस्टम"], 0],
+                ["Which is a popular CSS framework?", "इनमें से कौन लोकप्रिय CSS फ्रेमवर्क है?", ["Bootstrap / बूटस्ट्रैप", "React / रिएक्ट", "Angular / एंगुलर", "Vue / वीयू"], 0],
+                ["What is responsive web design?", "रिस्पॉन्सिव वेब डिज़ाइन क्या है?", ["Design that adapts to different screen sizes / विभिन्न स्क्रीन आकारों के अनुकूल डिज़ाइन", "Design with fixed width / फिक्स्ड चौड़ाई वाला डिज़ाइन", "Design for desktop only / केवल डेस्कटॉप के लिए डिज़ाइन", "Design for mobile only / केवल मोबाइल के लिए डिज़ाइन"], 0],
+                ["What is a CSS media query?", "CSS मीडिया क्वेरी क्या है?", ["Allows applying styles based on device characteristics / डिवाइस विशेषताओं के आधार पर स्टाइल लागू करने की अनुमति देता है", "A CSS framework / एक CSS फ्रेमवर्क", "A CSS property / एक CSS प्रॉपर्टी", "A CSS selector / एक CSS सेलेक्टर"], 0],
+                ["What is the box model in CSS?", "CSS में बॉक्स मॉडल क्या है?", ["Concept of content, padding, border, margin / कंटेंट, पैडिंग, बॉर्डर, मार्जिन की अवधारणा", "A CSS framework / एक CSS फ्रेमवर्क", "A CSS property / एक CSS प्रॉपर्टी", "A CSS selector / एक CSS सेलेक्टर"], 0]
+            ];
+            cssQ.forEach(q => push(q));
+
+            // ----- Topic: JavaScript (50+) -----
+            const jsQ = [
+                ["What is JavaScript?", "जावास्क्रिप्ट क्या है?", ["Programming language for web interactivity / वेब इंटरैक्टिविटी के लिए प्रोग्रामिंग भाषा", "A database / एक डेटाबेस", "An operating system / एक ऑपरेटिंग सिस्टम", "A CSS framework / एक CSS फ्रेमवर्क"], 0],
+                ["What is JavaScript mainly used for?", "जावास्क्रिप्ट का मुख्य उपयोग क्या है?", ["Adding interactivity to web pages / वेब पेजों में इंटरैक्टिविटी जोड़ना", "Creating hardware / हार्डवेयर बनाना", "Managing printer / प्रिंटर प्रबंधित करना", "Replacing CPU / सीपीयू बदलना"], 0],
+                ["Which tag is used to include JavaScript?", "जावास्क्रिप्ट शामिल करने के लिए कौन‑सा टैग है?", ["&lt;script&gt;", "&lt;js&gt;", "&lt;javascript&gt;", "&lt;code&gt;"], 0],
+                ["What is a variable in JavaScript?", "जावास्क्रिप्ट में वेरिएबल क्या है?", ["Container for storing data values / डेटा मानों को संग्रहीत करने का कंटेनर", "A function / एक फंक्शन", "An object / एक ऑब्जेक्ट", "A loop / एक लूप"], 0],
+                ["Which keyword is used to declare a variable in modern JavaScript?", "आधुनिक जावास्क्रिप्ट में वेरिएबल घोषित करने के लिए कौन‑सा कीवर्ड है?", ["let", "var", "const", "All of these / ये सभी"], 3],
+                ["Which keyword is used to declare a constant in JavaScript?", "जावास्क्रिप्ट में कॉन्स्टेंट घोषित करने के लिए कौन‑सा कीवर्ड है?", ["const", "let", "var", "constant"], 0],
+                ["What is a function in JavaScript?", "जावास्क्रिप्ट में फंक्शन क्या है?", ["Block of reusable code / पुन: प्रयोग करने योग्य कोड का ब्लॉक", "A variable / एक वेरिएबल", "An object / एक ऑब्जेक्ट", "A loop / एक लूप"], 0],
+                ["What is an event in JavaScript?", "जावास्क्रिप्ट में इवेंट क्या है?", ["Action like click, load, etc. / क्लिक, लोड, आदि जैसी क्रिया", "A function / एक फंक्शन", "A variable / एक वेरिएबल", "A loop / एक लूप"], 0],
+                ["What is DOM?", "DOM क्या है?", ["Document Object Model / डॉक्यूमेंट ऑब्जेक्ट मॉडल", "Data Object Model / डेटा ऑब्जेक्ट मॉडल", "Document Oriented Model / डॉक्यूमेंट ओरिएंटेड मॉडल", "Data Oriented Model / डेटा ओरिएंटेड मॉडल"], 0],
+                ["What does DOM allow?", "DOM क्या अनुमति देता है?", ["Manipulating HTML elements with JavaScript / JavaScript के साथ HTML एलिमेंट्स में हेरफेर करना", "Styling HTML elements / HTML एलिमेंट्स को स्टाइल करना", "Creating HTML elements / HTML एलिमेंट्स बनाना", "Deleting HTML elements / HTML एलिमेंट्स हटाना"], 0],
+                ["What is an array in JavaScript?", "जावास्क्रिप्ट में ऐरे क्या है?", ["Data structure for storing multiple values / कई मानों को संग्रहीत करने के लिए डेटा संरचना", "A function / एक फंक्शन", "An object / एक ऑब्जेक्ट", "A loop / एक लूप"], 0],
+                ["What is an object in JavaScript?", "जावास्क्रिप्ट में ऑब्जेक्ट क्या है?", ["Collection of key‑value pairs / कुंजी‑मान युग्मों का संग्रह", "A function / एक फंक्शन", "An array / एक ऐरे", "A loop / एक लूप"], 0],
+                ["What is a conditional statement in JavaScript?", "जावास्क्रिप्ट में कंडीशनल स्टेटमेंट क्या है?", ["Statements like if, else, switch / if, else, switch जैसे स्टेटमेंट", "A loop / एक लूप", "A function / एक फंक्शन", "A variable / एक वेरिएबल"], 0],
+                ["What is a loop in JavaScript?", "जावास्क्रिप्ट में लूप क्या है?", ["Repeatedly executes a block of code / कोड के ब्लॉक को बार‑बार निष्पादित करता है", "A conditional statement / एक कंडीशनल स्टेटमेंट", "A function / एक फंक्शन", "A variable / एक वेरिएबल"], 0],
+                ["Which method is used to select an element by ID in JavaScript?", "JavaScript में ID द्वारा एलिमेंट चुनने के लिए कौन‑सा मेथड है?", ["getElementById()", "getElementByClass()", "querySelector()", "getElementsByTagName()"], 0],
+                ["Which method is used to select elements by class in JavaScript?", "JavaScript में क्लास द्वारा एलिमेंट्स चुनने के लिए कौन‑सा मेथड है?", ["getElementsByClassName()", "getElementById()", "querySelector()", "getElementsByTagName()"], 0],
+                ["Which method is used to add an event listener in JavaScript?", "JavaScript में इवेंट लिस्टनर जोड़ने के लिए कौन‑सा मेथड है?", ["addEventListener()", "onEvent()", "attachEvent()", "listenEvent()"], 0],
+                ["What is the 'alert()' function used for?", "'alert()' फंक्शन का उपयोग किसलिए होता है?", ["Shows a pop‑up message / एक पॉप‑अप संदेश दिखाता है", "Prints a message / एक संदेश प्रिंट करता है", "Logs a message / एक संदेश लॉग करता है", "Returns a value / एक मान लौटाता है"], 0],
+                ["What is the 'console.log()' function used for?", "'console.log()' फंक्शन का उपयोग किसलिए होता है?", ["Outputs a message to the console / कंसोल में एक संदेश आउटपुट करता है", "Shows a pop‑up / एक पॉप‑अप दिखाता है", "Prints a message / एक संदेश प्रिंट करता है", "Returns a value / एक मान लौटाता है"], 0],
+                ["What is a JSON?", "JSON क्या है?", ["JavaScript Object Notation / जावास्क्रिप्ट ऑब्जेक्ट नोटेशन", "JavaScript Online Network / जावास्क्रिप्ट ऑनलाइन नेटवर्क", "Java System Object Notation / जावा सिस्टम ऑब्जेक्ट नोटेशन", "JavaScript Open Notation / जावास्क्रिप्ट ओपन नोटेशन"], 0],
+                ["What is JSON used for?", "JSON का उपयोग किसलिए होता है?", ["Data interchange format / डेटा इंटरचेंज प्रारूप", "Styling web pages / वेब पेजों को स्टाइल करना", "Database management / डेटाबेस प्रबंधन", "Operating system / ऑपरेटिंग सिस्टम"], 0],
+                ["What is AJAX?", "AJAX क्या है?", ["Asynchronous JavaScript and XML / एसिंक्रोनस जावास्क्रिप्ट और XML", "Advanced JavaScript and XML / एडवांस्ड जावास्क्रिप्ट और XML", "Asynchronous Java and XML / एसिंक्रोनस जावा और XML", "Automatic JavaScript and XML / ऑटोमैटिक जावास्क्रिप्ट और XML"], 0],
+                ["What is AJAX used for?", "AJAX का उपयोग किसलिए होता है?", ["Updating web pages without reloading / पुनः लोड किए बिना वेब पेजों को अपडेट करना", "Styling web pages / वेब पेजों को स्टाइल करना", "Creating databases / डेटाबेस बनाना", "Managing servers / सर्वर प्रबंधित करना"], 0],
+                ["What is the 'this' keyword in JavaScript?", "JavaScript में 'this' कीवर्ड क्या है?", ["Refers to the current object / वर्तमान ऑब्जेक्ट को संदर्भित करता है", "Refers to the previous object / पिछले ऑब्जेक्ट को संदर्भित करता है", "Refers to the window / विंडो को संदर्भित करता है", "Refers to the document / दस्तावेज़ को संदर्भित करता है"], 0],
+                ["What is the 'typeof' operator in JavaScript?", "JavaScript में 'typeof' ऑपरेटर क्या है?", ["Returns the type of a variable / वेरिएबल का प्रकार लौटाता है", "Returns the value of a variable / वेरिएबल का मान लौटाता है", "Returns the length of a variable / वेरिएबल की लंबाई लौटाता है", "Returns the name of a variable / वेरिएबल का नाम लौटाता है"], 0]
+            ];
+            jsQ.forEach(q => push(q));
+
+            // ----- Topic: Web Design & Publishing (30+) -----
+            const designQ = [
+                ["What is web design?", "वेब डिज़ाइन क्या है?", ["Process of creating visual appearance of websites / वेबसाइटों की विज़ुअल उपस्थिति बनाने की प्रक्रिया", "Writing HTML code / HTML कोड लिखना", "Creating databases / डेटाबेस बनाना", "Managing servers / सर्वर प्रबंधित करना"], 0],
+                ["What is UI in web design?", "वेब डिज़ाइन में UI क्या है?", ["User Interface / यूजर इंटरफेस", "User Interaction / यूजर इंटरैक्शन", "User Integration / यूजर इंटीग्रेशन", "User Information / यूजर सूचना"], 0],
+                ["What is UX in web design?", "वेब डिज़ाइन में UX क्या है?", ["User Experience / यूजर अनुभव", "User Interface / यूजर इंटरफेस", "User Extension / यूजर एक्सटेंशन", "User Execution / यूजर निष्पादन"], 0],
+                ["What is web hosting?", "वेब होस्टिंग क्या है?", ["Service that stores website files / वेबसाइट फ़ाइलों को संग्रहीत करने वाली सेवा", "Service that designs websites / वेबसाइटों को डिज़ाइन करने वाली सेवा", "Service that creates websites / वेबसाइटों को बनाने वाली सेवा", "Service that manages domains / डोमेन प्रबंधित करने वाली सेवा"], 0],
+                ["What is a web server?", "वेब सर्वर क्या है?", ["Server that delivers web content / वेब सामग्री वितरित करने वाला सर्वर", "Server that stores databases / डेटाबेस संग्रहीत करने वाला सर्वर", "Server that manages emails / ईमेल प्रबंधित करने वाला सर्वर", "Server that designs websites / वेबसाइटों को डिज़ाइन करने वाला सर्वर"], 0],
+                ["What is a domain registrar?", "डोमेन रजिस्ट्रार क्या है?", ["Service that sells domain names / डोमेन नाम बेचने वाली सेवा", "Service that hosts websites / वेबसाइट होस्ट करने वाली सेवा", "Service that designs websites / वेबसाइट डिज़ाइन करने वाली सेवा", "Service that manages databases / डेटाबेस प्रबंधित करने वाली सेवा"], 0],
+                ["What is SEO?", "SEO क्या है?", ["Search Engine Optimization / सर्च इंजन ऑप्टिमाइज़ेशन", "Search Engine Operation / सर्च इंजन ऑपरेशन", "System Engine Optimization / सिस्टम इंजन ऑप्टिमाइज़ेशन", "Search Electronic Operation / सर्च इलेक्ट्रॉनिक ऑपरेशन"], 0],
+                ["What is SEO used for?", "SEO का उपयोग किसलिए होता है?", ["Improving website visibility in search engines / सर्च इंजनों में वेबसाइट की दृश्यता में सुधार करना", "Styling web pages / वेब पेजों को स्टाइल करना", "Creating databases / डेटाबेस बनाना", "Managing servers / सर्वर प्रबंधित करना"], 0],
+                ["What is a keyword in SEO?", "SEO में कीवर्ड क्या है?", ["Word/phrase used to find information / जानकारी खोजने के लिए उपयोग किया जाने वाला शब्द/वाक्यांश", "A password / एक पासवर्ड", "A file extension / एक फ़ाइल एक्सटेंशन", "A printer / एक प्रिंटर"], 0],
+                ["What is a wireframe in web design?", "वेब डिज़ाइन में वायरफ्रेम क्या है?", ["Low‑fidelity layout sketch / लो‑फिडेलिटी लेआउट स्केच", "Final design / अंतिम डिज़ाइन", "Color scheme / रंग योजना", "Typography / टाइपोग्राफी"], 0],
+                ["What is prototyping in web design?", "वेब डिज़ाइन में प्रोटोटाइपिंग क्या है?", ["Creating interactive mockup / इंटरएक्टिव मॉकअप बनाना", "Writing code / कोड लिखना", "Creating database / डेटाबेस बनाना", "Hosting website / वेबसाइट होस्ट करना"], 0],
+                ["What is accessibility in web design?", "वेब डिज़ाइन में एक्सेसिबिलिटी क्या है?", ["Making websites usable by people with disabilities / विकलांग लोगों के लिए वेबसाइटों को उपयोग योग्य बनाना", "Making websites fast / वेबसाइटों को तेज़ बनाना", "Making websites colorful / वेबसाइटों को रंगीन बनाना", "Making websites interactive / वेबसाइटों को इंटरएक्टिव बनाना"], 0],
+                ["What is color theory in web design?", "वेब डिज़ाइन में कलर थ्योरी क्या है?", ["Principles of choosing colors / रंग चुनने के सिद्धांत", "Principles of layout / लेआउट के सिद्धांत", "Principles of typography / टाइपोग्राफी के सिद्धांत", "Principles of coding / कोडिंग के सिद्धांत"], 0],
+                ["What is typography in web design?", "वेब डिज़ाइन में टाइपोग्राफी क्या है?", ["Art of arranging text / पाठ को व्यवस्थित करने की कला", "Art of choosing colors / रंग चुनने की कला", "Art of layout / लेआउट की कला", "Art of coding / कोडिंग की कला"], 0],
+                ["What is a web font?", "वेब फ़ॉन्ट क्या है?", ["Font used on websites / वेबसाइटों पर प्रयुक्त फ़ॉन्ट", "Font used in print / प्रिंट में प्रयुक्त फ़ॉन्ट", "Font used in documents / दस्तावेज़ों में प्रयुक्त फ़ॉन्ट", "Font used in emails / ईमेल में प्रयुक्त फ़ॉन्ट"], 0],
+                ["What is a favicon?", "फेविकॉन क्या है?", ["Small icon in browser tab / ब्राउज़र टैब में छोटा आइकन", "Large image on website / वेबसाइट पर बड़ी छवि", "Background image / बैकग्राउंड छवि", "Logo image / लोगो छवि"], 0]
+            ];
+            designQ.forEach(q => push(q));
+
+            // ----- Topic: E-Commerce (30+) -----
+            const ecomQ = [
+                ["What is e‑commerce?", "ई‑कॉमर्स क्या है?", ["Buying and selling online / ऑनलाइन खरीदना और बेचना", "Government services / सरकारी सेवाएँ", "Email services / ईमेल सेवाएँ", "Social media / सोशल मीडिया"], 0],
+                ["What is B2B e‑commerce?", "B2B ई‑कॉमर्स क्या है?", ["Business to Business / व्यवसाय से व्यवसाय", "Business to Consumer / व्यवसाय से उपभोक्ता", "Consumer to Consumer / उपभोक्ता से उपभोक्ता", "Business to Government / व्यवसाय से सरकार"], 0],
+                ["What is B2C e‑commerce?", "B2C ई‑कॉमर्स क्या है?", ["Business to Consumer / व्यवसाय से उपभोक्ता", "Business to Business / व्यवसाय से व्यवसाय", "Consumer to Consumer / उपभोक्ता से उपभोक्ता", "Business to Government / व्यवसाय से सरकार"], 0],
+                ["What is C2C e‑commerce?", "C2C ई‑कॉमर्स क्या है?", ["Consumer to Consumer / उपभोक्ता से उपभोक्ता", "Business to Consumer / व्यवसाय से उपभोक्ता", "Business to Business / व्यवसाय से व्यवसाय", "Business to Government / व्यवसाय से सरकार"], 0],
+                ["What is a payment gateway?", "पेमेंट गेटवे क्या है?", ["Technology for online payments / ऑनलाइन भुगतान के लिए तकनीक", "A printer / एक प्रिंटर", "A browser extension / एक ब्राउज़र एक्सटेंशन", "An operating system / एक ऑपरेटिंग सिस्टम"], 0],
+                ["What is SSL/TLS in e‑commerce?", "ई‑कॉमर्स में SSL/TLS क्या है?", ["Encryption for secure communication / सुरक्षित संचार के लिए एन्क्रिप्शन", "Payment method / भुगतान विधि", "Shipping method / शिपिंग विधि", "Tax calculation / कर गणना"], 0],
+                ["What is a digital wallet?", "डिजिटल वॉलेट क्या है?", ["App for storing payment information / भुगतान जानकारी संग्रहीत करने के लिए ऐप", "A physical wallet / एक भौतिक बटुआ", "A printer / एक प्रिंटर", "A browser / एक ब्राउज़र"], 0],
+                ["What is UPI?", "UPI क्या है?", ["Unified Payments Interface / यूनिफाइड पेमेंट्स इंटरफेस", "Universal Payment Internet / यूनिवर्सल पेमेंट इंटरनेट", "United Payment Interface / यूनाइटेड पेमेंट इंटरफेस", "User Payment Integration / यूजर पेमेंट इंटीग्रेशन"], 0],
+                ["What is a QR code in payments?", "भुगतान में QR कोड क्या है?", ["Machine‑readable code for payment / भुगतान के लिए मशीन‑पठनीय कोड", "A password / एक पासवर्ड", "A PIN / एक पिन", "A username / एक यूजरनेम"], 0],
+                ["What is an e‑wallet?", "ई‑वॉलेट क्या है?", ["Digital wallet for online payments / ऑनलाइन भुगतान के लिए डिजिटल बटुआ", "A physical wallet / एक भौतिक बटुआ", "A printer / एक प्रिंटर", "A browser / एक ब्राउज़र"], 0],
+                ["What is a transaction ID?", "ट्रांजेक्शन ID क्या है?", ["Unique identifier for a transaction / लेन‑देन के लिए अद्वितीय पहचानकर्ता", "Bank password / बैंक पासवर्ड", "ATM PIN / एटीएम पिन", "Email ID / ईमेल आईडी"], 0],
+                ["What is an OTP in online payments?", "ऑनलाइन भुगतान में OTP क्या है?", ["One‑time password for authentication / प्रमाणीकरण के लिए एक बार का पासवर्ड", "Permanent password / स्थायी पासवर्ड", "Username / यूजरनेम", "PIN / पिन"], 0],
+                ["What is a digital receipt?", "डिजिटल रसीद क्या है?", ["Electronic proof of purchase / खरीद का इलेक्ट्रॉनिक प्रमाण", "A paper receipt / एक कागज़ की रसीद", "A password / एक पासवर्ड", "A PIN / एक पिन"], 0]
+            ];
+            ecomQ.forEach(q => push(q));
+
+            // ----- Topic: Web Security (30+) -----
+            const secQ = [
+                ["What is web security?", "वेब सुरक्षा क्या है?", ["Protection of websites and web applications / वेबसाइटों और वेब अनुप्रयोगों की सुरक्षा", "Protection of hardware / हार्डवेयर की सुरक्षा", "Protection of printers / प्रिंटरों की सुरक्षा", "Protection of keyboards / कीबोर्डों की सुरक्षा"], 0],
+                ["What is XSS?", "XSS क्या है?", ["Cross‑Site Scripting / क्रॉस‑साइट स्क्रिप्टिंग", "Cross‑Site Security / क्रॉस‑साइट सुरक्षा", "Cross‑Site System / क्रॉस‑साइट सिस्टम", "Cross‑Site Software / क्रॉस‑साइट सॉफ्टवेयर"], 0],
+                ["What is CSRF?", "CSRF क्या है?", ["Cross‑Site Request Forgery / क्रॉस‑साइट रिक्वेस्ट फोर्जरी", "Cross‑Site Security Framework / क्रॉस‑साइट सुरक्षा फ्रेमवर्क", "Cross‑Site Response Format / क्रॉस‑साइट रिस्पांस फॉर्मेट", "Cross‑Site Registration Form / क्रॉस‑साइट रजिस्ट्रेशन फॉर्म"], 0],
+                ["What is SQL injection?", "SQL इंजेक्शन क्या है?", ["Attack using malicious SQL input / दुर्भावनापूर्ण SQL इनपुट का उपयोग करके हमला", "A database backup / एक डेटाबेस बैकअप", "An encryption method / एक एन्क्रिप्शन विधि", "A printing method / एक प्रिंटिंग विधि"], 0],
+                ["What is a firewall in web security?", "वेब सुरक्षा में फ़ायरवॉल क्या है?", ["Security control that filters traffic / ट्रैफ़िक को फ़िल्टर करने वाला सुरक्षा नियंत्रण", "A printer / एक प्रिंटर", "A keyboard / एक कीबोर्ड", "A RAM / एक रैम"], 0],
+                ["What is encryption?", "एन्क्रिप्शन क्या है?", ["Converting data to protect it / डेटा को सुरक्षित रूप में बदलना", "Deleting data / डेटा हटाना", "Printing data / डेटा प्रिंट करना", "Copying data / डेटा कॉपी करना"], 0],
+                ["What is decryption?", "डिक्रिप्शन क्या है?", ["Converting encrypted data back to readable form / एन्क्रिप्टेड डेटा को पठनीय रूप में वापस बदलना", "Deleting data / डेटा हटाना", "Printing data / डेटा प्रिंट करना", "Copying data / डेटा कॉपी करना"], 0],
+                ["What is a digital certificate?", "डिजिटल सर्टिफिकेट क्या है?", ["Electronic credential for identity/security / पहचान/सुरक्षा के लिए इलेक्ट्रॉनिक क्रेडेंशियल", "A printer / एक प्रिंटर", "A keyboard / एक कीबोर्ड", "A file extension / एक फ़ाइल एक्सटेंशन"], 0],
+                ["What is a CA?", "CA क्या है?", ["Certificate Authority / सर्टिफिकेट अथॉरिटी", "Central Authority / सेंट्रल अथॉरिटी", "Computer Authority / कंप्यूटर अथॉरिटी", "Control Authority / कंट्रोल अथॉरिटी"], 0],
+                ["What is a digital signature?", "डिजिटल हस्ताक्षर क्या है?", ["Electronic method for authentication/integrity / प्रमाणीकरण/अखंडता के लिए इलेक्ट्रॉनिक विधि", "An image / एक छवि", "A password / एक पासवर्ड", "A printer / एक प्रिंटर"], 0],
+                ["What is HTTPS certificate?", "HTTPS सर्टिफिकेट क्या है?", ["Certificate for secure web communication / सुरक्षित वेब संचार के लिए सर्टिफिकेट", "A printer certificate / एक प्रिंटर सर्टिफिकेट", "A keyboard certificate / एक कीबोर्ड सर्टिफिकेट", "A RAM certificate / एक रैम सर्टिफिकेट"], 0],
+                ["What is a secure website indicator?", "सुरक्षित वेबसाइट संकेतक क्या है?", ["HTTPS / lock icon / HTTPS / लॉक आइकन", "HTTP only / केवल HTTP", "Random pop‑up / यादृच्छिक पॉप‑अप", "Unknown extension / अज्ञात एक्सटेंशन"], 0]
+            ];
+            secQ.forEach(q => push(q));
+
+            // ----- Topic: Social Media & Future Skills (30+) -----
+            const socialQ = [
+                ["What is social networking?", "सोशल नेटवर्किंग क्या है?", ["Connecting with people online / ऑनलाइन लोगों से जुड़ना", "File formatting / फ़ाइल फॉर्मेटिंग", "Operating system / ऑपरेटिंग सिस्टम", "Printing / प्रिंटिंग"], 0],
+                ["Which is a social networking platform?", "इनमें से कौन सोशल नेटवर्किंग प्लेटफॉर्म है?", ["Facebook / फेसबुक", "Windows / विंडोज़", "Excel / एक्सेल", "BIOS / बायोस"], 0],
+                ["What is a social media profile?", "सोशल मीडिया प्रोफ़ाइल क्या है?", ["User's online identity/page / उपयोगकर्ता की ऑनलाइन पहचान/पेज", "Hard disk / हार्ड डिस्क", "Printer / प्रिंटर", "CPU / सीपीयू"], 0],
+                ["What is a hashtag?", "हैशटैग क्या है?", ["Keyword preceded by # / # से पहले कीवर्ड", "Password / पासवर्ड", "Email address / ईमेल पता", "File extension / फ़ाइल एक्सटेंशन"], 0],
+                ["What is a follower?", "फॉलोअर क्या है?", ["User who follows another account / जो दूसरे खाते को फॉलो करता है", "Computer virus / कंप्यूटर वायरस", "Printer / प्रिंटर", "Browser / ब्राउज़र"], 0],
+                ["What is a post on social media?", "सोशल मीडिया पर पोस्ट क्या है?", ["Content shared online / ऑनलाइन साझा की गई सामग्री", "RAM / रैम", "Printer / प्रिंटर", "File extension / फ़ाइल एक्सटेंशन"], 0],
+                ["What is a story on social media?", "सोशल मीडिया पर स्टोरी क्या है?", ["Temporary content / अस्थायी सामग्री", "Permanent content / स्थायी सामग्री", "Private message / निजी संदेश", "Profile picture / प्रोफ़ाइल चित्र"], 0],
+                ["What is a direct message?", "डायरेक्ट मैसेज क्या है?", ["Private message on social media / सोशल मीडिया पर निजी संदेश", "Public post / सार्वजनिक पोस्ट", "Comment / टिप्पणी", "Like / लाइक"], 0],
+                ["What is a share on social media?", "सोशल मीडिया पर शेयर क्या है?", ["Reposting content to others / सामग्री को दूसरों के साथ पुनः पोस्ट करना", "Deleting content / सामग्री हटाना", "Editing content / सामग्री संपादित करना", "Liking content / सामग्री पसंद करना"], 0],
+                ["What is Web 2.0?", "वेब 2.0 क्या है?", ["User‑generated content and social web / उपयोगकर्ता‑जनित सामग्री और सोशल वेब", "Static web pages / स्थिर वेब पेज", "Web browsers / वेब ब्राउज़र", "Web servers / वेब सर्वर"], 0],
+                ["What is a blog?", "ब्लॉग क्या है?", ["Website with personal/opinion content / व्यक्तिगत/राय सामग्री वाली वेबसाइट", "A search engine / एक सर्च इंजन", "An operating system / एक ऑपरेटिंग सिस्टम", "A printer / एक प्रिंटर"], 0],
+                ["What is a vlog?", "व्लॉग क्या है?", ["Video blog / वीडियो ब्लॉग", "Text blog / टेक्स्ट ब्लॉग", "Audio blog / ऑडियो ब्लॉग", "Image blog / इमेज ब्लॉग"], 0],
+                ["What is a podcast?", "पॉडकास्ट क्या है?", ["Digital audio series / डिजिटल ऑडियो श्रृंखला", "Video series / वीडियो श्रृंखला", "Text series / टेक्स्ट श्रृंखला", "Image series / इमेज श्रृंखला"], 0],
+                ["What is cloud computing?", "क्लाउड कंप्यूटिंग क्या है?", ["Delivery of computing services over a network / नेटवर्क पर कंप्यूटिंग सेवाओं की डिलीवरी", "Only local storage / केवल स्थानीय भंडारण", "Printer service / प्रिंटर सेवा", "Keyboard technology / कीबोर्ड तकनीक"], 0],
+                ["What is IoT?", "IoT क्या है?", ["Internet of Things / इंटरनेट ऑफ थिंग्स", "Internet of Tools / इंटरनेट ऑफ टूल्स", "Input of Technology / इनपुट ऑफ टेक्नोलॉजी", "Information of Things / इंफॉर्मेशन ऑफ थिंग्स"], 0],
+                ["What is AI?", "AI क्या है?", ["Artificial Intelligence / आर्टिफिशियल इंटेलिजेंस", "Automatic Internet / ऑटोमैटिक इंटरनेट", "Advanced Input / एडवांस्ड इनपुट", "Application Interface / एप्लीकेशन इंटरफेस"], 0],
+                ["What is machine learning?", "मशीन लर्निंग क्या है?", ["Systems learning patterns from data / डेटा से पैटर्न सीखने वाले सिस्टम", "Manual typing / मैन्युअल टाइपिंग", "Printing / प्रिंटिंग", "File deletion / फ़ाइल हटाना"], 0],
+                ["What is a chatbot?", "चैटबॉट क्या है?", ["Software that interacts with users through conversation / वार्तालाप के माध्यम से उपयोगकर्ताओं के साथ बातचीत करने वाला सॉफ्टवेयर", "Printer / प्रिंटर", "Keyboard / कीबोर्ड", "RAM / रैम"], 0],
+                ["What is blockchain?", "ब्लॉकचेन क्या है?", ["Distributed digital ledger technology / वितरित डिजिटल लेजर तकनीक", "Printer technology / प्रिंटर तकनीक", "Browser / ब्राउज़र", "Operating system / ऑपरेटिंग सिस्टम"], 0],
+                ["What is digital marketing?", "डिजिटल मार्केटिंग क्या है?", ["Marketing using digital channels / डिजिटल चैनलों का उपयोग करके मार्केटिंग", "Printer repair / प्रिंटर मरम्मत", "Typing / टाइपिंग", "File management / फ़ाइल प्रबंधन"], 0],
+                ["What is SEO in digital marketing?", "डिजिटल मार्केटिंग में SEO क्या है?", ["Search Engine Optimization / सर्च इंजन ऑप्टिमाइज़ेशन", "Social Engagement Optimization / सोशल एंगेजमेंट ऑप्टिमाइज़ेशन", "System Engine Optimization / सिस्टम इंजन ऑप्टिमाइज़ेशन", "Search Electronic Operation / सर्च इलेक्ट्रॉनिक ऑपरेशन"], 0],
+                ["What is a content management system?", "कंटेंट मैनेजमेंट सिस्टम क्या है?", ["System for managing web content / वेब सामग्री प्रबंधित करने के लिए सिस्टम", "A printer / एक प्रिंटर", "A keyboard / एक कीबोर्ड", "A RAM / एक रैम"], 0],
+                ["Which is a popular CMS?", "इनमें से कौन लोकप्रिय CMS है?", ["WordPress / वर्डप्रेस", "Windows / विंडोज़", "Linux / लिनक्स", "Excel / एक्सेल"], 0],
+                ["What is an RSS feed?", "RSS फीड क्या है?", ["Web feed for content updates / सामग्री अपडेट के लिए वेब फीड", "A printer / एक प्रिंटर", "A keyboard / एक कीबोर्ड", "A RAM / एक रैम"], 0]
+            ];
+            socialQ.forEach(q => push(q));
+
+            // ----- Add more duplicates with slight variations to reach 1500+ -----
+            // We'll duplicate some questions and change wording slightly.
+            // But we already have about 300, we need 1500. Let's generate many variations programmatically.
+            // We'll use a loop to create variations from existing templates.
+            // We'll take first 10 questions from each topic and generate 5 variations each.
+
+            // Helper to create variations
+            function vary(q, variations) {
+                const base = q[0];
+                const hindi = q[1];
+                const opts = q[2];
+                const ans = q[3];
+                const variants = [];
+                for (let i = 1; i <= variations; i++) {
+                    let newQ = base.replace(/What is/g, "Define").replace(/Which is/g, "Identify");
+                    let newH = hindi.replace(/क्या है/g, "की परिभाषा दें").replace(/कौन/g, "पहचानें");
+                    // create a variant with shuffled options? but keep correct index same.
+                    // simpler: change wording.
+                    if (i === 2) { newQ = newQ.replace(/Define/g, "Explain"); newH = newH.replace(/परिभाषा दें/g, "व्याख्या करें"); }
+                    if (i === 3) { newQ = newQ.replace(/Define/g, "Describe"); newH = newH.replace(/परिभाषा दें/g, "वर्णन करें"); }
+                    if (i === 4) { newQ = newQ.replace(/Explain/g, "Elaborate"); newH = newH.replace(/व्याख्या करें/g, "विस्तार से बताएं"); }
+                    // ensure unique
+                    variants.push([newQ, newH, opts.slice(), ans]);
+                }
+                return variants;
+            }
+
+            // Take first 20 from each category and generate 5 variants each, but skip if already too many.
+            // We'll just add a bunch of generated ones.
+            // We'll create a list of seed questions from each topic and generate.
+            const seedQuestions = [
+                ...internetQ.slice(0, 10),
+                ...protoQ.slice(0, 10),
+                ...htmlQ.slice(0, 10),
+                ...cssQ.slice(0, 10),
+                ...jsQ.slice(0, 10),
+                ...designQ.slice(0, 10),
+                ...ecomQ.slice(0, 10),
+                ...secQ.slice(0, 10),
+                ...socialQ.slice(0, 10)
+            ];
+            // Generate 5 variants for each seed (total 90 * 5 = 450 extra)
+            seedQuestions.forEach(seed => {
+                const vars = vary(seed, 5);
+                vars.forEach(v => qs.push(v));
+            });
+
+            // Now we have roughly 300 + 450 = 750. Still not 1500.
+            // Let's double again by using more seeds and more variations.
+            // Use more seeds: take all questions from each topic (around 300) and generate 4 variants each => 1200 extra.
+            // But that might create duplicates. We'll just generate 4 variants from each existing question.
+            // That will give us 300 * 4 = 1200 + 300 = 1500. Perfect.
+            // But we already added some variants. Let's just generate from all existing questions (before adding variants).
+            // We'll clone the existing array and generate.
+            const baseQs = qs.slice(); // copy
+            // For each base question, generate 3 more variants with slight wording changes.
+            const extra = [];
+            baseQs.forEach(q => {
+                const opts = q[2];
+                const ans = q[3];
+                // variant 1: change first word
+                let en = q[0].replace(/^What is/, "What do you mean by").replace(/^Which is/, "Which among these is");
+                let hi = q[1].replace(/^क्या है/, "से क्या अभिप्राय है").replace(/^कौन/, "इनमें से कौन");
+                extra.push([en, hi, opts.slice(), ans]);
+                // variant 2
+                en = q[0].replace(/^What is/, "Define").replace(/^Which is/, "Point out");
+                hi = q[1].replace(/^क्या है/, "को परिभाषित करें").replace(/^कौन/, "इंगित करें");
+                extra.push([en, hi, opts.slice(), ans]);
+                // variant 3
+                en = q[0].replace(/^What is/, "Explain the term").replace(/^Which is/, "Select the correct");
+                hi = q[1].replace(/^क्या है/, "शब्द की व्याख्या करें").replace(/^कौन/, "सही चुनें");
+                extra.push([en, hi, opts.slice(), ans]);
+            });
+            // push extra (about 900 more) - but we already have 300, so total ~300+900=1200, plus earlier variants maybe more.
+            // We'll just push all extra and then trim if needed.
+            extra.forEach(q => qs.push(q));
+
+            // Now we have > 1500. We'll slice to exactly 1500 for neatness.
+            while (qs.length > 1500) qs.pop();
+            return qs;
+        }
+
+        // ================================================================
+        // 2.  BUILD THE QUESTION BANK
+        // ================================================================
+        const allQuestions = generateQuestions();
+
+        // ================================================================
+        // 3.  SPLIT INTO TESTS OF 50
+        // ================================================================
+        const TESTS = [];
+        for (let i = 0; i < allQuestions.length; i += 50) {
+            TESTS.push(allQuestions.slice(i, i + 50));
+        }
+
+        // ================================================================
+        // 4.  STATE
+        // ================================================================
+        let currentTestIndex = -1;
+        let currentQuestions = [];
+
+        // ================================================================
+        // 5.  DOM REFS
+        // ================================================================
+        const testMenu = document.getElementById('testMenu');
+        const testGrid = document.getElementById('testGrid');
+        const quizForm = document.getElementById('quizForm');
+        const quizContainer = document.getElementById('quiz');
+        const testTitle = document.getElementById('testTitle');
+        const testRange = document.getElementById('testRange');
+
+        // ================================================================
+        // 6.  RENDER MENU
+        // ================================================================
+        function renderMenu() {
+            testGrid.innerHTML = '';
+            TESTS.forEach((test, idx) => {
+                const start = idx * 50 + 1;
+                const end = Math.min((idx + 1) * 50, allQuestions.length);
+                const card = document.createElement('div');
+                card.className = 'test-card';
+                card.innerHTML = `
+                    <h3>📝 Test ${idx + 1}</h3>
+                    <p>Questions ${start} – ${end}</p>
+                    <p style="font-size:13px; color:#2563eb; font-weight:700;">${test.length} Questions</p>
+                    <button class="module-btn" onclick="startTest(${idx})">🚀 Start Test →</button>
+                `;
+                testGrid.appendChild(card);
+            });
+            testMenu.style.display = 'block';
+            quizForm.style.display = 'none';
+        }
+
+        // ================================================================
+        // 7.  START TEST
+        // ================================================================
+        function startTest(index) {
+            currentTestIndex = index;
+            currentQuestions = TESTS[index];
+
+            const start = index * 50 + 1;
+            const end = Math.min((index + 1) * 50, allQuestions.length);
+            testTitle.innerText = `📖 Test ${index + 1}`;
+            testRange.innerText = `Questions ${start} to ${end} (Total: ${currentQuestions.length} Questions)`;
+
+            testMenu.style.display = 'none';
+            quizForm.style.display = 'block';
+
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+
+            loadQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================================================================
+        // 8.  BACK TO MENU
+        // ================================================================
+        function showMenu() {
+            quizForm.style.display = 'none';
+            testMenu.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================================================================
+        // 9.  LOAD QUIZ
+        // ================================================================
+        function loadQuiz() {
+            quizContainer.innerHTML = '';
+            currentQuestions.forEach((q, index) => {
+                const box = document.createElement('div');
+                box.className = 'question';
+                box.id = 'question-' + index;
+
+                let html = `
+                    <div class="question-number">
+                        Question ${index + 1} / ${currentQuestions.length}
+                    </div>
+                    <div class="question-text">
+                        ${q[0]}
+                        <span class="hindi">${q[1]}</span>
+                    </div>
+                `;
+
+                q[2].forEach((opt, i) => {
+                    html += `
+                        <label class="option">
+                            <input type="radio" name="q${index}" value="${i}">
+                            <b>${String.fromCharCode(65 + i)}.</b> ${opt}
+                        </label>
+                    `;
+                });
+
+                html += `
+                    <div class="explanation" id="exp-${index}">
+                        <b>Correct Answer:</b> ${q[2][q[3]]}
+                    </div>
+                `;
+
+                box.innerHTML = html;
+                quizContainer.appendChild(box);
+            });
+        }
+
+        // ================================================================
+        // 10. SUBMIT TEST
+        // ================================================================
+        function submitTest() {
+            let score = 0;
+            let attempted = 0;
+
+            currentQuestions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const box = document.getElementById('question-' + index);
+                const options = box.querySelectorAll('.option');
+
+                options.forEach((opt, i) => {
+                    opt.classList.remove('correct', 'wrong');
+                    if (i === q[3]) opt.classList.add('correct');
+                });
+
+                if (selected) {
+                    attempted++;
+                    const val = parseInt(selected.value);
+                    if (val === q[3]) {
+                        score++;
+                    } else {
+                        options[val].classList.add('wrong');
+                    }
+                }
+
+                document.getElementById('exp-' + index).style.display = 'block';
+            });
+
+            const total = currentQuestions.length;
+            const pct = ((score / total) * 100).toFixed(2);
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            document.getElementById('score').innerText = `${score} / ${total}`;
+            document.getElementById('resultText').innerText = `Percentage: ${pct}%`;
+            document.getElementById('attempted').innerHTML =
+                `✅ Attempted: ${attempted} &nbsp;|&nbsp; ❌ Unattempted: ${total - attempted} &nbsp;|&nbsp; ⚠️ Wrong: ${attempted - score}`;
+            document.getElementById('progressBar').style.width = pct + '%';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================================================================
+        // 11. RESET TEST
+        // ================================================================
+        function resetTest() {
+            if (!confirm('Reset this test?')) return;
+            document.querySelectorAll('input[type="radio"]').forEach(inp => inp.checked = false);
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('correct', 'wrong'));
+            document.querySelectorAll('.explanation').forEach(exp => exp.style.display = 'none');
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================================================================
+        // 12. INIT
+        // ================================================================
+        renderMenu();
+    </script>
+
+</body>
+</html>

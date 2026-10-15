@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC MOCK | Candidate Dashboard</title>
+<meta name="description" content="SSC MOCK Candidate Dashboard - Mock Tests, Study Material, Performance, Progress and SSC Preparation.">
+<style>
+
+/* =========================================================
+   SSC MOCK — PREMIUM DASHBOARD
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --navy:#071b35;
+    --navy2:#0d315c;
+    --orange:#ff9d00;
+    --gold:#ffc34a;
+    --bg:#f3f6fa;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#748094;
+    --border:#e5eaf1;
+    --green:#16a34a;
+    --red:#dc2626;
+    --blue:#2563eb;
+    --purple:#7c3aed;
+    --shadow:0 8px 30px rgba(7,27,53,.07);
+    --radius:18px;
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+    background:
+        radial-gradient(circle at 10% 0%, rgba(255,157,0,.06), transparent 25%),
+        var(--bg);
+    color:var(--text);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    min-height:100vh;
+}
+
+/* =========================================================
+   3D MODE
+========================================================= */
+
+body.threeD .card,
+body.threeD .stat-card,
+body.threeD .quick-card,
+body.threeD .profile-hero{
+    transform-style:preserve-3d;
+    box-shadow:0 18px 35px rgba(7,27,53,.13), 0 3px 7px rgba(7,27,53,.06);
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+body.threeD .card:hover,
+body.threeD .stat-card:hover,
+body.threeD .quick-card:hover{
+    transform: translateY(-6px) rotateX(1deg) rotateY(-1deg);
+}
+
+body.threeD .stat-icon{
+    box-shadow:0 8px 15px rgba(0,0,0,.1);
+    transform:translateZ(12px);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    height:72px;
+    background:linear-gradient(135deg, var(--navy), var(--navy2));
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 5px 25px rgba(0,0,0,.16);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.mobile-menu{
+    display:none;
+    border:0;
+    background:transparent;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+}
+
+/* ===== ROUND LOGO (updated) ===== */
+.brand-logo{
+    width:52px;
+    height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    overflow:hidden;
+    border-radius:50%;           /* 👈 ROUND */
+    cursor:pointer;
+    transition:transform .3s ease, box-shadow .3s ease;
+    background:#000;
+    border:2.5px solid rgba(255,255,255,.9);
+    box-shadow:0 0 0 2px rgba(255,157,0,.55),
+               0 4px 14px rgba(0,0,0,.25);
+    flex-shrink:0;
+    padding:0;
+}
+
+.brand-logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:50%;           /* 👈 ROUND */
+    display:block;
+}
+
+.brand-logo:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 0 3px rgba(255,157,0,.85),
+               0 6px 18px rgba(0,0,0,.35);
+}
+
+.brand-name{
+    font-size:18px;
+    font-weight:900;
+}
+
+.brand-tagline{
+    display:block;
+    font-size:10px;
+    opacity:.65;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.header-btn{
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:11px;
+    background:rgba(255,255,255,.1);
+    color:white;
+    cursor:pointer;
+    font-size:17px;
+    transition:.2s;
+}
+
+.header-btn:hover{
+    background:rgba(255,255,255,.18);
+    transform:translateY(-2px);
+}
+
+.header-profile{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    cursor:pointer;
+    padding-left:5px;
+}
+
+.header-photo{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit:cover;
+    background:linear-gradient(135deg, var(--orange), var(--gold));
+    border:2px solid rgba(255,255,255,.65);
+}
+
+.header-user-name{
+    font-size:12px;
+    font-weight:800;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.layout{
+    display:flex;
+    min-height:calc(100vh - 72px);
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+    width:255px;
+    background:white;
+    border-right:1px solid var(--border);
+    padding:20px 14px;
+    position:sticky;
+    top:72px;
+    height:calc(100vh - 72px);
+    overflow-y:auto;
+}
+
+.sidebar-section{
+    color:#a0a9b7;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1.2px;
+    margin:12px 12px 8px;
+    text-transform:uppercase;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 13px;
+    margin:4px 0;
+    border-radius:11px;
+    text-decoration:none;
+    color:#596579;
+    font-size:13px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.nav-item:hover{
+    background:#fff5e5;
+    color:#d57b00;
+}
+
+.nav-item.active{
+    background:linear-gradient(90deg, #fff0d2, #fff9ee);
+    color:#d57900;
+    font-weight:800;
+    border-left:4px solid var(--orange);
+}
+
+.nav-icon{
+    width:24px;
+    text-align:center;
+    font-size:17px;
+}
+
+.logout-item{ color:var(--red); }
+.logout-item:hover{ background:#fff0f0; color:var(--red); }
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+    flex:1;
+    width:100%;
+    max-width:1600px;
+    margin:auto;
+    padding:28px;
+}
+
+.page-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.page-heading h1{
+    color:var(--navy);
+    font-size:27px;
+    font-weight:900;
+}
+
+.page-heading p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+.edit-profile-btn{
+    border:0;
+    background:var(--navy);
+    color:white;
+    padding:11px 16px;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.edit-profile-btn:hover{
+    background:var(--navy2);
+    transform:translateY(-2px);
+}
+
+/* =========================================================
+   PROFILE HERO
+========================================================= */
+
+.profile-hero{
+    background:
+        radial-gradient(circle at 85% 10%, rgba(255,195,74,.25), transparent 27%),
+        linear-gradient(135deg, var(--navy), var(--navy2));
+    border-radius:var(--radius);
+    color:white;
+    padding:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+    margin-bottom:20px;
+}
+
+.profile-hero::after{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    border:40px solid rgba(255,255,255,.04);
+    border-radius:50%;
+    right:-70px;
+    bottom:-130px;
+}
+
+.profile-content{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    position:relative;
+    z-index:2;
+}
+
+.profile-photo-box{ position:relative; }
+
+.profile-photo{
+    width:105px;
+    height:105px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid rgba(255,255,255,.8);
+    background:linear-gradient(135deg, var(--orange), var(--gold));
+}
+
+.photo-camera{
+    position:absolute;
+    right:0;
+    bottom:2px;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:var(--orange);
+    color:var(--navy);
+    border:3px solid var(--navy2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+.profile-details h2{
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+.profile-details p{
+    font-size:11px;
+    opacity:.75;
+    max-width:550px;
+    line-height:1.6;
+}
+
+.profile-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:10px;
+}
+
+.profile-badge{
+    padding:6px 10px;
+    border-radius:20px;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.13);
+    font-size:9px;
+}
+
+.target-box{
+    position:relative;
+    z-index:2;
+    text-align:right;
+    padding-right:30px;
+}
+
+.target-box small{
+    display:block;
+    font-size:9px;
+    opacity:.55;
+}
+
+.target-box strong{
+    display:block;
+    color:var(--gold);
+    font-size:19px;
+    margin-top:5px;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    box-shadow:0 4px 16px rgba(7,27,53,.035);
+}
+
+.stat-icon{
+    width:48px;
+    height:48px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+    background:#fff3df;
+}
+
+.stat-card:nth-child(2) .stat-icon{ background:#eaf2ff; }
+.stat-card:nth-child(3) .stat-icon{ background:#e9f9ef; }
+.stat-card:nth-child(4) .stat-icon{ background:#f1eaff; }
+
+.stat-label{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.stat-value{
+    color:var(--navy);
+    font-size:21px;
+    font-weight:900;
+    display:block;
+    margin-top:3px;
+}
+
+/* =========================================================
+   CONTENT GRID
+========================================================= */
+
+.content-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 4px 18px rgba(7,27,53,.035);
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:17px;
+}
+
+.card-header h2{
+    color:var(--navy);
+    font-size:16px;
+    font-weight:900;
+}
+
+.view-link{
+    color:#db8200;
+    font-size:10px;
+    font-weight:800;
+    text-decoration:none;
+}
+
+/* =========================================================
+   PREPARATION
+========================================================= */
+
+.preparation{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:15px;
+}
+
+.current-topic{
+    border:1px solid #ffe4ad;
+    background:linear-gradient(135deg, #fff7e8, #fffdf8);
+    border-radius:14px;
+    padding:18px;
+}
+
+.topic-label{
+    color:#ca7700;
+    font-size:9px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.current-topic h3{
+    color:var(--navy);
+    font-size:18px;
+    margin:7px 0;
+}
+
+.current-topic p{
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.6;
+}
+
+.progress-box{ margin-top:17px; }
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:9px;
+    margin-bottom:6px;
+}
+
+.progress{
+    height:8px;
+    background:#e9edf2;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg, var(--orange), var(--gold));
+}
+
+.continue-btn{
+    display:inline-block;
+    background:var(--navy);
+    color:white;
+    text-decoration:none;
+    padding:9px 14px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:800;
+    margin-top:14px;
+}
+
+.daily-goal{
+    background:linear-gradient(135deg, var(--navy), var(--navy2));
+    border-radius:14px;
+    padding:18px;
+    color:white;
+}
+
+.daily-goal h3{ font-size:14px; }
+
+.daily-goal p{
+    font-size:10px;
+    opacity:.65;
+    margin:6px 0 15px;
+}
+
+.goal-number{
+    color:var(--gold);
+    font-size:28px;
+    font-weight:900;
+}
+
+.daily-goal .progress{
+    background:rgba(255,255,255,.15);
+    margin-top:9px;
+}
+
+.daily-goal .progress span{ width:75%; }
+
+/* =========================================================
+   RECENT TESTS
+========================================================= */
+
+.test-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #edf0f4;
+}
+
+.test-row:last-child{ border-bottom:0; }
+
+.test-left{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.test-icon{
+    width:39px;
+    height:39px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff3df;
+}
+
+.test-title{
+    font-size:11px;
+    font-weight:800;
+}
+
+.test-date{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.test-score{ text-align:right; }
+
+.test-score strong{
+    color:var(--green);
+    font-size:12px;
+}
+
+.test-score small{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+}
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.quick-card{
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:15px;
+    text-decoration:none;
+    color:var(--text);
+    transition:.2s;
+}
+
+.quick-card:hover{ border-color:var(--orange); }
+
+.quick-icon{ font-size:23px; }
+
+.quick-card strong{
+    display:block;
+    font-size:11px;
+    margin-top:8px;
+}
+
+.quick-card small{
+    color:var(--muted);
+    font-size:9px;
+}
+
+/* =========================================================
+   SUBJECT PERFORMANCE
+========================================================= */
+
+.subject{ margin:15px 0; }
+
+.subject-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:6px;
+}
+
+.subject-top strong{
+    font-size:10px;
+    color:var(--navy);
+}
+
+.subject-top span{
+    font-size:9px;
+    color:var(--muted);
+}
+
+.subject-bar{
+    height:7px;
+    background:#edf0f4;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.subject-bar span{
+    display:block;
+    height:100%;
+    border-radius:20px;
+}
+
+.math{ width:72%; background:#2563eb; }
+.english{ width:81%; background:#16a34a; }
+.reasoning{ width:64%; background:#7c3aed; }
+.gk{ width:55%; background:#ea580c; }
+
+/* =========================================================
+   ACHIEVEMENT
+========================================================= */
+
+.achievement{ text-align:center; }
+
+.achievement-icon{ font-size:45px; }
+
+.achievement h3{
+    color:var(--navy);
+    font-size:16px;
+    margin-top:6px;
+}
+
+.achievement p{
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.5;
+    margin-top:5px;
+}
+
+/* =========================================================
+   NOTIFICATION PANEL
+========================================================= */
+
+.notification-panel{
+    position:fixed;
+    top:82px;
+    right:25px;
+    width:330px;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:0 15px 50px rgba(0,0,0,.18);
+    z-index:1800;
+    display:none;
+    overflow:hidden;
+}
+
+.notification-panel.show{ display:block; }
+
+.notification-header{
+    padding:15px;
+    background:linear-gradient(135deg, var(--navy), var(--navy2));
+    color:white;
+    font-weight:800;
+    font-size:13px;
+}
+
+.notification-item{
+    padding:13px 15px;
+    border-bottom:1px solid var(--border);
+}
+
+.notification-item strong{
+    display:block;
+    font-size:10px;
+}
+
+.notification-item small{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-top:4px;
+}
+
+/* =========================================================
+   PROFILE MODAL
+========================================================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(3,12,25,.72);
+    backdrop-filter:blur(6px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    z-index:3000;
+}
+
+.modal.show{ display:flex; }
+
+.modal-box{
+    width:520px;
+    max-width:100%;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 25px 80px rgba(0,0,0,.35);
+}
+
+.modal-header{
+    background:linear-gradient(135deg, var(--navy), var(--navy2));
+    color:white;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-header h2{ font-size:17px; }
+
+.close-btn{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:8px;
+    color:white;
+    background:rgba(255,255,255,.12);
+    cursor:pointer;
+    font-size:18px;
+}
+
+.modal-body{ padding:21px; }
+
+.profile-edit-photo{
+    text-align:center;
+    margin-bottom:18px;
+}
+
+.edit-photo{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid white;
+    box-shadow:0 4px 20px rgba(0,0,0,.15);
+}
+
+.photo-actions{
+    margin-top:9px;
+    display:flex;
+    justify-content:center;
+    gap:7px;
+}
+
+.photo-action{
+    border:1px solid var(--border);
+    background:white;
+    border-radius:7px;
+    padding:7px 10px;
+    cursor:pointer;
+    font-size:9px;
+}
+
+.photo-remove{ color:var(--red); }
+
+.form-group{ margin-bottom:13px; }
+
+.form-group label{
+    display:block;
+    color:#485468;
+    font-size:10px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:#fafbfd;
+    outline:none;
+    border-radius:9px;
+    padding:10px 11px;
+    font-size:11px;
+    color:var(--text);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--orange);
+    background:white;
+}
+
+.form-group textarea{
+    resize:vertical;
+    min-height:70px;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+.save-profile{
+    width:100%;
+    border:0;
+    border-radius:9px;
+    padding:12px;
+    background:linear-gradient(135deg, var(--orange), var(--gold));
+    color:var(--navy);
+    font-weight:900;
+    font-size:11px;
+    cursor:pointer;
+}
+
+/* =========================================================
+   CUSTOMIZATION MODAL
+========================================================= */
+
+.custom-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.custom-option{
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:13px;
+    cursor:pointer;
+    background:white;
+}
+
+.custom-option:hover{ border-color:var(--orange); }
+
+.custom-option strong{
+    display:block;
+    font-size:11px;
+}
+
+.custom-option small{
+    color:var(--muted);
+    font-size:9px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    background:var(--navy);
+    color:white;
+    padding:12px 16px;
+    border-radius:10px;
+    font-size:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transform:translateY(80px);
+    opacity:0;
+    transition:.3s;
+    z-index:5000;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+    .stats-grid{ grid-template-columns:repeat(2,1fr); }
+    .content-grid{ grid-template-columns:1fr; }
+}
+
+@media(max-width:760px){
+    .header{ padding:0 13px; }
+    .mobile-menu{ display:block; }
+    .brand-tagline, .brand-name{ display:none; }
+    .header-user-name{ display:none; }
+
+    .sidebar{
+        position:fixed;
+        left:-270px;
+        top:72px;
+        z-index:2000;
+        transition:.3s;
+        box-shadow:8px 0 30px rgba(0,0,0,.18);
+    }
+
+    .sidebar.open{ left:0; }
+
+    .main{ padding:17px 12px; }
+
+    .page-heading{ align-items:flex-start; }
+    .page-heading h1{ font-size:21px; }
+    .page-heading p{ font-size:10px; }
+
+    .edit-profile-btn{
+        padding:9px 11px;
+        font-size:9px;
+    }
+
+    .profile-hero{ padding:18px; }
+    .profile-content{ gap:12px; }
+    .profile-photo{ width:78px; height:78px; }
+    .profile-details h2{ font-size:18px; }
+    .profile-details p{ max-width:220px; font-size:9px; }
+    .profile-badge{ font-size:8px; padding:5px 7px; }
+    .target-box{ display:none; }
+
+    .stats-grid{ gap:9px; }
+    .stat-card{ padding:13px; gap:8px; }
+    .stat-icon{ width:39px; height:39px; font-size:17px; }
+    .stat-value{ font-size:17px; }
+    .stat-label{ font-size:8px; }
+
+    .preparation{ grid-template-columns:1fr; }
+    .quick-grid{ grid-template-columns:1fr 1fr; }
+    .form-row{ grid-template-columns:1fr; }
+}
+
+@media(max-width:430px){
+    .profile-hero{ padding:15px; }
+    .profile-details h2{ font-size:16px; }
+    .profile-details p{ max-width:180px; }
+    .notification-panel{
+        left:12px;
+        right:12px;
+        width:auto;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+<header class="header">
+    <div class="brand">
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+        <!-- ROUND CLICKABLE LOGO — clicking stays on dashboard -->
+ <a href="new.html?stay=1" class="brand-logo" title="SSC MOCK Home">
+    <img src="images/WhatsApp Image 2026-09-09 at 12.46.43 PM.jpeg" alt="SSC MOCK Logo">
+</a>
+        <div>
+            <div class="brand-name">SSC MOCK</div>
+            <span class="brand-tagline">Practice • Analyze • Succeed</span>
+        </div>
+    </div>
+
+    <div class="header-actions">
+        <button class="header-btn" title="3D Mode" onclick="toggle3D()">🧊</button>
+        <button class="header-btn" title="Notifications" onclick="toggleNotifications()">🔔</button>
+
+        <div class="header-profile" onclick="openProfile()">
+            <img id="headerPhoto" class="header-photo" src="" alt="Candidate">
+            <span id="headerName">Candidate</span>
+        </div>
+    </div>
+</header>
+
+<div class="layout">
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-section">Main Menu</div>
+
+    <a href="new.html?stay=1" class="nav-item active">
+    <span class="nav-icon">🏠</span> Dashboard
+</a>
+       
+    <a href="mock.html" class="nav-item">
+        <span class="nav-icon">📝</span> Mock Tests
+    </a>
+
+    <a href="ai.html" class="nav-item">
+        <span class="nav-icon">📚</span> Study Material
+    </a>
+
+    <a href="mathbackup3.html" class="nav-item">
+        <span class="nav-icon">🎯</span> Topic Tests
+    </a>
+
+    <a href="previous.html" class="nav-item">
+        <span class="nav-icon">📄</span> Previous Year Papers
+    </a>
+
+    <a href="current.html" class="nav-item">
+        <span class="nav-icon">📰</span> Current Affairs
+    </a>
+
+    <div class="sidebar-section">My Preparation</div>
+
+    <a href="E-Book/E-book.html" class="nav-item">
+        <span class="nav-icon">📊</span> E-books
+    </a>
+
+    <a href="quiz.html" class="nav-item">
+        <span class="nav-icon">🔖</span> Daily Quiz
+    </a>
+
+    <a href="JOBS PORTAL/JOBS PORTAL02.html" class="nav-item">
+        <span class="nav-icon">🏆</span> Sarkari Jobs
+    </a>
+
+    <div class="sidebar-section">Account</div>
+
+    <a href="#" class="nav-item" onclick="openProfile(); return false;">
+        <span class="nav-icon">👤</span> My Profile
+    </a>
+
+    <a href="#" class="nav-item" onclick="openCustomization(); return false;">
+        <span class="nav-icon">🎨</span> Customize
+    </a>
+
+    <a href="settings.html" class="nav-item">
+        <span class="nav-icon">⚙️</span> Settings
+    </a>
+
+    <a href="#" class="nav-item logout-item" onclick="handleLogout(event)">
+        <span class="nav-icon">🚪</span> Logout
+    </a>
+
+</aside>
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+<main class="main">
+
+    <div class="page-heading">
+        <div>
+            <h1>Candidate Dashboard</h1>
+            <p>Your complete SSC preparation command centre.</p>
+        </div>
+
+        <button class="edit-profile-btn" onclick="openProfile()">
+            ✏️ Edit Profile
+        </button>
+    </div>
+
+    <section class="profile-hero">
+
+        <div class="profile-content">
+
+            <div class="profile-photo-box">
+                <img id="profilePhoto" class="profile-photo" src="" alt="Candidate Photo">
+
+                <label class="photo-camera" for="quickPhotoInput">📷</label>
+
+                <input type="file" id="quickPhotoInput" accept="image/*" hidden onchange="changePhoto(event)">
+            </div>
+
+            <div class="profile-details">
+                <h2 id="profileName">Candidate</h2>
+
+                <p id="profileBio">SSC Aspirant • Preparing with SSC MOCK</p>
+
+                <div class="profile-badges">
+                    <span class="profile-badge">
+                        🎯 <span id="examBadge">SSC CGL</span>
+                    </span>
+
+                    <span class="profile-badge">🏆 Serious Aspirant</span>
+
+                    <span class="profile-badge">🔥 12 Day Streak</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="target-box">
+            <small>MY TARGET POST</small>
+            <strong id="postBadge">Income Tax Inspector</strong>
+        </div>
+    </section>
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div>
+                <span class="stat-label">Tests Attempted</span>
+                <strong class="stat-value">42</strong>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div>
+                <span class="stat-label">Average Score</span>
+                <strong class="stat-value">78%</strong>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div>
+                <span class="stat-label">Study Time</span>
+                <strong class="stat-value">86h</strong>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🔥</div>
+            <div>
+                <span class="stat-label">Current Streak</span>
+                <strong class="stat-value">12 Days</strong>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="content-grid">
+
+        <div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>🎯 Continue Preparation</h2>
+                    <a href="study-material.html" class="view-link">View Material →</a>
+                </div>
+
+                <div class="preparation">
+
+                    <div class="current-topic">
+                        <span class="topic-label">Current Topic</span>
+
+                        <h3>Percentage — Advanced Level</h3>
+
+                        <p>
+                            Percentage comparison, successive percentage,
+                            percentage + average and SSC CGL advanced questions.
+                        </p>
+
+                        <div class="progress-box">
+                            <div class="progress-top">
+                                <span>Course Progress</span>
+                                <b>68%</b>
+                            </div>
+
+                            <div class="progress">
+                                <span style="width:68%"></span>
+                            </div>
+                        </div>
+
+                        <a href="#" class="continue-btn">Continue Learning →</a>
+                    </div>
+
+                    <div class="daily-goal">
+                        <h3>🔥 Today's Goal</h3>
+
+                        <p>Complete your daily SSC practice target.</p>
+
+                        <div class="goal-number">3 / 4 hrs</div>
+
+                        <div class="progress">
+                            <span style="width:75%"></span>
+                        </div>
+
+                        <p>1 hour remaining — Keep going! 💪</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>📝 Recent Tests</h2>
+                    <a href="performance.html" class="view-link">Full History →</a>
+                </div>
+
+                <div class="test-row">
+                    <div class="test-left">
+                        <div class="test-icon">🏆</div>
+                        <div>
+                            <strong class="test-title">SSC CGL Full Mock Test #12</strong>
+                            <small class="test-date">10 Sep 2026 • 60 Minutes</small>
+                        </div>
+                    </div>
+
+                    <div class="test-score">
+                        <strong>164 / 200</strong>
+                        <small>82%</small>
+                    </div>
+                </div>
+
+                <div class="test-row">
+                    <div class="test-left">
+                        <div class="test-icon">➗</div>
+                        <div>
+                            <strong class="test-title">Percentage Advanced</strong>
+                            <small class="test-date">09 Sep 2026 • 25 Questions</small>
+                        </div>
+                    </div>
+
+                    <div class="test-score">
+                        <strong>21 / 25</strong>
+                        <small>84%</small>
+                    </div>
+                </div>
+
+                <div class="test-row">
+                    <div class="test-left">
+                        <div class="test-icon">📖</div>
+                        <div>
+                            <strong class="test-title">English Error Detection</strong>
+                            <small class="test-date">08 Sep 2026 • 20 Questions</small>
+                        </div>
+                    </div>
+
+                    <div class="test-score">
+                        <strong>14 / 20</strong>
+                        <small>70%</small>
+                    </div>
+                </div>
+
+                <div class="test-row">
+                    <div class="test-left">
+                        <div class="test-icon">🧠</div>
+                        <div>
+                            <strong class="test-title">Reasoning Classification</strong>
+                            <small class="test-date">07 Sep 2026 • 20 Questions</small>
+                        </div>
+                    </div>
+
+                    <div class="test-score">
+                        <strong>18 / 20</strong>
+                        <small>90%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>⚡ Quick Practice</h2>
+                    <a href="mock-tests.html" class="view-link">All Tests →</a>
+                </div>
+
+                <div class="quick-grid">
+
+                    <a href="cgl-mock.html" class="quick-card">
+                        <div class="quick-icon">🏆</div>
+                        <strong>SSC CGL Mock</strong>
+                        <small>Full length test</small>
+                    </a>
+
+                    <a href="math-test.html" class="quick-card">
+                        <div class="quick-icon">➗</div>
+                        <strong>Maths Practice</strong>
+                        <small>Topic-wise questions</small>
+                    </a>
+
+                    <a href="english-test.html" class="quick-card">
+                        <div class="quick-icon">📖</div>
+                        <strong>English Practice</strong>
+                        <small>Grammar & vocabulary</small>
+                    </a>
+
+                    <a href="reasoning-test.html" class="quick-card">
+                        <div class="quick-icon">🧠</div>
+                        <strong>Reasoning Practice</strong>
+                        <small>Complete reasoning</small>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>📊 Subject Performance</h2>
+                    <a href="performance.html" class="view-link">Details →</a>
+                </div>
+
+                <div class="subject">
+                    <div class="subject-top">
+                        <strong>Mathematics</strong>
+                        <span>72%</span>
+                    </div>
+                    <div class="subject-bar"><span class="math"></span></div>
+                </div>
+
+                <div class="subject">
+                    <div class="subject-top">
+                        <strong>English</strong>
+                        <span>81%</span>
+                    </div>
+                    <div class="subject-bar"><span class="english"></span></div>
+                </div>
+
+                <div class="subject">
+                    <div class="subject-top">
+                        <strong>Reasoning</strong>
+                        <span>64%</span>
+                    </div>
+                    <div class="subject-bar"><span class="reasoning"></span></div>
+                </div>
+
+                <div class="subject">
+                    <div class="subject-top">
+                        <strong>GK / GS</strong>
+                        <span>55%</span>
+                    </div>
+                    <div class="subject-bar"><span class="gk"></span></div>
+                </div>
+            </div>
+
+            <div class="card achievement">
+                <div class="achievement-icon">🏆</div>
+                <h3>Top 18% Learner</h3>
+                <p>
+                    Your current performance is better than most
+                    active SSC MOCK learners.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>🔖 My Shortcuts</h2>
+                </div>
+
+                <div class="quick-grid">
+
+                    <a href="bookmarks.html" class="quick-card">
+                        <div class="quick-icon">🔖</div>
+                        <strong>Bookmarks</strong>
+                        <small>37 saved questions</small>
+                    </a>
+
+                    <a href="current-affairs.html" class="quick-card">
+                        <div class="quick-icon">📰</div>
+                        <strong>Current Affairs</strong>
+                        <small>Today's updates</small>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>🔥 Preparation Status</h2>
+                </div>
+
+                <div class="subject">
+                    <div class="subject-top">
+                        <strong>Overall Preparation</strong>
+                        <span>74%</span>
+                    </div>
+
+                    <div class="subject-bar">
+                        <span style="width:74%; background:linear-gradient(90deg, var(--orange), var(--gold));"></span>
+                    </div>
+                </div>
+
+                <p style="font-size:9px; color:var(--muted); margin-top:10px; line-height:1.5;">
+                    Keep improving your weak subjects and attempt more full-length mocks.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+</div>
+
+<!-- =========================================================
+     NOTIFICATION PANEL
+========================================================= -->
+<div class="notification-panel" id="notificationPanel">
+
+    <div class="notification-header">🔔 Notifications</div>
+
+    <div class="notification-item">
+        <strong>🔥 New CGL Mock Tests Added</strong>
+        <small>5 new full-length tests are available.</small>
+    </div>
+
+    <div class="notification-item">
+        <strong>📚 Percentage Material Updated</strong>
+        <small>Advanced Percentage chapter has been updated.</small>
+    </div>
+
+    <div class="notification-item">
+        <strong>📰 Current Affairs Updated</strong>
+        <small>Today's current affairs are now available.</small>
+    </div>
+
+</div>
+
+<!-- =========================================================
+     PROFILE MODAL
+========================================================= -->
+<div class="modal" id="profileModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2>👤 Customize Profile</h2>
+            <button class="close-btn" onclick="closeProfile()">×</button>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="profile-edit-photo">
+                <img id="editPhoto" class="edit-photo" src="" alt="Profile Photo">
+
+                <div class="photo-actions">
+                    <label class="photo-action" for="modalPhotoInput">📷 Change Photo</label>
+
+                    <button class="photo-action photo-remove" onclick="removePhoto()">
+                        Remove Photo
+                    </button>
+                </div>
+
+                <input type="file" id="modalPhotoInput" accept="image/*" hidden onchange="changePhoto(event)">
+            </div>
+
+            <div class="form-group">
+                <label>Candidate Name</label>
+                <input type="text" id="nameInput" placeholder="Enter candidate name">
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>Target Exam</label>
+                    <select id="examInput">
+                        <option>SSC CGL</option>
+                        <option>SSC CHSL</option>
+                        <option>SSC CPO</option>
+                        <option>SSC MTS</option>
+                        <option>SSC GD</option>
+                        <option>SSC Stenographer</option>
+                        <option>SSC JE</option>
+                        <option>Other SSC Exam</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Post</label>
+                    <select id="postInput">
+                        <option>Income Tax Inspector</option>
+                        <option>Assistant Section Officer</option>
+                        <option>Inspector of Central Excise</option>
+                        <option>Inspector of Posts</option>
+                        <option>Sub Inspector</option>
+                        <option>Junior Statistical Officer</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label>Preparation Bio</label>
+                <textarea id="bioInput" placeholder="Write something about your preparation..."></textarea>
+            </div>
+
+            <button class="save-profile" onclick="saveProfile()">
+                💾 Save Profile
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- =========================================================
+     CUSTOMIZATION MODAL
+========================================================= -->
+<div class="modal" id="customModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2>🎨 Dashboard Customize</h2>
+            <button class="close-btn" onclick="closeCustomization()">×</button>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="custom-grid">
+
+                <div class="custom-option" onclick="toggle3D();closeCustomization()">
+                    <strong>🧊 3D Mode</strong>
+                    <small>Add depth and premium card effects</small>
+                </div>
+
+                <div class="custom-option" onclick="showToast('Dark mode can be connected to your theme system.')">
+                    <strong>🌙 Appearance</strong>
+                    <small>Theme customization</small>
+                </div>
+
+                <div class="custom-option" onclick="showToast('Dashboard layout saved.')">
+                    <strong>📐 Dashboard Layout</strong>
+                    <small>Customize dashboard sections</small>
+                </div>
+
+                <div class="custom-option" onclick="showToast('Settings opened.')">
+                    <strong>⚙️ Preferences</strong>
+                    <small>Manage dashboard preferences</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+<div class="toast" id="toast">Done ✓</div>
+
+<!-- =========================================================
+     FIREBASE AUTH BRIDGE — Dashboard Protection
+========================================================= -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAR94WOt3A8b0ss_VUBVuxwjNAJV8vaO_U",
+    authDomain: "ssc-mock-18arpit.firebaseapp.com",
+    projectId: "ssc-mock-18arpit",
+    storageBucket: "ssc-mock-18arpit.firebasestorage.app",
+    messagingSenderId: "1022683826614",
+    appId: "1:1022683826614:web:f4e94b4e1be8e5d2325917",
+    measurementId: "G-6CSKJ651LB"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const MAIN_PAGE = "new.html";
+
+window.sscFirebaseAuth = auth;
+window.sscFirebaseSignOut = function () { return signOut(auth); };
+window.sscCurrentUser = null;
+
+onAuthStateChanged(auth, function (user) {
+
+    if (!user) {
+        // Safety: 800ms wait — Firebase ko auth restore karne do
+        setTimeout(function () {
+            if (!auth.currentUser) {
+                window.location.replace(MAIN_PAGE);
+            }
+        }, 800);
+        return;
+    }
+
+    window.sscCurrentUser = user;
+
+    try {
+        var raw = localStorage.getItem("sscMockProfile");
+        var profile = raw ? JSON.parse(raw) : {};
+        var fbName = user.displayName ||
+            (user.email ? user.email.split("@")[0] : "SSC Candidate");
+
+        if (!profile.name)  profile.name  = fbName;
+        if (!profile.email) profile.email = user.email || "";
+        if (!profile.uid)   profile.uid   = user.uid   || "";
+        if (!profile.photo && user.photoURL) profile.photo = user.photoURL;
+        if (!profile.exam)  profile.exam  = "SSC CGL";
+        if (!profile.post)  profile.post  = "Income Tax Inspector";
+        if (!profile.bio)   profile.bio   = "SSC Aspirant • Preparing with SSC MOCK";
+
+        localStorage.setItem("sscMockProfile", JSON.stringify(profile));
+    } catch (e) { console.warn("Profile sync failed:", e); }
+
+    window.dispatchEvent(new CustomEvent("sscAuthReady", { detail: user }));
+});
+</script>
+
+<!-- =========================================================
+     MAIN DASHBOARD SCRIPT
+========================================================= -->
+<script>
+
+const API = {
+    async getCurrentUser(){ return getLocalProfile(); },
+    async updateProfile(profile){
+        localStorage.setItem("sscMockProfile", JSON.stringify(profile));
+        return profile;
+    },
+    async logout(){
+        localStorage.removeItem("sscMockSession");
+        return true;
+    }
+};
+
+const DEFAULT_PROFILE = {
+    name: "Arpit Pandey",
+    exam: "SSC CGL",
+    post: "Income Tax Inspector",
+    bio: "SSC Aspirant • Preparing with SSC MOCK",
+    photo: ""
+};
+
+function getLocalProfile(){
+    try{
+        const saved = localStorage.getItem("sscMockProfile");
+        if(saved){
+            return { ...DEFAULT_PROFILE, ...JSON.parse(saved) };
+        }
+    }catch(error){
+        console.log("Profile read error:", error);
+    }
+    return { ...DEFAULT_PROFILE };
+}
+
+function createAvatar(name){
+    const canvas = document.createElement("canvas");
+    canvas.width = 300;
+    canvas.height = 300;
+    const ctx = canvas.getContext("2d");
+
+    const gradient = ctx.createLinearGradient(0, 0, 300, 300);
+    gradient.addColorStop(0, "#ff9d00");
+    gradient.addColorStop(1, "#ffc34a");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 300, 300);
+
+    let initials = name.trim().split(/\s+/).map(word => word[0]).join("").substring(0,2).toUpperCase();
+
+    ctx.fillStyle = "#071b35";
+    ctx.font = "900 100px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(initials || "SC", 150, 150);
+
+    return canvas.toDataURL("image/png");
+}
+
+async function loadProfile(){
+    const profile = await API.getCurrentUser();
+
+    document.getElementById("profileName").textContent = profile.name;
+    document.getElementById("headerName").textContent  = profile.name;
+    document.getElementById("profileBio").textContent = profile.bio;
+    document.getElementById("examBadge").textContent  = profile.exam;
+    document.getElementById("postBadge").textContent  = profile.post;
+
+    const photo = profile.photo || createAvatar(profile.name);
+
+    document.getElementById("profilePhoto").src = photo;
+    document.getElementById("headerPhoto").src  = photo;
+    document.getElementById("editPhoto").src    = photo;
+}
+
+function openProfile(){
+    const profile = getLocalProfile();
+
+    document.getElementById("nameInput").value = profile.name;
+    document.getElementById("examInput").value = profile.exam;
+    document.getElementById("postInput").value = profile.post;
+    document.getElementById("bioInput").value  = profile.bio;
+
+    document.getElementById("profileModal").classList.add("show");
+    loadProfile();
+}
+
+function closeProfile(){
+    document.getElementById("profileModal").classList.remove("show");
+}
+
+async function saveProfile(){
+    const oldProfile = getLocalProfile();
+
+    const name = document.getElementById("nameInput").value.trim() || "SSC Candidate";
+    const exam = document.getElementById("examInput").value;
+    const post = document.getElementById("postInput").value;
+    const bio  = document.getElementById("bioInput").value.trim() || "SSC Aspirant • Preparing with SSC MOCK";
+
+    const updatedProfile = {
+        name: name,
+        exam: exam,
+        post: post,
+        bio: bio,
+        photo: oldProfile.photo || "",
+        email: oldProfile.email || "",
+        uid: oldProfile.uid || ""
+    };
+
+    await API.updateProfile(updatedProfile);
+    await loadProfile();
+    closeProfile();
+    showToast("Profile updated successfully ✓");
+}
+
+function changePhoto(event){
+    const file = event.target.files[0];
+    if(!file) return;
+
+    if(!file.type.startsWith("image/")){
+        showToast("Please select an image.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+        const image = new Image();
+
+        image.onload = function(){
+            const maxSize = 500;
+            let width = image.width;
+            let height = image.height;
+
+            if(width > maxSize){
+                height = height * maxSize / width;
+                width = maxSize;
+            }
+            if(height > maxSize){
+                width = width * maxSize / height;
+                height = maxSize;
+            }
+
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(image, 0, 0, width, height);
+
+            const compressed = canvas.toDataURL("image/jpeg", .82);
+
+            const profile = getLocalProfile();
+            profile.photo = compressed;
+            localStorage.setItem("sscMockProfile", JSON.stringify(profile));
+
+            loadProfile();
+            showToast("Profile photo updated ✓");
+        };
+
+        image.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}
+
+function removePhoto(){
+    const profile = getLocalProfile();
+    profile.photo = "";
+    localStorage.setItem("sscMockProfile", JSON.stringify(profile));
+    loadProfile();
+    showToast("Profile photo removed");
+}
+
+function toggle3D(){
+    document.body.classList.toggle("threeD");
+    const enabled = document.body.classList.contains("threeD");
+    localStorage.setItem("sscMock3D", enabled);
+    showToast(enabled ? "3D Mode ON 🧊" : "3D Mode OFF");
+}
+
+function load3DPreference(){
+    if(localStorage.getItem("sscMock3D") === "true"){
+        document.body.classList.add("threeD");
+    }
+}
+
+function toggleSidebar(){
+    document.getElementById("sidebar").classList.toggle("open");
+}
+
+function toggleNotifications(){
+    document.getElementById("notificationPanel").classList.toggle("show");
+}
+
+function openCustomization(){
+    document.getElementById("customModal").classList.add("show");
+}
+
+function closeCustomization(){
+    document.getElementById("customModal").classList.remove("show");
+}
+
+/* ---- Dashboard sidebar link — NO reload, just scroll top ---- */
+function scrollToTopDashboard(event){
+    if(event) event.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // close mobile sidebar if open
+    const sb = document.getElementById("sidebar");
+    if(sb) sb.classList.remove("open");
+}
+
+async function handleLogout(event){
+    event.preventDefault();
+
+    const confirmLogout = confirm("Are you sure you want to logout?");
+    if(!confirmLogout){ return; }
+
+    try{
+        if (window.sscFirebaseSignOut) {
+            await window.sscFirebaseSignOut();
+        } else {
+            await API.logout();
+        }
+
+        showToast("Logging out...");
+
+        setTimeout(function(){
+            window.location.href = "new.html";
+        }, 700);
+
+    }catch(error){
+        console.error("Logout error:", error);
+        showToast("Logout failed. Please try again.");
+    }
+}
+
+function showToast(message){
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(function(){
+        toast.classList.remove("show");
+    }, 2300);
+}
+
+document.getElementById("profileModal").addEventListener("click", function(event){
+    if(event.target === this){ closeProfile(); }
+});
+
+document.getElementById("customModal").addEventListener("click", function(event){
+    if(event.target === this){ closeCustomization(); }
+});
+
+document.addEventListener("click", function(event){
+    const panel = document.getElementById("notificationPanel");
+    const button = event.target.closest(".header-btn");
+
+    if(!panel.contains(event.target) && !button){
+        panel.classList.remove("show");
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    function bootDashboard(){
+        loadProfile();
+        load3DPreference();
+    }
+
+    if (window.sscCurrentUser) {
+        bootDashboard();
+        return;
+    }
+
+    window.addEventListener("sscAuthReady", function(){
+        bootDashboard();
+    }, { once: true });
+
+});
+
+</script>
+
+</body>
+</html>

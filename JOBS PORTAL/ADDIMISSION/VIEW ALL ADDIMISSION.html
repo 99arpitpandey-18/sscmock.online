@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admission | SSC MOCK</title>
+<style>
+/* ================= GLOBAL RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ================= HEADER ================= */
+.top-header {
+    background-color: #1a5c9a;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 2px solid #fff;
+}
+
+.logo-box {
+    background: #fff;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    margin-right: 20px;
+    border: 3px solid #e63946;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.logo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+}
+
+.site-name {
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.site-name span {
+    font-weight: normal;
+    font-size: 24px;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+    background-color: #fef7e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: #111;
+    font-weight: bold;
+    padding: 15px 20px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.nav-links a:hover {
+    background-color: #f1f1f1;
+}
+
+.nav-links a.active {
+    background-color: #e63946;
+    color: #fff;
+}
+
+.search-icon {
+    padding: 15px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* ================= MAIN CONTAINER ================= */
+.main-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.col-box {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+}
+
+.col-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: #fff;
+}
+
+.col-header h3 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.col-header .view-all {
+    background: #e63946;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid #b31b1b;
+    text-decoration: none;
+}
+
+/* Purple Header for Admission */
+.header-purple { background-color: #9b59b6; }
+
+/* ================= LIST STYLING (SINGLE COLUMN) ================= */
+.col-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Make the whole list item a clickable block */
+.col-list li {
+    padding: 0;
+    border-bottom: 1px dotted #bbb;
+    transition: background-color 0.2s ease;
+}
+
+.col-list li:last-child {
+    border-bottom: none;
+}
+
+.col-list li:hover {
+    background-color: #f9f9f9;
+}
+
+/* The Anchor tag wraps the whole item */
+.job-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #111;
+    width: 100%;
+}
+
+.job-title {
+    font-weight: bold;
+    font-size: 17px;
+    display: block;
+    color: #111;
+    transition: color 0.2s ease;
+    line-height: 1.4;
+    margin-bottom: 5px;
+}
+
+.job-item:hover .job-title {
+    color: #9b59b6; /* Title highlights on hover with matching purple color */
+}
+
+/* ================= MODERN CLICK HERE BADGE ================= */
+.click-badge {
+    background: linear-gradient(135deg, #4a90e2, #1a5c9a); /* Modern Blue Gradient */
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 6px 16px;
+    border-radius: 25px; /* Pill shape */
+    display: inline-block;
+    margin-top: 5px;
+    box-shadow: 0 3px 6px rgba(26, 92, 154, 0.3); /* Soft Shadow */
+    transition: all 0.3s ease;
+}
+
+.job-item:hover .click-badge {
+    background: linear-gradient(135deg, #1a5c9a, #0d315c); /* Darker on hover */
+    box-shadow: 0 5px 12px rgba(26, 92, 154, 0.5);
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* ================= FOOTER ================= */
+.main-footer {
+    background-color: #0B1B33;
+    color: #fff;
+    padding: 50px 20px 20px;
+}
+
+.footer-inner {
+    max-width: 1250px;
+    margin: auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-col h3 {
+    color: #F39C12;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.footer-col p, .footer-col ul li a {
+    color: #cdd8e5;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a:hover {
+    color: #F39C12;
+}
+
+.footer-bottom {
+    border-top: 1px solid #1a2c4a;
+    padding-top: 20px;
+    text-align: center;
+    color: #aebccc;
+    font-size: 13px;
+}
+
+/* ================= FLOATING DASHBOARD BUTTON ================= */
+.floating-dashboard {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #F39C12;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+    transition: all 0.3s ease;
+    z-index: 10000;
+    text-decoration: none;
+}
+
+.floating-dashboard:hover {
+    background: #e67e22;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(243, 156, 18, 0.6);
+}
+
+/* ================= MOBILE VIEW ================= */
+@media (max-width: 768px) {
+    .top-header { padding: 10px 15px; }
+    .logo-box { width: 45px; height: 45px; margin-right: 12px; border: 2px solid #e63946; }
+    .site-name { font-size: 20px; }
+
+    .navbar { position: static; flex-direction: column; padding: 5px 0; }
+    .nav-links { justify-content: center; width: 100%; }
+    .nav-links a { padding: 10px 14px; font-size: 13px; }
+    .search-icon { padding: 8px 15px; font-size: 18px; text-align: center; width: 100%; }
+
+    .col-header h3 { font-size: 20px; }
+    .col-header .view-all { padding: 6px 12px; font-size: 13px; }
+    
+    .job-item { padding: 12px 15px; }
+    .job-title { font-size: 15px; }
+    .click-badge { font-size: 11px; padding: 5px 12px; }
+
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .floating-dashboard { bottom: 15px; right: 15px; padding: 10px 18px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= TOP HEADER ================= -->
+<a href="javascript:history.back()" class="header-link">
+    <div class="top-header">
+        <div class="logo-box">
+            <img src="VIEW ALL ADDIMISSION/WhatsApp Image 2026-09-09 at 12.46.43 PM.jpeg" alt="SSC MOCK Channel Logo">
+        </div>
+        <div class="site-name">
+            🎓SSC MOCKⒶ : SSCMock.Com
+        </div>
+    </div>
+</a>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="../JOBS%20PORTAL02.html">Home</a>
+      <a href="../LATEST%20JOB/VIEW%20ALL%20JOBS.html">Latest Jobs</a>
+        <a href="../ADMIT%20CARD/VIEW%20ALL%20ADMITCARD.html">Admit Card</a>
+        <a href="../RESULT/VIEW%20ALL%20RESULT.html">Result</a>
+        <a href="../ANSWER%20KEY/VIEW%20ALL%20ANSWERKEY.html">Answer Key</a>
+        <a href="../SYLLABUS/VIEW%20ALL%20SYLLABUS.html">Syllabus</a>
+        <a href="../ADDIMISSION/VIEW%20ALL%20ADDIMISSION.html" class="active">Admission</a>
+        <a href="../SARKARI%20YOJNA/VIEW%20ALL%20SARKARI%20YOJNA.html">Sarkari Yojna</a>
+        <a href="../UPCOMMING/VIEW%20ALL%20UPCOMING.html">Upcoming</a>
+    </div>
+    <div class="search-icon">🔍</div>
+</nav>
+
+<!-- ================= ALL ADMISSION (SINGLE COLUMN) ================= -->
+<div class="main-container">
+    <div class="col-box">
+        <div class="col-header header-purple">
+            <h3>Admission</h3>
+            <a href="../JOBS PORTAL.html" class="view-all">⬅ Back</a>
+        </div>
+        
+        <ul class="col-list">
+            <!-- June 2026 ke baad wale aur 2027 wale Admissions -->
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/UP Scholarship Online Form 2026.html" class="job-item">
+                    <span class="job-title">UP Scholarship Online Form 2026 | Link Working</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/CTET September 2026.html" class="job-item">
+                    <span class="job-title">CTET September 2026 Correction Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/AIBE All India Bar Exam XXII Online Form 2026.html" class="job-item">
+                    <span class="job-title">AIBE All India Bar Exam XXII Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/UPESSC UP Special TET Online Form 2026.html" class="job-item">
+                    <span class="job-title">UPESSC UP Special TET Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/IIT JAM 2027 Online Form.html" class="job-item">
+                    <span class="job-title">IIT JAM 2027 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/Allahabad University PHD Admission 2026.html" class="job-item">
+                    <span class="job-title">Allahabad University PHD Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/LIC Golden Jubilee Scholarship Online Form 2026.html" class="job-item">
+                    <span class="job-title">LIC Golden Jubilee Scholarship Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">GATE 2027 Graduate Aptitude Test in Engineering Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/NTA RIMCEE Admission 2027.html" class="job-item">
+                    <span class="job-title">NTA RIMCEE Admission 2027 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/NTA NEET UG 2026 Allotment Result.html" class="job-item">
+                    <span class="job-title">NTA NEET UG 2026 Allotment Result – OUT</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/MP Rojgar Panjiyan Registration Online Form 2026.html" class="job-item">
+                    <span class="job-title">MP Rojgar Panjiyan Registration Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/NSP National Scholarship Online Form 2026.html" class="job-item">
+                    <span class="job-title">NSP National Scholarship Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/UP Nursing Council Registration Online Form 2026.html" class="job-item">
+                    <span class="job-title">UP Nursing Council Registration Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/NVS Class 6th Admissions Online Form 2026.html" class="job-item">
+                    <span class="job-title">NVS Class 6th Admissions Online Form 2026 Date Extended</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="../ADDIMISSION/VIEW ALL ADDIMISSION/UTET Online Form 2026.html" class="job-item">
+                    <span class="job-title">UTET Online Form 2026 | Uttarakhand Teacher Eligibility Test Date Extended</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">CLAT Admission Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">IIM CAT Admission Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">NIELIT CCC Online Form 2026 | September Examination Date Extended</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Atul Maheshwari Scholarship Registration 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Chhattisgarh State Eligibility Test SET Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">MPESB PSTST MP Primary School Teacher Counseling 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UPRTOU BEd, BEd (SE) Entrance Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UP CNET Counselling 2026 2nd Round</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Allahabad University UG Admission 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UP ANM Training Online Form 2026 for 1800 Seats</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UP B.Ed Counselling 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Allahabad University PGAT Result 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Maharaja Suhel Dev University Azamgarh Admission 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UPRTOU MA Yoga Entrance Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">MMM University of Technology Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">VKSU Ara UG Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">JRDSU Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UPTAC Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Rajju Bhaiya State University Admission Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">CCS University Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Dr B R Ambedkar University Delhi UG/PG Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Jiwaji University Gwalior UG/PG Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Patliputra University UG Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Jai Prakash University UG Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Delhi University PG Admission Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Allahabad State University CET Entrance 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Kurukshetra University UG Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Nalanda University PG Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">ONGC Scholarship Registration 2026 Apply Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Rajju Bhaiya State University Back Paper Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">NHAI Summer Internship Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">CSJM Kanpur University Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">IIT Delhi Summer Research Fellowship Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">IIT Delhi Executive MBA Admission 2026 | Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">AIIA Ayurveda PHD Admission Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">NVS JNV Class 6th Summer Result | Winter Bound Admit Card 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">MNNIT Allahabad MBA Admission 2026 Online Form</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Lucknow University PHD Course Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">Madhya Pradesh MP CPCT Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">CCS University Meerut BED Examination Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UP RTI Nursery LKG UKG & Class 1 Free Admission Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">KIITEE Online Form 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UP DELED (BTC) Counselling 2026</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="job-item">
+                    <span class="job-title">UP Board Time Table 2026 for Class 10th and 12th</span>
+                    <span class="click-badge">📥 Click Here</span>
+                </a>
+            </li>
+            <!-- List End -->
+        </ul>
+    </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="main-footer">
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>🎓SSC MOCK</h3>
+                <p>Latest Government Jobs, Admit Card, Result, Answer Key, Syllabus और Government Exam Preparation के लिए आपका complete educational platform.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Important</h3>
+                <ul>
+                    <li><a href="#">Latest Jobs</a></li>
+                    <li><a href="#">Admit Card</a></li>
+                    <li><a href="#">Result</a></li>
+                    <li><a href="#">Answer Key</a></li>
+                    <li><a href="#">Syllabus</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Preparation</h3>
+                <ul>
+                    <li><a href="#">Study Material</a></li>
+                    <li><a href="#">Mock Tests</a></li>
+                    <li><a href="#">PYQ</a></li>
+                    <li><a href="#">E-Books</a></li>
+                    <li><a href="#">Typing Test</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Telegram</a></li>
+                    <li><a href="#">WhatsApp</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 🎓SSC MOCK • Government Exam Information & Preparation Portal</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ================= FLOATING DASHBOARD BUTTON ================= -->
+<a href="../JOBS PORTAL02.html" class="floating-dashboard">
+    🏠 Home
+</a>
+
+</body>
+</html>

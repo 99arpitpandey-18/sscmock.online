@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC MOCK – Spelling Practice (500+ MCQs)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+        body { background: #e9edf2; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 30px 15px; }
+        .app-container { max-width: 1100px; width: 100%; background: #ffffff; border-radius: 40px; box-shadow: 0 25px 60px rgba(0,0,0,0.15); overflow: hidden; }
+
+        .header { background: #0b1a33; padding: 16px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #e74c3c; flex-wrap: wrap; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { background: #e74c3c; color: #0b1a33; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1.6rem; font-weight: 800; }
+        .logo-text { color: white; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo-text span { color: #e74c3c; font-weight: 400; }
+        .header-badge { background: rgba(231, 76, 60, 0.15); color: #e74c3c; padding: 6px 18px; border-radius: 40px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(231,76,60,0.3); }
+
+        .page { display: none; padding: 30px 35px; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        .cover-top { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 25px; margin-bottom: 25px; }
+        .cover-badge { display: inline-block; background: #e74c3c; color: #fff; font-weight: 800; font-size: 0.9rem; padding: 6px 24px; border-radius: 40px; letter-spacing: 1px; margin-bottom: 15px; }
+        .cover-title { font-size: 2.8rem; font-weight: 800; color: #0b1a33; line-height: 1.1; }
+        .cover-title .highlight { color: #e74c3c; background: #fdedec; padding: 0 12px; border-radius: 12px; }
+        .cover-subtitle { font-size: 1.3rem; color: #334155; font-weight: 600; margin-top: 12px; background: #f1f5f9; display: inline-block; padding: 6px 30px; border-radius: 60px; }
+        .cover-desc { font-size: 1.05rem; color: #475569; margin-top: 18px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .overall-progress { background: #f8fafc; border-radius: 16px; padding: 14px 22px; margin-bottom: 22px; border: 1px solid #e9eef3; display: flex; flex-wrap: wrap; gap: 18px 30px; align-items: center; }
+        .overall-progress .bar-wrap { flex: 1; min-width: 120px; height: 8px; background: #e9eef3; border-radius: 20px; overflow: hidden; }
+        .overall-progress .bar-wrap .bar { height: 100%; width: 0%; background: linear-gradient(90deg, #e74c3c, #f1948a); border-radius: 20px; transition: width 0.5s; }
+
+        .sets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin: 25px 0; }
+        .set-card { background: #f8fafc; border-radius: 20px; padding: 18px 14px; text-align: center; border: 2px solid #e9eef3; cursor: pointer; transition: 0.25s ease; position: relative; }
+        .set-card:hover { border-color: #e74c3c; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(231,76,60,0.12); }
+        .set-card .set-num { font-size: 1.8rem; font-weight: 800; color: #0b1a33; }
+        .set-card .set-label { font-size: 0.75rem; color: #64748b; font-weight: 600; margin-top: 2px; }
+        .set-card .set-progress { font-size: 0.7rem; color: #e74c3c; font-weight: 600; margin-top: 6px; background: #fdedec; padding: 2px 12px; border-radius: 20px; display: inline-block; }
+        .set-card .set-status { position: absolute; top: 8px; right: 10px; font-size: 0.6rem; padding: 2px 10px; border-radius: 20px; font-weight: 600; }
+        .set-card .set-status.completed { background: #eafaf1; color: #27ae60; }
+        .set-card .set-status.inprogress { background: #fef9e7; color: #f39c12; }
+        .set-card .set-status.notstarted { background: #f1f5f9; color: #94a3b8; }
+
+        .text-center { text-align: center; margin-top: 10px; }
+
+        .practice-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-bottom: 3px solid #e74c3c; padding-bottom: 15px; margin-bottom: 20px; gap: 12px; }
+        .practice-header .left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .practice-header .left h2 { font-size: 1.5rem; font-weight: 800; color: #0b1a33; }
+        .practice-header .left h2 i { color: #e74c3c; margin-right: 8px; }
+        .practice-header .set-tag { background: #0b1a33; color: white; padding: 5px 18px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; }
+
+        .score-bar { display: flex; flex-wrap: wrap; gap: 18px 30px; background: #f8fafc; border-radius: 16px; padding: 12px 22px; margin-bottom: 22px; border: 1px solid #e9eef3; }
+        .score-item { display: flex; align-items: center; gap: 8px; font-weight: 500; color: #334155; font-size: 0.9rem; }
+        .score-item i { font-size: 1rem; }
+        .score-item .num { font-weight: 700; font-size: 1.1rem; color: #0b1a33; }
+        .score-item.correct i { color: #27ae60; }
+        .score-item.wrong i { color: #e74c3c; }
+        .score-item.attempted i { color: #2980b9; }
+        .score-item.percent i { color: #e74c3c; }
+        .score-item.percent .num { color: #e74c3c; }
+
+        .question-card { background: #ffffff; border-radius: 20px; padding: 22px 26px; margin-bottom: 20px; border: 1px solid #e9eef3; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: 0.2s; border-left: 6px solid #e74c3c; }
+        .question-card:hover { border-color: #f1948a; box-shadow: 0 6px 20px rgba(0,0,0,0.04); }
+        .q-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+        .q-number { font-weight: 800; font-size: 0.95rem; color: #e74c3c; background: #fdedec; padding: 2px 14px; border-radius: 40px; flex-shrink: 0; }
+        .q-text { font-size: 1.05rem; font-weight: 500; color: #0b1a33; line-height: 1.6; }
+        .q-text .word-highlight { color: #e74c3c; font-weight: 700; border-bottom: 2px solid #e74c3c; padding-bottom: 2px; }
+        .q-text .q-type { font-size: 0.8rem; background: #e2e8f0; color: #475569; padding: 2px 14px; border-radius: 40px; font-weight: 700; margin-left: 8px; }
+
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 14px; }
+        .options label { display: flex; align-items: center; gap: 10px; font-weight: 500; color: #1e293b; cursor: pointer; font-size: 0.95rem; padding: 10px 16px; border-radius: 12px; transition: 0.2s; background: #f8fafc; border: 1px solid #e9eef3; }
+        .options label:hover { background: #fdedec; border-color: #f1948a; }
+        .options input[type="radio"] { width: 17px; height: 17px; accent-color: #e74c3c; cursor: pointer; flex-shrink: 0; }
+        .options label.correct-ans { background: #eafaf1; border-color: #27ae60; color: #1e8449; }
+        .options label.wrong-ans { background: #fdedec; border-color: #e74c3c; color: #922b21; }
+        .options input[type="radio"]:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        .btn-answer { background: #0b1a33; color: white; border: none; padding: 8px 28px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-answer:hover:not(:disabled) { background: #e74c3c; color: #0b1a33; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(231,76,60,0.3); }
+        .btn-answer:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+        .answer-box { margin-top: 14px; padding: 14px 20px; border-radius: 14px; background: #fdedec; border-left: 6px solid #e74c3c; display: none; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { 0% { opacity: 0; transform: translateY(-8px); } 100% { opacity: 1; transform: translateY(0); } }
+        .answer-box .correct-word { font-weight: 700; font-size: 1.05rem; color: #27ae60; }
+        .answer-box .explanation { margin-top: 6px; color: #2c3e50; font-size: 0.92rem; line-height: 1.6; }
+        .answer-box .explanation strong { color: #0b1a33; }
+        .answer-box .original-sentence { margin-top: 6px; font-size: 0.85rem; color: #64748b; border-top: 1px solid #f1948a; padding-top: 8px; }
+
+        .nav-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 18px; border-top: 1px solid #e9eef3; flex-wrap: wrap; gap: 12px; }
+        .btn-nav { background: transparent; color: #0b1a33; border: 2px solid #cbd5e1; padding: 8px 22px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-nav:hover { border-color: #e74c3c; background: #fdedec; }
+        .btn-nav.primary { background: #0b1a33; color: white; border-color: #0b1a33; }
+        .btn-nav.primary:hover { background: #e74c3c; color: #0b1a33; border-color: #e74c3c; }
+        .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-indicator { font-weight: 600; color: #64748b; background: #f1f5f9; padding: 4px 18px; border-radius: 40px; font-size: 0.85rem; }
+
+        @media (max-width: 700px) {
+            .page { padding: 20px 16px; }
+            .cover-title { font-size: 2rem; }
+            .sets-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+            .set-card { padding: 14px 10px; }
+            .set-card .set-num { font-size: 1.4rem; }
+            .practice-header .left h2 { font-size: 1.2rem; }
+            .question-card { padding: 16px 16px; }
+            .q-text { font-size: 0.95rem; }
+            .options { grid-template-columns: 1fr; gap: 8px; }
+            .options label { font-size: 0.9rem; padding: 8px 12px; }
+            .score-bar { gap: 10px 16px; padding: 10px 14px; }
+            .score-item { font-size: 0.8rem; }
+            .score-item .num { font-size: 0.95rem; }
+            .nav-footer { flex-direction: column; align-items: stretch; }
+            .btn-nav { justify-content: center; }
+            .header { padding: 12px 16px; }
+            .logo-text { font-size: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .sets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .set-card .set-num { font-size: 1.2rem; }
+            .cover-title { font-size: 1.6rem; }
+            .options { grid-template-columns: 1fr; }
+            .btn-answer { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+
+    <div class="header">
+        <a href="#" class="logo" onclick="goToDashboard(); return false;">
+            <div class="logo-icon"><i class="fas fa-pencil-alt"></i></div>
+            <div class="logo-text">SSC <span>MOCK</span></div>
+        </a>
+        <div class="header-badge"><i class="fas fa-spell-check"></i> Spellings Practice</div>
+    </div>
+
+    <div class="page active" id="page-dashboard">
+        <div class="cover-top">
+            <div class="cover-badge"><i class="fas fa-star"></i> SSC CGL / CHSL / CPO / MTS</div>
+            <h1 class="cover-title"><span class="highlight">500+</span> Spelling<br>Practice Sets</h1>
+            <div class="cover-subtitle">Master Spellings</div>
+            <p class="cover-desc">Based on SSC Previous Year Questions – 20 Sets × 25 MCQs = 500+ Questions</p>
+        </div>
+
+        <div class="overall-progress">
+            <div><strong>Overall Progress:</strong> <span id="overallProgressText">0 / 500</span></div>
+            <div class="bar-wrap"><div class="bar" id="overallProgressBar"></div></div>
+            <div><strong>Score:</strong> <span id="overallScoreText">0%</span></div>
+        </div>
+
+        <div class="sets-grid" id="setsGrid"></div>
+
+        <div class="text-center">
+            <button class="btn-nav primary" onclick="resetAllProgress()"><i class="fas fa-redo-alt"></i> Reset All Progress</button>
+        </div>
+    </div>
+
+    <div class="page" id="page-practice">
+        <div class="practice-header">
+            <div class="left">
+                <button class="btn-nav" onclick="goToDashboard()" style="padding:6px 14px;font-size:0.8rem;"><i class="fas fa-arrow-left"></i> Sets</button>
+                <h2><i class="fas fa-pen-fancy"></i> <span id="setTitle">Set 1</span></h2>
+            </div>
+            <span class="set-tag" id="setTag"><i class="fas fa-layer-group"></i> Set 1 / 20</span>
+        </div>
+
+        <div class="score-bar">
+            <div class="score-item correct"><i class="fas fa-check-circle"></i> Correct: <span class="num" id="correctCount">0</span></div>
+            <div class="score-item wrong"><i class="fas fa-times-circle"></i> Wrong: <span class="num" id="wrongCount">0</span></div>
+            <div class="score-item attempted"><i class="fas fa-flag"></i> Attempted: <span class="num" id="attemptedCount">0</span></div>
+            <div class="score-item percent"><i class="fas fa-star"></i> Score: <span class="num" id="scorePercent">0</span>%</div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="nav-footer">
+            <button class="btn-nav" id="prevSetBtn" onclick="changeSet(-1)"><i class="fas fa-chevron-left"></i> Previous</button>
+            <span class="page-indicator" id="setIndicator">Set 1 of 20</span>
+            <button class="btn-nav primary" id="nextSetBtn" onclick="changeSet(1)">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ================================================================
+// 📦 SPELLING DATA – 524+ COMMONLY MISSPELLED WORDS (A-Z)
+// ================================================================
+const spellingData = [
+  { id: 11, incorrect: "attepmt", correct: "attempt", meaning_hi: "प्रयास", definition: "Effort", example_en: "He made an attempt.", example_hi: "उसने प्रयास किया。" },
+    { id: 12, incorrect: "avaliable", correct: "available", meaning_hi: "उपलब्ध", definition: "Able to be used", example_en: "Tickets available.", example_hi: "टिकट उपलब्ध हैं。" },
+    { id: 13, incorrect: "awkward", correct: "awkward", meaning_hi: "अजीब", definition: "Clumsy", example_en: "He felt awkward.", example_hi: "वह अजीब लगा。" },
+    { id: 14, incorrect: "acheive", correct: "achieve", meaning_hi: "प्राप्त करना", definition: "To succeed", example_en: "He achieved his goal.", example_hi: "उसने लक्ष्य प्राप्त किया。" },
+    { id: 15, incorrect: "accross", correct: "across", meaning_hi: "पार", definition: "From one side to other", example_en: "Walk across the road.", example_hi: "सड़क पार करें。" },
+    { id: 16, incorrect: "agressive", correct: "aggressive", meaning_hi: "आक्रामक", definition: "Hostile", example_en: "He is aggressive.", example_hi: "वह आक्रामक है。" },
+    { id: 17, incorrect: "allegience", correct: "allegiance", meaning_hi: "निष्ठा", definition: "Loyalty", example_en: "He pledged allegiance.", example_hi: "उसने निष्ठा की शपथ ली。" },
+    { id: 18, incorrect: "amature", correct: "amateur", meaning_hi: "शौकिया", definition: "Non-professional", example_en: "He is an amateur.", example_hi: "वह शौकिया है。" },
+    { id: 19, incorrect: "anihilate", correct: "annihilate", meaning_hi: "मिटाना", definition: "Destroy completely", example_en: "The army was annihilated.", example_hi: "सेना मिटा दी गई。" },
+    { id: 20, incorrect: "aparent", correct: "apparent", meaning_hi: "स्पष्ट", definition: "Obvious", example_en: "It was apparent.", example_hi: "यह स्पष्ट था。" },
+    { id: 21, incorrect: "appearence", correct: "appearance", meaning_hi: "रूप", definition: "The way something looks", example_en: "His appearance was shabby.", example_hi: "उसका रूप फटेहाल था。" },
+    { id: 22, incorrect: "appetite", correct: "appetite", meaning_hi: "भूख", definition: "Desire for food", example_en: "He has a good appetite.", example_hi: "उसकी भूख अच्छी है。" },
+    { id: 23, incorrect: "apprieciate", correct: "appreciate", meaning_hi: "सराहना करना", definition: "To value", example_en: "I appreciate your help.", example_hi: "मैं आपकी मदद की सराहना करता हूँ。" },
+    { id: 24, incorrect: "apropriate", correct: "appropriate", meaning_hi: "उचित", definition: "Suitable", example_en: "This is appropriate.", example_hi: "यह उचित है。" },
+    { id: 25, incorrect: "aproximate", correct: "approximate", meaning_hi: "लगभग", definition: "Almost exact", example_en: "The approximate cost is $100.", example_hi: "लगभग लागत $100 है。" },
+    { id: 26, incorrect: "artificial", correct: "artificial", meaning_hi: "कृत्रिम", definition: "Man-made", example_en: "Artificial flowers.", example_hi: "कृत्रिम फूल。" },
+    { id: 27, incorrect: "assasin", correct: "assassin", meaning_hi: "हत्यारा", definition: "Political murderer", example_en: "The assassin was caught.", example_hi: "हत्यारा पकड़ा गया。" },
+    { id: 28, incorrect: "athletics", correct: "athletics", meaning_hi: "एथलेटिक्स", definition: "Sports", example_en: "He is good at athletics.", example_hi: "वह एथलेटिक्स में अच्छा है。" },
+    { id: 29, incorrect: "atmosphere", correct: "atmosphere", meaning_hi: "वातावरण", definition: "Envelope of gases", example_en: "The atmosphere is polluted.", example_hi: "वातावरण प्रदूषित है。" },
+    { id: 30, incorrect: "attendance", correct: "attendance", meaning_hi: "उपस्थिति", definition: "Being present", example_en: "Attendance is mandatory.", example_hi: "उपस्थिति अनिवार्य है。" },
+    { id: 31, incorrect: "authority", correct: "authority", meaning_hi: "अधिकार", definition: "Power", example_en: "He has authority.", example_hi: "उसके पास अधिकार है。" },
+    { id: 32, incorrect: "avarage", correct: "average", meaning_hi: "औसत", definition: "Mean", example_en: "The average score is 50.", example_hi: "औसत स्कोर 50 है。" },
+    { id: 33, incorrect: "awfull", correct: "awful", meaning_hi: "भयानक", definition: "Very bad", example_en: "The weather is awful.", example_hi: "मौसम भयानक है。" },
+    { id: 34, incorrect: "begining", correct: "beginning", meaning_hi: "शुरुआत", definition: "Start", example_en: "The beginning of the film.", example_hi: "फिल्म की शुरुआत。" },
+    { id: 35, incorrect: "beleive", correct: "believe", meaning_hi: "विश्वास करना", definition: "Accept as true", example_en: "I believe you.", example_hi: "मैं आप पर विश्वास करता हूँ。" },
+    { id: 36, incorrect: "beneficial", correct: "beneficial", meaning_hi: "लाभकारी", definition: "Helpful", example_en: "Exercise is beneficial.", example_hi: "व्यायाम लाभकारी है。" },
+    { id: 37, incorrect: "business", correct: "business", meaning_hi: "व्यवसाय", definition: "Commerce", example_en: "He runs a business.", example_hi: "वह व्यवसाय चलाता है。" },
+    { id: 38, incorrect: "belligerent", correct: "belligerent", meaning_hi: "युद्धप्रिय", definition: "Hostile", example_en: "He is belligerent.", example_hi: "वह युद्धप्रिय है。" },
+    { id: 39, incorrect: "benefactor", correct: "benefactor", meaning_hi: "उपकारी", definition: "One who helps", example_en: "He is a benefactor.", example_hi: "वह एक उपकारी है。" },
+    { id: 40, incorrect: "benevolent", correct: "benevolent", meaning_hi: "परोपकारी", definition: "Kind", example_en: "She is benevolent.", example_hi: "वह परोपकारी है。" },
+    { id: 41, incorrect: "bereave", correct: "bereave", meaning_hi: "वंचित करना", definition: "To deprive", example_en: "He was bereaved.", example_hi: "वह वंचित हो गया。" },
+    { id: 42, incorrect: "bias", correct: "bias", meaning_hi: "पक्षपात", definition: "Prejudice", example_en: "He showed bias.", example_hi: "उसने पक्षपात दिखाया。" },
+    { id: 43, incorrect: "bizzare", correct: "bizarre", meaning_hi: "विचित्र", definition: "Strange", example_en: "He wore a bizarre hat.", example_hi: "उसने विचित्र टोपी पहनी。" },
+    { id: 44, incorrect: "blasphemy", correct: "blasphemy", meaning_hi: "ईश्वर निंदा", definition: "Sacrilege", example_en: "His words were blasphemy.", example_hi: "उसके शब्द ईश्वर निंदा थे。" },
+    { id: 45, incorrect: "blatant", correct: "blatant", meaning_hi: "प्रबल", definition: "Obvious", example_en: "It was a blatant lie.", example_hi: "यह प्रबल झूठ था。" },
+    { id: 46, incorrect: "blunder", correct: "blunder", meaning_hi: "भूल", definition: "Mistake", example_en: "He made a blunder.", example_hi: "उसने भूल की。" },
+    { id: 47, incorrect: "boisterous", correct: "boisterous", meaning_hi: "कोलाहल", definition: "Noisy", example_en: "The children were boisterous.", example_hi: "बच्चे कोलाहल कर रहे थे。" },
+    { id: 48, incorrect: "bolster", correct: "bolster", meaning_hi: "सहारा", definition: "To support", example_en: "He bolstered his argument.", example_hi: "उसने अपने तर्क को सहारा दिया。" },
+    { id: 49, incorrect: "bombastic", correct: "bombastic", meaning_hi: "आडंबरपूर्ण", definition: "Pretentious", example_en: "His speech was bombastic.", example_hi: "उसका भाषण आडंबरपूर्ण था。" },
+    { id: 50, incorrect: "boorish", correct: "boorish", meaning_hi: "असभ्य", definition: "Rude", example_en: "He is boorish.", example_hi: "वह असभ्य है。" },
+    { id: 51, incorrect: "bountiful", correct: "bountiful", meaning_hi: "प्रचुर", definition: "Abundant", example_en: "The harvest was bountiful.", example_hi: "फसल प्रचुर थी。" },
+    { id: 52, incorrect: "brilliant", correct: "brilliant", meaning_hi: "शानदार", definition: "Very clever", example_en: "He is brilliant.", example_hi: "वह शानदार है。" },
+    { id: 53, incorrect: "brochure", correct: "brochure", meaning_hi: "पुस्तिका", definition: "Booklet", example_en: "He read the brochure.", example_hi: "उसने पुस्तिका पढ़ी。" },
+    { id: 54, incorrect: "bureaucracy", correct: "bureaucracy", meaning_hi: "नौकरशाही", definition: "Officialdom", example_en: "Bureaucracy is slow.", example_hi: "नौकरशाही धीमी है。" },
+    { id: 55, incorrect: "burglary", correct: "burglary", meaning_hi: "चोरी", definition: "Theft", example_en: "He was charged with burglary.", example_hi: "उस पर चोरी का आरोप लगा。" },
+    { id: 56, incorrect: "calender", correct: "calendar", meaning_hi: "कैलेंडर", definition: "Chart of days", example_en: "Check the calendar.", example_hi: "कैलेंडर देखें。" },
+    { id: 57, incorrect: "catagory", correct: "category", meaning_hi: "श्रेणी", definition: "Class", example_en: "It falls under this category.", example_hi: "यह इस श्रेणी में आता है。" },
+    { id: 58, incorrect: "comittee", correct: "committee", meaning_hi: "समिति", definition: "Group", example_en: "The committee decided.", example_hi: "समिति ने फैसला किया。" },
+    { id: 59, incorrect: "concious", correct: "conscious", meaning_hi: "सचेत", definition: "Aware", example_en: "He was conscious.", example_hi: "वह सचेत था。" },
+    { id: 60, incorrect: "courageous", correct: "courageous", meaning_hi: "साहसी", definition: "Brave", example_en: "He is courageous.", example_hi: "वह साहसी है。" },
+    { id: 61, incorrect: "collegue", correct: "colleague", meaning_hi: "सहकर्मी", definition: "Co-worker", example_en: "My colleague helped me.", example_hi: "मेरे सहकर्मी ने मेरी मदद की。" },
+    { id: 62, incorrect: "collateral", correct: "collateral", meaning_hi: "जमानत", definition: "Security", example_en: "He gave collateral.", example_hi: "उसने जमानत दी。" },
+    { id: 63, incorrect: "commemorate", correct: "commemorate", meaning_hi: "स्मरण करना", definition: "To honor", example_en: "They built a statue.", example_hi: "उन्होंने मूर्ति बनाई。" },
+    { id: 64, incorrect: "commensurate", correct: "commensurate", meaning_hi: "आनुपातिक", definition: "In proportion", example_en: "Salary is commensurate.", example_hi: "वेतन आनुपातिक है。" },
+    { id: 65, incorrect: "commiserate", correct: "commiserate", meaning_hi: "सहानुभूति", definition: "Sympathy", example_en: "He commiserated.", example_hi: "उसने सहानुभूति व्यक्त की。" },
+    { id: 66, incorrect: "commodious", correct: "commodious", meaning_hi: "विशाल", definition: "Spacious", example_en: "The house is commodious.", example_hi: "घर विशाल है。" },
+    { id: 67, incorrect: "compel", correct: "compel", meaning_hi: "मजबूर करना", definition: "To force", example_en: "He compelled me.", example_hi: "उसने मुझे मजबूर किया。" },
+    { id: 68, incorrect: "compensate", correct: "compensate", meaning_hi: "क्षतिपूर्ति", definition: "To pay", example_en: "They compensated him.", example_hi: "उन्होंने उसकी क्षतिपूर्ति की。" },
+    { id: 69, incorrect: "competent", correct: "competent", meaning_hi: "सक्षम", definition: "Capable", example_en: "He is competent.", example_hi: "वह सक्षम है。" },
+    { id: 70, incorrect: "complacent", correct: "complacent", meaning_hi: "आत्मसंतुष्ट", definition: "Self-satisfied", example_en: "He is complacent.", example_hi: "वह आत्मसंतुष्ट है。" },
+    { id: 71, incorrect: "complement", correct: "complement", meaning_hi: "पूरक", definition: "To complete", example_en: "It complements the dish.", example_hi: "यह पूरक है。" },
+    { id: 72, incorrect: "complicity", correct: "complicity", meaning_hi: "सह-अपराध", definition: "Involvement", example_en: "He was accused of complicity.", example_hi: "उस पर सह-अपराध का आरोप था。" },
+    { id: 73, incorrect: "compromise", correct: "compromise", meaning_hi: "समझौता", definition: "Settlement", example_en: "They reached a compromise.", example_hi: "उन्होंने समझौता किया。" },
+    { id: 74, incorrect: "conceal", correct: "conceal", meaning_hi: "छिपाना", definition: "To hide", example_en: "He concealed the truth.", example_hi: "उसने सच्चाई छिपाई。" },
+    { id: 75, incorrect: "concede", correct: "concede", meaning_hi: "स्वीकार करना", definition: "To admit", example_en: "He conceded his defeat.", example_hi: "उसने अपनी हार स्वीकार की。" },
+    { id: 76, incorrect: "conciliate", correct: "conciliate", meaning_hi: "मनाना", definition: "To pacify", example_en: "He tried to conciliate.", example_hi: "उसने मनाने की कोशिश की。" },
+    { id: 77, incorrect: "concise", correct: "concise", meaning_hi: "संक्षिप्त", definition: "Brief", example_en: "He gave a concise speech.", example_hi: "उसने संक्षिप्त भाषण दिया。" },
+    { id: 78, incorrect: "concur", correct: "concur", meaning_hi: "सहमत होना", definition: "To agree", example_en: "I concur with you.", example_hi: "मैं आपसे सहमत हूँ。" },
+    { id: 79, incorrect: "condemn", correct: "condemn", meaning_hi: "निंदा करना", definition: "To criticize", example_en: "He condemned the violence.", example_hi: "उसने हिंसा की निंदा की。" },
+    { id: 80, incorrect: "condescend", correct: "condescend", meaning_hi: "कृपा करना", definition: "To lower oneself", example_en: "He condescended to help.", example_hi: "उसने मदद करने की कृपा की。" },
+    { id: 81, incorrect: "condone", correct: "condone", meaning_hi: "माफ़ करना", definition: "To overlook", example_en: "He condoned the mistake.", example_hi: "उसने गलती को माफ़ किया。" },
+    { id: 82, incorrect: "conducive", correct: "conducive", meaning_hi: "अनुकूल", definition: "Favorable", example_en: "This is conducive to study.", example_hi: "यह अध्ययन के लिए अनुकूल है。" },
+    { id: 83, incorrect: "confide", correct: "confide", meaning_hi: "भरोसा करना", definition: "To trust", example_en: "She confided in him.", example_hi: "उसने उस पर भरोसा किया。" },
+    { id: 84, incorrect: "confiscate", correct: "confiscate", meaning_hi: "जब्त करना", definition: "To seize", example_en: "The police confiscated the goods.", example_hi: "पुलिस ने माल जब्त कर लिया。" },
+    { id: 85, incorrect: "conformity", correct: "conformity", meaning_hi: "अनुरूपता", definition: "Compliance", example_en: "He acted in conformity.", example_hi: "उसने अनुरूपता में कार्य किया。" },
+    { id: 86, incorrect: "confound", correct: "confound", meaning_hi: "चकित करना", definition: "To confuse", example_en: "His actions confounded me.", example_hi: "उसके कार्यों ने मुझे चकित कर दिया。" },
+    { id: 87, incorrect: "congenial", correct: "congenial", meaning_hi: "अनुकूल", definition: "Pleasant", example_en: "He is congenial.", example_hi: "वह अनुकूल है。" },
+    { id: 88, incorrect: "congregate", correct: "congregate", meaning_hi: "इकट्ठा होना", definition: "To gather", example_en: "The crowd congregated.", example_hi: "भीड़ इकट्ठा हुई。" },
+    { id: 89, incorrect: "conjecture", correct: "conjecture", meaning_hi: "अनुमान", definition: "A guess", example_en: "His conjecture proved correct.", example_hi: "उसका अनुमान सही साबित हुआ。" },
+    { id: 90, incorrect: "connoisseur", correct: "connoisseur", meaning_hi: "पारखी", definition: "An expert", example_en: "He is a connoisseur.", example_hi: "वह पारखी है。" },
+    { id: 91, incorrect: "conscientious", correct: "conscientious", meaning_hi: "ईमानदार", definition: "Diligent", example_en: "He is conscientious.", example_hi: "वह ईमानदार है。" },
+    { id: 92, incorrect: "consensus", correct: "consensus", meaning_hi: "सहमति", definition: "Agreement", example_en: "There is consensus.", example_hi: "सहमति है。" },
+    { id: 93, incorrect: "consequence", correct: "consequence", meaning_hi: "परिणाम", definition: "Result", example_en: "He faced consequences.", example_hi: "उसने परिणाम भुगते。" },
+    { id: 94, incorrect: "conservative", correct: "conservative", meaning_hi: "रूढ़िवादी", definition: "Traditional", example_en: "He is conservative.", example_hi: "वह रूढ़िवादी है。" },
+    { id: 95, incorrect: "consign", correct: "consign", meaning_hi: "सौंपना", definition: "To hand over", example_en: "He consigned the goods.", example_hi: "उसने माल सौंप दिया。" },
+    { id: 96, incorrect: "consolation", correct: "consolation", meaning_hi: "सांत्वना", definition: "Comfort", example_en: "He found consolation.", example_hi: "उसे सांत्वना मिली。" },
+    { id: 97, incorrect: "conspiracy", correct: "conspiracy", meaning_hi: "षड्यंत्र", definition: "Secret plan", example_en: "They uncovered a conspiracy.", example_hi: "उन्होंने षड्यंत्र का पता लगाया。" },
+    { id: 98, incorrect: "constituent", correct: "constituent", meaning_hi: "घटक", definition: "Component", example_en: "The constituents of the mixture.", example_hi: "मिश्रण के घटक。" },
+    { id: 99, incorrect: "constrain", correct: "constrain", meaning_hi: "विवश करना", definition: "To restrict", example_en: "He was constrained.", example_hi: "वह विवश था。" },
+    { id: 100, incorrect: "contaminate", correct: "contaminate", meaning_hi: "दूषित करना", definition: "To pollute", example_en: "The water was contaminated.", example_hi: "पानी दूषित था。" },
+    { id: 101, incorrect: "contemplate", correct: "contemplate", meaning_hi: "विचार करना", definition: "To think", example_en: "He contemplated his future.", example_hi: "उसने अपने भविष्य पर विचार किया。" },
+    { id: 102, incorrect: "contempt", correct: "contempt", meaning_hi: "अवमानना", definition: "Disrespect", example_en: "He showed contempt.", example_hi: "उसने अवमानना दिखाई。" },
+    { id: 103, incorrect: "contend", correct: "contend", meaning_hi: "संघर्ष करना", definition: "To struggle", example_en: "He contended with difficulties.", example_hi: "उसने कठिनाइयों से संघर्ष किया。" },
+    { id: 104, incorrect: "contingent", correct: "contingent", meaning_hi: "आकस्मिक", definition: "Dependent", example_en: "It is contingent on weather.", example_hi: "यह मौसम पर आकस्मिक है。" },
+    { id: 105, incorrect: "contradict", correct: "contradict", meaning_hi: "खंडन करना", definition: "To deny", example_en: "He contradicted the statement.", example_hi: "उसने बयान का खंडन किया。" },
+    { id: 106, incorrect: "contribute", correct: "contribute", meaning_hi: "योगदान करना", definition: "To give", example_en: "He contributed to the fund.", example_hi: "उसने कोष में योगदान दिया。" },
+    { id: 107, incorrect: "contrite", correct: "contrite", meaning_hi: "पश्चातापी", definition: "Remorseful", example_en: "He was contrite.", example_hi: "वह पश्चातापी था。" },
+    { id: 108, incorrect: "controversy", correct: "controversy", meaning_hi: "विवाद", definition: "Disagreement", example_en: "The issue caused controversy.", example_hi: "मुद्दे ने विवाद पैदा किया。" },
+    { id: 109, incorrect: "convene", correct: "convene", meaning_hi: "बुलाना", definition: "To call", example_en: "The committee convened.", example_hi: "समिति बुलाई गई。" },
+    { id: 110, incorrect: "converge", correct: "converge", meaning_hi: "मिलना", definition: "To come together", example_en: "The roads converge.", example_hi: "सड़कें मिलती हैं。" },
+    { id: 111, incorrect: "convivial", correct: "convivial", meaning_hi: "आनंदप्रिय", definition: "Fond of feasting", example_en: "He is convivial.", example_hi: "वह आनंदप्रिय है。" },
+    { id: 112, incorrect: "convoke", correct: "convoke", meaning_hi: "बुलाना", definition: "To call together", example_en: "The president convoked the parliament.", example_hi: "राष्ट्रपति ने संसद बुलाई。" },
+    { id: 113, incorrect: "camouflage", correct: "camouflage", meaning_hi: "छलावरण", definition: "Disguise", example_en: "The soldiers used camouflage.", example_hi: "सैनिकों ने छलावरण का उपयोग किया。" },
+    { id: 114, incorrect: "candor", correct: "candor", meaning_hi: "स्पष्टवादिता", definition: "Openness", example_en: "He spoke with candor.", example_hi: "उसने स्पष्टवादिता से बात की。" },
+    { id: 115, incorrect: "cantankerous", correct: "cantankerous", meaning_hi: "झगड़ालू", definition: "Bad-tempered", example_en: "He is cantankerous.", example_hi: "वह झगड़ालू है。" },
+    { id: 116, incorrect: "capacious", correct: "capacious", meaning_hi: "विशाल", definition: "Spacious", example_en: "The room is capacious.", example_hi: "कमरा विशाल है。" },
+    { id: 117, incorrect: "capitulate", correct: "capitulate", meaning_hi: "आत्मसमर्पण", definition: "To surrender", example_en: "The enemy capitulated.", example_hi: "दुश्मन ने आत्मसमर्पण किया。" },
+    { id: 118, incorrect: "capricious", correct: "capricious", meaning_hi: "मनमौजी", definition: "Impulsive", example_en: "He is capricious.", example_hi: "वह मनमौजी है。" },
+    { id: 119, incorrect: "captivity", correct: "captivity", meaning_hi: "कैद", definition: "Imprisonment", example_en: "He was held in captivity.", example_hi: "उसे कैद में रखा गया。" },
+    { id: 120, incorrect: "cardinal", correct: "cardinal", meaning_hi: "मुख्य", definition: "Prime", example_en: "This is a cardinal rule.", example_hi: "यह मुख्य नियम है。" },
+    { id: 121, incorrect: "carnage", correct: "carnage", meaning_hi: "हत्याकांड", definition: "Massacre", example_en: "The battle led to carnage.", example_hi: "युद्ध हत्याकांड में बदल गया。" },
+    { id: 122, incorrect: "cascade", correct: "cascade", meaning_hi: "झरना", definition: "Waterfall", example_en: "A cascade of water.", example_hi: "पानी का झरना。" },
+    { id: 123, incorrect: "cataclysm", correct: "cataclysm", meaning_hi: "प्रलय", definition: "Violent upheaval", example_en: "The earthquake was a cataclysm.", example_hi: "भूकंप प्रलय था。" },
+    { id: 124, incorrect: "catastrophe", correct: "catastrophe", meaning_hi: "तबाही", definition: "Disaster", example_en: "The storm caused a catastrophe.", example_hi: "तूफान ने तबाही मचाई。" },
+    { id: 125, incorrect: "categorize", correct: "categorize", meaning_hi: "वर्गीकृत करना", definition: "To classify", example_en: "He categorized the books.", example_hi: "उसने किताबों को वर्गीकृत किया。" },
+    { id: 126, incorrect: "caustic", correct: "caustic", meaning_hi: "तीखा", definition: "Biting", example_en: "He made a caustic remark.", example_hi: "उसने तीखी टिप्पणी की。" },
+    { id: 127, incorrect: "censure", correct: "censure", meaning_hi: "आलोचना", definition: "Criticism", example_en: "He faced censure.", example_hi: "उसे आलोचना का सामना करना पड़ा。" },
+    { id: 128, incorrect: "cessation", correct: "cessation", meaning_hi: "विराम", definition: "A stop", example_en: "The cessation of hostilities.", example_hi: "शत्रुता का विराम。" },
+    { id: 129, incorrect: "chagrin", correct: "chagrin", meaning_hi: "शर्म", definition: "Distress", example_en: "To his chagrin, he lost.", example_hi: "उसकी शर्म के लिए, वह हार गया。" },
+    { id: 130, incorrect: "chaos", correct: "chaos", meaning_hi: "अराजकता", definition: "Disorder", example_en: "The traffic was in chaos.", example_hi: "यातायात अराजकता में था。" },
+    { id: 131, incorrect: "charisma", correct: "charisma", meaning_hi: "आकर्षण", definition: "Personal magnetism", example_en: "He has charisma.", example_hi: "उसमें आकर्षण है。" },
+    { id: 132, incorrect: "charlatan", correct: "charlatan", meaning_hi: "झूठा वैद्य", definition: "A fake", example_en: "He was a charlatan.", example_hi: "वह झूठा वैद्य था。" },
+    { id: 133, incorrect: "chastise", correct: "chastise", meaning_hi: "दंड देना", definition: "To punish", example_en: "He chastised his son.", example_hi: "उसने अपने बेटे को दंड दिया。" },
+    { id: 134, incorrect: "cherish", correct: "cherish", meaning_hi: "संजोना", definition: "To treasure", example_en: "He cherishes his memories.", example_hi: "वह अपनी यादों को संजोता है。" },
+    { id: 135, incorrect: "chivalry", correct: "chivalry", meaning_hi: "शूरता", definition: "Knightly valor", example_en: "He showed chivalry.", example_hi: "उसने शूरता दिखाई。" },
+    { id: 136, incorrect: "chronicle", correct: "chronicle", meaning_hi: "इतिहास", definition: "A record", example_en: "He wrote a chronicle.", example_hi: "उसने इतिहास लिखा。" },
+    { id: 137, incorrect: "circumvent", correct: "circumvent", meaning_hi: "चकमा देना", definition: "To bypass", example_en: "He circumvented the rules.", example_hi: "उसने नियमों को चकमा दिया。" },
+    { id: 138, incorrect: "clarify", correct: "clarify", meaning_hi: "स्पष्ट करना", definition: "To make clear", example_en: "He clarified his position.", example_hi: "उसने अपनी स्थिति स्पष्ट की。" },
+    { id: 139, incorrect: "clemency", correct: "clemency", meaning_hi: "दया", definition: "Mercy", example_en: "He appealed for clemency.", example_hi: "उसने दया की अपील की。" },
+    { id: 140, incorrect: "cliché", correct: "cliché", meaning_hi: "घिसी-पिटी", definition: "Overused phrase", example_en: "It's a cliché.", example_hi: "यह घिसी-पिटी है。" },
+    { id: 141, incorrect: "coalesce", correct: "coalesce", meaning_hi: "मिलना", definition: "To unite", example_en: "The groups coalesced.", example_hi: "समूह मिल गए。" },
+    { id: 142, incorrect: "coerce", correct: "coerce", meaning_hi: "दबाव डालना", definition: "To compel", example_en: "He coerced him into signing.", example_hi: "उसने उसे हस्ताक्षर करने के लिए दबाव डाला。" },
+    { id: 143, incorrect: "cogent", correct: "cogent", meaning_hi: "प्रभावी", definition: "Convincing", example_en: "He gave a cogent argument.", example_hi: "उसने प्रभावी तर्क दिया。" },
+    { id: 144, incorrect: "cognizant", correct: "cognizant", meaning_hi: "जागरूक", definition: "Aware", example_en: "He was cognizant.", example_hi: "वह जागरूक था。" },
+    { id: 145, incorrect: "cohesion", correct: "cohesion", meaning_hi: "एकता", definition: "Unity", example_en: "There was cohesion.", example_hi: "एकता थी。" },
+    { id: 146, incorrect: "collaborate", correct: "collaborate", meaning_hi: "सहयोग करना", definition: "To work together", example_en: "They collaborated.", example_hi: "उन्होंने सहयोग किया。" },
+    { id: 147, incorrect: "colloquial", correct: "colloquial", meaning_hi: "बोलचाल", definition: "Informal", example_en: "He used colloquial words.", example_hi: "उसने बोलचाल के शब्दों का उपयोग किया。" },
+    { id: 148, incorrect: "dainty", correct: "dainty", meaning_hi: "सुंदर", definition: "Delicately beautiful", example_en: "She wore a dainty necklace.", example_hi: "उसने सुंदर हार पहना。" },
+    { id: 149, incorrect: "dearth", correct: "dearth", meaning_hi: "कमी", definition: "Scarcity", example_en: "There is a dearth of water.", example_hi: "पानी की कमी है。" },
+    { id: 150, incorrect: "debacle", correct: "debacle", meaning_hi: "पराजय", definition: "Collapse", example_en: "The company faced a debacle.", example_hi: "कंपनी को पराजय का सामना करना पड़ा。" },
+    { id: 151, incorrect: "debilitate", correct: "debilitate", meaning_hi: "कमजोर करना", definition: "To weaken", example_en: "The illness debilitated him.", example_hi: "बीमारी ने उसे कमजोर किया。" },
+    { id: 152, incorrect: "decadence", correct: "decadence", meaning_hi: "पतन", definition: "Moral decay", example_en: "The empire fell into decadence.", example_hi: "साम्राज्य पतन में आ गया。" },
+    { id: 153, incorrect: "decipher", correct: "decipher", meaning_hi: "समझना", definition: "To interpret", example_en: "He deciphered the code.", example_hi: "उसने कोड समझ लिया。" },
+    { id: 154, incorrect: "decorum", correct: "decorum", meaning_hi: "शिष्टाचार", definition: "Proper behavior", example_en: "He maintained decorum.", example_hi: "उसने शिष्टाचार बनाए रखा。" },
+    { id: 155, incorrect: "decry", correct: "decry", meaning_hi: "निंदा करना", definition: "To denounce", example_en: "He decried the corruption.", example_hi: "उसने भ्रष्टाचार की निंदा की。" },
+    { id: 156, incorrect: "defer", correct: "defer", meaning_hi: "स्थगित करना", definition: "To postpone", example_en: "The meeting was deferred.", example_hi: "बैठक स्थगित कर दी गई。" },
+    { id: 157, incorrect: "defiance", correct: "defiance", meaning_hi: "अवज्ञा", definition: "Open resistance", example_en: "He showed defiance.", example_hi: "उसने अवज्ञा दिखाई。" },
+    { id: 158, incorrect: "deft", correct: "deft", meaning_hi: "निपुण", definition: "Skillful", example_en: "He is deft.", example_hi: "वह निपुण है。" },
+    { id: 159, incorrect: "delegate", correct: "delegate", meaning_hi: "प्रतिनिधि", definition: "Representative", example_en: "He was a delegate.", example_hi: "वह प्रतिनिधि था。" },
+    { id: 160, incorrect: "delineate", correct: "delineate", meaning_hi: "रेखांकित करना", definition: "To describe", example_en: "He delineated the plan.", example_hi: "उसने योजना को रेखांकित किया。" },
+    { id: 161, incorrect: "deluge", correct: "deluge", meaning_hi: "बाढ़", definition: "Flood", example_en: "The deluge destroyed the crops.", example_hi: "बाढ़ ने फसलें नष्ट कर दीं。" },
+    { id: 162, incorrect: "demagogue", correct: "demagogue", meaning_hi: "जनोन्मादक", definition: "Rabble-rouser", example_en: "The demagogue incited the crowd.", example_hi: "जनोन्मादक ने भीड़ को भड़काया。" },
+    { id: 163, incorrect: "demure", correct: "demure", meaning_hi: "विनीत", definition: "Modest", example_en: "She is demure.", example_hi: "वह विनीत है。" },
+    { id: 164, incorrect: "denigrate", correct: "denigrate", meaning_hi: "बदनाम करना", definition: "To defame", example_en: "He denigrated his opponent.", example_hi: "उसने अपने प्रतिद्वंद्वी को बदनाम किया。" },
+    { id: 165, incorrect: "denounce", correct: "denounce", meaning_hi: "आरोप लगाना", definition: "To condemn", example_en: "He denounced the policy.", example_hi: "उसने नीति पर आरोप लगाया。" },
+    { id: 166, incorrect: "depict", correct: "depict", meaning_hi: "चित्रित करना", definition: "To portray", example_en: "He depicted the scene.", example_hi: "उसने दृश्य को चित्रित किया。" },
+    { id: 167, incorrect: "deplore", correct: "deplore", meaning_hi: "खेद प्रकट करना", definition: "To regret", example_en: "He deplored the loss.", example_hi: "उसने नुकसान पर खेद प्रकट किया。" },
+    { id: 168, incorrect: "depravity", correct: "depravity", meaning_hi: "भ्रष्टता", definition: "Moral corruption", example_en: "The depravity of the regime.", example_hi: "शासन की भ्रष्टता。" },
+    { id: 169, incorrect: "deprecate", correct: "deprecate", meaning_hi: "नापसंद करना", definition: "To disapprove", example_en: "He deprecated the use of force.", example_hi: "उसने बल के प्रयोग को नापसंद किया。" },
+    { id: 170, incorrect: "deride", correct: "deride", meaning_hi: "उपहास करना", definition: "To mock", example_en: "He derided his rival.", example_hi: "उसने अपने प्रतिद्वंद्वी का उपहास किया。" },
+    { id: 171, incorrect: "desecrate", correct: "desecrate", meaning_hi: "अपवित्र करना", definition: "To violate sacredness", example_en: "They desecrated the temple.", example_hi: "उन्होंने मंदिर को अपवित्र किया。" },
+    { id: 172, incorrect: "desist", correct: "desist", meaning_hi: "रोकना", definition: "To stop", example_en: "He desisted from his efforts.", example_hi: "उसने अपने प्रयासों को रोक दिया。" },
+    { id: 173, incorrect: "despondent", correct: "despondent", meaning_hi: "निराश", definition: "In low spirits", example_en: "He was despondent.", example_hi: "वह निराश था。" },
+    { id: 174, incorrect: "destitute", correct: "destitute", meaning_hi: "निर्धन", definition: "Extremely poor", example_en: "They were destitute.", example_hi: "वे निर्धन थे。" },
+    { id: 175, incorrect: "deter", correct: "deter", meaning_hi: "रोकना", definition: "To discourage", example_en: "The fence deterred intruders.", example_hi: "बाड़ ने घुसपैठियों को रोका。" },
+    { id: 176, incorrect: "detrimental", correct: "detrimental", meaning_hi: "हानिकारक", definition: "Harmful", example_en: "Smoking is detrimental.", example_hi: "धूम्रपान हानिकारक है。" },
+    { id: 177, incorrect: "deviate", correct: "deviate", meaning_hi: "विचलित होना", definition: "To turn aside", example_en: "He deviated from the path.", example_hi: "वह रास्ते से विचलित हो गया。" },
+    { id: 178, incorrect: "devout", correct: "devout", meaning_hi: "धार्मिक", definition: "Pious", example_en: "He is devout.", example_hi: "वह धार्मिक है。" },
+    { id: 179, incorrect: "dexterous", correct: "dexterous", meaning_hi: "कुशल", definition: "Skillful", example_en: "He is dexterous.", example_hi: "वह कुशल है。" },
+    { id: 180, incorrect: "diaphanous", correct: "diaphanous", meaning_hi: "पारदर्शी", definition: "Transparent", example_en: "She wore a diaphanous dress.", example_hi: "उसने पारदर्शी पोशाक पहनी。" },
+    { id: 181, incorrect: "diatribe", correct: "diatribe", meaning_hi: "निंदात्मक", definition: "Bitter criticism", example_en: "He launched a diatribe.", example_hi: "उसने निंदात्मक भाषण दिया。" },
+    { id: 182, incorrect: "dichotomy", correct: "dichotomy", meaning_hi: "द्विभाजन", definition: "Division into two", example_en: "There is a dichotomy.", example_hi: "द्विभाजन है。" },
+    { id: 183, incorrect: "dictum", correct: "dictum", meaning_hi: "सिद्धांत", definition: "A formal statement", example_en: "He quoted the dictum.", example_hi: "उसने सिद्धांत उद्धृत किया。" },
+    { id: 184, incorrect: "didactic", correct: "didactic", meaning_hi: "उपदेशात्मक", definition: "Instructive", example_en: "The book is didactic.", example_hi: "पुस्तक उपदेशात्मक है。" },
+    { id: 185, incorrect: "dilemma", correct: "dilemma", meaning_hi: "दुविधा", definition: "A choice between two evils", example_en: "He was in a dilemma.", example_hi: "वह दुविधा में था。" },
+    { id: 186, incorrect: "diligent", correct: "diligent", meaning_hi: "परिश्रमी", definition: "Hard-working", example_en: "He is diligent.", example_hi: "वह परिश्रमी है。" },
+    { id: 187, incorrect: "dilute", correct: "dilute", meaning_hi: "पतला करना", definition: "To make weaker", example_en: "He diluted the solution.", example_hi: "उसने घोल को पतला किया。" },
+    { id: 188, incorrect: "diminish", correct: "diminish", meaning_hi: "कम होना", definition: "To decrease", example_en: "The supply diminished.", example_hi: "आपूर्ति कम हो गई。" },
+    { id: 189, incorrect: "dirge", correct: "dirge", meaning_hi: "शोकगीत", definition: "Funeral song", example_en: "They sang a dirge.", example_hi: "उन्होंने शोकगीत गाया。" },
+    { id: 190, incorrect: "discerning", correct: "discerning", meaning_hi: "विवेकी", definition: "Perceptive", example_en: "He is discerning.", example_hi: "वह विवेकी है。" },
+    { id: 191, incorrect: "disdain", correct: "disdain", meaning_hi: "घृणा", definition: "Contempt", example_en: "He looked with disdain.", example_hi: "उसने घृणा से देखा。" },
+    { id: 192, incorrect: "disparage", correct: "disparage", meaning_hi: "अपमान करना", definition: "To belittle", example_en: "He disparaged her efforts.", example_hi: "उसने उसके प्रयासों का अपमान किया。" },
+    { id: 193, incorrect: "disparate", correct: "disparate", meaning_hi: "भिन्न", definition: "Essentially different", example_en: "They are disparate groups.", example_hi: "वे भिन्न समूह हैं。" },
+    { id: 194, incorrect: "disseminate", correct: "disseminate", meaning_hi: "फैलाना", definition: "To spread", example_en: "He disseminated the news.", example_hi: "उसने समाचार फैलाया。" },
+    { id: 195, incorrect: "dissent", correct: "dissent", meaning_hi: "असहमति", definition: "Disagreement", example_en: "There was dissent.", example_hi: "असहमति थी。" },
+    { id: 196, incorrect: "dissipate", correct: "dissipate", meaning_hi: "बिखरना", definition: "To scatter", example_en: "The crowd dissipated.", example_hi: "भीड़ बिखर गई。" },
+    { id: 197, incorrect: "dissonance", correct: "dissonance", meaning_hi: "कर्कशता", definition: "Discord", example_en: "The dissonance was unpleasant.", example_hi: "कर्कशता अप्रिय थी。" },
+    { id: 198, incorrect: "definite", correct: "definite", meaning_hi: "निश्चित", definition: "Clear", example_en: "It is definite.", example_hi: "यह निश्चित है。" },
+    { id: 199, incorrect: "desirable", correct: "desirable", meaning_hi: "वांछनीय", definition: "Worth having", example_en: "It is desirable.", example_hi: "यह वांछनीय है。" },
+    { id: 200, incorrect: "desperate", correct: "desperate", meaning_hi: "निराश", definition: "Hopeless", example_en: "He is desperate.", example_hi: "वह निराश है。" },
+    { id: 201, incorrect: "determined", correct: "determined", meaning_hi: "दृढ़", definition: "Resolute", example_en: "He is determined.", example_hi: "वह दृढ़ है。" },
+    { id: 202, incorrect: "develop", correct: "develop", meaning_hi: "विकसित करना", definition: "To grow", example_en: "He developed the site.", example_hi: "उसने साइट विकसित की。" },
+    { id: 203, incorrect: "difference", correct: "difference", meaning_hi: "अंतर", definition: "Dissimilarity", example_en: "There is a difference.", example_hi: "एक अंतर है。" },
+    { id: 204, incorrect: "discipline", correct: "discipline", meaning_hi: "अनुशासन", definition: "Training", example_en: "He has discipline.", example_hi: "उसके पास अनुशासन है。" },
+    { id: 205, incorrect: "disease", correct: "disease", meaning_hi: "बीमारी", definition: "Illness", example_en: "He has a disease.", example_hi: "उसे बीमारी है。" },
+    { id: 206, incorrect: "distinguish", correct: "distinguish", meaning_hi: "अलग करना", definition: "To differentiate", example_en: "He distinguished them.", example_hi: "उसने उन्हें अलग किया。" },
+    { id: 207, incorrect: "embarass", correct: "embarrass", meaning_hi: "शर्मिंदा करना", definition: "To shame", example_en: "He embarrassed me.", example_hi: "उसने मुझे शर्मिंदा किया。" },
+    { id: 208, incorrect: "enviroment", correct: "environment", meaning_hi: "पर्यावरण", definition: "Surroundings", example_en: "Protect the environment.", example_hi: "पर्यावरण की रक्षा करें。" },
+    { id: 209, incorrect: "especialy", correct: "especially", meaning_hi: "विशेष रूप से", definition: "Particularly", example_en: "I love all, especially you.", example_hi: "मुझे सब पसंद है, विशेष रूप से आप。" },
+    { id: 210, incorrect: "exagerate", correct: "exaggerate", meaning_hi: "बढ़ा-चढ़ा करना", definition: "To overstate", example_en: "He exaggerated the story.", example_hi: "उसने कहानी को बढ़ा-चढ़ा कर कहा。" },
+    { id: 211, incorrect: "excellent", correct: "excellent", meaning_hi: "उत्कृष्ट", definition: "Very good", example_en: "His performance was excellent.", example_hi: "उनका प्रदर्शन उत्कृष्ट था。" },
+    { id: 212, incorrect: "exited", correct: "excited", meaning_hi: "उत्साहित", definition: "Enthusiastic", example_en: "He was excited.", example_hi: "वह उत्साहित था。" },
+    { id: 213, incorrect: "exercise", correct: "exercise", meaning_hi: "व्यायाम", definition: "Physical activity", example_en: "He exercises daily.", example_hi: "वह रोज व्यायाम करता है。" },
+    { id: 214, incorrect: "existence", correct: "existence", meaning_hi: "अस्तित्व", definition: "Being", example_en: "The existence of God.", example_hi: "ईश्वर का अस्तित्व。" },
+    { id: 215, incorrect: "experience", correct: "experience", meaning_hi: "अनुभव", definition: "Practical knowledge", example_en: "He has experience.", example_hi: "उसे अनुभव है。" },
+    { id: 216, incorrect: "exuberant", correct: "exuberant", meaning_hi: "उत्साही", definition: "Full of energy", example_en: "He is exuberant.", example_hi: "वह उत्साही है。" },
+    { id: 217, incorrect: "egregious", correct: "egregious", meaning_hi: "घोर", definition: "Outstandingly bad", example_en: "It was an egregious error.", example_hi: "यह घोर त्रुटि थी。" },
+    { id: 218, incorrect: "elaborate", correct: "elaborate", meaning_hi: "विस्तृत", definition: "Detailed", example_en: "He gave an elaborate description.", example_hi: "उसने विस्तृत विवरण दिया。" },
+    { id: 219, incorrect: "elated", correct: "elated", meaning_hi: "हर्षित", definition: "Overjoyed", example_en: "He was elated.", example_hi: "वह हर्षित था。" },
+    { id: 220, incorrect: "elegy", correct: "elegy", meaning_hi: "शोकगीत", definition: "A mournful poem", example_en: "He wrote an elegy.", example_hi: "उसने शोकगीत लिखा。" },
+    { id: 221, incorrect: "elicit", correct: "elicit", meaning_hi: "निकालना", definition: "To draw out", example_en: "He elicited a response.", example_hi: "उसने जवाब निकाला。" },
+    { id: 222, incorrect: "eloquence", correct: "eloquence", meaning_hi: "वाक्पटुता", definition: "Fluent speaking", example_en: "His eloquence impressed everyone.", example_hi: "उसकी वाक्पटुता ने सभी को प्रभावित किया。" },
+    { id: 223, incorrect: "elucidate", correct: "elucidate", meaning_hi: "स्पष्ट करना", definition: "To explain", example_en: "He elucidated the point.", example_hi: "उसने बिंदु को स्पष्ट किया。" },
+    { id: 224, incorrect: "emaciated", correct: "emaciated", meaning_hi: "दुबला-पतला", definition: "Thin and weak", example_en: "He looked emaciated.", example_hi: "वह दुबला-पतला लग रहा था。" },
+    { id: 225, incorrect: "emancipate", correct: "emancipate", meaning_hi: "मुक्त करना", definition: "To liberate", example_en: "He emancipated the slaves.", example_hi: "उसने गुलामों को मुक्त किया。" },
+    { id: 226, incorrect: "embargo", correct: "embargo", meaning_hi: "प्रतिबंध", definition: "Ban on trade", example_en: "They imposed an embargo.", example_hi: "उन्होंने प्रतिबंध लगाया。" },
+    { id: 227, incorrect: "embellish", correct: "embellish", meaning_hi: "सजाना", definition: "To decorate", example_en: "She embellished the dress.", example_hi: "उसने पोशाक को सजाया。" },
+    { id: 228, incorrect: "embezzle", correct: "embezzle", meaning_hi: "गबन करना", definition: "To steal money", example_en: "He embezzled the funds.", example_hi: "उसने धन का गबन किया。" },
+    { id: 229, incorrect: "embody", correct: "embody", meaning_hi: "समाहित करना", definition: "To represent", example_en: "He embodies courage.", example_hi: "वह साहस को समाहित करता है。" },
+    { id: 230, incorrect: "emigrate", correct: "emigrate", meaning_hi: "प्रवास करना", definition: "To leave one's country", example_en: "He emigrated to the US.", example_hi: "वह अमेरिका प्रवास कर गया。" },
+    { id: 231, incorrect: "eminent", correct: "eminent", meaning_hi: "प्रतिष्ठित", definition: "Distinguished", example_en: "He is an eminent scientist.", example_hi: "वह प्रतिष्ठित वैज्ञानिक है。" },
+    { id: 232, incorrect: "emollient", correct: "emollient", meaning_hi: "मृदुकारी", definition: "Soothing", example_en: "He used an emollient cream.", example_hi: "उसने मृदुकारी क्रीम का उपयोग किया。" },
+    { id: 233, incorrect: "empathy", correct: "empathy", meaning_hi: "समानुभूति", definition: "Understanding others", example_en: "He showed empathy.", example_hi: "उसने समानुभूति दिखाई。" },
+    { id: 234, incorrect: "emulate", correct: "emulate", meaning_hi: "अनुकरण करना", definition: "To imitate", example_en: "He emulated his hero.", example_hi: "उसने अपने हीरो का अनुकरण किया。" },
+    { id: 235, incorrect: "encapsulate", correct: "encapsulate", meaning_hi: "संक्षिप्त करना", definition: "To summarize", example_en: "He encapsulated the argument.", example_hi: "उसने तर्क को संक्षिप्त किया。" },
+    { id: 236, incorrect: "encompass", correct: "encompass", meaning_hi: "घेरना", definition: "To surround", example_en: "The forest encompasses the village.", example_hi: "जंगल गाँव को घेरता है。" },
+    { id: 237, incorrect: "encroach", correct: "encroach", meaning_hi: "अतिक्रमण करना", definition: "To intrude", example_en: "They encroached on the land.", example_hi: "उन्होंने जमीन पर अतिक्रमण किया。" },
+    { id: 238, incorrect: "endeavor", correct: "endeavor", meaning_hi: "प्रयास", definition: "An attempt", example_en: "He made an endeavor.", example_hi: "उसने प्रयास किया。" },
+    { id: 239, incorrect: "endorse", correct: "endorse", meaning_hi: "समर्थन करना", definition: "To support", example_en: "He endorsed the candidate.", example_hi: "उसने उम्मीदवार का समर्थन किया。" },
+    { id: 240, incorrect: "endure", correct: "endure", meaning_hi: "सहना", definition: "To bear", example_en: "He endured the pain.", example_hi: "उसने दर्द सहा。" },
+    { id: 241, incorrect: "energetic", correct: "energetic", meaning_hi: "ऊर्जावान", definition: "Active", example_en: "He is energetic.", example_hi: "वह ऊर्जावान है。" },
+    { id: 242, incorrect: "enervate", correct: "enervate", meaning_hi: "शक्तिहीन करना", definition: "To weaken", example_en: "The heat enervated him.", example_hi: "गर्मी ने उसे शक्तिहीन कर दिया。" },
+    { id: 243, incorrect: "enhance", correct: "enhance", meaning_hi: "बढ़ाना", definition: "To improve", example_en: "He enhanced his skills.", example_hi: "उसने अपने कौशल को बढ़ाया。" },
+    { id: 244, incorrect: "enigma", correct: "enigma", meaning_hi: "पहेली", definition: "A mystery", example_en: "He is an enigma.", example_hi: "वह एक पहेली है。" },
+    { id: 245, incorrect: "enlighten", correct: "enlighten", meaning_hi: "प्रबुद्ध करना", definition: "To inform", example_en: "He enlightened me.", example_hi: "उसने मुझे प्रबुद्ध किया。" },
+    { id: 246, incorrect: "enmity", correct: "enmity", meaning_hi: "शत्रुता", definition: "Hatred", example_en: "There is enmity between them.", example_hi: "उनके बीच शत्रुता है。" },
+    { id: 247, incorrect: "enormous", correct: "enormous", meaning_hi: "विशाल", definition: "Huge", example_en: "It is an enormous building.", example_hi: "यह एक विशाल इमारत है。" },
+    { id: 248, incorrect: "enrapture", correct: "enrapture", meaning_hi: "मोहित करना", definition: "To delight", example_en: "The music enraptured him.", example_hi: "संगीत ने उसे मोहित कर लिया。" },
+    { id: 249, incorrect: "ensconce", correct: "ensconce", meaning_hi: "आराम से बैठना", definition: "To settle", example_en: "He ensconced himself.", example_hi: "वह आराम से बैठ गया。" },
+    { id: 250, incorrect: "ensue", correct: "ensue", meaning_hi: "पीछा करना", definition: "To follow", example_en: "Chaos ensued.", example_hi: "अराजकता पीछा करने लगी。" },
+    { id: 251, incorrect: "entail", correct: "entail", meaning_hi: "आवश्यक बनाना", definition: "To involve", example_en: "The job entails hard work.", example_hi: "नौकरी में कठिन परिश्रम आवश्यक है。" },
+    { id: 252, incorrect: "entangle", correct: "entangle", meaning_hi: "उलझाना", definition: "To twist", example_en: "The strings were entangled.", example_hi: "डोरियाँ उलझ गईं。" },
+    { id: 253, incorrect: "enthrall", correct: "enthrall", meaning_hi: "मंत्रमुग्ध करना", definition: "To captivate", example_en: "He was enthralled.", example_hi: "वह मंत्रमुग्ध हो गया。" },
+    { id: 254, incorrect: "entice", correct: "entice", meaning_hi: "लुभाना", definition: "To attract", example_en: "The offer enticed him.", example_hi: "प्रस्ताव ने उसे लुभाया。" },
+    { id: 255, incorrect: "entourage", correct: "entourage", meaning_hi: "अनुचर", definition: "Group of attendants", example_en: "He came with his entourage.", example_hi: "वह अपने अनुचरों के साथ आया。" },
+    { id: 256, incorrect: "entrenched", correct: "entrenched", meaning_hi: "सुदृढ़", definition: "Firmly established", example_en: "The system is entrenched.", example_hi: "प्रणाली सुदृढ़ है。" },
+    { id: 257, incorrect: "entrepreneur", correct: "entrepreneur", meaning_hi: "उद्यमी", definition: "Business founder", example_en: "He is an entrepreneur.", example_hi: "वह एक उद्यमी है。" },
+    { id: 258, incorrect: "enumerate", correct: "enumerate", meaning_hi: "गिनना", definition: "To count", example_en: "He enumerated the items.", example_hi: "उसने वस्तुओं को गिना。" },
+    { id: 259, incorrect: "enunciate", correct: "enunciate", meaning_hi: "उच्चारण करना", definition: "To pronounce", example_en: "He enunciated clearly.", example_hi: "उसने स्पष्ट उच्चारण किया。" },
+    { id: 260, incorrect: "ephemeral", correct: "ephemeral", meaning_hi: "क्षणिक", definition: "Short-lived", example_en: "Fame is ephemeral.", example_hi: "प्रसिद्धि क्षणिक है。" },
+    { id: 261, incorrect: "epic", correct: "epic", meaning_hi: "महाकाव्य", definition: "A long poem", example_en: "He read an epic.", example_hi: "उसने महाकाव्य पढ़ा。" },
+    { id: 262, incorrect: "epilogue", correct: "epilogue", meaning_hi: "उपसंहार", definition: "Concluding part", example_en: "The epilogue of the book.", example_hi: "किताब का उपसंहार。" },
+    { id: 263, incorrect: "epiphany", correct: "epiphany", meaning_hi: "प्रकाशन", definition: "Sudden realization", example_en: "He had an epiphany.", example_hi: "उसे प्रकाशन हुआ。" },
+    { id: 264, incorrect: "equanimity", correct: "equanimity", meaning_hi: "समता", definition: "Calmness", example_en: "He maintained equanimity.", example_hi: "उसने समता बनाए रखी。" },
+    { id: 265, incorrect: "equestrian", correct: "equestrian", meaning_hi: "घुड़सवार", definition: "Horse rider", example_en: "He is a skilled equestrian.", example_hi: "वह कुशल घुड़सवार है。" },
+    { id: 266, incorrect: "equitable", correct: "equitable", meaning_hi: "न्यायसंगत", definition: "Fair", example_en: "It was an equitable decision.", example_hi: "यह न्यायसंगत निर्णय था。" },
+    { id: 267, incorrect: "equivalent", correct: "equivalent", meaning_hi: "समकक्ष", definition: "Equal", example_en: "It is equivalent.", example_hi: "यह समकक्ष है。" },
+    { id: 268, incorrect: "eradicate", correct: "eradicate", meaning_hi: "जड़ से मिटाना", definition: "To destroy", example_en: "They eradicated the disease.", example_hi: "उन्होंने बीमारी को जड़ से मिटा दिया。" },
+    { id: 269, incorrect: "erase", correct: "erase", meaning_hi: "मिटाना", definition: "To rub out", example_en: "He erased the pencil marks.", example_hi: "उसने पेंसिल के निशान मिटा दिए。" },
+    { id: 270, incorrect: "erratic", correct: "erratic", meaning_hi: "अनिश्चित", definition: "Irregular", example_en: "His behavior is erratic.", example_hi: "उसका व्यवहार अनिश्चित है。" },
+    { id: 271, incorrect: "erroneous", correct: "erroneous", meaning_hi: "त्रुटिपूर्ण", definition: "Wrong", example_en: "The conclusion is erroneous.", example_hi: "निष्कर्ष त्रुटिपूर्ण है。" },
+    { id: 272, incorrect: "eruption", correct: "eruption", meaning_hi: "विस्फोट", definition: "A bursting out", example_en: "The eruption of the volcano.", example_hi: "ज्वालामुखी का विस्फोट।" },
+    { id: 273, incorrect: "escalate", correct: "escalate", meaning_hi: "बढ़ना", definition: "To increase", example_en: "The conflict escalated.", example_hi: "संघर्ष बढ़ गया。" },
+    { id: 274, incorrect: "esoteric", correct: "esoteric", meaning_hi: "गूढ़", definition: "For a small group", example_en: "The teachings are esoteric.", example_hi: "शिक्षाएँ गूढ़ हैं。" },
+    { id: 275, incorrect: "essential", correct: "essential", meaning_hi: "आवश्यक", definition: "Necessary", example_en: "Water is essential.", example_hi: "पानी आवश्यक है。" },
+    { id: 276, incorrect: "establish", correct: "establish", meaning_hi: "स्थापित करना", definition: "To set up", example_en: "He established a company.", example_hi: "उसने कंपनी स्थापित की。" },
+    { id: 277, incorrect: "esteem", correct: "esteem", meaning_hi: "सम्मान", definition: "Respect", example_en: "He is held in high esteem.", example_hi: "उनका बहुत सम्मान है。" },
+    { id: 278, incorrect: "estimate", correct: "estimate", meaning_hi: "अनुमान", definition: "Approximate calculation", example_en: "He gave an estimate.", example_hi: "उसने अनुमान दिया。" },
+    { id: 279, incorrect: "estrange", correct: "estrange", meaning_hi: "अलग करना", definition: "To alienate", example_en: "He was estranged.", example_hi: "वह अलग हो गया。" },
+    { id: 280, incorrect: "ethereal", correct: "ethereal", meaning_hi: "अलौकिक", definition: "Heavenly", example_en: "The music was ethereal.", example_hi: "संगीत अलौकिक था。" },
+    { id: 281, incorrect: "ethical", correct: "ethical", meaning_hi: "नैतिक", definition: "Moral", example_en: "It is an ethical issue.", example_hi: "यह नैतिक मुद्दा है。" },
+    { id: 282, incorrect: "ethnic", correct: "ethnic", meaning_hi: "जातीय", definition: "Racial", example_en: "They belong to different ethnic groups.", example_hi: "वे विभिन्न जातीय समूहों से हैं。" },
+    { id: 283, incorrect: "eulogy", correct: "eulogy", meaning_hi: "प्रशस्ति", definition: "Speech of praise", example_en: "He delivered the eulogy.", example_hi: "उसने प्रशस्ति दी。" },
+    { id: 284, incorrect: "euphemism", correct: "euphemism", meaning_hi: "सुभाषित", definition: "Mild expression", example_en: "He used a euphemism.", example_hi: "उसने सुभाषित का उपयोग किया。" },
+    { id: 285, incorrect: "euphoria", correct: "euphoria", meaning_hi: "उत्साह", definition: "Feeling of well-being", example_en: "He was filled with euphoria.", example_hi: "वह उत्साह से भर गया。" },
+    { id: 286, incorrect: "evacuate", correct: "evacuate", meaning_hi: "खाली करना", definition: "To empty", example_en: "They evacuated the building.", example_hi: "उन्होंने इमारत खाली कर दी。" },
+    { id: 287, incorrect: "evade", correct: "evade", meaning_hi: "बचना", definition: "To avoid", example_en: "He evaded the question.", example_hi: "उसने सवाल से बचा。" },
+    { id: 288, incorrect: "evaluate", correct: "evaluate", meaning_hi: "मूल्यांकन करना", definition: "To assess", example_en: "He evaluated the situation.", example_hi: "उसने स्थिति का मूल्यांकन किया。" },
+    { id: 289, incorrect: "evanescent", correct: "evanescent", meaning_hi: "क्षणिक", definition: "Vanishing quickly", example_en: "The rainbow was evanescent.", example_hi: "इंद्रधनुष क्षणिक था。" },
+    { id: 290, incorrect: "evict", correct: "evict", meaning_hi: "निकालना", definition: "To expel", example_en: "He was evicted.", example_hi: "उसे निकाल दिया गया。" },
+    { id: 291, incorrect: "evident", correct: "evident", meaning_hi: "स्पष्ट", definition: "Clear", example_en: "It was evident.", example_hi: "यह स्पष्ट था。" },
+    { id: 292, incorrect: "evil", correct: "evil", meaning_hi: "बुराई", definition: "Bad", example_en: "He fought against evil.", example_hi: "उसने बुराई के खिलाफ लड़ाई लड़ी。" },
+    { id: 293, incorrect: "evoke", correct: "evoke", meaning_hi: "जगाना", definition: "To call forth", example_en: "The music evoked memories.", example_hi: "संगीत ने यादें जगाईं。" },
+    { id: 294, incorrect: "evolve", correct: "evolve", meaning_hi: "विकसित होना", definition: "To develop", example_en: "The species evolved.", example_hi: "प्रजाति विकसित हुई。" },
+    { id: 295, incorrect: "exacerbate", correct: "exacerbate", meaning_hi: "बिगाड़ना", definition: "To worsen", example_en: "His words exacerbated the situation.", example_hi: "उसके शब्दों ने स्थिति को बिगाड़ दिया。" },
+    { id: 296, incorrect: "familiar", correct: "familiar", meaning_hi: "परिचित", definition: "Known", example_en: "He is familiar with this.", example_hi: "वह इससे परिचित है。" },
+    { id: 297, incorrect: "finaly", correct: "finally", meaning_hi: "अंत में", definition: "At last", example_en: "Finally, he arrived.", example_hi: "अंत में, वह आ गया。" },
+    { id: 298, incorrect: "foriegn", correct: "foreign", meaning_hi: "विदेशी", definition: "From abroad", example_en: "He speaks foreign languages.", example_hi: "वह विदेशी भाषाएँ बोलता है。" },
+    { id: 299, incorrect: "forty", correct: "forty", meaning_hi: "चालीस", definition: "Number 40", example_en: "He is forty years old.", example_hi: "वह चालीस साल का है。" },
+    { id: 300, incorrect: "forward", correct: "forward", meaning_hi: "आगे", definition: "Towards the front", example_en: "Move forward.", example_hi: "आगे बढ़ें。" },
+    { id: 301, incorrect: "freind", correct: "friend", meaning_hi: "दोस्त", definition: "Companion", example_en: "He is my friend.", example_hi: "वह मेरा दोस्त है。" },
+    { id: 302, incorrect: "fulfill", correct: "fulfill", meaning_hi: "पूरा करना", definition: "To satisfy", example_en: "He fulfilled his dream.", example_hi: "उसने अपना सपना पूरा किया。" },
+    { id: 303, incorrect: "facetious", correct: "facetious", meaning_hi: "हास्यप्रिय", definition: "Joking", example_en: "He made a facetious remark.", example_hi: "उसने हास्यप्रिय टिप्पणी की。" },
+    { id: 304, incorrect: "facile", correct: "facile", meaning_hi: "सरल", definition: "Easily done", example_en: "It was a facile task.", example_hi: "यह सरल कार्य था。" },
+    { id: 305, incorrect: "facilitate", correct: "facilitate", meaning_hi: "सुगम बनाना", definition: "To make easy", example_en: "He facilitated the process.", example_hi: "उसने प्रक्रिया को सुगम बनाया。" },
+    { id: 306, incorrect: "facsimile", correct: "facsimile", meaning_hi: "प्रतिरूप", definition: "Exact copy", example_en: "It is a facsimile.", example_hi: "यह प्रतिरूप है。" },
+    { id: 307, incorrect: "fallacy", correct: "fallacy", meaning_hi: "भ्रांति", definition: "False belief", example_en: "That is a fallacy.", example_hi: "यह भ्रांति है。" },
+    { id: 308, incorrect: "falter", correct: "falter", meaning_hi: "लड़खड़ाना", definition: "To hesitate", example_en: "He faltered in his speech.", example_hi: "वह अपने भाषण में लड़खड़ा गया。" },
+    { id: 309, incorrect: "famine", correct: "famine", meaning_hi: "अकाल", definition: "Scarcity of food", example_en: "The famine killed many.", example_hi: "अकाल ने कई लोगों को मार डाला。" },
+    { id: 310, incorrect: "fanatic", correct: "fanatic", meaning_hi: "कट्टर", definition: "A zealot", example_en: "He is a fanatic.", example_hi: "वह कट्टर है。" },
+    { id: 311, incorrect: "fascinate", correct: "fascinate", meaning_hi: "मोहित करना", definition: "To attract", example_en: "The story fascinated him.", example_hi: "कहानी ने उसे मोहित किया。" },
+    { id: 312, incorrect: "fatal", correct: "fatal", meaning_hi: "घातक", definition: "Causing death", example_en: "It was a fatal accident.", example_hi: "यह घातक दुर्घटना थी。" },
+    { id: 313, incorrect: "fathom", correct: "fathom", meaning_hi: "समझना", definition: "To understand", example_en: "I cannot fathom.", example_hi: "मैं नहीं समझ सकता。" },
+    { id: 314, incorrect: "fatigue", correct: "fatigue", meaning_hi: "थकान", definition: "Tiredness", example_en: "He felt fatigue.", example_hi: "उसने थकान महसूस की。" },
+    { id: 315, incorrect: "fatuous", correct: "fatuous", meaning_hi: "निरर्थक", definition: "Silly", example_en: "He made a fatuous remark.", example_hi: "उसने निरर्थक टिप्पणी की。" },
+    { id: 316, incorrect: "feasible", correct: "feasible", meaning_hi: "संभव", definition: "Possible", example_en: "The plan is feasible.", example_hi: "योजना संभव है。" },
+    { id: 317, incorrect: "feeble", correct: "feeble", meaning_hi: "कमजोर", definition: "Weak", example_en: "He is feeble.", example_hi: "वह कमजोर है。" },
+    { id: 318, incorrect: "felicitate", correct: "felicitate", meaning_hi: "बधाई देना", definition: "To congratulate", example_en: "He felicitated the winner.", example_hi: "उसने विजेता को बधाई दी。" },
+    { id: 319, incorrect: "ferocity", correct: "ferocity", meaning_hi: "क्रूरता", definition: "Fierceness", example_en: "The ferocity of the attack.", example_hi: "हमले की क्रूरता।" },
+    { id: 320, incorrect: "fervent", correct: "fervent", meaning_hi: "उत्साही", definition: "Passionate", example_en: "He is fervent.", example_hi: "वह उत्साही है。" },
+    { id: 321, incorrect: "fickle", correct: "fickle", meaning_hi: "चंचल", definition: "Changeable", example_en: "The weather is fickle.", example_hi: "मौसम चंचल है。" },
+    { id: 322, incorrect: "fidelity", correct: "fidelity", meaning_hi: "निष्ठा", definition: "Faithfulness", example_en: "He showed fidelity.", example_hi: "उसने निष्ठा दिखाई。" },
+    { id: 323, incorrect: "fierce", correct: "fierce", meaning_hi: "क्रूर", definition: "Violent", example_en: "The dog is fierce.", example_hi: "कुत्ता क्रूर है。" },
+    { id: 324, incorrect: "figment", correct: "figment", meaning_hi: "मिथ्या", definition: "Something imagined", example_en: "It was a figment.", example_hi: "यह मिथ्या थी。" },
+    { id: 325, incorrect: "flagrant", correct: "flagrant", meaning_hi: "प्रबल", definition: "Glaring", example_en: "It was a flagrant violation.", example_hi: "यह प्रबल उल्लंघन था。" },
+    { id: 326, incorrect: "flamboyant", correct: "flamboyant", meaning_hi: "भड़कीला", definition: "Showy", example_en: "He wore a flamboyant shirt.", example_hi: "उसने भड़कीला शर्ट पहना。" },
+    { id: 327, incorrect: "flaw", correct: "flaw", meaning_hi: "दोष", definition: "Defect", example_en: "There is a flaw.", example_hi: "एक दोष है。" },
+    { id: 328, incorrect: "fledgling", correct: "fledgling", meaning_hi: "नौसिखिया", definition: "A beginner", example_en: "He is a fledgling.", example_hi: "वह नौसिखिया है。" },
+    { id: 329, incorrect: "flippant", correct: "flippant", meaning_hi: "उच्छृंखल", definition: "Lacking respect", example_en: "He gave a flippant answer.", example_hi: "उसने उच्छृंखल जवाब दिया。" },
+    { id: 330, incorrect: "fluctuate", correct: "fluctuate", meaning_hi: "उतार-चढ़ाव", definition: "To vary", example_en: "The price fluctuates.", example_hi: "कीमत में उतार-चढ़ाव है。" },
+    { id: 331, incorrect: "foible", correct: "foible", meaning_hi: "कमजोरी", definition: "A weakness", example_en: "We all have foibles.", example_hi: "हम सभी में कमजोरियाँ हैं。" },
+    { id: 332, incorrect: "foment", correct: "foment", meaning_hi: "भड़काना", definition: "To incite", example_en: "He fomented rebellion.", example_hi: "उसने विद्रोह भड़काया。" },
+    { id: 333, incorrect: "foresee", correct: "foresee", meaning_hi: "पूर्वानुमान", definition: "To predict", example_en: "He foresaw the danger.", example_hi: "उसने खतरे का पूर्वानुमान लगाया。" },
+    { id: 334, incorrect: "forge", correct: "forge", meaning_hi: "बनाना", definition: "To shape", example_en: "He forged a sword.", example_hi: "उसने तलवार बनाई。" },
+    { id: 335, incorrect: "forlorn", correct: "forlorn", meaning_hi: "उजाड़", definition: "Abandoned", example_en: "The house looks forlorn.", example_hi: "घर उजाड़ दिखता है。" },
+    { id: 336, incorrect: "formidable", correct: "formidable", meaning_hi: "दुर्जेय", definition: "Inspiring fear", example_en: "He is formidable.", example_hi: "वह दुर्जेय है。" },
+    { id: 337, incorrect: "forsake", correct: "forsake", meaning_hi: "त्यागना", definition: "To abandon", example_en: "He forsook his family.", example_hi: "उसने अपने परिवार को त्याग दिया。" },
+    { id: 338, incorrect: "fortitude", correct: "fortitude", meaning_hi: "धैर्य", definition: "Courage", example_en: "He showed fortitude.", example_hi: "उसने धैर्य दिखाया。" },
+    { id: 339, incorrect: "foster", correct: "foster", meaning_hi: "बढ़ावा देना", definition: "To promote", example_en: "He fostered the idea.", example_hi: "उसने विचार को बढ़ावा दिया。" },
+    { id: 340, incorrect: "fractious", correct: "fractious", meaning_hi: "झगड़ालू", definition: "Irritable", example_en: "He is fractious.", example_hi: "वह झगड़ालू है。" },
+    { id: 341, incorrect: "fragile", correct: "fragile", meaning_hi: "नाजुक", definition: "Easily broken", example_en: "The glass is fragile.", example_hi: "कांच नाजुक है。" },
+    { id: 342, incorrect: "frantic", correct: "frantic", meaning_hi: "बेक़रार", definition: "Wildly excited", example_en: "He made a frantic call.", example_hi: "उसने बेक़रार कॉल किया。" },
+    { id: 343, incorrect: "fraud", correct: "fraud", meaning_hi: "धोखाधड़ी", definition: "Deception", example_en: "He was charged with fraud.", example_hi: "उस पर धोखाधड़ी का आरोप लगा。" },
+    { id: 344, incorrect: "frugal", correct: "frugal", meaning_hi: "मितव्ययी", definition: "Economical", example_en: "He is frugal.", example_hi: "वह मितव्ययी है。" },
+    { id: 345, incorrect: "fruitful", correct: "fruitful", meaning_hi: "फलदायक", definition: "Productive", example_en: "It was a fruitful discussion.", example_hi: "यह फलदायक चर्चा थी。" },
+    { id: 346, incorrect: "frustrate", correct: "frustrate", meaning_hi: "निराश करना", definition: "To thwart", example_en: "He frustrated my plans.", example_hi: "उसने मेरी योजनाओं को निराश किया。" },
+    { id: 347, incorrect: "fugitive", correct: "fugitive", meaning_hi: "भगोड़ा", definition: "A runaway", example_en: "The fugitive was caught.", example_hi: "भगोड़ा पकड़ा गया。" },
+    { id: 348, incorrect: "fulminate", correct: "fulminate", meaning_hi: "विरोध करना", definition: "To protest", example_en: "He fulminated against the policy.", example_hi: "उसने नीति के खिलाफ विरोध किया。" },
+    { id: 349, incorrect: "fumble", correct: "fumble", meaning_hi: "टटोलना", definition: "To grope", example_en: "He fumbled in the dark.", example_hi: "उसने अंधेरे में टटोला。" },
+    { id: 350, incorrect: "furtive", correct: "furtive", meaning_hi: "चोर-चोर", definition: "Secretive", example_en: "He gave a furtive glance.", example_hi: "उसने चोर-चोर नज़र डाली。" },
+    { id: 351, incorrect: "fusillade", correct: "fusillade", meaning_hi: "गोलाबारी", definition: "A discharge", example_en: "A fusillade of shots was heard.", example_hi: "गोलाबारी की आवाज़ सुनाई दी。" },
+    { id: 352, incorrect: "goverment", correct: "government", meaning_hi: "सरकार", definition: "Ruling body", example_en: "The government works.", example_hi: "सरकार काम करती है。" },
+    { id: 353, incorrect: "grammer", correct: "grammar", meaning_hi: "व्याकरण", definition: "Rules of language", example_en: "He knows grammar.", example_hi: "उसे व्याकरण आता है。" },
+    { id: 354, incorrect: "greatful", correct: "grateful", meaning_hi: "आभारी", definition: "Thankful", example_en: "I am grateful to you.", example_hi: "मैं आपका आभारी हूँ。" },
+    { id: 355, incorrect: "guarantee", correct: "guarantee", meaning_hi: "गारंटी", definition: "A promise", example_en: "He gave a guarantee.", example_hi: "उसने गारंटी दी。" },
+    { id: 356, incorrect: "guardian", correct: "guardian", meaning_hi: "अभिभावक", definition: "Protector", example_en: "He is my guardian.", example_hi: "वह मेरा अभिभावक है。" },
+    { id: 357, incorrect: "garrulous", correct: "garrulous", meaning_hi: "बातूनी", definition: "Talkative", example_en: "She is garrulous.", example_hi: "वह बातूनी है。" },
+    { id: 358, incorrect: "gauge", correct: "gauge", meaning_hi: "मापना", definition: "To measure", example_en: "He gauged the depth.", example_hi: "उसने गहराई मापी。" },
+    { id: 359, incorrect: "genealogy", correct: "genealogy", meaning_hi: "वंशावली", definition: "Lineage", example_en: "He studied genealogy.", example_hi: "उसने वंशावली का अध्ययन किया。" },
+    { id: 360, incorrect: "generosity", correct: "generosity", meaning_hi: "उदारता", definition: "Liberality", example_en: "He is known for generosity.", example_hi: "वह उदारता के लिए जाना जाता है。" },
+    { id: 361, incorrect: "genesis", correct: "genesis", meaning_hi: "उत्पत्ति", definition: "Origin", example_en: "The genesis of the idea.", example_hi: "विचार की उत्पत्ति。" },
+    { id: 362, incorrect: "genial", correct: "genial", meaning_hi: "मिलनसार", definition: "Friendly", example_en: "He is genial.", example_hi: "वह मिलनसार है。" },
+    { id: 363, incorrect: "genteel", correct: "genteel", meaning_hi: "सभ्य", definition: "Well-bred", example_en: "She has genteel manners.", example_hi: "उसके सभ्य शिष्टाचार हैं。" },
+    { id: 364, incorrect: "genuine", correct: "genuine", meaning_hi: "असली", definition: "Real", example_en: "The diamond is genuine.", example_hi: "हीरा असली है。" },
+    { id: 365, incorrect: "germane", correct: "germane", meaning_hi: "उचित", definition: "Relevant", example_en: "His comment is germane.", example_hi: "उसकी टिप्पणी उचित है。" },
+    { id: 366, incorrect: "gesticulate", correct: "gesticulate", meaning_hi: "इशारा करना", definition: "To gesture", example_en: "He gesticulated wildly.", example_hi: "उसने जोर-जोर से इशारे किए。" },
+    { id: 367, incorrect: "glib", correct: "glib", meaning_hi: "वाचाल", definition: "Fluent but insincere", example_en: "He gave a glib answer.", example_hi: "उसने वाचाल जवाब दिया。" },
+    { id: 368, incorrect: "glut", correct: "glut", meaning_hi: "भरमार", definition: "Oversupply", example_en: "There is a glut of goods.", example_hi: "माल की भरमार है。" },
+    { id: 369, incorrect: "goad", correct: "goad", meaning_hi: "उकसाना", definition: "To prod", example_en: "He goaded him into action.", example_hi: "उसने उसे कार्रवाई के लिए उकसाया。" },
+    { id: 370, incorrect: "gourmet", correct: "gourmet", meaning_hi: "पेटू", definition: "Connoisseur of food", example_en: "He is a gourmet.", example_hi: "वह पेटू है。" },
+    { id: 371, incorrect: "gracious", correct: "gracious", meaning_hi: "विनयशील", definition: "Kind", example_en: "She is gracious.", example_hi: "वह विनयशील है。" },
+    { id: 372, incorrect: "grandeur", correct: "grandeur", meaning_hi: "वैभव", definition: "Splendor", example_en: "The grandeur of the palace.", example_hi: "महल का वैभव।" },
+    { id: 373, incorrect: "grievous", correct: "grievous", meaning_hi: "पीड़ादायक", definition: "Causing grief", example_en: "It was a grievous loss.", example_hi: "यह पीड़ादायक नुकसान था。" },
+    { id: 374, incorrect: "grim", correct: "grim", meaning_hi: "भयानक", definition: "Stern", example_en: "He had a grim expression.", example_hi: "उसकी भयानक अभिव्यक्ति थी。" },
+    { id: 375, incorrect: "grotesque", correct: "grotesque", meaning_hi: "विचित्र", definition: "Distorted", example_en: "It was a grotesque figure.", example_hi: "यह विचित्र आकृति थी。" },
+    { id: 376, incorrect: "guile", correct: "guile", meaning_hi: "छल", definition: "Cunning", example_en: "He used guile.", example_hi: "उसने छल का उपयोग किया。" },
+    { id: 377, incorrect: "guise", correct: "guise", meaning_hi: "वेश", definition: "Appearance", example_en: "He came in the guise of a friend.", example_hi: "वह दोस्त के वेश में आया。" },
+    { id: 378, incorrect: "gullible", correct: "gullible", meaning_hi: "भोला", definition: "Easily deceived", example_en: "He is gullible.", example_hi: "वह भोला है。" },
+    { id: 379, incorrect: "gusto", correct: "gusto", meaning_hi: "उत्साह", definition: "Enthusiasm", example_en: "He sang with gusto.", example_hi: "उसने उत्साह से गाया。" },
+    { id: 380, incorrect: "happiness", correct: "happiness", meaning_hi: "खुशी", definition: "Joy", example_en: "He found happiness.", example_hi: "उसे खुशी मिली。" },
+    { id: 381, incorrect: "harassment", correct: "harassment", meaning_hi: "उत्पीड़न", definition: "Annoyance", example_en: "He faced harassment.", example_hi: "उसे उत्पीड़न का सामना करना पड़ा。" },
+    { id: 382, incorrect: "height", correct: "height", meaning_hi: "ऊँचाई", definition: "Tallness", example_en: "His height is 6 feet.", example_hi: "उसकी ऊँचाई 6 फीट है。" },
+    { id: 383, incorrect: "humorous", correct: "humorous", meaning_hi: "हास्यपूर्ण", definition: "Funny", example_en: "He is humorous.", example_hi: "वह हास्यपूर्ण है。" },
+    { id: 384, incorrect: "hallowed", correct: "hallowed", meaning_hi: "पवित्र", definition: "Holy", example_en: "This is hallowed ground.", example_hi: "यह पवित्र भूमि है。" },
+    { id: 385, incorrect: "halt", correct: "halt", meaning_hi: "रुकना", definition: "Stop", example_en: "The car came to a halt.", example_hi: "कार रुक गई。" },
+    { id: 386, incorrect: "hamper", correct: "hamper", meaning_hi: "बाधा डालना", definition: "To hinder", example_en: "Rain hampered progress.", example_hi: "बारिश ने प्रगति में बाधा डाली。" },
+    { id: 387, incorrect: "harass", correct: "harass", meaning_hi: "परेशान करना", definition: "To annoy", example_en: "He harassed his neighbor.", example_hi: "उसने अपने पड़ोसी को परेशान किया。" },
+    { id: 388, incorrect: "hardship", correct: "hardship", meaning_hi: "कठिनाई", definition: "Difficulty", example_en: "He faced hardship.", example_hi: "उसे कठिनाई का सामना करना पड़ा。" },
+    { id: 389, incorrect: "hardy", correct: "hardy", meaning_hi: "सहनशील", definition: "Robust", example_en: "The plant is hardy.", example_hi: "पौधा सहनशील है。" },
+    { id: 390, incorrect: "harmless", correct: "harmless", meaning_hi: "हानिरहित", definition: "Innocuous", example_en: "It is harmless.", example_hi: "यह हानिरहित है。" },
+    { id: 391, incorrect: "haste", correct: "haste", meaning_hi: "जल्दबाजी", definition: "Speed", example_en: "He left in haste.", example_hi: "वह जल्दबाजी में चला गया。" },
+    { id: 392, incorrect: "haughty", correct: "haughty", meaning_hi: "घमंडी", definition: "Arrogant", example_en: "He is haughty.", example_hi: "वह घमंडी है。" },
+    { id: 393, incorrect: "hazard", correct: "hazard", meaning_hi: "जोखिम", definition: "Danger", example_en: "It is a health hazard.", example_hi: "यह स्वास्थ्य के लिए जोखिम है。" },
+    { id: 394, incorrect: "heed", correct: "heed", meaning_hi: "ध्यान देना", definition: "To pay attention", example_en: "He heeded my advice.", example_hi: "उसने मेरी सलाह पर ध्यान दिया。" },
+    { id: 395, incorrect: "heresy", correct: "heresy", meaning_hi: "विधर्म", definition: "Unorthodox belief", example_en: "He was accused of heresy.", example_hi: "उस पर विधर्म का आरोप लगा。" },
+    { id: 396, incorrect: "heritage", correct: "heritage", meaning_hi: "विरासत", definition: "Legacy", example_en: "This is our heritage.", example_hi: "यह हमारी विरासत है。" },
+    { id: 397, incorrect: "hesitate", correct: "hesitate", meaning_hi: "झिझकना", definition: "To pause", example_en: "He hesitated.", example_hi: "वह झिझका。" },
+    { id: 398, incorrect: "heterogeneous", correct: "heterogeneous", meaning_hi: "विषम", definition: "Diverse", example_en: "The group is heterogeneous.", example_hi: "समूह विषम है。" },
+    { id: 399, incorrect: "hideous", correct: "hideous", meaning_hi: "भद्दा", definition: "Ugly", example_en: "It was hideous.", example_hi: "यह भद्दा था。" },
+    { id: 400, incorrect: "hierarchy", correct: "hierarchy", meaning_hi: "पदानुक्रम", definition: "System of ranks", example_en: "There is a hierarchy.", example_hi: "पदानुक्रम है。" },
+    { id: 401, incorrect: "hilarious", correct: "hilarious", meaning_hi: "प्रफुल्लित", definition: "Very funny", example_en: "He told a hilarious story.", example_hi: "उसने प्रफुल्लित कहानी सुनाई。" },
+    { id: 402, incorrect: "hindrance", correct: "hindrance", meaning_hi: "बाधा", definition: "Obstacle", example_en: "It was a hindrance.", example_hi: "यह बाधा थी。" },
+    { id: 403, incorrect: "hindsight", correct: "hindsight", meaning_hi: "पूर्वदृष्टि", definition: "Afterthought", example_en: "In hindsight, I was wrong.", example_hi: "पूर्वदृष्टि से, मैं गलत था。" },
+    { id: 404, incorrect: "homogeneous", correct: "homogeneous", meaning_hi: "समरूप", definition: "Same kind", example_en: "The population is homogeneous.", example_hi: "जनसंख्या समरूप है。" },
+    { id: 405, incorrect: "honorable", correct: "honorable", meaning_hi: "सम्माननीय", definition: "Worthy of honor", example_en: "He is honorable.", example_hi: "वह सम्माननीय है。" },
+    { id: 406, incorrect: "hostile", correct: "hostile", meaning_hi: "शत्रुतापूर्ण", definition: "Unfriendly", example_en: "He gave a hostile look.", example_hi: "उसने शत्रुतापूर्ण नज़र दी。" },
+    { id: 407, incorrect: "humane", correct: "humane", meaning_hi: "मानवीय", definition: "Kind", example_en: "He is humane.", example_hi: "वह मानवीय है。" },
+    { id: 408, incorrect: "humble", correct: "humble", meaning_hi: "विनम्र", definition: "Modest", example_en: "He is humble.", example_hi: "वह विनम्र है。" },
+    { id: 409, incorrect: "humor", correct: "humor", meaning_hi: "हास्य", definition: "Comedy", example_en: "He has a good sense of humor.", example_hi: "उसके पास हास्य की अच्छी भावना है。" },
+    { id: 410, incorrect: "hurtle", correct: "hurtle", meaning_hi: "टकराना", definition: "To move rapidly", example_en: "The car hurtled down the road.", example_hi: "कार सड़क पर टकराती हुई आगे बढ़ी。" },
+    { id: 411, incorrect: "hypothesis", correct: "hypothesis", meaning_hi: "परिकल्पना", definition: "Tentative theory", example_en: "His hypothesis was proven.", example_hi: "उसकी परिकल्पना साबित हो गई。" },
+    { id: 412, incorrect: "immediately", correct: "immediately", meaning_hi: "तुरंत", definition: "At once", example_en: "Come immediately.", example_hi: "तुरंत आओ。" },
+    { id: 413, incorrect: "independant", correct: "independent", meaning_hi: "स्वतंत्र", definition: "Free", example_en: "India is independent.", example_hi: "भारत स्वतंत्र है。" },
+    { id: 414, incorrect: "indispensible", correct: "indispensable", meaning_hi: "अपरिहार्य", definition: "Essential", example_en: "Water is indispensable.", example_hi: "पानी अपरिहार्य है。" },
+    { id: 415, incorrect: "intelligence", correct: "intelligence", meaning_hi: "बुद्धि", definition: "Wisdom", example_en: "He has intelligence.", example_hi: "उसके पास बुद्धि है。" },
+    { id: 416, incorrect: "interesting", correct: "interesting", meaning_hi: "दिलचस्प", definition: "Engaging", example_en: "It is interesting.", example_hi: "यह दिलचस्प है。" },
+    { id: 417, incorrect: "irresistable", correct: "irresistible", meaning_hi: "अप्रतिरोध्य", definition: "Too tempting", example_en: "The offer is irresistible.", example_hi: "प्रस्ताव अप्रतिरोध्य है。" },
+    { id: 418, incorrect: "irascible", correct: "irascible", meaning_hi: "चिड़चिड़ा", definition: "Easily angered", example_en: "He is irascible.", example_hi: "वह चिड़चिड़ा है。" },
+    { id: 419, incorrect: "iconoclast", correct: "iconoclast", meaning_hi: "मूर्तिभंजक", definition: "One who attacks beliefs", example_en: "He is an iconoclast.", example_hi: "वह मूर्तिभंजक है。" },
+    { id: 420, incorrect: "idealist", correct: "idealist", meaning_hi: "आदर्शवादी", definition: "One who follows ideals", example_en: "He is an idealist.", example_hi: "वह आदर्शवादी है。" },
+    { id: 421, incorrect: "idiosyncrasy", correct: "idiosyncrasy", meaning_hi: "स्वभाव", definition: "Peculiarity", example_en: "He has many idiosyncrasies.", example_hi: "उसके कई स्वभाव हैं。" },
+    { id: 422, incorrect: "ignite", correct: "ignite", meaning_hi: "जलाना", definition: "To set fire", example_en: "He ignited the fire.", example_hi: "उसने आग जलाई。" },
+    { id: 423, incorrect: "ignoble", correct: "ignoble", meaning_hi: "नीच", definition: "Dishonorable", example_en: "It was an ignoble act.", example_hi: "यह नीच कार्य था。" },
+    { id: 424, incorrect: "ignorant", correct: "ignorant", meaning_hi: "अज्ञानी", definition: "Lacking knowledge", example_en: "He is ignorant.", example_hi: "वह अज्ञानी है。" },
+    { id: 425, incorrect: "illuminate", correct: "illuminate", meaning_hi: "प्रकाशित करना", definition: "To light up", example_en: "The lamp illuminated the room.", example_hi: "दीपक ने कमरे को प्रकाशित किया。" },
+    { id: 426, incorrect: "illusion", correct: "illusion", meaning_hi: "भ्रम", definition: "False perception", example_en: "It is an illusion.", example_hi: "यह भ्रम है。" },
+    { id: 427, incorrect: "illustrious", correct: "illustrious", meaning_hi: "विख्यात", definition: "Famous", example_en: "He is illustrious.", example_hi: "वह विख्यात है。" },
+    { id: 428, incorrect: "immaculate", correct: "immaculate", meaning_hi: "निष्कलंक", definition: "Pure", example_en: "She wore an immaculate dress.", example_hi: "उसने निष्कलंक पोशाक पहनी。" },
+    { id: 429, incorrect: "immerse", correct: "immerse", meaning_hi: "डुबाना", definition: "To dip", example_en: "He immersed himself in the book.", example_hi: "उसने खुद को किताब में डुबो दिया。" },
+    { id: 430, incorrect: "immigrant", correct: "immigrant", meaning_hi: "अप्रवासी", definition: "One who comes to a country", example_en: "He is an immigrant.", example_hi: "वह अप्रवासी है。" },
+    { id: 431, incorrect: "imminent", correct: "imminent", meaning_hi: "आसन्न", definition: "About to happen", example_en: "A storm is imminent.", example_hi: "तूफान आसन्न है。" },
+    { id: 432, incorrect: "immutable", correct: "immutable", meaning_hi: "अपरिवर्तनीय", definition: "Unchangeable", example_en: "The laws are immutable.", example_hi: "कानून अपरिवर्तनीय हैं。" },
+    { id: 433, incorrect: "impartial", correct: "impartial", meaning_hi: "निष्पक्ष", definition: "Unbiased", example_en: "The judge is impartial.", example_hi: "न्यायाधीश निष्पक्ष है。" },
+    { id: 434, incorrect: "impeccable", correct: "impeccable", meaning_hi: "निर्दोष", definition: "Faultless", example_en: "His manners are impeccable.", example_hi: "उसके शिष्टाचार निर्दोष हैं。" },
+    { id: 435, incorrect: "impediment", correct: "impediment", meaning_hi: "बाधा", definition: "Obstacle", example_en: "He overcame the impediment.", example_hi: "उसने बाधा को पार किया。" },
+    { id: 436, incorrect: "impel", correct: "impel", meaning_hi: "प्रेरित करना", definition: "To drive forward", example_en: "Hunger impelled him.", example_hi: "भूख ने उसे प्रेरित किया。" },
+    { id: 437, incorrect: "impenetrable", correct: "impenetrable", meaning_hi: "अभेद्य", definition: "Impossible to enter", example_en: "The fortress is impenetrable.", example_hi: "किला अभेद्य है。" },
+    { id: 438, incorrect: "imperative", correct: "imperative", meaning_hi: "अनिवार्य", definition: "Urgent", example_en: "It is imperative to act.", example_hi: "कार्रवाई करना अनिवार्य है。" },
+    { id: 439, incorrect: "imperious", correct: "imperious", meaning_hi: "प्रभावशाली", definition: "Domineering", example_en: "He is imperious.", example_hi: "वह प्रभावशाली है。" },
+    { id: 440, incorrect: "impertinent", correct: "impertinent", meaning_hi: "अशिष्ट", definition: "Rude", example_en: "He made an impertinent remark.", example_hi: "उसने अशिष्ट टिप्पणी की。" },
+    { id: 441, incorrect: "impetuous", correct: "impetuous", meaning_hi: "आवेशपूर्ण", definition: "Acting quickly", example_en: "He is impetuous.", example_hi: "वह आवेशपूर्ण है。" },
+    { id: 442, incorrect: "impious", correct: "impious", meaning_hi: "अधर्मी", definition: "Irreligious", example_en: "He is impious.", example_hi: "वह अधर्मी है。" },
+    { id: 443, incorrect: "implacable", correct: "implacable", meaning_hi: "अदम्य", definition: "Relentless", example_en: "He is an implacable enemy.", example_hi: "वह अदम्य शत्रु है。" },
+    { id: 444, incorrect: "implicit", correct: "implicit", meaning_hi: "अंतर्निहित", definition: "Implied", example_en: "His implicit trust in me.", example_hi: "मुझ पर उसका अंतर्निहित विश्वास。" },
+    { id: 445, incorrect: "impotent", correct: "impotent", meaning_hi: "शक्तिहीन", definition: "Powerless", example_en: "He felt impotent.", example_hi: "उसने शक्तिहीन महसूस किया。" },
+    { id: 446, incorrect: "impress", correct: "impress", meaning_hi: "प्रभावित करना", definition: "To affect", example_en: "His speech impressed me.", example_hi: "उनके भाषण ने मुझे प्रभावित किया。" },
+    { id: 447, incorrect: "imprint", correct: "imprint", meaning_hi: "छाप", definition: "A mark", example_en: "His work left an imprint.", example_hi: "उनके काम ने छाप छोड़ी。" },
+    { id: 448, incorrect: "impromptu", correct: "impromptu", meaning_hi: "तात्कालिक", definition: "Without preparation", example_en: "He gave an impromptu speech.", example_hi: "उसने तात्कालिक भाषण दिया。" },
+    { id: 449, incorrect: "impropriety", correct: "impropriety", meaning_hi: "अनौचित्य", definition: "Improperness", example_en: "He was accused of impropriety.", example_hi: "उस पर अनौचित्य का आरोप लगा。" },
+    { id: 450, incorrect: "imprudent", correct: "imprudent", meaning_hi: "अविवेकी", definition: "Unwise", example_en: "It was imprudent.", example_hi: "यह अविवेकी था。" },
+    { id: 451, incorrect: "impudent", correct: "impudent", meaning_hi: "ढीठ", definition: "Disrespectful", example_en: "He is impudent.", example_hi: "वह ढीठ है。" },
+    { id: 452, incorrect: "impulse", correct: "impulse", meaning_hi: "आवेग", definition: "Sudden urge", example_en: "He acted on impulse.", example_hi: "उसने आवेग पर काम किया。" },
+    { id: 453, incorrect: "inadvertent", correct: "inadvertent", meaning_hi: "अनजाने", definition: "Unintentional", example_en: "It was an inadvertent mistake.", example_hi: "यह अनजानी गलती थी。" },
+    { id: 454, incorrect: "inalienable", correct: "inalienable", meaning_hi: "अहस्तांतरणीय", definition: "Not transferable", example_en: "It is an inalienable right.", example_hi: "यह अहस्तांतरणीय अधिकार है。" },
+    { id: 455, incorrect: "inanimate", correct: "inanimate", meaning_hi: "निर्जीव", definition: "Lifeless", example_en: "The rock is inanimate.", example_hi: "चट्टान निर्जीव है。" },
+    { id: 456, incorrect: "inaugurate", correct: "inaugurate", meaning_hi: "उद्घाटन करना", definition: "To begin", example_en: "He inaugurated the new office.", example_hi: "उसने नए कार्यालय का उद्घाटन किया。" },
+    { id: 457, incorrect: "incarnate", correct: "incarnate", meaning_hi: "अवतार", definition: "Embodied", example_en: "He is evil incarnate.", example_hi: "वह बुराई का अवतार है。" },
+    { id: 458, incorrect: "incendiary", correct: "incendiary", meaning_hi: "आग लगाने वाला", definition: "Causing fire", example_en: "He used incendiary devices.", example_hi: "उसने आग लगाने वाले उपकरणों का उपयोग किया。" },
+    { id: 459, incorrect: "incense", correct: "incense", meaning_hi: "क्रोधित करना", definition: "To make angry", example_en: "His words incensed me.", example_hi: "उसके शब्दों ने मुझे क्रोधित किया。" },
+    { id: 460, incorrect: "inception", correct: "inception", meaning_hi: "आरंभ", definition: "Beginning", example_en: "The inception of the project.", example_hi: "परियोजना का आरंभ。" },
+    { id: 461, incorrect: "incipient", correct: "incipient", meaning_hi: "प्रारंभिक", definition: "Beginning to exist", example_en: "It is an incipient problem.", example_hi: "यह प्रारंभिक समस्या है。" },
+    { id: 462, incorrect: "incisive", correct: "incisive", meaning_hi: "तीक्ष्ण", definition: "Sharp", example_en: "He made an incisive comment.", example_hi: "उसने तीक्ष्ण टिप्पणी की。" },
+    { id: 463, incorrect: "incite", correct: "incite", meaning_hi: "भड़काना", definition: "To provoke", example_en: "He incited the crowd.", example_hi: "उसने भीड़ को भड़काया。" },
+    { id: 464, incorrect: "inclusive", correct: "inclusive", meaning_hi: "समावेशी", definition: "Including all", example_en: "The policy is inclusive.", example_hi: "नीति समावेशी है。" },
+    { id: 465, incorrect: "incognito", correct: "incognito", meaning_hi: "अज्ञात", definition: "In disguise", example_en: "He traveled incognito.", example_hi: "उसने अज्ञात रूप से यात्रा की。" },
+    { id: 466, incorrect: "incoherent", correct: "incoherent", meaning_hi: "असंगत", definition: "Disconnected", example_en: "He gave an incoherent answer.", example_hi: "उसने असंगत जवाब दिया。" },
+    { id: 467, incorrect: "incompatible", correct: "incompatible", meaning_hi: "असंगत", definition: "Not in harmony", example_en: "They are incompatible.", example_hi: "वे असंगत हैं。" },
+    { id: 468, incorrect: "incongruous", correct: "incongruous", meaning_hi: "बेतुका", definition: "Out of place", example_en: "His clothes were incongruous.", example_hi: "उसके कपड़े बेतुके थे。" },
+    { id: 469, incorrect: "inconsequential", correct: "inconsequential", meaning_hi: "महत्वहीन", definition: "Unimportant", example_en: "It was an inconsequential detail.", example_hi: "यह महत्वहीन विवरण था。" },
+    { id: 470, incorrect: "jewelry", correct: "jewelry", meaning_hi: "गहने", definition: "Ornaments", example_en: "She wore jewelry.", example_hi: "उसने गहने पहने。" },
+    { id: 471, incorrect: "judgement", correct: "judgment", meaning_hi: "निर्णय", definition: "Decision", example_en: "He passed judgment.", example_hi: "उसने निर्णय सुनाया。" },
+    { id: 472, incorrect: "jealous", correct: "jealous", meaning_hi: "ईर्ष्यालु", definition: "Envious", example_en: "He is jealous.", example_hi: "वह ईर्ष्यालु है。" },
+    { id: 473, incorrect: "knowledge", correct: "knowledge", meaning_hi: "ज्ञान", definition: "Awareness", example_en: "Knowledge is power.", example_hi: "ज्ञान शक्ति है。" },
+    { id: 474, incorrect: "laboratory", correct: "laboratory", meaning_hi: "प्रयोगशाला", definition: "Lab", example_en: "He works in a laboratory.", example_hi: "वह प्रयोगशाला में काम करता है。" },
+    { id: 475, incorrect: "leisure", correct: "leisure", meaning_hi: "आराम", definition: "Free time", example_en: "He enjoys leisure.", example_hi: "वह आराम का आनंद लेता है。" },
+    { id: 476, incorrect: "library", correct: "library", meaning_hi: "पुस्तकालय", definition: "Place of books", example_en: "He went to the library.", example_hi: "वह पुस्तकालय गया。" },
+    { id: 477, incorrect: "lightning", correct: "lightning", meaning_hi: "बिजली", definition: "Electric flash", example_en: "Lightning struck the tree.", example_hi: "बिजली पेड़ पर गिरी。" },
+    { id: 478, incorrect: "maintenance", correct: "maintenance", meaning_hi: "रखरखाव", definition: "Upkeep", example_en: "He does maintenance.", example_hi: "वह रखरखाव करता है。" },
+    { id: 479, incorrect: "mathematics", correct: "mathematics", meaning_hi: "गणित", definition: "Maths", example_en: "He loves mathematics.", example_hi: "उसे गणित पसंद है。" },
+    { id: 480, incorrect: "millennium", correct: "millennium", meaning_hi: "सहस्राब्दी", definition: "Thousand years", example_en: "The new millennium began.", example_hi: "नई सहस्राब्दी शुरू हुई。" },
+    { id: 481, incorrect: "mischievous", correct: "mischievous", meaning_hi: "शरारती", definition: "Naughty", example_en: "He is mischievous.", example_hi: "वह शरारती है。" },
+    { id: 482, incorrect: "memento", correct: "memento", meaning_hi: "निशानी", definition: "Souvenir", example_en: "He kept it as a memento.", example_hi: "उसने इसे निशानी के रूप में रखा。" },
+    { id: 483, incorrect: "necessary", correct: "necessary", meaning_hi: "आवश्यक", definition: "Essential", example_en: "It is necessary.", example_hi: "यह आवश्यक है。" },
+    { id: 484, incorrect: "neighbor", correct: "neighbor", meaning_hi: "पड़ोसी", definition: "Person next door", example_en: "He is my neighbor.", example_hi: "वह मेरा पड़ोसी है。" },
+    { id: 485, incorrect: "noticeable", correct: "noticeable", meaning_hi: "ध्यान देने योग्य", definition: "Perceptible", example_en: "It is noticeable.", example_hi: "यह ध्यान देने योग्य है。" },
+    { id: 486, incorrect: "occasion", correct: "occasion", meaning_hi: "अवसर", definition: "Event", example_en: "It was a special occasion.", example_hi: "यह विशेष अवसर था。" },
+    { id: 487, incorrect: "occurrence", correct: "occurrence", meaning_hi: "घटना", definition: "Event", example_en: "It was a strange occurrence.", example_hi: "यह अजीब घटना थी。" },
+    { id: 488, incorrect: "opportunity", correct: "opportunity", meaning_hi: "अवसर", definition: "Chance", example_en: "He grabbed the opportunity.", example_hi: "उसने अवसर को जब्त कर लिया。" },
+    { id: 489, incorrect: "parallel", correct: "parallel", meaning_hi: "समानांतर", definition: "Equidistant", example_en: "The lines are parallel.", example_hi: "रेखाएँ समानांतर हैं。" },
+    { id: 490, incorrect: "parliament", correct: "parliament", meaning_hi: "संसद", definition: "Legislature", example_en: "The parliament passed the bill.", example_hi: "संसद ने विधेयक पारित किया。" },
+    { id: 491, incorrect: "perseverance", correct: "perseverance", meaning_hi: "दृढ़ता", definition: "Persistence", example_en: "He showed perseverance.", example_hi: "उसने दृढ़ता दिखाई。" },
+    { id: 492, incorrect: "possession", correct: "possession", meaning_hi: "अधिकार", definition: "Ownership", example_en: "He has possession of the house.", example_hi: "उसके पास घर का अधिकार है。" },
+    { id: 493, incorrect: "privilege", correct: "privilege", meaning_hi: "विशेषाधिकार", definition: "Special right", example_en: "It is a privilege.", example_hi: "यह विशेषाधिकार है。" },
+    { id: 494, incorrect: "pronunciation", correct: "pronunciation", meaning_hi: "उच्चारण", definition: "Way of saying", example_en: "His pronunciation is good.", example_hi: "उसका उच्चारण अच्छा है。" },
+    { id: 495, incorrect: "psychology", correct: "psychology", meaning_hi: "मनोविज्ञान", definition: "Study of mind", example_en: "He studies psychology.", example_hi: "वह मनोविज्ञान पढ़ता है。" },
+    { id: 496, incorrect: "quarantine", correct: "quarantine", meaning_hi: "संगरोध", definition: "Isolation", example_en: "He was in quarantine.", example_hi: "वह संगरोध में था。" },
+    { id: 497, incorrect: "questionnaire", correct: "questionnaire", meaning_hi: "प्रश्नावली", definition: "Set of questions", example_en: "He filled out the questionnaire.", example_hi: "उसने प्रश्नावली भरी。" },
+    { id: 498, incorrect: "receipt", correct: "receipt", meaning_hi: "रसीद", definition: "Proof of payment", example_en: "He kept the receipt.", example_hi: "उसने रसीद रखी。" },
+    { id: 499, incorrect: "receive", correct: "receive", meaning_hi: "प्राप्त करना", definition: "To get", example_en: "I received a gift.", example_hi: "मुझे एक उपहार मिला。" },
+    { id: 500, incorrect: "recommend", correct: "recommend", meaning_hi: "सिफारिश करना", definition: "To suggest", example_en: "I recommend this book.", example_hi: "मैं इस किताब की सिफारिश करता हूँ。" },
+    { id: 501, incorrect: "relevant", correct: "relevant", meaning_hi: "प्रासंगिक", definition: "Related", example_en: "His question is relevant.", example_hi: "उसका सवाल प्रासंगिक है。" },
+    { id: 502, incorrect: "repetitive", correct: "repetitive", meaning_hi: "दोहरावदार", definition: "Happening again", example_en: "The work is repetitive.", example_hi: "काम दोहरावदार है。" },
+    { id: 503, incorrect: "rhythm", correct: "rhythm", meaning_hi: "लय", definition: "Beat", example_en: "The rhythm is fast.", example_hi: "लय तेज़ है。" },
+    { id: 504, incorrect: "sacrifice", correct: "sacrifice", meaning_hi: "बलिदान", definition: "Give up", example_en: "He made a sacrifice.", example_hi: "उसने बलिदान दिया。" },
+    { id: 505, incorrect: "schedule", correct: "schedule", meaning_hi: "अनुसूची", definition: "Timetable", example_en: "Check the schedule.", example_hi: "अनुसूची देखें。" },
+    { id: 506, incorrect: "separate", correct: "separate", meaning_hi: "अलग", definition: "Divide", example_en: "Separate the papers.", example_hi: "कागजात अलग करें。" },
+    { id: 507, incorrect: "sergeant", correct: "sergeant", meaning_hi: "सार्जेंट", definition: "Military rank", example_en: "He is a sergeant.", example_hi: "वह सार्जेंट है。" },
+    { id: 508, incorrect: "similar", correct: "similar", meaning_hi: "समान", definition: "Alike", example_en: "They are similar.", example_hi: "वे समान हैं。" },
+    { id: 509, incorrect: "successful", correct: "successful", meaning_hi: "सफल", definition: "Achieving success", example_en: "He is successful.", example_hi: "वह सफल है。" },
+    { id: 510, incorrect: "supersede", correct: "supersede", meaning_hi: "हटाना", definition: "To replace", example_en: "The new rule supersedes the old.", example_hi: "नया नियम पुराने को हटाता है。" },
+    { id: 511, incorrect: "temperature", correct: "temperature", meaning_hi: "तापमान", definition: "Heat level", example_en: "The temperature is high.", example_hi: "तापमान अधिक है。" },
+    { id: 512, incorrect: "thorough", correct: "thorough", meaning_hi: "संपूर्ण", definition: "Complete", example_en: "He did a thorough job.", example_hi: "उसने संपूर्ण काम किया。" },
+    { id: 513, incorrect: "tournament", correct: "tournament", meaning_hi: "टूर्नामेंट", definition: "Competition", example_en: "He won the tournament.", example_hi: "उसने टूर्नामेंट जीता。" },
+    { id: 514, incorrect: "twelfth", correct: "twelfth", meaning_hi: "बारहवाँ", definition: "12th", example_en: "It is the twelfth day.", example_hi: "यह बारहवाँ दिन है。" },
+    { id: 515, incorrect: "unnecessary", correct: "unnecessary", meaning_hi: "अनावश्यक", definition: "Not needed", example_en: "It is unnecessary.", example_hi: "यह अनावश्यक है。" },    { id: 1, incorrect: "abcense", correct: "absence", meaning_hi: "अनुपस्थिति", definition: "State of being away", example_en: "His absence was noticed.", example_hi: "उसकी अनुपस्थिति पर ध्यान दिया गया।" },
+    { id: 2, incorrect: "adress", correct: "address", meaning_hi: "पता", definition: "Place where someone lives", example_en: "Write your address.", example_hi: "अपना पता लिखें。" },
+    { id: 3, incorrect: "aquit", correct: "acquit", meaning_hi: "बरी करना", definition: "Free from charge", example_en: "The jury acquitted him.", example_hi: "जूरी ने उसे बरी किया।" },
+    { id: 4, incorrect: "arguement", correct: "argument", meaning_hi: "तर्क", definition: "Reason", example_en: "They had an argument.", example_hi: "उनका तर्क था।" },
+    { id: 5, incorrect: "artic", correct: "arctic", meaning_hi: "आर्कटिक", definition: "North Pole region", example_en: "Arctic is cold.", example_hi: "आर्कटिक ठंडा है।" },
+    { id: 6, incorrect: "alot", correct: "a lot", meaning_hi: "बहुत", definition: "Large amount", example_en: "I have a lot of work.", example_hi: "मेरे पास बहुत काम है。" },
+    { id: 7, incorrect: "advise", correct: "advice", meaning_hi: "सलाह", definition: "Guidance", example_en: "I need your advice.", example_hi: "मुझे आपकी सलाह चाहिए。" },
+    { id: 8, incorrect: "anually", correct: "annually", meaning_hi: "सालाना", definition: "Every year", example_en: "The festival is annual.", example_hi: "त्योहार सालाना है。" },
+    { id: 9, incorrect: "apparent", correct: "apparent", meaning_hi: "स्पष्ट", definition: "Clearly visible", example_en: "It was apparent.", example_hi: "यह स्पष्ट था।" },
+    { id: 10, incorrect: "arround", correct: "around", meaning_hi: "आसपास", definition: "On all sides", example_en: "Look around.", example_hi: "आसपास देखें。" },
+  
+    { id: 516, incorrect: "until", correct: "until", meaning_hi: "तक", definition: "Up to", example_en: "Wait until I come.", example_hi: "मेरे आने तक रुको。" },
+    { id: 517, incorrect: "vacuum", correct: "vacuum", meaning_hi: "निर्वात", definition: "Empty space", example_en: "He cleaned with a vacuum.", example_hi: "उसने वैक्यूम से साफ किया。" },
+    { id: 518, incorrect: "vicious", correct: "vicious", meaning_hi: "शातिर", definition: "Cruel", example_en: "He made a vicious attack.", example_hi: "उसने शातिर हमला किया。" },
+    { id: 519, incorrect: "vulnerable", correct: "vulnerable", meaning_hi: "अतिसंवेदनशील", definition: "Exposed to danger", example_en: "He is vulnerable.", example_hi: "वह अतिसंवेदनशील है。" },
+    { id: 520, incorrect: "weather", correct: "weather", meaning_hi: "मौसम", definition: "Climate", example_en: "The weather is nice.", example_hi: "मौसम अच्छा है。" },
+    { id: 521, incorrect: "weird", correct: "weird", meaning_hi: "अजीब", definition: "Strange", example_en: "He is weird.", example_hi: "वह अजीब है。" },
+    { id: 522, incorrect: "whether", correct: "whether", meaning_hi: "क्या", definition: "If", example_en: "I don't know whether he will come.", example_hi: "मुझे नहीं पता कि वह आएगा या नहीं।" },
+    { id: 523, incorrect: "zeal", correct: "zeal", meaning_hi: "उत्साह", definition: "Enthusiasm", example_en: "He works with zeal.", example_hi: "वह उत्साह से काम करता है。" },
+    { id: 524, incorrect: "zenith", correct: "zenith", meaning_hi: "चरम बिंदु", definition: "Highest point", example_en: "He reached the zenith.", example_hi: "वह चरम बिंदु पर पहुँच गया。" }
+];
+
+// ================================================================
+// 🔧 BUILD QUESTIONS – 20 SETS × 25 = 500 QUESTIONS
+// ================================================================
+const TOTAL_SETS = 20;
+const PER_SET = 25;
+
+function buildAllQuestions() {
+    const qs = [];
+    const shuffled = [...spellingData];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    const used = shuffled.slice(0, TOTAL_SETS * PER_SET);
+    used.forEach((item, idx) => {
+        const correct = item.correct;
+        const wrongPool = spellingData.filter(d => d.correct !== item.correct).map(d => d.incorrect);
+        const shuffledWrong = wrongPool.filter(w => w !== correct);
+        for (let i = shuffledWrong.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledWrong[i], shuffledWrong[j]] = [shuffledWrong[j], shuffledWrong[i]];
+        }
+        const wrongs = shuffledWrong.slice(0, 3);
+        const opts = [correct, ...wrongs];
+        for (let i = opts.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opts[i], opts[j]] = [opts[j], opts[i]];
+        }
+        const correctIdx = opts.indexOf(correct);
+        const explanation = `सही स्पेलिंग "${correct}" है। अर्थ: ${item.meaning_hi} (${item.definition})। उदाहरण: ${item.example_en} – ${item.example_hi}`;
+        qs.push({
+            id: idx + 1,
+            question: `Choose the correct spelling:`,
+            options: opts,
+            correctIndex: correctIdx,
+            correctAnswer: correct,
+            explanation: explanation,
+            meaning: item.meaning_hi,
+            definition: item.definition,
+            example_en: item.example_en,
+            example_hi: item.example_hi,
+            set: Math.floor(idx / PER_SET) + 1
+        });
+    });
+    return qs;
+}
+
+// ================================================================
+// 🎮 STATE
+// ================================================================
+let allQuestions = [];
+let currentSet = 1;
+let setProgress = {};
+let selectedOptions = {};
+let answeredQuestions = {};
+
+function init() {
+    allQuestions = buildAllQuestions();
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        setProgress[s] = { attempted: 0, correct: 0, wrong: 0 };
+    }
+    renderDashboard();
+    renderSet(1);
+}
+
+function renderDashboard() {
+    const grid = document.getElementById('setsGrid');
+    let html = '';
+    let totalAttempted = 0, totalCorrect = 0;
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        const p = setProgress[s] || { attempted: 0, correct: 0, wrong: 0 };
+        totalAttempted += p.attempted;
+        totalCorrect += p.correct;
+        const status = p.attempted === 0 ? 'notstarted' : (p.attempted === PER_SET ? 'completed' : 'inprogress');
+        const label = status === 'notstarted' ? 'Not Started' : (status === 'completed' ? '✅ Done' : '⏳ In Progress');
+        const pct = p.attempted === 0 ? 0 : Math.round((p.correct / p.attempted) * 100);
+        html += `
+            <div class="set-card" onclick="openSet(${s})">
+                <div class="set-status ${status}">${label}</div>
+                <div class="set-num">${s}</div>
+                <div class="set-label">Set ${s}</div>
+                <div class="set-progress">${p.attempted}/${PER_SET} · ${pct}%</div>
+            </div>
+        `;
+    }
+    grid.innerHTML = html;
+    const totalQ = TOTAL_SETS * PER_SET;
+    document.getElementById('overallProgressText').textContent = `${totalAttempted} / ${totalQ}`;
+    document.getElementById('overallProgressBar').style.width = `${(totalAttempted / totalQ) * 100}%`;
+    document.getElementById('overallScoreText').textContent = totalAttempted === 0 ? '0%' : `${Math.round((totalCorrect / totalAttempted) * 100)}%`;
+}
+
+function renderSet(setNum) {
+    currentSet = setNum;
+    const questions = allQuestions.filter(q => q.set === setNum);
+    const container = document.getElementById('questionsContainer');
+    const p = setProgress[setNum] || { attempted: 0, correct: 0, wrong: 0 };
+
+    document.getElementById('setTitle').textContent = `Set ${setNum}`;
+    document.getElementById('setTag').innerHTML = `<i class="fas fa-layer-group"></i> Set ${setNum} / ${TOTAL_SETS}`;
+    document.getElementById('setIndicator').textContent = `Set ${setNum} of ${TOTAL_SETS}`;
+
+    document.getElementById('correctCount').textContent = p.correct || 0;
+    document.getElementById('wrongCount').textContent = p.wrong || 0;
+    document.getElementById('attemptedCount').textContent = p.attempted || 0;
+    const pct = p.attempted === 0 ? 0 : Math.round((p.correct / p.attempted) * 100);
+    document.getElementById('scorePercent').textContent = pct;
+
+    document.getElementById('prevSetBtn').disabled = (setNum === 1);
+    document.getElementById('nextSetBtn').disabled = (setNum === TOTAL_SETS);
+
+    let html = '';
+    questions.forEach((q, idx) => {
+        const qNum = idx + 1;
+        const isAnswered = answeredQuestions[q.id] || false;
+        const selected = selectedOptions[q.id];
+        html += `
+            <div class="question-card" id="qcard-${q.id}">
+                <div class="q-top">
+                    <span class="q-number">Q${qNum}</span>
+                    <span class="q-text">
+                        ${q.question}
+                        <span class="q-type">Spelling</span>
+                    </span>
+                </div>
+                <div class="options" id="options-${q.id}">
+                    ${q.options.map((opt, oi) => `
+                        <label>
+                            <input type="radio" name="q${q.id}" value="${oi}" 
+                                ${isAnswered ? 'disabled' : ''}
+                                onchange="selectOption(${q.id}, ${oi})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="btn-answer" id="btn-${q.id}" 
+                    onclick="showAnswer(${q.id})" 
+                    ${isAnswered ? 'disabled' : ''}>
+                    <i class="fas fa-eye"></i> Show Answer
+                </button>
+                <div class="answer-box" id="answer-${q.id}">
+                    <div><span class="correct-word">✔ ${q.correctAnswer}</span> <span id="result-${q.id}"></span></div>
+                    <div class="explanation"><strong>💡 Explanation:</strong> ${q.explanation}</div>
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+
+    questions.forEach(q => {
+        if (answeredQuestions[q.id]) {
+            const ansBox = document.getElementById(`answer-${q.id}`);
+            if (ansBox) ansBox.style.display = 'block';
+            const selected = selectedOptions[q.id];
+            const isCorrect = (selected === q.correctIndex);
+            const resultSpan = document.getElementById(`result-${q.id}`);
+            if (resultSpan) {
+                if (isCorrect) { resultSpan.innerHTML = ' ✅ Correct!'; resultSpan.style.color = '#27ae60'; }
+                else { const chosen = q.options[selected] || 'None'; resultSpan.innerHTML = ` ❌ Your answer: ${chosen}`; resultSpan.style.color = '#e74c3c'; }
+            }
+            const optContainer = document.getElementById(`options-${q.id}`);
+            if (optContainer) {
+                const labels = optContainer.querySelectorAll('label');
+                labels.forEach((label, idx) => {
+                    if (idx === q.correctIndex) label.classList.add('correct-ans');
+                    else if (idx === selected && !isCorrect) label.classList.add('wrong-ans');
+                    const radio = label.querySelector('input');
+                    if (radio) radio.disabled = true;
+                });
+            }
+            const btn = document.getElementById(`btn-${q.id}`);
+            if (btn) btn.disabled = true;
+        }
+    });
+    renderDashboard();
+}
+
+function selectOption(qId, idx) {
+    if (answeredQuestions[qId]) return;
+    selectedOptions[qId] = idx;
+}
+
+function showAnswer(qId) {
+    if (answeredQuestions[qId]) return;
+    const q = allQuestions.find(item => item.id === qId);
+    if (!q) return;
+    const selected = selectedOptions[qId];
+    const isCorrect = (selected === q.correctIndex);
+
+    answeredQuestions[qId] = true;
+    const p = setProgress[q.set] || { attempted: 0, correct: 0, wrong: 0 };
+    p.attempted++;
+    if (isCorrect) p.correct++;
+    else p.wrong++;
+    setProgress[q.set] = p;
+
+    const ansBox = document.getElementById(`answer-${q.id}`);
+    if (ansBox) ansBox.style.display = 'block';
+
+    const resultSpan = document.getElementById(`result-${q.id}`);
+    if (resultSpan) {
+        if (isCorrect) { resultSpan.innerHTML = ' ✅ Correct!'; resultSpan.style.color = '#27ae60'; }
+        else { const chosen = q.options[selected] || 'None'; resultSpan.innerHTML = ` ❌ Your answer: ${chosen}`; resultSpan.style.color = '#e74c3c'; }
+    }
+
+    const optContainer = document.getElementById(`options-${q.id}`);
+    if (optContainer) {
+        const labels = optContainer.querySelectorAll('label');
+        labels.forEach((label, idx) => {
+            if (idx === q.correctIndex) label.classList.add('correct-ans');
+            else if (idx === selected && !isCorrect) label.classList.add('wrong-ans');
+            const radio = label.querySelector('input');
+            if (radio) radio.disabled = true;
+        });
+    }
+    const btn = document.getElementById(`btn-${q.id}`);
+    if (btn) btn.disabled = true;
+
+    renderSet(q.set);
+}
+
+function openSet(setNum) {
+    if (setNum < 1 || setNum > TOTAL_SETS) return;
+    document.getElementById('page-dashboard').classList.remove('active');
+    document.getElementById('page-practice').classList.add('active');
+    renderSet(setNum);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToDashboard() {
+    document.getElementById('page-practice').classList.remove('active');
+    document.getElementById('page-dashboard').classList.add('active');
+    renderDashboard();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function changeSet(delta) {
+    const newSet = currentSet + delta;
+    if (newSet < 1 || newSet > TOTAL_SETS) return;
+    openSet(newSet);
+}
+
+function resetAllProgress() {
+    if (!confirm('Reset all progress for all sets? This cannot be undone.')) return;
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        setProgress[s] = { attempted: 0, correct: 0, wrong: 0 };
+    }
+    selectedOptions = {};
+    answeredQuestions = {};
+    allQuestions = buildAllQuestions();
+    renderDashboard();
+    if (document.getElementById('page-practice').classList.contains('active')) {
+        renderSet(currentSet);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

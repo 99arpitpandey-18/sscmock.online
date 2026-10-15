@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>SSC MOCK — Advanced CBT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --blue: #123d8d;
+            --blue2: #1769d2;
+            --green: #159447;
+            --red: #df3b3b;
+            --orange: #f29a24;
+            --purple: #8f4bd6;
+            --bg: #eef2f7;
+            --border: #d8e0eb;
+            --text: #172033;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            overflow: hidden;
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        /* HEADER */
+        header {
+            height: 64px;
+            background: linear-gradient(135deg, #07255c, var(--blue));
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .18);
+            position: relative;
+            z-index: 100;
+            flex-shrink: 0;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #ffd43b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 900;
+            font-size: 16px;
+            color: var(--blue);
+            flex-shrink: 0;
+        }
+        .brand h1 {
+            font-size: 16px;
+            line-height: 1.1;
+        }
+        .brand p {
+            font-size: 9px;
+            opacity: .85;
+            line-height: 1;
+        }
+        .examTitle {
+            text-align: center;
+            flex: 1;
+            padding: 0 6px;
+        }
+        .examTitle h2 {
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .examTitle p {
+            font-size: 9px;
+            opacity: .8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .timerArea {
+            text-align: right;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+        #mainTimer {
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        #timerLabel {
+            font-size: 8px;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+            margin-top: 1px;
+        }
+        #sectionTimer {
+            font-size: 9px;
+            color: #ffd54f;
+            margin-top: 1px;
+        }
+
+        /* LAYOUT */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            height: calc(100vh - 64px);
+            overflow: hidden;
+        }
+
+        /* LEFT PANEL */
+        .left {
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            height: 100%;
+        }
+        .progressBarWrap {
+            padding: 6px 12px;
+            background: #f7f9fc;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .progressTop {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .progress {
+            height: 6px;
+            background: #d7e4f7;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .progressFill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--blue), #4aa3ff);
+            transition: .3s;
+        }
+
+        .sectionTabs {
+            display: flex;
+            gap: 4px;
+            padding: 6px 10px;
+            background: #fafbfd;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .sectionTab {
+            flex: 1;
+            min-width: 70px;
+            padding: 8px 6px;
+            border: 1px solid #ccd6e4;
+            border-radius: 5px;
+            background: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            text-align: center;
+            transition: .2s;
+        }
+        .sectionTab.active {
+            background: var(--blue2);
+            color: #fff;
+            border-color: var(--blue2);
+        }
+
+        .questionHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        #questionNumber {
+            font-size: 16px;
+            font-weight: 800;
+        }
+        .langSwitch {
+            display: flex;
+            gap: 4px;
+        }
+        .langSwitch button {
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: .2s;
+        }
+        .langSwitch .active {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .questionBody {
+            flex: 1;
+            overflow: auto;
+            padding: 16px 14px;
+            -webkit-overflow-scrolling: touch;
+        }
+        #questionText {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        .option {
+            display: flex;
+            gap: 12px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .2s;
+            background: #fff;
+            align-items: center;
+            min-height: 48px;
+        }
+        .option:active {
+            transform: scale(0.99);
+        }
+        .option:hover {
+            border-color: #4f8ff1;
+            background: #f5f9ff;
+        }
+        .option.selected {
+            border-color: var(--blue2);
+            background: #eaf4ff;
+        }
+        .letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #bcc8d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .option.selected .letter {
+            background: var(--blue2);
+            color: #fff;
+            border-color: var(--blue2);
+        }
+
+        .footer {
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            background: #f8fafc;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .btnGroup {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+            font-size: 12px;
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .nextBtn {
+            background: var(--blue2);
+            border-color: var(--blue2);
+            color: #fff;
+        }
+        .nextBtn:active {
+            background: #0f5bb5;
+        }
+        .reviewBtn {
+            background: #fff3df;
+            border-color: #f3c177;
+            color: #a86100;
+        }
+
+        /* ===== RIGHT PANEL ===== */
+        .right {
+            background: #fff;
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+        }
+        .profile {
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue2), #062e72);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .profile div b {
+            font-size: 13px;
+        }
+        .profile div div {
+            font-size: 10px;
+        }
+
+        /* Section timer on right panel */
+        .sectionTimerRight {
+            padding: 6px 14px 4px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--blue);
+            background: #f7f9fc;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .sectionTimerRight span:last-child {
+            color: var(--red);
+            font-weight: 900;
+        }
+
+        .paletteTitle {
+            padding: 10px 14px 4px;
+            font-size: 12px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .palette {
+            padding: 8px 12px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .palette button {
+            height: 34px;
+            border-radius: 5px;
+            border: 1.5px solid #ccd5e1;
+            background: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+            font-size: 12px;
+            color: #172033;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .palette button.current {
+            border: 2.5px solid var(--blue2);
+            box-shadow: 0 0 0 2px rgba(23, 105, 210, 0.25);
+        }
+        .palette button.answered {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+        .palette button.review {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple);
+        }
+        .palette button.answeredReview {
+            background: var(--orange);
+            color: #fff;
+            border-color: var(--orange);
+        }
+        .palette button.notVisited {
+            background: #fff;
+            color: #172033;
+            border-color: #ccd5e1;
+        }
+
+        .rightLegend {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 4px 14px 8px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            background: #fafbfd;
+        }
+        .rightLegend .legendItem {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #374151;
+        }
+        .rightLegend .box {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            flex-shrink: 0;
+        }
+        .rightLegend .box.green { background: var(--green); }
+        .rightLegend .box.orange { background: var(--orange); }
+        .rightLegend .box.purple { background: var(--purple); }
+        .rightLegend .box.white { background: #fff; border: 1px solid #bbb; }
+
+        .submitWrap {
+            padding: 10px 14px 6px;
+            flex-shrink: 0;
+            background: #fff;
+            border-top: 1px solid var(--border);
+        }
+        .submitWrap .btn {
+            width: 100%;
+            justify-content: center;
+            background: linear-gradient(135deg, #e83e3e, #bd1f1f);
+            border: none;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(220, 50, 50, .25);
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+        }
+        .submitWrap .btn:active {
+            transform: scale(0.97);
+        }
+
+        .instructionsRight {
+            padding: 8px 14px 14px;
+            flex-shrink: 0;
+            background: #fafbfd;
+            border-top: 1px solid var(--border);
+        }
+        .instructionsRight h4 {
+            font-size: 11px;
+            color: var(--blue);
+            margin-bottom: 4px;
+        }
+        .instructionsRight ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            list-style: none;
+            padding-left: 0;
+        }
+        .instructionsRight li {
+            font-size: 10px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+        }
+        .instructionsRight li::before {
+            content: "•";
+            color: var(--blue2);
+            font-weight: bold;
+            margin-right: 4px;
+            font-size: 14px;
+        }
+
+        /* RESULT SCREEN */
+        #resultScreen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #06193f, #123f89);
+            overflow: auto;
+            padding: 16px;
+            z-index: 999;
+            -webkit-overflow-scrolling: touch;
+        }
+        .resultContainer {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .resultCard {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, .18);
+        }
+        .resultCard h1 { font-size: 22px; }
+        .resultCard h2 { font-size: 18px; }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .summary div {
+            padding: 12px 8px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .greenCard { background: #e8f6ec; color: var(--green); }
+        .redCard { background: #fdeaea; color: var(--red); }
+        .orangeCard { background: #fff5e8; color: var(--orange); }
+        .grayCard { background: #f1f3f5; color: #6b7280; }
+        .analysisGrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .circle {
+            width: 120px;
+            height: 120px;
+            border: 4px solid var(--red);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+        }
+        .circle h1 { font-size: 32px; color: var(--red); }
+        .circle small { font-size: 11px; }
+        .progressBar {
+            height: 14px;
+            border-radius: 30px;
+            background: #d1d5db;
+            overflow: hidden;
+            display: flex;
+            margin-top: 10px;
+        }
+        .progressBar div { height: 100%; }
+        .reviewQuestion {
+            border-left: 4px solid var(--blue);
+            padding: 14px;
+            background: #fafbfd;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .reviewQuestion h3 { font-size: 15px; margin-bottom: 4px; }
+        .correct { color: var(--green); font-weight: 700; }
+        .wrong { color: var(--red); font-weight: 700; }
+
+        /* MOBILE */
+        #mobilePaletteToggle {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 16px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--blue2);
+            color: #fff;
+            border: none;
+            font-size: 22px;
+            box-shadow: 0 4px 16px rgba(23, 105, 210, 0.4);
+            z-index: 50;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+        #mobilePaletteToggle:active { transform: scale(0.92); }
+        #mobilePaletteOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 60;
+        }
+        #mobilePalettePanel {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 16px 16px 0 0;
+            padding: 16px 14px 20px;
+            z-index: 70;
+            max-height: 75vh;
+            overflow: auto;
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.2);
+            -webkit-overflow-scrolling: touch;
+        }
+        #mobilePalettePanel .paletteTitle {
+            font-size: 14px;
+            padding: 0 0 8px 0;
+        }
+        #mobilePalettePanel .palette {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            padding: 0;
+        }
+        #mobilePalettePanel .palette button {
+            height: 40px;
+            font-size: 14px;
+        }
+        #mobilePalettePanel .rightLegend {
+            border: none;
+            padding: 12px 0 0;
+            background: transparent;
+            justify-content: center;
+        }
+        #mobilePalettePanel .rightLegend .legendItem {
+            font-size: 12px;
+        }
+        #mobilePalettePanel .closePalette {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            padding: 4px 8px;
+        }
+        #mobilePalettePanel .submitWrap {
+            border-top: 1px solid var(--border);
+            margin-top: 12px;
+            padding: 12px 0 0;
+            background: transparent;
+        }
+        #mobilePalettePanel .instructionsRight {
+            background: transparent;
+            border-top: 1px solid var(--border);
+            padding: 10px 0 0;
+            margin-top: 10px;
+        }
+        /* mobile section timer inside panel */
+        #mobilePalettePanel .sectionTimerRight {
+            background: transparent;
+            border-bottom: 1px solid var(--border);
+            padding: 6px 0 8px;
+            margin-bottom: 8px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:1024px) {
+            .container { grid-template-columns: 1fr 280px; }
+        }
+        @media(max-width:820px) {
+            .container { grid-template-columns: 1fr 240px; }
+            .examTitle h2 { font-size: 12px; }
+            .examTitle p { font-size: 8px; }
+            #mainTimer { font-size: 20px; }
+            .sectionTab { font-size: 11px; padding: 6px 4px; min-width: 55px; }
+        }
+        @media(max-width:768px) {
+            body { overflow: auto; }
+            .container { grid-template-columns: 1fr; height: auto; min-height: calc(100vh - 64px); }
+            .right { display: none; }
+            #mobilePaletteToggle { display: flex; }
+            #mobilePaletteOverlay { display: none; }
+            #mobilePalettePanel { display: none; }
+            .left { height: auto; min-height: calc(100vh - 64px); }
+            .questionBody { min-height: 240px; }
+            header { height: 58px; padding: 0 8px; }
+            .brand h1 { font-size: 14px; }
+            .brand p { display: none; }
+            .logo { width: 34px; height: 34px; font-size: 14px; }
+            .examTitle h2 { font-size: 11px; }
+            .examTitle p { font-size: 8px; }
+            .timerArea { min-width: 60px; }
+            #mainTimer { font-size: 18px; }
+            #timerLabel { font-size: 7px; }
+            #sectionTimer { font-size: 8px; }
+            .sectionTabs { gap: 3px; padding: 4px 8px; }
+            .sectionTab { font-size: 10px; padding: 5px 3px; min-width: 48px; }
+            .questionHeader { padding: 8px 12px; }
+            #questionNumber { font-size: 14px; }
+            .langSwitch button { font-size: 10px; padding: 3px 8px; }
+            .questionBody { padding: 12px; }
+            #questionText { font-size: 17px; }
+            .option { padding: 10px 12px; gap: 10px; min-height: 44px; }
+            .letter { width: 28px; height: 28px; font-size: 12px; }
+            .footer { padding: 6px 8px; flex-direction: column; align-items: stretch; gap: 4px; }
+            .btnGroup { justify-content: center; gap: 4px; }
+            .btn { padding: 6px 10px; font-size: 11px; min-height: 36px; }
+            .footer .btn.submitMobile {
+                background: linear-gradient(135deg, #e83e3e, #bd1f1f);
+                border: none;
+                color: #fff;
+                box-shadow: 0 4px 12px rgba(220,50,50,.25);
+                padding: 8px 16px;
+                font-size: 12px;
+                width: 100%;
+                justify-content: center;
+            }
+            #resultScreen { padding: 12px; }
+            .resultCard { padding: 12px; }
+            .summary { grid-template-columns: repeat(2, 1fr); }
+            .analysisGrid { grid-template-columns: 1fr; }
+            .circle { width: 100px; height: 100px; }
+            .circle h1 { font-size: 28px; }
+        }
+        @media(max-width:420px) {
+            header { height: 50px; padding: 0 6px; }
+            .logo { width: 30px; height: 30px; font-size: 12px; }
+            .brand h1 { font-size: 12px; }
+            .examTitle h2 { font-size: 10px; }
+            .examTitle p { font-size: 7px; }
+            #mainTimer { font-size: 16px; }
+            #timerLabel { font-size: 6px; }
+            #sectionTimer { font-size: 7px; }
+            #questionText { font-size: 16px; }
+            .option { font-size: 14px; padding: 8px 10px; min-height: 40px; }
+            .letter { width: 24px; height: 24px; font-size: 11px; }
+            .btn { font-size: 10px; padding: 5px 8px; min-height: 32px; }
+            .palette button { height: 30px; font-size: 10px; }
+            .sectionTab { font-size: 9px; padding: 4px 2px; min-width: 40px; }
+        }
+        #mobilePaletteOverlay.active { display: block; }
+        #mobilePalettePanel.active { display: block; }
+        #mobilePaletteToggle.active { background: var(--red); }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="brand">
+            <div class="logo">SSC</div>
+            <div>
+                <h1>SSC MOCK</h1>
+                <p>Practice·Analyze·Succeed</p>
+            </div>
+        </div>
+        <div class="examTitle">
+            <h2>SSC CGL Tier 1 Mock Test</h2>
+            <p>Full Length Mock • 100 Questions • 60 Min</p>
+        </div>
+        <div class="timerArea">
+            <div id="mainTimer">60:00</div>
+            <div id="timerLabel">TIME LEFT</div>
+            <div id="sectionTimer">General • 15:00</div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container" id="examContainer">
+
+        <!-- LEFT PANEL -->
+        <div class="left">
+
+            <div class="progressBarWrap">
+                <div class="progressTop">
+                    <span id="progressText">Q1 / 100</span>
+                    <span id="attemptText">Attempted 0</span>
+                </div>
+                <div class="progress">
+                    <div class="progressFill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="sectionTabs" id="sectionTabs">
+                <button class="sectionTab active">General Intelligence</button>
+                <button class="sectionTab">General Awareness</button>
+                <button class="sectionTab">Quantitative Aptitude</button>
+                <button class="sectionTab">English Language</button>
+            </div>
+
+            <div class="questionHeader">
+                <div id="questionNumber">Question 1</div>
+                <div class="langSwitch">
+                    <button id="englishBtn" class="active">English</button>
+                    <button id="hindiBtn">हिन्दी</button>
+                </div>
+            </div>
+
+            <div class="questionBody">
+                <div id="questionText">Loading Question...</div>
+                <div id="options"></div>
+            </div>
+
+            <div class="footer">
+                <div class="btnGroup">
+                    <button class="btn" id="prevBtn">← Prev</button>
+                    <button class="btn" id="clearBtn">Clear</button>
+                </div>
+                <div class="btnGroup">
+                    <button class="btn reviewBtn" id="reviewBtn">⚑ Mark</button>
+                    <button class="btn nextBtn" id="nextBtn">Save & Next →</button>
+                    <button class="btn submitMobile" id="submitBtnMobile" style="display:none;">SUBMIT</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- END LEFT PANEL -->
+
+        <!-- ===== RIGHT PANEL ===== -->
+        <div class="right">
+
+            <div class="profile">
+                <div class="avatar">A</div>
+                <div>
+                    <b>MockTest Candidate</b>
+                    <div style="font-size:11px;color:#667085;">SSCAspirant</div>
+                </div>
+            </div>
+
+            <!-- Section Timer on Right Panel -->
+            <div class="sectionTimerRight">
+                <span>⏱ Section Time Left</span>
+                <span id="sectionTimerRightDisplay">15:00</span>
+            </div>
+
+            <div class="paletteTitle">Question Palette</div>
+            <div class="palette" id="palette"></div>
+
+            <div class="rightLegend">
+                <span class="legendItem"><span class="box green"></span> Answered</span>
+                <span class="legendItem"><span class="box purple"></span> Marked</span>
+                <span class="legendItem"><span class="box orange"></span> Ans+Mark</span>
+                <span class="legendItem"><span class="box white"></span> Not Visited</span>
+            </div>
+
+            <div class="submitWrap">
+                <button class="btn" id="submitBtnRight">SUBMIT TEST</button>
+            </div>
+
+            <div class="instructionsRight">
+                <h4>✶ Exam Instructions</h4>
+                <ul>
+                    <li>Total Questions: 100</li>
+                    <li>Total Time: 60 Minutes</li>
+                    <li>+2 marks for correct</li>
+                    <li>-0.50 marks for wrong</li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- END RIGHT PANEL -->
+
+    </div>
+    <!-- END CONTAINER -->
+
+    <!-- MOBILE PALETTE -->
+    <button id="mobilePaletteToggle">📋</button>
+    <div id="mobilePaletteOverlay"></div>
+    <div id="mobilePalettePanel">
+        <button class="closePalette" id="closePaletteBtn">✕</button>
+        <div class="paletteTitle">Question Palette</div>
+        <!-- mobile section timer -->
+        <div class="sectionTimerRight">
+            <span>⏱ Section Time Left</span>
+            <span id="mobileSectionTimerDisplay">15:00</span>
+        </div>
+        <div class="palette" id="mobilePalette"></div>
+        <div class="rightLegend">
+            <span class="legendItem"><span class="box green"></span> Answered</span>
+            <span class="legendItem"><span class="box purple"></span> Marked</span>
+            <span class="legendItem"><span class="box orange"></span> Ans+Mark</span>
+            <span class="legendItem"><span class="box white"></span> Not Visited</span>
+        </div>
+        <div class="submitWrap">
+            <button class="btn" id="submitBtnMobilePanel">SUBMIT TEST</button>
+        </div>
+        <div class="instructionsRight">
+            <h4>✶ Exam Instructions</h4>
+            <ul>
+                <li>Total: 100 Qs</li>
+                <li>Time: 60 Min</li>
+                <li>+2 correct</li>
+                <li>-0.50 wrong</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="resultScreen">
+        <div class="resultContainer">
+            <div class="resultCard">
+                <h1>🏆 SSC MOCK Analysis</h1>
+                <p>Complete Performance Dashboard</p>
+                <h2 id="finalScore">0 / 200</h2>
+                <div class="summary">
+                    <div class="greenCard"><div id="correctCount">0</div>Correct</div>
+                    <div class="redCard"><div id="wrongCount">0</div>Wrong</div>
+                    <div class="orangeCard"><div id="skipCount">0</div>Skipped</div>
+                    <div class="grayCard"><div id="accuracy">0%</div>Accuracy</div>
+                </div>
+            </div>
+            <div class="resultCard">
+                <h2>Attempt Quality</h2>
+                <div class="summary">
+                    <div class="greenCard"><div id="perfectAttempt">0</div>Perfect</div>
+                    <div class="redCard"><div id="wastedAttempt">0</div>Wasted</div>
+                    <div class="orangeCard"><div id="overtimeAttempt">0</div>Overtime</div>
+                    <div class="grayCard"><div id="confusedAttempt">0</div>Confused</div>
+                </div>
+            </div>
+            <div class="resultCard">
+                <div class="analysisGrid">
+                    <div>
+                        <h3 style="text-align:center;">Efficiency</h3>
+                        <div class="circle"><h1 id="efficiencyScore">0</h1><small>Out of 100</small></div>
+                    </div>
+                    <div>
+                        <h3>Distribution</h3>
+                        <div class="progressBar">
+                            <div id="greenBar" style="background:#16a34a;width:0%;"></div>
+                            <div id="redBar" style="background:#ef4444;width:0%;"></div>
+                            <div id="orangeBar" style="background:#f59e0b;width:0%;"></div>
+                            <div id="grayBar" style="background:#9ca3af;width:100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="resultCard">
+                <h2>Subject-wise Breakdown</h2>
+                <table style="width:100%;border-collapse:collapse;" id="subjectTable">
+                    <tr style="background:#f5f7fa;">
+                        <th align="left" style="padding:10px;">Subject</th>
+                        <th>Correct</th>
+                        <th>Wrong</th>
+                        <th>Skipped</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="resultCard">
+                <h2>Detailed Explanations</h2>
+                <div id="reviewContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // SSC MOCK — ENGINE (with section timer on right panel)
+        // ============================================================
+
+        const SECTION_NAMES = ["General Intelligence","General Awareness","Quantitative Aptitude","English Language"];
+        const QS_PER_SECTION = 25;
+        const TOTAL_QS = 100;
+        const TOTAL_TIME = 60 * 60;
+        const SECTION_TIME = 15 * 60;
+
+        // Generate question bank
+        const sampleBank = [
+            {en:"What is the capital of India?",hi:"भारत की राजधानी क्या है?",options:["Mumbai","Kolkata","New Delhi","Chennai"],answer:2,exp:"New Delhi is the capital of India."},
+            {en:"Who is known as the Father of the Indian Constitution?",hi:"भारतीय संविधान के जनक किसे कहा जाता है?",options:["Gandhi","Dr. B.R. Ambedkar","Nehru","Patel"],answer:1,exp:"Dr. B. R. Ambedkar is known as the Father of the Indian Constitution."},
+            {en:"25% of 240 equals?",hi:"240 का 25% कितना होगा?",options:["40","50","60","80"],answer:2,exp:"25% = 1/4, therefore 240 ÷ 4 = 60."},
+            {en:"Choose the synonym of Rapid.",hi:"Rapid का समानार्थी शब्द चुनिए।",options:["Slow","Fast","Weak","Late"],answer:1,exp:"Rapid means Fast."},
+            {en:"Find the next number: 3, 6, 12, 24, ?",hi:"अगली संख्या ज्ञात कीजिए: 3, 6, 12, 24, ?",options:["36","42","48","60"],answer:2,exp:"Each number is doubled. Therefore 24 × 2 = 48."}
+        ];
+        const questions = [];
+        for (let s=0; s<4; s++) {
+            for (let i=1; i<=25; i++) {
+                const base = sampleBank[(s+i)%sampleBank.length];
+                const qNum = s*25 + i;
+                questions.push({
+                    section:s,
+                    en:"Q"+qNum+". "+base.en,
+                    hi:"प्रश्न "+qNum+". "+base.hi,
+                    options:[...base.options],
+                    answer:base.answer,
+                    exp:base.exp
+                });
+            }
+        }
+
+        // State
+        let current = 0, language = "en";
+        const answers = new Array(TOTAL_QS).fill(null);
+        const review = new Array(TOTAL_QS).fill(false);
+        const visited = new Array(TOTAL_QS).fill(false);
+        let totalTimer = TOTAL_TIME, sectionTimer = SECTION_TIME;
+        let currentSection = 0, finished = false, timerInterval = null;
+
+        // DOM refs
+        const qText = document.getElementById("questionText");
+        const qNumber = document.getElementById("questionNumber");
+        const optionsBox = document.getElementById("options");
+        const palette = document.getElementById("palette");
+        const mobilePalette = document.getElementById("mobilePalette");
+        const progressFill = document.getElementById("progressFill");
+        const progressText = document.getElementById("progressText");
+        const attemptText = document.getElementById("attemptText");
+        const mainTimer = document.getElementById("mainTimer");
+        const sectionTimerText = document.getElementById("sectionTimer");
+        const sectionTimerRight = document.getElementById("sectionTimerRightDisplay");
+        const mobileSectionTimer = document.getElementById("mobileSectionTimerDisplay");
+        const englishBtn = document.getElementById("englishBtn");
+        const hindiBtn = document.getElementById("hindiBtn");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const reviewBtn = document.getElementById("reviewBtn");
+        const submitBtnRight = document.getElementById("submitBtnRight");
+        const submitBtnMobile = document.getElementById("submitBtnMobile");
+        const submitBtnMobilePanel = document.getElementById("submitBtnMobilePanel");
+
+        const mobileToggle = document.getElementById("mobilePaletteToggle");
+        const mobileOverlay = document.getElementById("mobilePaletteOverlay");
+        const mobilePanel = document.getElementById("mobilePalettePanel");
+        const closePaletteBtn = document.getElementById("closePaletteBtn");
+        const sectionTabs = document.querySelectorAll(".sectionTab");
+
+        // Mobile palette toggle
+        function toggleMobilePalette(show) {
+            if (show === undefined) { show = !mobilePanel.classList.contains("active"); }
+            if (show) {
+                mobilePanel.classList.add("active");
+                mobileOverlay.classList.add("active");
+                mobileToggle.classList.add("active");
+                mobileToggle.textContent = "✕";
+            } else {
+                mobilePanel.classList.remove("active");
+                mobileOverlay.classList.remove("active");
+                mobileToggle.classList.remove("active");
+                mobileToggle.textContent = "📋";
+            }
+        }
+        mobileToggle.onclick = (e) => { e.stopPropagation(); toggleMobilePalette(); };
+        mobileOverlay.onclick = () => toggleMobilePalette(false);
+        closePaletteBtn.onclick = () => toggleMobilePalette(false);
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") toggleMobilePalette(false); });
+
+        // Render
+        function renderQuestion() {
+            visited[current] = true;
+            const q = questions[current];
+            const isEnglish = language === "en";
+            qNumber.innerHTML = "Question " + (current+1);
+            qText.innerHTML = isEnglish ? q.en : q.hi;
+            optionsBox.innerHTML = "";
+            const letters = ["A","B","C","D"];
+            q.options.forEach((text,idx) => {
+                const div = document.createElement("div");
+                div.className = "option";
+                if (answers[current] === idx) div.classList.add("selected");
+                div.innerHTML = '<div class="letter">'+letters[idx]+'</div><div>'+text+'</div>';
+                div.onclick = () => { answers[current] = idx; renderQuestion(); if (window.innerWidth <= 768) toggleMobilePalette(false); };
+                optionsBox.appendChild(div);
+            });
+            updateProgress();
+            updatePalette();
+            updateTabs();
+        }
+
+        function updateProgress() {
+            progressText.innerHTML = "Q" + (current+1) + " / 100";
+            const attempted = answers.filter(a => a !== null).length;
+            attemptText.innerHTML = "Attempted " + attempted;
+            progressFill.style.width = ((current+1)/100)*100 + "%";
+        }
+
+        function updateTabs() {
+            sectionTabs.forEach((btn,idx) => btn.classList.toggle("active", idx === currentSection));
+        }
+
+        function updatePalette() {
+            palette.innerHTML = "";
+            mobilePalette.innerHTML = "";
+            const start = currentSection * 25;
+            const end = start + 25;
+            for (let i = start; i < end; i++) {
+                const btn = document.createElement("button");
+                const btnM = document.createElement("button");
+                const label = i+1;
+                btn.textContent = label;
+                btnM.textContent = label;
+                if (i === current) { btn.classList.add("current"); btnM.classList.add("current"); }
+                const isAnswered = answers[i] !== null;
+                const isReview = review[i];
+                if (isAnswered && isReview) {
+                    btn.classList.add("answeredReview");
+                    btnM.classList.add("answeredReview");
+                } else if (isReview) {
+                    btn.classList.add("review");
+                    btnM.classList.add("review");
+                } else if (isAnswered) {
+                    btn.classList.add("answered");
+                    btnM.classList.add("answered");
+                } else {
+                    btn.classList.add("notVisited");
+                    btnM.classList.add("notVisited");
+                }
+                const clickHandler = () => {
+                    const targetSection = Math.floor(i/25);
+                    if (targetSection === currentSection) {
+                        current = i;
+                        renderQuestion();
+                        if (window.innerWidth <= 768) toggleMobilePalette(false);
+                    } else {
+                        currentSection = targetSection;
+                        sectionTimer = SECTION_TIME;
+                        current = i;
+                        renderQuestion();
+                        if (window.innerWidth <= 768) toggleMobilePalette(false);
+                    }
+                };
+                btn.onclick = clickHandler;
+                btnM.onclick = clickHandler;
+                palette.appendChild(btn);
+                mobilePalette.appendChild(btnM);
+            }
+        }
+
+        // Navigation
+        function nextQuestion() {
+            if (current === TOTAL_QS-1) { finishMock(); return; }
+            current++;
+            const newSection = Math.floor(current/25);
+            if (newSection !== currentSection) { currentSection = newSection; sectionTimer = SECTION_TIME; }
+            renderQuestion();
+        }
+        function prevQuestion() {
+            if (current === 0) return;
+            current--;
+            currentSection = Math.floor(current/25);
+            renderQuestion();
+        }
+
+        // Section tabs
+        sectionTabs.forEach((tab,idx) => {
+            tab.onclick = () => {
+                if (idx !== currentSection) { currentSection = idx; sectionTimer = SECTION_TIME; }
+                current = idx * 25;
+                renderQuestion();
+                if (window.innerWidth <= 768) toggleMobilePalette(false);
+            };
+        });
+
+        // Buttons
+        prevBtn.onclick = prevQuestion;
+        nextBtn.onclick = nextQuestion;
+        clearBtn.onclick = () => { answers[current] = null; renderQuestion(); };
+        reviewBtn.onclick = () => { review[current] = !review[current]; updatePalette(); };
+
+        function handleSubmit() { if (confirm("Submit Mock Test?")) finishMock(); }
+        submitBtnRight.onclick = handleSubmit;
+        submitBtnMobile.onclick = handleSubmit;
+        submitBtnMobilePanel.onclick = handleSubmit;
+
+        // Language
+        englishBtn.onclick = () => { language="en"; englishBtn.classList.add("active"); hindiBtn.classList.remove("active"); renderQuestion(); };
+        hindiBtn.onclick = () => { language="hi"; hindiBtn.classList.add("active"); englishBtn.classList.remove("active"); renderQuestion(); };
+
+        // Keyboard
+        document.addEventListener("keydown", (e) => {
+            if (e.key >= "1" && e.key <= "4") { const idx = parseInt(e.key)-1; if (idx < questions[current].options.length) { answers[current]=idx; renderQuestion(); } }
+            if (e.key.toLowerCase() === "n") nextQuestion();
+            if (e.key.toLowerCase() === "p") prevQuestion();
+            if (e.key === "Enter") { if (!finished) handleSubmit(); }
+        });
+
+        // Timer
+        function format(sec) { const m=Math.floor(sec/60); const s=sec%60; return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0"); }
+        function autoNextSection() {
+            if (currentSection === 3) { finishMock(); return; }
+            currentSection++;
+            sectionTimer = SECTION_TIME;
+            current = currentSection * 25;
+            renderQuestion();
+            document.querySelector(".questionBody").scrollTop = 0;
+        }
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (finished) return;
+                totalTimer--;
+                sectionTimer--;
+                mainTimer.innerHTML = format(totalTimer);
+                sectionTimerText.innerHTML = SECTION_NAMES[currentSection].substring(0,8) + " • " + format(sectionTimer);
+                // Update right panel section timer
+                const secStr = format(sectionTimer);
+                if (sectionTimerRight) sectionTimerRight.textContent = secStr;
+                if (mobileSectionTimer) mobileSectionTimer.textContent = secStr;
+                if (totalTimer <= 300) mainTimer.style.color = "#ffd43b";
+                if (totalTimer <= 60) mainTimer.style.color = "#ff6666";
+                if (sectionTimer <= 0) autoNextSection();
+                if (totalTimer <= 0) finishMock();
+            }, 1000);
+        }
+
+        // Finish
+        function finishMock() {
+            if (finished) return;
+            finished = true;
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById("examContainer").style.display = "none";
+            document.getElementById("resultScreen").style.display = "block";
+            mobileToggle.style.display = "none";
+
+            let correct=0, wrong=0, skipped=0;
+            questions.forEach((q,i) => {
+                if (answers[i] === null) skipped++;
+                else if (answers[i] === q.answer) correct++;
+                else wrong++;
+            });
+            const score = correct*2 - wrong*0.5;
+            document.getElementById("finalScore").innerHTML = score.toFixed(1) + " / 200";
+            document.getElementById("correctCount").innerHTML = correct;
+            document.getElementById("wrongCount").innerHTML = wrong;
+            document.getElementById("skipCount").innerHTML = skipped;
+            const accuracy = (correct+wrong === 0) ? 0 : Math.round(correct/(correct+wrong)*100);
+            document.getElementById("accuracy").innerHTML = accuracy + "%";
+            document.getElementById("perfectAttempt").innerHTML = correct;
+            document.getElementById("wastedAttempt").innerHTML = wrong;
+            document.getElementById("overtimeAttempt").innerHTML = 0;
+            document.getElementById("confusedAttempt").innerHTML = skipped;
+            document.getElementById("efficiencyScore").innerHTML = accuracy;
+            document.getElementById("greenBar").style.width = correct + "%";
+            document.getElementById("redBar").style.width = wrong + "%";
+            document.getElementById("orangeBar").style.width = "0%";
+            document.getElementById("grayBar").style.width = skipped + "%";
+            buildSubjectTable();
+            buildExplanations();
+        }
+
+        function buildSubjectTable() {
+            const table = document.getElementById("subjectTable");
+            while (table.rows.length > 1) table.deleteRow(1);
+            for (let s=0; s<4; s++) {
+                let c=0,w=0,sk=0;
+                for (let i=s*25; i<s*25+25; i++) {
+                    if (answers[i] === null) sk++;
+                    else if (answers[i] === questions[i].answer) c++;
+                    else w++;
+                }
+                const row = table.insertRow();
+                row.innerHTML = '<td style="padding:10px;">'+SECTION_NAMES[s]+'</td><td align=center>'+c+'</td><td align=center>'+w+'</td><td align=center>'+sk+'</td>';
+            }
+        }
+
+        function buildExplanations() {
+            const container = document.getElementById("reviewContainer");
+            container.innerHTML = "";
+            questions.forEach((q,idx) => {
+                const ans = answers[idx];
+                const isCorrect = ans === q.answer;
+                const ansText = (ans === null) ? "Not Attempted" : q.options[ans];
+                const correctText = q.options[q.answer];
+                const cls = (ans === null) ? "" : (isCorrect ? "correct" : "wrong");
+                container.innerHTML += `
+                    <div class="reviewQuestion">
+                        <h3>Question ${idx+1}</h3>
+                        <p><b>${q.en}</b></p>
+                        <p style="font-size:13px;color:#555;">${q.hi}</p>
+                        <p class="${cls}">Your Answer: ${ansText}</p>
+                        <p class="correct">Correct Answer: ${correctText}</p>
+                        <p><b>Explanation:</b> ${q.exp}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Mobile submit visibility
+        function handleMobileSubmitVisibility() {
+            const isMobile = window.innerWidth <= 768;
+            const mobileBtn = document.getElementById("submitBtnMobile");
+            if (mobileBtn) mobileBtn.style.display = isMobile ? "flex" : "none";
+        }
+
+        // Start
+        renderQuestion();
+        startTimer();
+        handleMobileSubmitVisibility();
+        window.addEventListener("resize", handleMobileSubmitVisibility);
+
+        console.log("✅ SSC MOCK loaded — section timer added on right panel.");
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,3214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>SSC Biology Master Test Series</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --primary:#16a34a;
+    --primary-dark:#15803d;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e4e7ec;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#f59e0b;
+    --shadow:0 8px 30px rgba(15,23,42,.08);
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+header{
+    background:#111827;
+    color:white;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 4px 15px rgba(0,0,0,.15);
+}
+
+.navbar{
+    max-width:1250px;
+    margin:auto;
+    min-height:72px;
+    padding:10px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:46px;
+    height:46px;
+    border-radius:12px;
+    background:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:900;
+    color:white;
+}
+
+.brand-title{
+    font-size:20px;
+    font-weight:800;
+}
+
+.brand-sub{
+    color:#cbd5e1;
+    font-size:12px;
+    margin-top:2px;
+}
+
+.language-box{
+    display:flex;
+    gap:6px;
+}
+
+.language-box button{
+    border:1px solid #475569;
+    background:#1e293b;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.language-box button.active{
+    background:var(--primary);
+    border-color:var(--primary);
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:25px 18px 50px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#111827,#1a3a2a);
+    color:white;
+    border-radius:20px;
+    padding:35px;
+    margin-bottom:28px;
+    box-shadow:var(--shadow);
+}
+
+.hero h1{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    max-width:800px;
+    color:#dbe4ef;
+    font-size:15px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-top:25px;
+}
+
+.stat{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:14px;
+    padding:16px;
+}
+
+.stat strong{
+    display:block;
+    font-size:23px;
+    color:#fff;
+}
+
+.stat span{
+    color:#cbd5e1;
+    font-size:12px;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin:10px 0 18px;
+}
+
+.section-title h2{
+    font-size:25px;
+}
+
+.section-title p{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:4px;
+}
+
+.search-box{
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px 17px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:white;
+    font-size:15px;
+    outline:none;
+}
+
+.search-box input:focus{
+    border-color:var(--primary);
+}
+
+.topic-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.topic-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 4px 18px rgba(15,23,42,.05);
+    transition:.2s;
+}
+
+.topic-card:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow);
+    border-color:#86efac;
+}
+
+.topic-number{
+    color:var(--primary);
+    font-weight:900;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.topic-card h3{
+    font-size:17px;
+    line-height:1.35;
+    min-height:46px;
+}
+
+.topic-info{
+    color:var(--muted);
+    font-size:12px;
+    margin:10px 0 14px;
+}
+
+.set-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:7px;
+}
+
+.set-btn{
+    border:1px solid #86efac;
+    background:#f0fdf4;
+    color:#15803d;
+    padding:9px 5px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.set-btn:hover{
+    background:var(--primary);
+    color:white;
+    border-color:var(--primary);
+}
+
+/* TEST */
+
+#testPage,
+#resultPage{
+    display:none;
+}
+
+.test-header{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px 20px;
+    margin-bottom:18px;
+    box-shadow:var(--shadow);
+}
+
+.breadcrumb{
+    color:var(--primary);
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    margin-bottom:7px;
+}
+
+.test-title-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.test-title{
+    font-size:24px;
+}
+
+.timer{
+    min-width:95px;
+    text-align:center;
+    background:#111827;
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+    font-weight:900;
+    font-size:18px;
+}
+
+.timer.warning{
+    background:var(--danger);
+}
+
+.progress-track{
+    height:7px;
+    background:#edf0f4;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    transition:.2s;
+}
+
+.test-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 300px;
+    gap:18px;
+}
+
+.question-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:25px;
+    box-shadow:var(--shadow);
+}
+
+.question-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+#answerStatus{
+    font-weight:700;
+}
+
+.question{
+    font-size:19px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.question-hi{
+    color:#475467;
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:25px;
+}
+
+.option{
+    width:100%;
+    text-align:left;
+    background:white;
+    border:1px solid var(--border);
+    padding:14px 15px;
+    border-radius:11px;
+    margin-bottom:10px;
+    font-size:15px;
+    transition:.15s;
+}
+
+.option:hover{
+    border-color:#86efac;
+    background:#f0fdf4;
+}
+
+.option.selected{
+    background:#f0fdf4;
+    border:2px solid var(--primary);
+    color:#14532d;
+}
+
+.option-letter{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    background:#f2f4f7;
+    font-weight:900;
+    margin-right:10px;
+}
+
+.option.selected .option-letter{
+    background:var(--primary);
+    color:white;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:22px;
+    flex-wrap:wrap;
+}
+
+.nav-btn{
+    border:0;
+    padding:11px 17px;
+    border-radius:9px;
+    font-weight:800;
+    background:#eef2f6;
+    color:#344054;
+}
+
+.nav-btn:hover{
+    background:#dfe5ec;
+}
+
+.primary-btn{
+    background:var(--primary);
+    color:white;
+}
+
+.primary-btn:hover{
+    background:var(--primary-dark);
+}
+
+.mark-btn{
+    background:#f0fdf4;
+    color:#15803d;
+    border:1px solid #86efac;
+}
+
+.exit-btn{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.palette-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:var(--shadow);
+    height:max-content;
+    position:sticky;
+    top:95px;
+}
+
+.palette-card h3{
+    font-size:16px;
+    margin-bottom:13px;
+}
+
+.palette-info{
+    display:flex;
+    gap:12px;
+    font-size:11px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+}
+
+.palette-info span{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    display:inline-block;
+}
+
+.dot.answered{
+    background:var(--success);
+}
+
+.dot.unanswered{
+    background:#e5e7eb;
+}
+
+.dot.marked{
+    background:var(--warning);
+}
+
+.palette{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:7px;
+}
+
+.palette button{
+    height:36px;
+    border:1px solid #dfe3e8;
+    border-radius:7px;
+    background:#f8fafc;
+    font-weight:800;
+    font-size:12px;
+}
+
+.palette button.answered{
+    background:#dcfce7;
+    border-color:#86efac;
+    color:#166534;
+}
+
+.palette button.marked{
+    box-shadow:inset 0 0 0 2px var(--warning);
+}
+
+.palette button.current{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:white;
+}
+
+/* RESULT */
+
+.result-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:var(--shadow);
+}
+
+.result-card h2{
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+.result-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:28px;
+}
+
+.result-stat{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:17px;
+}
+
+.result-stat strong{
+    display:block;
+    font-size:24px;
+}
+
+.result-stat span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.review{
+    margin-top:20px;
+}
+
+.review-item{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:14px;
+}
+
+.review-question{
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.review-hi{
+    color:#667085;
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+.review-answer{
+    font-size:14px;
+    margin-top:6px;
+}
+
+.correct-text{
+    color:var(--success);
+    font-weight:700;
+}
+
+.wrong-text{
+    color:var(--danger);
+    font-weight:700;
+}
+
+.explanation{
+    background:#f8fafc;
+    border-left:4px solid var(--primary);
+    padding:12px;
+    margin-top:12px;
+    font-size:14px;
+}
+
+.result-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+    .topic-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .test-layout{
+        grid-template-columns:1fr;
+    }
+
+    .palette-card{
+        position:static;
+    }
+}
+
+@media(max-width:650px){
+    .navbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .language-box{
+        width:100%;
+    }
+
+    .language-box button{
+        flex:1;
+    }
+
+    .hero{
+        padding:24px;
+    }
+
+    .hero h1{
+        font-size:26px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .topic-grid{
+        grid-template-columns:1fr;
+    }
+
+    .test-title-row{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .timer{
+        width:100%;
+    }
+
+    .question-card{
+        padding:18px;
+    }
+
+    .result-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+
+        <div class="brand">
+            <div class="logo">🧬</div>
+
+            <div>
+                <div class="brand-title">SSC Biology Master</div>
+                <div class="brand-sub">
+                    CGL • CHSL • CPO • GD • MTS
+                </div>
+            </div>
+        </div>
+
+        <div class="language-box">
+            <button id="englishBtn" onclick="changeLanguage('en')">
+                English
+            </button>
+
+            <button id="hindiBtn" onclick="changeLanguage('hi')">
+                हिन्दी
+            </button>
+
+            <button id="bothBtn" onclick="changeLanguage('both')">
+                H / E
+            </button>
+        </div>
+
+    </div>
+</header>
+
+<main class="container">
+
+<!-- ================= HOME ================= -->
+
+<section id="homePage">
+
+    <div class="hero">
+
+        <h1 id="heroTitle">
+            Biology Master Test Series
+        </h1>
+
+        <p id="heroDescription">
+            Master SSC Biology through topic-wise sectional tests.
+            Questions are based on SSC PYQ-style and most-repeated concepts
+            with balanced A/B/C/D answer distribution.
+        </p>
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong>6</strong>
+                <span>Biology Topics</span>
+            </div>
+
+            <div class="stat">
+                <strong>24</strong>
+                <span>Test Sets</span>
+            </div>
+
+            <div class="stat">
+                <strong>600</strong>
+                <span>Questions</span>
+            </div>
+
+            <div class="stat">
+                <strong>15 Min</strong>
+                <span>Sectional Timer</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="section-title">
+
+        <div>
+            <h2 id="chooseTitle">
+                Choose a Biology Topic
+            </h2>
+
+            <p id="chooseSubtitle">
+                Each topic contains 4 sectional sets × 25 questions
+            </p>
+        </div>
+
+    </div>
+
+    <div class="search-box">
+        <input
+            id="topicSearch"
+            type="text"
+            placeholder="Search Biology topic..."
+            oninput="searchTopics(this.value)"
+        >
+    </div>
+
+    <div class="topic-grid" id="topicGrid"></div>
+
+</section>
+
+
+<!-- ================= TEST ================= -->
+
+<section id="testPage">
+
+    <div class="test-header">
+
+        <div class="breadcrumb" id="breadcrumb">
+            BIOLOGY • SET 1
+        </div>
+
+        <div class="test-title-row">
+
+            <h2 class="test-title" id="testTitle">
+                Biology — Set 1
+            </h2>
+
+            <div class="timer" id="timer">
+                15:00
+            </div>
+
+        </div>
+
+        <div class="progress-track">
+            <div class="progress" id="progress"></div>
+        </div>
+
+    </div>
+
+
+    <div class="test-layout">
+
+        <div class="question-card">
+
+            <div class="question-top">
+
+                <span id="questionNumber">
+                    Question 1 of 25
+                </span>
+
+                <span id="answerStatus">
+                    Not Answered
+                </span>
+
+            </div>
+
+            <div class="question" id="question"></div>
+
+            <div class="question-hi" id="questionHi"></div>
+
+            <div id="options"></div>
+
+            <div class="navigation">
+
+                <button
+                    class="nav-btn"
+                    id="previousBtn"
+                    onclick="previousQuestion()">
+                    ← Previous
+                </button>
+
+                <button
+                    class="nav-btn mark-btn"
+                    id="markBtn"
+                    onclick="markQuestion()">
+                    ☆ Mark
+                </button>
+
+                <button
+                    class="nav-btn primary-btn"
+                    id="nextBtn"
+                    onclick="nextQuestion()">
+                    Next →
+                </button>
+
+                <button
+                    class="nav-btn primary-btn"
+                    id="submitBtn"
+                    onclick="submitTest()"
+                    style="display:none;">
+                    Submit Test
+                </button>
+
+                <button
+                    class="nav-btn exit-btn"
+                    onclick="exitTest()">
+                    Exit Test
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <aside class="palette-card">
+
+            <h3 id="paletteTitle">
+                Question Palette
+            </h3>
+
+            <div class="palette-info">
+
+                <span>
+                    <i class="dot answered"></i>
+                    <span id="answeredLabel">Answered</span>
+                </span>
+
+                <span>
+                    <i class="dot unanswered"></i>
+                    <span id="notAnsweredLabel">Not Answered</span>
+                </span>
+
+                <span>
+                    <i class="dot marked"></i>
+                    Marked
+                </span>
+
+            </div>
+
+            <div class="palette" id="palette"></div>
+
+        </aside>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section id="resultPage">
+
+    <div class="result-card">
+
+        <h2 id="resultTitle">
+            Test Result
+        </h2>
+
+        <div class="result-stats">
+
+            <div class="result-stat">
+                <strong id="scoreValue">0/25</strong>
+                <span>Score</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="attemptedValue">0</strong>
+                <span id="attemptedLabel">Attempted</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="correctValue">0</strong>
+                <span id="correctLabel">Correct</span>
+            </div>
+
+            <div class="result-stat">
+                <strong id="accuracyValue">0%</strong>
+                <span id="accuracyLabel">Accuracy</span>
+            </div>
+
+        </div>
+
+        <h3 id="reviewTitle">
+            Detailed Explanation
+        </h3>
+
+        <p style="color:#667085;margin-top:5px;">
+            Correct answer + your answer + explanation
+        </p>
+
+        <div class="review" id="review"></div>
+
+        <div class="result-actions">
+
+            <button
+                class="nav-btn primary-btn"
+                onclick="retryTest()"
+                id="retryBtn">
+                ↻ Reattempt
+            </button>
+
+            <button
+                class="nav-btn primary-btn"
+                onclick="nextSet()"
+                id="nextSetBtn">
+                Next Set →
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="backToTopics()"
+                id="allTopicsBtn">
+                ← All Topics
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<script>
+
+/* ============================================================
+   BIOLOGY TOPICS
+============================================================ */
+
+const topics = [
+    "Cell Biology",
+    "Genetics",
+    "Human Anatomy & Physiology",
+    "Plant Physiology",
+    "Ecology & Environment",
+    "Microbiology & Diseases"
+];
+
+
+/* ============================================================
+   TRANSLATIONS
+============================================================ */
+
+const translations = {
+
+    en: {
+
+        choose:"Choose a Biology Topic",
+
+        subtitle:
+        "Each topic contains 4 sectional sets × 25 questions, built from SSC PYQ-style & most-repeated Biology concepts",
+
+        heroTitle:
+        "Biology Master Test Series",
+
+        heroDescription:
+        "Master SSC Biology through topic-wise sectional tests — PYQ-style & most-repeated concepts with balanced A/B/C/D answer distribution.",
+
+        previous:"← Previous",
+
+        next:"Next →",
+
+        mark:"☆ Mark",
+
+        marked:"★ Marked",
+
+        submit:"Submit Test",
+
+        exit:"Exit Test",
+
+        palette:"Question Palette",
+
+        answered:"Answered",
+
+        notAnswered:"Not Answered",
+
+        result:"Test Result",
+
+        attempted:"Attempted",
+
+        correct:"Correct",
+
+        wrong:"Wrong",
+
+        accuracy:"Accuracy",
+
+        retry:"↻ Reattempt",
+
+        allTopics:"← All Topics",
+
+        nextSet:"Next Set →",
+
+        explanation:"Explanation",
+
+        correctAnswer:"Correct Answer",
+
+        yourAnswer:"Your Answer",
+
+        skipped:"Not Attempted"
+
+    },
+
+    hi: {
+
+        choose:"Biology विषय चुनें",
+
+        subtitle:
+        "हर विषय में 4 sectional sets × 25 प्रश्न हैं, जो SSC PYQ-style और सबसे अधिक पूछे गए Biology concepts पर आधारित हैं",
+
+        heroTitle:
+        "Biology मास्टर टेस्ट सीरीज़",
+
+        heroDescription:
+        "Topic-wise sectional tests के माध्यम से SSC Biology की तैयारी करें — PYQ-style और सबसे अधिक पूछे गए concepts के साथ।",
+
+        previous:"← पिछला",
+
+        next:"अगला →",
+
+        mark:"☆ मार्क",
+
+        marked:"★ मार्क्ड",
+
+        submit:"टेस्ट सबमिट करें",
+
+        exit:"टेस्ट छोड़ें",
+
+        palette:"प्रश्न पैलेट",
+
+        answered:"उत्तर दिया",
+
+        notAnswered:"उत्तर नहीं दिया",
+
+        result:"टेस्ट परिणाम",
+
+        attempted:"प्रयास किए",
+
+        correct:"सही",
+
+        wrong:"गलत",
+
+        accuracy:"सटीकता",
+
+        retry:"↻ दोबारा दें",
+
+        allTopics:"← सभी विषय",
+
+        nextSet:"अगला सेट →",
+
+        explanation:"व्याख्या",
+
+        correctAnswer:"सही उत्तर",
+
+        yourAnswer:"आपका उत्तर",
+
+        skipped:"प्रयास नहीं किया"
+
+    }
+
+};
+
+
+/* ============================================================
+   QUESTION HELPER
+============================================================ */
+
+function Q(en, hi, opts, optsHi, answer, explEn, explHi){
+    return {
+        question: en,
+        questionHi: hi,
+        options: opts,
+        optionsHi: optsHi,
+        answer: answer,
+        explanation: explEn,
+        explanationHi: explHi
+    };
+}
+
+
+/* ============================================================
+   QUESTION BANK – 25+ QUESTIONS PER TOPIC
+============================================================ */
+
+const questionBank = {};
+
+
+/* ------------------------------------------------------------
+   TOPIC 1: Cell Biology
+------------------------------------------------------------ */
+
+questionBank["Cell Biology"] = [
+
+Q(
+    "Which organelle is known as the 'powerhouse of the cell'?",
+    "किस कोशिकांग को 'कोशिका का ऊर्जा गृह' कहा जाता है?",
+    ["Mitochondria", "Ribosome", "Golgi body", "Nucleus"],
+    ["माइटोकॉन्ड्रिया", "राइबोसोम", "गॉल्जीकाय", "केन्द्रक"],
+    0,
+    "Mitochondria produce ATP through cellular respiration, thus called powerhouse of the cell.",
+    "माइटोकॉन्ड्रिया कोशिकीय श्वसन द्वारा ATP का उत्पादन करता है, इसलिए इसे कोशिका का ऊर्जा गृह कहते हैं।"
+),
+
+Q(
+    "Which organelle contains the cell's genetic material?",
+    "किस कोशिकांग में कोशिका की आनुवांशिक सामग्री होती है?",
+    ["Nucleus", "Mitochondria", "Ribosome", "Golgi body"],
+    ["केन्द्रक", "माइटोकॉन्ड्रिया", "राइबोसोम", "गॉल्जीकाय"],
+    0,
+    "The nucleus contains DNA, which is the genetic material.",
+    "केन्द्रक में DNA होता है, जो आनुवांशिक सामग्री है।"
+),
+
+Q(
+    "Which cell organelle is responsible for protein synthesis?",
+    "प्रोटीन संश्लेषण के लिए कौन सा कोशिकांग जिम्मेदार है?",
+    ["Ribosome", "Mitochondria", "Golgi body", "Endoplasmic reticulum"],
+    ["राइबोसोम", "माइटोकॉन्ड्रिया", "गॉल्जीकाय", "एंडोप्लाज्मिक रेटिकुलम"],
+    0,
+    "Ribosomes are the sites of protein synthesis.",
+    "राइबोसोम प्रोटीन संश्लेषण के स्थल होते हैं।"
+),
+
+Q(
+    "What is the outermost layer of a plant cell?",
+    "पादप कोशिका की सबसे बाहरी परत क्या है?",
+    ["Cell wall", "Cell membrane", "Cytoplasm", "Nucleus"],
+    ["कोशिका भित्ति", "कोशिका झिल्ली", "कोशिकाद्रव्य", "केन्द्रक"],
+    0,
+    "The cell wall provides structural support and protection in plant cells.",
+    "कोशिका भित्ति पादप कोशिकाओं को संरचनात्मक सहारा और सुरक्षा प्रदान करती है।"
+),
+
+Q(
+    "Which organelle is involved in photosynthesis?",
+    "प्रकाश संश्लेषण में कौन सा कोशिकांग शामिल है?",
+    ["Chloroplast", "Mitochondria", "Ribosome", "Golgi body"],
+    ["क्लोरोप्लास्ट", "माइटोकॉन्ड्रिया", "राइबोसोम", "गॉल्जीकाय"],
+    0,
+    "Chloroplasts contain chlorophyll and are the site of photosynthesis.",
+    "क्लोरोप्लास्ट में क्लोरोफिल होता है और यह प्रकाश संश्लेषण का स्थल है।"
+),
+
+Q(
+    "Which organelle is called the 'suicidal bag' of the cell?",
+    "किस कोशिकांग को 'कोशिका की आत्मघाती थैली' कहा जाता है?",
+    ["Lysosome", "Peroxisome", "Vacuole", "Nucleus"],
+    ["लाइसोसोम", "पेरॉक्सीसोम", "रिक्तिका", "केन्द्रक"],
+    0,
+    "Lysosomes contain digestive enzymes and break down waste; they are called suicidal bags.",
+    "लाइसोसोम में पाचक एंजाइम होते हैं और ये अपशिष्ट को तोड़ते हैं; इन्हें आत्मघाती थैली कहते हैं।"
+),
+
+Q(
+    "Who discovered the cell?",
+    "कोशिका की खोज किसने की?",
+    ["Robert Hooke", "Antonie van Leeuwenhoek", "Rudolf Virchow", "Schleiden and Schwann"],
+    ["रॉबर्ट हूक", "एंटोनी वैन लीउवेनहॉक", "रुडोल्फ विरचो", "श्लाइडेन और श्वान"],
+    0,
+    "Robert Hooke discovered cells in 1665 using a microscope.",
+    "रॉबर्ट हूक ने 1665 में सूक्ष्मदर्शी से कोशिका की खोज की।"
+),
+
+Q(
+    "Which scientist coined the term 'cell'?",
+    "'कोशिका' शब्द किस वैज्ञानिक ने दिया?",
+    ["Robert Hooke", "Antonie van Leeuwenhoek", "Rudolf Virchow", "Schleiden"],
+    ["रॉबर्ट हूक", "एंटोनी वैन लीउवेनहॉक", "रुडोल्फ विरचो", "श्लाइडेन"],
+    0,
+    "Robert Hooke first coined the term 'cell'.",
+    "रॉबर्ट हूक ने सबसे पहले 'कोशिका' शब्द गढ़ा।"
+),
+
+Q(
+    "The cell theory states that:",
+    "कोशिका सिद्धांत बताता है कि:",
+    ["All cells arise from pre-existing cells", "Cells are the basic unit of life", "All organisms are made of cells", "All of the above"],
+    ["सभी कोशिकाएँ पूर्व-मौजूद कोशिकाओं से उत्पन्न होती हैं", "कोशिकाएँ जीवन की मूल इकाई हैं", "सभी जीव कोशिकाओं से बने हैं", "उपरोक्त सभी"],
+    3,
+    "The modern cell theory includes all three statements.",
+    "आधुनिक कोशिका सिद्धांत में ये तीनों कथन शामिल हैं।"
+),
+
+Q(
+    "Which organelle is responsible for intracellular digestion?",
+    "अंतराकोशिकीय पाचन के लिए कौन सा कोशिकांग जिम्मेदार है?",
+    ["Lysosome", "Mitochondria", "Golgi body", "ER"],
+    ["लाइसोसोम", "माइटोकॉन्ड्रिया", "गॉल्जीकाय", "ईआर"],
+    0,
+    "Lysosomes perform intracellular digestion.",
+    "लाइसोसोम अंतराकोशिकीय पाचन करते हैं।"
+),
+
+Q(
+    "What is the function of the endoplasmic reticulum?",
+    "एंडोप्लाज्मिक रेटिकुलम का कार्य क्या है?",
+    ["Protein transport and synthesis", "Energy production", "Photosynthesis", "Cell division"],
+    ["प्रोटीन परिवहन और संश्लेषण", "ऊर्जा उत्पादन", "प्रकाश संश्लेषण", "कोशिका विभाजन"],
+    0,
+    "ER is involved in protein transport and synthesis.",
+    "ईआर प्रोटीन परिवहन और संश्लेषण में शामिल है।"
+),
+
+Q(
+    "Which organelle is present only in animal cells?",
+    "कौन सा कोशिकांग केवल जंतु कोशिकाओं में पाया जाता है?",
+    ["Centrosome", "Chloroplast", "Cell wall", "Vacuole"],
+    ["सेंट्रोसोम", "क्लोरोप्लास्ट", "कोशिका भित्ति", "रिक्तिका"],
+    0,
+    "Centrosome is found only in animal cells.",
+    "सेंट्रोसोम केवल जंतु कोशिकाओं में पाया जाता है।"
+),
+
+Q(
+    "Which organelle is present only in plant cells?",
+    "कौन सा कोशिकांग केवल पादप कोशिकाओं में पाया जाता है?",
+    ["Chloroplast", "Centrosome", "Mitochondria", "Ribosome"],
+    ["क्लोरोप्लास्ट", "सेंट्रोसोम", "माइटोकॉन्ड्रिया", "राइबोसोम"],
+    0,
+    "Chloroplasts are found only in plant cells.",
+    "क्लोरोप्लास्ट केवल पादप कोशिकाओं में पाए जाते हैं।"
+),
+
+Q(
+    "Which organelle is called the 'protein factory'?",
+    "किस कोशिकांग को 'प्रोटीन कारखाना' कहा जाता है?",
+    ["Ribosome", "Mitochondria", "Golgi body", "Nucleus"],
+    ["राइबोसोम", "माइटोकॉन्ड्रिया", "गॉल्जीकाय", "केन्द्रक"],
+    0,
+    "Ribosomes are the sites of protein synthesis, hence protein factory.",
+    "राइबोसोम प्रोटीन संश्लेषण के स्थल हैं, इसलिए प्रोटीन कारखाना।"
+),
+
+Q(
+    "What is the function of the cell membrane?",
+    "कोशिका झिल्ली का कार्य क्या है?",
+    ["Selective permeability", "Protein synthesis", "Energy production", "Photosynthesis"],
+    ["चयनात्मक पारगम्यता", "प्रोटीन संश्लेषण", "ऊर्जा उत्पादन", "प्रकाश संश्लेषण"],
+    0,
+    "Cell membrane is selectively permeable, regulating entry and exit of substances.",
+    "कोशिका झिल्ली चयनात्मक पारगम्य होती है, जो पदार्थों के प्रवेश और निकास को नियंत्रित करती है।"
+),
+
+Q(
+    "Which scientist proposed the cell theory?",
+    "कोशिका सिद्धांत किस वैज्ञानिक ने प्रस्तावित किया?",
+    ["Schleiden and Schwann", "Robert Hooke", "Rudolf Virchow", "Antonie van Leeuwenhoek"],
+    ["श्लाइडेन और श्वान", "रॉबर्ट हूक", "रुडोल्फ विरचो", "एंटोनी वैन लीउवेनहॉक"],
+    0,
+    "Schleiden and Schwann proposed the cell theory in 1839.",
+    "श्लाइडेन और श्वान ने 1839 में कोशिका सिद्धांत प्रस्तावित किया।"
+),
+
+Q(
+    "What is the function of the Golgi body?",
+    "गॉल्जीकाय का कार्य क्या है?",
+    ["Package and transport proteins", "Produce energy", "Synthesize proteins", "Store genetic material"],
+    ["प्रोटीनों को पैकेज और परिवहन", "ऊर्जा उत्पादन", "प्रोटीन संश्लेषण", "आनुवांशिक सामग्री भंडारण"],
+    0,
+    "Golgi body modifies, packages, and transports proteins.",
+    "गॉल्जीकाय प्रोटीनों को संशोधित, पैकेज और परिवहन करता है।"
+),
+
+Q(
+    "Which organelle is responsible for lipid synthesis?",
+    "लिपिड संश्लेषण के लिए कौन सा कोशिकांग जिम्मेदार है?",
+    ["Smooth ER", "Rough ER", "Golgi body", "Mitochondria"],
+    ["चिकनी ईआर", "रूक्ष ईआर", "गॉल्जीकाय", "माइटोकॉन्ड्रिया"],
+    0,
+    "Smooth ER is responsible for lipid synthesis.",
+    "चिकनी ईआर लिपिड संश्लेषण के लिए जिम्मेदार है।"
+),
+
+Q(
+    "What is the function of the nucleolus?",
+    "न्यूक्लियोलस का कार्य क्या है?",
+    ["Ribosome synthesis", "Protein synthesis", "Lipid synthesis", "Photosynthesis"],
+    ["राइबोसोम संश्लेषण", "प्रोटीन संश्लेषण", "लिपिड संश्लेषण", "प्रकाश संश्लेषण"],
+    0,
+    "The nucleolus is involved in ribosome synthesis.",
+    "न्यूक्लियोलस राइबोसोम संश्लेषण में शामिल है।"
+),
+
+Q(
+    "Which cell organelle is called the 'brain of the cell'?",
+    "किस कोशिकांग को 'कोशिका का मस्तिष्क' कहा जाता है?",
+    ["Nucleus", "Mitochondria", "Golgi body", "ER"],
+    ["केन्द्रक", "माइटोकॉन्ड्रिया", "गॉल्जीकाय", "ईआर"],
+    0,
+    "The nucleus controls cell activities and contains DNA.",
+    "केन्द्रक कोशिका गतिविधियों को नियंत्रित करता है और इसमें DNA होता है।"
+),
+
+Q(
+    "Which organelle is responsible for detoxification in liver cells?",
+    "यकृत कोशिकाओं में विषहरण के लिए कौन सा कोशिकांग जिम्मेदार है?",
+    ["Smooth ER", "Rough ER", "Mitochondria", "Lysosome"],
+    ["चिकनी ईआर", "रूक्ष ईआर", "माइटोकॉन्ड्रिया", "लाइसोसोम"],
+    0,
+    "Smooth ER detoxifies drugs and poisons in liver cells.",
+    "चिकनी ईआर यकृत कोशिकाओं में दवाओं और विषों का विषहरण करती है।"
+),
+
+Q(
+    "What is the function of the vacuole?",
+    "रिक्तिका का कार्य क्या है?",
+    ["Storage and turgor maintenance", "Energy production", "Protein synthesis", "Cell division"],
+    ["भंडारण और दृढ़ता बनाए रखना", "ऊर्जा उत्पादन", "प्रोटीन संश्लेषण", "कोशिका विभाजन"],
+    0,
+    "Vacuoles store water, nutrients, and maintain turgor pressure.",
+    "रिक्तिकाएं पानी, पोषक तत्वों का भंडारण करती हैं और दृढ़ता दबाव बनाए रखती हैं।"
+),
+
+Q(
+    "Which organelle is responsible for cellular respiration?",
+    "कोशिकीय श्वसन के लिए कौन सा कोशिकांग जिम्मेदार है?",
+    ["Mitochondria", "Chloroplast", "Ribosome", "Golgi body"],
+    ["माइटोकॉन्ड्रिया", "क्लोरोप्लास्ट", "राइबोसोम", "गॉल्जीकाय"],
+    0,
+    "Mitochondria are the sites of cellular respiration.",
+    "माइटोकॉन्ड्रिया कोशिकीय श्वसन के स्थल हैं।"
+),
+
+Q(
+    "Which cell organelle is absent in prokaryotic cells?",
+    "कौन सा कोशिकांग प्रोकैरियोटिक कोशिकाओं में अनुपस्थित है?",
+    ["Nucleus", "Ribosome", "Cell membrane", "DNA"],
+    ["केन्द्रक", "राइबोसोम", "कोशिका झिल्ली", "DNA"],
+    0,
+    "Prokaryotic cells lack a true nucleus.",
+    "प्रोकैरियोटिक कोशिकाओं में वास्तविक केन्द्रक नहीं होता।"
+),
+
+Q(
+    "What is the function of the peroxisome?",
+    "पेरॉक्सीसोम का कार्य क्या है?",
+    ["Breakdown of fatty acids", "Protein synthesis", "Energy production", "Photosynthesis"],
+    ["फैटी एसिड का टूटना", "प्रोटीन संश्लेषण", "ऊर्जा उत्पादन", "प्रकाश संश्लेषण"],
+    0,
+    "Peroxisomes break down fatty acids and produce hydrogen peroxide.",
+    "पेरॉक्सीसोम फैटी एसिड को तोड़ते हैं और हाइड्रोजन पेरोक्साइड उत्पन्न करते हैं।"
+),
+
+Q(
+    "Which cell organelle is responsible for the synthesis of ATP?",
+    "ATP के संश्लेषण के लिए कौन सा कोशिकांग जिम्मेदार है?",
+    ["Mitochondria", "Chloroplast", "Ribosome", "Golgi body"],
+    ["माइटोकॉन्ड्रिया", "क्लोरोप्लास्ट", "राइबोसोम", "गॉल्जीकाय"],
+    0,
+    "Mitochondria produce ATP through oxidative phosphorylation.",
+    "माइटोकॉन्ड्रिया ऑक्सीडेटिव फास्फोरिलीकरण द्वारा ATP का उत्पादन करते हैं।"
+),
+
+Q(
+    "What is the main component of the cell wall in bacteria?",
+    "जीवाणुओं में कोशिका भित्ति का मुख्य घटक क्या है?",
+    ["Peptidoglycan", "Cellulose", "Chitin", "Lignin"],
+    ["पेप्टिडोग्लाइकन", "सेल्यूलोज", "काइटिन", "लिग्निन"],
+    0,
+    "Bacterial cell walls are made of peptidoglycan.",
+    "जीवाणु कोशिका भित्ति पेप्टिडोग्लाइकन से बनी होती है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 2: Genetics
+------------------------------------------------------------ */
+
+questionBank["Genetics"] = [
+
+Q(
+    "Who is known as the father of genetics?",
+    "आनुवांशिकी के जनक किसे कहा जाता है?",
+    ["Gregor Mendel", "Charles Darwin", "Francis Crick", "James Watson"],
+    ["ग्रेगर मेंडल", "चार्ल्स डार्विन", "फ्रांसिस क्रिक", "जेम्स वॉटसन"],
+    0,
+    "Gregor Mendel is the father of genetics for his work on pea plants.",
+    "ग्रेगर मेंडल को मटर के पौधों पर कार्य के लिए आनुवांशिकी का जनक कहा जाता है।"
+),
+
+Q(
+    "What is the chemical composition of a gene?",
+    "जीन की रासायनिक संरचना क्या है?",
+    ["DNA", "RNA", "Protein", "Lipid"],
+    ["DNA", "RNA", "प्रोटीन", "लिपिड"],
+    0,
+    "Genes are made of DNA (deoxyribonucleic acid).",
+    "जीन DNA (डीऑक्सीराइबोन्यूक्लिक अम्ल) से बने होते हैं।"
+),
+
+Q(
+    "What is a genotype?",
+    "जीनोटाइप क्या है?",
+    ["Genetic makeup of an organism", "Physical appearance of an organism", "Environmental influence", "Trait expression"],
+    ["किसी जीव का आनुवांशिक संरचना", "किसी जीव का शारीरिक दिखावट", "पर्यावरणीय प्रभाव", "लक्षण अभिव्यक्ति"],
+    0,
+    "Genotype is the genetic constitution of an organism.",
+    "जीनोटाइप किसी जीव की आनुवांशिक संरचना है।"
+),
+
+Q(
+    "What is a phenotype?",
+    "फेनोटाइप क्या है?",
+    ["Physical expression of genes", "Genetic makeup", "DNA sequence", "Chromosome number"],
+    ["जीनों की शारीरिक अभिव्यक्ति", "आनुवांशिक संरचना", "DNA अनुक्रम", "गुणसूत्र संख्या"],
+    0,
+    "Phenotype is the observable physical or biochemical characteristics.",
+    "फेनोटाइप दृश्यमान शारीरिक या जैवरासायनिक विशेषताएं हैं।"
+),
+
+Q(
+    "What is a dominant gene?",
+    "प्रभावी जीन क्या है?",
+    ["Gene that expresses even in heterozygous condition", "Gene that only expresses in homozygous condition", "Gene that never expresses", "Gene that is present on the Y chromosome"],
+    ["जीन जो विषमयुग्मजी अवस्था में भी अभिव्यक्त होता है", "जीन जो केवल समयुग्मजी अवस्था में अभिव्यक्त होता है", "जीन जो कभी अभिव्यक्त नहीं होता", "जीन जो Y गुणसूत्र पर स्थित होता है"],
+    0,
+    "A dominant gene expresses itself in both homozygous and heterozygous conditions.",
+    "प्रभावी जीन समयुग्मजी और विषमयुग्मजी दोनों स्थितियों में अभिव्यक्त होता है।"
+),
+
+Q(
+    "What is a recessive gene?",
+    "अप्रभावी जीन क्या है?",
+    ["Gene that expresses only in homozygous condition", "Gene that expresses in heterozygous condition", "Gene on the Y chromosome", "Gene that is always expressed"],
+    ["जीन जो केवल समयुग्मजी अवस्था में अभिव्यक्त होता है", "जीन जो विषमयुग्मजी अवस्था में अभिव्यक्त होता है", "Y गुणसूत्र पर जीन", "जीन जो हमेशा अभिव्यक्त होता है"],
+    0,
+    "A recessive gene is expressed only when both alleles are recessive.",
+    "अप्रभावी जीन तभी अभिव्यक्त होता है जब दोनों एलील अप्रभावी हों।"
+),
+
+Q(
+    "What is a chromosome?",
+    "गुणसूत्र क्या है?",
+    ["Thread-like structure of DNA and protein", "A type of protein", "A type of lipid", "A cell organelle"],
+    ["DNA और प्रोटीन की धागे जैसी संरचना", "एक प्रकार का प्रोटीन", "एक प्रकार का लिपिड", "एक कोशिकांग"],
+    0,
+    "Chromosomes are thread-like structures composed of DNA and proteins.",
+    "गुणसूत्र DNA और प्रोटीन से बनी धागे जैसी संरचनाएं हैं।"
+),
+
+Q(
+    "How many chromosomes does a human have?",
+    "मानव में कितने गुणसूत्र होते हैं?",
+    ["46", "48", "44", "50"],
+    ["46", "48", "44", "50"],
+    0,
+    "Humans have 46 chromosomes (23 pairs).",
+    "मानव में 46 गुणसूत्र (23 जोड़े) होते हैं।"
+),
+
+Q(
+    "What is DNA?",
+    "DNA क्या है?",
+    ["Deoxyribonucleic acid", "Ribonucleic acid", "Protein", "Carbohydrate"],
+    ["डीऑक्सीराइबोन्यूक्लिक अम्ल", "राइबोन्यूक्लिक अम्ल", "प्रोटीन", "कार्बोहाइड्रेट"],
+    0,
+    "DNA is deoxyribonucleic acid, the genetic material.",
+    "DNA डीऑक्सीराइबोन्यूक्लिक अम्ल है, जो आनुवांशिक सामग्री है।"
+),
+
+Q(
+    "What is RNA?",
+    "RNA क्या है?",
+    ["Ribonucleic acid", "Deoxyribonucleic acid", "Protein", "Carbohydrate"],
+    ["राइबोन्यूक्लिक अम्ल", "डीऑक्सीराइबोन्यूक्लिक अम्ल", "प्रोटीन", "कार्बोहाइड्रेट"],
+    0,
+    "RNA is ribonucleic acid, involved in protein synthesis.",
+    "RNA राइबोन्यूक्लिक अम्ल है, जो प्रोटीन संश्लेषण में शामिल है।"
+),
+
+Q(
+    "What is a mutation?",
+    "उत्परिवर्तन क्या है?",
+    ["Change in DNA sequence", "Change in protein structure", "Change in cell shape", "Change in tissue function"],
+    ["DNA अनुक्रम में परिवर्तन", "प्रोटीन संरचना में परिवर्तन", "कोशिका आकार में परिवर्तन", "ऊतक कार्य में परिवर्तन"],
+    0,
+    "Mutation is a permanent change in the nucleotide sequence of DNA.",
+    "उत्परिवर्तन DNA के न्यूक्लियोटाइड अनुक्रम में स्थायी परिवर्तन है।"
+),
+
+Q(
+    "What is a gene?",
+    "जीन क्या है?",
+    ["Segment of DNA that codes for a protein", "A chromosome", "A cell organelle", "A type of RNA"],
+    ["DNA का खंड जो प्रोटीन के लिए कोड करता है", "एक गुणसूत्र", "एक कोशिकांग", "एक प्रकार का RNA"],
+    0,
+    "A gene is a segment of DNA that codes for a specific protein.",
+    "जीन DNA का एक खंड है जो एक विशिष्ट प्रोटीन के लिए कोड करता है।"
+),
+
+Q(
+    "What is a haploid cell?",
+    "अगुणित कोशिका क्या है?",
+    ["Cell with half the chromosome number (n)", "Cell with full chromosome number (2n)", "Cell with no chromosomes", "Cell with three sets of chromosomes"],
+    ["कोशिका जिसमें आधी गुणसूत्र संख्या (n) होती है", "कोशिका जिसमें पूरी गुणसूत्र संख्या (2n) होती है", "कोशिका जिसमें कोई गुणसूत्र नहीं होते", "कोशिका जिसमें गुणसूत्रों के तीन सेट होते हैं"],
+    0,
+    "Haploid cells contain half the number of chromosomes (n).",
+    "अगुणित कोशिकाओं में आधी गुणसूत्र संख्या (n) होती है।"
+),
+
+Q(
+    "What is a diploid cell?",
+    "द्विगुणित कोशिका क्या है?",
+    ["Cell with full chromosome number (2n)", "Cell with half chromosome number (n)", "Cell with no chromosomes", "Cell with three sets"],
+    ["कोशिका जिसमें पूरी गुणसूत्र संख्या (2n) होती है", "कोशिका जिसमें आधी गुणसूत्र संख्या (n) होती है", "कोशिका जिसमें कोई गुणसूत्र नहीं होते", "कोशिका जिसमें तीन सेट होते हैं"],
+    0,
+    "Diploid cells have the full chromosome number (2n).",
+    "द्विगुणित कोशिकाओं में पूरी गुणसूत्र संख्या (2n) होती है।"
+),
+
+Q(
+    "What is a homozygous genotype?",
+    "समयुग्मजी जीनोटाइप क्या है?",
+    ["Both alleles are same", "Both alleles are different", "One allele is dominant", "One allele is recessive"],
+    ["दोनों एलील समान हैं", "दोनों एलील अलग हैं", "एक एलील प्रभावी है", "एक एलील अप्रभावी है"],
+    0,
+    "Homozygous means having identical alleles for a gene.",
+    "समयुग्मजी का अर्थ है किसी जीन के लिए समान एलील होना।"
+),
+
+Q(
+    "What is a heterozygous genotype?",
+    "विषमयुग्मजी जीनोटाइप क्या है?",
+    ["Both alleles are different", "Both alleles are same", "Both alleles are dominant", "Both alleles are recessive"],
+    ["दोनों एलील अलग हैं", "दोनों एलील समान हैं", "दोनों एलील प्रभावी हैं", "दोनों एलील अप्रभावी हैं"],
+    0,
+    "Heterozygous means having different alleles for a gene.",
+    "विषमयुग्मजी का अर्थ है किसी जीन के लिए अलग एलील होना।"
+),
+
+Q(
+    "What is the inheritance pattern of blood groups?",
+    "रक्त समूहों की वंशागति पैटर्न क्या है?",
+    ["Multiple alleles", "Incomplete dominance", "Codominance", "All of the above"],
+    ["बहु एलील", "अपूर्ण प्रभाविता", "सहप्रभाविता", "उपरोक्त सभी"],
+    3,
+    "Blood groups show multiple alleles, codominance, and dominance.",
+    "रक्त समूह बहु एलील, सहप्रभाविता और प्रभाविता दिखाते हैं।"
+),
+
+Q(
+    "Which disease is caused by a recessive gene?",
+    "कौन सी बीमारी अप्रभावी जीन के कारण होती है?",
+    ["Cystic fibrosis", "Huntington's disease", "Marfan syndrome", "Hemophilia"],
+    ["सिस्टिक फाइब्रोसिस", "हंटिंगटन रोग", "मार्फन सिंड्रोम", "हीमोफीलिया"],
+    0,
+    "Cystic fibrosis is caused by a recessive gene.",
+    "सिस्टिक फाइब्रोसिस अप्रभावी जीन के कारण होता है।"
+),
+
+Q(
+    "What is the genetic material of HIV?",
+    "HIV की आनुवांशिक सामग्री क्या है?",
+    ["RNA", "DNA", "Protein", "Lipid"],
+    ["RNA", "DNA", "प्रोटीन", "लिपिड"],
+    0,
+    "HIV has RNA as its genetic material.",
+    "HIV में RNA आनुवांशिक सामग्री होती है।"
+),
+
+Q(
+    "Who discovered the structure of DNA?",
+    "DNA की संरचना किसने खोजी?",
+    ["Watson and Crick", "Mendel", "Darwin", "Hooke"],
+    ["वॉटसन और क्रिक", "मेंडल", "डार्विन", "हूक"],
+    0,
+    "Watson and Crick proposed the double helix structure of DNA in 1953.",
+    "वॉटसन और क्रिक ने 1953 में DNA की दोहरी कुंडली संरचना प्रस्तावित की।"
+),
+
+Q(
+    "What is the function of tRNA?",
+    "tRNA का कार्य क्या है?",
+    ["Transfer amino acids during protein synthesis", "Store genetic information", "Carry genetic information from DNA to ribosome", "Make up ribosomes"],
+    ["प्रोटीन संश्लेषण के दौरान अमीनो एसिड स्थानांतरित करना", "आनुवांशिक जानकारी संग्रहीत करना", "DNA से राइबोसोम तक आनुवांशिक जानकारी पहुँचाना", "राइबोसोम बनाना"],
+    0,
+    "tRNA transfers specific amino acids to the ribosome during translation.",
+    "tRNA अनुवाद के दौरान राइबोसोम में विशिष्ट अमीनो एसिड स्थानांतरित करता है।"
+),
+
+Q(
+    "What is the function of rRNA?",
+    "rRNA का कार्य क्या है?",
+    ["Make up ribosomes", "Transfer amino acids", "Carry genetic code", "Store genetic information"],
+    ["राइबोसोम बनाना", "अमीनो एसिड स्थानांतरित करना", "आनुवांशिक कोड ले जाना", "आनुवांशिक जानकारी संग्रहीत करना"],
+    0,
+    "rRNA is a structural component of ribosomes.",
+    "rRNA राइबोसोम का एक संरचनात्मक घटक है।"
+),
+
+Q(
+    "What is the role of messenger RNA (mRNA)?",
+    "mRNA की क्या भूमिका है?",
+    ["Carries genetic code from DNA to ribosome", "Transfers amino acids", "Forms ribosomes", "Stores genetic material"],
+    ["DNA से राइबोसोम तक आनुवांशिक कोड पहुँचाता है", "अमीनो एसिड स्थानांतरित करता है", "राइबोसोम बनाता है", "आनुवांशिक सामग्री संग्रहीत करता है"],
+    0,
+    "mRNA carries the genetic code from DNA to the ribosome for protein synthesis.",
+    "mRNA प्रोटीन संश्लेषण के लिए DNA से राइबोसोम तक आनुवांशिक कोड ले जाता है।"
+),
+
+Q(
+    "What is a genome?",
+    "जीनोम क्या है?",
+    ["Complete set of DNA in an organism", "A single gene", "A chromosome", "A protein"],
+    ["किसी जीव का संपूर्ण DNA सेट", "एक एकल जीन", "एक गुणसूत्र", "एक प्रोटीन"],
+    0,
+    "A genome is the complete set of genetic material in an organism.",
+    "जीनोम किसी जीव में आनुवांशिक सामग्री का संपूर्ण सेट है।"
+),
+
+Q(
+    "What is a genetic disorder?",
+    "आनुवांशिक विकार क्या है?",
+    ["Disease caused by changes in DNA", "Disease caused by bacteria", "Disease caused by virus", "Disease caused by diet"],
+    ["DNA में परिवर्तन के कारण होने वाला रोग", "जीवाणु के कारण होने वाला रोग", "वायरस के कारण होने वाला रोग", "आहार के कारण होने वाला रोग"],
+    0,
+    "Genetic disorders are caused by mutations or alterations in DNA.",
+    "आनुवांशिक विकार DNA में उत्परिवर्तन या परिवर्तन के कारण होते हैं।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 3: Human Anatomy & Physiology
+------------------------------------------------------------ */
+
+questionBank["Human Anatomy & Physiology"] = [
+
+Q(
+    "What is the largest organ in the human body?",
+    "मानव शरीर का सबसे बड़ा अंग कौन सा है?",
+    ["Skin", "Liver", "Brain", "Heart"],
+    ["त्वचा", "यकृत", "मस्तिष्क", "हृदय"],
+    0,
+    "The skin is the largest organ of the human body.",
+    "त्वचा मानव शरीर का सबसे बड़ा अंग है।"
+),
+
+Q(
+    "What is the smallest bone in the human body?",
+    "मानव शरीर की सबसे छोटी हड्डी कौन सी है?",
+    ["Stapes", "Malleus", "Incus", "Femur"],
+    ["स्टेपीज", "मैलियस", "इन्कस", "फीमर"],
+    0,
+    "The stapes in the ear is the smallest bone.",
+    "कान में स्टेपीज सबसे छोटी हड्डी है।"
+),
+
+Q(
+    "What is the largest bone in the human body?",
+    "मानव शरीर की सबसे बड़ी हड्डी कौन सी है?",
+    ["Femur", "Tibia", "Humerus", "Radius"],
+    ["फीमर", "टिबिया", "ह्युमरस", "रेडियस"],
+    0,
+    "The femur is the largest bone.",
+    "फीमर सबसे बड़ी हड्डी है।"
+),
+
+Q(
+    "What is the normal human body temperature?",
+    "मानव शरीर का सामान्य तापमान क्या है?",
+    ["37°C", "36°C", "38°C", "39°C"],
+    ["37°C", "36°C", "38°C", "39°C"],
+    0,
+    "Normal body temperature is about 37°C.",
+    "सामान्य शरीर का तापमान लगभग 37°C होता है।"
+),
+
+Q(
+    "Which blood group is the universal donor?",
+    "सार्वभौमिक दाता रक्त समूह कौन सा है?",
+    ["O negative", "O positive", "AB positive", "AB negative"],
+    ["O नेगेटिव", "O पॉजिटिव", "AB पॉजिटिव", "AB नेगेटिव"],
+    0,
+    "O negative blood can be given to any patient.",
+    "O नेगेटिव रक्त किसी भी रोगी को दिया जा सकता है।"
+),
+
+Q(
+    "Which blood group is the universal recipient?",
+    "सार्वभौमिक ग्राही रक्त समूह कौन सा है?",
+    ["AB positive", "O negative", "O positive", "AB negative"],
+    ["AB पॉजिटिव", "O नेगेटिव", "O पॉजिटिव", "AB नेगेटिव"],
+    0,
+    "AB positive individuals can receive blood from any group.",
+    "AB पॉजिटिव व्यक्ति किसी भी समूह से रक्त प्राप्त कर सकते हैं।"
+),
+
+Q(
+    "What is the function of red blood cells?",
+    "लाल रक्त कोशिकाओं का कार्य क्या है?",
+    ["Carry oxygen", "Fight infections", "Clot blood", "Produce antibodies"],
+    ["ऑक्सीजन ले जाना", "संक्रमण से लड़ना", "रक्त का थक्का बनाना", "एंटीबॉडी उत्पन्न करना"],
+    0,
+    "Red blood cells contain hemoglobin and transport oxygen.",
+    "लाल रक्त कोशिकाओं में हीमोग्लोबिन होता है और ये ऑक्सीजन पहुँचाती हैं।"
+),
+
+Q(
+    "Which organ produces insulin?",
+    "इंसुलिन कौन सा अंग उत्पन्न करता है?",
+    ["Pancreas", "Liver", "Kidney", "Spleen"],
+    ["अग्न्याशय", "यकृत", "गुर्दा", "प्लीहा"],
+    0,
+    "The pancreas produces the hormone insulin.",
+    "अग्न्याशय हार्मोन इंसुलिन का उत्पादन करता है।"
+),
+
+Q(
+    "What is the function of white blood cells?",
+    "श्वेत रक्त कोशिकाओं का कार्य क्या है?",
+    ["Fight infections", "Carry oxygen", "Clot blood", "Transport nutrients"],
+    ["संक्रमण से लड़ना", "ऑक्सीजन ले जाना", "रक्त का थक्का बनाना", "पोषक तत्वों का परिवहन"],
+    0,
+    "White blood cells are part of the immune system and fight pathogens.",
+    "श्वेत रक्त कोशिकाएं प्रतिरक्षा प्रणाली का हिस्सा हैं और रोगजनकों से लड़ती हैं।"
+),
+
+Q(
+    "Which part of the brain controls balance?",
+    "मस्तिष्क का कौन सा भाग संतुलन नियंत्रित करता है?",
+    ["Cerebellum", "Cerebrum", "Brainstem", "Hypothalamus"],
+    ["सेरीबैलम", "सेरीब्रम", "ब्रेनस्टेम", "हाइपोथैलेमस"],
+    0,
+    "The cerebellum is responsible for balance and coordination.",
+    "सेरीबैलम संतुलन और समन्वय के लिए जिम्मेदार है।"
+),
+
+Q(
+    "What is the function of the heart?",
+    "हृदय का कार्य क्या है?",
+    ["Pump blood", "Filter blood", "Produce hormones", "Store blood"],
+    ["रक्त पंप करना", "रक्त फ़िल्टर करना", "हार्मोन उत्पन्न करना", "रक्त संग्रहीत करना"],
+    0,
+    "The heart pumps blood throughout the body.",
+    "हृदय पूरे शरीर में रक्त पंप करता है।"
+),
+
+Q(
+    "How many chambers does the human heart have?",
+    "मानव हृदय में कितने कक्ष होते हैं?",
+    ["4", "3", "2", "5"],
+    ["4", "3", "2", "5"],
+    0,
+    "The human heart has four chambers: two atria and two ventricles.",
+    "मानव हृदय में चार कक्ष होते हैं: दो अलिंद और दो निलय।"
+),
+
+Q(
+    "Which organ is responsible for filtering blood?",
+    "रक्त फ़िल्टर करने के लिए कौन सा अंग जिम्मेदार है?",
+    ["Kidneys", "Liver", "Heart", "Lungs"],
+    ["गुर्दे", "यकृत", "हृदय", "फेफड़े"],
+    0,
+    "Kidneys filter blood and remove waste products.",
+    "गुर्दे रक्त को फ़िल्टर करते हैं और अपशिष्ट उत्पादों को हटाते हैं।"
+),
+
+Q(
+    "What is the function of the lungs?",
+    "फेफड़ों का कार्य क्या है?",
+    ["Gas exchange (oxygen and carbon dioxide)", "Filter blood", "Produce hormones", "Digest food"],
+    ["गैसों का आदान-प्रदान (ऑक्सीजन और कार्बन डाइऑक्साइड)", "रक्त फ़िल्टर करना", "हार्मोन उत्पन्न करना", "भोजन पचाना"],
+    0,
+    "Lungs perform gas exchange, taking in oxygen and releasing carbon dioxide.",
+    "फेफड़े गैसों का आदान-प्रदान करते हैं, ऑक्सीजन लेते हैं और कार्बन डाइऑक्साइड निकालते हैं।"
+),
+
+Q(
+    "What is the largest internal organ?",
+    "सबसे बड़ा आंतरिक अंग कौन सा है?",
+    ["Liver", "Brain", "Heart", "Lungs"],
+    ["यकृत", "मस्तिष्क", "हृदय", "फेफड़े"],
+    0,
+    "The liver is the largest internal organ.",
+    "यकृत सबसे बड़ा आंतरिक अंग है।"
+),
+
+Q(
+    "Which gland is called the master gland?",
+    "किस ग्रंथि को मास्टर ग्रंथि कहा जाता है?",
+    ["Pituitary gland", "Thyroid gland", "Adrenal gland", "Pancreas"],
+    ["पिट्यूटरी ग्रंथि", "थायरॉयड ग्रंथि", "अधिवृक्क ग्रंथि", "अग्न्याशय"],
+    0,
+    "The pituitary gland is called the master gland because it controls other glands.",
+    "पिट्यूटरी ग्रंथि को मास्टर ग्रंथि कहा जाता है क्योंकि यह अन्य ग्रंथियों को नियंत्रित करती है।"
+),
+
+Q(
+    "What is the function of the thyroid gland?",
+    "थायरॉयड ग्रंथि का कार्य क्या है?",
+    ["Regulate metabolism", "Control blood sugar", "Control blood pressure", "Store bile"],
+    ["चयापचय नियंत्रित करना", "रक्त शर्करा नियंत्रित करना", "रक्तचाप नियंत्रित करना", "पित्त संग्रहीत करना"],
+    0,
+    "The thyroid gland produces hormones that regulate metabolism.",
+    "थायरॉयड ग्रंथि हार्मोन उत्पन्न करती है जो चयापचय को नियंत्रित करते हैं।"
+),
+
+Q(
+    "Which vitamin is produced by the body on exposure to sunlight?",
+    "सूर्य के प्रकाश के संपर्क में आने पर शरीर में कौन सा विटामिन बनता है?",
+    ["Vitamin D", "Vitamin C", "Vitamin B12", "Vitamin A"],
+    ["विटामिन D", "विटामिन C", "विटामिन B12", "विटामिन A"],
+    0,
+    "Vitamin D is synthesized in the skin upon sunlight exposure.",
+    "सूर्य के प्रकाश में त्वचा में विटामिन D संश्लेषित होता है।"
+),
+
+Q(
+    "What is the function of the large intestine?",
+    "बड़ी आंत का कार्य क्या है?",
+    ["Absorb water and electrolytes", "Digest food", "Absorb nutrients", "Store bile"],
+    ["पानी और इलेक्ट्रोलाइट्स का अवशोषण", "भोजन पचाना", "पोषक तत्वों का अवशोषण", "पित्त संग्रहीत करना"],
+    0,
+    "The large intestine absorbs water and electrolytes from undigested food.",
+    "बड़ी आंत अपचित भोजन से पानी और इलेक्ट्रोलाइट्स अवशोषित करती है।"
+),
+
+Q(
+    "What is the function of the small intestine?",
+    "छोटी आंत का कार्य क्या है?",
+    ["Absorb nutrients", "Absorb water", "Store bile", "Produce hormones"],
+    ["पोषक तत्वों का अवशोषण", "पानी का अवशोषण", "पित्त संग्रहीत करना", "हार्मोन उत्पन्न करना"],
+    0,
+    "The small intestine is the main site for nutrient absorption.",
+    "छोटी आंत पोषक तत्वों के अवशोषण का मुख्य स्थल है।"
+),
+
+Q(
+    "Which part of the eye controls the amount of light?",
+    "आँख का कौन सा भाग प्रकाश की मात्रा को नियंत्रित करता है?",
+    ["Iris", "Cornea", "Lens", "Retina"],
+    ["परितारिका", "कॉर्निया", "लेंस", "रेटिना"],
+    0,
+    "The iris controls the size of the pupil and thus the amount of light entering the eye.",
+    "परितारिका पुतली के आकार को नियंत्रित करती है और इस प्रकार आँख में प्रवेश करने वाले प्रकाश की मात्रा को नियंत्रित करती है।"
+),
+
+Q(
+    "What is the function of the eardrum?",
+    "कर्णपटह (ईयरड्रम) का कार्य क्या है?",
+    ["Convert sound waves to vibrations", "Detect balance", "Transmit nerve impulses", "Filter sound"],
+    ["ध्वनि तरंगों को कंपन में परिवर्तित करना", "संतुलन का पता लगाना", "तंत्रिका आवेगों को संचारित करना", "ध्वनि फ़िल्टर करना"],
+    0,
+    "The eardrum vibrates in response to sound waves and transmits them to the middle ear.",
+    "कर्णपटह ध्वनि तरंगों के जवाब में कंपन करता है और उन्हें मध्य कान तक पहुँचाता है।"
+),
+
+Q(
+    "Which organ produces bile?",
+    "पित्त कौन सा अंग उत्पन्न करता है?",
+    ["Liver", "Gallbladder", "Pancreas", "Stomach"],
+    ["यकृत", "पित्ताशय", "अग्न्याशय", "आमाशय"],
+    0,
+    "The liver produces bile, which is stored in the gallbladder.",
+    "यकृत पित्त उत्पन्न करता है, जो पित्ताशय में संग्रहीत होता है।"
+),
+
+Q(
+    "What is the function of the kidney?",
+    "गुर्दे का कार्य क्या है?",
+    ["Filter blood and produce urine", "Produce bile", "Produce hormones", "Digest food"],
+    ["रक्त फ़िल्टर करना और मूत्र उत्पन्न करना", "पित्त उत्पन्न करना", "हार्मोन उत्पन्न करना", "भोजन पचाना"],
+    0,
+    "Kidneys filter blood to remove waste and excess water, producing urine.",
+    "गुर्दे रक्त को फ़िल्टर करते हैं, अपशिष्ट और अतिरिक्त पानी निकालते हैं, मूत्र उत्पन्न करते हैं।"
+),
+
+Q(
+    "What is the normal pH of human blood?",
+    "मानव रक्त का सामान्य pH क्या है?",
+    ["7.35-7.45", "7.0-7.1", "6.8-7.0", "7.5-8.0"],
+    ["7.35-7.45", "7.0-7.1", "6.8-7.0", "7.5-8.0"],
+    0,
+    "Normal blood pH is tightly regulated between 7.35 and 7.45.",
+    "सामान्य रक्त pH 7.35 और 7.45 के बीच कसकर नियंत्रित किया जाता है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 4: Plant Physiology
+------------------------------------------------------------ */
+
+questionBank["Plant Physiology"] = [
+
+Q(
+    "What is the process by which plants make their own food?",
+    "पौधे अपना भोजन किस प्रक्रिया द्वारा बनाते हैं?",
+    ["Photosynthesis", "Respiration", "Transpiration", "Fermentation"],
+    ["प्रकाश संश्लेषण", "श्वसन", "वाष्पोत्सर्जन", "किण्वन"],
+    0,
+    "Photosynthesis is the process by which plants use sunlight, water, and CO2 to produce glucose.",
+    "प्रकाश संश्लेषण वह प्रक्रिया है जिसमें पौधे सूर्य के प्रकाश, पानी और CO2 का उपयोग करके ग्लूकोज उत्पन्न करते हैं।"
+),
+
+Q(
+    "What is the green pigment in plants called?",
+    "पौधों में हरा रंगद्रव्य क्या कहलाता है?",
+    ["Chlorophyll", "Chloroplast", "Carotene", "Anthocyanin"],
+    ["क्लोरोफिल", "क्लोरोप्लास्ट", "कैरोटीन", "एंथोसायनिन"],
+    0,
+    "Chlorophyll is the green pigment responsible for absorbing light energy.",
+    "क्लोरोफिल हरा रंगद्रव्य है जो प्रकाश ऊर्जा को अवशोषित करने के लिए जिम्मेदार है।"
+),
+
+Q(
+    "What are the raw materials for photosynthesis?",
+    "प्रकाश संश्लेषण के लिए कच्ची सामग्री क्या हैं?",
+    ["Water and carbon dioxide", "Oxygen and glucose", "Sunlight and water", "Sunlight and oxygen"],
+    ["पानी और कार्बन डाइऑक्साइड", "ऑक्सीजन और ग्लूकोज", "सूर्य का प्रकाश और पानी", "सूर्य का प्रकाश और ऑक्सीजन"],
+    0,
+    "Photosynthesis uses water and carbon dioxide as raw materials.",
+    "प्रकाश संश्लेषण में पानी और कार्बन डाइऑक्साइड कच्ची सामग्री के रूप में उपयोग होते हैं।"
+),
+
+Q(
+    "What is the gas released during photosynthesis?",
+    "प्रकाश संश्लेषण के दौरान कौन सी गैस निकलती है?",
+    ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+    ["ऑक्सीजन", "कार्बन डाइऑक्साइड", "नाइट्रोजन", "हाइड्रोजन"],
+    0,
+    "Oxygen is released as a byproduct of photosynthesis.",
+    "प्रकाश संश्लेषण के दौरान ऑक्सीजन उप-उत्पाद के रूप में निकलती है।"
+),
+
+Q(
+    "What is the function of stomata?",
+    "रंध्र (स्टोमेटा) का कार्य क्या है?",
+    ["Gas exchange and transpiration", "Absorb water", "Photosynthesis", "Reproduction"],
+    ["गैसों का आदान-प्रदान और वाष्पोत्सर्जन", "पानी अवशोषित करना", "प्रकाश संश्लेषण", "प्रजनन"],
+    0,
+    "Stomata are pores that allow gas exchange and water loss (transpiration).",
+    "रंध्र ऐसे छिद्र हैं जो गैसों के आदान-प्रदान और पानी के नुकसान (वाष्पोत्सर्जन) की अनुमति देते हैं।"
+),
+
+Q(
+    "What is the function of xylem?",
+    "जाइलम का कार्य क्या है?",
+    ["Transport water and minerals", "Transport food", "Photosynthesis", "Reproduction"],
+    ["पानी और खनिजों का परिवहन", "भोजन का परिवहन", "प्रकाश संश्लेषण", "प्रजनन"],
+    0,
+    "Xylem is responsible for upward transport of water and minerals from roots.",
+    "जाइलम जड़ों से पानी और खनिजों के ऊपर की ओर परिवहन के लिए जिम्मेदार है।"
+),
+
+Q(
+    "What is the function of phloem?",
+    "फ्लोएम का कार्य क्या है?",
+    ["Transport food (sugars)", "Transport water", "Photosynthesis", "Support"],
+    ["भोजन (शर्करा) का परिवहन", "पानी का परिवहन", "प्रकाश संश्लेषण", "सहारा"],
+    0,
+    "Phloem transports organic nutrients, especially sugars, from leaves to other parts.",
+    "फ्लोएम पत्तियों से अन्य भागों तक कार्बनिक पोषक तत्वों, विशेष रूप से शर्करा का परिवहन करता है।"
+),
+
+Q(
+    "What is the role of root hairs?",
+    "मूल रोमों की भूमिका क्या है?",
+    ["Absorb water and minerals", "Anchor the plant", "Photosynthesis", "Store food"],
+    ["पानी और खनिजों का अवशोषण", "पौधे को स्थिर करना", "प्रकाश संश्लेषण", "भोजन संग्रहित करना"],
+    0,
+    "Root hairs increase the surface area for absorption of water and minerals.",
+    "मूल रोम पानी और खनिजों के अवशोषण के लिए सतह क्षेत्र को बढ़ाते हैं।"
+),
+
+Q(
+    "What is transpiration?",
+    "वाष्पोत्सर्जन क्या है?",
+    ["Loss of water vapor from plant surfaces", "Loss of carbon dioxide", "Photosynthesis", "Respiration"],
+    ["पौधों की सतहों से जल वाष्प का नुकसान", "कार्बन डाइऑक्साइड का नुकसान", "प्रकाश संश्लेषण", "श्वसन"],
+    0,
+    "Transpiration is the loss of water vapor from leaves and other aerial parts.",
+    "वाष्पोत्सर्जन पत्तियों और अन्य वायवीय भागों से जल वाष्प का नुकसान है।"
+),
+
+Q(
+    "What is the site of photosynthesis in a plant cell?",
+    "पादप कोशिका में प्रकाश संश्लेषण का स्थल क्या है?",
+    ["Chloroplast", "Mitochondria", "Nucleus", "Ribosome"],
+    ["क्लोरोप्लास्ट", "माइटोकॉन्ड्रिया", "केन्द्रक", "राइबोसोम"],
+    0,
+    "Chloroplasts are the organelles where photosynthesis occurs.",
+    "क्लोरोप्लास्ट वे कोशिकांग हैं जहाँ प्रकाश संश्लेषण होता है।"
+),
+
+Q(
+    "Which substance is used to test for starch in leaves?",
+    "पत्तियों में स्टार्च का परीक्षण करने के लिए किस पदार्थ का उपयोग किया जाता है?",
+    ["Iodine solution", "Benedict's solution", "Litmus paper", "Hydrochloric acid"],
+    ["आयोडीन घोल", "बेनेडिक्ट घोल", "लिटमस पेपर", "हाइड्रोक्लोरिक अम्ल"],
+    0,
+    "Iodine solution turns blue-black in the presence of starch.",
+    "आयोडीन घोल स्टार्च की उपस्थिति में नीला-काला हो जाता है।"
+),
+
+Q(
+    "What is the main photosynthetic pigment?",
+    "मुख्य प्रकाश संश्लेषी रंगद्रव्य क्या है?",
+    ["Chlorophyll a", "Chlorophyll b", "Carotene", "Xanthophyll"],
+    ["क्लोरोफिल a", "क्लोरोफिल b", "कैरोटीन", "जैंथोफिल"],
+    0,
+    "Chlorophyll a is the main pigment involved in photosynthesis.",
+    "क्लोरोफिल a मुख्य रंगद्रव्य है जो प्रकाश संश्लेषण में शामिल है।"
+),
+
+Q(
+    "What is the product of the light-dependent reactions?",
+    "प्रकाश-आश्रित अभिक्रियाओं का उत्पाद क्या है?",
+    ["ATP and NADPH", "Glucose", "Carbon dioxide", "Oxygen only"],
+    ["ATP और NADPH", "ग्लूकोज", "कार्बन डाइऑक्साइड", "केवल ऑक्सीजन"],
+    0,
+    "The light reactions produce ATP and NADPH, which are used in the Calvin cycle.",
+    "प्रकाश अभिक्रियाएँ ATP और NADPH उत्पन्न करती हैं, जिनका उपयोग कैल्विन चक्र में होता है।"
+),
+
+Q(
+    "What is the Calvin cycle?",
+    "कैल्विन चक्र क्या है?",
+    ["Set of reactions that fix carbon dioxide", "Light reactions", "Photosystem I", "Electron transport chain"],
+    ["कार्बन डाइऑक्साइड को स्थिर करने वाली अभिक्रियाएँ", "प्रकाश अभिक्रियाएँ", "फोटोसिस्टम I", "इलेक्ट्रॉन परिवहन श्रृंखला"],
+    0,
+    "The Calvin cycle is the set of reactions that fix CO2 into organic molecules.",
+    "कैल्विन चक्र कार्बन डाइऑक्साइड को कार्बनिक अणुओं में स्थिर करने वाली अभिक्रियाएँ हैं।"
+),
+
+Q(
+    "What is the role of the hormone auxin in plants?",
+    "पौधों में हार्मोन ऑक्सिन की भूमिका क्या है?",
+    ["Promotes cell elongation", "Promotes fruit ripening", "Promotes seed germination", "Inhibits growth"],
+    ["कोशिका दीर्घीकरण को बढ़ावा देना", "फल पकने को बढ़ावा देना", "बीज अंकुरण को बढ़ावा देना", "वृद्धि को रोकना"],
+    0,
+    "Auxin is a plant hormone that promotes cell elongation and growth.",
+    "ऑक्सिन एक पौधा हार्मोन है जो कोशिका दीर्घीकरण और वृद्धि को बढ़ावा देता है।"
+),
+
+Q(
+    "What is the function of the meristem?",
+    "मेरिस्टेम का कार्य क्या है?",
+    ["Cell division and growth", "Photosynthesis", "Transport of water", "Storage of food"],
+    ["कोशिका विभाजन और वृद्धि", "प्रकाश संश्लेषण", "पानी का परिवहन", "भोजन का संग्रह"],
+    0,
+    "Meristematic tissues are responsible for continuous cell division and growth in plants.",
+    "मेरिस्टेमेटिक ऊतक पौधों में निरंतर कोशिका विभाजन और वृद्धि के लिए जिम्मेदार होते हैं।"
+),
+
+Q(
+    "What is the process of gaseous exchange in plants?",
+    "पौधों में गैसीय विनिमय की प्रक्रिया क्या है?",
+    ["Diffusion", "Osmosis", "Active transport", "Transpiration"],
+    ["विसरण", "परासरण", "सक्रिय परिवहन", "वाष्पोत्सर्जन"],
+    0,
+    "Gases are exchanged by diffusion through stomata in leaves.",
+    "गैसों का विनिमय पत्तियों में रंध्रों के माध्यम से विसरण द्वारा होता है।"
+),
+
+Q(
+    "What is the function of the seed coat?",
+    "बीज आवरण का कार्य क्या है?",
+    ["Protect the embryo", "Store nutrients", "Photosynthesis", "Absorb water"],
+    ["भ्रूण की सुरक्षा", "पोषक तत्वों का भंडारण", "प्रकाश संश्लेषण", "पानी अवशोषित करना"],
+    0,
+    "The seed coat protects the embryo from physical damage and pathogens.",
+    "बीज आवरण भ्रूण को शारीरिक क्षति और रोगजनकों से बचाता है।"
+),
+
+Q(
+    "What is the process of seed germination?",
+    "बीज अंकुरण की प्रक्रिया क्या है?",
+    ["Growth of embryo after dormancy", "Fruit development", "Flower formation", "Root growth"],
+    ["प्रसुप्ति के बाद भ्रूण की वृद्धि", "फल का विकास", "फूल का निर्माण", "जड़ की वृद्धि"],
+    0,
+    "Seed germination is the process by which a dormant seed begins to grow into a seedling.",
+    "बीज अंकुरण वह प्रक्रिया है जिसके द्वारा एक प्रसुप्त बीज अंकुर में विकसित होना शुरू होता है।"
+),
+
+Q(
+    "What is the function of the root cap?",
+    "मूल टोपी (रूट कैप) का कार्य क्या है?",
+    ["Protect the growing root tip", "Absorb water", "Anchor the plant", "Store food"],
+    ["बढ़ती हुई जड़ की नोक की रक्षा करना", "पानी अवशोषित करना", "पौधे को स्थिर करना", "भोजन संग्रहित करना"],
+    0,
+    "The root cap protects the delicate meristem at the root tip.",
+    "मूल टोपी जड़ की नोक पर नाजुक मेरिस्टेम की रक्षा करती है।"
+),
+
+Q(
+    "What is the role of pollination?",
+    "परागण की क्या भूमिका है?",
+    ["Transfer of pollen to stigma", "Fertilization", "Seed dispersal", "Fruit formation"],
+    ["पराग को वर्तिकाग्र तक स्थानांतरित करना", "निषेचन", "बीजों का फैलाव", "फल निर्माण"],
+    0,
+    "Pollination is the transfer of pollen grains to the female stigma.",
+    "परागण परागकणों को मादा वर्तिकाग्र तक स्थानांतरित करना है।"
+),
+
+Q(
+    "What is a fruit?",
+    "फल क्या है?",
+    ["Mature ovary", "Mature seed", "Flower bud", "Root"],
+    ["परिपक्व अंडाशय", "परिपक्व बीज", "फूल की कली", "जड़"],
+    0,
+    "A fruit is the mature ovary of a flower, often containing seeds.",
+    "फल फूल का परिपक्व अंडाशय है, जिसमें अक्सर बीज होते हैं।"
+),
+
+Q(
+    "What is the function of the leaf?",
+    "पत्ती का कार्य क्या है?",
+    ["Photosynthesis and transpiration", "Support and transport", "Storage and reproduction", "Absorption and anchor"],
+    ["प्रकाश संश्लेषण और वाष्पोत्सर्जन", "सहारा और परिवहन", "भंडारण और प्रजनन", "अवशोषण और स्थिरता"],
+    0,
+    "Leaves are the main site of photosynthesis and also perform transpiration.",
+    "पत्तियाँ प्रकाश संश्लेषण का मुख्य स्थल हैं और वाष्पोत्सर्जन भी करती हैं।"
+),
+
+Q(
+    "Which hormone promotes fruit ripening?",
+    "कौन सा हार्मोन फल पकने को बढ़ावा देता है?",
+    ["Ethylene", "Auxin", "Gibberellin", "Cytokinin"],
+    ["इथीलीन", "ऑक्सिन", "जिबरेलिन", "साइटोकाइनिन"],
+    0,
+    "Ethylene is a plant hormone that promotes fruit ripening.",
+    "इथीलीन एक पादप हार्मोन है जो फल पकने को बढ़ावा देता है।"
+),
+
+Q(
+    "What is the function of the cambium?",
+    "कैम्बियम का कार्य क्या है?",
+    ["Secondary growth (increase in thickness)", "Photosynthesis", "Transport of water", "Absorption of minerals"],
+    ["द्वितीयक वृद्धि (मोटाई में वृद्धि)", "प्रकाश संश्लेषण", "पानी का परिवहन", "खनिजों का अवशोषण"],
+    0,
+    "Cambium is a lateral meristem responsible for secondary growth in stems and roots.",
+    "कैम्बियम एक पार्श्व मेरिस्टेम है जो तनों और जड़ों में द्वितीयक वृद्धि के लिए जिम्मेदार है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 5: Ecology & Environment
+------------------------------------------------------------ */
+
+questionBank["Ecology & Environment"] = [
+
+Q(
+    "What is ecology?",
+    "पारिस्थितिकी क्या है?",
+    ["Study of interactions between organisms and their environment", "Study of cells", "Study of heredity", "Study of fossils"],
+    ["जीवों और उनके पर्यावरण के बीच अंतःक्रियाओं का अध्ययन", "कोशिकाओं का अध्ययन", "आनुवांशिकता का अध्ययन", "जीवाश्मों का अध्ययन"],
+    0,
+    "Ecology is the branch of biology that studies the interactions of organisms with each other and their environment.",
+    "पारिस्थितिकी जीवविज्ञान की वह शाखा है जो जीवों की एक-दूसरे और उनके पर्यावरण के साथ अंतःक्रियाओं का अध्ययन करती है।"
+),
+
+Q(
+    "What is an ecosystem?",
+    "पारिस्थितिकी तंत्र क्या है?",
+    ["Community of living organisms interacting with the non-living environment", "Only plants and animals", "Only non-living things", "A food chain"],
+    ["जीवित जीवों का समुदाय जो निर्जीव पर्यावरण के साथ अंतःक्रिया करता है", "केवल पौधे और जानवर", "केवल निर्जीव वस्तुएँ", "एक खाद्य श्रृंखला"],
+    0,
+    "An ecosystem includes all living organisms and the physical environment they interact with.",
+    "एक पारिस्थितिकी तंत्र में सभी जीवित जीव और वह भौतिक पर्यावरण शामिल है जिसके साथ वे अंतःक्रिया करते हैं।"
+),
+
+Q(
+    "What is a food chain?",
+    "खाद्य श्रृंखला क्या है?",
+    ["Sequence of organisms each eating the other", "Chain of mountains", "Group of similar organisms", "Cycle of nutrients"],
+    ["एक-दूसरे को खाने वाले जीवों का अनुक्रम", "पहाड़ों की श्रृंखला", "समान जीवों का समूह", "पोषक तत्वों का चक्र"],
+    0,
+    "A food chain shows the flow of energy from one organism to another through feeding.",
+    "एक खाद्य श्रृंखला भोजन के माध्यम से एक जीव से दूसरे में ऊर्जा के प्रवाह को दर्शाती है।"
+),
+
+Q(
+    "What is a food web?",
+    "खाद्य जाल क्या है?",
+    ["Interconnected food chains", "Single food chain", "Group of herbivores", "Group of carnivores"],
+    ["परस्पर जुड़ी खाद्य श्रृंखलाएँ", "एकल खाद्य श्रृंखला", "शाकाहारियों का समूह", "मांसाहारियों का समूह"],
+    0,
+    "A food web is a network of multiple interconnected food chains.",
+    "खाद्य जाल कई परस्पर जुड़ी खाद्य श्रृंखलाओं का एक नेटवर्क है।"
+),
+
+Q(
+    "What is the role of decomposers?",
+    "अपघटकों की भूमिका क्या है?",
+    ["Break down dead matter and recycle nutrients", "Produce food", "Consume plants", "Consume animals"],
+    ["मृत पदार्थ को तोड़ना और पोषक तत्वों को पुनःचक्रित करना", "भोजन उत्पन्न करना", "पौधों का उपभोग करना", "जानवरों का उपभोग करना"],
+    0,
+    "Decomposers like bacteria and fungi break down dead organisms, returning nutrients to the soil.",
+    "जीवाणु और कवक जैसे अपघटक मृत जीवों को तोड़ते हैं, पोषक तत्वों को मिट्टी में वापस लाते हैं।"
+),
+
+Q(
+    "What is the pyramid of energy?",
+    "ऊर्जा पिरामिड क्या है?",
+    ["Energy transfer between trophic levels", "Number of organisms in each level", "Biomass at each level", "A pyramid-shaped structure"],
+    ["ट्रॉफिक स्तरों के बीच ऊर्जा स्थानांतरण", "प्रत्येक स्तर में जीवों की संख्या", "प्रत्येक स्तर पर बायोमास", "एक पिरामिड आकार की संरचना"],
+    0,
+    "The pyramid of energy shows the flow of energy from one trophic level to the next.",
+    "ऊर्जा पिरामिड एक ट्रॉफिक स्तर से दूसरे स्तर तक ऊर्जा के प्रवाह को दर्शाता है।"
+),
+
+Q(
+    "What is a producer in an ecosystem?",
+    "पारिस्थितिकी तंत्र में उत्पादक क्या है?",
+    ["Organism that produces food through photosynthesis", "Animal that eats plants", "Organism that breaks down dead matter", "Animal that eats other animals"],
+    ["जीव जो प्रकाश संश्लेषण द्वारा भोजन उत्पन्न करता है", "जानवर जो पौधे खाता है", "जीव जो मृत पदार्थ को तोड़ता है", "जानवर जो अन्य जानवरों को खाता है"],
+    0,
+    "Producers are autotrophs, typically plants, that produce their own food via photosynthesis.",
+    "उत्पादक स्वपोषी होते हैं, आमतौर पर पौधे, जो प्रकाश संश्लेषण द्वारा अपना भोजन स्वयं बनाते हैं।"
+),
+
+Q(
+    "What is a consumer?",
+    "उपभोक्ता क्या है?",
+    ["Organism that obtains food by eating other organisms", "Organism that produces food", "Organism that breaks down dead matter", "Organism that lives on dead matter"],
+    ["जीव जो अन्य जीवों को खाकर भोजन प्राप्त करता है", "जीव जो भोजन उत्पन्न करता है", "जीव जो मृत पदार्थ को तोड़ता है", "जीव जो मृत पदार्थ पर रहता है"],
+    0,
+    "Consumers are heterotrophs that depend on other organisms for food.",
+    "उपभोक्ता विषमपोषी हैं जो भोजन के लिए अन्य जीवों पर निर्भर होते हैं।"
+),
+
+Q(
+    "What is the greenhouse effect?",
+    "ग्रीनहाउस प्रभाव क्या है?",
+    ["Trapping of heat by gases in the atmosphere", "Cooling of the earth", "Depletion of ozone layer", "Acid rain"],
+    ["वायुमंडल में गैसों द्वारा गर्मी का बंद होना", "पृथ्वी का ठंडा होना", "ओजोन परत का क्षरण", "अम्लीय वर्षा"],
+    0,
+    "The greenhouse effect is the trapping of heat by greenhouse gases like CO2, leading to global warming.",
+    "ग्रीनहाउस प्रभाव CO2 जैसी ग्रीनहाउस गैसों द्वारा गर्मी का बंद होना है, जो ग्लोबल वार्मिंग की ओर ले जाता है।"
+),
+
+Q(
+    "Which gas is the main cause of the greenhouse effect?",
+    "ग्रीनहाउस प्रभाव का मुख्य कारण कौन सी गैस है?",
+    ["Carbon dioxide", "Oxygen", "Nitrogen", "Argon"],
+    ["कार्बन डाइऑक्साइड", "ऑक्सीजन", "नाइट्रोजन", "आर्गन"],
+    0,
+    "Carbon dioxide is the primary greenhouse gas from human activities.",
+    "कार्बन डाइऑक्साइड मानव गतिविधियों से मुख्य ग्रीनहाउस गैस है।"
+),
+
+Q(
+    "What is biodiversity?",
+    "जैव विविधता क्या है?",
+    ["Variety of life in a particular area", "Variety of diseases", "Variety of climates", "Variety of rocks"],
+    ["किसी विशेष क्षेत्र में जीवन की विविधता", "रोगों की विविधता", "जलवायु की विविधता", "चट्टानों की विविधता"],
+    0,
+    "Biodiversity refers to the variety of species and ecosystems in a region.",
+    "जैव विविधता किसी क्षेत्र में प्रजातियों और पारिस्थितिक तंत्रों की विविधता को संदर्भित करती है।"
+),
+
+Q(
+    "What is a biome?",
+    "बायोम क्या है?",
+    ["Large geographical area with specific climate and life forms", "A small ecosystem", "A group of species", "A type of soil"],
+    ["एक विशिष्ट जलवायु और जीवन रूपों वाला बड़ा भौगोलिक क्षेत्र", "एक छोटा पारिस्थितिकी तंत्र", "प्रजातियों का एक समूह", "एक प्रकार की मिट्टी"],
+    0,
+    "Biomes are large regions characterized by climate and dominant vegetation.",
+    "बायोम बड़े क्षेत्र हैं जो जलवायु और प्रमुख वनस्पति द्वारा चित्रित होते हैं।"
+),
+
+Q(
+    "What is a habitat?",
+    "पर्यावास (हैबिटेट) क्या है?",
+    ["Natural environment where an organism lives", "Large region with similar climate", "All organisms in an area", "Non-living part of environment"],
+    ["प्राकृतिक वातावरण जहाँ एक जीव रहता है", "समान जलवायु वाला बड़ा क्षेत्र", "किसी क्षेत्र के सभी जीव", "पर्यावरण का निर्जीव भाग"],
+    0,
+    "A habitat is the specific place where an organism lives.",
+    "पर्यावास वह विशिष्ट स्थान है जहाँ एक जीव रहता है।"
+),
+
+Q(
+    "What is a niche?",
+    "निच (पारिस्थितिकीय आला) क्या है?",
+    ["The role of an organism in its ecosystem", "The place where an organism lives", "All organisms of a species", "The physical environment"],
+    ["अपने पारिस्थितिकी तंत्र में एक जीव की भूमिका", "वह स्थान जहाँ एक जीव रहता है", "एक प्रजाति के सभी जीव", "भौतिक पर्यावरण"],
+    0,
+    "A niche describes how an organism fits into its environment, including its diet, behavior, and interactions.",
+    "एक निच बताता है कि एक जीव अपने पर्यावरण में कैसे फिट बैठता है, जिसमें उसका आहार, व्यवहार और अंतःक्रियाएँ शामिल हैं।"
+),
+
+Q(
+    "What is a population?",
+    "जनसंख्या क्या है?",
+    ["All individuals of a species in a given area", "All organisms in an area", "All species in an area", "A group of different species"],
+    ["किसी दिए गए क्षेत्र में एक प्रजाति के सभी व्यक्ति", "किसी क्षेत्र के सभी जीव", "किसी क्षेत्र की सभी प्रजातियाँ", "विभिन्न प्रजातियों का एक समूह"],
+    0,
+    "Population is a group of individuals of the same species living in a specific area.",
+    "जनसंख्या एक विशिष्ट क्षेत्र में रहने वाली एक ही प्रजाति के व्यक्तियों का समूह है।"
+),
+
+Q(
+    "What is a community?",
+    "समुदाय (कम्युनिटी) क्या है?",
+    ["All populations of different species in an area", "All individuals of a species", "All non-living things", "All ecosystems"],
+    ["किसी क्षेत्र में विभिन्न प्रजातियों की सभी जनसंख्या", "एक प्रजाति के सभी व्यक्ति", "सभी निर्जीव चीजें", "सभी पारिस्थितिकी तंत्र"],
+    0,
+    "A community is all the populations of different species living together in an area.",
+    "एक समुदाय किसी क्षेत्र में एक साथ रहने वाली विभिन्न प्रजातियों की सभी जनसंख्या है।"
+),
+
+Q(
+    "What is an endangered species?",
+    "संकटग्रस्त प्रजाति क्या है?",
+    ["Species at risk of extinction", "Species with high population", "Species newly discovered", "Species that are extinct"],
+    ["प्रजाति जो विलुप्त होने के खतरे में है", "उच्च जनसंख्या वाली प्रजाति", "नई खोजी गई प्रजाति", "प्रजाति जो विलुप्त हो चुकी है"],
+    0,
+    "Endangered species are those with very few individuals and a high risk of extinction.",
+    "संकटग्रस्त प्रजातियाँ वे हैं जिनमें बहुत कम व्यक्ति होते हैं और विलुप्त होने का उच्च जोखिम होता है।"
+),
+
+Q(
+    "What is the ozone layer?",
+    "ओजोन परत क्या है?",
+    ["Layer in the stratosphere that absorbs UV radiation", "Layer in the troposphere", "Layer near the ground", "Layer with high oxygen"],
+    ["समताप मंडल में परत जो UV विकिरण को अवशोषित करती है", "क्षोभ मंडल में परत", "जमीन के पास की परत", "उच्च ऑक्सीजन वाली परत"],
+    0,
+    "The ozone layer in the stratosphere protects life on Earth by absorbing most of the sun's harmful ultraviolet radiation.",
+    "समताप मंडल में ओजोन परत सूर्य की अधिकांश हानिकारक पराबैंगनी विकिरण को अवशोषित करके पृथ्वी पर जीवन की रक्षा करती है।"
+),
+
+Q(
+    "What is the main cause of ozone depletion?",
+    "ओजोन क्षरण का मुख्य कारण क्या है?",
+    ["Chlorofluorocarbons (CFCs)", "Carbon dioxide", "Methane", "Nitrous oxide"],
+    ["क्लोरोफ्लोरोकार्बन (CFC)", "कार्बन डाइऑक्साइड", "मीथेन", "नाइट्रस ऑक्साइड"],
+    0,
+    "CFCs are synthetic compounds that deplete the ozone layer.",
+    "CFC सिंथेटिक यौगिक हैं जो ओजोन परत को क्षीण करते हैं।"
+),
+
+Q(
+    "What is the greenhouse effect?",
+    "ग्रीनहाउस प्रभाव क्या है?",
+    ["Trapping of heat by atmospheric gases", "Release of oxygen", "Cooling of the earth", "Formation of clouds"],
+    ["वायुमंडलीय गैसों द्वारा गर्मी का बंद होना", "ऑक्सीजन का निकलना", "पृथ्वी का ठंडा होना", "बादलों का निर्माण"],
+    0,
+    "The greenhouse effect is the natural process by which certain gases trap heat in the atmosphere.",
+    "ग्रीनहाउस प्रभाव वह प्राकृतिक प्रक्रिया है जिसके द्वारा कुछ गैसें वायुमंडल में गर्मी को बंद करती हैं।"
+),
+
+Q(
+    "Which gas is responsible for acid rain?",
+    "अम्लीय वर्षा के लिए कौन सी गैस जिम्मेदार है?",
+    ["Sulphur dioxide and nitrogen oxides", "Carbon dioxide", "Methane", "Ozone"],
+    ["सल्फर डाइऑक्साइड और नाइट्रोजन ऑक्साइड", "कार्बन डाइऑक्साइड", "मीथेन", "ओजोन"],
+    0,
+    "Sulphur dioxide and nitrogen oxides react with water to form acids, causing acid rain.",
+    "सल्फर डाइऑक्साइड और नाइट्रोजन ऑक्साइड पानी के साथ प्रतिक्रिया करके अम्ल बनाते हैं, जो अम्लीय वर्षा का कारण बनते हैं।"
+),
+
+Q(
+    "What is a renewable resource?",
+    "नवीकरणीय संसाधन क्या है?",
+    ["Resource that can be replenished naturally", "Resource that cannot be replenished", "A fossil fuel", "A mineral"],
+    ["संसाधन जो प्राकृतिक रूप से पुनः भरा जा सकता है", "संसाधन जो पुनः नहीं भरा जा सकता", "एक जीवाश्म ईंधन", "एक खनिज"],
+    0,
+    "Renewable resources, such as solar energy and timber, can be replaced naturally.",
+    "नवीकरणीय संसाधन, जैसे सौर ऊर्जा और लकड़ी, प्राकृतिक रूप से प्रतिस्थापित किए जा सकते हैं।"
+),
+
+Q(
+    "What is a non-renewable resource?",
+    "गैर-नवीकरणीय संसाधन क्या है?",
+    ["Resource that cannot be replaced in a short time", "Resource that can be replaced quickly", "A plant-based resource", "A renewable resource"],
+    ["संसाधन जो कम समय में प्रतिस्थापित नहीं किया जा सकता", "संसाधन जो जल्दी प्रतिस्थापित किया जा सकता है", "एक पौधा-आधारित संसाधन", "एक नवीकरणीय संसाधन"],
+    0,
+    "Non-renewable resources like fossil fuels take millions of years to form and are limited.",
+    "गैर-नवीकरणीय संसाधन जैसे जीवाश्म ईंधन बनने में लाखों वर्ष लगते हैं और सीमित होते हैं।"
+),
+
+Q(
+    "What is an ecological succession?",
+    "पारिस्थितिकीय अनुक्रमण क्या है?",
+    ["Gradual change in species composition over time", "Sudden change in ecosystem", "Movement of species", "Natural selection"],
+    ["समय के साथ प्रजातियों की संरचना में क्रमिक परिवर्तन", "पारिस्थितिकी तंत्र में अचानक परिवर्तन", "प्रजातियों की गति", "प्राकृतिक चयन"],
+    0,
+    "Ecological succession is the predictable change in species composition of an area over time.",
+    "पारिस्थितिकीय अनुक्रमण समय के साथ किसी क्षेत्र की प्रजातियों की संरचना में पूर्वानुमानित परिवर्तन है।"
+)
+
+];
+
+
+/* ------------------------------------------------------------
+   TOPIC 6: Microbiology & Diseases
+------------------------------------------------------------ */
+
+questionBank["Microbiology & Diseases"] = [
+
+Q(
+    "What is a microorganism?",
+    "सूक्ष्मजीव क्या है?",
+    ["Organism that is microscopic in size", "Large organism", "Plant", "Animal"],
+    ["जीव जो सूक्ष्म आकार का होता है", "बड़ा जीव", "पौधा", "जानवर"],
+    0,
+    "Microorganisms are tiny organisms that can only be seen with a microscope.",
+    "सूक्ष्मजीव वे छोटे जीव हैं जिन्हें केवल सूक्ष्मदर्शी से ही देखा जा सकता है।"
+),
+
+Q(
+    "Which disease is caused by the bacteria Salmonella?",
+    "साल्मोनेला जीवाणु के कारण कौन सी बीमारी होती है?",
+    ["Typhoid", "Tuberculosis", "Cholera", "Malaria"],
+    ["टायफॉइड", "ट्यूबरकुलोसिस", "हैजा", "मलेरिया"],
+    0,
+    "Salmonella bacteria cause typhoid fever.",
+    "साल्मोनेला जीवाणु टायफॉइड बुखार का कारण बनता है।"
+),
+
+Q(
+    "Which disease is caused by the Plasmodium parasite?",
+    "प्लास्मोडियम परजीवी के कारण कौन सी बीमारी होती है?",
+    ["Malaria", "Dengue", "Chikungunya", "Yellow fever"],
+    ["मलेरिया", "डेंगू", "चिकनगुनिया", "पीला बुखार"],
+    0,
+    "Malaria is caused by the Plasmodium parasite, transmitted by Anopheles mosquitoes.",
+    "मलेरिया प्लास्मोडियम परजीवी के कारण होता है, जो एनोफेलीज मच्छरों द्वारा फैलता है।"
+),
+
+Q(
+    "Which virus causes AIDS?",
+    "AIDS किस वायरस के कारण होता है?",
+    ["HIV", "HPV", "Herpesvirus", "Influenza virus"],
+    ["HIV", "HPV", "हर्पीसवायरस", "इन्फ्लुएंजा वायरस"],
+    0,
+    "Human Immunodeficiency Virus (HIV) causes AIDS.",
+    "ह्यूमन इम्यूनोडेफिशिएंसी वायरस (HIV) AIDS का कारण बनता है।"
+),
+
+Q(
+    "What is a vaccine?",
+    "टीका (वैक्सीन) क्या है?",
+    ["Biological preparation that provides immunity to a disease", "Antibiotic", "Painkiller", "Nutritional supplement"],
+    ["जैविक तैयारी जो किसी रोग के प्रति प्रतिरोधक क्षमता प्रदान करती है", "एंटीबायोटिक", "दर्द निवारक", "पोषक पूरक"],
+    0,
+    "Vaccines stimulate the immune system to protect against specific diseases.",
+    "टीके प्रतिरक्षा प्रणाली को उत्तेजित करते हैं ताकि विशिष्ट बीमारियों से बचाव हो सके।"
+),
+
+Q(
+    "Which disease is caused by the Mycobacterium tuberculosis?",
+    "माइकोबैक्टीरियम ट्यूबरक्युलोसिस के कारण कौन सी बीमारी होती है?",
+    ["Tuberculosis", "Pneumonia", "Leprosy", "Diphtheria"],
+    ["ट्यूबरकुलोसिस", "निमोनिया", "कोढ़", "डिप्थीरिया"],
+    0,
+    "Mycobacterium tuberculosis causes tuberculosis (TB).",
+    "माइकोबैक्टीरियम ट्यूबरक्युलोसिस ट्यूबरकुलोसिस (TB) का कारण बनता है।"
+),
+
+Q(
+    "What is the function of antibiotics?",
+    "एंटीबायोटिक्स का कार्य क्या है?",
+    ["Kill bacteria or inhibit their growth", "Kill viruses", "Kill fungi", "Kill parasites"],
+    ["जीवाणुओं को मारना या उनकी वृद्धि को रोकना", "वायरस को मारना", "कवक को मारना", "परजीवियों को मारना"],
+    0,
+    "Antibiotics are effective against bacteria, not viruses.",
+    "एंटीबायोटिक्स जीवाणुओं के खिलाफ प्रभावी हैं, वायरस के नहीं।"
+),
+
+Q(
+    "Which disease is caused by a virus?",
+    "कौन सी बीमारी वायरस के कारण होती है?",
+    ["Influenza", "Tuberculosis", "Typhoid", "Cholera"],
+    ["इन्फ्लुएंजा", "ट्यूबरकुलोसिस", "टायफॉइड", "हैजा"],
+    0,
+    "Influenza (flu) is a viral disease.",
+    "इन्फ्लुएंजा (फ्लू) एक वायरल रोग है।"
+),
+
+Q(
+    "What is the causative agent of COVID-19?",
+    "COVID-19 का कारक एजेंट क्या है?",
+    ["SARS-CoV-2", "HIV", "Influenza virus", "Ebola virus"],
+    ["SARS-CoV-2", "HIV", "इन्फ्लुएंजा वायरस", "इबोला वायरस"],
+    0,
+    "COVID-19 is caused by the novel coronavirus SARS-CoV-2.",
+    "COVID-19 नए कोरोनावायरस SARS-CoV-2 के कारण होता है।"
+),
+
+Q(
+    "Which organism causes malaria?",
+    "मलेरिया किस जीव के कारण होता है?",
+    ["Plasmodium", "Trypanosoma", "Leishmania", "Entamoeba"],
+    ["प्लास्मोडियम", "ट्रिपैनोसोमा", "लीशमानिया", "एंटामीबा"],
+    0,
+    "Malaria is caused by Plasmodium species.",
+    "मलेरिया प्लास्मोडियम प्रजाति के कारण होता है।"
+),
+
+Q(
+    "What is the mode of transmission of HIV?",
+    "HIV के संचरण का तरीका क्या है?",
+    ["Blood, sexual contact, mother to child", "Air", "Water", "Food"],
+    ["रक्त, यौन संपर्क, माता से शिशु", "वायु", "जल", "भोजन"],
+    0,
+    "HIV is transmitted through blood, unprotected sexual contact, and from mother to child.",
+    "HIV रक्त, असुरक्षित यौन संपर्क और माता से शिशु के माध्यम से फैलता है।"
+),
+
+Q(
+    "Which disease is caused by a fungus?",
+    "कौन सी बीमारी कवक के कारण होती है?",
+    ["Ringworm", "Tuberculosis", "Typhoid", "Cholera"],
+    ["दाद (रिंगवर्म)", "ट्यूबरकुलोसिस", "टायफॉइड", "हैजा"],
+    0,
+    "Ringworm is a fungal infection of the skin.",
+    "दाद (रिंगवर्म) त्वचा का एक कवकीय संक्रमण है।"
+),
+
+Q(
+    "What is a pathogen?",
+    "रोगजनक (पैथोजेन) क्या है?",
+    ["Organism that causes disease", "Organism that produces food", "Organism that decomposes", "Organism that lives in soil"],
+    ["जीव जो रोग का कारण बनता है", "जीव जो भोजन उत्पन्न करता है", "जीव जो विघटन करता है", "जीव जो मिट्टी में रहता है"],
+    0,
+    "A pathogen is any organism that causes disease in its host.",
+    "रोगजनक वह जीव है जो अपने मेजबान में रोग का कारण बनता है।"
+),
+
+Q(
+    "Which insect acts as a vector for dengue?",
+    "डेंगू के लिए कौन सा कीट वेक्टर के रूप में कार्य करता है?",
+    ["Aedes mosquito", "Anopheles mosquito", "Culex mosquito", "Tsetse fly"],
+    ["एडीज मच्छर", "एनोफेलीज मच्छर", "क्यूलेक्स मच्छर", "सेत्से मक्खी"],
+    0,
+    "Dengue is transmitted by the bite of an infected Aedes mosquito.",
+    "डेंगू संक्रमित एडीज मच्छर के काटने से फैलता है।"
+),
+
+Q(
+    "What is the incubation period?",
+    "उद्भवन काल (इन्क्यूबेशन पीरियड) क्या है?",
+    ["Time between infection and appearance of symptoms", "Time between symptoms and recovery", "Time for treatment", "Time for vaccine to work"],
+    ["संक्रमण और लक्षणों की उपस्थिति के बीच का समय", "लक्षणों और स्वास्थ्य लाभ के बीच का समय", "उपचार का समय", "टीके के काम करने का समय"],
+    0,
+    "Incubation period is the time from infection to the onset of symptoms.",
+    "उद्भवन काल संक्रमण से लक्षणों की शुरुआत तक का समय है।"
+),
+
+Q(
+    "What is a vector?",
+    "वेक्टर क्या है?",
+    ["Organism that transmits a disease", "Organism that causes disease", "Organism that decomposes", "Organism that produces food"],
+    ["जीव जो रोग संचारित करता है", "जीव जो रोग का कारण बनता है", "जीव जो विघटन करता है", "जीव जो भोजन उत्पन्न करता है"],
+    0,
+    "A vector is an organism that transmits pathogens between hosts.",
+    "वेक्टर वह जीव है जो मेजबानों के बीच रोगजनकों को संचारित करता है।"
+),
+
+Q(
+    "Which disease is caused by the Vibrio cholerae bacteria?",
+    "विब्रियो कोलेरे जीवाणु के कारण कौन सी बीमारी होती है?",
+    ["Cholera", "Typhoid", "Tuberculosis", "Pneumonia"],
+    ["हैजा", "टायफॉइड", "ट्यूबरकुलोसिस", "निमोनिया"],
+    0,
+    "Vibrio cholerae causes cholera.",
+    "विब्रियो कोलेरे हैजा का कारण बनता है।"
+),
+
+Q(
+    "What is the role of white blood cells?",
+    "श्वेत रक्त कोशिकाओं की भूमिका क्या है?",
+    ["Fight infections", "Carry oxygen", "Clot blood", "Transport nutrients"],
+    ["संक्रमण से लड़ना", "ऑक्सीजन ले जाना", "रक्त का थक्का बनाना", "पोषक तत्वों का परिवहन"],
+    0,
+    "White blood cells defend the body against infections and foreign invaders.",
+    "श्वेत रक्त कोशिकाएं शरीर को संक्रमणों और विदेशी आक्रमणकारियों से बचाती हैं।"
+),
+
+Q(
+    "What is the causative agent of tetanus?",
+    "टिटनेस का कारक एजेंट क्या है?",
+    ["Clostridium tetani", "Bacillus anthracis", "Mycobacterium leprae", "Treponema pallidum"],
+    ["क्लोस्ट्रीडियम टेटानी", "बैसिलस एन्थ्रेसिस", "माइकोबैक्टीरियम लेप्री", "ट्रेपोनेमा पैलिडम"],
+    0,
+    "Tetanus is caused by the bacterium Clostridium tetani.",
+    "टिटनेस जीवाणु क्लोस्ट्रीडियम टेटानी के कारण होता है।"
+),
+
+Q(
+    "Which disease is caused by a protozoan?",
+    "कौन सी बीमारी प्रोटोज़ोआ के कारण होती है?",
+    ["Malaria", "Typhoid", "Tuberculosis", "Cholera"],
+    ["मलेरिया", "टायफॉइड", "ट्यूबरकुलोसिस", "हैजा"],
+    0,
+    "Malaria is caused by the protozoan Plasmodium.",
+    "मलेरिया प्रोटोज़ोआ प्लास्मोडियम के कारण होता है।"
+),
+
+Q(
+    "What is the mode of transmission of the common cold?",
+    "सामान्य सर्दी (Common cold) के संचरण का तरीका क्या है?",
+    ["Airborne droplets", "Contaminated water", "Contaminated food", "Blood"],
+    ["हवाई बूंदें", "दूषित जल", "दूषित भोजन", "रक्त"],
+    0,
+    "The common cold is transmitted through respiratory droplets from coughs and sneezes.",
+    "सामान्य सर्दी खांसने और छींकने से निकलने वाली श्वसन बूंदों के माध्यम से फैलती है।"
+),
+
+Q(
+    "Which bacteria causes stomach ulcers?",
+    "पेट के अल्सर का कारण कौन सा जीवाणु है?",
+    ["Helicobacter pylori", "E. coli", "Salmonella", "Streptococcus"],
+    ["हेलिकोबैक्टर पाइलोरी", "ई. कोलाई", "साल्मोनेला", "स्ट्रेप्टोकोकस"],
+    0,
+    "Helicobacter pylori is the primary cause of stomach ulcers.",
+    "हेलिकोबैक्टर पाइलोरी पेट के अल्सर का प्रमुख कारण है।"
+),
+
+Q(
+    "What is an antibiotic?",
+    "एंटीबायोटिक क्या है?",
+    ["Drug that kills bacteria", "Drug that kills viruses", "Drug that kills fungi", "Drug that kills parasites"],
+    ["दवा जो जीवाणुओं को मारती है", "दवा जो वायरस को मारती है", "दवा जो कवक को मारती है", "दवा जो परजीवियों को मारती है"],
+    0,
+    "Antibiotics are drugs used to treat bacterial infections.",
+    "एंटीबायोटिक्स वे दवाएँ हैं जिनका उपयोग जीवाणु संक्रमण के इलाज के लिए किया जाता है।"
+),
+
+Q(
+    "Which disease is spread by the bite of a rabid animal?",
+    "रेबीज (पागल) जानवर के काटने से कौन सी बीमारी फैलती है?",
+    ["Rabies", "Tetanus", "Leptospirosis", "Lyme disease"],
+    ["रेबीज", "टिटनेस", "लेप्टोस्पायरोसिस", "लाइम रोग"],
+    0,
+    "Rabies is transmitted through the bite of an infected animal.",
+    "रेबीज संक्रमित जानवर के काटने से फैलता है।"
+),
+
+Q(
+    "What is the function of the immune system?",
+    "प्रतिरक्षा प्रणाली का कार्य क्या है?",
+    ["Protect against disease-causing organisms", "Digest food", "Transport oxygen", "Filter blood"],
+    ["रोग पैदा करने वाले जीवों से बचाव करना", "भोजन पचाना", "ऑक्सीजन का परिवहन", "रक्त फ़िल्टर करना"],
+    0,
+    "The immune system protects the body from pathogens and other foreign substances.",
+    "प्रतिरक्षा प्रणाली शरीर को रोगजनकों और अन्य विदेशी पदार्थों से बचाती है।"
+)
+
+];
+
+
+/* ============================================================
+   STATE AND LOGIC – SAME AS STATIC GK PROVIDED
+============================================================ */
+
+let currentTopic = "";
+let currentTopicQuestions = [];
+let currentQuestions = [];
+let currentSetNumber = 1;
+let currentQuestionIndex = 0;
+let userAnswers = [];
+let markedQuestions = new Set();
+let selectedLanguage = "both";
+let testStarted = false;
+let testSubmitted = false;
+let timerInterval = null;
+let remainingSeconds = 15 * 60;
+
+const $ = id => document.getElementById(id);
+
+function escapeHTML(value){
+    if(value === undefined || value === null) return "";
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function setLanguage(lang){
+    selectedLanguage = lang === "hi" ? "hi" : lang === "en" ? "en" : "both";
+    ["englishBtn","hindiBtn","bothBtn"].forEach(id => $(id)?.classList.remove("active"));
+    const active = selectedLanguage === "en" ? $("englishBtn") : 
+                   selectedLanguage === "hi" ? $("hindiBtn") : $("bothBtn");
+    active?.classList.add("active");
+    const t = selectedLanguage === "hi" ? translations.hi : translations.en;
+    $("chooseTitle").textContent = t.choose;
+    $("chooseSubtitle").textContent = t.subtitle;
+    $("heroTitle").textContent = t.heroTitle;
+    $("heroDescription").textContent = t.heroDescription;
+    $("previousBtn").textContent = t.previous;
+    $("nextBtn").textContent = t.next;
+    $("markBtn").textContent = markedQuestions.has(currentQuestionIndex) ? t.marked : t.mark;
+    $("submitBtn").textContent = t.submit;
+    $("paletteTitle").textContent = t.palette;
+    $("answeredLabel").textContent = t.answered;
+    $("notAnsweredLabel").textContent = t.notAnswered;
+    $("retryBtn").textContent = t.retry;
+    $("nextSetBtn").textContent = t.nextSet;
+    $("allTopicsBtn").textContent = t.allTopics;
+    if(testStarted && currentQuestions.length) renderQuestion();
+}
+
+function changeLanguage(lang){
+    setLanguage(lang);
+}
+
+function prepareQuestionForSet(sourceQuestion, index){
+    const q = {
+        ...sourceQuestion,
+        options: [...sourceQuestion.options],
+        optionsHi: [...sourceQuestion.optionsHi],
+        explanation: sourceQuestion.explanation,
+        explanationHi: sourceQuestion.explanationHi
+    };
+    if(q.options.length < 4) return q;
+    // Balanced answer distribution
+    const targetAnswer = index % 4;
+    const currentAnswer = Number.isInteger(q.answer) ? q.answer : 0;
+    const shift = (targetAnswer - currentAnswer + 4) % 4;
+    if(shift){
+        q.options = q.options.map((_, i) => q.options[(i - shift + 4) % 4]);
+        q.optionsHi = q.optionsHi.map((_, i) => q.optionsHi[(i - shift + 4) % 4]);
+    }
+    q.answer = targetAnswer;
+    return q;
+}
+
+function getSetQuestions(topicName, setNumber){
+    const bank = questionBank[topicName];
+    if(!bank || !bank.length) return [];
+    const set = Math.min(4, Math.max(1, Number(setNumber) || 1));
+    const questions = [];
+    for(let i = 0; i < 25; i++){
+        const sourceIndex = ((set - 1) * 25 + i) % bank.length;
+        const sourceQuestion = bank[sourceIndex];
+        questions.push(prepareQuestionForSet(sourceQuestion, i));
+    }
+    return questions;
+}
+
+function startTopic(topicName, setNumber = 1){
+    if(!questionBank[topicName]){
+        alert("Questions are not available for this topic.");
+        return;
+    }
+    currentTopic = topicName;
+    currentTopicQuestions = [...questionBank[topicName]];
+    currentSetNumber = Math.min(4, Math.max(1, Number(setNumber) || 1));
+    currentQuestions = getSetQuestions(topicName, currentSetNumber);
+    currentQuestionIndex = 0;
+    userAnswers = new Array(currentQuestions.length).fill(null);
+    markedQuestions = new Set();
+    testStarted = true;
+    testSubmitted = false;
+    remainingSeconds = 15 * 60;
+
+    $("homePage").style.display = "none";
+    $("resultPage").style.display = "none";
+    $("testPage").style.display = "block";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    startTimer();
+    renderQuestion();
+    renderQuestionPalette();
+    updateProgress();
+    updateNavigationButtons();
+}
+
+function renderQuestion(){
+    if(!currentQuestions.length) return;
+    const q = currentQuestions[currentQuestionIndex];
+    const n = currentQuestionIndex + 1;
+    const total = currentQuestions.length;
+
+    $("questionNumber").textContent = `Question ${n} of ${total}`;
+    $("breadcrumb").textContent = `BIOLOGY • ${currentTopic} • SET ${currentSetNumber}`;
+    $("testTitle").textContent = `${currentTopic} — Set ${currentSetNumber}`;
+
+    if(selectedLanguage === "en"){
+        $("question").textContent = q.question;
+        $("questionHi").textContent = "";
+    } else if(selectedLanguage === "hi"){
+        $("question").textContent = q.questionHi;
+        $("questionHi").textContent = "";
+    } else {
+        $("question").textContent = q.question;
+        $("questionHi").textContent = q.questionHi;
+    }
+
+    const optionsContainer = $("options");
+    optionsContainer.innerHTML = "";
+
+    q.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        if(userAnswers[currentQuestionIndex] === index) btn.classList.add("selected");
+        const letters = ["A", "B", "C", "D"];
+        let optionText = selectedLanguage === "hi" ? q.optionsHi[index] : q.options[index];
+        btn.innerHTML = `
+            <span class="option-letter">${letters[index]}</span>
+            ${escapeHTML(optionText)}
+        `;
+        btn.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(btn);
+    });
+
+    $("answerStatus").textContent = userAnswers[currentQuestionIndex] === null ?
+        (selectedLanguage === "hi" ? "उत्तर नहीं दिया" : "Not Answered") :
+        (selectedLanguage === "hi" ? "उत्तर दिया" : "Answered");
+
+    $("markBtn").textContent = markedQuestions.has(currentQuestionIndex) ?
+        (selectedLanguage === "hi" ? "★ मार्क्ड" : "★ Marked") :
+        (selectedLanguage === "hi" ? "☆ मार्क" : "☆ Mark");
+}
+
+function selectAnswer(index){
+    if(testSubmitted) return;
+    userAnswers[currentQuestionIndex] = index;
+    renderQuestion();
+    renderQuestionPalette();
+    updateProgress();
+    updateNavigationButtons();
+}
+
+function nextQuestion(){
+    if(currentQuestionIndex < currentQuestions.length - 1){
+        currentQuestionIndex++;
+        renderQuestion();
+        renderQuestionPalette();
+        updateProgress();
+        updateNavigationButtons();
+    }
+}
+
+function previousQuestion(){
+    if(currentQuestionIndex > 0){
+        currentQuestionIndex--;
+        renderQuestion();
+        renderQuestionPalette();
+        updateProgress();
+        updateNavigationButtons();
+    }
+}
+
+function goToQuestion(index){
+    if(index < 0 || index >= currentQuestions.length) return;
+    currentQuestionIndex = index;
+    renderQuestion();
+    renderQuestionPalette();
+    updateProgress();
+    updateNavigationButtons();
+}
+
+function markQuestion(){
+    if(markedQuestions.has(currentQuestionIndex))
+        markedQuestions.delete(currentQuestionIndex);
+    else
+        markedQuestions.add(currentQuestionIndex);
+    renderQuestion();
+    renderQuestionPalette();
+}
+
+function renderQuestionPalette(){
+    const palette = $("palette");
+    palette.innerHTML = "";
+    currentQuestions.forEach((q, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = index + 1;
+        if(userAnswers[index] !== null) btn.classList.add("answered");
+        if(markedQuestions.has(index)) btn.classList.add("marked");
+        if(index === currentQuestionIndex) btn.classList.add("current");
+        btn.onclick = () => goToQuestion(index);
+        palette.appendChild(btn);
+    });
+}
+
+function updateProgress(){
+    const answered = userAnswers.filter(x => x !== null).length;
+    const percent = (answered / currentQuestions.length) * 100;
+    $("progress").style.width = percent + "%";
+}
+
+function updateNavigationButtons(){
+    $("previousBtn").disabled = currentQuestionIndex === 0;
+    const isLast = currentQuestionIndex === currentQuestions.length - 1;
+    $("nextBtn").style.display = isLast ? "none" : "inline-block";
+    $("submitBtn").style.display = isLast ? "inline-block" : "none";
+}
+
+function submitTest(auto = false){
+    if(testSubmitted) return;
+    if(!auto){
+        const unanswered = userAnswers.filter(x => x === null).length;
+        if(unanswered > 0){
+            const message = selectedLanguage === "hi" ?
+                `अभी ${unanswered} प्रश्नों का उत्तर नहीं दिया गया है। क्या आप टेस्ट सबमिट करना चाहते हैं?` :
+                `${unanswered} questions are unanswered. Do you want to submit the test?`;
+            if(!confirm(message)) return;
+        }
+    }
+    stopTimer();
+    testSubmitted = true;
+    testStarted = false;
+    showResult();
+}
+
+function showResult(){
+    $("testPage").style.display = "none";
+    $("resultPage").style.display = "block";
+
+    const correct = currentQuestions.reduce((count, q, index) => count + (userAnswers[index] === q.answer ? 1 : 0), 0);
+    const attempted = userAnswers.filter(x => x !== null).length;
+    const accuracy = attempted ? Math.round(correct / attempted * 100) : 0;
+
+    $("resultTitle").textContent = `${currentTopic} — Set ${currentSetNumber}`;
+    $("scoreValue").textContent = `${correct}/${currentQuestions.length}`;
+    $("attemptedValue").textContent = attempted;
+    $("correctValue").textContent = correct;
+    $("accuracyValue").textContent = accuracy + "%";
+
+    renderReview();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderReview(){
+    const review = $("review");
+    review.innerHTML = "";
+    const t = selectedLanguage === "hi" ? translations.hi : translations.en;
+
+    currentQuestions.forEach((q, index) => {
+        const item = document.createElement("div");
+        item.className = "review-item";
+
+        const userAnswer = userAnswers[index];
+        const correctAnswer = q.answer;
+        const isCorrect = userAnswer === correctAnswer;
+        const letters = ["A", "B", "C", "D"];
+
+        const correctText = selectedLanguage === "hi" ? q.optionsHi[correctAnswer] : q.options[correctAnswer];
+        const correctExpl = selectedLanguage === "hi" ? q.explanationHi : q.explanation;
+        let yourText = "";
+        if(userAnswer === null){
+            yourText = t.skipped;
+        } else {
+            yourText = selectedLanguage === "hi" ? q.optionsHi[userAnswer] : q.options[userAnswer];
+        }
+
+        let questionHTML = "";
+        if(selectedLanguage === "en"){
+            questionHTML = `<div class="review-question">${index+1}. ${escapeHTML(q.question)}</div>`;
+        } else if(selectedLanguage === "hi"){
+            questionHTML = `<div class="review-question">${index+1}. ${escapeHTML(q.questionHi)}</div>`;
+        } else {
+            questionHTML = `
+                <div class="review-question">${index+1}. ${escapeHTML(q.question)}</div>
+                <div class="review-hi">${escapeHTML(q.questionHi)}</div>
+            `;
+        }
+
+        item.innerHTML = `
+            ${questionHTML}
+            <div class="review-answer">
+                ${t.correctAnswer}:
+                <span class="correct-text">${letters[correctAnswer]}. ${escapeHTML(correctText)}</span>
+            </div>
+            <div class="review-answer">
+                ${t.yourAnswer}:
+                <span class="${isCorrect ? "correct-text" : "wrong-text"}">
+                    ${userAnswer === null ? t.skipped : `${letters[userAnswer]}. ${escapeHTML(yourText)}`}
+                </span>
+            </div>
+            <div class="explanation">
+                <strong>${t.explanation}:</strong>
+                ${escapeHTML(correctExpl)}
+            </div>
+        `;
+        review.appendChild(item);
+    });
+}
+
+function retryTest(){
+    if(!currentTopic) return;
+    startTopic(currentTopic, currentSetNumber);
+}
+
+function restartTest(){
+    retryTest();
+}
+
+function nextSet(){
+    if(!currentTopic) return;
+    const next = currentSetNumber < 4 ? currentSetNumber + 1 : 1;
+    startTopic(currentTopic, next);
+}
+
+function startTimer(){
+    stopTimer();
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        if(!testStarted || testSubmitted) return;
+        remainingSeconds--;
+        updateTimerDisplay();
+        if(remainingSeconds <= 0){
+            stopTimer();
+            submitTest(true);
+        }
+    }, 1000);
+}
+
+function stopTimer(){
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+function updateTimerDisplay(){
+    const timer = $("timer");
+    const minutes = Math.floor(Math.max(0, remainingSeconds) / 60);
+    const seconds = Math.max(0, remainingSeconds) % 60;
+    timer.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    timer.classList.toggle("warning", remainingSeconds <= 60);
+}
+
+function exitTest(){
+    if(!testStarted || testSubmitted){
+        backToTopics();
+        return;
+    }
+    const message = selectedLanguage === "hi" ?
+        "क्या आप टेस्ट से बाहर निकलना चाहते हैं? आपकी वर्तमान प्रगति खो जाएगी।" :
+        "Are you sure you want to exit this test? Your current progress will be lost.";
+    if(confirm(message)) backToTopics();
+}
+
+function backToTopics(){
+    stopTimer();
+    testStarted = false;
+    testSubmitted = false;
+    currentQuestionIndex = 0;
+    currentQuestions = [];
+    currentTopicQuestions = [];
+    userAnswers = [];
+    markedQuestions = new Set();
+    remainingSeconds = 15 * 60;
+
+    $("testPage").style.display = "none";
+    $("resultPage").style.display = "none";
+    $("homePage").style.display = "block";
+
+    updateTimerDisplay();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goHome(){
+    backToTopics();
+}
+
+function initializeTopicCards(){
+    const container = $("topicGrid");
+    container.innerHTML = "";
+
+    const topicEntries = Object.keys(questionBank);
+
+    topicEntries.forEach((topic, index) => {
+        const card = document.createElement("div");
+        card.className = "topic-card";
+
+        card.innerHTML = `
+            <div class="topic-number">${String(index+1).padStart(2, "0")}</div>
+            <h3>${escapeHTML(topic)}</h3>
+            <div class="topic-info">4 Sets • 25 Questions per Set</div>
+            <div class="set-grid">
+                ${Array.from({length: 4}, (_, i) => `
+                    <button type="button" class="set-btn" data-set="${i+1}">Set ${i+1}</button>
+                `).join("")}
+            </div>
+        `;
+
+        card.addEventListener("click", event => {
+            const button = event.target.closest(".set-btn");
+            if(!button) return;
+            event.stopPropagation();
+            startTopic(topic, Number(button.dataset.set));
+        });
+
+        container.appendChild(card);
+    });
+
+    const topicCount = topicEntries.length;
+    const totalSets = topicCount * 4;
+    const totalQuestions = topicCount * 4 * 25;
+
+    const stats = document.querySelectorAll(".stats .stat");
+    if(stats[0]) stats[0].querySelector("strong").textContent = topicCount;
+    if(stats[1]) stats[1].querySelector("strong").textContent = totalSets;
+    if(stats[2]) stats[2].querySelector("strong").textContent = totalQuestions.toLocaleString();
+}
+
+function searchTopics(searchText){
+    const query = String(searchText || "").toLowerCase().trim();
+    document.querySelectorAll(".topic-card").forEach(card => {
+        card.style.display = card.textContent.toLowerCase().includes(query) ? "" : "none";
+    });
+}
+
+document.addEventListener("keydown", event => {
+    if(!testStarted || testSubmitted) return;
+    const tag = document.activeElement?.tagName;
+    if(["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+    const key = event.key.toLowerCase();
+    if(["a", "b", "c", "d"].includes(key)){
+        selectAnswer(key.charCodeAt(0) - 97);
+    } else if(event.key === "ArrowRight"){
+        nextQuestion();
+    } else if(event.key === "ArrowLeft"){
+        previousQuestion();
+    }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+    initializeTopicCards();
+    setLanguage("both");
+    updateTimerDisplay();
+});
+
+window.startTopic = startTopic;
+window.nextQuestion = nextQuestion;
+window.previousQuestion = previousQuestion;
+window.goToQuestion = goToQuestion;
+window.submitTest = submitTest;
+window.restartTest = restartTest;
+window.retryTest = retryTest;
+window.nextSet = nextSet;
+window.markQuestion = markQuestion;
+window.backToTopics = backToTopics;
+window.goHome = goHome;
+window.setLanguage = setLanguage;
+window.changeLanguage = changeLanguage;
+window.searchTopics = searchTopics;
+
+</script>
+
+</body>
+</html>

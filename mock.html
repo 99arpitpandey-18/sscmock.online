@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC Mock Tests | SSC MOCK</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#222;min-height:100vh}
+
+/* ===== NAVBAR ===== */
+.navbar{width:100%;min-height:78px;background:linear-gradient(135deg,#E0E7FF,#C7D2FE,#A5B4FC);color:#172554;box-shadow:0 4px 18px rgba(79,70,229,.15);display:flex;align-items:center;justify-content:space-between;gap:22px;padding:9px 4.5%;border-bottom:1px solid rgba(79,70,229,.14);position:sticky;top:0;z-index:9999}
+.logo{display:flex;align-items:center;gap:10px;min-width:205px;flex-shrink:0}
+.logo-icon{width:52px;height:52px;border-radius:50%;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid rgba(79,70,229,.18);box-shadow:0 4px 12px rgba(30,41,59,.12)}
+.logo-icon img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.logo h2{font-size:21px;line-height:1.05;white-space:nowrap;color:#172554}
+.logo h2 span{color:#4f46e5}
+.logo p{margin-top:4px;font-size:10px;color:#667085;white-space:nowrap}
+.navbar nav{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 13px;flex:1}
+.navbar nav a{text-decoration:none;color:#374151;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:5px;padding:8px 5px;border-radius:8px;white-space:nowrap;transition:.2s}
+.navbar nav a:hover,.navbar nav a.active{color:#4f46e5;background:rgba(255,255,255,.42)}
+.menu-toggle{display:none;width:40px;height:40px;border:1px solid rgba(79,70,229,.35);border-radius:9px;background:#fff;color:#4f46e5;font-size:21px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ===== SIDEBAR TOGGLE (mobile left) ===== */
+.sidebar-toggle{display:none;width:42px;height:42px;border:1px solid rgba(79,70,229,.35);border-radius:10px;background:#fff;color:#4f46e5;font-size:20px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;transition:.2s}
+.sidebar-toggle:hover{background:#f3f0ff;border-color:#4f46e5}
+.sidebar-toggle:active{transform:scale(.94)}
+
+/* ===== SIDEBAR BACKDROP ===== */
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:9998;opacity:0;transition:opacity .3s ease}
+.sidebar-backdrop.show{display:block;opacity:1}
+
+/* ===== SIDEBAR CLOSE BTN ===== */
+.sidebar-close{display:none;position:absolute;top:14px;right:14px;width:34px;height:34px;border:none;border-radius:9px;background:#f1edff;color:#301b7c;font-size:15px;font-weight:800;cursor:pointer;align-items:center;justify-content:center;transition:.2s;z-index:2;font-family:inherit}
+.sidebar-close:hover{background:#301b7c;color:#fff}
+
+/* ===== LAYOUT ===== */
+.main-layout{display:flex;min-height:calc(100vh - 78px)}
+.sidebar{width:250px;height:calc(100vh - 78px);position:fixed;left:0;top:78px;border-right:1px solid #ddd;background:#fff;overflow-y:auto;padding-bottom:30px;z-index:100}
+.profile{display:flex;align-items:center;gap:10px;padding:12px 15px;margin:5px 8px;border:1px solid transparent;border-radius:9px;transition:.3s}
+.profile:hover{background:linear-gradient(90deg,#f0ebff,#e9f0ff);border-color:#7c68e8;box-shadow:0 4px 12px rgba(48,27,124,.15)}
+.profile-image{width:38px;height:38px;background:#eee;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.3s}
+.profile:hover .profile-image{background:#301b7c;color:#fff;transform:scale(1.08)}
+.profile-name{font-size:16px;font-weight:600;color:#252525}
+.menu-title{margin:18px 8px 8px;padding:9px 12px;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#301b7c;background:linear-gradient(90deg,#f1edff 0%,#faf9ff 65%,transparent 100%);border:1px solid #ddd5ff;border-left:4px solid #301b7c;border-radius:8px}
+.menu-item{position:relative;display:flex;align-items:center;gap:9px;text-decoration:none;color:#333;font-size:14px;padding:9px 12px;margin:3px 8px;border:1px solid transparent;border-radius:8px;transition:all .3s}
+.menu-item:hover{color:#fff!important;background:linear-gradient(90deg,#301b7c,#5b3fc4,#3b82f6);border-color:#7058e8;padding-left:17px;transform:translateX(4px);box-shadow:0 5px 15px rgba(48,27,124,.30)}
+.menu-item.active{color:#fff!important;background:linear-gradient(90deg,#301b7c,#5b3fc4);border-color:#7058e8;box-shadow:0 4px 12px rgba(48,27,124,.25);font-weight:600}
+.content{margin-left:250px;width:calc(100% - 250px);padding:30px 35px 50px}
+
+/* ===== PAGE HEADING ===== */
+.page-heading{text-align:center;margin-bottom:30px}
+.animated-heading{display:block;width:fit-content;margin:0 auto 8px;font-size:20px;font-weight:700;color:#301b7c;padding:8px 18px;border:2px solid transparent;border-radius:10px;animation:headingUpDown 2.5s ease-in-out infinite;transition:.3s}
+.animated-heading:hover{color:#fff;background:#301b7c;border-color:#301b7c;box-shadow:0 0 15px rgba(48,27,124,.35)}
+.animated-subtitle{display:block;width:fit-content;margin:0 auto;font-size:13px;color:#666;padding:6px 15px;border:2px solid transparent;border-radius:8px;animation:subtitleUpDown 2.5s ease-in-out infinite;transition:.3s}
+.animated-subtitle:hover{color:#301b7c;background:#f3f0ff;border-color:#301b7c}
+@keyframes headingUpDown{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes subtitleUpDown{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ===== TEST GRID ===== */
+.test-grid{width:100%;max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.test-card{min-height:218px;border:2px solid #ddd;border-radius:10px;padding:12px;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.12);transition:transform .35s,box-shadow .35s,border-color .35s;display:flex;flex-direction:column;animation:cardFloat 3s ease-in-out infinite;cursor:pointer;position:relative}
+@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.test-card:hover{transform:translateY(-12px) scale(1.02);border-color:#301b7c;box-shadow:0 8px 20px rgba(48,27,124,.25)}
+.test-card::after{content:"";position:absolute;inset:0;border-radius:10px;pointer-events:none;transition:box-shadow .3s}
+.test-card:hover::after{box-shadow:inset 0 0 0 2px #301b7c}
+.exam-logo{width:65px;height:65px;margin:0 auto 10px;border-radius:50%;background:#fafafa;border:5px solid #f1f1f1;display:flex;justify-content:center;align-items:center;overflow:hidden;flex-shrink:0}
+.exam-logo img{width:48px;height:48px;object-fit:contain;display:block}
+.exam-logo.fallback{background:linear-gradient(135deg,#301b7c,#6244cf);color:#fff;font-size:28px;border-color:#e0d5ff}
+.test-card h3{text-align:center;font-size:17px;font-weight:600;margin-bottom:10px;color:#222}
+.test-card ul{padding-left:18px;font-size:12px;line-height:17px;margin-bottom:10px}
+.test-card li::marker{color:#333}
+.view-tests{margin-top:auto;width:100%;border:none;background:#301b7c;color:#fff;padding:9px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;transition:.3s;pointer-events:none}
+.test-card:hover .view-tests{background:#4a2ca3}
+
+/* ===== TEST LIST SECTION ===== */
+.test-list-section{display:none;width:100%;max-width:1100px;margin:0 auto;padding:25px}
+.test-list-section.show{display:block;animation:testPageOpen .5s ease}
+@keyframes testPageOpen{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.test-list-header{display:flex;align-items:center;gap:20px;margin-bottom:18px;padding:20px;background:linear-gradient(135deg,#fff,#f5f2ff);border:1px solid #ddd5ff;border-radius:14px;box-shadow:0 5px 20px rgba(48,27,124,.08)}
+.back-btn{padding:9px 14px;border:1px solid #d8d0ff;border-radius:8px;background:#fff;color:#301b7c;font-size:12px;font-weight:600;cursor:pointer;transition:.3s}
+.back-btn:hover{color:#fff;background:#301b7c;border-color:#301b7c;transform:translateX(-3px)}
+.test-list-title{display:flex;align-items:center;gap:13px;flex:1}
+.test-list-title h2{margin:0;color:#301b7c;font-size:20px}
+.test-list-title p{margin:4px 0 0;color:#777;font-size:12px}
+.test-list-badge{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#301b7c,#6244cf);color:#fff;font-size:13px;font-weight:800;box-shadow:0 5px 15px rgba(48,27,124,.25);overflow:hidden;padding:0;flex-shrink:0}
+.test-list-badge img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.test-count{display:flex;flex-direction:column;align-items:center;min-width:65px}
+.test-count strong{color:#301b7c;font-size:22px}
+.test-count span{color:#777;font-size:11px}
+.tabs-bar{display:flex;gap:10px;margin-bottom:18px;padding:6px;background:#f5f5fb;border-radius:14px;flex-wrap:wrap}
+.tab-btn{padding:11px 22px;border:none;border-radius:10px;background:transparent;color:#475569;font-size:14px;font-weight:800;cursor:pointer;transition:.25s;display:inline-flex;align-items:center;gap:8px;font-family:inherit}
+.tab-btn:hover{background:rgba(48,27,124,.06);color:#301b7c}
+.tab-btn.active{background:linear-gradient(135deg,#172554,#301b7c);color:#fff;box-shadow:0 5px 15px rgba(23,37,84,.25)}
+.tab-btn .count-badge{font-size:11.5px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:10px;font-weight:800}
+.tab-btn.active .count-badge{background:rgba(255,255,255,.3)}
+.tab-btn:not(.active) .count-badge{background:#e2e8f0;color:#301b7c}
+.tab-btn .free-tag{font-size:9.5px;background:#22c55e;color:#fff;padding:2px 7px;border-radius:5px;letter-spacing:.5px;font-weight:800}
+.tab-btn.active .free-tag{background:#16a34a}
+.test-list-container{display:flex;flex-direction:column;gap:12px}
+.single-test-card{position:relative;display:flex;align-items:center;gap:18px;padding:15px 18px;background:#fff;border:1.5px solid #e4e0f0;border-radius:12px;transition:transform .3s,border-color .3s,box-shadow .3s,background .3s;animation:testCardFloat 4s ease-in-out infinite}
+.single-test-card:hover{transform:translateX(7px);border-color:#6d55d9;background:linear-gradient(90deg,#faf8ff,#fff);box-shadow:0 7px 20px rgba(48,27,124,.13)}
+@keyframes testCardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.test-number{min-width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#f1edff;color:#301b7c;font-size:14px;font-weight:800;border:1px solid #ddd5ff;transition:.3s;flex-shrink:0}
+.single-test-card:hover .test-number{color:#fff;background:linear-gradient(135deg,#301b7c,#6244cf);border-color:#6244cf;transform:rotate(-3deg) scale(1.05)}
+.single-test-card.pyq .test-number{background:#fff7e6;color:#b45309;border-color:#fde68a}
+.single-test-card.pyq:hover .test-number{background:linear-gradient(135deg,#d97706,#f59e0b);border-color:#d97706;color:#fff}
+.test-info{flex:1;min-width:0}
+.test-info h3{margin:0 0 8px;color:#252525;font-size:14px;font-weight:700}
+.single-test-card:hover .test-info h3{color:#301b7c}
+.test-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.test-meta span{color:#777;font-size:11px;padding:4px 8px;background:#f7f7fa;border-radius:5px;display:inline-flex;align-items:center;gap:4px}
+.test-meta .difficulty-easy{background:#dcfce7!important;color:#166534!important;font-weight:700}
+.test-meta .difficulty-medium{background:#fef3c7!important;color:#92400e!important;font-weight:700}
+.test-meta .difficulty-hard{background:#fee2e2!important;color:#991b1b!important;font-weight:700}
+.test-meta .pyq-tag{background:#fff7e6!important;color:#b45309!important;font-weight:700}
+.test-meta .free-tag{background:#dcfce7!important;color:#15803d!important;font-weight:700}
+.start-test-btn{padding:11px 18px;border:1px solid #301b7c;border-radius:7px;background:#301b7c;color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.3s;min-width:130px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.start-test-btn:hover{background:#4e36b2;border-color:#4e36b2;transform:translateX(4px) scale(1.03);box-shadow:0 5px 14px rgba(48,27,124,.3)}
+.start-test-btn.pyq-btn{background:linear-gradient(135deg,#d97706,#f59e0b);border-color:#d97706}
+.start-test-btn.pyq-btn:hover{background:linear-gradient(135deg,#b45309,#d97706);border-color:#b45309}
+.empty-state{padding:60px 20px;text-align:center;color:#94a3b8;background:#fff;border:2px dashed #d8d0ff;border-radius:16px}
+.empty-state h3{font-size:18px;color:#301b7c;margin-bottom:10px;font-weight:800}
+.empty-state p{font-size:14px;line-height:1.6}
+
+/* ===== TABLET ===== */
+@media(max-width:1100px){
+    .navbar{padding:9px 3%;gap:12px}
+    .logo{min-width:185px}
+    .navbar nav{gap:3px 7px}
+    .navbar nav a{font-size:12px;padding:7px 4px}
+    .test-grid{grid-template-columns:repeat(3,1fr)}
+    .sidebar{width:220px}
+    .content{margin-left:220px;width:calc(100% - 220px)}
+}
+
+/* ===== MOBILE (≤850px) — sidebar becomes drawer ===== */
+@media(max-width:850px){
+    .navbar{min-height:66px;padding:8px 3.5%;gap:8px;flex-wrap:wrap}
+
+    /* Hamburger buttons */
+    .sidebar-toggle{display:flex!important}
+    .menu-toggle{display:flex!important}
+
+    .logo{min-width:0;flex:1;gap:8px}
+    .logo-icon{width:43px;height:43px}
+    .logo h2{font-size:18px}
+    .logo p{font-size:9px;margin-top:3px}
+
+    .navbar nav{display:none!important;width:100%;order:10;flex:none;padding:10px;margin-top:3px;background:#fff;border:1px solid rgba(79,70,229,.18);border-radius:12px;box-shadow:0 10px 30px rgba(15,23,42,.15);grid-template-columns:repeat(2,1fr);gap:7px}
+    .navbar nav.show{display:grid!important}
+    .navbar nav a{width:100%;min-height:42px;display:flex;align-items:center;justify-content:flex-start;padding:10px 9px;font-size:13px;background:#f8fafc;border-radius:9px}
+
+    /* Sidebar becomes slide-in drawer */
+    .sidebar{
+        display:block!important;
+        position:fixed;
+        left:-290px;
+        top:0;
+        width:265px;
+        height:100vh;
+        z-index:10001;
+        background:#fff;
+        border-right:none;
+        border-radius:0 18px 18px 0;
+        overflow-y:auto;
+        padding:60px 0 30px;
+        transition:left .32s cubic-bezier(.4,0,.2,1);
+        box-shadow:6px 0 28px rgba(15,23,42,.22);
+    }
+    .sidebar.open{left:0}
+    .sidebar-close{display:flex}
+
+    .content{margin-left:0;width:100%;padding:24px 12px 40px}
+    .test-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:600px){
+    .navbar{min-height:62px;padding:7px 3%}
+    .logo-icon{width:39px;height:39px}
+    .logo h2{font-size:16px}
+    .logo p{font-size:8px}
+    .sidebar-toggle{width:38px;height:38px;font-size:18px}
+    .menu-toggle{width:36px;height:36px;font-size:19px}
+    .navbar nav{grid-template-columns:1fr 1fr;padding:8px;gap:6px}
+    .navbar nav a{min-height:40px;font-size:12px;padding:9px 8px}
+    .test-grid{grid-template-columns:1fr;max-width:430px}
+    .test-card{min-height:220px}
+    .animated-heading{font-size:17px;text-align:center}
+    .animated-subtitle{font-size:12px;text-align:center}
+    .test-list-section{padding:15px 0}
+    .test-list-header{flex-wrap:wrap;gap:12px;padding:15px}
+    .test-list-title{order:3;width:100%}
+    .test-list-title h2{font-size:17px}
+    .single-test-card{flex-wrap:wrap;align-items:flex-start;padding:14px}
+    .test-info{width:100%}
+    .start-test-btn{width:100%}
+    .tabs-bar{padding:5px}
+    .tab-btn{padding:9px 14px;font-size:12.5px;flex:1;justify-content:center}
+    .tab-btn .count-badge{font-size:10px;padding:1px 6px}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+    <!-- ✅ NEW: Sidebar toggle (left) -->
+    <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Open menu">☰</button>
+
+    <div class="logo">
+        <div class="logo-icon">
+            <img src="images/WhatsApp Image 2026-09-09 at 12.46.43 PM.jpeg" alt="SSC MOCK Logo" onerror="this.onerror=null;this.src='../images/WhatsApp Image 2026-09-09 at 12.46.43 PM.jpeg';">
+        </div>
+        <div>
+            <h2>SSC <span>MOCK</span></h2>
+            <p>Practice • Analyze • Succeed</p>
+        </div>
+    </div>
+
+    <nav id="mainNav">
+        <a href="new.html">🏠 Home</a>
+        <a href="mock.html" class="active">📝 Mock Tests</a>
+        <a href="previous.html">📄 PYQ</a>
+        <a href="quiz.html">✏️ Daily Quiz</a>
+        <a href="Study Notes.html">📚 Study Notes</a>
+        <a href="E-Book/E-book.html">📖 E-Books</a>
+    </nav>
+
+    <button class="menu-toggle" id="menuToggle" type="button">☰</button>
+</header>
+
+<div class="main-layout">
+    <aside class="sidebar" id="appSidebar">
+        <!-- ✅ NEW: Close button -->
+        <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">✕</button>
+
+        <div class="profile">
+            <div class="profile-image">👤</div>
+            <div class="profile-name">Arpit Pandey</div>
+        </div>
+
+        <div class="menu-title">Tests</div>
+        <a href="#" class="menu-item active">▣ <span>Mock Test</span></a>
+        <!-- ✅ NEW: My Analysis link -->
+        <a href="SSC%20MOCK%20TEST/analysis.html" class="menu-item">📊 <span>My Analysis</span></a>
+        <a href="quiz.html" class="menu-item">📝 <span>Daily Quiz</span></a>
+        <a href="typing-test.html" class="menu-item">⌨ <span>Typing Test</span></a>
+
+        <div class="menu-title">Daily Study</div>
+        <a href="previous.html" class="menu-item">📁 <span>PYQ Papers</span></a>
+        <a href="current.html" class="menu-item">📰 <span>Current Affairs</span></a>
+        <a href="E-Book/E-book.html" class="menu-item">📚 <span>E-Books</span></a>
+
+        <div class="menu-title">Account</div>
+        <a href="new.html" class="menu-item">👤 <span>My Profile</span></a>
+        <a href="#" class="menu-item">🚪 <span>Logout</span></a>
+    </aside>
+
+    <!-- ✅ NEW: Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <main class="content">
+        <section class="page-heading" id="pageHeading">
+            <h1 class="animated-heading">Latest Online Test Series by SSC MOCK</h1>
+            <p class="animated-subtitle">Online Test Series for Government Exams</p>
+        </section>
+
+        <div class="test-grid" id="testGrid"></div>
+
+        <section id="testListSection" class="test-list-section">
+            <div class="test-list-header">
+                <button id="backToTests" class="back-btn" type="button">← Back to Test Series</button>
+                <div class="test-list-title">
+                    <span class="test-list-badge" id="examBadge">SSC</span>
+                    <div>
+                        <h2 id="selectedExam">Loading...</h2>
+                        <p id="examSubtitle">Select a test and start your preparation</p>
+                    </div>
+                </div>
+                <div class="test-count">
+                    <strong id="testCount">0</strong>
+                    <span id="testCountLabel">Tests</span>
+                </div>
+            </div>
+
+            <div class="tabs-bar" id="tabsBar">
+                <button class="tab-btn active" type="button" data-tab="mocks">
+                    Mocks <span class="count-badge" id="tabMocksCount">0</span>
+                </button>
+                <button class="tab-btn" type="button" data-tab="pyqs">
+                    Previous Year <span class="count-badge" id="tabPyqsCount">0</span>
+                    <span class="free-tag">FREE</span>
+                </button>
+            </div>
+
+            <div class="test-list-container" id="testListContainer"></div>
+        </section>
+    </main>
+</div>
+
+<!-- ============================================================
+     DATA FILES
+============================================================ -->
+<script src="SSC%20MOCK%20TEST/data/cgl-tier1.js?v=1"></script>
+<script src="SSC%20MOCK%20TEST/data/cgl-tier2.js?v=2"></script>
+<script src="SSC%20MOCK%20TEST/data/cpo-paper1.js?v=3"></script>
+<script src="SSC%20MOCK%20TEST/data/cpo-paper2.js?v=4"></script>
+<script src="SSC%20MOCK%20TEST/data/chsl-tier1.js?v=5"></script>
+<script src="SSC%20MOCK%20TEST/data/chsl-tier2.js?v=6"></script>
+<script src="SSC%20MOCK%20TEST/data/mts.js?v=1001"></script>
+<script src="SSC%20MOCK%20TEST/data/gd.js?v=1000"></script>
+<script src="SSC%20MOCK%20TEST/data/selection-post.js?v=1002"></script>
+<script src="SSC%20MOCK%20TEST/data/steno.js?v=1003"></script>
+<script>
+(function(){
+    "use strict";
+
+    /* ============================================
+       EXAM CARD CONFIG
+    ============================================ */
+    const EXAM_META_INFO = {
+        "cgl-tier1":      { icon: "📝", list: ["100 Total Tests", "40 Previous Mock Tests", "42 Full Tests", "18 Sectional Tests"] },
+        "cgl-tier2":      { icon: "📝", list: ["80 Total Tests", "30 Previous Mock Tests", "35 Full Tests", "15 Sectional Tests"] },
+        "cpo-paper1":     { icon: "👮", list: ["60 Total Tests", "20 Previous Mock Tests", "30 Full Tests", "10 Sectional Tests"] },
+        "cpo-paper2":     { icon: "👮", list: ["40 Total Tests", "10 Previous Mock Tests", "20 Full Tests", "10 Sectional Tests"] },
+        "chsl-tier1":     { icon: "🧑‍💻", list: ["80 Total Tests", "30 Previous Mock Tests", "35 Full Tests", "15 Sectional Tests"] },
+        "chsl-tier2":     { icon: "🧑‍💻", list: ["50 Total Tests", "15 Previous Mock Tests", "25 Full Tests", "10 Sectional Tests"] },
+        "mts":            { icon: "🧑‍🔧", list: ["70 Total Tests", "25 Previous Tests", "35 Full Tests", "10 Sectional Tests"] },
+        "gd":             { icon: "🪖", list: ["100 Total Tests", "40 Previous Year Tests", "50 Full Tests", "10 Sectional Tests"] },
+        "selection-post": { icon: "🏛️", list: ["80 Total Tests", "30 Previous Tests", "40 Full Tests", "10 Sectional Tests"] },
+        "steno":          { icon: "⌨️", list: ["100 Total Tests", "40 Previous Mock Tests", "42 Full Tests", "18 Sectional Tests"] }
+    };
+
+    const EXAM_SHORT = {
+        "cgl-tier1": "SSC CGL Tier 1",
+        "cgl-tier2": "SSC CGL Tier 2",
+        "cpo-paper1": "SSC CPO Paper 1",
+        "cpo-paper2": "SSC CPO Paper 2",
+        "chsl-tier1": "SSC CHSL Tier 1",
+        "chsl-tier2": "SSC CHSL Tier 2",
+        "mts": "SSC MTS",
+        "gd": "SSC GD",
+        "selection-post": "SSC Selection Post",
+        "steno": "SSC Stenographer"
+    };
+
+    const SSC_LOGO_PATH = "ssc-exam_1654329802.png";
+
+    const testGrid = document.getElementById("testGrid");
+    const pageHeading = document.getElementById("pageHeading");
+    const testListSection = document.getElementById("testListSection");
+    const testListContainer = document.getElementById("testListContainer");
+    const selectedExamEl = document.getElementById("selectedExam");
+    const testCountEl = document.getElementById("testCount");
+    const testCountLabel = document.getElementById("testCountLabel");
+    const examBadge = document.getElementById("examBadge");
+    const examSubtitle = document.getElementById("examSubtitle");
+    const backBtn = document.getElementById("backToTests");
+    const tabsBar = document.getElementById("tabsBar");
+    const tabMocksCount = document.getElementById("tabMocksCount");
+    const tabPyqsCount = document.getElementById("tabPyqsCount");
+
+    /* ✅ Sidebar elements */
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const sidebarClose = document.getElementById("sidebarClose");
+    const appSidebar = document.getElementById("appSidebar");
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+
+    let currentExamKey = null;
+    let currentTab = "mocks";
+
+    /* ============================================
+       SIDEBAR DRAWER LOGIC
+    ============================================ */
+    function openSidebar(){
+        appSidebar.classList.add("open");
+        sidebarBackdrop.classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
+    function closeSidebar(){
+        appSidebar.classList.remove("open");
+        sidebarBackdrop.classList.remove("show");
+        document.body.style.overflow = "";
+    }
+    if (sidebarToggle) sidebarToggle.addEventListener("click", openSidebar);
+    if (sidebarClose) sidebarClose.addEventListener("click", closeSidebar);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener("click", closeSidebar);
+
+    /* Auto close on menu item click (mobile) */
+    appSidebar.querySelectorAll(".menu-item").forEach(function(item){
+        item.addEventListener("click", function(){
+            if (window.innerWidth <= 850) closeSidebar();
+        });
+    });
+
+    /* Auto close on resize */
+    window.addEventListener("resize", function(){
+        if (window.innerWidth > 850 && appSidebar.classList.contains("open")) closeSidebar();
+    });
+
+    /* ESC key */
+    document.addEventListener("keydown", function(e){
+        if (e.key === "Escape") closeSidebar();
+    });
+
+    /* ============================================
+       AUTO-GENERATE 20 TESTS
+    ============================================ */
+    function ensure20MockTests(examKey, existingTests) {
+        const existing = existingTests || [];
+        const TOTAL = 20;
+        if (existing.length >= TOTAL) return existing.slice(0, TOTAL);
+        const filled = existing.slice();
+        for (let i = filled.length + 1; i <= TOTAL; i++) {
+            let difficulty = "Easy";
+            if (i > 15) difficulty = "Hard";
+            else if (i > 5) difficulty = "Medium";
+            filled.push({
+                id: examKey + "-t" + i,
+                title: "Mock Test " + i,
+                difficulty: difficulty,
+                questions: [],
+                placeholder: true
+            });
+        }
+        return filled;
+    }
+
+    function ensure20Pyqs(examKey, existingPyqs) {
+        const existing = existingPyqs || [];
+        const TOTAL = 20;
+        const shortName = EXAM_SHORT[examKey] || "SSC";
+        if (existing.length >= TOTAL) return existing.slice(0, TOTAL);
+        const filled = existing.slice();
+        const currentYear = 2024;
+        for (let i = filled.length; i < TOTAL; i++) {
+            const year = currentYear - i;
+            let difficulty = "Medium";
+            if (i < 5) difficulty = "Medium";
+            else if (i < 12) difficulty = "Hard";
+            else difficulty = "Medium";
+            filled.push({
+                id: examKey + "-pyq-" + year,
+                title: shortName + " " + year,
+                year: year,
+                difficulty: difficulty,
+                questions: [],
+                placeholder: true,
+                isPyq: true
+            });
+        }
+        return filled;
+    }
+
+    function buildExamCards() {
+        const data = window.MOCK_DATA || {};
+        const keys = Object.keys(data);
+        if (keys.length === 0) {
+            testGrid.innerHTML =
+                '<div class="empty-state" style="grid-column:1/-1">' +
+                    '<h3>🚧 Exams Jald Aa Rahe Hain!</h3>' +
+                    '<p>Data files load nahi ho paayi. Folder check karein:<br><code>SSC MOCK TEST/data/</code></p>' +
+                '</div>';
+            return;
+        }
+        testGrid.innerHTML = keys.map(function(key){
+            const exam = data[key];
+            const info = EXAM_META_INFO[key] || { icon: "📝", list: ["Mock Tests", "Full Tests", "Sectional Tests"] };
+            const title = exam.title || key;
+            const mocksCount = ensure20MockTests(key, exam.tests).length;
+            const pyqsCount = ensure20Pyqs(key, exam.pyqs).length;
+            const totalCount = mocksCount + pyqsCount;
+            return (
+                '<div class="test-card" data-exam="' + key + '">' +
+                    '<div class="exam-logo">' +
+                        '<img src="' + SSC_LOGO_PATH + '" alt="SSC Logo" ' +
+                             'onerror="this.parentElement.classList.add(\'fallback\');this.parentElement.innerHTML=\'' + info.icon + '\';">' +
+                    '</div>' +
+                    '<h3>' + escapeHTML(title) + '</h3>' +
+                    '<ul>' +
+                        info.list.map(function(l){ return '<li>' + escapeHTML(l) + '</li>'; }).join("") +
+                    '</ul>' +
+                    '<button class="view-tests" type="button">View All Tests (' + totalCount + ')</button>' +
+                '</div>'
+            );
+        }).join("");
+        testGrid.querySelectorAll(".test-card").forEach(function(card){
+            card.addEventListener("click", function(){
+                openTestList(this.dataset.exam);
+            });
+        });
+    }
+
+    function openTestList(examKey) {
+        const data = window.MOCK_DATA || {};
+        const exam = data[examKey];
+        if (!exam) return;
+        currentExamKey = examKey;
+        currentTab = "mocks";
+        const info = EXAM_META_INFO[examKey] || { icon: "📝" };
+        const mocks = ensure20MockTests(examKey, exam.tests);
+        const pyqs = ensure20Pyqs(examKey, exam.pyqs);
+        selectedExamEl.textContent = exam.title || examKey;
+        examBadge.innerHTML =
+            '<img src="' + SSC_LOGO_PATH + '" alt="SSC" ' +
+            'onerror="this.parentElement.innerHTML=\'' + info.icon + '\';">';
+        tabMocksCount.textContent = mocks.length;
+        tabPyqsCount.textContent = pyqs.length;
+        tabsBar.querySelectorAll(".tab-btn").forEach(function(btn){
+            btn.classList.toggle("active", btn.dataset.tab === "mocks");
+            btn.onclick = function(){
+                currentTab = this.dataset.tab;
+                tabsBar.querySelectorAll(".tab-btn").forEach(function(b){
+                    b.classList.toggle("active", b === this);
+                }.bind(this));
+                renderTabContent(examKey, exam);
+            };
+        });
+        renderTabContent(examKey, exam);
+        testGrid.style.display = "none";
+        pageHeading.style.display = "none";
+        testListSection.classList.add("show");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderTabContent(examKey, exam) {
+        const isPyq = currentTab === "pyqs";
+        const list = isPyq
+            ? ensure20Pyqs(examKey, exam.pyqs)
+            : ensure20MockTests(examKey, exam.tests);
+        testCountEl.textContent = list.length;
+        testCountLabel.textContent = isPyq ? "Papers" : "Tests";
+        examSubtitle.textContent = isPyq
+            ? "Attempt previous year papers as full mock test"
+            : "Select a test and start your preparation";
+        testListContainer.innerHTML = list.map(function(t, i){
+            const qCount = (t.questions || []).length;
+            const diff = (t.difficulty || "Easy");
+            const diffClass = "difficulty-" + diff.toLowerCase();
+            const attempts = Math.floor(Math.random() * 12000) + 500;
+            const isPlaceholder = t.placeholder || qCount === 0;
+            let cardTitle = t.title || ("Mock Test " + (i + 1));
+            if (isPyq && t.year) {
+                cardTitle = (EXAM_SHORT[examKey] || "SSC") + " " + t.year;
+            }
+            const cardClass = "single-test-card" + (isPyq ? " pyq" : "");
+            const btnClass = "start-test-btn" + (isPyq ? " pyq-btn" : "");
+            const pyqTagHtml = isPyq ? '<span class="pyq-tag">📅 ' + (t.year || "Previous") + '</span>' : '';
+            const freeTagHtml = isPyq ? '<span class="free-tag">FREE</span>' : '';
+            return (
+                '<div class="' + cardClass + '">' +
+                    '<div class="test-number">' + String(i + 1).padStart(2, "0") + '</div>' +
+                    '<div class="test-info">' +
+                        '<h3>' + escapeHTML(exam.title || examKey) + ' — ' + escapeHTML(cardTitle) + '</h3>' +
+                        '<div class="test-meta">' +
+                            '<span>📝 ' + (qCount || "?") + ' Questions</span>' +
+                            '<span>⏱ ' + (exam.duration || 60) + ' Min</span>' +
+                            '<span>🏆 ' + (exam.marks || 200) + ' Marks</span>' +
+                            '<span class="' + diffClass + '">⚡ ' + diff + '</span>' +
+                            pyqTagHtml +
+                            freeTagHtml +
+                            '<span>👥 ' + attempts.toLocaleString("en-IN") + ' attempts</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<button class="' + btnClass + '" type="button" ' +
+                        'data-exam="' + examKey + '" ' +
+                        'data-test="' + t.id + '" ' +
+                        'data-type="' + (isPyq ? "pyq" : "mock") + '" ' +
+                        'data-placeholder="' + (isPlaceholder ? "1" : "0") + '">' +
+                        (isPlaceholder ? 'Coming Soon' : 'Start Test →') +
+                    '</button>' +
+                '</div>'
+            );
+        }).join("");
+        testListContainer.querySelectorAll(".start-test-btn").forEach(function(btn){
+            btn.addEventListener("click", function(e){
+                e.stopPropagation();
+                if (this.dataset.placeholder === "1") {
+                    alert(
+                        "🚧 Ye " + (this.dataset.type === "pyq" ? "PYQ paper" : "test") + " jald aa raha hai!\n\n" +
+                        "Is " + (this.dataset.type === "pyq" ? "paper" : "exam") + " mein abhi questions add nahi hue hain.\n\n" +
+                        "Jab data add hoga, tab ye kaam karega."
+                    );
+                    return;
+                }
+                startMock(this.dataset.exam, this.dataset.test, this.dataset.type);
+            });
+        });
+    }
+
+    function startMock(examKey, testId, type) {
+        const url = "SSC%20MOCK%20TEST/test-interface.html?exam=" +
+                    encodeURIComponent(examKey) +
+                    "&test=" + encodeURIComponent(testId) +
+                    "&type=" + encodeURIComponent(type || "mock");
+        console.log("🚀 Starting:", url);
+        window.location.href = url;
+    }
+
+    backBtn.addEventListener("click", function(){
+        testListSection.classList.remove("show");
+        testGrid.style.display = "grid";
+        pageHeading.style.display = "block";
+        currentExamKey = null;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const menuToggle = document.getElementById("menuToggle");
+    const mainNav = document.getElementById("mainNav");
+    menuToggle.addEventListener("click", function(){
+        mainNav.classList.toggle("show");
+        menuToggle.textContent = mainNav.classList.contains("show") ? "✕" : "☰";
+    });
+    mainNav.querySelectorAll("a").forEach(function(a){
+        a.addEventListener("click", function(){
+            if (window.innerWidth <= 850) {
+                mainNav.classList.remove("show");
+                menuToggle.textContent = "☰";
+            }
+        });
+    });
+
+    function escapeHTML(t) {
+        return String(t)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", buildExamCards);
+    } else {
+        buildExamCards();
+    }
+    console.log("🎯 Available exams:", window.MOCK_DATA ? Object.keys(window.MOCK_DATA) : "(none)");
+})();
+</script>
+
+</body>
+</html>

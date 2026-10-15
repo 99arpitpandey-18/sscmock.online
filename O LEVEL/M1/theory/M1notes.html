@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC MOCK - O-Level (M1-R5) IT Tools & Basics of Networks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ── Reset & Base ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a3a5c;
+            --primary-light: #2a5a7a;
+            --secondary: #e67e22;
+            --accent: #c0392b;
+            --bg: #f7f4f0;
+            --card-bg: #ffffff;
+            --text: #1e1e2a;
+            --text-light: #3d3d4a;
+            --border: #e0dbd4;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --max-width: 820px;
+            --font-deva: 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
+            --font-eng: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-deva);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .book-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 8px;
+        }
+
+        /* ── Typography ── */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            letter-spacing: -0.01em;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.8rem;
+            margin-bottom: 0.6rem;
+            color: var(--primary-light);
+        }
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--text-light);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: var(--accent);
+        }
+
+        /* ── Cover ── */
+        .cover {
+            background: linear-gradient(145deg, var(--primary) 0%, #0f2a44 100%);
+            color: #fff;
+            padding: 3.5rem 2.5rem;
+            text-align: center;
+            border-bottom: 6px solid var(--secondary);
+        }
+        .cover .brand {
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+        .cover h1 {
+            color: #fff;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.3rem;
+        }
+        .cover .sub {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.85;
+            margin-bottom: 0.5rem;
+        }
+        .cover .detail {
+            font-size: 1rem;
+            opacity: 0.65;
+            font-weight: 300;
+        }
+        .cover .badge {
+            display: inline-block;
+            margin-top: 1.2rem;
+            background: var(--secondary);
+            padding: 0.3rem 1.6rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .cover .chapters-count {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* ── TOC ── */
+        .toc {
+            padding: 2rem 2.5rem;
+            background: #faf8f6;
+            border-bottom: 1px solid var(--border);
+        }
+        .toc h2 {
+            border-bottom: none;
+            margin-top: 0;
+            font-size: 1.6rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .toc h2::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--border), transparent);
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem 1.5rem;
+            margin-top: 0.8rem;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+        }
+        .toc-item:hover {
+            background: rgba(26, 58, 92, 0.06);
+        }
+        .toc-item .num {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            min-width: 1.8rem;
+        }
+        .toc-item a {
+            color: var(--text);
+            font-weight: 500;
+        }
+        .toc-item a:hover {
+            color: var(--secondary);
+        }
+
+        /* ── Content ── */
+        .content {
+            padding: 2rem 2.5rem 3rem;
+        }
+
+        .chapter {
+            scroll-margin-top: 1rem;
+            padding-top: 0.5rem;
+        }
+        .chapter+.chapter {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px dashed var(--border);
+        }
+
+        .chapter-head {
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .chapter-head .ch-num {
+            background: var(--secondary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── Lists ── */
+        ul,
+        ol {
+            padding-left: 1.6rem;
+            margin-bottom: 1.2rem;
+        }
+        li {
+            margin-bottom: 0.3rem;
+        }
+
+        .check-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .check-list li {
+            padding-left: 1.8rem;
+            position: relative;
+            margin-bottom: 0.4rem;
+        }
+        .check-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .arrow-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .arrow-list li {
+            padding-left: 1.6rem;
+            position: relative;
+            margin-bottom: 0.3rem;
+        }
+        .arrow-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* ── Tables ── */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.2rem 0 1.8rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+        th,
+        td {
+            padding: 0.6rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 500;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:nth-child(even) td {
+            background: #f9f7f5;
+        }
+
+        /* ── Cards / Boxes ── */
+        .info-box {
+            background: #f0edeb;
+            border-left: 5px solid var(--secondary);
+            padding: 1rem 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.2rem 0;
+        }
+        .info-box strong {
+            color: var(--primary);
+        }
+
+        .tip-box {
+            background: #eaf4f0;
+            border-left: 5px solid #1a8a5a;
+            padding: 1rem 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.2rem 0;
+        }
+
+        .warning-box {
+            background: #fdf0e6;
+            border-left: 5px solid var(--accent);
+            padding: 1rem 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.2rem 0;
+        }
+
+        /* ── Keyboard shortcuts ── */
+        .kbd-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem 2rem;
+            background: #f8f6f4;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+        .kbd-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.15rem 0;
+            font-size: 0.9rem;
+            border-bottom: 1px dotted #e8e3dc;
+        }
+        .kbd-item:last-child {
+            border-bottom: none;
+        }
+        .kbd-item .key {
+            font-family: var(--font-eng);
+            font-weight: 600;
+            color: var(--primary);
+            background: #eae5de;
+            padding: 0 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* ── Important Questions ── */
+        .questions {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 3px double var(--border);
+        }
+        .questions h3 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+        .q-item {
+            margin-bottom: 1.8rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--secondary);
+            padding-left: 1rem;
+        }
+        .q-item .q {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .q-item .q-label {
+            color: var(--secondary);
+            font-weight: 700;
+            margin-right: 0.3rem;
+        }
+
+        /* ── Navigation ── */
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .chapter-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background 0.25s, transform 0.15s;
+        }
+        .chapter-nav a:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+        .chapter-nav a.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 700px) {
+            body {
+                padding: 0.6rem;
+            }
+            .cover {
+                padding: 2rem 1.2rem;
+            }
+            .cover h1 {
+                font-size: 1.8rem;
+            }
+            .cover .sub {
+                font-size: 1rem;
+            }
+            .toc {
+                padding: 1.2rem 1.2rem;
+            }
+            .toc-grid {
+                grid-template-columns: 1fr;
+                gap: 0.1rem;
+            }
+            .content {
+                padding: 1.2rem 1.2rem 2rem;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .kbd-grid {
+                grid-template-columns: 1fr;
+                padding: 0.8rem 1rem;
+            }
+            .chapter-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .chapter-nav a {
+                justify-content: center;
+            }
+            .table-wrap {
+                font-size: 0.8rem;
+            }
+            th,
+            td {
+                padding: 0.4rem 0.6rem;
+            }
+            .toc-item {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .cover h1 {
+                font-size: 1.4rem;
+            }
+            .content {
+                padding: 0.8rem 0.8rem 1.5rem;
+            }
+            .info-box,
+            .tip-box,
+            .warning-box {
+                padding: 0.7rem 1rem;
+            }
+        }
+
+        /* ── Print ── */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0.2in;
+            }
+            .book-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .cover {
+                background: #1a3a5c !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .chapter-nav {
+                display: none;
+            }
+            .toc {
+                break-after: avoid;
+            }
+            .chapter {
+                break-inside: avoid;
+                page-break-after: always;
+            }
+            .chapter:last-child {
+                page-break-after: avoid;
+            }
+        }
+
+        /* ── Misc ── */
+        .text-center {
+            text-align: center;
+        }
+        .mt-1 {
+            margin-top: 1rem;
+        }
+        .mb-1 {
+            margin-bottom: 1rem;
+        }
+        .small {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .highlight {
+            background: #fef3d7;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, var(--border), transparent);
+            margin: 2rem 0;
+        }
+
+        .note-credit {
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background: #faf8f6;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+        .note-credit strong {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="book-container">
+
+        <!-- ======== COVER ======== -->
+        <div class="cover">
+            <div class="brand">SSC MOCK</div>
+            <h1>O-Level (M1-R5)</h1>
+            <div class="sub">IT Tools &amp; Basics of Networks</div>
+            <div class="detail">Video Tutorial &bull; Full Playlist on YouTube</div>
+            <div class="badge">📺 SSC MOCK</div>
+            <div class="chapters-count">9 Chapters &bull; Complete Study Material</div>
+            <div style="margin-top:1.2rem; font-size:0.75rem; opacity:0.4;">
+                SSC MOCK &bull; SSC MOCK
+            </div>
+        </div>
+
+        <!-- ======== TOC ======== -->
+        <div class="toc" id="toc">
+            <h2>📖 सामग्री · Contents</h2>
+            <div class="toc-grid">
+                <div class="toc-item"><span class="num">01</span><a href="#ch1">Introduction to Computer</a></div>
+                <div class="toc-item"><span class="num">02</span><a href="#ch2">Introduction to Operating System</a></div>
+                <div class="toc-item"><span class="num">03</span><a href="#ch3">Word Processing</a></div>
+                <div class="toc-item"><span class="num">04</span><a href="#ch4">Spreadsheet</a></div>
+                <div class="toc-item"><span class="num">05</span><a href="#ch5">Presentation</a></div>
+                <div class="toc-item"><span class="num">06</span><a href="#ch6">Introduction to Internet &amp; WWW</a></div>
+                <div class="toc-item"><span class="num">07</span><a href="#ch7">E-mail, Social Networking &amp; e-Governance</a></div>
+                <div class="toc-item"><span class="num">08</span><a href="#ch8">Digital Financial Tools &amp; Applications</a></div>
+                <div class="toc-item"><span class="num">09</span><a href="#ch9">Futureskills &amp; Cyber Security</a></div>
+            </div>
+        </div>
+
+        <!-- ======== CONTENT ======== -->
+        <div class="content">
+
+            <!-- ============================== CHAPTER 1 ============================== -->
+            <div class="chapter" id="ch1">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 1</span>
+                    <h2>Introduction to Computer</h2>
+                </div>
+
+                <p>Computer एक Electronic machine है, जो हमारे दिए गए निर्देशों पर कार्य करती है। Computer Hardware और Software से मिलकर बना है, यह एक सार्वभौमिक मशीन है। Computer शब्द की उत्पत्ति कंप्यूट (Compute) शब्द से हुई है, जिसका अर्थ है गणना करना। Computer को हिंदी में संगणक कहते हैं, जो तेज गति से Arithmetic and Logical operation करता है।</p>
+
+                <p><strong>Computer विभिन्न कार्यों को करता है:</strong></p>
+                <ul class="check-list">
+                    <li>यह Input के रूप में Data या Instructions को Accept करता है।</li>
+                    <li>यह Data और Instructions को Store करता है।</li>
+                    <li>यह Instructions के अनुसार Data को Processed करता है।</li>
+                    <li>यह Computer के अंदर होने वाले सभी operations को Control करता है।</li>
+                    <li>यह Output के रूप में Result देता है।</li>
+                </ul>
+
+                <h3>Computer Terms</h3>
+                <ul class="arrow-list">
+                    <li><strong>Data</strong> — Row Facts and Figure जिन्हें Processed करने की आवश्यकता होती है।</li>
+                    <li><strong>Information</strong> — Meaningful Data जो Processed और Organized होता है, जिसे पढ़कर समझा जा सकता है।</li>
+                    <li><strong>Instruction</strong> — Command जो Computer को बताता है, क्या करना है।</li>
+                    <li><strong>Processing</strong> — Data पर Order में किए गए Works को Processing कहते हैं, जो Data को Information में Convert करने का कार्य करती है।</li>
+                    <li><strong>Hardware</strong> — Computer के Physical Component को Hardware कहते हैं।</li>
+                    <li><strong>Program</strong> — Program एक प्रकार का निर्देशों का समूह होता है, जो Computer को Sequential या Non Sequential order में बताता है कि उसे क्या करना है।</li>
+                    <li><strong>Software</strong> — Program के समूह को Software कहते हैं, जिसके द्वारा Computer किसी विशेष प्रकार के कार्य को करता है।</li>
+                </ul>
+
+                <h3>Computer के प्रमुख घटक</h3>
+                <ul class="arrow-list">
+                    <li>Central Processing Unit (CPU)</li>
+                    <li>Memory Unit</li>
+                    <li>Input Device</li>
+                    <li>Output Device</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>Block Diagram of Computer:</strong><br />
+                    Input Unit → Memory Unit → CPU (Control Unit + ALU) → Output Unit<br />
+                    Secondary Storage (connected to Memory Unit)
+                </div>
+
+                <h4>Central Processing Unit (CPU)</h4>
+                <p>CPU का पूरा नाम Central Processing Unit है। यह Computer का दिमाग होता है। CPU का काम निर्देशों या प्रोग्रामों को Execute करना होता है। CPU निम्न Unit से मिलकर बना होता है:</p>
+                <ul class="arrow-list">
+                    <li><strong>CU</strong> (Control Unit) — पूरे Computer System के सभी कार्यों को नियंत्रित करता है।</li>
+                    <li><strong>ALU</strong> (Arithmetic Logical Unit) — Computer में सभी Arithmetic एवं Logical कार्य किए जाते हैं।</li>
+                    <li><strong>General Purpose Registers (MU)</strong> — Processing के समय Data को Store करने का काम करती है, Computer की सबसे Fast Memory।</li>
+                </ul>
+
+                <h3>Classification of Computer</h3>
+                <p>Computer को दो तरीकों से Classified किया गया है:</p>
+                <ul class="arrow-list">
+                    <li>कार्य करने के आधार पर (On the basis of work)</li>
+                    <li>आकार के आधार पर (On the basis of size)</li>
+                </ul>
+
+                <h4>Type of Computer Basis on Work</h4>
+                <ul class="arrow-list">
+                    <li><strong>Analog Computer</strong> — भौतिक मात्राओं को मापने का कार्य करते हैं (ताप, दबाव, लंबाई, चौड़ाई आदि)।</li>
+                    <li><strong>Digital Computer</strong> — Calculations and Logical Operations करते हैं। Data को 0,1 में परिवर्तित करके Electronic रूप में लेता है।</li>
+                    <li><strong>Hybrid Computer</strong> — Analog और Digital Computer दोनों का कार्य करते हैं (जैसे Petrol Pump)।</li>
+                </ul>
+
+                <h4>Type of Computer Base on Size</h4>
+                <ul class="arrow-list">
+                    <li><strong>Micro Computer</strong> — आकार में छोटे, Microprocessor का उपयोग, घरों और छोटे व्यवसायों में उपयोग। (Desktop, Laptop, Palmtop, Notebook, Tablet)</li>
+                    <li><strong>Mini Computer</strong> — कंपनियों और सरकारी ऑफिस में Server Computer के कार्य के लिए। PDP-8 First Mini Computer (1965)।</li>
+                    <li><strong>Mainframe Computer</strong> — बड़ी कंपनियों और सरकारी ऑफिस में Server Computer के कार्य के लिए।</li>
+                    <li><strong>Super Computer</strong> — विशेष कार्य के लिए निर्मित, दुनिया के सबसे तेज़ और बड़े Computer। भारत का पहला Super Computer PARAM 8000।</li>
+                </ul>
+
+                <h3>Computer की विशेषताएँ</h3>
+                <ul class="check-list">
+                    <li><strong>Speed (गति)</strong> — बहुत तीव्र गति से कार्य करता है, Processor की Speed को Hertz में मापा जाता है।</li>
+                    <li><strong>Accuracy (शुद्धता)</strong> — कार्य को बहुत शुद्धता के साथ करता है।</li>
+                    <li><strong>Multitalented (सार्वभौमिकता)</strong> — एक Multifunctional Machine है।</li>
+                    <li><strong>Memory</strong> — याद रखने की क्षमता बहुत अधिक है, आवश्यकतानुसार बढ़ाई या घटाई जा सकती है।</li>
+                    <li><strong>Diligence (परिश्रमशीलता)</strong> — बिना थके कई दिनों तक कार्य करने की क्षमता।</li>
+                    <li><strong>Honest (ईमानदारी)</strong> — कार्य को ईमानदारी के साथ करता है।</li>
+                    <li><strong>User-Friendly</strong> — चलाना सरल है।</li>
+                </ul>
+
+                <h3>Weakness (कमियाँ)</h3>
+                <ul class="arrow-list">
+                    <li><strong>No IQ</strong> — सोचने-समझने की क्षमता नहीं है।</li>
+                    <li><strong>No Feeling</strong> — भावना नहीं है।</li>
+                </ul>
+
+                <h3>History of Computer</h3>
+                <ul class="arrow-list">
+                    <li><strong>Abacus</strong> — 16वीं शताब्दी में चीन में, Addition/Subtraction के लिए।</li>
+                    <li><strong>Pascal's Calculator</strong> — 1642 में Blaise Pascal (France) द्वारा, Addition, Subtraction, Multiplication, Division।</li>
+                    <li><strong>Charles Babbage's Difference Engine</strong> — 1822 में, Charles Babbage (Modern Computer के पिता)।</li>
+                    <li><strong>Analytical Engine (1833)</strong> — Input, Storage, Process, Output — आधुनिक Computer का प्रारूप।</li>
+                    <li><strong>Tabulating Machine</strong> — 1880 में Herman Hollerith, Punched Cards।</li>
+                    <li><strong>Mark-1</strong> — 1930 में Howard Aiken, पहली Electromechanical Calculator।</li>
+                    <li><strong>ENIAC</strong> — 1946 में Eckert &amp; Mauchly, दुनिया का पहला Electronic Computer।</li>
+                    <li><strong>EDSAC</strong> — 1949 में Maurice Wilkes।</li>
+                </ul>
+
+                <h3>Generations of Computer</h3>
+                <ul class="arrow-list">
+                    <li><strong>First Generation (1940–1956)</strong> — Vacuum Tube, Machine Language, ENIAC, UNIVAC-1।</li>
+                    <li><strong>Second Generation (1956–1963)</strong> — Transistor, High Level Language, IBM 1620, UNIVAC 1108।</li>
+                    <li><strong>Third Generation (1964–1971)</strong> — Integrated Circuit (IC), Multi Programming OS, IBM-360 series।</li>
+                    <li><strong>Fourth Generation (1972–2010)</strong> — LSI/VLSI, Microprocessor, GUI, MS-DOS, Windows, C, C++।</li>
+                    <li><strong>Fifth Generation (2010–continued)</strong> — ULSI, Artificial Intelligence, 64-bit Microprocessor, Desktop, Laptop, Notebook।</li>
+                </ul>
+
+                <h3>IT Gadgets and Their Applications</h3>
+                <p>IT Device Information and Communication Technology के लिए उपयोग किया जाता है। जैसे — TV, Mobile, Laptop, Tablet, Desktop, PDA, GPS, Telephone।</p>
+
+                <h3>Use of Computers in Different Fields</h3>
+                <ul class="arrow-list">
+                    <li>दैनिक जीवन में — Internet, Email, Games, Office कार्य।</li>
+                    <li>शिक्षा में — Smart Classroom, e-classroom, Report Card, Online परीक्षा।</li>
+                    <li>चिकित्सा में — बीमारी का निदान, Hospital Management, रिकॉर्ड रखना।</li>
+                    <li>बैंकिंग में — Account Information, ATM, Transaction Tracking।</li>
+                    <li>व्यापार में — Product Development, Marketing, Distribution।</li>
+                    <li>मनोरंजन में — Movies, Online Games, Music।</li>
+                    <li>रक्षा और सैन्य में — Missile Tracking, GPS, Simulation Training।</li>
+                    <li>विज्ञान और अनुसंधान में — Data Processing, Weather, Earthquake।</li>
+                </ul>
+
+                <h3>Basics of Hardware and Software</h3>
+                <p><strong>Hardware</strong> — Computer के भौतिक भाग (जिन्हें Touch कर सकते हैं) — Microprocessor, Hard Disk, Monitor, Keyboard, Printer, etc.</p>
+                <p><strong>Software</strong> — Program का समूह — System Software, Application Software, Utility Software।</p>
+
+                <h3>Input Device</h3>
+                <ul class="arrow-list">
+                    <li><strong>Keyboard</strong> — Standard 101–105 keys, Wired/Wireless, Multimedia keyboard।</li>
+                    <li><strong>Mouse</strong> — Optical, Wired, Wireless, Touchpad, Mechanical।</li>
+                    <li><strong>Scanner</strong> — Hard Copy को Soft Copy में बदलता है।</li>
+                    <li><strong>OMR</strong> — Optical Mark Reader, OMR Sheet को चेक करता है।</li>
+                    <li><strong>OCR</strong> — Optical Character Recognition, Image/PDF को Edit करने योग्य Data में बदलता है।</li>
+                    <li><strong>MICR</strong> — Magnetic Ink Character Recognition, Cheque checking in Banks।</li>
+                    <li><strong>Light Pen</strong> — Screen पर चित्र बनाने के लिए, CAD में उपयोग।</li>
+                    <li><strong>Joystick</strong> — Games खेलने और Robot Control के लिए।</li>
+                    <li><strong>Trackball</strong> — Pointing Input Device।</li>
+                    <li><strong>Touch Screen</strong> — उंगलियों से Input, Mobile में उपयोग।</li>
+                    <li><strong>Digitizing Tablet</strong> — Drawing Table।</li>
+                    <li><strong>Bar Code Reader</strong> — Barcode पढ़ने के लिए, Product Price/Date।</li>
+                </ul>
+
+                <h3>Output Device</h3>
+                <ul class="arrow-list">
+                    <li><strong>Monitor</strong> — Visual Display Unit — CRT, LCD, LED।</li>
+                    <li><strong>Printer</strong> — Impact (Dot Matrix, Daisy Wheel, Line) और Non-Impact (Inkjet, Thermal, Laser, 3D Printer)।</li>
+                    <li><strong>Plotter</strong> — चित्र और Graph Print करने के लिए (Drum pen, Flatbed)।</li>
+                </ul>
+
+                <h3>Computer Memory and Storage</h3>
+                <p><strong>Primary Memory</strong> — Main Memory (RAM, ROM, Cache Memory)।</p>
+                <ul class="arrow-list">
+                    <li><strong>RAM</strong> — Volatile, Temporary, SRAM (Static) और DRAM (Dynamic)।</li>
+                    <li><strong>ROM</strong> — Non-Volatile, Permanent, PROM, EPROM, EEPROM।</li>
+                    <li><strong>Cache Memory</strong> — CPU और RAM के बीच, L1, L2, L3।</li>
+                </ul>
+                <p><strong>Secondary Memory</strong> — Storage Device (Magnetic Tape, Hard Disk, Floppy Disk, CD, DVD, Blu-ray Disc)।</p>
+                <p><strong>Virtual Memory</strong> — CPU द्वारा Temporary Storage, Main Memory की Capacity बढ़ाता है।</p>
+
+                <h3>Software — Types</h3>
+                <ul class="arrow-list">
+                    <li><strong>System Software</strong> — Operating System, Assembler, Compiler, Interpreter, Utility Software।</li>
+                    <li><strong>Application Software</strong> — Horizontal (MS Office, Photoshop), Vertical (Finacle), Shareware, Freeware, Open Source, Commercial, Nagware।</li>
+                </ul>
+
+                <h3>Mobile Apps</h3>
+                <ul class="arrow-list">
+                    <li><strong>Native Apps</strong> — एक specific OS/Device के लिए (जैसे iPhone App)।</li>
+                    <li><strong>Web-Based Apps</strong> — HTML, CSS, JavaScript, Web Browser से Access।</li>
+                    <li><strong>Hybrid Apps</strong> — Multi Device Compatible।</li>
+                </ul>
+                <p><strong>Example:</strong> WhatsApp, Facebook, Gmail, Snapchat, Instagram, Twitter, YouTube, Chrome।</p>
+
+                <!-- Chapter 1 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 1 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> What is the difference between primary memory and secondary memory? Briefly explain various types of primary and secondary memory.</div>
+                        <p><strong>Primary memory</strong> — Internal, expensive, fast, volatile, less storage. (RAM, ROM, Cache)</p>
+                        <p><strong>Secondary memory</strong> — External, cheap, slow, non-volatile, more storage. (Hard Disk, CD, DVD, Magnetic Tape)</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> Explain the functions of Compiler, Interpreter and Assembler?</div>
+                        <p><strong>Compiler:</strong> High Level Language → Machine Language (entire program at once).</p>
+                        <p><strong>Interpreter:</strong> High Level Language → Machine Language (line by line, slower).</p>
+                        <p><strong>Assembler:</strong> Assembly Language ↔ Machine Language.</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> Draw an Internal Diagram of computer system and explain in brief the application of various components?</div>
+                        <p><strong>CPU</strong> (Brain) — CU, ALU, MU.<br />
+                            <strong>Memory Unit</strong> — Primary &amp; Secondary.<br />
+                            <strong>Input Device</strong> — Keyboard, Mouse, Scanner, etc.<br />
+                            <strong>Output Device</strong> — Monitor, Printer, Plotter, etc.</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> Explain briefly System Software, Application and Utility Software?</div>
+                        <p><strong>System Software:</strong> Controls Hardware (OS, Compiler, Interpreter).<br />
+                            <strong>Application Software:</strong> Specific tasks (MS Word, Photoshop).<br />
+                            <strong>Utility Software:</strong> System maintenance (Antivirus, Disk Cleaner).</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> Explain the concept of Virtual memory? And describe volatile and non-volatile memory?</div>
+                        <p><strong>Virtual Memory:</strong> Temporary storage by CPU, increases Main Memory capacity.<br />
+                            <strong>Volatile:</strong> Loses data when power off (RAM).<br />
+                            <strong>Non-Volatile:</strong> Retains data when power off (Hard Disk, ROM).</p>
+                    </div>
+                </div>
+
+                <!-- Nav -->
+                <div class="chapter-nav">
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch2">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ============================== CHAPTER 2 ============================== -->
+            <div class="chapter" id="ch2">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 2</span>
+                    <h2>Introduction to Operating System</h2>
+                </div>
+
+                <p>Operating System किसी भी Computer का एक अहम हिस्सा होता है, जो Computer में Software के रूप में Store रहता है। Operating System Computer के सभी हिस्सों — Memory, Input, Output तथा Computer से जुड़े सभी Hardware Components को नियंत्रित करता है। Operating System एक System Software होता है।</p>
+
+                <h3>Main Functions of Operating System</h3>
+                <ul class="check-list">
+                    <li><strong>Processing Management</strong> — सभी Programs/Processes की स्थिति पर नजर रखना और संसाधन उपलब्ध कराना।</li>
+                    <li><strong>Memory Management</strong> — Primary memory को Manage करना, प्रत्येक Location का Record रखना।</li>
+                    <li><strong>Input Output Device Management</strong> — Device Communication का प्रबंधन।</li>
+                    <li><strong>File Management</strong> — File System को Directory में व्यवस्थित करना।</li>
+                    <li><strong>Protection and Security</strong> — Password security, Unauthorized access को रोकना।</li>
+                </ul>
+
+                <h3>Popular Operating System</h3>
+                <p>Windows, Android, Macintosh, Unix, Linux। (Windows — Microsoft Corporation)</p>
+
+                <h3>Types of Operating System (Based On Technology)</h3>
+                <ul class="arrow-list">
+                    <li><strong>Single User OS (CUI Based)</strong> — एक User (MS-DOS, Windows)।</li>
+                    <li><strong>Multiuser OS (GUI Based)</strong> — कई Users (Unix, Linux)।</li>
+                    <li><strong>Single Tasking OS</strong> — एक समय में एक Task (MS-DOS)।</li>
+                    <li><strong>Multi Tasking OS</strong> — एक समय में कई Tasks (Windows, Unix, Linux)।</li>
+                    <li><strong>Real Time OS</strong> — Real-time Applications के लिए।</li>
+                </ul>
+
+                <h3>Operating Systems for Desktop and Laptop</h3>
+                <p>Windows 10, Apple Mac OS, Linux (Open Source, Free)।</p>
+
+                <h3>Operating Systems for Mobile Phones and Tablet</h3>
+                <ul class="arrow-list">
+                    <li>Android OS</li>
+                    <li>IOS (Apple)</li>
+                    <li>BlackBerry OS</li>
+                    <li>Kai OS</li>
+                </ul>
+
+                <h3>User Interface for Desktop and Laptop</h3>
+                <ul class="arrow-list">
+                    <li><strong>CUI</strong> (Character User Interface) — Commands type करके (MS-DOS, UNIX)।</li>
+                    <li><strong>GUI</strong> (Graphical User Interface) — Icons पर Click (Windows OS)।</li>
+                </ul>
+
+                <h3>Desktop</h3>
+                <p>Desktop Computer का Primary User Interface है। Desktop Background, Wallpaper, Files, Folders, Icons।</p>
+
+                <h3>Task Bar</h3>
+                <p>Desktop पर सबसे नीचे की पट्टी। Left Side — Start Menu, Right Side — Notification Area।</p>
+
+                <h3>Icons and Shortcuts</h3>
+                <ul class="arrow-list">
+                    <li><strong>System Icon</strong> — My Computer, My Documents, Recycle Bin, Control Panel।</li>
+                    <li><strong>Shortcut Icon</strong> — Link to Program/Folder/File, Extension .lnk, Arrow mark।</li>
+                    <li><strong>Program Icon</strong> — Application Program का Icon।</li>
+                </ul>
+
+                <h3>Running an Application / Close Apps</h3>
+                <p>Double Click या Right Click → Open। Close — Close Button या Alt + F4।</p>
+
+                <h3>Operating System Simple Setting</h3>
+                <ul class="arrow-list">
+                    <li><strong>Control Panel</strong> — Hardware और Software से संबंधित सभी Settings।</li>
+                    <li><strong>Mouse Properties</strong> — Control Panel → Mouse → Buttons, Pointers, Pointer Options।</li>
+                    <li><strong>System Date and Time</strong> — Task Bar Right Side → Right Click → Adjust Date/Time।</li>
+                    <li><strong>Display Properties</strong> — Desktop Right Click → Display Settings।</li>
+                    <li><strong>Add or Remove Programs</strong> — Control Panel → Programs and Features।</li>
+                    <li><strong>Adding, Removing and Sharing Printers</strong> — Control Panel → Devices and Printers → Add Printer / Remove Device।</li>
+                </ul>
+
+                <h3>File and Folder Management</h3>
+                <p><strong>File</strong> — Object जो Data, Information या Commands को Store करती है।</p>
+                <p><strong>File Extension</strong> — File के नाम के अंत में Dot (.) के बाद, बताता है कि किस प्रकार की File है।</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>File Type</th><th>Extensions</th></tr>
+                        <tr><td>Web Document</td><td>.html, .css, .js, .php</td></tr>
+                        <tr><td>Image</td><td>.bmp, .jpeg/.jpg, .png, .gif</td></tr>
+                        <tr><td>Audio</td><td>.mp3, .mpa, .mid/.midi, .wav</td></tr>
+                        <tr><td>Video</td><td>.mp4, .wmv, .m4v, .vob</td></tr>
+                        <tr><td>Executable</td><td>.bat, .bin, .apk, .com</td></tr>
+                        <tr><td>Text</td><td>.doc/.docx, .pdf, .txt, .odt</td></tr>
+                    </table>
+                </div>
+
+                <!-- Chapter 2 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 2 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> What is an Operating System? Explain the Functions of Operating Systems.</div>
+                        <p><strong>OS:</strong> System Software जो User और Hardware के बीच संवाद स्थापित करता है, Application Software को Platform प्रदान करता है और Hardware को Control करता है।</p>
+                        <p><strong>Functions:</strong> Processing Management, Memory Management, I/O Device Management, File Management, Protection &amp; Security.</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> What is Ubuntu Operating System? What are the Difference between Ubuntu and Windows Operating System?</div>
+                        <p><strong>Ubuntu:</strong> Linux-based Open Source OS for Personal Computer, Smart Phone, Server.</p>
+                        <p><strong>Differences:</strong> Ubuntu — Linux based, Open Source, Free, Server popular; Windows — DOS based, Closed Source, Paid, easier to use.</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> Explain following terms in the context of Linux operating system? (i) Kernel (ii) System Library (iii) Shell</div>
+                        <p><strong>Kernel:</strong> Core component, interacts directly with Hardware.<br />
+                            <strong>System Library:</strong> Special functions/programs that access Kernel features.<br />
+                            <strong>Shell:</strong> Interface to Kernel, takes commands and executes Kernel functions.</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> What do you mean by type of file extension?</div>
+                        <p><strong>File Extension:</strong> Identifier at the end of file name after dot (.), indicates file type. Example: .bmp (Image), .mp3 (Audio), .mp4 (Video), .docx (MS Word).</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> Describe the user interface for Desktop and Laptop?</div>
+                        <p><strong>CUI</strong> — Character User Interface, commands typed (MS-DOS, UNIX).<br />
+                            <strong>GUI</strong> — Graphical User Interface, icons clicked (Windows).</p>
+                    </div>
+                </div>
+
+                <div class="chapter-nav">
+                    <a href="#ch1">← Previous Chapter</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch3">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ============================== CHAPTER 3 ============================== -->
+            <div class="chapter" id="ch3">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 3</span>
+                    <h2>Word Processing</h2>
+                </div>
+
+                <p>Word Processing Software एक Application Software है, जो User को Text Type, Edit और Text Manipulate करने में Help करता है। मुख्य रूप से Office में उपयोग किया जाता है।</p>
+
+                <h3>Word Processing की विशेषताएँ</h3>
+                <ul class="check-list">
+                    <li>Type किए गए Text में आसानी से बदलाव किया जा सकता है।</li>
+                    <li>Spelling की गलतियों को ठीक किया जा सकता है।</li>
+                    <li>Word और Sentence को आसानी से Add, Remove और Replace किया जा सकता है।</li>
+                    <li>Cut और Paste से Text को एक स्थान से दूसरे स्थान पर Move कर सकते हैं।</li>
+                    <li>Mail-Merge — List, Database, Spreadsheet से Multiple letters, Labels, Envelopes बनाने की अनुमति।</li>
+                </ul>
+
+                <h3>Introduction to LibreOffice</h3>
+                <p>LibreOffice एक Open Source Software है, LibreOffice Foundation द्वारा Develop। Microsoft Office की तरह Office Suit — Word Processing, Spreadsheet, Presentation, Database Management, Graphics Editing। Compatible with Windows, MacOS, Linux।</p>
+
+                <h4>Components of LibreOffice</h4>
+                <ul class="arrow-list">
+                    <li>LibreOffice Writer</li>
+                    <li>LibreOffice Calc</li>
+                    <li>LibreOffice Impress</li>
+                    <li>LibreOffice Base</li>
+                    <li>LibreOffice Draw</li>
+                    <li>LibreOffice Math</li>
+                </ul>
+
+                <h4>Main Applications</h4>
+                <ul class="arrow-list">
+                    <li><strong>LibreOffice Writer</strong> — Microsoft Word के समान।</li>
+                    <li><strong>LibreOffice Calc</strong> — Microsoft Excel के समान।</li>
+                    <li><strong>LibreOffice Impress</strong> — Microsoft PowerPoint के समान।</li>
+                </ul>
+
+                <h3>LibreOffice Writer</h3>
+                <p>Word Processing Program, Document Create और Modify करने के लिए। Resume, Letter, Documents आसानी से बनाए जा सकते हैं।</p>
+
+                <h3>Opening Word Processing Package</h3>
+                <p>Start Menu → LibreOffice → LibreOffice Writer।</p>
+
+                <h3>Shortcut Keys For LibreOffice Writer</h3>
+                <div class="kbd-grid">
+                    <div class="kbd-item"><span>New</span><span class="key">Ctrl+N</span></div>
+                    <div class="kbd-item"><span>Select All</span><span class="key">Ctrl+A</span></div>
+                    <div class="kbd-item"><span>Align Left</span><span class="key">Ctrl+L</span></div>
+                    <div class="kbd-item"><span>Align Right</span><span class="key">Ctrl+R</span></div>
+                    <div class="kbd-item"><span>Justify</span><span class="key">Ctrl+J</span></div>
+                    <div class="kbd-item"><span>Double Underline</span><span class="key">Ctrl+D</span></div>
+                    <div class="kbd-item"><span>Center Align</span><span class="key">Ctrl+E</span></div>
+                    <div class="kbd-item"><span>Find &amp; Replace</span><span class="key">Ctrl+H</span></div>
+                    <div class="kbd-item"><span>Superscript</span><span class="key">Ctrl+Shift+P</span></div>
+                    <div class="kbd-item"><span>Subscript</span><span class="key">Ctrl+Shift+B</span></div>
+                    <div class="kbd-item"><span>Save</span><span class="key">Ctrl+S</span></div>
+                    <div class="kbd-item"><span>Save As</span><span class="key">Ctrl+Shift+S</span></div>
+                    <div class="kbd-item"><span>Undo</span><span class="key">Ctrl+Z</span></div>
+                    <div class="kbd-item"><span>Redo</span><span class="key">Ctrl+Y</span></div>
+                    <div class="kbd-item"><span>Heading Style</span><span class="key">Ctrl+1–9</span></div>
+                    <div class="kbd-item"><span>Page Break</span><span class="key">Ctrl+Enter</span></div>
+                    <div class="kbd-item"><span>Go to beginning of word</span><span class="key">Ctrl+Left Arrow</span></div>
+                    <div class="kbd-item"><span>Go to beginning of Line</span><span class="key">Home</span></div>
+                    <div class="kbd-item"><span>Go to End of Line</span><span class="key">End</span></div>
+                    <div class="kbd-item"><span>Go to Start of Document</span><span class="key">Ctrl+Home</span></div>
+                    <div class="kbd-item"><span>Go to End of Document</span><span class="key">Ctrl+End</span></div>
+                    <div class="kbd-item"><span>Delete whole word</span><span class="key">Ctrl+Backspace</span></div>
+                    <div class="kbd-item"><span>Formula Bar</span><span class="key">F2</span></div>
+                    <div class="kbd-item"><span>Complete Auto text</span><span class="key">F3</span></div>
+                    <div class="kbd-item"><span>Check Spelling</span><span class="key">F7</span></div>
+                    <div class="kbd-item"><span>Thesaurus</span><span class="key">Ctrl+F7</span></div>
+                    <div class="kbd-item"><span>Create Style</span><span class="key">Shift+F11</span></div>
+                    <div class="kbd-item"><span>Insert Number</span><span class="key">F12</span></div>
+                    <div class="kbd-item"><span>Insert Table</span><span class="key">Ctrl+F12</span></div>
+                    <div class="kbd-item"><span>Insert Bullets</span><span class="key">Shift+F12</span></div>
+                    <div class="kbd-item"><span>Print Document</span><span class="key">Ctrl+P</span></div>
+                    <div class="kbd-item"><span>Print Preview</span><span class="key">Ctrl+Shift+O</span></div>
+                    <div class="kbd-item"><span>Close Writer</span><span class="key">Ctrl+W</span></div>
+                    <div class="kbd-item"><span>Close LibreOffice</span><span class="key">Ctrl+Q</span></div>
+                    <div class="kbd-item"><span>Paste Special</span><span class="key">Ctrl+Shift+V</span></div>
+                    <div class="kbd-item"><span>Track Change Record</span><span class="key">Ctrl+Shift+C</span></div>
+                    <div class="kbd-item"><span>Rulers On/Off</span><span class="key">Ctrl+Shift+R</span></div>
+                    <div class="kbd-item"><span>Sidebar (Show/Hide)</span><span class="key">Ctrl+F5</span></div>
+                    <div class="kbd-item"><span>Show Style</span><span class="key">F11</span></div>
+                    <div class="kbd-item"><span>Data Source</span><span class="key">Ctrl+Shift+F4</span></div>
+                    <div class="kbd-item"><span>Full Screen</span><span class="key">Ctrl+Shift+J</span></div>
+                    <div class="kbd-item"><span>Comment</span><span class="key">Ctrl+Alt+C</span></div>
+                    <div class="kbd-item"><span>Hyperlink</span><span class="key">Ctrl+K</span></div>
+                    <div class="kbd-item"><span>Increase Text Size</span><span class="key">Ctrl+]</span></div>
+                    <div class="kbd-item"><span>Decrease Text Size</span><span class="key">Ctrl+[</span></div>
+                    <div class="kbd-item"><span>Cycle Case</span><span class="key">Shift+F3</span></div>
+                    <div class="kbd-item"><span>Clear Formatting</span><span class="key">Ctrl+M</span></div>
+                    <div class="kbd-item"><span>Automatic Spell Checking</span><span class="key">Shift+F7</span></div>
+                    <div class="kbd-item"><span>Options</span><span class="key">Alt+F12</span></div>
+                    <div class="kbd-item"><span>Help</span><span class="key">F1</span></div>
+                    <div class="kbd-item"><span>Open</span><span class="key">Ctrl+O</span></div>
+                </div>
+
+                <!-- Chapter 3 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 3 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> How to turn off and activate automatic spelling checking and automatic grammar checking in LibreOffice programs?</div>
+                        <p><strong>Tools menu → Automatic Spell Checking</strong> या <strong>Shift+F7</strong> से Activate/Off कर सकते हैं।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> Write steps to add watermark in LibreOffice writer?</div>
+                        <p><strong>Format menu → Watermark</strong> → Text, Font, Angle, Transparency, Color Set करें → OK।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> List and Explain any five features of word processor?</div>
+                        <p><strong>Editing Text</strong> — Typing errors को सुधारना।<br />
+                            <strong>Word Wrap</strong> — Line को Automatic Arrange करना।<br />
+                            <strong>Search and Replace</strong> — Specific word को Search और Replace करना।<br />
+                            <strong>Copy and Cut</strong> — Text को Duplicate या Move करना।<br />
+                            <strong>Headers and Footers</strong> — प्रत्येक Page के Top और Bottom में Content जोड़ना।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> What is LibreOffice Writer? What are the difference between LibreOffice and Microsoft Office?</div>
+                        <p><strong>LibreOffice Writer:</strong> Word Processing Program जैसे MS Word।</p>
+                        <p><strong>Differences:</strong> LibreOffice — Free, Open Source, all OS, small size, works on low RAM; Microsoft Office — Paid, Windows/Mac only, large size.</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> Explain Footnote and Endnote in LibreOffice?</div>
+                        <p><strong>Footnote:</strong> Same page के अंत में Insert होता है।<br />
+                            <strong>Endnote:</strong> Document के सबसे Last में नए Page के साथ Insert होता है।</p>
+                    </div>
+                </div>
+
+                <div class="chapter-nav">
+                    <a href="#ch2">← Previous Chapter</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch4">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ============================== CHAPTER 4 ============================== -->
+            <div class="chapter" id="ch4">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 4</span>
+                    <h2>Spreadsheet</h2>
+                </div>
+
+                <p>Spreadsheet एक Application Software है, जिसका उपयोग Tabular form में Data को Manage, Analyze और Store करने के लिए किया जाता है। Cell, Rows और Columns का Combination होता है।</p>
+
+                <h3>What is LibreOffice Calc</h3>
+                <p>LibreOffice Calc Microsoft Excel की तरह एक Spreadsheet Program है। Data को Calculate, Analyze और Manage करने के लिए। Maximum 32000 Sheets, 1048576 Rows, 1024 Columns। Extension .ods।</p>
+
+                <h3>Element of Spreadsheet Program</h3>
+                <ul class="arrow-list">
+                    <li>Workbook</li>
+                    <li>Worksheet</li>
+                    <li>Row</li>
+                    <li>Column</li>
+                    <li>Cell</li>
+                    <li>Formula</li>
+                    <li>Functions</li>
+                </ul>
+
+                <h3>Shortcut Keys For LibreOffice Calc</h3>
+                <div class="kbd-grid">
+                    <div class="kbd-item"><span>New Sheet</span><span class="key">Ctrl+N</span></div>
+                    <div class="kbd-item"><span>Manage Templates</span><span class="key">Ctrl+Shift+N</span></div>
+                    <div class="kbd-item"><span>Open</span><span class="key">Ctrl+O</span></div>
+                    <div class="kbd-item"><span>Save as Template</span><span class="key">Shift+F11</span></div>
+                    <div class="kbd-item"><span>Save</span><span class="key">Ctrl+S</span></div>
+                    <div class="kbd-item"><span>Save As</span><span class="key">Ctrl+Shift+S</span></div>
+                    <div class="kbd-item"><span>Next Line</span><span class="key">Ctrl+Enter</span></div>
+                    <div class="kbd-item"><span>Print Preview</span><span class="key">Ctrl+Shift+O</span></div>
+                    <div class="kbd-item"><span>Exit LibreOffice</span><span class="key">Ctrl+Q</span></div>
+                    <div class="kbd-item"><span>Cut</span><span class="key">Ctrl+X</span></div>
+                    <div class="kbd-item"><span>Copy</span><span class="key">Ctrl+C</span></div>
+                    <div class="kbd-item"><span>Paste</span><span class="key">Ctrl+V</span></div>
+                    <div class="kbd-item"><span>Undo</span><span class="key">Ctrl+Z</span></div>
+                    <div class="kbd-item"><span>Redo</span><span class="key">Ctrl+Y</span></div>
+                    <div class="kbd-item"><span>Repeat</span><span class="key">Ctrl+Shift+Y</span></div>
+                    <div class="kbd-item"><span>Paste Special</span><span class="key">Ctrl+Shift+V</span></div>
+                    <div class="kbd-item"><span>Select All</span><span class="key">Ctrl+Shift+Space</span></div>
+                    <div class="kbd-item"><span>Go to Next Sheet</span><span class="key">Ctrl+Page Down</span></div>
+                    <div class="kbd-item"><span>Go to Previous Sheet</span><span class="key">Ctrl+Page Up</span></div>
+                    <div class="kbd-item"><span>Select Row</span><span class="key">Shift+Space</span></div>
+                    <div class="kbd-item"><span>Select Column</span><span class="key">Ctrl+Space</span></div>
+                    <div class="kbd-item"><span>Edit Cell</span><span class="key">F2</span></div>
+                    <div class="kbd-item"><span>Find &amp; Replace</span><span class="key">Ctrl+H</span></div>
+                    <div class="kbd-item"><span>Show/Hide Sidebar</span><span class="key">Ctrl+F5</span></div>
+                    <div class="kbd-item"><span>Show/Hide Manage Style</span><span class="key">F11</span></div>
+                    <div class="kbd-item"><span>Open Navigator</span><span class="key">F5</span></div>
+                    <div class="kbd-item"><span>Full Screen</span><span class="key">Ctrl+Shift+J</span></div>
+                    <div class="kbd-item"><span>Insert Function</span><span class="key">Ctrl+F2</span></div>
+                    <div class="kbd-item"><span>Comments</span><span class="key">Ctrl+Alt+C</span></div>
+                    <div class="kbd-item"><span>Hyperlink</span><span class="key">Ctrl+K</span></div>
+                    <div class="kbd-item"><span>Date</span><span class="key">Ctrl+;</span></div>
+                    <div class="kbd-item"><span>Time</span><span class="key">Ctrl+Shift+;</span></div>
+                    <div class="kbd-item"><span>Superscript</span><span class="key">Ctrl+Shift+P</span></div>
+                    <div class="kbd-item"><span>Subscript</span><span class="key">Ctrl+Shift+B</span></div>
+                    <div class="kbd-item"><span>Cycle Case</span><span class="key">Shift+F3</span></div>
+                    <div class="kbd-item"><span>General Format</span><span class="key">Ctrl+Shift+6</span></div>
+                    <div class="kbd-item"><span>Number Format</span><span class="key">Ctrl+Shift+1</span></div>
+                    <div class="kbd-item"><span>Percent Format</span><span class="key">Ctrl+Shift+5</span></div>
+                    <div class="kbd-item"><span>Currency Format</span><span class="key">Ctrl+Shift+4</span></div>
+                    <div class="kbd-item"><span>Date Format</span><span class="key">Ctrl+Shift+3</span></div>
+                    <div class="kbd-item"><span>Clear Formatting</span><span class="key">Ctrl+M</span></div>
+                    <div class="kbd-item"><span>Cell Formatting</span><span class="key">Ctrl+1</span></div>
+                    <div class="kbd-item"><span>Insert Cell</span><span class="key">Ctrl++</span></div>
+                    <div class="kbd-item"><span>Delete Cell</span><span class="key">Ctrl+-</span></div>
+                    <div class="kbd-item"><span>Cell Data Copy to Down</span><span class="key">Ctrl+D</span></div>
+                    <div class="kbd-item"><span>Manage Names</span><span class="key">Ctrl+F3</span></div>
+                    <div class="kbd-item"><span>Go to Next Cell</span><span class="key">Tab</span></div>
+                    <div class="kbd-item"><span>Go to Previous Cell</span><span class="key">Shift+Tab</span></div>
+                    <div class="kbd-item"><span>Group Cell</span><span class="key">F12</span></div>
+                    <div class="kbd-item"><span>Ungroup</span><span class="key">Ctrl+12</span></div>
+                    <div class="kbd-item"><span>Automatic Spelling Check</span><span class="key">Shift+F7</span></div>
+                    <div class="kbd-item"><span>Open Options</span><span class="key">Alt+F12</span></div>
+                </div>
+
+                <!-- Chapter 4 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 4 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> Explain LibreOffice Calc Spreadsheet with his Elements?</div>
+                        <p><strong>LibreOffice Calc:</strong> Spreadsheet Program जैसे MS Excel, Data Calculate/Analyze/Manage करने के लिए। Elements — Workbook, Worksheet, Row, Column, Cell, Formula, Functions.</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> Define cell referencing? Different types of cell referencing Explain with example?</div>
+                        <p><strong>Cell Reference:</strong> Cell Address का Function में उपयोग। Example: =SUM(A1:C10)</p>
+                        <p><strong>Absolute:</strong> $A$2:$B$2 (Dollar sign both)<br />
+                            <strong>Relative:</strong> C1:C10 (No dollar sign)<br />
+                            <strong>Mixed:</strong> $A1:C$5 (Dollar sign either column or row)</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> What is Array Formula?</div>
+                        <p><strong>Array Formula:</strong> किसी अन्य Formula के साथ मिलकर उसे Advance बनाता है। Multiple Range पर एक साथ काम करता है।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> What are Charts? Briefly explain the process of making a Pie Chart?</div>
+                        <p><strong>Chart:</strong> Data को Impressive और Easy to Understand रूप में Display करना।</p>
+                        <p><strong>Pie Chart:</strong> Data को गोल आकार में Display करता है। Process: Data Select करें → Insert Tab → Chart Group → Pie Chart → 2D या 3D चुनें।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> Define functions in Spreadsheet software and describe any five Pre-define functions?</div>
+                        <p><strong>Functions:</strong> Built-in Commands, Pre-define functions। Example: SUM(), IF(), VLOOKUP(), HLOOKUP(), CONCATENATE()।</p>
+                    </div>
+                </div>
+
+                <div class="chapter-nav">
+                    <a href="#ch3">← Previous Chapter</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch5">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ============================== CHAPTER 5 ============================== -->
+            <div class="chapter" id="ch5">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 5</span>
+                    <h2>Presentation</h2>
+                </div>
+
+                <h3>What is LibreOffice Impress</h3>
+                <p>LibreOffice Impress Microsoft PowerPoint की तरह एक Presentation Program है। Slide Show बनाने के लिए, Information को Graphics और Multimedia के माध्यम से Present करने के लिए। Extension .odp। Custom Animation, Slide Transition, Slide Effects।</p>
+
+                <h3>Shortcut Keys For LibreOffice Impress</h3>
+                <div class="kbd-grid">
+                    <div class="kbd-item"><span>New</span><span class="key">Ctrl+N</span></div>
+                    <div class="kbd-item"><span>Manage Templates</span><span class="key">Ctrl+Shift+N</span></div>
+                    <div class="kbd-item"><span>Open</span><span class="key">Ctrl+O</span></div>
+                    <div class="kbd-item"><span>Edit Text</span><span class="key">F2</span></div>
+                    <div class="kbd-item"><span>Save</span><span class="key">Ctrl+S</span></div>
+                    <div class="kbd-item"><span>Save As</span><span class="key">Ctrl+Shift+S</span></div>
+                    <div class="kbd-item"><span>New Slide</span><span class="key">Ctrl+M</span></div>
+                    <div class="kbd-item"><span>Duplicate Object</span><span class="key">Shift+F3</span></div>
+                    <div class="kbd-item"><span>Exit LibreOffice</span><span class="key">Ctrl+Q</span></div>
+                    <div class="kbd-item"><span>Cut</span><span class="key">Ctrl+X</span></div>
+                    <div class="kbd-item"><span>Copy</span><span class="key">Ctrl+C</span></div>
+                    <div class="kbd-item"><span>Paste</span><span class="key">Ctrl+V</span></div>
+                    <div class="kbd-item"><span>Undo</span><span class="key">Ctrl+Z</span></div>
+                    <div class="kbd-item"><span>Redo</span><span class="key">Ctrl+Y</span></div>
+                    <div class="kbd-item"><span>Find &amp; Replace</span><span class="key">Ctrl+H</span></div>
+                    <div class="kbd-item"><span>Paste Special</span><span class="key">Ctrl+Shift+V</span></div>
+                    <div class="kbd-item"><span>Object Position &amp; Size</span><span class="key">F4</span></div>
+                    <div class="kbd-item"><span>Start Slide Show</span><span class="key">F5</span></div>
+                    <div class="kbd-item"><span>Start From Current Slide</span><span class="key">Shift+F5</span></div>
+                    <div class="kbd-item"><span>Navigator</span><span class="key">Ctrl+Shift+F5</span></div>
+                    <div class="kbd-item"><span>Fit Text to Frame</span><span class="key">Ctrl+Shift+F8</span></div>
+                    <div class="kbd-item"><span>Go to First Slide</span><span class="key">Home</span></div>
+                    <div class="kbd-item"><span>Go to Last Slide</span><span class="key">End</span></div>
+                    <div class="kbd-item"><span>Stop Presentation</span><span class="key">Esc</span></div>
+                    <div class="kbd-item"><span>Black Screen in Slide Show</span><span class="key">B</span></div>
+                    <div class="kbd-item"><span>White Screen in Slide Show</span><span class="key">W</span></div>
+                    <div class="kbd-item"><span>Group Selected Object</span><span class="key">Ctrl+Shift+G</span></div>
+                    <div class="kbd-item"><span>Ungroup</span><span class="key">Alt+Ctrl+Shift+G</span></div>
+                    <div class="kbd-item"><span>Bring to Front</span><span class="key">Ctrl+Shift++</span></div>
+                </div>
+
+                <!-- Chapter 5 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 5 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> Write a short note on Slide Handout Master?</div>
+                        <p><strong>Handout:</strong> Presentation का Printout, एक Page में Minimum 1 और Maximum 9 Slides। Audience को दिया जाता है, जिसमें Content, Company Name, Date, Speaker Name होता है।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> What is MS PowerPoint?</div>
+                        <p>MS PowerPoint एक Presentation Program (PPT) है, Microsoft द्वारा Developed, MS Office Suite का हिस्सा। Business/Training/Schools में उपयोग।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> What are the Advantages of a presentation package?</div>
+                        <p>Standard Application, Shareable, Attractive Features (Transitions, Animations, Layouts, Templates), Export to other formats (GIF, JPG, PDF, MPEG-4), Easy to Use।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> How to Add Movies and Sounds in LibreOffice Impress?</div>
+                        <p><strong>Insert Menu → Audio or Video</strong> → Select File → Open → Properties से Control (Play, Pause, Stop) कर सकते हैं।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> What is slide transition effect and how to apply transition in ms power point?</div>
+                        <p><strong>Slide Transition:</strong> दो Slides के बीच का Effect, Speed और Sound Set कर सकते हैं। Apply: Select Slide → Transition Tab → Select Transition (Cut, Fade, Push, Wipe, Split)।</p>
+                    </div>
+                </div>
+
+                <div class="chapter-nav">
+                    <a href="#ch4">← Previous Chapter</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch6">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ============================== CHAPTER 6 ============================== -->
+            <div class="chapter" id="ch6">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 6</span>
+                    <h2>Introduction to Internet and WWW</h2>
+                </div>
+
+                <p>Internet एक सबसे बड़ा Computer Network है, जिसमें Personal और Public दोनों प्रकार के Network आपस में जुड़े होते हैं। Internet एक Public Network है, जिसका कोई Owner नहीं होता। Internet से जुड़े सभी Device का अपना एक Unique IP Address होता है। Internet पर Information Send and Receive करने के लिए TCP/IP Protocol का Use होता है।</p>
+
+                <p>Internet की शुरुआत 1970 और 1980 के दशक में हुई। Internet ARPANET (Advance Research Projects Agency Network) के नाम से Defense Department द्वारा शुरू किया गया था। 1974 में Local Area Network ARPANET से TCP/IP के माध्यम से Connect किए जाते थे। India में Internet सेवा का पहला उपयोग 15 August 1995 को Videsh Sanchar Nigam Limited द्वारा किया गया। Internet के जनक Vint Cerf हैं।</p>
+
+                <h3>Basics of Computer Networks</h3>
+                <p>Computer Network दो या दो से अधिक Computer का एक Collection है, जो Information को Share करने के लिए एक दूसरे से जुड़े होते हैं।</p>
+
+                <h4>Components of Computer Network</h4>
+                <ul class="arrow-list">
+                    <li>Network Adapter</li>
+                    <li>Transmission Media</li>
+                    <li>Servers</li>
+                    <li>Clients</li>
+                    <li>Protocols</li>
+                    <li>Resources</li>
+                    <li>User</li>
+                </ul>
+
+                <h4>Types of Communication Medium</h4>
+                <ul class="arrow-list">
+                    <li><strong>Guided Media (Wired)</strong> — Coaxial Cable, Fiber-Optic Cable, Twisted Pair।</li>
+                    <li><strong>Unguided Media (Wireless)</strong> — Radio Waves, Microwave, Satellite।</li>
+                </ul>
+
+                <h3>Types of Network</h3>
+                <ul class="arrow-list">
+                    <li><strong>LAN (Local Area Network)</strong> — 1 km तक, Private, High Speed।</li>
+                    <li><strong>MAN (Metropolitan Area Network)</strong> — Town/City, LAN से बड़ा, WAN से छोटा।</li>
+                    <li><strong>WAN (Wide Area Network)</strong> — Cities, Countries, Continents (Internet), Speed 10x slower than LAN।</li>
+                </ul>
+
+                <h3>Network Topology</h3>
+                <ul class="arrow-list">
+                    <li><strong>Bus Topology</strong> — Single Cable (Back-bone), Terminator, Cheap, Small Network।</li>
+                    <li><strong>Ring Topology</strong> — Circular, Unidirectional, Sequential, Repeater।</li>
+                    <li><strong>Star Topology</strong> — Hub/Switch से जुड़े, Central Device Server की तरह।</li>
+                    <li><strong>Mesh Topology</strong> — All Nodes Directly Connected, Most Reliable, Expensive।</li>
+                    <li><strong>Tree Topology</strong> — Star + Bus Combination, Tree-like structure।</li>
+                </ul>
+
+                <h3>Networking Device</h3>
+                <ul class="arrow-list">
+                    <li><strong>Repeater</strong> — Signal Regenerate and Replicate, Physical Layer।</li>
+                    <li><strong>Hub</strong> — Multiple Computers Connect, Physical Layer।</li>
+                    <li><strong>Switch</strong> — Multiport Bridge, Data Link Layer।</li>
+                    <li><strong>Bridge</strong> — Two LAN Segments Connect, Data Link Layer।</li>
+                    <li><strong>Router</strong> — Two or more Networks Connect, Network Layer।</li>
+                    <li><strong>Gateway</strong> — Two Different Networks Connect, Transport Layer।</li>
+                    <li><strong>NIC (Network Interface Card)</strong> — Parallel ↔ Serial Data Stream, Data Link &amp; Physical Layer।</li>
+                    <li><strong>Modem</strong> — Analog ↔ Digital Signal, Internet Connect।</li>
+                </ul>
+
+                <h3>Applications of Internet</h3>
+                <ul class="arrow-list">
+                    <li>Communication</li>
+                    <li>Education</li>
+                    <li>Business</li>
+                    <li>Entertainment</li>
+                    <li>Medicine</li>
+                    <li>Shopping</li>
+                </ul>
+
+                <h3>Website Address and URL</h3>
+                <p><strong>URL (Uniform Resource Locator):</strong> Website का Address। Example: SSC MOCK</p>
+
+                <h4>Types of URL</h4>
+                <ul class="arrow-list">
+                    <li><strong>Absolute URL</strong> — Protocol, Host-name, Folder-name, File-name (Complete)।</li>
+                    <li><strong>Relative URL</strong> — Only Folder-name and File-name (same server)।</li>
+                </ul>
+
+                <h3>World Wide Web (WWW)</h3>
+                <p>WWW Internet का वह हिस्सा है जिसमें Website और Web-page शामिल हैं। 1989 में Tim Berners-Lee द्वारा CERN, Switzerland में आविष्कार। HTML, Hyperlink, URL।</p>
+
+                <h3>Domain Name</h3>
+                <ul class="arrow-list">
+                    <li>.com — Commercial Business</li>
+                    <li>.edu — Educational institutions</li>
+                    <li>.gov — Governmental Organizations</li>
+                    <li>.net — Internet Service Provider</li>
+                    <li>.mil — Military Site</li>
+                    <li>.org — Organizations</li>
+                </ul>
+
+                <h3>Types of Website</h3>
+                <ul class="arrow-list">
+                    <li><strong>Static Website</strong> — Fixed Content, HTML only, No Database।</li>
+                    <li><strong>Dynamic Website</strong> — Content changes per User, HTML + Programming + Database।</li>
+                </ul>
+
+                <h3>Introduction to IP Address</h3>
+                <p>IP Address एक Number है जो Internet पर Computer/Device की पहचान करता है।</p>
+
+                <h4>Types of IP Address</h4>
+                <ul class="arrow-list">
+                    <li><strong>IPv4</strong> — 32 Bit, 4 parts (0–255), ~4.3 Billion Addresses। Example: 172.16.254.1</li>
+                    <li><strong>IPv6</strong> — 128 Bit, 8 groups of 4 Hex Digits। Example: 2001:0db8:0000:0042:0000:8a2e:0370:7334</li>
+                </ul>
+
+                <h3>ISP and Role of ISP</h3>
+                <p><strong>ISP (Internet Service Provider):</strong> Company जो Customers/Users को Internet Service Provide करती है।</p>
+                <ul class="arrow-list">
+                    <li><strong>Tier1</strong> — High Level, Underwater Cables, connects World Wide Web corners।</li>
+                    <li><strong>Tier2</strong> — Connects Tier1 and Tier3, Peering Agreements।</li>
+                    <li><strong>Tier3</strong> — Last mile, provides to End Users।</li>
+                </ul>
+
+                <h4>Role of ISP</h4>
+                <ul class="arrow-list">
+                    <li>Provide Internet Connection</li>
+                    <li>Provide Modem</li>
+                    <li>Connect Information Service</li>
+                    <li>E-mail Services</li>
+                    <li>Antivirus Security</li>
+                    <li>Web Hosting, Domain Management</li>
+                </ul>
+
+                <h3>Internet Protocol</h3>
+                <ul class="arrow-list">
+                    <li><strong>TCP</strong> — Connection Oriented, End-to-End Delivery, works with IP।</li>
+                    <li><strong>IP</strong> — Routing and Addressing of Data Packets।</li>
+                    <li><strong>HTTP</strong> — Hyper Text Transfer, Port 80; HTTPS — Secure, Port 443।</li>
+                    <li><strong>FTP</strong> — File Transfer, Port 21, Faster than HTTP।</li>
+                    <li><strong>POP3</strong> — Download Mail from Server, Port 110।</li>
+                    <li><strong>SMTP</strong> — Send Mail, Port 25।</li>
+                    <li><strong>Ethernet</strong> — LAN Communication।</li>
+                    <li><strong>UDP</strong> — Connection Free, no delivery check।</li>
+                    <li><strong>PPP</strong> — Data Link Layer, Direct Connection।</li>
+                    <li><strong>Telnet</strong> — Remote Login, Port 23।</li>
+                </ul>
+
+                <h3>Modes of Connecting Internet</h3>
+                <ul class="arrow-list">
+                    <li><strong>Hotspot</strong> — Virtual Router, Wi-Fi based।</li>
+                    <li><strong>Wi-Fi</strong> — Wireless Fidelity, Radio Waves, High Speed।</li>
+                    <li><strong>LAN Cable</strong> — Ethernet Port, Cable Modem।</li>
+                    <li><strong>Broadband</strong> — High-Speed, Wide Frequency, Coaxial/Fiber।</li>
+                    <li><strong>USB Tethering</strong> — Mobile Data Share via USB Cable।</li>
+                </ul>
+
+                <h3>Identifying and Uses of IP/MAC/IMEI</h3>
+                <ul class="arrow-list">
+                    <li><strong>IP Address</strong> — Network Device की पहचान।</li>
+                    <li><strong>MAC Address</strong> — Media Access Control, Physical/Hardware Address, 12 Digit Hex (6 Bytes), Unique।</li>
+                    <li><strong>IMEI</strong> — International Mobile Equipment Identity, 15/17 Digit Code, Phone की पहचान, *#06# से देखें।</li>
+                </ul>
+
+                <h3>Popular Web Browsers</h3>
+                <ul class="arrow-list">
+                    <li>Internet Explorer (Microsoft, 1995, C++)</li>
+                    <li>Microsoft Edge (Windows 10, 2015, C++/C#)</li>
+                    <li>Google Chrome (2008, C/C++/JavaScript/Python)</li>
+                    <li>Mozilla Firefox (2002, Open Source, C/C++/JavaScript)</li>
+                    <li>Opera Browser (1995, C++)</li>
+                </ul>
+
+                <h3>Popular Search Engines</h3>
+                <ul class="arrow-list">
+                    <li><strong>Google</strong> — 1997, Larry Page &amp; Sergey Brin, Python/C++/C</li>
+                    <li><strong>Bing</strong> — 2009, Microsoft, ASP.NET</li>
+                    <li><strong>Yahoo</strong> — 1995, Yahoo Company</li>
+                    <li><strong>ASK</strong> — 1996, Garrett Gruener &amp; David Warthen</li>
+                    <li><strong>Baidu</strong> — 2000, China, Chinese Language</li>
+                    <li><strong>Yandex</strong> — 1997, Russia, CompTek</li>
+                    <li><strong>DuckDuckGo</strong> — 2008, Gabriel Weinberg</li>
+                </ul>
+
+                <!-- Chapter 6 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 6 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> What is an Internet Service Provider? Into how many parts is ISP Divided?</div>
+                        <p><strong>ISP:</strong> Company जो Customers/Users को Internet Service Provide करती है। 3 Parts — Tier1, Tier2, Tier3।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> Define network topology. Explain the various types of topologies?</div>
+                        <p><strong>Topology:</strong> Network का Shape/Layout। Types — Bus, Ring, Star, Mesh, Tree।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> What do you understand by WWW? Name some popular Internet Browser?</div>
+                        <p><strong>WWW:</strong> Internet का हिस्सा, Websites &amp; Web-pages, 1989, Tim Berners-Lee। Browsers — Internet Explorer, Edge, Chrome, Firefox, Opera।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> Explain LAN Network and WAN Network?</div>
+                        <p><strong>LAN:</strong> Local Area, 1 km, Private, High Speed।<br />
+                            <strong>WAN:</strong> Wide Area, Cities/Countries, Internet, Speed 10x slower than LAN।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> What is Internet Protocol? Explain common networking protocols?</div>
+                        <p><strong>Protocol:</strong> Set of Rules for Digital Communication। TCP, IP, HTTP, FTP, POP3, SMTP, Ethernet, UDP, PPP, Telnet।</p>
+                    </div>
+                </div>
+
+                <div class="chapter-nav">
+                    <a href="#ch5">← Previous Chapter</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch7">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ============================== CHAPTER 7 ============================== -->
+            <div class="chapter" id="ch7">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 7</span>
+                    <h2>E-mail, Social Networking and e-Governance Services</h2>
+                </div>
+
+                <h3>Introduction to E-mail</h3>
+                <p>E-mail (Electronic Mail) एक Digital Message है, जिसे एक User दूसरे User के साथ Communicate करने के लिए Use करता है। E-mail में Text, Files, Images, Attachments हो सकते हैं। पहला E-mail 1971 में Ray Tomlinson द्वारा ARPANET से भेजा गया।</p>
+
+                <h4>E-mail Address</h4>
+                <p>2 Parts — user_name @ domain_name। Example: SSC MOCK</p>
+
+                <h4>Parts of Electronic Mail</h4>
+                <ul class="arrow-list">
+                    <li>To (Recipient's Address)</li>
+                    <li>CC (Carbon Copy) and BCC (Blind Carbon Copy)</li>
+                    <li>Date and Time Stamp</li>
+                    <li>Body</li>
+                    <li>Subject Line</li>
+                    <li>Signature</li>
+                    <li>Attachments</li>
+                </ul>
+
+                <h4>Popular E-mail Clients</h4>
+                <ul class="arrow-list">
+                    <li>Mozilla Thunderbird</li>
+                    <li>MS-Outlook</li>
+                    <li>Opera Email Client</li>
+                    <li>Pegasus Mail</li>
+                    <li>Outlook Express</li>
+                    <li>Mailbird</li>
+                    <li>Dream Mail</li>
+                </ul>
+
+                <h4>E-mail Services</h4>
+                <ul class="arrow-list">
+                    <li>Application Based E-mail</li>
+                    <li>Web Based E-mail</li>
+                </ul>
+
+                <h3>How E-mail Works</h3>
+                <ul class="arrow-list">
+                    <li><strong>SMTP</strong> — Send Mail, Port 25</li>
+                    <li><strong>POP3</strong> — Receive Mail (Application Based), Port 110</li>
+                    <li><strong>IMAP</strong> — Receive Mail (Web Based), Port 143</li>
+                </ul>
+
+                <h3>Using E-mails</h3>
+                <ul class="arrow-list">
+                    <li><strong>Mailbox:</strong> Inbox (Received), Outbox (Sent till delivered), Sent-Box (Sent)</li>
+                    <li><strong>Creating and Sending:</strong> Compose → To, CC, BCC, Subject, Body, Attachments</li>
+                    <li><strong>Replying:</strong> Reply (only sender) / Reply to all</li>
+                    <li><strong>Forwarding:</strong> Forward to others</li>
+                    <li><strong>Searching:</strong> By Address, User Name, Subject, Date</li>
+                    <li><strong>Attachment:</strong> Up to 25MB (Gmail/Yahoo), Audio, Video, Image, Text, Zip (exe, msi, com, dll, cmd blocked)</li>
+                    <li><strong>E-mail Signature:</strong> Name, Company, Logo, Website</li>
+                </ul>
+
+                <h3>Social Networking &amp; E-Commerce</h3>
+                <ul class="arrow-list">
+                    <li><strong>Social Networking:</strong> Internet के माध्यम से लोगों को आपस में जोड़ना। Facebook, Twitter, LinkedIn, Instagram।</li>
+                    <li><strong>E-Commerce:</strong> Internet पर Goods/Services खरीदना और बेचना। Types — B2C, B2B, C2C, C2B, B2A, C2A।</li>
+                </ul>
+
+                <h4>History of E-Commerce</h4>
+                <p>World's first E-Commerce Company — CompuServe (1969), Dr. John R. Goltz &amp; Jeffrey Wilkins। India's first — Fabmart.Com (1999), Vaitheswaran।</p>
+
+                <h3>Social Media Platforms</h3>
+                <ul class="arrow-list">
+                    <li><strong>Facebook</strong> — 2004, Mark Zuckerberg, Photo/Video/Text Share, Min Age 13, Max Video 240 min / 4 GB।</li>
+                    <li><strong>Twitter</strong> — 2006, Microblogging, "Twit", Max 280 Characters, Video 2 min 20 sec, Max 12 MB।</li>
+                    <li><strong>LinkedIn</strong> — 2002, Business Professionals, CV Post।</li>
+                    <li><strong>Instagram</strong> — 2010, Photo/Video Share, Max Video 60 sec, Owner — Facebook।</li>
+                </ul>
+
+                <h3>Instant Messaging</h3>
+                <ul class="arrow-list">
+                    <li><strong>WhatsApp</strong> — 2009, Brian Acton &amp; Jan Koum, Now Facebook, Text/ Voice/Video Call, Status 30 sec, File 100 MB, Group 256 Members।</li>
+                    <li><strong>Facebook Messenger</strong> — Photo, Video, Sticker, Audio, Files, Voice/Video Call।</li>
+                    <li><strong>Telegram</strong> — 2013, Nikolai &amp; Pavel Durov, Files (doc, zip, mp3), Group 200,000 Members।</li>
+                </ul>
+
+                <h3>Introduction to Blogs</h3>
+                <p>Blog — Online Diary, Opinion, Experience, Interests। Blogging Platforms — WordPress, Gator, Blogger, Tumblr, Medium, Squarespace, Wix, Ghost।</p>
+
+                <h3>Basics of E-Commerce</h3>
+                <p>E-Commerce की शुरुआत 11 August 1994 — "NetMarket" से, first CD sold। Types — B2B, B2C, C2B, C2C, B2A, C2A।</p>
+
+                <h3>M-Commerce</h3>
+                <p>Mobile Commerce — Mobile Phone के माध्यम से Product खरीदना/बेचना। Term 1997 — Kevin Duffey।</p>
+
+                <h3>Netiquettes</h3>
+                <p>Netiquette = Internet + Etiquette — Internet शिष्टाचार। Online Respect, No Spam, No Troll, No Obscene Comments, Respect Privacy, Check Facts before Repost, No Abusive Language।</p>
+
+                <h3>Overview of e-Governance Services</h3>
+                <ul class="arrow-list">
+                    <li><strong>Railway Reservation (IRCTC)</strong> — 27 Sep 1999, 3 Aug 2002, E-Ticketing, UTS App for Unreserved।</li>
+                    <li><strong>Passport</strong> — Legal Document for Foreign Travel, Ministry of External Affairs (MEA), 36 Offices, 424 POPSK।</li>
+                    <li><strong>eHospital [ORS]</strong> — Online Registration System, 1 July 2015, OPD Booking, Lab Report, Blood Availability।</li>
+                </ul>
+
+                <h3>UMANG APP</h3>
+                <p>Unified Mobile App for New Age Governance — Digital India, Nov 2017, MeitY &amp; NeGD, 13 Indian Languages, 623 Services, 116 Departments, 23 States।</p>
+
+                <h3>Digital Locker (DigiLocker)</h3>
+                <p>Feb 2015, Secure Cloud Storage, 1GB per account, Max 10 MB, PDF/JPEG/PNG, Aadhaar required, OTP verification।</p>
+
+                <!-- Chapter 7 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 7 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> What is Social Networking? Give the Examples of Social Networking Sites?</div>
+                        <p><strong>Social Networking:</strong> Internet के माध्यम से लोगों को आपस में जोड़ना। Examples — Facebook, Instagram, LinkedIn, Twitter, YouTube।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> What is Netiquette?</div>
+                        <p><strong>Netiquette:</strong> Internet शिष्टाचार, Online Respect, No Spam, No Troll, No Obscene Comments, Respect Privacy, Check Facts, No Abusive Language।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> What is the Basics of E-Commerce and the types of E-Commerce Models?</div>
+                        <p><strong>E-Commerce:</strong> Internet पर Goods/Services खरीदना/बेचना। Models — B2B, B2C, C2C, C2B, B2A, C2A।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> What is an ISP and What is the role of an ISP?</div>
+                        <p><strong>ISP:</strong> Internet Service Provider, Company जो Internet Service Provide करती है। Role — Provide Connection, Modem, E-mail, Security, Web Hosting, Domain Management।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> What is the Protocol? Explain the SMTP Protocol and POP3 Protocol?</div>
+                        <p><strong>Protocol:</strong> Set of Rules for Digital Communication।<br />
+                            <strong>SMTP:</strong> Send Mail, Port 25।<br />
+                            <strong>POP3:</strong> Download Mail from Server, Port 110।</p>
+                    </div>
+                </div>
+
+                <div class="chapter-nav">
+                    <a href="#ch6">← Previous Chapter</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch8">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ============================== CHAPTER 8 ============================== -->
+            <div class="chapter" id="ch8">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 8</span>
+                    <h2>Digital Financial Tools and Applications</h2>
+                </div>
+
+                <p>वर्तमान में दुनिया Digitalization की ओर बहुत तेजी से आगे बढ़ रही है। Computer, Internet और Smartphone के आविष्कार ने Financial Services पर बहुत अधिक प्रभाव डाला है। अब कोई भी Person अपने Bank Account तक पहुँच सकता है, 24*7 Account Details, Money Transaction, Pay Bills, Ticket Booking कर सकता है।</p>
+
+                <h3>Digital Financial Tools</h3>
+                <p>ऐसे Devices जिनके माध्यम से Digital Financial Services का Use किया जा सकता है — ATM, Credit Card, Debit Card, UPI, e-Wallets, POS Machine।</p>
+
+                <h3>Understanding OTP and QR Code</h3>
+                <ul class="arrow-list">
+                    <li><strong>OTP (One Time Password)</strong> — एक Login Session या एक Transaction के लिए Valid, 6 Digit Code, Time Limit 10 Minute, Registered Mobile/E-mail पर भेजा जाता है।</li>
+                    <li><strong>QR Code (Quick Response Code)</strong> — Matrix Bar Code, 2D Bar Code, 1994 में Denso Wave (Japan) द्वारा Design, QR Scanner/Mobile Camera से Scan, Static &amp; Dynamic।</li>
+                </ul>
+
+                <h3>UPI (Unified Payment Interface)</h3>
+                <p>NPCI द्वारा Developed Instant Payment System, 11 April 2016 को Mumbai में RBI Governor Dr. Raghuram Ji Rajan द्वारा Launch। कई Bank Accounts को एक Mobile Application में Combine करता है। OTP की आवश्यकता नहीं।</p>
+
+                <h4>Requirement for UPI</h4>
+                <ul class="arrow-list">
+                    <li>Bank Account</li>
+                    <li>Debit Card for MPIN</li>
+                    <li>Smart Phone with Internet</li>
+                    <li>Mobile Number Linked with Bank Account</li>
+                </ul>
+
+                <h3>AEPS (Aadhaar Enable Payment System)</h3>
+                <p>Aadhaar Authentication के माध्यम से Basic Banking Services (Balance Enquiry, Cash Withdrawal) — MicroATM/BankMitra, Bio-metrics Verification।</p>
+
+                <h3>USSD (Unstructured Supplementary Service Data)</h3>
+                <p>NPCI द्वारा Nov 2012, GSM Protocol, *99# Dial, Basic Feature Mobile पर Mobile Banking, Internet Data की आवश्यकता नहीं।</p>
+
+                <h3>Card (Credit / Debit)</h3>
+                <ul class="arrow-list">
+                    <li><strong>Credit Card</strong> — 1946 में John Biggins, Pre-defined Credit Limit, Credit Score और Monthly Income पर Based।</li>
+                    <li><strong>Debit Card</strong> — Savings/Current Account से Linked, ATM और POS Terminal पर Use, केवल Account में Available Money तक Limit।</li>
+                </ul>
+
+                <h3>E-Wallet</h3>
+                <p>Online Prepaid Account, Digital रूप में Money Store, Instant &amp; Secure Transactions — PayTM, PhonePe, PayZapp, MobiKwik, Google Pay।</p>
+
+                <h4>Types of e-Wallet</h4>
+                <ul class="arrow-list">
+                    <li><strong>Closed e-Wallet</strong> — केवल एक Special Site के लिए Use।</li>
+                    <li><strong>Semi-Closed e-Wallet</strong> — Related Sites पर भी Use, Cash Withdrawal नहीं।</li>
+                    <li><strong>Open e-Wallet</strong> — Banking Wallet, Bank Account से Connect, Cash Withdrawal भी।</li>
+                </ul>
+
+                <h3>PoS (Point of Sale)</h3>
+                <p>Retail Store पर Use होने वाला System, 1879 में James Ritty, Hardware + Software, Thermal Printer for Bill।</p>
+
+                <h3>Internet Banking</h3>
+                <p>24*7 Financial &amp; Non-Financial Transactions, User ID + Password, Features — Account Statement, Transaction Info, e-Commerce, Fund Transfer, Bill Payment, Mobile Recharge।</p>
+
+                <h3>NEFT (National Electronic Fund Transfer)</h3>
+                <p>Nov 2005, RBI, Batch-wise Transactions, 16 Dec 2019 से 24*7, No Upper/Lower Limit, Requires Beneficiary Name, Account Number, IFSC Code।</p>
+
+                <h3>RTGS (Real Time Gross Settlement)</h3>
+                <p>Mar 2004, RBI, Real Time, Monday–Saturday (8:00 AM – 6:00 PM), Minimum 2 Lakh, No Upper Limit।</p>
+
+                <h3>IMPS (Immediate Payment Service)</h3>
+                <p>22 Nov 2010, NPCI, 24*7, Real Time, Two ways — (1) Beneficiary Name + Account + IFSC, (2) MMID + Mobile Number।</p>
+
+                <h3>Online Bill Payment</h3>
+                <p>Utility Payment Online — Light Bill, Mobile Bill, Water Bill, Insurance Payment etc. via Internet Banking, Mobile Banking, Credit/Debit Card, e-Wallet।</p>
+
+                <!-- Chapter 8 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 8 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> Describe e-Wallet and also explain various e-Wallet Payment gateway?</div>
+                        <p><strong>e-Wallet:</strong> Online Prepaid Account, Digital Money Store, Instant Transactions। Types — Closed, Semi-Closed, Open। Examples — PayTM, PhonePe, PayZapp, MobiKwik, Google Pay।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> Write short description on QR Code and IFSC Code?</div>
+                        <p><strong>QR Code:</strong> Matrix Bar Code, 2D, 1994, Denso Wave।<br />
+                            <strong>IFSC Code:</strong> 11 Alpha-Numeric, Bank Branch Unique Identity, First 4 Alpha (Bank), 5th 0, Last 6 (Branch).</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> What is Unified Payment Interface (UPI)?</div>
+                        <p><strong>UPI:</strong> NPCI द्वारा Developed Instant Payment System, 11 April 2016, RBI Governor Dr. Raghuram Ji Rajan द्वारा Launch, कई Bank Accounts को एक App में Combine।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> Explain Credit Card and Debit Card?</div>
+                        <p><strong>Credit Card:</strong> Plastic Card, Pre-defined Credit Limit, Credit Score &amp; Monthly Income Based।<br />
+                            <strong>Debit Card:</strong> Savings/Current Account से Linked, ATM/POS Use, Available Money Limit।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> Explain the Digital Financial Tools?</div>
+                        <p><strong>Digital Financial Tools:</strong> Devices जिनसे Digital Financial Services Use की जा सकती है — ATM, Credit Card, Debit Card, UPI, e-Wallets, POS Machine।</p>
+                    </div>
+                </div>
+
+                <div class="chapter-nav">
+                    <a href="#ch7">← Previous Chapter</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#ch9">Next Chapter →</a>
+                </div>
+            </div>
+
+            <!-- ============================== CHAPTER 9 ============================== -->
+            <div class="chapter" id="ch9">
+                <div class="chapter-head">
+                    <span class="ch-num">Chapter 9</span>
+                    <h2>Overview of Futureskills and Cyber Security</h2>
+                </div>
+
+                <p>NASSCOM (National Association of Software and Service Companies) ने Futureskills Platform बनाया है, जहाँ IT Professional खुद को Enroll कर सकते हैं और IoT, Robotics, Artificial Intelligence जैसी Emerging Technologies सीख सकते हैं। 19 February 2018 को Launch।</p>
+
+                <h3>Introduction to Internet of Things (IoT)</h3>
+                <p>IoT Physical Objects का Network है, जो Sensors और Software से Connected रहते हैं और Communication कर सकते हैं। Example — Smart watch, Smart TV, Smart phone।</p>
+
+                <h4>Components of IoT</h4>
+                <ul class="arrow-list">
+                    <li>Sensors Device</li>
+                    <li>Connectivity</li>
+                    <li>Data Processing</li>
+                    <li>User Interface</li>
+                </ul>
+
+                <h4>Advantages of IoT</h4>
+                <ul class="arrow-list">
+                    <li>Easy Tracking</li>
+                    <li>Home Automation</li>
+                    <li>Remote Access</li>
+                </ul>
+
+                <h4>Disadvantages of IoT</h4>
+                <ul class="arrow-list">
+                    <li>Security</li>
+                    <li>Privacy</li>
+                    <li>Complexity</li>
+                </ul>
+
+                <h3>Big Data Analytics</h3>
+                <p>Big Data — Internet पर Users द्वारा Create किए गए Data का Collection। Big Data Analytics — इन Data को Analyze करके Pattern या Useful Information निकालना। Types — Structured, Unstructured, Semi-Structured।</p>
+
+                <h3>Cloud Computing</h3>
+                <p>Internet के माध्यम से Services — Data Storage, Servers, Database, Networking, Software। Remote Database में Files Store, Cost कम करता है।</p>
+
+                <h4>Advantages of Cloud Computing</h4>
+                <ul class="arrow-list">
+                    <li><strong>Cost</strong> — Hardware/Software Purchase Cost कम करता है।</li>
+                    <li><strong>Speed</strong> — Resources Minutes में Access।</li>
+                    <li><strong>Scalability</strong> — Requirements बढ़ा/घटा सकते हैं।</li>
+                    <li><strong>Security</strong> — Strong Policies, Technologies, Controls।</li>
+                    <li><strong>Reliability</strong> — Data Backup &amp; Recovery Fast &amp; Cheap।</li>
+                </ul>
+
+                <h4>Types of Cloud</h4>
+                <ul class="arrow-list">
+                    <li>Public Cloud — कोई भी Use कर सकता है।</li>
+                    <li>Private Cloud — Personal/Company Use।</li>
+                    <li>Hybrid Cloud — Public + Private Combination।</li>
+                </ul>
+
+                <h4>Cloud Computing Services</h4>
+                <ul class="arrow-list">
+                    <li><strong>IaaS</strong> — Infrastructure as a Service (Storage, Networking, Servers)</li>
+                    <li><strong>PaaS</strong> — Platform as a Service (Operating Systems)</li>
+                    <li><strong>SaaS</strong> — Software as a Service (Shared Software Applications)</li>
+                </ul>
+
+                <h3>Virtual Reality (VR)</h3>
+                <p>Computer के माध्यम से ऐसी चीज़ों का अनुभव जो Actually में मौजूद नहीं हैं। 3D Environment, High Visual Multimedia। Use — Gaming, Entertainment, Engineering, Education, Scientific Visualization।</p>
+
+                <h3>Artificial Intelligence (AI)</h3>
+                <p>Machine को Program किया जाता है ताकि Machines Intelligent Work कर सकें। John McCarthy — AI के जनक, 1959 में LISP Language। Applications — Gaming, Natural Language Processing, Vision System, Expert System, Speech Recognition, Intelligent Robots।</p>
+
+                <h3>Blockchain Technology</h3>
+                <p>Distributed Database, Transactions/Digital Events का Record, Bitcoin की Backbone Technology। Satoshi Nakamoto, 2008 — "Bitcoin — A Peer to Peer Electronic Cash System"। Use — IoT, Smart Device, Banking, Passport, Healthcare, Personal Identification, Certificates।</p>
+
+                <h3>3D Printing / Additive Manufacturing</h3>
+                <p>3D Objects का Production — CAD Software / 3D Scanner, Advantages — Easily Accessible, Faster Production, Cost-Effective, Low Waste, Unlimited Shapes। Applications — Space Engineering, Education, Construction, Biomedical, Robotics।</p>
+
+                <h3>Robotics Process Automation (RPA)</h3>
+                <p>Automated Software Tool, Software Robots बनाने के लिए। Advanced Technology, Humans की तरह Work सीख सकते हैं। Advantages — Accuracy Increased, Tasks Completed Rapidly, Cost of Manpower Saved, Productivity Increased। Applications — Banking, HR, Customer Service, Healthcare।</p>
+
+                <h3>Cyber Security</h3>
+                <p>Computer System और Networks के Hardware/Electronic Data को Theft, Damage, Dissolution, Misuse से Security Provide करता है। Need — Personal, Official, Banking, Other Information को Secure रखना।</p>
+
+                <h4>Cyber Security Goals</h4>
+                <ul class="arrow-list">
+                    <li>Data Privacy</li>
+                    <li>Integrity of Data</li>
+                    <li>Authorized Users के लिए Data Availability</li>
+                </ul>
+
+                <h4>Types of Cyber Attacks</h4>
+                <ul class="arrow-list">
+                    <li><strong>System Based</strong> — Virus, Worm, Trojan Horse, Backdoors</li>
+                    <li><strong>Web Based</strong> — DNS Spoofing, Phishing, Denial of Service, Man in the Middle (MiTM), Brute Force</li>
+                </ul>
+
+                <h3>Securing PC</h3>
+                <ul class="check-list">
+                    <li>Keep OS and Software Updated</li>
+                    <li>Use Licensed Software</li>
+                    <li>Be Careful Online, Don't Click Suspicious Links</li>
+                    <li>Backup System</li>
+                    <li>Keep Password Safe &amp; Hard to Guess</li>
+                    <li>Install Antivirus</li>
+                    <li>Adjust Browser Settings</li>
+                    <li>Enable Firewall</li>
+                </ul>
+
+                <h3>Securing Smart Phone</h3>
+                <ul class="check-list">
+                    <li>Keep Strong Password</li>
+                    <li>Use Only Trusted Apps</li>
+                    <li>Update Phones and Apps Regularly</li>
+                    <li>Backup Phone Data</li>
+                    <li>Set up Remote Wipe</li>
+                    <li>Wi-Fi and Hotspot Security</li>
+                    <li>Understand App Permissions</li>
+                </ul>
+
+                <!-- Chapter 9 Important Questions -->
+                <div class="questions">
+                    <h3>📌 Chapter 9 — Important Questions</h3>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q1.</span> Describe Cloud Computing with Advantage of Cloud Computing?</div>
+                        <p><strong>Cloud Computing:</strong> Internet के माध्यम से Services — Data Storage, Servers, Database, Networking, Software। Advantages — Cost, Speed, Scalability, Security, Reliability।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q2.</span> Explain the Artificial Intelligence? What are the Applications of Artificial Intelligence?</div>
+                        <p><strong>AI:</strong> Technology जिसमें Machine को Program किया जाता है ताकि Intelligent Work कर सके। John McCarthy — AI के जनक। Applications — Gaming, NLP, Vision System, Expert System, Speech Recognition, Intelligent Robots।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q3.</span> What is Virtual Reality (VR)?</div>
+                        <p><strong>VR:</strong> Computer के माध्यम से ऐसी चीज़ों का अनुभव जो Actually में मौजूद नहीं हैं। 3D Environment, High Visual Multimedia।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q4.</span> Explain Robotics Process Automation (RPA) and Advantage of RPA?</div>
+                        <p><strong>RPA:</strong> Automated Software Tool, Software Robots बनाने के लिए, Advanced Technology। Advantages — Accuracy Increased, Tasks Completed Rapidly, Cost of Manpower Saved, Productivity Increased।</p>
+                    </div>
+
+                    <div class="q-item">
+                        <div class="q"><span class="q-label">Q5.</span> What is Blockchain Technology? How it Works?</div>
+                        <p><strong>Blockchain:</strong> Distributed Database, Transactions/Digital Events का Record, Bitcoin की Backbone Technology। Satoshi Nakamoto, 2008। Works — Digital Signature के माध्यम से Secure Transactions।</p>
+                    </div>
+                </div>
+
+                <div class="chapter-nav">
+                    <a href="#ch8">← Previous Chapter</a>
+                    <a href="#toc">📚 Table of Contents</a>
+                    <a href="#" class="disabled">End of Book</a>
+                </div>
+            </div>
+
+            <!-- ======== CREDIT ======== -->
+            <div class="note-credit">
+                <strong>🙏 नोट्स बनाने में बहुत मेहनत लगी है</strong><br />
+                यदि आप कुछ शुल्क (50, 100, 200 रूपए) जो आपको उचित लगता है, pay कर सकते हैं, तो धन्यवाद।<br />
+                <span style="font-size:0.85rem; opacity:0.6;">Copyright © 2026 SSC MOCK</span>
+            </div>
+
+        </div>
+        <!-- end .content -->
+
+    </div>
+    <!-- end .book-container -->
+
+</body>
+</html>

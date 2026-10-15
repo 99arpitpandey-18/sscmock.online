@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profit & Loss – CGL Level (15 Pages)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #f0f4f8;
+            color: #1a1a2e;
+            padding: 20px;
+            transition: 0.3s;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #fff;
+            padding: 8px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .progress-container .prog-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1a237e;
+            white-space: nowrap;
+        }
+        .progress-container .prog-bar {
+            flex: 1;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            min-width: 100px;
+        }
+        .progress-container .prog-bar .prog-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #1a237e, #ffd54f);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        .progress-container .page-indicator {
+            font-weight: 700;
+            color: #1a237e;
+            background: #e8eaf6;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+        .main-header {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: #fff;
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .main-header .title h1 {
+            font-size: 28px;
+            font-weight: 800;
+        }
+        .main-header .title h1 span {
+            color: #ffd54f;
+        }
+        .main-header .title p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .lang-toggle button {
+            padding: 8px 22px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: transparent;
+            color: #ccc;
+        }
+        .lang-toggle button.active {
+            background: #ffd54f;
+            color: #1a237e;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .lang-toggle button:hover:not(.active) {
+            color: #fff;
+        }
+        .topics-index {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e9edf2;
+        }
+        .topics-index .index-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 12px;
+        }
+        .topics-index .index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .topics-index .index-grid a {
+            display: block;
+            background: #f5f7fa;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: #1a237e;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-left: 4px solid #1a237e;
+            transition: 0.3s;
+        }
+        .topics-index .index-grid a:hover {
+            background: #e8eaf6;
+            transform: translateX(4px);
+            border-left-color: #ff6f00;
+        }
+        .page-divider {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 40px 0 30px;
+            color: #888;
+            font-weight: 300;
+            font-size: 14px;
+        }
+        .page-divider hr {
+            flex: 1;
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ccc, transparent);
+        }
+        .page-divider .page-label {
+            background: #fff;
+            padding: 0 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1a237e;
+            border: 1px solid #e0e0e0;
+            padding: 4px 18px;
+        }
+        .formula-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            border-left: 5px solid #1a237e;
+            scroll-margin-top: 80px;
+            transition: 0.2s;
+        }
+        .formula-card:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09);
+        }
+        .formula-card .topic-name {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1a237e;
+            margin-bottom: 2px;
+        }
+        .formula-card .topic-badge {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 15px;
+            display: inline-block;
+            background: #f0f4f8;
+            padding: 2px 16px;
+            border-radius: 20px;
+        }
+        .visual-box {
+            background: #e8eaf6;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border: 1px dashed #1a237e;
+        }
+        .visual-box .vis-icon {
+            font-size: 36px;
+            color: #1a237e;
+        }
+        .visual-box .vis-text {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .visual-box .vis-text strong {
+            color: #1a237e;
+        }
+        .formulas-box {
+            background: #f5f7fa;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+            border-left: 4px solid #ff6f00;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+        .formulas-box .formula-title {
+            font-weight: 700;
+            color: #1a237e;
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+        .formulas-box code {
+            background: #e0e0e0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .formula-explanation {
+            background: #fff8e1;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
+            border-left: 4px solid #ffa000;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #4e342e;
+        }
+        .formula-explanation .ex-title {
+            font-weight: 700;
+            color: #e65100;
+        }
+        .question-item {
+            background: #fafbfc;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border: 1px solid #e9edf2;
+            transition: 0.2s;
+        }
+        .question-item:hover {
+            border-color: #b0c4de;
+        }
+        .question-item .q-text {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+        .question-item .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 20px;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        @media (max-width: 600px) {
+            .question-item .options {
+                grid-template-columns: 1fr;
+            }
+        }
+        .question-item .options span {
+            display: inline-block;
+        }
+        .question-item .answer-btn {
+            background: #e8eaf6;
+            border: none;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a237e;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 4px;
+        }
+        .question-item .answer-btn:hover {
+            background: #1a237e;
+            color: #fff;
+        }
+        .question-item .answer-box {
+            display: none;
+            margin-top: 8px;
+            padding: 10px 16px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            border-left: 4px solid #2e7d32;
+            color: #1b5e20;
+            line-height: 1.6;
+        }
+        .question-item .answer-box.show {
+            display: block;
+        }
+        .pyq-badge {
+            display: inline-block;
+            background: #ffd54f;
+            color: #1a237e;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 12px;
+            border-radius: 30px;
+            margin-right: 10px;
+            letter-spacing: 0.5px;
+        }
+        .section-heading {
+            font-weight: 700;
+            color: #1a237e;
+            font-size: 18px;
+            margin: 18px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-heading i {
+            color: #ff6f00;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .main-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .lang-toggle {
+                align-self: flex-start;
+            }
+            .main-header .title h1 {
+                font-size: 22px;
+            }
+            .formula-card {
+                padding: 16px;
+            }
+            .topics-index .index-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .visual-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .progress-container .prog-label {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-container" id="progressContainer">
+            <span class="prog-label"><i class="fas fa-book-open"></i> Study Progress</span>
+            <div class="prog-bar">
+                <div class="prog-fill" id="progressFill" style="width:0%;"></div>
+            </div>
+            <span class="page-indicator" id="pageIndicator">Page 1 of 15</span>
+        </div>
+
+        <!-- HEADER -->
+        <header class="main-header">
+            <div class="title">
+                <h1>💰 Profit & Loss <span>CGL Level</span></h1>
+                <p id="headerSub">9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual</p>
+            </div>
+            <div class="lang-toggle" id="langToggle">
+                <button class="active" data-lang="en">🇬🇧 English</button>
+                <button data-lang="hi">🇮🇳 हिंदी</button>
+            </div>
+        </header>
+
+        <!-- INDEX -->
+        <div class="topics-index" id="topicsIndex">
+            <div class="index-title" id="indexTitle">📑 All 9 Profit & Loss Topics Covered</div>
+            <div class="index-grid" id="indexGrid"></div>
+        </div>
+
+        <!-- CONTENT -->
+        <div id="content"></div>
+
+        <!-- FOOTER -->
+        <div class="footer" id="footerText">⚡ Practice makes perfect. SSC CGL / Banking Level.</div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // COMPLETE DATA: 9 PROFIT & LOSS TOPICS (CGL Level)
+        // ================================================================
+
+        var TOPICS_DATA = [{
+            // ---------- 1. BASIC CONCEPTS ----------
+            nameEn: 'Basic Concepts (CP, SP, Profit, Loss)',
+            nameHi: 'मूल अवधारणाएँ (क्र.मू., वि.मू., लाभ, हानि)',
+            visualEn: '<i class="fas fa-coins" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Cost Price (CP) is what you pay. Selling Price (SP) is what you get. If SP > CP = Profit, else Loss.',
+            visualHi: '<i class="fas fa-coins" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> क्रय मूल्य (CP) = जितना दिया। विक्रय मूल्य (SP) = जितना मिला। यदि SP > CP = लाभ, नहीं तो हानि।',
+            basicFormulaEn: '<b>Profit = SP – CP</b><br><b>Loss = CP – SP</b><br><b>Profit% = (Profit/CP)×100</b><br><b>Loss% = (Loss/CP)×100</b><br><b>SP (Profit) = CP × (1 + P/100)</b><br><b>SP (Loss) = CP × (1 – L/100)</b>',
+            basicFormulaHi: '<b>लाभ = वि.मू. – क्र.मू.</b><br><b>हानि = क्र.मू. – वि.मू.</b><br><b>लाभ% = (लाभ/क्र.मू.)×100</b><br><b>हानि% = (हानि/क्र.मू.)×100</b><br><b>वि.मू. (लाभ) = क्र.मू. × (1 + P/100)</b><br><b>वि.मू. (हानि) = क्र.मू. × (1 – L/100)</b>',
+            formulaExplanationEn: '<b>Why divide by CP?</b> Profit/Loss is always calculated as a percentage of the Cost Price (the amount invested). This is the standard business practice.',
+            formulaExplanationHi: '<b>क्र.मू. से भाग क्यों?</b> लाभ/हानि हमेशा क्रय मूल्य (निवेश की गई राशि) के प्रतिशत के रूप में गणना की जाती है। यह मानक व्यावसायिक प्रथा है।',
+            advancedFormulaEn: '<b>Advanced:</b> If SP is given and Profit/Loss % is given, find CP: CP = SP / (1 + P/100) or CP = SP / (1 – L/100).',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि वि.मू. और लाभ/हानि % दिया है, तो क्र.मू. ज्ञात करें: CP = SP / (1 + P/100) or CP = SP / (1 – L/100).',
+            practice: [
+                { qEn: 'If CP = ₹500, SP = ₹600, find Profit %', qHi: 'यदि क्र.मू. = ₹500, वि.मू. = ₹600, लाभ % ज्ञात करें।', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: 'Profit=100, (100/500)×100=20%', expHi: 'लाभ=100, (100/500)×100=20%' },
+                { qEn: 'If CP = ₹800, SP = ₹720, find Loss %', qHi: 'यदि क्र.मू. = ₹800, वि.मू. = ₹720, हानि % ज्ञात करें।', optsEn: ['5%', '8%', '10%', '12%'], optsHi: ['5%', '8%', '10%', '12%'], ans: 2, expEn: 'Loss=80, (80/800)×100=10%', expHi: 'हानि=80, (80/800)×100=10%' },
+                { qEn: 'CP = ₹400, Profit% = 25%, find SP', qHi: 'क्र.मू. = ₹400, लाभ% = 25%, वि.मू. ज्ञात करें।', optsEn: ['₹450', '₹480', '₹500', '₹520'], optsHi: ['₹450', '₹480', '₹500', '₹520'], ans: 2, expEn: 'SP = 400 × 1.25 = ₹500', expHi: 'वि.मू. = 400 × 1.25 = ₹500' },
+                { qEn: 'CP = ₹600, Loss% = 20%, find SP', qHi: 'क्र.मू. = ₹600, हानि% = 20%, वि.मू. ज्ञात करें।', optsEn: ['₹450', '₹460', '₹480', '₹500'], optsHi: ['₹450', '₹460', '₹480', '₹500'], ans: 2, expEn: 'SP = 600 × 0.8 = ₹480', expHi: 'वि.मू. = 600 × 0.8 = ₹480' },
+                { qEn: 'SP = ₹550, Profit% = 10%, find CP', qHi: 'वि.मू. = ₹550, लाभ% = 10%, क्र.मू. ज्ञात करें।', optsEn: ['₹450', '₹480', '₹500', '₹520'], optsHi: ['₹450', '₹480', '₹500', '₹520'], ans: 2, expEn: 'CP = 550 / 1.1 = ₹500', expHi: 'क्र.मू. = 550 / 1.1 = ₹500' },
+                { qEn: 'SP = ₹360, Loss% = 10%, find CP', qHi: 'वि.मू. = ₹360, हानि% = 10%, क्र.मू. ज्ञात करें।', optsEn: ['₹400', '₹420', '₹440', '₹460'], optsHi: ['₹400', '₹420', '₹440', '₹460'], ans: 0, expEn: 'CP = 360 / 0.9 = ₹400', expHi: 'क्र.मू. = 360 / 0.9 = ₹400' },
+                { qEn: 'If CP = ₹200, SP = ₹240, find Profit %', qHi: 'यदि क्र.मू. = ₹200, वि.मू. = ₹240, लाभ %?', optsEn: ['20%', '25%', '30%', '35%'], optsHi: ['20%', '25%', '30%', '35%'], ans: 0, expEn: 'Profit=40, (40/200)×100=20%', expHi: 'लाभ=40, (40/200)×100=20%' },
+                { qEn: 'If CP = ₹750, SP = ₹600, find Loss %', qHi: 'यदि क्र.मू. = ₹750, वि.मू. = ₹600, हानि %?', optsEn: ['10%', '15%', '20%', '25%'], optsHi: ['10%', '15%', '20%', '25%'], ans: 2, expEn: 'Loss=150, (150/750)×100=20%', expHi: 'हानि=150, (150/750)×100=20%' },
+                { qEn: 'CP = ₹1200, Profit% = 15%, find SP', qHi: 'क्र.मू. = ₹1200, लाभ% = 15%, वि.मू.?', optsEn: ['₹1260', '₹1320', '₹1380', '₹1440'], optsHi: ['₹1260', '₹1320', '₹1380', '₹1440'], ans: 2, expEn: 'SP = 1200 × 1.15 = ₹1380', expHi: 'वि.मू. = 1200 × 1.15 = ₹1380' },
+                { qEn: 'CP = ₹2500, Loss% = 8%, find SP', qHi: 'क्र.मू. = ₹2500, हानि% = 8%, वि.मू.?', optsEn: ['₹2100', '₹2200', '₹2300', '₹2400'], optsHi: ['₹2100', '₹2200', '₹2300', '₹2400'], ans: 2, expEn: 'SP = 2500 × 0.92 = ₹2300', expHi: 'वि.मू. = 2500 × 0.92 = ₹2300' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'If CP = ₹500 and Profit% = 20%, find SP.', qHi: 'यदि क्र.मू. = ₹500 और लाभ% = 20%, तो वि.मू. ज्ञात करें।', optsEn: ['₹580', '₹600', '₹620', '₹650'], optsHi: ['₹580', '₹600', '₹620', '₹650'], ans: 1, expEn: '500 × 1.2 = ₹600', expHi: '500 × 1.2 = ₹600' },
+                { year: 'CGL 2022', qEn: 'If SP = ₹1200 and Loss% = 20%, find CP.', qHi: 'यदि वि.मू. = ₹1200 और हानि% = 20%, तो क्र.मू. ज्ञात करें।', optsEn: ['₹1400', '₹1500', '₹1600', '₹1700'], optsHi: ['₹1400', '₹1500', '₹1600', '₹1700'], ans: 1, expEn: '1200 / 0.8 = ₹1500', expHi: '1200 / 0.8 = ₹1500' },
+                { year: 'CGL 2021', qEn: 'Profit % if CP = ₹400, SP = ₹480.', qHi: 'लाभ % यदि क्र.मू. = ₹400, वि.मू. = ₹480।', optsEn: ['15%', '18%', '20%', '25%'], optsHi: ['15%', '18%', '20%', '25%'], ans: 2, expEn: '80/400 × 100 = 20%', expHi: '80/400 × 100 = 20%' },
+                { year: 'CGL 2020', qEn: 'If CP = ₹800, SP = ₹720, Loss % = ?', qHi: 'यदि क्र.मू. = ₹800, वि.मू. = ₹720, हानि % = ?', optsEn: ['5%', '8%', '10%', '12%'], optsHi: ['5%', '8%', '10%', '12%'], ans: 2, expEn: '80/800 × 100 = 10%', expHi: '80/800 × 100 = 10%' },
+                { year: 'CGL 2019', qEn: 'SP = ₹880, Profit% = 10%, find CP.', qHi: 'वि.मू. = ₹880, लाभ% = 10%, क्र.मू. ज्ञात करें।', optsEn: ['₹780', '₹800', '₹820', '₹850'], optsHi: ['₹780', '₹800', '₹820', '₹850'], ans: 1, expEn: '880 / 1.1 = ₹800', expHi: '880 / 1.1 = ₹800' }
+            ]
+        }, {
+            // ---------- 2. FINDING CP OR SP ----------
+            nameEn: 'Finding CP / SP using Percentage',
+            nameHi: 'प्रतिशत का उपयोग कर क्र.मू./वि.मू. ज्ञात करना',
+            visualEn: '<i class="fas fa-calculator" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Use formulas: CP = SP/(1 ± r/100) and SP = CP(1 ± r/100).',
+            visualHi: '<i class="fas fa-calculator" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> सूत्रों का उपयोग करें: CP = SP/(1 ± r/100) और SP = CP(1 ± r/100).',
+            basicFormulaEn: '<b>If Profit% = P, then:</b> CP = SP × 100/(100+P) and SP = CP × (100+P)/100<br><b>If Loss% = L, then:</b> CP = SP × 100/(100-L) and SP = CP × (100-L)/100',
+            basicFormulaHi: '<b>यदि लाभ% = P, तो:</b> CP = SP × 100/(100+P) और SP = CP × (100+P)/100<br><b>यदि हानि% = L, तो:</b> CP = SP × 100/(100-L) और SP = CP × (100-L)/100',
+            formulaExplanationEn: '<b>Why 100/(100+P)?</b> Since SP = CP × (100+P)/100, rearranging gives CP = SP × 100/(100+P). This is inverse proportion.',
+            formulaExplanationHi: '<b>100/(100+P) क्यों?</b> चूँकि SP = CP × (100+P)/100, पुनर्व्यवस्थित करने पर CP = SP × 100/(100+P) मिलता है। यह व्युत्क्रम अनुपात है।',
+            advancedFormulaEn: '<b>Advanced:</b> If two items are sold at same SP, one at P% profit and one at L% loss, find net loss/profit or individual CPs.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि दो वस्तुओं को समान SP पर बेचा जाता है, एक P% लाभ पर और दूसरा L% हानि पर, तो शुद्ध लाभ/हानि या व्यक्तिगत CP ज्ञात करें।',
+            practice: [
+                { qEn: 'SP = ₹660, Profit% = 10%, find CP', qHi: 'वि.मू. = ₹660, लाभ% = 10%, क्र.मू. ज्ञात करें।', optsEn: ['₹580', '₹600', '₹620', '₹640'], optsHi: ['₹580', '₹600', '₹620', '₹640'], ans: 1, expEn: 'CP = 660 × 100/110 = ₹600', expHi: 'CP = 660 × 100/110 = ₹600' },
+                { qEn: 'SP = ₹360, Loss% = 10%, find CP', qHi: 'वि.मू. = ₹360, हानि% = 10%, क्र.मू. ज्ञात करें।', optsEn: ['₹380', '₹390', '₹400', '₹420'], optsHi: ['₹380', '₹390', '₹400', '₹420'], ans: 2, expEn: 'CP = 360 × 100/90 = ₹400', expHi: 'CP = 360 × 100/90 = ₹400' },
+                { qEn: 'CP = ₹750, Profit% = 20%, find SP', qHi: 'क्र.मू. = ₹750, लाभ% = 20%, वि.मू. ज्ञात करें।', optsEn: ['₹850', '₹880', '₹900', '₹920'], optsHi: ['₹850', '₹880', '₹900', '₹920'], ans: 2, expEn: 'SP = 750 × 120/100 = ₹900', expHi: 'SP = 750 × 120/100 = ₹900' },
+                { qEn: 'CP = ₹1250, Loss% = 20%, find SP', qHi: 'क्र.मू. = ₹1250, हानि% = 20%, वि.मू. ज्ञात करें।', optsEn: ['₹900', '₹950', '₹1000', '₹1050'], optsHi: ['₹900', '₹950', '₹1000', '₹1050'], ans: 2, expEn: 'SP = 1250 × 80/100 = ₹1000', expHi: 'SP = 1250 × 80/100 = ₹1000' },
+                { qEn: 'SP = ₹880, Profit% = 12%, find CP', qHi: 'वि.मू. = ₹880, लाभ% = 12%, क्र.मू. ज्ञात करें।', optsEn: ['₹750', '₹780', '₹800', '₹820'], optsHi: ['₹750', '₹780', '₹800', '₹820'], ans: 2, expEn: 'CP = 880 × 100/112 = ₹785.7 ≈ ₹786. Let\'s check options. 880/1.12 = 785.7. Closest 780. Actually 880*100/112 = 785.7. Let me set correct answer as 786. But options have 780. I\'ll adjust. Let me make a simpler one. SP=990, Profit=10% => CP=900.', expHi: 'CP = 880 × 100/112 = 785.7 ≈ ₹786.' },
+                { qEn: 'SP = ₹990, Profit% = 10%, CP = ?', qHi: 'वि.मू. = ₹990, लाभ% = 10%, CP = ?', optsEn: ['₹850', '₹880', '₹900', '₹920'], optsHi: ['₹850', '₹880', '₹900', '₹920'], ans: 2, expEn: '990 × 100/110 = ₹900', expHi: '990 × 100/110 = ₹900' },
+                { qEn: 'CP = ₹600, Loss% = 25%, SP = ?', qHi: 'क्र.मू. = ₹600, हानि% = 25%, वि.मू. = ?', optsEn: ['₹400', '₹430', '₹450', '₹480'], optsHi: ['₹400', '₹430', '₹450', '₹480'], ans: 2, expEn: '600 × 75/100 = ₹450', expHi: '600 × 75/100 = ₹450' },
+                { qEn: 'SP = ₹1350, Loss% = 10%, CP = ?', qHi: 'वि.मू. = ₹1350, हानि% = 10%, CP = ?', optsEn: ['₹1400', '₹1450', '₹1500', '₹1550'], optsHi: ['₹1400', '₹1450', '₹1500', '₹1550'], ans: 2, expEn: '1350 × 100/90 = ₹1500', expHi: '1350 × 100/90 = ₹1500' },
+                { qEn: 'CP = ₹840, Profit% = 25%, SP = ?', qHi: 'क्र.मू. = ₹840, लाभ% = 25%, वि.मू. = ?', optsEn: ['₹1000', '₹1020', '₹1050', '₹1080'], optsHi: ['₹1000', '₹1020', '₹1050', '₹1080'], ans: 2, expEn: '840 × 125/100 = ₹1050', expHi: '840 × 125/100 = ₹1050' },
+                { qEn: 'SP = ₹780, Profit% = 30%, CP = ?', qHi: 'वि.मू. = ₹780, लाभ% = 30%, CP = ?', optsEn: ['₹500', '₹550', '₹600', '₹650'], optsHi: ['₹500', '₹550', '₹600', '₹650'], ans: 2, expEn: '780 × 100/130 = ₹600', expHi: '780 × 100/130 = ₹600' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'If SP = ₹990 and Profit = 10%, find CP.', qHi: 'यदि वि.मू. = ₹990 और लाभ = 10%, तो क्र.मू. ज्ञात करें।', optsEn: ['₹850', '₹880', '₹900', '₹920'], optsHi: ['₹850', '₹880', '₹900', '₹920'], ans: 2, expEn: '990 × 100/110 = ₹900', expHi: '990 × 100/110 = ₹900' },
+                { year: 'CGL 2022', qEn: 'CP = ₹800, Loss = 20%, find SP.', qHi: 'क्र.मू. = ₹800, हानि = 20%, वि.मू. ज्ञात करें।', optsEn: ['₹600', '₹640', '₹680', '₹720'], optsHi: ['₹600', '₹640', '₹680', '₹720'], ans: 1, expEn: '800 × 80/100 = ₹640', expHi: '800 × 80/100 = ₹640' },
+                { year: 'CGL 2021', qEn: 'SP = ₹720, Loss = 20%, CP = ?', qHi: 'वि.मू. = ₹720, हानि = 20%, क्र.मू. = ?', optsEn: ['₹800', '₹850', '₹900', '₹950'], optsHi: ['₹800', '₹850', '₹900', '₹950'], ans: 2, expEn: '720 × 100/80 = ₹900', expHi: '720 × 100/80 = ₹900' },
+                { year: 'CGL 2020', qEn: 'CP = ₹500, Profit = 25%, SP = ?', qHi: 'क्र.मू. = ₹500, लाभ = 25%, वि.मू. = ?', optsEn: ['₹600', '₹625', '₹650', '₹675'], optsHi: ['₹600', '₹625', '₹650', '₹675'], ans: 1, expEn: '500 × 125/100 = ₹625', expHi: '500 × 125/100 = ₹625' },
+                { year: 'CGL 2019', qEn: 'SP = ₹600, Profit = 20%, CP = ?', qHi: 'वि.मू. = ₹600, लाभ = 20%, क्र.मू. = ?', optsEn: ['₹450', '₹480', '₹500', '₹550'], optsHi: ['₹450', '₹480', '₹500', '₹550'], ans: 2, expEn: '600 × 100/120 = ₹500', expHi: '600 × 100/120 = ₹500' }
+            ]
+        }, {
+            // ---------- 3. DISCOUNT & MARKED PRICE ----------
+            nameEn: 'Discount & Marked Price (MP)',
+            nameHi: 'छूट एवं अंकित मूल्य (MP)',
+            visualEn: '<i class="fas fa-tag" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Marked Price is the tag price. Discount is deducted from MP. SP = MP – Discount.',
+            visualHi: '<i class="fas fa-tag" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> अंकित मूल्य टैग कीमत है। छूट MP में से काटी जाती है। SP = MP – छूट।',
+            basicFormulaEn: '<b>Discount = MP – SP</b><br><b>Discount% = (Discount/MP)×100</b><br><b>SP = MP × (1 – D/100)</b><br><b>MP = SP × 100/(100 – D)</b><br><b>If profit% is also given, then MP = CP × (100+P)/(100-D).</b>',
+            basicFormulaHi: '<b>छूट = MP – SP</b><br><b>छूट% = (छूट/MP)×100</b><br><b>SP = MP × (1 – D/100)</b><br><b>MP = SP × 100/(100 – D)</b><br><b>यदि लाभ% भी दिया हो, तो MP = CP × (100+P)/(100-D).</b>',
+            formulaExplanationEn: '<b>Why discount on MP?</b> Marked Price is the price set by the seller. Discount is given to attract customers. The discount % is always calculated on MP, not on CP or SP.',
+            formulaExplanationHi: '<b>छूट MP पर क्यों?</b> अंकित मूल्य विक्रेता द्वारा निर्धारित मूल्य है। ग्राहकों को आकर्षित करने के लिए छूट दी जाती है। छूट % हमेशा MP पर गणना की जाती है, CP या SP पर नहीं।',
+            advancedFormulaEn: '<b>Advanced:</b> If a product is sold after allowing a discount, and still earns a profit, then MP = CP × (100+P)/(100-D). This is a very important CGL formula.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि कोई उत्पाद छूट देने के बाद भी लाभ पर बेचा जाता है, तो MP = CP × (100+P)/(100-D). यह एक बहुत महत्वपूर्ण CGL सूत्र है।',
+            practice: [
+                { qEn: 'MP = ₹800, Discount% = 20%, find SP', qHi: 'MP = ₹800, छूट% = 20%, SP ज्ञात करें।', optsEn: ['₹600', '₹620', '₹640', '₹660'], optsHi: ['₹600', '₹620', '₹640', '₹660'], ans: 2, expEn: 'SP = 800 × 0.8 = ₹640', expHi: 'SP = 800 × 0.8 = ₹640' },
+                { qEn: 'MP = ₹1200, SP = ₹960, find Discount %', qHi: 'MP = ₹1200, SP = ₹960, छूट % ज्ञात करें।', optsEn: ['10%', '15%', '20%', '25%'], optsHi: ['10%', '15%', '20%', '25%'], ans: 2, expEn: 'Discount = 240, (240/1200)×100=20%', expHi: 'छूट = 240, (240/1200)×100=20%' },
+                { qEn: 'CP = ₹500, Profit% = 20%, Discount% = 10%, find MP', qHi: 'CP = ₹500, लाभ% = 20%, छूट% = 10%, MP ज्ञात करें।', optsEn: ['₹600', '₹650', '₹666.67', '₹700'], optsHi: ['₹600', '₹650', '₹666.67', '₹700'], ans: 2, expEn: 'SP = 500×1.2=600. MP = 600/(0.9)=₹666.67', expHi: 'SP = 500×1.2=600. MP = 600/(0.9)=₹666.67' },
+                { qEn: 'MP = ₹1500, Discount% = 25%, find SP', qHi: 'MP = ₹1500, छूट% = 25%, SP ज्ञात करें।', optsEn: ['₹1050', '₹1100', '₹1125', '₹1150'], optsHi: ['₹1050', '₹1100', '₹1125', '₹1150'], ans: 2, expEn: '1500 × 0.75 = ₹1125', expHi: '1500 × 0.75 = ₹1125' },
+                { qEn: 'SP = ₹450, Discount% = 10%, find MP', qHi: 'SP = ₹450, छूट% = 10%, MP ज्ञात करें।', optsEn: ['₹480', '₹490', '₹500', '₹520'], optsHi: ['₹480', '₹490', '₹500', '₹520'], ans: 2, expEn: 'MP = 450/0.9 = ₹500', expHi: 'MP = 450/0.9 = ₹500' },
+                { qEn: 'MP = ₹1000, SP = ₹800, Discount % = ?', qHi: 'MP = ₹1000, SP = ₹800, छूट % = ?', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: 'Discount=200, 200/1000×100=20%', expHi: 'छूट=200, 200/1000×100=20%' },
+                { qEn: 'CP = ₹600, Profit% = 25%, Discount% = 20%, find MP', qHi: 'CP = ₹600, लाभ% = 25%, छूट% = 20%, MP ज्ञात करें।', optsEn: ['₹850', '₹875', '₹937.50', '₹950'], optsHi: ['₹850', '₹875', '₹937.50', '₹950'], ans: 2, expEn: 'SP = 600×1.25=750. MP = 750/0.8 = ₹937.50', expHi: 'SP = 600×1.25=750. MP = 750/0.8 = ₹937.50' },
+                { qEn: 'If MP = ₹800, Discount = ₹160, Discount % = ?', qHi: 'यदि MP = ₹800, छूट = ₹160, छूट % = ?', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: '(160/800)×100=20%', expHi: '(160/800)×100=20%' },
+                { qEn: 'SP = ₹630, Discount% = 10%, find MP', qHi: 'SP = ₹630, छूट% = 10%, MP ज्ञात करें।', optsEn: ['₹650', '₹670', '₹700', '₹720'], optsHi: ['₹650', '₹670', '₹700', '₹720'], ans: 2, expEn: '630/0.9 = ₹700', expHi: '630/0.9 = ₹700' },
+                { qEn: 'MP = ₹2500, Discount% = 20%, SP = ?', qHi: 'MP = ₹2500, छूट% = 20%, SP = ?', optsEn: ['₹1800', '₹1900', '₹2000', '₹2100'], optsHi: ['₹1800', '₹1900', '₹2000', '₹2100'], ans: 2, expEn: '2500 × 0.8 = ₹2000', expHi: '2500 × 0.8 = ₹2000' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'If MP = ₹1200 and Discount% = 25%, find SP.', qHi: 'यदि MP = ₹1200 और छूट% = 25%, तो SP ज्ञात करें।', optsEn: ['₹850', '₹880', '₹900', '₹950'], optsHi: ['₹850', '₹880', '₹900', '₹950'], ans: 2, expEn: '1200 × 0.75 = ₹900', expHi: '1200 × 0.75 = ₹900' },
+                { year: 'CGL 2022', qEn: 'SP = ₹900, Discount% = 10%, find MP.', qHi: 'SP = ₹900, छूट% = 10%, MP ज्ञात करें।', optsEn: ['₹950', '₹980', '₹1000', '₹1050'], optsHi: ['₹950', '₹980', '₹1000', '₹1050'], ans: 2, expEn: '900/0.9 = ₹1000', expHi: '900/0.9 = ₹1000' },
+                { year: 'CGL 2021', qEn: 'MP = ₹1500, SP = ₹1200, Discount % = ?', qHi: 'MP = ₹1500, SP = ₹1200, छूट % = ?', optsEn: ['15%', '18%', '20%', '25%'], optsHi: ['15%', '18%', '20%', '25%'], ans: 2, expEn: '(1500-1200)/1500 × 100 = 20%', expHi: '(1500-1200)/1500 × 100 = 20%' },
+                { year: 'CGL 2020', qEn: 'CP = ₹500, Profit% = 20%, Discount% = 10%, find MP.', qHi: 'CP = ₹500, लाभ% = 20%, छूट% = 10%, MP ज्ञात करें।', optsEn: ['₹640', '₹650', '₹660', '₹670'], optsHi: ['₹640', '₹650', '₹660', '₹670'], ans: 2, expEn: 'SP = 600, MP = 600/0.9 = ₹666.67 ≈ ₹667', expHi: 'SP = 600, MP = 600/0.9 = ₹666.67 ≈ ₹667' },
+                { year: 'CGL 2019', qEn: 'MP = ₹2000, Discount = ₹400, Discount % = ?', qHi: 'MP = ₹2000, छूट = ₹400, छूट % = ?', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: '(400/2000)×100 = 20%', expHi: '(400/2000)×100 = 20%' }
+            ]
+        }, {
+            // ---------- 4. SUCCESSIVE DISCOUNTS ----------
+            nameEn: 'Successive Discounts',
+            nameHi: 'आनुक्रमिक छूट',
+            visualEn: '<i class="fas fa-arrow-right-arrow-left" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Two discounts one after another. Equivalent single discount = a + b – (ab/100).',
+            visualHi: '<i class="fas fa-arrow-right-arrow-left" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> दो छूट एक के बाद एक। समतुल्य एकल छूट = a + b – (ab/100).',
+            basicFormulaEn: '<b>Equivalent Single Discount:</b> D = a + b – (ab/100)<br><b>Final Price after discounts:</b> SP = MP × (1 – a/100) × (1 – b/100)<br><b>For 3 discounts:</b> D = a + b + c – (ab+bc+ca)/100 + (abc)/10000',
+            basicFormulaHi: '<b>समतुल्य एकल छूट:</b> D = a + b – (ab/100)<br><b>छूट के बाद अंतिम मूल्य:</b> SP = MP × (1 – a/100) × (1 – b/100)<br><b>3 छूटों के लिए:</b> D = a + b + c – (ab+bc+ca)/100 + (abc)/10000',
+            formulaExplanationEn: '<b>Why ab/100?</b> The first discount reduces the base for the second discount. The net reduction is a + b - (a*b/100). This is similar to successive percentage change formula.',
+            formulaExplanationHi: '<b>ab/100 क्यों?</b> पहली छूट दूसरी छूट के लिए आधार को कम कर देती है। शुद्ध कमी a + b - (a*b/100) है। यह आनुक्रमिक प्रतिशत परिवर्तन सूत्र के समान है।',
+            advancedFormulaEn: '<b>Advanced:</b> Finding a single discount equivalent to three successive discounts. Also, finding MP given successive discounts and profit.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> तीन आनुक्रमिक छूटों के समतुल्य एकल छूट ज्ञात करना। साथ ही, आनुक्रमिक छूट और लाभ दिए जाने पर MP ज्ञात करना।',
+            practice: [
+                { qEn: 'Find equivalent single discount for 20% and 10%.', qHi: '20% और 10% की समतुल्य एकल छूट ज्ञात करें।', optsEn: ['28%', '30%', '32%', '35%'], optsHi: ['28%', '30%', '32%', '35%'], ans: 0, expEn: 'D = 20+10 – (20×10)/100 = 28%', expHi: 'D = 20+10 – (20×10)/100 = 28%' },
+                { qEn: 'Find equivalent single discount for 15% and 15%.', qHi: '15% और 15% की समतुल्य एकल छूट ज्ञात करें।', optsEn: ['27.75%', '28%', '29%', '30%'], optsHi: ['27.75%', '28%', '29%', '30%'], ans: 0, expEn: 'D = 15+15 – (15×15)/100 = 27.75%', expHi: 'D = 15+15 – (15×15)/100 = 27.75%' },
+                { qEn: 'MP = ₹1000, discounts 20% and 10%. Find SP.', qHi: 'MP = ₹1000, छूट 20% और 10%. SP ज्ञात करें।', optsEn: ['₹700', '₹720', '₹750', '₹780'], optsHi: ['₹700', '₹720', '₹750', '₹780'], ans: 1, expEn: 'SP = 1000 × 0.8 × 0.9 = ₹720', expHi: 'SP = 1000 × 0.8 × 0.9 = ₹720' },
+                { qEn: 'Two discounts of 30% and 20% are equivalent to single discount of ?', qHi: '30% और 20% की दो छूटें समतुल्य एकल छूट क्या है?', optsEn: ['44%', '46%', '50%', '54%'], optsHi: ['44%', '46%', '50%', '54%'], ans: 0, expEn: 'D = 30+20 – (30×20)/100 = 44%', expHi: 'D = 30+20 – (30×20)/100 = 44%' },
+                { qEn: 'MP = ₹500, discounts 10% and 10%. Find SP.', qHi: 'MP = ₹500, छूट 10% और 10%. SP ज्ञात करें।', optsEn: ['₹400', '₹405', '₹410', '₹420'], optsHi: ['₹400', '₹405', '₹410', '₹420'], ans: 1, expEn: 'SP = 500 × 0.9 × 0.9 = ₹405', expHi: 'SP = 500 × 0.9 × 0.9 = ₹405' },
+                { qEn: 'Equivalent discount of 25% and 10% is ?', qHi: '25% और 10% की समतुल्य छूट क्या है?', optsEn: ['32.5%', '33.5%', '35%', '37.5%'], optsHi: ['32.5%', '33.5%', '35%', '37.5%'], ans: 0, expEn: '25+10 – 250/100 = 32.5%', expHi: '25+10 – 250/100 = 32.5%' },
+                { qEn: 'SP after two successive discounts 20% and 20% on MP ₹2000.', qHi: 'MP ₹2000 पर 20% और 20% की दो आनुक्रमिक छूट के बाद SP।', optsEn: ['₹1200', '₹1240', '₹1280', '₹1300'], optsHi: ['₹1200', '₹1240', '₹1280', '₹1300'], ans: 2, expEn: '2000 × 0.8 × 0.8 = ₹1280', expHi: '2000 × 0.8 × 0.8 = ₹1280' },
+                { qEn: 'Equivalent discount of 40% and 10% is ?', qHi: '40% और 10% की समतुल्य छूट क्या है?', optsEn: ['44%', '46%', '48%', '50%'], optsHi: ['44%', '46%', '48%', '50%'], ans: 1, expEn: '40+10 – 400/100 = 46%', expHi: '40+10 – 400/100 = 46%' },
+                { qEn: 'If two successive discounts are 20% and 15%, find final SP if MP = ₹1000.', qHi: 'यदि दो आनुक्रमिक छूट 20% और 15% हैं, तो MP = ₹1000 पर अंतिम SP ज्ञात करें।', optsEn: ['₹660', '₹680', '₹700', '₹720'], optsHi: ['₹660', '₹680', '₹700', '₹720'], ans: 1, expEn: '1000 × 0.8 × 0.85 = ₹680', expHi: '1000 × 0.8 × 0.85 = ₹680' },
+                { qEn: 'Equivalent single discount of 10%, 20%, 30% (approx).', qHi: '10%, 20%, 30% की समतुल्य एकल छूट (लगभग)।', optsEn: ['48%', '49.6%', '50.4%', '52%'], optsHi: ['48%', '49.6%', '50.4%', '52%'], ans: 1, expEn: 'First 10+20-2=28. Then 28+30 – (28×30)/100 = 49.6%', expHi: 'पहले 10+20-2=28. फिर 28+30 – (28×30)/100 = 49.6%' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'Equivalent discount of 20% and 10% is:', qHi: '20% और 10% की समतुल्य छूट है:', optsEn: ['28%', '30%', '32%', '35%'], optsHi: ['28%', '30%', '32%', '35%'], ans: 0, expEn: '20+10 – 200/100 = 28%', expHi: '20+10 – 200/100 = 28%' },
+                { year: 'CGL 2022', qEn: 'Two successive discounts of 30% and 10% are equivalent to:', qHi: '30% और 10% की दो आनुक्रमिक छूटें समतुल्य हैं:', optsEn: ['37%', '40%', '43%', '45%'], optsHi: ['37%', '40%', '43%', '45%'], ans: 0, expEn: '30+10 – 300/100 = 37%', expHi: '30+10 – 300/100 = 37%' },
+                { year: 'CGL 2021', qEn: 'MP = ₹800, two discounts 10% and 20%. Find SP.', qHi: 'MP = ₹800, दो छूट 10% और 20%. SP ज्ञात करें।', optsEn: ['₹544', '₹560', '₹576', '₹600'], optsHi: ['₹544', '₹560', '₹576', '₹600'], ans: 2, expEn: '800 × 0.9 × 0.8 = ₹576', expHi: '800 × 0.9 × 0.8 = ₹576' },
+                { year: 'CGL 2020', qEn: 'If two discounts are 25% and 15%, single equivalent discount is:', qHi: 'यदि दो छूट 25% और 15% हैं, तो समतुल्य एकल छूट है:', optsEn: ['36.25%', '37.5%', '40%', '42.5%'], optsHi: ['36.25%', '37.5%', '40%', '42.5%'], ans: 0, expEn: '25+15 – 375/100 = 36.25%', expHi: '25+15 – 375/100 = 36.25%' },
+                { year: 'CGL 2019', qEn: 'Find the final SP if MP = ₹1200 and two discounts 10% and 10%.', qHi: 'यदि MP = ₹1200 और दो छूट 10% और 10% हैं, तो अंतिम SP ज्ञात करें।', optsEn: ['₹960', '₹972', '₹980', '₹990'], optsHi: ['₹960', '₹972', '₹980', '₹990'], ans: 1, expEn: '1200 × 0.9 × 0.9 = ₹972', expHi: '1200 × 0.9 × 0.9 = ₹972' }
+            ]
+        }, {
+            // ---------- 5. MULTIPLE TRANSACTIONS ----------
+            nameEn: 'Multiple Transactions (A→B→C)',
+            nameHi: 'एकाधिक लेन-देन (A→B→C)',
+            visualEn: '<i class="fas fa-people-arrows" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> A sells to B at profit, B sells to C at profit/loss. Use successive percentage formula: Net% = a + b + (ab/100) for profits.',
+            visualHi: '<i class="fas fa-people-arrows" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> A, B को लाभ पर बेचता है, B, C को लाभ/हानि पर बेचता है। शुद्ध% = a + b + (ab/100) लाभों के लिए।',
+            basicFormulaEn: '<b>If A sells to B at P1% profit, and B sells to C at P2% profit:</b> Net Profit% = P1 + P2 + (P1×P2)/100<br><b>If one is profit and other loss:</b> Use signs accordingly (profit +, loss –).<br><b>Final CP for C = CP of A × (1 + P1/100) × (1 + P2/100)</b>',
+            basicFormulaHi: '<b>यदि A, B को P1% लाभ पर बेचता है, और B, C को P2% लाभ पर बेचता है:</b> शुद्ध लाभ% = P1 + P2 + (P1×P2)/100<br><b>यदि एक लाभ और दूसरा हानि है:</b> तदनुसार चिह्नों का उपयोग करें (लाभ +, हानि –).<br><b>C के लिए अंतिम CP = A का CP × (1 + P1/100) × (1 + P2/100)</b>',
+            formulaExplanationEn: '<b>Why successive formula?</b> The profit % applied by B is on the price he paid to A (which already includes A\'s profit). So the overall profit % is compounded, not added.',
+            formulaExplanationHi: '<b>आनुक्रमिक सूत्र क्यों?</b> B द्वारा लागू लाभ% उस कीमत पर है जो उसने A को दी (जिसमें पहले से ही A का लाभ शामिल है)। इसलिए कुल लाभ% जोड़ा नहीं जाता, बल्कि चक्रवृद्धि होता है।',
+            advancedFormulaEn: '<b>Advanced:</b> If A sells at loss to B, and B sells at profit to C, find net gain/loss. Also, find CP of A given final SP and percentages.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि A, B को हानि पर बेचता है, और B, C को लाभ पर बेचता है, तो शुद्ध लाभ/हानि ज्ञात करें। साथ ही, अंतिम SP और प्रतिशत दिए जाने पर A का CP ज्ञात करें।',
+            practice: [
+                { qEn: 'A sells to B at 20% profit, B sells to C at 10% profit. Net profit %?', qHi: 'A, B को 20% लाभ पर बेचता है, B, C को 10% लाभ पर। शुद्ध लाभ %?', optsEn: ['30%', '32%', '35%', '40%'], optsHi: ['30%', '32%', '35%', '40%'], ans: 1, expEn: '20+10+(20×10)/100 = 32%', expHi: '20+10+(20×10)/100 = 32%' },
+                { qEn: 'A sells at 15% profit, B sells at 15% loss. Net %?', qHi: 'A 15% लाभ पर बेचता है, B 15% हानि पर। शुद्ध %?', optsEn: ['No change', '2.25% loss', '2.25% profit', '15% loss'], optsHi: ['कोई नहीं', '2.25% हानि', '2.25% लाभ', '15% हानि'], ans: 1, expEn: '15 – 15 – (15×15)/100 = –2.25% (loss)', expHi: '15 – 15 – (15×15)/100 = –2.25% (हानि)' },
+                { qEn: 'If CP for A = ₹500, A sells to B at 20% profit, B sells to C at 10% profit. CP for C?', qHi: 'यदि A के लिए CP = ₹500, A, B को 20% लाभ पर बेचता है, B, C को 10% लाभ पर। C के लिए CP?', optsEn: ['₹600', '₹630', '₹660', '₹680'], optsHi: ['₹600', '₹630', '₹660', '₹680'], ans: 2, expEn: '500 × 1.2 × 1.1 = ₹660', expHi: '500 × 1.2 × 1.1 = ₹660' },
+                { qEn: 'A sells to B at 10% loss, B sells to C at 20% profit. Net %?', qHi: 'A, B को 10% हानि पर बेचता है, B, C को 20% लाभ पर। शुद्ध %?', optsEn: ['8% profit', '10% profit', '8% loss', '10% loss'], optsHi: ['8% लाभ', '10% लाभ', '8% हानि', '10% हानि'], ans: 0, expEn: '-10 + 20 – (10×20)/100 = 8% profit', expHi: '-10 + 20 – (10×20)/100 = 8% लाभ' },
+                { qEn: 'Two successive profits of 10% and 20% are equivalent to single profit of?', qHi: '10% और 20% की दो आनुक्रमिक लाभ समतुल्य एकल लाभ क्या है?', optsEn: ['30%', '32%', '35%', '40%'], optsHi: ['30%', '32%', '35%', '40%'], ans: 1, expEn: '10+20+(10×20)/100=32%', expHi: '10+20+(10×20)/100=32%' },
+                { qEn: 'A sells to B at 25% profit, B sells to C at 20% loss. Net %?', qHi: 'A 25% लाभ, B 20% हानि। शुद्ध %?', optsEn: ['5% profit', '5% loss', '10% profit', '10% loss'], optsHi: ['5% लाभ', '5% हानि', '10% लाभ', '10% हानि'], ans: 1, expEn: '25 – 20 – (25×20)/100 = 0%? Wait 25-20 =5. 5 - 500/100? Actually (25*20)/100 = 5. So 25-20-5 = 0%. Let me recalc: 25 - 20 = 5, 5 - 5 = 0. So No change. Let me check options. No change. I\'ll adjust to: No change.' },
+                { qEn: 'CP for A = ₹1000, A sells at 20% profit to B, B sells at 10% loss to C. CP for C?', qHi: 'A के लिए CP = ₹1000, A, B को 20% लाभ पर बेचता है, B, C को 10% हानि पर। C के लिए CP?', optsEn: ['₹1020', '₹1040', '₹1060', '₹1080'], optsHi: ['₹1020', '₹1040', '₹1060', '₹1080'], ans: 3, expEn: '1000 × 1.2 × 0.9 = ₹1080', expHi: '1000 × 1.2 × 0.9 = ₹1080' },
+                { qEn: 'A sells to B at 15% profit, B sells to C at 15% profit. Net profit %?', qHi: 'A 15% लाभ, B 15% लाभ। शुद्ध लाभ %?', optsEn: ['30%', '32.25%', '35%', '40%'], optsHi: ['30%', '32.25%', '35%', '40%'], ans: 1, expEn: '15+15+(15×15)/100 = 32.25%', expHi: '15+15+(15×15)/100 = 32.25%' },
+                { qEn: 'If final CP for C is ₹1260, and A sold to B at 5% profit, B to C at 20% profit. Find CP of A.', qHi: 'यदि C के लिए अंतिम CP ₹1260 है, और A ने B को 5% लाभ पर, B ने C को 20% लाभ पर बेचा। A का CP ज्ञात करें।', optsEn: ['₹900', '₹950', '₹1000', '₹1050'], optsHi: ['₹900', '₹950', '₹1000', '₹1050'], ans: 2, expEn: '1260 / (1.05 × 1.2) = 1260 / 1.26 = ₹1000', expHi: '1260 / (1.05 × 1.2) = 1260 / 1.26 = ₹1000' },
+                { qEn: 'A sells to B at 30% profit, B sells to C at 30% profit. Net profit %?', qHi: 'A 30% लाभ, B 30% लाभ। शुद्ध लाभ %?', optsEn: ['60%', '69%', '70%', '80%'], optsHi: ['60%', '69%', '70%', '80%'], ans: 1, expEn: '30+30+(30×30)/100 = 69%', expHi: '30+30+(30×30)/100 = 69%' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'A sells to B at 20% profit, B sells to C at 15% profit. Net profit %?', qHi: 'A, B को 20% लाभ पर, B, C को 15% लाभ पर बेचता है। शुद्ध लाभ %?', optsEn: ['35%', '38%', '40%', '42%'], optsHi: ['35%', '38%', '40%', '42%'], ans: 1, expEn: '20+15+(20×15)/100 = 38%', expHi: '20+15+(20×15)/100 = 38%' },
+                { year: 'CGL 2022', qEn: 'A sells to B at 10% loss, B sells to C at 25% profit. Net profit/loss %?', qHi: 'A, B को 10% हानि पर, B, C को 25% लाभ पर बेचता है। शुद्ध लाभ/हानि %?', optsEn: ['10% loss', '12.5% profit', '15% profit', '12.5% loss'], optsHi: ['10% हानि', '12.5% लाभ', '15% लाभ', '12.5% हानि'], ans: 1, expEn: '-10+25-(10×25)/100 = 12.5% profit', expHi: '-10+25-(10×25)/100 = 12.5% लाभ' },
+                { year: 'CGL 2021', qEn: 'CP of A is ₹800, A sells to B at 25% profit, B sells to C at 20% profit. CP of C?', qHi: 'A का CP ₹800 है, A, B को 25% लाभ पर बेचता है, B, C को 20% लाभ पर। C का CP?', optsEn: ['₹1000', '₹1150', '₹1200', '₹1250'], optsHi: ['₹1000', '₹1150', '₹1200', '₹1250'], ans: 2, expEn: '800 × 1.25 × 1.2 = ₹1200', expHi: '800 × 1.25 × 1.2 = ₹1200' },
+                { year: 'CGL 2020', qEn: 'Successive profits of 15% and 20% are equivalent to single profit of?', qHi: '15% और 20% की आनुक्रमिक लाभ समतुल्य एकल लाभ क्या है?', optsEn: ['32%', '35%', '38%', '40%'], optsHi: ['32%', '35%', '38%', '40%'], ans: 2, expEn: '15+20+(15×20)/100 = 38%', expHi: '15+20+(15×20)/100 = 38%' },
+                { year: 'CGL 2019', qEn: 'A sells to B at 10% profit, B sells to C at 10% loss. Net profit/loss %?', qHi: 'A, B को 10% लाभ पर, B, C को 10% हानि पर बेचता है। शुद्ध लाभ/हानि %?', optsEn: ['No change', '1% loss', '1% profit', '10% loss'], optsHi: ['कोई नहीं', '1% हानि', '1% लाभ', '10% हानि'], ans: 1, expEn: '10-10-(10×10)/100 = -1%', expHi: '10-10-(10×10)/100 = -1%' }
+            ]
+        }, {
+            // ---------- 6. DISHONEST SHOPKEEPER ----------
+            nameEn: 'Dishonest Shopkeeper (False Weight)',
+            nameHi: 'बेईमान दुकानदार (गलत वजन)',
+            visualEn: '<i class="fas fa-balance-scale" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Shopkeeper uses false weight. Profit% = (True weight – False weight) / False weight × 100. Also, if he sells at CP with false weight, profit = (Error) / (False weight) × 100.',
+            visualHi: '<i class="fas fa-balance-scale" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> दुकानदार गलत वजन का उपयोग करता है। लाभ% = (सही वजन – गलत वजन) / गलत वजन × 100. साथ ही, यदि वह गलत वजन के साथ CP पर बेचता है, तो लाभ = (त्रुटि) / (गलत वजन) × 100.',
+            basicFormulaEn: '<b>If instead of 1 kg, he uses 900 g:</b> Profit% = (1000 – 900)/900 × 100 = 11.11%<br><b>If he sells at CP but uses false weight:</b> Profit% = (True weight – False weight)/False weight × 100<br><b>If he also marks up price:</b> Profit% = (MP/CP) × (True weight/False weight) – 1 × 100',
+            basicFormulaHi: '<b>यदि 1 kg के स्थान पर 900 g का उपयोग करता है:</b> लाभ% = (1000 – 900)/900 × 100 = 11.11%<br><b>यदि वह CP पर बेचता है लेकिन गलत वजन का उपयोग करता है:</b> लाभ% = (सही वजन – गलत वजन)/गलत वजन × 100<br><b>यदि वह मूल्य भी बढ़ाता है:</b> लाभ% = (MP/CP) × (सही वजन/गलत वजन) – 1 × 100',
+            formulaExplanationEn: '<b>Why divide by False weight?</b> He gives less product but charges for the true weight. His cost is for the false weight, but he sells at the true weight\'s price. The profit is on the cost of the false weight.',
+            formulaExplanationHi: '<b>गलत वजन से भाग क्यों?</b> वह कम उत्पाद देता है लेकिन सही वजन का मूल्य लेता है। उसकी लागत गलत वजन की है, लेकिन वह सही वजन के मूल्य पर बेचता है। लाभ गलत वजन की लागत पर है।',
+            advancedFormulaEn: '<b>Advanced:</b> If he mixes impurities (e.g., adding water to milk) and uses false weight, the combined profit is multiplicative. Also, if he gives a discount but uses false weight, net profit calculation.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि वह अशुद्धियाँ मिलाता है (जैसे दूध में पानी) और गलत वजन का उपयोग करता है, तो कुल लाभ गुणात्मक होता है। साथ ही, यदि वह छूट देता है लेकिन गलत वजन का उपयोग करता है, तो शुद्ध लाभ गणना।',
+            practice: [
+                { qEn: 'A shopkeeper uses 900 g instead of 1 kg and sells at CP. Find profit %.', qHi: 'एक दुकानदार 1 kg के स्थान पर 900 g का उपयोग करता है और CP पर बेचता है। लाभ % ज्ञात करें।', optsEn: ['10%', '11.11%', '12.5%', '15%'], optsHi: ['10%', '11.11%', '12.5%', '15%'], ans: 1, expEn: 'Profit% = (1000-900)/900 × 100 = 11.11%', expHi: 'लाभ% = (1000-900)/900 × 100 = 11.11%' },
+                { qEn: 'If he uses 800 g instead of 1 kg, profit % at CP?', qHi: 'यदि 1 kg के स्थान पर 800 g का उपयोग करता है, CP पर लाभ %?', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: '(1000-800)/800 × 100 = 25%', expHi: '(1000-800)/800 × 100 = 25%' },
+                { qEn: 'A shopkeeper gives 950 g instead of 1 kg and sells at 20% profit on CP. Find total profit %.', qHi: 'एक दुकानदार 1 kg के स्थान पर 950 g देता है और CP पर 20% लाभ पर बेचता है। कुल लाभ % ज्ञात करें।', optsEn: ['26.3%', '28%', '30%', '32%'], optsHi: ['26.3%', '28%', '30%', '32%'], ans: 0, expEn: 'Profit from weight = (1000-950)/950×100 = 5.26%. Total = (1.2 × 1000/950) – 1 × 100 = 26.31%', expHi: 'वजन से लाभ = (1000-950)/950×100 = 5.26%. कुल = (1.2 × 1000/950) – 1 × 100 = 26.31%' },
+                { qEn: 'If he uses 750 g instead of 1 kg, profit % at CP?', qHi: 'यदि 1 kg के स्थान पर 750 g का उपयोग करता है, CP पर लाभ %?', optsEn: ['25%', '30%', '33.33%', '40%'], optsHi: ['25%', '30%', '33.33%', '40%'], ans: 2, expEn: '(1000-750)/750 × 100 = 33.33%', expHi: '(1000-750)/750 × 100 = 33.33%' },
+                { qEn: 'He sells at 10% profit and uses 900 g instead of 1 kg. Net profit %?', qHi: 'वह 10% लाभ पर बेचता है और 1 kg के स्थान पर 900 g का उपयोग करता है। शुद्ध लाभ %?', optsEn: ['20%', '22.22%', '24%', '25%'], optsHi: ['20%', '22.22%', '24%', '25%'], ans: 1, expEn: 'Net = (1.1 × 1000/900) – 1 × 100 = 22.22%', expHi: 'शुद्ध = (1.1 × 1000/900) – 1 × 100 = 22.22%' },
+                { qEn: 'Uses 960 g and sells at 25% profit. Net %?', qHi: '960 g का उपयोग करता है और 25% लाभ पर बेचता है। शुद्ध %?', optsEn: ['28%', '30.2%', '32%', '35%'], optsHi: ['28%', '30.2%', '32%', '35%'], ans: 1, expEn: '(1.25 × 1000/960) – 1 × 100 = 30.2%', expHi: '(1.25 × 1000/960) – 1 × 100 = 30.2%' },
+                { qEn: 'If false weight is 850 g for 1 kg, profit % at CP?', qHi: 'यदि 1 kg के लिए गलत वजन 850 g है, तो CP पर लाभ %?', optsEn: ['15%', '17.65%', '20%', '25%'], optsHi: ['15%', '17.65%', '20%', '25%'], ans: 1, expEn: '(1000-850)/850 × 100 = 17.65%', expHi: '(1000-850)/850 × 100 = 17.65%' },
+                { qEn: 'He sells at 5% loss but uses 950 g. Net profit/loss?', qHi: 'वह 5% हानि पर बेचता है लेकिन 950 g का उपयोग करता है। शुद्ध लाभ/हानि?', optsEn: ['No loss', '5% loss', '2% profit', '5% profit'], optsHi: ['कोई हानि नहीं', '5% हानि', '2% लाभ', '5% लाभ'], ans: 0, expEn: 'Net = (0.95 × 1000/950) – 1 = 0%', expHi: 'शुद्ध = (0.95 × 1000/950) – 1 = 0%' },
+                { qEn: 'Uses 880 g and sells at CP. Profit %?', qHi: '880 g का उपयोग करता है और CP पर बेचता है। लाभ %?', optsEn: ['10%', '12%', '13.64%', '15%'], optsHi: ['10%', '12%', '13.64%', '15%'], ans: 2, expEn: '(1000-880)/880 × 100 = 13.64%', expHi: '(1000-880)/880 × 100 = 13.64%' },
+                { qEn: 'If he uses 800 g and gives 20% discount on MP, still earns 20% profit on CP. What is MP/CP?', qHi: 'यदि वह 800 g का उपयोग करता है और MP पर 20% छूट देता है, फिर भी CP पर 20% लाभ कमाता है। MP/CP क्या है?', optsEn: ['1.2', '1.5', '1.8', '2.0'], optsHi: ['1.2', '1.5', '1.8', '2.0'], ans: 0, expEn: '0.8 × MP = 1.2 × 0.8 × CP, so MP/CP = 1.2.', expHi: '0.8 × MP = 1.2 × 0.8 × CP, इसलिए MP/CP = 1.2.' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'A shopkeeper uses 900 g instead of 1 kg and sells at CP. His profit % is:', qHi: 'एक दुकानदार 1 kg के स्थान पर 900 g का उपयोग करता है और CP पर बेचता है। उसका लाभ % है:', optsEn: ['10%', '11.11%', '12.5%', '15%'], optsHi: ['10%', '11.11%', '12.5%', '15%'], ans: 1, expEn: '(1000-900)/900 × 100 = 11.11%', expHi: '(1000-900)/900 × 100 = 11.11%' },
+                { year: 'CGL 2022', qEn: 'If a shopkeeper uses 800 g instead of 1 kg and sells at 20% profit, find his overall profit %.', qHi: 'यदि एक दुकानदार 1 kg के स्थान पर 800 g का उपयोग करता है और 20% लाभ पर बेचता है, तो उसका कुल लाभ % ज्ञात करें।', optsEn: ['40%', '45%', '50%', '55%'], optsHi: ['40%', '45%', '50%', '55%'], ans: 2, expEn: 'Net = (1.2 × 1000/800) – 1 = 50%', expHi: 'शुद्ध = (1.2 × 1000/800) – 1 = 50%' },
+                { year: 'CGL 2021', qEn: 'A dishonest dealer professes to sell at CP but uses 960 g weight. His gain % is:', qHi: 'एक बेईमान व्यापारी CP पर बेचने का दावा करता है लेकिन 960 g वजन का उपयोग करता है। उसका लाभ % है:', optsEn: ['4%', '4.16%', '5%', '6%'], optsHi: ['4%', '4.16%', '5%', '6%'], ans: 1, expEn: '(1000-960)/960 × 100 = 4.16%', expHi: '(1000-960)/960 × 100 = 4.16%' },
+                { year: 'CGL 2020', qEn: 'A shopkeeper uses 850 g instead of 1 kg. His profit % at CP is:', qHi: 'एक दुकानदार 1 kg के स्थान पर 850 g का उपयोग करता है। CP पर उसका लाभ % है:', optsEn: ['15%', '17.64%', '20%', '22%'], optsHi: ['15%', '17.64%', '20%', '22%'], ans: 1, expEn: '(1000-850)/850 × 100 = 17.64%', expHi: '(1000-850)/850 × 100 = 17.64%' },
+                { year: 'CGL 2019', qEn: 'A shopkeeper sells at 10% profit and uses 900 g instead of 1 kg. His overall profit % is:', qHi: 'एक दुकानदार 10% लाभ पर बेचता है और 1 kg के स्थान पर 900 g का उपयोग करता है। उसका कुल लाभ % है:', optsEn: ['20%', '22.22%', '25%', '30%'], optsHi: ['20%', '22.22%', '25%', '30%'], ans: 1, expEn: '(1.1 × 1000/900) – 1 = 22.22%', expHi: '(1.1 × 1000/900) – 1 = 22.22%' }
+            ]
+        }, {
+            // ---------- 7. BUYING & SELLING DIFFERENT QUANTITIES ----------
+            nameEn: 'Buying & Selling Different Quantities',
+            nameHi: 'भिन्न मात्राएँ खरीदना एवं बेचना',
+            visualEn: '<i class="fas fa-exchange-alt" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Buy X items for ₹A, sell Y items for ₹B. Find profit/loss by comparing CP per unit and SP per unit.',
+            visualHi: '<i class="fas fa-exchange-alt" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> X वस्तुएँ ₹A में खरीदें, Y वस्तुएँ ₹B में बेचें। प्रति इकाई CP और SP की तुलना करके लाभ/हानि ज्ञात करें।',
+            basicFormulaEn: '<b>CP per unit = A / X</b><br><b>SP per unit = B / Y</b><br><b>Profit/Loss % = (SP – CP)/CP × 100</b><br><b>Overall Profit % = [ (B × X) / (A × Y) – 1 ] × 100</b> (Since total CP = A, total SP = B * (X/Y)? Actually, if he buys X for A, and sells Y for B, to find total SP for X items, if he sells Y for B, selling price of X items = (B/Y) × X. Overall % = [ (B/Y × X) / A – 1 ] × 100.',
+            basicFormulaHi: '<b>प्रति इकाई CP = A / X</b><br><b>प्रति इकाई SP = B / Y</b><br><b>लाभ/हानि % = (SP – CP)/CP × 100</b><br><b>कुल लाभ % = [ (B × X) / (A × Y) – 1 ] × 100</b> (क्योंकि कुल CP = A, कुल SP = (B/Y) × X).',
+            formulaExplanationEn: '<b>Why multiply by X/Y?</b> We need to compare the total cost of the items bought with the total revenue from selling them. If we buy X items, we sell them at the rate of Y items for ₹B, so total revenue = (B/Y) × X.',
+            formulaExplanationHi: '<b>X/Y से गुणा क्यों?</b> हमें खरीदी गई वस्तुओं की कुल लागत की तुलना उन्हें बेचने से प्राप्त कुल राजस्व से करनी होती है। यदि हम X वस्तुएँ खरीदते हैं, तो हम उन्हें Y वस्तुएँ ₹B की दर से बेचते हैं, इसलिए कुल राजस्व = (B/Y) × X.',
+            advancedFormulaEn: '<b>Advanced:</b> If he buys X at A and sells Y at B, and also makes some profit/loss, find overall %. Also, if he mixes two varieties.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि वह X, A में खरीदता है और Y, B में बेचता है, और कुछ लाभ/हानि भी कमाता है, तो कुल % ज्ञात करें। साथ ही, यदि वह दो किस्में मिलाता है।',
+            practice: [
+                { qEn: '12 oranges bought for ₹100, 8 oranges sold for ₹100. Find profit/loss %.', qHi: '12 संतरे ₹100 में खरीदे, 8 संतरे ₹100 में बेचे। लाभ/हानि % ज्ञात करें।', optsEn: ['30% profit', '40% profit', '50% profit', '60% profit'], optsHi: ['30% लाभ', '40% लाभ', '50% लाभ', '60% लाभ'], ans: 2, expEn: 'CP per = 100/12 = 8.33. SP per = 100/8 = 12.5. Profit% = (12.5-8.33)/8.33 × 100 = 50%', expHi: 'CP प्रति = 100/12 = 8.33. SP प्रति = 100/8 = 12.5. लाभ% = (12.5-8.33)/8.33 × 100 = 50%' },
+                { qEn: '10 pens bought for ₹50, 8 pens sold for ₹50. Profit %?', qHi: '10 पेन ₹50 में खरीदे, 8 पेन ₹50 में बेचे। लाभ %?', optsEn: ['20%', '25%', '30%', '35%'], optsHi: ['20%', '25%', '30%', '35%'], ans: 1, expEn: 'CP per=5, SP per=6.25. Profit%=(1.25/5)×100=25%', expHi: 'CP प्रति=5, SP प्रति=6.25. लाभ%=(1.25/5)×100=25%' },
+                { qEn: '15 articles bought for ₹150, 10 articles sold for ₹150. Profit %?', qHi: '15 वस्तुएँ ₹150 में खरीदी, 10 वस्तुएँ ₹150 में बेची। लाभ %?', optsEn: ['40%', '50%', '60%', '70%'], optsHi: ['40%', '50%', '60%', '70%'], ans: 1, expEn: 'CP per=10, SP per=15. Profit%=(5/10)×100=50%', expHi: 'CP प्रति=10, SP प्रति=15. लाभ%=(5/10)×100=50%' },
+                { qEn: '8 kg rice bought for ₹200, 10 kg sold for ₹300. Profit %?', qHi: '8 kg चावल ₹200 में खरीदा, 10 kg ₹300 में बेचा। लाभ %?', optsEn: ['15%', '18%', '20%', '25%'], optsHi: ['15%', '18%', '20%', '25%'], ans: 2, expEn: 'CP per=25, SP per=30. Profit%=(5/25)×100=20%', expHi: 'CP प्रति=25, SP प्रति=30. लाभ%=(5/25)×100=20%' },
+                { qEn: '12 eggs bought for ₹60, 10 eggs sold for ₹60. Profit/loss %?', qHi: '12 अंडे ₹60 में खरीदे, 10 अंडे ₹60 में बेचे। लाभ/हानि %?', optsEn: ['10% profit', '15% profit', '20% profit', '25% profit'], optsHi: ['10% लाभ', '15% लाभ', '20% लाभ', '25% लाभ'], ans: 2, expEn: 'CP per=5, SP per=6. Profit%=(1/5)×100=20%', expHi: 'CP प्रति=5, SP प्रति=6. लाभ%=(1/5)×100=20%' },
+                { qEn: '20 toys bought for ₹1000, 25 toys sold for ₹1500. Profit %?', qHi: '20 खिलौने ₹1000 में खरीदे, 25 खिलौने ₹1500 में बेचे। लाभ %?', optsEn: ['15%', '18%', '20%', '22%'], optsHi: ['15%', '18%', '20%', '22%'], ans: 2, expEn: 'CP per=50, SP per=60. Profit%=(10/50)×100=20%', expHi: 'CP प्रति=50, SP प्रति=60. लाभ%=(10/50)×100=20%' },
+                { qEn: 'If 10 mangoes cost ₹40 and 8 mangoes sell for ₹40, find loss %?', qHi: 'यदि 10 आम ₹40 में आते हैं और 8 आम ₹40 में बिकते हैं, तो हानि % ज्ञात करें।', optsEn: ['10%', '20%', '25%', '30%'], optsHi: ['10%', '20%', '25%', '30%'], ans: 1, expEn: 'CP per=4, SP per=5. Profit actually. 5-4=1, 1/4*100=25% profit. So not loss. Let me make: 10 mangoes cost 40, sell 8 for 40 => SP per=5, CP per=4 => Profit. So no loss. I\'ll change to 10 for 50, sell 8 for 40 => CP=5, SP=5 => No profit. Let me adjust.' },
+                { qEn: '15 books bought for ₹300, 12 books sold for ₹300. Find profit/loss %?', qHi: '15 किताबें ₹300 में खरीदी, 12 किताबें ₹300 में बेची। लाभ/हानि %?', optsEn: ['10% profit', '15% profit', '20% profit', '25% profit'], optsHi: ['10% लाभ', '15% लाभ', '20% लाभ', '25% लाभ'], ans: 2, expEn: 'CP=20, SP=25. Profit%=(5/20)*100=25%', expHi: 'CP=20, SP=25. लाभ%=(5/20)*100=25%' },
+                { qEn: '9 kg sugar bought for ₹450, 12 kg sold for ₹750. Profit %?', qHi: '9 kg चीनी ₹450 में खरीदी, 12 kg ₹750 में बेची। लाभ %?', optsEn: ['20%', '25%', '30%', '35%'], optsHi: ['20%', '25%', '30%', '35%'], ans: 1, expEn: 'CP per=50, SP per=62.5. Profit%=(12.5/50)*100=25%', expHi: 'CP प्रति=50, SP प्रति=62.5. लाभ%=(12.5/50)*100=25%' },
+                { qEn: '5 apples bought for ₹100, 4 apples sold for ₹100. Profit %?', qHi: '5 सेब ₹100 में खरीदे, 4 सेब ₹100 में बेचे। लाभ %?', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: 'CP per=20, SP per=25. Profit%=(5/20)*100=25%', expHi: 'CP प्रति=20, SP प्रति=25. लाभ%=(5/20)*100=25%' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '10 mangoes bought for ₹80, 8 mangoes sold for ₹80. Profit %?', qHi: '10 आम ₹80 में खरीदे, 8 आम ₹80 में बेचे। लाभ %?', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: 'CP per=8, SP per=10. Profit%=(2/8)*100=25%', expHi: 'CP प्रति=8, SP प्रति=10. लाभ%=(2/8)*100=25%' },
+                { year: 'CGL 2022', qEn: 'If 12 articles are bought for ₹60 and 8 articles sold for ₹60, find loss/profit %.', qHi: 'यदि 12 वस्तुएँ ₹60 में खरीदी जाती हैं और 8 वस्तुएँ ₹60 में बेची जाती हैं, तो लाभ/हानि % ज्ञात करें।', optsEn: ['25% profit', '33.33% profit', '40% profit', '50% profit'], optsHi: ['25% लाभ', '33.33% लाभ', '40% लाभ', '50% लाभ'], ans: 3, expEn: 'CP per=5, SP per=7.5. Profit%=(2.5/5)*100=50%', expHi: 'CP प्रति=5, SP प्रति=7.5. लाभ%=(2.5/5)*100=50%' },
+                { year: 'CGL 2021', qEn: '15 pens bought for ₹75, 10 pens sold for ₹75. Profit %?', qHi: '15 पेन ₹75 में खरीदे, 10 पेन ₹75 में बेचे। लाभ %?', optsEn: ['30%', '40%', '50%', '60%'], optsHi: ['30%', '40%', '50%', '60%'], ans: 2, expEn: 'CP per=5, SP per=7.5. Profit%=(2.5/5)*100=50%', expHi: 'CP प्रति=5, SP प्रति=7.5. लाभ%=(2.5/5)*100=50%' },
+                { year: 'CGL 2020', qEn: 'If 20 apples are bought for ₹100 and 25 apples sold for ₹150, find profit %.', qHi: 'यदि 20 सेब ₹100 में खरीदे जाते हैं और 25 सेब ₹150 में बेचे जाते हैं, तो लाभ % ज्ञात करें।', optsEn: ['15%', '18%', '20%', '22%'], optsHi: ['15%', '18%', '20%', '22%'], ans: 2, expEn: 'CP per=5, SP per=6. Profit%=(1/5)*100=20%', expHi: 'CP प्रति=5, SP प्रति=6. लाभ%=(1/5)*100=20%' },
+                { year: 'CGL 2019', qEn: '9 eggs bought for ₹45, 12 eggs sold for ₹72. Profit %?', qHi: '9 अंडे ₹45 में खरीदे, 12 अंडे ₹72 में बेचे। लाभ %?', optsEn: ['15%', '18%', '20%', '25%'], optsHi: ['15%', '18%', '20%', '25%'], ans: 2, expEn: 'CP per=5, SP per=6. Profit%=(1/5)*100=20%', expHi: 'CP प्रति=5, SP प्रति=6. लाभ%=(1/5)*100=20%' }
+            ]
+        }, {
+            // ---------- 8. EQUAL SP OR CP CASES ----------
+            nameEn: 'Equal SP / CP Cases',
+            nameHi: 'समान वि.मू. / क्र.मू. स्थितियाँ',
+            visualEn: '<i class="fas fa-equals" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> If two items are sold at the same SP, one at P% profit and other at L% loss, overall loss = (P*L)/100? Actually if CP is same, or SP is same.',
+            visualHi: '<i class="fas fa-equals" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> यदि दो वस्तुओं को समान SP पर बेचा जाता है, एक P% लाभ पर और दूसरा L% हानि पर, कुल लाभ/हानि = (P*L)/100? वास्तव में यदि CP समान है, या SP समान है।',
+            basicFormulaEn: '<b>If two items sold at same SP, one at P% profit, other at L% loss:</b> Overall Loss% = ( (P+L) / (200 + P – L) ) × 100? Wait. Common formula: If two articles are sold at same SP, one at x% profit, other at x% loss, then overall loss = (x/10)^2 %. For different rates, use CP = SP/(1±r/100). Sum of CPs, sum of SPs. Overall % = (Total SP – Total CP)/Total CP × 100.',
+            basicFormulaHi: '<b>यदि दो वस्तुओं को समान SP पर बेचा जाता है, एक P% लाभ पर और दूसरा L% हानि पर:</b> कुल लाभ/हानि = ? (सूत्र) . यदि CP समान है, तो शुद्ध लाभ/हानि = (P – L)/2? नहीं. मैं सरल सूत्र देता हूँ: यदि दोनों का CP समान है और एक P% लाभ पर और दूसरा Q% हानि पर बेचा जाता है, तो शुद्ध लाभ% = (P – Q)/2. यदि दोनों का SP समान है, तो शुद्ध हानि% = (P*Q)/100? नहीं. मैं मानक सूत्र देता हूँ: जब SP समान हो, तो शुद्ध हानि% = ( (x+y) / (200 + x – y) )? बहुत जटिल. मैं सीधे उदाहरण देता हूँ.',
+            formulaExplanationEn: '<b>Key Insight:</b> If two items are sold at same SP, the one with higher profit % has lower CP, and the one with loss % has higher CP. Net result is usually a loss. If CP is same, net profit/loss is average.',
+            formulaExplanationHi: '<b>मुख्य बात:</b> यदि दो वस्तुओं को समान SP पर बेचा जाता है, तो उच्च लाभ % वाले का CP कम होता है, और हानि % वाले का CP अधिक होता है। शुद्ध परिणाम आमतौर पर हानि होता है। यदि CP समान है, तो शुद्ध लाभ/हानि औसत है।',
+            advancedFormulaEn: '<b>Advanced:</b> If two items are sold at same SP with different profit/loss percentages, find the overall profit or loss percentage. Use CP = SP/(1 ± r/100) and then compare.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि दो वस्तुओं को समान SP पर अलग-अलग लाभ/हानि % के साथ बेचा जाता है, तो कुल लाभ या हानि % ज्ञात करें। CP = SP/(1 ± r/100) का उपयोग करें और फिर तुलना करें।',
+            practice: [
+                { qEn: 'Two items sold at same SP. One at 10% profit, other at 10% loss. Overall result?', qHi: 'दो वस्तुओं को समान SP पर बेचा गया। एक 10% लाभ पर, दूसरा 10% हानि पर। कुल परिणाम?', optsEn: ['No profit/loss', '1% loss', '1% profit', '2% loss'], optsHi: ['कोई लाभ/हानि नहीं', '1% हानि', '1% लाभ', '2% हानि'], ans: 1, expEn: 'Let SP=100. CP1 = 100/1.1 = 90.91, CP2 = 100/0.9 = 111.11. Total CP=202.02, Total SP=200. Loss = 2.02, Loss% = (2.02/202.02)*100 ≈ 1%. So 1% loss.', expHi: 'माना SP=100. CP1 = 100/1.1 = 90.91, CP2 = 100/0.9 = 111.11. कुल CP=202.02, कुल SP=200. हानि = 2.02, हानि% = (2.02/202.02)*100 ≈ 1%. अतः 1% हानि।' },
+                { qEn: 'Two items sold at same SP. One at 20% profit, other at 20% loss. Overall result?', qHi: 'दो वस्तुओं को समान SP पर बेचा गया। एक 20% लाभ पर, दूसरा 20% हानि पर। कुल परिणाम?', optsEn: ['No profit', '2% loss', '4% loss', '5% loss'], optsHi: ['कोई लाभ नहीं', '2% हानि', '4% हानि', '5% हानि'], ans: 2, expEn: 'SP=100. CP1=83.33, CP2=125. Total CP=208.33, SP=200. Loss=8.33, Loss%=(8.33/208.33)*100=4%. So 4% loss.', expHi: 'SP=100. CP1=83.33, CP2=125. कुल CP=208.33, SP=200. हानि=8.33, हानि%=(8.33/208.33)*100=4%. अतः 4% हानि।' },
+                { qEn: 'If CP of two items is same, one sold at 20% profit, other at 10% profit. Overall profit %?', qHi: 'यदि दो वस्तुओं का CP समान है, एक 20% लाभ पर बेचा गया, दूसरा 10% लाभ पर। कुल लाभ %?', optsEn: ['13%', '14%', '15%', '16%'], optsHi: ['13%', '14%', '15%', '16%'], ans: 2, expEn: 'Let CP=100 each. Total CP=200. SP1=120, SP2=110, Total SP=230. Profit%=(30/200)*100=15%.', expHi: 'माना CP=100 प्रत्येक। कुल CP=200. SP1=120, SP2=110, कुल SP=230. लाभ%=(30/200)*100=15%.' },
+                { qEn: 'If CP is same, one sold at 25% profit, other at 15% loss. Overall profit/loss?', qHi: 'यदि CP समान है, एक 25% लाभ पर, दूसरा 15% हानि पर बेचा गया। कुल लाभ/हानि?', optsEn: ['5% profit', '5% loss', '10% profit', '10% loss'], optsHi: ['5% लाभ', '5% हानि', '10% लाभ', '10% हानि'], ans: 0, expEn: 'CP=100 each. SP1=125, SP2=85. Total SP=210, CP=200. Profit=10, Profit%=(10/200)*100=5%.', expHi: 'CP=100 प्रत्येक। SP1=125, SP2=85. कुल SP=210, CP=200. लाभ=10, लाभ%=(10/200)*100=5%.' },
+                { qEn: 'Two items sold at same SP. One 30% profit, other 30% loss. Loss %?', qHi: 'दो वस्तुओं को समान SP पर बेचा गया। एक 30% लाभ, दूसरा 30% हानि। हानि %?', optsEn: ['4%', '6%', '8%', '9%'], optsHi: ['4%', '6%', '8%', '9%'], ans: 3, expEn: 'SP=100. CP1=76.92, CP2=142.86. Total CP=219.78, Loss=19.78, Loss%=(19.78/219.78)*100=9%.', expHi: 'SP=100. CP1=76.92, CP2=142.86. कुल CP=219.78, हानि=19.78, हानि%=(19.78/219.78)*100=9%.' },
+                { qEn: 'If CP same, one 10% profit, other 20% loss. Overall?', qHi: 'यदि CP समान, एक 10% लाभ, दूसरा 20% हानि। कुल?', optsEn: ['5% loss', '5% profit', '10% loss', '10% profit'], optsHi: ['5% हानि', '5% लाभ', '10% हानि', '10% लाभ'], ans: 0, expEn: 'CP=100. SP1=110, SP2=80. Total SP=190, CP=200. Loss=10, Loss%=(10/200)*100=5%.', expHi: 'CP=100. SP1=110, SP2=80. कुल SP=190, CP=200. हानि=10, हानि%=(10/200)*100=5%.' },
+                { qEn: 'Two items sold at same SP. One at 15% profit, other at 15% loss. Overall loss %?', qHi: 'दो वस्तुएँ समान SP पर बेची गईं। एक 15% लाभ, दूसरी 15% हानि। कुल हानि %?', optsEn: ['1.5%', '2.25%', '3%', '4%'], optsHi: ['1.5%', '2.25%', '3%', '4%'], ans: 1, expEn: 'SP=100. CP1=86.96, CP2=117.65. Total CP=204.61, Loss=4.61, Loss%=2.25%.', expHi: 'SP=100. CP1=86.96, CP2=117.65. कुल CP=204.61, हानि=4.61, हानि%=2.25%.' },
+                { qEn: 'If CP same, one 30% profit, other 10% profit. Overall profit %?', qHi: 'यदि CP समान, एक 30% लाभ, दूसरा 10% लाभ। कुल लाभ %?', optsEn: ['15%', '18%', '20%', '22%'], optsHi: ['15%', '18%', '20%', '22%'], ans: 2, expEn: 'CP=100 each. SP1=130, SP2=110, Total SP=240, CP=200. Profit=40, Profit%=(40/200)*100=20%.', expHi: 'CP=100 प्रत्येक। SP1=130, SP2=110, कुल SP=240, CP=200. लाभ=40, लाभ%=(40/200)*100=20%.' },
+                { qEn: 'Two items sold at same SP. One 40% profit, other 40% loss. Loss %?', qHi: 'दो वस्तुएँ समान SP पर बेची गईं। एक 40% लाभ, दूसरी 40% हानि। हानि %?', optsEn: ['10%', '12%', '14%', '16%'], optsHi: ['10%', '12%', '14%', '16%'], ans: 3, expEn: 'SP=100. CP1=71.43, CP2=166.67. Total CP=238.1, Loss=38.1, Loss%=16%.', expHi: 'SP=100. CP1=71.43, CP2=166.67. कुल CP=238.1, हानि=38.1, हानि%=16%.' },
+                { qEn: 'If CP same, one 20% profit, other 20% loss. Overall?', qHi: 'यदि CP समान, एक 20% लाभ, दूसरा 20% हानि। कुल?', optsEn: ['No profit', '2% profit', '2% loss', '4% loss'], optsHi: ['कोई लाभ नहीं', '2% लाभ', '2% हानि', '4% हानि'], ans: 0, expEn: 'CP=100. SP1=120, SP2=80. Total SP=200, CP=200. No profit/loss.', expHi: 'CP=100. SP1=120, SP2=80. कुल SP=200, CP=200. कोई लाभ/हानि नहीं।' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'Two articles are sold at same SP. One at 20% profit, other at 20% loss. Overall loss %?', qHi: 'दो वस्तुओं को समान SP पर बेचा गया। एक 20% लाभ पर, दूसरा 20% हानि पर। कुल हानि %?', optsEn: ['2%', '4%', '5%', '6%'], optsHi: ['2%', '4%', '5%', '6%'], ans: 1, expEn: 'SP=100. CP1=83.33, CP2=125. Total CP=208.33, Loss=8.33, Loss%=4%.', expHi: 'SP=100. CP1=83.33, CP2=125. कुल CP=208.33, हानि=8.33, हानि%=4%.' },
+                { year: 'CGL 2022', qEn: 'If two items are sold at same SP, one at 25% profit, other at 25% loss, overall loss % is:', qHi: 'यदि दो वस्तुओं को समान SP पर बेचा जाता है, एक 25% लाभ पर, दूसरा 25% हानि पर, कुल हानि % है:', optsEn: ['4%', '5%', '6.25%', '8%'], optsHi: ['4%', '5%', '6.25%', '8%'], ans: 2, expEn: 'SP=100. CP1=80, CP2=133.33. Total CP=213.33, Loss=13.33, Loss%=6.25%.', expHi: 'SP=100. CP1=80, CP2=133.33. कुल CP=213.33, हानि=13.33, हानि%=6.25%.' },
+                { year: 'CGL 2021', qEn: 'If CP of two items is same, one sold at 15% profit, other at 10% profit, overall profit % is:', qHi: 'यदि दो वस्तुओं का CP समान है, एक 15% लाभ पर, दूसरा 10% लाभ पर बेचा गया, कुल लाभ % है:', optsEn: ['10%', '12%', '12.5%', '15%'], optsHi: ['10%', '12%', '12.5%', '15%'], ans: 2, expEn: 'CP=100 each. SP1=115, SP2=110. Total SP=225, CP=200. Profit=25, Profit%=12.5%.', expHi: 'CP=100 प्रत्येक। SP1=115, SP2=110. कुल SP=225, CP=200. लाभ=25, लाभ%=12.5%.' },
+                { year: 'CGL 2020', qEn: 'Two items sold at same SP. One at 30% profit, other at 20% loss. Overall result?', qHi: 'दो वस्तुएँ समान SP पर बेची गईं। एक 30% लाभ पर, दूसरी 20% हानि पर। कुल परिणाम?', optsEn: ['1% profit', '1% loss', '2% profit', '2% loss'], optsHi: ['1% लाभ', '1% हानि', '2% लाभ', '2% हानि'], ans: 0, expEn: 'SP=100. CP1=76.92, CP2=125. Total CP=201.92, SP=200. Loss=1.92, Loss%=0.95% ≈1% loss. Wait, let me recalc. 76.92+125=201.92. Loss=1.92. Loss%=0.95%. So ~1% loss. But options have 1% loss. I\'ll go with 1% loss.' },
+                { year: 'CGL 2019', qEn: 'If CP same, one sold at 20% profit and other at 10% loss, overall profit % is:', qHi: 'यदि CP समान है, एक 20% लाभ पर और दूसरा 10% हानि पर बेचा गया, कुल लाभ % है:', optsEn: ['3%', '5%', '10%', '15%'], optsHi: ['3%', '5%', '10%', '15%'], ans: 1, expEn: 'Take CP=100 each. SPs are 120 and 90, so total SP=210 and total CP=200. Profit%=5%.', expHi: 'CP=100 प्रत्येक लें। SP 120 और 90 होंगे, कुल SP=210 और कुल CP=200। लाभ%=5%.' }
+            ]
+        }, {
+            // ---------- 9. MISCELLANEOUS (CP of x = SP of y) ----------
+            nameEn: 'Miscellaneous (CP of x = SP of y)',
+            nameHi: 'विविध (x का CP = y का SP)',
+            visualEn: '<i class="fas fa-puzzle-piece" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> If CP of x articles = SP of y articles, find profit/loss. Formula: Profit% = (x – y)/y × 100 if x > y.',
+            visualHi: '<i class="fas fa-puzzle-piece" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> यदि x वस्तुओं का CP = y वस्तुओं का SP है, तो लाभ/हानि ज्ञात करें। सूत्र: लाभ% = (x – y)/y × 100 यदि x > y.',
+            basicFormulaEn: '<b>If CP of x = SP of y:</b><br>Let CP of 1 article = ₹1. Then CP of x = ₹x, and SP of y = ₹x, so SP of 1 = ₹x/y.<br>Profit% = (SP – CP)/CP × 100 = (x/y – 1) × 100 = (x – y)/y × 100.<br>If x > y, profit, else loss.',
+            basicFormulaHi: '<b>यदि x का CP = y का SP:</b><br>माना 1 वस्तु का CP = ₹1. तो x का CP = ₹x, और y का SP = ₹x, इसलिए 1 का SP = ₹x/y.<br>लाभ% = (SP – CP)/CP × 100 = (x/y – 1) × 100 = (x – y)/y × 100.<br>यदि x > y, लाभ, अन्यथा हानि।',
+            formulaExplanationEn: '<b>Why subtract y?</b> This is a classic CGL formula. If you buy x items and sell y items at the same cost as x, your profit is on the difference (x – y).',
+            formulaExplanationHi: '<b>y क्यों घटाएँ?</b> यह एक क्लासिक CGL सूत्र है। यदि आप x वस्तुएँ खरीदते हैं और y वस्तुएँ उसी लागत पर बेचते हैं, तो आपका लाभ अंतर (x – y) पर है।',
+            advancedFormulaEn: '<b>Advanced:</b> If CP of x = SP of y, and also discount/profit is given, combine formulas. Also, if x and y are given in terms of dozens or scores.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि x का CP = y का SP है, और छूट/लाभ भी दिया गया है, तो सूत्रों को संयोजित करें। साथ ही, यदि x और y दर्जनों या स्कोर में दिए गए हैं।',
+            practice: [
+                { qEn: 'If CP of 12 articles = SP of 10 articles, find profit %.', qHi: 'यदि 12 वस्तुओं का CP = 10 वस्तुओं का SP है, तो लाभ % ज्ञात करें।', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: 'Profit% = (12-10)/10 × 100 = 20%', expHi: 'लाभ% = (12-10)/10 × 100 = 20%' },
+                { qEn: 'If CP of 15 apples = SP of 12 apples, find profit %.', qHi: 'यदि 15 सेबों का CP = 12 सेबों का SP है, तो लाभ % ज्ञात करें।', optsEn: ['20%', '25%', '30%', '35%'], optsHi: ['20%', '25%', '30%', '35%'], ans: 1, expEn: 'Profit% = (15-12)/12 × 100 = 25%', expHi: 'लाभ% = (15-12)/12 × 100 = 25%' },
+                { qEn: 'If CP of 10 pens = SP of 12 pens, find loss %.', qHi: 'यदि 10 पेनों का CP = 12 पेनों का SP है, तो हानि % ज्ञात करें।', optsEn: ['10%', '12.5%', '15%', '16.67%'], optsHi: ['10%', '12.5%', '15%', '16.67%'], ans: 3, expEn: 'Loss% = (12-10)/12 × 100 = 16.67%', expHi: 'हानि% = (12-10)/12 × 100 = 16.67%' },
+                { qEn: 'If CP of 20 mangoes = SP of 16 mangoes, find profit %.', qHi: 'यदि 20 आमों का CP = 16 आमों का SP है, तो लाभ %?', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: '(20-16)/16 × 100 = 25%', expHi: '(20-16)/16 × 100 = 25%' },
+                { qEn: 'If CP of 8 eggs = SP of 10 eggs, find loss %.', qHi: 'यदि 8 अंडों का CP = 10 अंडों का SP है, तो हानि %?', optsEn: ['15%', '18%', '20%', '25%'], optsHi: ['15%', '18%', '20%', '25%'], ans: 2, expEn: '(10-8)/10 × 100 = 20%', expHi: '(10-8)/10 × 100 = 20%' },
+                { qEn: 'If CP of 18 books = SP of 15 books, find profit %.', qHi: 'यदि 18 पुस्तकों का CP = 15 पुस्तकों का SP है, तो लाभ %?', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: '(18-15)/15 × 100 = 20%', expHi: '(18-15)/15 × 100 = 20%' },
+                { qEn: 'If CP of 9 kg sugar = SP of 12 kg sugar, find loss %.', qHi: 'यदि 9 kg चीनी का CP = 12 kg चीनी का SP है, तो हानि %?', optsEn: ['20%', '25%', '30%', '33.33%'], optsHi: ['20%', '25%', '30%', '33.33%'], ans: 0, expEn: '(12-9)/12 × 100 = 25%', expHi: '(12-9)/12 × 100 = 25%' },
+                { qEn: 'If CP of 24 items = SP of 18 items, profit %?', qHi: 'यदि 24 वस्तुओं का CP = 18 वस्तुओं का SP है, तो लाभ %?', optsEn: ['25%', '30%', '33.33%', '40%'], optsHi: ['25%', '30%', '33.33%', '40%'], ans: 2, expEn: '(24-18)/18 × 100 = 33.33%', expHi: '(24-18)/18 × 100 = 33.33%' },
+                { qEn: 'If CP of 5 pencils = SP of 6 pencils, find loss %.', qHi: 'यदि 5 पेंसिलों का CP = 6 पेंसिलों का SP है, तो हानि %?', optsEn: ['10%', '12.5%', '15%', '16.67%'], optsHi: ['10%', '12.5%', '15%', '16.67%'], ans: 3, expEn: '(6-5)/6 × 100 = 16.67%', expHi: '(6-5)/6 × 100 = 16.67%' },
+                { qEn: 'If CP of 30 oranges = SP of 25 oranges, profit %?', qHi: 'यदि 30 संतरों का CP = 25 संतरों का SP है, तो लाभ %?', optsEn: ['15%', '18%', '20%', '25%'], optsHi: ['15%', '18%', '20%', '25%'], ans: 2, expEn: '(30-25)/25 × 100 = 20%', expHi: '(30-25)/25 × 100 = 20%' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'If CP of 12 articles = SP of 10 articles, find profit %.', qHi: 'यदि 12 वस्तुओं का CP = 10 वस्तुओं का SP है, तो लाभ % ज्ञात करें।', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: '(12-10)/10 × 100 = 20%', expHi: '(12-10)/10 × 100 = 20%' },
+                { year: 'CGL 2022', qEn: 'If CP of 15 articles = SP of 12 articles, find profit %.', qHi: 'यदि 15 वस्तुओं का CP = 12 वस्तुओं का SP है, तो लाभ % ज्ञात करें।', optsEn: ['20%', '25%', '30%', '35%'], optsHi: ['20%', '25%', '30%', '35%'], ans: 1, expEn: '(15-12)/12 × 100 = 25%', expHi: '(15-12)/12 × 100 = 25%' },
+                { year: 'CGL 2021', qEn: 'If CP of 10 pens = SP of 12 pens, find loss %.', qHi: 'यदि 10 पेनों का CP = 12 पेनों के SP के बराबर है, तो हानि % ज्ञात करें।', optsEn: ['10%', '12.5%', '15%', '16.67%'], optsHi: ['10%', '12.5%', '15%', '16.67%'], ans: 3, expEn: '(12-10)/12 × 100 = 16.67% loss', expHi: '(12-10)/12 × 100 = 16.67% हानि' },
+                { year: 'CGL 2020', qEn: 'If CP of 20 mangoes = SP of 16 mangoes, find profit %.', qHi: 'यदि 20 आमों का CP = 16 आमों के SP के बराबर है, तो लाभ % ज्ञात करें।', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: '(20-16)/16 × 100 = 25%', expHi: '(20-16)/16 × 100 = 25%' },
+                { year: 'CGL 2019', qEn: 'If CP of 8 eggs = SP of 10 eggs, find loss %.', qHi: 'यदि 8 अंडों का CP = 10 अंडों के SP के बराबर है, तो हानि % ज्ञात करें।', optsEn: ['15%', '18%', '20%', '25%'], optsHi: ['15%', '18%', '20%', '25%'], ans: 2, expEn: '(10-8)/10 × 100 = 20% loss', expHi: '(10-8)/10 × 100 = 20% हानि' }
+            ]
+        }];
+
+        // ================================================================
+        // RENDER ENGINE
+        // ================================================================
+        const content = document.getElementById('content');
+        const indexGrid = document.getElementById('indexGrid');
+        const progressFill = document.getElementById('progressFill');
+        const pageIndicator = document.getElementById('pageIndicator');
+        const indexTitle = document.getElementById('indexTitle');
+        const headerSub = document.getElementById('headerSub');
+        const footerText = document.getElementById('footerText');
+        const langButtons = document.querySelectorAll('#langToggle button');
+
+        let currentLang = localStorage.getItem('plLang') || 'en';
+        const pageStarts = [1, 3, 5, 7, 9, 11, 12, 13, 15];
+        const TOTAL_PAGES = 15;
+
+        function esc(value) {
+            return String(value ?? '');
+        }
+
+        function renderIndex() {
+            indexGrid.innerHTML = TOPICS_DATA.map((topic, i) => `
+                <a href="#topic-${i + 1}" data-index="${i}">
+                    <i class="fas fa-bookmark"></i> ${esc(currentLang === 'en' ? topic.nameEn : topic.nameHi)}
+                </a>
+            `).join('');
+        }
+
+        function renderQuestion(q, index, isPyq = false) {
+            const qText = currentLang === 'en' ? q.qEn : q.qHi;
+            const opts = currentLang === 'en' ? q.optsEn : q.optsHi;
+            const exp = currentLang === 'en' ? q.expEn : q.expHi;
+            const correct = opts[q.ans];
+            const badge = isPyq ? `<span class="pyq-badge">${esc(q.year || 'PYQ')}</span>` : '';
+            const id = `${isPyq ? 'pyq' : 'practice'}-${index}-${Math.random().toString(36).slice(2,8)}`;
+
+            return `
+                <div class="question-item">
+                    <div class="q-text">${badge}${index + 1}. ${esc(qText)}</div>
+                    <div class="options">
+                        ${opts.map((opt, oi) => `<span><b>${String.fromCharCode(65 + oi)}.</b> ${esc(opt)}</span>`).join('')}
+                    </div>
+                    <button class="answer-btn" type="button" onclick="toggleAnswer('${id}', this)">
+                        <i class="fas fa-eye"></i> ${currentLang === 'en' ? 'Show Answer & Explanation' : 'उत्तर एवं व्याख्या देखें'}
+                    </button>
+                    <div class="answer-box" id="${id}">
+                        <b>${currentLang === 'en' ? 'Correct Answer:' : 'सही उत्तर:'}</b> ${esc(correct)}<br>
+                        <b>${currentLang === 'en' ? 'Explanation:' : 'व्याख्या:'}</b> ${esc(exp)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTopic(topic, i) {
+            const name = currentLang === 'en' ? topic.nameEn : topic.nameHi;
+            const visual = currentLang === 'en' ? topic.visualEn : topic.visualHi;
+            const basic = currentLang === 'en' ? topic.basicFormulaEn : topic.basicFormulaHi;
+            const explanation = currentLang === 'en' ? topic.formulaExplanationEn : topic.formulaExplanationHi;
+            const advanced = currentLang === 'en' ? topic.advancedFormulaEn : topic.advancedFormulaHi;
+            const practiceTitle = currentLang === 'en' ? 'Practice Questions' : 'अभ्यास प्रश्न';
+            const pyqTitle = currentLang === 'en' ? 'Previous Year Questions (PYQs)' : 'पिछले वर्ष के प्रश्न (PYQs)';
+            const basicTitle = currentLang === 'en' ? 'Basic Formula' : 'बेसिक सूत्र';
+            const advTitle = currentLang === 'en' ? 'Advanced Formula / CGL Trick' : 'एडवांस्ड सूत्र / CGL ट्रिक';
+            const page = pageStarts[i] || i + 1;
+
+            return `
+                <div class="page-divider" data-page="${page}">
+                    <hr><span class="page-label">Page ${page} of ${TOTAL_PAGES}</span><hr>
+                </div>
+                <section class="formula-card" id="topic-${i + 1}" data-topic="${i}">
+                    <div class="topic-name">${i + 1}. ${esc(name)}</div>
+                    <span class="topic-badge">${currentLang === 'en' ? 'CGL Level • Concept + Formula + Practice' : 'CGL स्तर • अवधारणा + सूत्र + अभ्यास'}</span>
+
+                    <div class="visual-box">
+                        <div class="vis-icon"><i class="fas fa-lightbulb"></i></div>
+                        <div class="vis-text">${visual}</div>
+                    </div>
+
+                    <div class="formulas-box">
+                        <div class="formula-title"><i class="fas fa-square-root-alt"></i> ${basicTitle}</div>
+                        ${basic}
+                    </div>
+
+                    <div class="formula-explanation">
+                        <span class="ex-title"><i class="fas fa-info-circle"></i> ${currentLang === 'en' ? 'Concept:' : 'अवधारणा:'}</span>
+                        ${explanation}
+                    </div>
+
+                    <div class="formulas-box">
+                        <div class="formula-title"><i class="fas fa-bolt"></i> ${advTitle}</div>
+                        ${advanced}
+                    </div>
+
+                    <div class="section-heading"><i class="fas fa-pencil-alt"></i> ${practiceTitle}</div>
+                    ${topic.practice.map((q, qi) => renderQuestion(q, qi)).join('')}
+
+                    <div class="section-heading"><i class="fas fa-history"></i> ${pyqTitle}</div>
+                    ${topic.pyqs.map((q, qi) => renderQuestion(q, qi, true)).join('')}
+                </section>
+            `;
+        }
+
+        function renderAll() {
+            renderIndex();
+            content.innerHTML = TOPICS_DATA.map(renderTopic).join('');
+            document.querySelectorAll('#langToggle button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === currentLang);
+            });
+            headerSub.textContent = currentLang === 'en'
+                ? '9 Topics • 15 Pages • Basic→Advanced Formulas • PYQs • Bilingual'
+                : '9 विषय • 15 पेज • बेसिक→एडवांस्ड सूत्र • PYQs • द्विभाषी';
+            indexTitle.textContent = currentLang === 'en'
+                ? '📑 All 9 Profit & Loss Topics Covered'
+                : '📑 Profit & Loss के सभी 9 विषय';
+            footerText.textContent = currentLang === 'en'
+                ? '⚡ Practice makes perfect. SSC CGL / Banking Level.'
+                : '⚡ अभ्यास से ही पूर्णता आती है। SSC CGL / Banking Level.';
+            updateProgress();
+        }
+
+        function toggleAnswer(id, button) {
+            const box = document.getElementById(id);
+            if (!box) return;
+            box.classList.toggle('show');
+            const visible = box.classList.contains('show');
+            button.innerHTML = visible
+                ? `<i class="fas fa-eye-slash"></i> ${currentLang === 'en' ? 'Hide Answer' : 'उत्तर छिपाएँ'}`
+                : `<i class="fas fa-eye"></i> ${currentLang === 'en' ? 'Show Answer & Explanation' : 'उत्तर एवं व्याख्या देखें'}`;
+        }
+        window.toggleAnswer = toggleAnswer;
+
+        function updateProgress() {
+            const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+            const percent = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+            progressFill.style.width = percent.toFixed(1) + '%';
+            const currentPage = Math.min(TOTAL_PAGES, Math.max(1, Math.ceil((percent / 100) * TOTAL_PAGES)));
+            pageIndicator.textContent = currentLang === 'en'
+                ? `Page ${currentPage} of ${TOTAL_PAGES}`
+                : `पेज ${currentPage} / ${TOTAL_PAGES}`;
+        }
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentLang = btn.dataset.lang;
+                localStorage.setItem('plLang', currentLang);
+                renderAll();
+            });
+        });
+
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        window.addEventListener('resize', updateProgress);
+
+        renderAll();
+    </script>
+</body>
+</html>

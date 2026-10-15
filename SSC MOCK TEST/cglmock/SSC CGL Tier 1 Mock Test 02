@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SSC CGL Tier 1 Mock Test 02</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef2f7;
+    color:#1f2937;
+}
+
+.header{
+    height:70px;
+    background:#172554;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:bold;
+}
+
+.test-title{
+    font-size:18px;
+}
+
+.timer{
+    background:#dc2626;
+    padding:12px 20px;
+    border-radius:7px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.container{
+    display:grid;
+    grid-template-columns:1fr 300px;
+    gap:15px;
+    padding:15px;
+    max-width:1500px;
+    margin:auto;
+}
+
+.question-box{
+    background:white;
+    border-radius:8px;
+    min-height:650px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.subject-bar{
+    background:#e0e7ff;
+    padding:14px 20px;
+    font-weight:bold;
+    color:#3730a3;
+    border-radius:8px 8px 0 0;
+}
+
+.question-content{
+    padding:25px;
+}
+
+.q-number{
+    font-size:19px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.question-text{
+    font-size:18px;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.option{
+    border:1px solid #cbd5e1;
+    padding:15px;
+    margin:12px 0;
+    border-radius:7px;
+    cursor:pointer;
+    transition:.2s;
+    background:#fff;
+}
+
+.option:hover{
+    background:#f1f5f9;
+}
+
+.option.selected{
+    background:#dbeafe;
+    border-color:#2563eb;
+}
+
+.option input{
+    margin-right:10px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+    gap:10px;
+}
+
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.prev{
+    background:#64748b;
+    color:white;
+}
+
+.next{
+    background:#2563eb;
+    color:white;
+}
+
+.mark{
+    background:#f59e0b;
+    color:white;
+}
+
+.submit{
+    background:#dc2626;
+    color:white;
+}
+
+.sidebar{
+    background:white;
+    border-radius:8px;
+    padding:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    height:max-content;
+}
+
+.sidebar h3{
+    margin-bottom:15px;
+}
+
+.palette{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+}
+
+.palette button{
+    padding:10px 5px;
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.palette button.current{
+    background:#2563eb;
+    color:white;
+}
+
+.palette button.answered{
+    background:#16a34a;
+    color:white;
+}
+
+.palette button.marked{
+    background:#f59e0b;
+    color:white;
+}
+
+.legend{
+    margin-top:20px;
+    line-height:2;
+    font-size:14px;
+}
+
+.legend span{
+    display:inline-block;
+    width:15px;
+    height:15px;
+    border-radius:3px;
+    margin-right:7px;
+    vertical-align:middle;
+}
+
+.green{background:#16a34a}
+.blue{background:#2563eb}
+.orange{background:#f59e0b}
+.gray{background:#e5e7eb}
+
+#result{
+    display:none;
+    max-width:1200px;
+    margin:25px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+}
+
+.result-header{
+    text-align:center;
+    padding:20px;
+    background:#172554;
+    color:white;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.score{
+    font-size:42px;
+    font-weight:bold;
+    margin:10px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin:20px 0;
+}
+
+.stat{
+    padding:20px;
+    text-align:center;
+    border-radius:8px;
+    background:#f1f5f9;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    margin-top:8px;
+}
+
+.analysis{
+    margin-top:25px;
+}
+
+.analysis table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.analysis th,
+.analysis td{
+    border:1px solid #cbd5e1;
+    padding:12px;
+    text-align:center;
+}
+
+.analysis th{
+    background:#172554;
+    color:white;
+}
+
+.review{
+    margin-top:30px;
+}
+
+.review-item{
+    border:1px solid #cbd5e1;
+    padding:18px;
+    margin:15px 0;
+    border-radius:8px;
+}
+
+.correct-answer{
+    color:#15803d;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.explanation{
+    background:#f8fafc;
+    padding:12px;
+    margin-top:10px;
+    border-left:4px solid #2563eb;
+}
+
+.restart{
+    display:block;
+    margin:25px auto 0;
+    background:#2563eb;
+    color:white;
+}
+
+@media(max-width:900px){
+    .container{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .header{
+        padding:10px;
+    }
+
+    .test-title{
+        display:none;
+    }
+
+    .question-content{
+        padding:15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">SSC MOCK TEST</div>
+    <div class="test-title">SSC CGL Tier 1 — Mock Test 02</div>
+    <div class="timer" id="timer">60:00</div>
+</header>
+
+<div id="exam">
+
+<div class="container">
+
+<main class="question-box">
+
+    <div class="subject-bar" id="subjectBar">
+        Reasoning
+    </div>
+
+    <div class="question-content">
+
+        <div class="q-number" id="qNumber">
+            Question 1 of 100
+        </div>
+
+        <div class="question-text" id="questionText"></div>
+
+        <div id="options"></div>
+
+        <div class="buttons">
+
+            <button class="prev" onclick="previousQuestion()">
+                ← Previous
+            </button>
+
+            <button class="mark" onclick="markQuestion()">
+                ⚑ Mark for Review
+            </button>
+
+            <button class="next" onclick="nextQuestion()">
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<aside class="sidebar">
+
+    <h3>Question Palette</h3>
+
+    <div class="palette" id="palette"></div>
+
+    <div class="legend">
+        <div><span class="green"></span> Answered</div>
+        <div><span class="blue"></span> Current</div>
+        <div><span class="orange"></span> Marked</div>
+        <div><span class="gray"></span> Not Visited</div>
+    </div>
+
+    <button class="submit" onclick="submitTest()" style="width:100%;margin-top:20px;">
+        Submit Test
+    </button>
+
+</aside>
+
+</div>
+
+</div>
+
+
+<section id="result">
+
+    <div class="result-header">
+        <h1>SSC CGL Tier 1 — Mock Test 02</h1>
+        <div class="score" id="score"></div>
+        <p id="percentage"></p>
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            Correct
+            <strong id="correctCount">0</strong>
+        </div>
+
+        <div class="stat">
+            Wrong
+            <strong id="wrongCount">0</strong>
+        </div>
+
+        <div class="stat">
+            Unattempted
+            <strong id="unattemptedCount">0</strong>
+        </div>
+
+        <div class="stat">
+            Accuracy
+            <strong id="accuracy">0%</strong>
+        </div>
+
+    </div>
+
+
+    <div class="analysis">
+
+        <h2>📊 Mock Test Analysis</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Total</th>
+                    <th>Correct</th>
+                    <th>Wrong</th>
+                    <th>Unattempted</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+
+            <tbody id="analysisBody"></tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="review">
+
+        <h2>📝 All Questions — Answers & Explanations</h2>
+
+        <div id="reviewContainer"></div>
+
+    </div>
+
+
+    <button class="restart" onclick="location.reload()">
+        🔄 Restart Mock Test
+    </button>
+
+</section>
+
+
+<script>
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const questions = [
+
+/* ================= REASONING ================= */
+
+{
+subject:"Reasoning",
+q:"यदि CLOCK को DMPDL के रूप में coded किया जाता है, तो BRICK को किस प्रकार coded किया जाएगा?<br><br>If CLOCK is coded as DMPDL, how will BRICK be coded?",
+o:["CSJDL","CSKDL","CTJDL","DRJDL"],
+a:0,
+e:"प्रत्येक अक्षर को alphabet में एक स्थान आगे बढ़ाया गया है। इसलिए BRICK → CSJDL.<br><br>Each letter is shifted one position forward. Therefore BRICK becomes CSJDL."
+},
+
+{
+subject:"Reasoning",
+q:"श्रृंखला में अगली संख्या ज्ञात कीजिए: 3, 8, 18, 38, 78, ?<br><br>Find the next number: 3, 8, 18, 38, 78, ?",
+o:["156","158","160","162"],
+a:1,
+e:"प्रत्येक संख्या को 2 से गुणा करके 2 जोड़ा गया है। 78 × 2 + 2 = 158.<br><br>Each term is multiplied by 2 and then 2 is added. Therefore, 158."
+},
+
+{
+subject:"Reasoning",
+q:"एक व्यक्ति 12 मीटर उत्तर, फिर 9 मीटर पूर्व और फिर 12 मीटर दक्षिण चलता है। वह प्रारंभिक बिंदु से किस दिशा में है?<br><br>A person walks 12 m north, 9 m east and then 12 m south. In which direction is he from the starting point?",
+o:["उत्तर / North","दक्षिण / South","पूर्व / East","पश्चिम / West"],
+a:2,
+e:"उत्तर और दक्षिण की दूरी cancel हो जाती है। व्यक्ति 9 मीटर पूर्व में है.<br><br>The north and south movements cancel. He is 9 m east."
+},
+
+{
+subject:"Reasoning",
+q:"यदि A > B, B = C और C > D है, तो कौन-सा कथन निश्चित रूप से सत्य है?<br><br>If A > B, B = C and C > D, which statement is definitely true?",
+o:["A > D","A = D","B < D","A < C"],
+a:0,
+e:"A > B = C > D, इसलिए A निश्चित रूप से D से बड़ा है.<br><br>A is definitely greater than D."
+},
+
+{
+subject:"Reasoning",
+q:"निम्न में से विषम को चुनिए।<br><br>Find the odd one out.",
+o:["Mercury / बुध","Venus / शुक्र","Earth / पृथ्वी","Moon / चंद्रमा"],
+a:3,
+e:"Mercury, Venus और Earth ग्रह हैं जबकि Moon एक natural satellite है.<br><br>Moon is a natural satellite while the others are planets."
+},
+
+{
+subject:"Reasoning",
+q:"रवि ऊपर से 17वें और नीचे से 24वें स्थान पर है। कुल कितने विद्यार्थी हैं?<br><br>Ravi is 17th from the top and 24th from the bottom. How many students are there?",
+o:["39","40","41","42"],
+a:1,
+e:"17 + 24 − 1 = 40.<br><br>Total students = 40."
+},
+
+{
+subject:"Reasoning",
+q:"श्रृंखला AZ, CX, EV, GT, ? में अगला पद ज्ञात कीजिए।<br><br>Complete the series: AZ, CX, EV, GT, ?",
+o:["IR","HS","IS","JQ"],
+a:0,
+e:"पहले अक्षर में +2 और दूसरे में −2 हो रहा है। इसलिए IR.<br><br>The first letter increases by 2 and the second decreases by 2. Answer: IR."
+},
+
+{
+subject:"Reasoning",
+q:"यदि TABLE को UBCMF के रूप में coded किया जाता है, तो CHAIR को कैसे coded किया जाएगा?<br><br>If TABLE is coded as UBCMF, how is CHAIR coded?",
+o:["DIBJS","DHBJS","DIBJR","EIBJS"],
+a:0,
+e:"प्रत्येक अक्षर एक स्थान आगे shift होता है। CHAIR → DIBJS."
+},
+
+{
+subject:"Reasoning",
+q:"कथन: सभी Books, Papers हैं। कुछ Papers, White हैं। निष्कर्ष: I. कुछ Books, White हैं। II. सभी Books, Papers हैं।<br><br>Statements: All books are papers. Some papers are white. Conclusions: I. Some books are white. II. All books are papers.",
+o:["केवल I / Only I","केवल II / Only II","दोनों / Both","कोई नहीं / Neither"],
+a:1,
+e:"केवल II निश्चित रूप से follow करता है.<br><br>Only conclusion II necessarily follows."
+},
+
+{
+subject:"Reasoning",
+q:"यदि + का अर्थ −, − का अर्थ × और × का अर्थ + है, तो 18 + 6 − 2 × 4 का मान ज्ञात कीजिए।<br><br>If + means −, − means × and × means +, find 18 + 6 − 2 × 4.",
+o:["10","12","14","20"],
+a:0,
+e:"Expression becomes 18 − 6 × 2 + 4 = 10."
+},
+
+{
+subject:"Reasoning",
+q:"P, Q का पिता है। R, Q की बहन है। S, P की पत्नी है। S का R से क्या संबंध है?<br><br>P is Q's father. R is Q's sister. S is P's wife. How is S related to R?",
+o:["बहन / Sister","माता / Mother","चाची / Aunt","पुत्री / Daughter"],
+a:1,
+e:"S is P's wife and P is R's father. Therefore S is R's mother."
+},
+
+{
+subject:"Reasoning",
+q:"अगली संख्या ज्ञात कीजिए: 5, 11, 23, 47, 95, ?<br><br>Find the next term.",
+o:["189","190","191","193"],
+a:2,
+e:"Pattern: ×2 + 1. Therefore 95 × 2 + 1 = 191."
+},
+
+{
+subject:"Reasoning",
+q:"यदि सभी A, B हैं और कोई भी B, C नहीं है, तो कौन-सा निष्कर्ष follow करता है?<br><br>If all A are B and no B is C, which conclusion follows?",
+o:["कुछ A, C हैं / Some A are C","कोई A, C नहीं है / No A is C","सभी C, A हैं / All C are A","कुछ C, B हैं / Some C are B"],
+a:1,
+e:"All A are B and no B is C, therefore no A is C."
+},
+
+{
+subject:"Reasoning",
+q:"एक व्यक्ति 5 km पूर्व, 3 km उत्तर और 5 km पश्चिम चलता है। वह प्रारंभिक बिंदु से कितनी दूर है?<br><br>A person walks 5 km east, 3 km north and 5 km west. How far is he from the starting point?",
+o:["2 km","3 km","5 km","8 km"],
+a:1,
+e:"East and west movements cancel. Distance = 3 km."
+},
+
+{
+subject:"Reasoning",
+q:"यदि 2 = 6, 3 = 12, 4 = 20, तो 7 = ?<br><br>If 2 = 6, 3 = 12, 4 = 20, then 7 = ?",
+o:["42","48","56","64"],
+a:2,
+e:"Pattern = n(n+1). Therefore 7 × 8 = 56."
+},
+
+{
+subject:"Reasoning",
+q:"किस आकृति की चारों भुजाएँ बराबर और चारों कोण 90° होते हैं?<br><br>Which figure has four equal sides and four right angles?",
+o:["आयत / Rectangle","समचतुर्भुज / Rhombus","वर्ग / Square","समलंब / Trapezium"],
+a:2,
+e:"A square has four equal sides and four right angles."
+},
+
+{
+subject:"Reasoning",
+q:"यदि PENCIL के अक्षरों को alphabetical order में arrange किया जाए, तो तीसरा अक्षर कौन-सा होगा?<br><br>If the letters of PENCIL are arranged alphabetically, which is the third letter?",
+o:["C","E","I","L"],
+a:2,
+e:"Alphabetical order: C, E, I, L, N, P. Third letter = I."
+},
+
+{
+subject:"Reasoning",
+q:"नेहा कहती है, “वह मेरे पिता के इकलौते पुत्र का पुत्र है।” वह व्यक्ति नेहा से कैसे संबंधित है?<br><br>Neha says, 'He is the son of my father's only son.' How is he related to Neha?",
+o:["भाई / Brother","भतीजा / Nephew","चचेरा भाई / Cousin","चाचा / Uncle"],
+a:1,
+e:"Her father's only son is her brother. His son is her nephew."
+},
+
+{
+subject:"Reasoning",
+q:"गलत पद ज्ञात कीजिए: 4, 9, 16, 25, 35, 49<br><br>Find the wrong term.",
+o:["9","16","25","35"],
+a:3,
+e:"The sequence should be 2², 3², 4², 5², 6², 7². Hence 35 is wrong; it should be 36."
+},
+
+/* 21-25 */
+
+{
+subject:"Reasoning",
+q:"यदि MANGO को NBOHP लिखा जाता है, तो APPLE को कैसे लिखा जाएगा?<br><br>If MANGO is coded as NBOHP, how will APPLE be coded?",
+o:["BQQMF","BQPMF","BQQLE","CQQMF"],
+a:0,
+e:"Each letter is shifted one position forward. APPLE → BQQMF."
+},
+
+{
+subject:"Reasoning",
+q:"एक code में CAT = 24 और DOG = 26 है। इसी pattern में BAT का value क्या होगा?",
+o:["21","23","25","27"],
+a:1,
+e:"Alphabet positions are added: B+A+T = 2+1+20 = 23."
+},
+
+{
+subject:"Reasoning",
+q:"एक व्यक्ति पश्चिम की ओर मुख करके खड़ा है। वह 90° clockwise घूमता है। अब वह किस दिशा में है?",
+o:["North","South","East","West"],
+a:0,
+e:"Facing west, a 90° clockwise turn points north."
+},
+
+{
+subject:"Reasoning",
+q:"यदि आज सोमवार है, तो 45 दिन बाद कौन-सा दिन होगा?",
+o:["Tuesday","Wednesday","Thursday","Friday"],
+a:2,
+e:"45 mod 7 = 3. Monday + 3 days = Thursday."
+},
+
+{
+subject:"Reasoning",
+q:"एक वर्ग में कितने diagonals होते हैं?",
+o:["1","2","3","4"],
+a:1,
+e:"A square has two diagonals."
+},
+
+
+/* ================= GENERAL AWARENESS ================= */
+
+{
+subject:"General Awareness",
+q:"भारतीय संविधान में Fundamental Duties किस Constitutional Amendment द्वारा जोड़े गए थे?<br><br>Fundamental Duties were added by which Amendment?",
+o:["42nd Amendment","44th Amendment","52nd Amendment","73rd Amendment"],
+a:0,
+e:"Fundamental Duties were added by the 42nd Constitutional Amendment Act, 1976."
+},
+
+{
+subject:"General Awareness",
+q:"भारतीय संविधान का Article 21 किससे संबंधित है?<br><br>Article 21 deals with:",
+o:["Equality","Freedom of religion","Life and personal liberty","Education"],
+a:2,
+e:"Article 21 protects life and personal liberty."
+},
+
+{
+subject:"General Awareness",
+q:"पृथ्वी के वायुमंडल में सबसे अधिक मात्रा में कौन-सी गैस है?<br><br>Which gas is most abundant in Earth's atmosphere?",
+o:["Oxygen","Nitrogen","Argon","Carbon dioxide"],
+a:1,
+e:"Nitrogen constitutes approximately 78% of Earth's atmosphere."
+},
+
+{
+subject:"General Awareness",
+q:"भारतीय राष्ट्रीय कांग्रेस की स्थापना किस वर्ष हुई थी?<br><br>In which year was the Indian National Congress founded?",
+o:["1885","1887","1905","1911"],
+a:0,
+e:"The Indian National Congress was founded in 1885."
+},
+
+{
+subject:"General Awareness",
+q:"Battle of Plassey किस वर्ष लड़ी गई थी?<br><br>The Battle of Plassey was fought in:",
+o:["1757","1761","1764","1772"],
+a:0,
+e:"The Battle of Plassey was fought in 1757."
+},
+
+{
+subject:"General Awareness",
+q:"Insulin किस अंग द्वारा secreted होता है?<br><br>Insulin is secreted by which organ?",
+o:["Liver","Pancreas","Kidney","Spleen"],
+a:1,
+e:"Insulin is produced by beta cells of the pancreas."
+},
+
+{
+subject:"General Awareness",
+q:"Vitamin B12 की deficiency मुख्य रूप से किसका कारण बन सकती है?<br><br>Vitamin B12 deficiency can primarily cause:",
+o:["Scurvy","Anaemia","Rickets","Night blindness"],
+a:1,
+e:"Vitamin B12 deficiency can cause megaloblastic anaemia."
+},
+
+{
+subject:"General Awareness",
+q:"कौन-सा blood group सामान्यतः universal recipient माना जाता है?<br><br>Which blood group is generally known as the universal recipient?",
+o:["O−","O+","AB+","AB−"],
+a:2,
+e:"AB+ is generally considered the universal recipient for red blood cell transfusion."
+},
+
+{
+subject:"General Awareness",
+q:"भारत का सबसे बड़ा plateau region कौन-सा है?<br><br>Which is the largest plateau region in India?",
+o:["Malwa Plateau","Deccan Plateau","Chota Nagpur Plateau","Meghalaya Plateau"],
+a:1,
+e:"The Deccan Plateau is the largest plateau region in India."
+},
+
+{
+subject:"General Awareness",
+q:"Narmada River किस समुद्र में गिरती है?<br><br>The Narmada River drains into which sea?",
+o:["Bay of Bengal","Arabian Sea","Red Sea","Indian Ocean"],
+a:1,
+e:"The Narmada flows westward into the Arabian Sea."
+},
+
+{
+subject:"General Awareness",
+q:"Reserve Bank of India की स्थापना कब हुई थी?<br><br>When was the Reserve Bank of India established?",
+o:["1930","1935","1947","1950"],
+a:1,
+e:"The RBI began operations on 1 April 1935."
+},
+
+{
+subject:"General Awareness",
+q:"भारत में national income estimates कौन जारी करता है?<br><br>Which institution releases national income estimates in India?",
+o:["RBI","NSO","SEBI","NITI Aayog"],
+a:1,
+e:"The National Statistical Office releases national income estimates."
+},
+
+{
+subject:"General Awareness",
+q:"भारत में सबसे लंबी coastline किस राज्य की है?<br><br>Which Indian state has the longest coastline?",
+o:["Tamil Nadu","Gujarat","Maharashtra","Andhra Pradesh"],
+a:1,
+e:"Gujarat has the longest coastline among Indian states."
+},
+
+{
+subject:"General Awareness",
+q:"सूर्य के सबसे निकट कौन-सा ग्रह है?<br><br>Which planet is closest to the Sun?",
+o:["Venus","Earth","Mercury","Mars"],
+a:2,
+e:"Mercury is the closest planet to the Sun."
+},
+
+{
+subject:"General Awareness",
+q:"Ozone layer मुख्य रूप से atmosphere की किस layer में पाई जाती है?<br><br>The ozone layer is mainly found in which layer?",
+o:["Troposphere","Stratosphere","Mesosphere","Thermosphere"],
+a:1,
+e:"The ozone layer is mainly concentrated in the stratosphere."
+},
+
+{
+subject:"General Awareness",
+q:"'Gitanjali' के लेखक कौन हैं?<br><br>Who wrote 'Gitanjali'?",
+o:["Rabindranath Tagore","Bankim Chandra","Premchand","Sarojini Naidu"],
+a:0,
+e:"Gitanjali was written by Rabindranath Tagore."
+},
+
+{
+subject:"General Awareness",
+q:"Sanchi Stupa किस राज्य में स्थित है?<br><br>Sanchi Stupa is located in which state?",
+o:["Rajasthan","Madhya Pradesh","Uttar Pradesh","Bihar"],
+a:1,
+e:"Sanchi Stupa is located in Madhya Pradesh."
+},
+
+{
+subject:"General Awareness",
+q:"Right to Constitutional Remedies किस Article में दिया गया है?<br><br>Which Article deals with the Right to Constitutional Remedies?",
+o:["Article 14","Article 19","Article 21","Article 32"],
+a:3,
+e:"Article 32 provides the Right to Constitutional Remedies."
+},
+
+{
+subject:"General Awareness",
+q:"'The Discovery of India' किसने लिखी?<br><br>Who wrote 'The Discovery of India'?",
+o:["Mahatma Gandhi","Jawaharlal Nehru","B. R. Ambedkar","S. Radhakrishnan"],
+a:1,
+e:"The Discovery of India was written by Jawaharlal Nehru."
+},
+
+{
+subject:"General Awareness",
+q:"भारत में अत्यधिक rainfall के लिए कौन-सा स्थान प्रसिद्ध है?<br><br>Which place is famous for exceptionally high rainfall in India?",
+o:["Jaisalmer","Mawsynram","Leh","Bikaner"],
+a:1,
+e:"Mawsynram in Meghalaya is famous for exceptionally high rainfall."
+},
+
+{
+subject:"General Awareness",
+q:"Vacuum में light की speed लगभग कितनी होती है?<br><br>The speed of light in vacuum is approximately:",
+o:["3×10⁶ m/s","3×10⁷ m/s","3×10⁸ m/s","3×10⁹ m/s"],
+a:2,
+e:"The speed of light in vacuum is approximately 3×10⁸ m/s."
+},
+
+{
+subject:"General Awareness",
+q:"किस metal को commonly 'red metal' कहा जाता है?<br><br>Which metal is commonly called the 'red metal'?",
+o:["Iron","Copper","Aluminium","Zinc"],
+a:1,
+e:"Copper is commonly called the red metal."
+},
+
+{
+subject:"General Awareness",
+q:"भारत का पहला satellite कौन-सा था?<br><br>What was India's first satellite?",
+o:["INSAT-1A","Aryabhata","Rohini","Bhaskara"],
+a:1,
+e:"Aryabhata was India's first satellite."
+},
+
+{
+subject:"General Awareness",
+q:"कौन-सी Five-Year Plan ने heavy industries पर जोर दिया था?<br><br>Which Five-Year Plan emphasized heavy industries?",
+o:["First","Second","Third","Fourth"],
+a:1,
+e:"The Second Five-Year Plan emphasized heavy industries."
+},
+
+/* ================= MATHS ================= */
+
+{
+subject:"Quantitative Aptitude",
+q:"यदि किसी संख्या का 40% = 72 है, तो संख्या ज्ञात कीजिए।<br><br>If 40% of a number is 72, find the number.",
+o:["160","180","200","220"],
+a:1,
+e:"Number = 72 × 100 / 40 = 180."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"किसी संख्या में 20% वृद्धि और फिर 20% कमी की जाती है। Net change क्या होगा?<br><br>A number is increased by 20% and then decreased by 20%.",
+o:["4% increase","4% decrease","No change","2% decrease"],
+a:1,
+e:"1.20 × 0.80 = 0.96, so there is a 4% decrease."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"दो संख्याओं का ratio 5:7 है और उनका sum 144 है। छोटी संख्या ज्ञात कीजिए।<br><br>The ratio is 5:7 and sum is 144.",
+o:["50","55","60","65"],
+a:2,
+e:"Total parts = 12. One part = 12. Smaller number = 60."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"₹800 की cost वाले article को 15% profit पर बेचा गया। Selling price ज्ञात कीजिए।<br><br>An article costing ₹800 is sold at 15% profit.",
+o:["₹880","₹900","₹920","₹940"],
+a:2,
+e:"Profit = ₹120. Selling price = ₹920."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"₹2000 के marked price पर successive discounts 15% और 10% दिए जाते हैं। Selling price क्या होगी?<br><br>An article marked ₹2000 has successive discounts of 15% and 10%.",
+o:["₹1500","₹1530","₹1550","₹1570"],
+a:1,
+e:"SP = 2000 × 85/100 × 90/100 = ₹1530."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"A किसी काम को 12 दिन में और B 18 दिन में करता है। दोनों साथ में कितने दिन में करेंगे?<br><br>A completes a work in 12 days and B in 18 days.",
+o:["6 days","7.2 days","8 days","9 days"],
+a:1,
+e:"Combined rate = 1/12 + 1/18 = 5/36. Time = 36/5 = 7.2 days."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक train की speed 72 km/h है। 25 seconds में वह कितनी दूरी तय करेगी?<br><br>A train travels at 72 km/h. Distance in 25 seconds?",
+o:["400 m","450 m","500 m","550 m"],
+a:2,
+e:"72 km/h = 20 m/s. Distance = 20 × 25 = 500 m."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"यदि x + 1/x = 5 है, तो x² + 1/x² ज्ञात कीजिए।<br><br>If x + 1/x = 5, find x² + 1/x².",
+o:["21","23","25","27"],
+a:1,
+e:"(x + 1/x)² = x² + 1/x² + 2. Therefore answer = 23."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक rectangle का area 240 cm² और length 20 cm है। Breadth ज्ञात कीजिए।<br><br>A rectangle has area 240 cm² and length 20 cm.",
+o:["10 cm","12 cm","14 cm","16 cm"],
+a:1,
+e:"Breadth = 240/20 = 12 cm."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"7 cm radius वाले circle का area ज्ञात कीजिए। π = 22/7 लें।<br><br>Find the area of a circle of radius 7 cm.",
+o:["144 cm²","154 cm²","164 cm²","176 cm²"],
+a:1,
+e:"Area = πr² = 22/7 × 49 = 154 cm²."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"₹5000 पर 8% प्रति वर्ष की दर से 3 years का Simple Interest ज्ञात कीजिए।<br><br>Find SI on ₹5000 at 8% for 3 years.",
+o:["₹1000","₹1200","₹1400","₹1600"],
+a:1,
+e:"SI = 5000 × 8 × 3 / 100 = ₹1200."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक sum 2 years में 10% compound interest पर ₹1210 हो जाता है। Principal ज्ञात कीजिए।<br><br>A sum becomes ₹1210 in 2 years at 10% CI.",
+o:["₹900","₹1000","₹1050","₹1100"],
+a:1,
+e:"P × 1.1² = 1210, hence P = ₹1000."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"यदि 3x − 7 = 20 है, तो x का मान ज्ञात कीजिए।<br><br>If 3x − 7 = 20, find x.",
+o:["7","8","9","10"],
+a:2,
+e:"3x = 27, therefore x = 9."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक संख्या 25% increase के बाद 250 हो जाती है। Original number ज्ञात कीजिए।<br><br>A number becomes 250 after a 25% increase.",
+o:["180","200","220","225"],
+a:1,
+e:"Original × 1.25 = 250. Original = 200."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक व्यक्ति अपनी income का 30% save करता है। यदि expenditure ₹14,000 है, तो income कितनी है?<br><br>A man saves 30% of income. Expenditure is ₹14,000.",
+o:["₹18,000","₹20,000","₹22,000","₹24,000"],
+a:1,
+e:"Expenditure = 70% of income. Income = ₹20,000."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"दो numbers का HCF 12 और LCM 420 है। यदि एक number 60 है, तो दूसरा number क्या होगा?<br><br>HCF = 12, LCM = 420 and one number = 60.",
+o:["72","84","96","108"],
+a:1,
+e:"Product = HCF × LCM = 5040. Other number = 5040/60 = 84."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"Still water में boat की speed 12 km/h और stream की speed 3 km/h है। Downstream speed क्या होगी?<br><br>Boat speed is 12 km/h and stream speed is 3 km/h.",
+o:["9 km/h","12 km/h","15 km/h","18 km/h"],
+a:2,
+e:"Downstream speed = 12 + 3 = 15 km/h."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक student को 40% marks पर 20 marks से fail किया जाता है। 50% marks पर वह 30 marks से pass होता है। Maximum marks ज्ञात कीजिए।<br><br>A student fails by 20 marks at 40% and passes by 30 marks at 50%.",
+o:["400","500","600","700"],
+a:1,
+e:"10% marks = 20 + 30 = 50. Maximum marks = 500."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"यदि a:b = 2:3 और b:c = 4:5 है, तो a:c ज्ञात कीजिए।<br><br>If a:b = 2:3 and b:c = 4:5, find a:c.",
+o:["8:15","2:5","3:5","4:15"],
+a:0,
+e:"Making b common gives a:c = 8:15."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक shopkeeper article को cost से 25% अधिक mark करता है और 10% discount देता है। Profit percentage क्या होगा?<br><br>A shopkeeper marks an article 25% above cost and gives 10% discount.",
+o:["10%","12.5%","15%","17.5%"],
+a:1,
+e:"Take CP = 100. MP = 125. SP = 112.5. Profit = 12.5%."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक pipe tank को 20 minutes में और दूसरा 30 minutes में भरता है। दोनों साथ में कितने समय में भरेंगे?<br><br>One pipe fills a tank in 20 minutes and another in 30 minutes.",
+o:["10 minutes","12 minutes","15 minutes","18 minutes"],
+a:1,
+e:"Combined rate = 1/20 + 1/30 = 1/12. Time = 12 minutes."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक triangle का base 16 cm और height 9 cm है। Area ज्ञात कीजिए।<br><br>A triangle has base 16 cm and height 9 cm.",
+o:["64 cm²","72 cm²","80 cm²","144 cm²"],
+a:1,
+e:"Area = 1/2 × 16 × 9 = 72 cm²."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"यदि sin θ = 3/5 और θ acute है, तो cos θ ज्ञात कीजिए।<br><br>If sin θ = 3/5 and θ is acute, find cos θ.",
+o:["3/5","4/5","5/4","2/5"],
+a:1,
+e:"Using the 3-4-5 triangle, cos θ = 4/5."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"किसी संख्या के 2/5 और 1/3 का difference 14 है। संख्या ज्ञात कीजिए।<br><br>The difference between 2/5 and 1/3 of a number is 14.",
+o:["180","200","210","240"],
+a:2,
+e:"2/5 − 1/3 = 1/15. Number = 14 × 15 = 210."
+},
+
+{
+subject:"Quantitative Aptitude",
+q:"एक square का diagonal 10√2 cm है। उसका area ज्ञात कीजिए।<br><br>The diagonal of a square is 10√2 cm.",
+o:["50 cm²","100 cm²","150 cm²","200 cm²"],
+a:1,
+e:"Side = 10 cm. Area = 100 cm²."
+},
+
+/* ================= ENGLISH ================= */
+
+{
+subject:"English",
+q:"Choose the most appropriate synonym of <b>Obsolete</b>.",
+o:["Modern","Outdated","Useful","Frequent"],
+a:1,
+e:"Obsolete means outdated or no longer in use."
+},
+
+{
+subject:"English",
+q:"Choose the most appropriate antonym of <b>Meticulous</b>.",
+o:["Careful","Precise","Careless","Accurate"],
+a:2,
+e:"Meticulous means extremely careful. Its antonym is careless."
+},
+
+{
+subject:"English",
+q:"Identify the error: <b>Neither of the two boys have completed his homework.</b>",
+o:["Neither","of the two boys","have completed","No error"],
+a:2,
+e:"Neither is singular. Therefore, 'has completed' is correct."
+},
+
+{
+subject:"English",
+q:"Choose the correct improvement: <b>He is senior than me.</b>",
+o:["senior to me","senior from me","senior with me","No improvement"],
+a:0,
+e:"The adjective 'senior' is followed by 'to'."
+},
+
+{
+subject:"English",
+q:"Choose the correctly spelt word.",
+o:["Conscientious","Consciencious","Conscentious","Conscientous"],
+a:0,
+e:"The correct spelling is Conscientious."
+},
+
+{
+subject:"English",
+q:"One word substitution: A person who speaks many languages.",
+o:["Linguist","Polyglot","Orator","Grammarian"],
+a:1,
+e:"A polyglot is a person who knows or uses several languages."
+},
+
+{
+subject:"English",
+q:"Choose the correct meaning of <b>To hit the nail on the head</b>.",
+o:["To make a mistake","To say exactly the right thing","To work slowly","To become angry"],
+a:1,
+e:"The idiom means to identify or state something exactly correctly."
+},
+
+{
+subject:"English",
+q:"Fill in the blank: If I ___ rich, I would travel around the world.",
+o:["am","was","were","have been"],
+a:2,
+e:"In a hypothetical second conditional sentence, 'were' is conventionally used."
+},
+
+{
+subject:"English",
+q:"Choose the correct passive voice: <b>People speak English all over the world.</b>",
+o:["English was spoken all over the world.","English is spoken all over the world.","English has spoken all over the world.","English speaks all over the world."],
+a:1,
+e:"Simple present passive uses is/am/are + past participle."
+},
+
+{
+subject:"English",
+q:"Choose the correct indirect speech: <b>She said, 'I have finished my work.'</b>",
+o:["She said that she had finished her work.","She said that I had finished my work.","She says that she finished her work.","She said that she has finished my work."],
+a:0,
+e:"Present perfect generally changes to past perfect in reported speech."
+},
+
+{
+subject:"English",
+q:"Choose the synonym of <b>Prudent</b>.",
+o:["Careless","Wise","Reckless","Foolish"],
+a:1,
+e:"Prudent means wise, careful and sensible."
+},
+
+{
+subject:"English",
+q:"Choose the antonym of <b>Transparent</b>.",
+o:["Clear","Obvious","Opaque","Visible"],
+a:2,
+e:"Opaque is opposite in meaning to transparent."
+},
+
+{
+subject:"English",
+q:"Identify the error: <b>Each of the students were given a certificate.</b>",
+o:["Each","of the students","were given","No error"],
+a:2,
+e:"Each is singular; therefore 'was given' is correct."
+},
+
+{
+subject:"English",
+q:"Choose the correct preposition: He has been working here ___ 2019.",
+o:["for","since","from","by"],
+a:1,
+e:"Since is used with a specific point in time."
+},
+
+{
+subject:"English",
+q:"Choose the correct spelling.",
+o:["Entrepreneur","Enterpreneur","Entreprenuer","Entreprenur"],
+a:0,
+e:"The correct spelling is Entrepreneur."
+},
+
+{
+subject:"English",
+q:"One word substitution: A speech delivered without preparation.",
+o:["Extempore","Verbose","Epilogue","Dialogue"],
+a:0,
+e:"An extempore speech is delivered without prior preparation."
+},
+
+{
+subject:"English",
+q:"Choose the correct meaning of <b>Burn the midnight oil</b>.",
+o:["Waste electricity","Work late into the night","Start a fire","Sleep early"],
+a:1,
+e:"The idiom means to work or study late into the night."
+},
+
+{
+subject:"English",
+q:"Choose the correct sentence.",
+o:["He is one of those men who works hard.","He is one of those men who work hard.","He is one of those men who working hard.","He is one of those men which work hard."],
+a:1,
+e:"'Who' refers to the plural noun 'men', so 'work' is correct."
+},
+
+{
+subject:"English",
+q:"Choose the most appropriate synonym of <b>Alleviate</b>.",
+o:["Increase","Aggravate","Relieve","Destroy"],
+a:2,
+e:"Alleviate means to make something less severe; relieve."
+},
+
+{
+subject:"English",
+q:"Choose the antonym of <b>Hostile</b>.",
+o:["Aggressive","Friendly","Violent","Unfriendly"],
+a:1,
+e:"Friendly is opposite in meaning to hostile."
+},
+
+{
+subject:"English",
+q:"Identify the error: <b>The news are very encouraging.</b>",
+o:["The","news","are","No error"],
+a:2,
+e:"News is treated as singular. Correct: 'The news is very encouraging.'"
+},
+
+{
+subject:"English",
+q:"Choose the correct article: He is ___ European citizen.",
+o:["a","an","the","no article"],
+a:0,
+e:"European begins with the consonant sound /juː/, so 'a' is used."
+},
+
+{
+subject:"English",
+q:"Choose the correct improvement: <b>No sooner did he arrive when it started raining.</b>",
+o:["than it started raining","then it started raining","when it starts raining","No improvement"],
+a:0,
+e:"The correct construction is 'No sooner...than'."
+},
+
+{
+subject:"English",
+q:"Choose the correctly spelt word.",
+o:["Accomodation","Accommodation","Acommodation","Accommadation"],
+a:1,
+e:"The correct spelling is Accommodation."
+},
+
+{
+subject:"English",
+q:"Choose the correct meaning of <b>Once in a blue moon</b>.",
+o:["Very frequently","Very rarely","At night","Unexpectedly"],
+a:1,
+e:"The idiom means something that happens very rarely."
+}
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+let marked = new Array(questions.length).fill(false);
+
+let timeLeft = 60 * 60;
+let submitted = false;
+
+
+/* =========================================================
+   DISPLAY QUESTION
+========================================================= */
+
+function showQuestion(){
+
+    const q = questions[current];
+
+    document.getElementById("subjectBar").textContent =
+        q.subject;
+
+    document.getElementById("qNumber").textContent =
+        "Question " + (current + 1) + " of " + questions.length;
+
+    document.getElementById("questionText").innerHTML =
+        q.q;
+
+    const optionsBox =
+        document.getElementById("options");
+
+    optionsBox.innerHTML = "";
+
+    q.o.forEach((option,index)=>{
+
+        const div = document.createElement("div");
+
+        div.className = "option";
+
+        if(answers[current] === index){
+            div.classList.add("selected");
+        }
+
+        div.innerHTML =
+            `<input type="radio"
+             name="option"
+             ${answers[current] === index ? "checked" : ""}
+             onclick="selectAnswer(${index})">
+             <span>${String.fromCharCode(65+index)}. ${option}</span>`;
+
+        div.onclick = function(e){
+
+            if(e.target.tagName !== "INPUT"){
+                selectAnswer(index);
+            }
+
+        };
+
+        optionsBox.appendChild(div);
+
+    });
+
+    createPalette();
+}
+
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
+function selectAnswer(index){
+
+    answers[current] = index;
+
+    showQuestion();
+
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+function nextQuestion(){
+
+    if(current < questions.length - 1){
+
+        current++;
+
+        showQuestion();
+
+    }
+
+}
+
+
+/* =========================================================
+   PREVIOUS
+========================================================= */
+
+function previousQuestion(){
+
+    if(current > 0){
+
+        current--;
+
+        showQuestion();
+
+    }
+
+}
+
+
+/* =========================================================
+   MARK
+========================================================= */
+
+function markQuestion(){
+
+    marked[current] = !marked[current];
+
+    createPalette();
+
+}
+
+
+/* =========================================================
+   PALETTE
+========================================================= */
+
+function createPalette(){
+
+    const palette =
+        document.getElementById("palette");
+
+    palette.innerHTML = "";
+
+    questions.forEach((q,index)=>{
+
+        const btn =
+            document.createElement("button");
+
+        btn.textContent = index + 1;
+
+        if(index === current){
+            btn.classList.add("current");
+        }
+
+        else if(marked[index]){
+            btn.classList.add("marked");
+        }
+
+        else if(answers[index] !== null){
+            btn.classList.add("answered");
+        }
+
+        btn.onclick = function(){
+
+            current = index;
+
+            showQuestion();
+
+        };
+
+        palette.appendChild(btn);
+
+    });
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function updateTimer(){
+
+    const minutes =
+        Math.floor(timeLeft / 60);
+
+    const seconds =
+        timeLeft % 60;
+
+    document.getElementById("timer").textContent =
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+
+    if(timeLeft <= 0){
+
+        submitTest();
+
+        return;
+
+    }
+
+    timeLeft--;
+
+}
+
+setInterval(updateTimer,1000);
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+function submitTest(){
+
+    if(submitted) return;
+
+    const confirmSubmit =
+        confirm(
+            "Are you sure you want to submit the test?\n\n" +
+            "क्या आप test submit करना चाहते हैं?"
+        );
+
+    if(!confirmSubmit) return;
+
+    submitted = true;
+
+    document.getElementById("exam").style.display = "none";
+
+    document.getElementById("result").style.display = "block";
+
+    calculateResult();
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function calculateResult(){
+
+    let correct = 0;
+    let wrong = 0;
+    let unattempted = 0;
+
+    questions.forEach((q,index)=>{
+
+        if(answers[index] === null){
+
+            unattempted++;
+
+        }
+
+        else if(answers[index] === q.a){
+
+            correct++;
+
+        }
+
+        else{
+
+            wrong++;
+
+        }
+
+    });
+
+    const score =
+        correct * 2 - wrong * 0.5;
+
+    const percentage =
+        (score / 200) * 100;
+
+    const accuracy =
+        correct + wrong === 0
+        ? 0
+        : (correct / (correct + wrong)) * 100;
+
+
+    document.getElementById("score").textContent =
+        score.toFixed(2) + " / 200";
+
+    document.getElementById("percentage").textContent =
+        "Percentage: " + percentage.toFixed(2) + "%";
+
+
+    document.getElementById("correctCount").textContent =
+        correct;
+
+    document.getElementById("wrongCount").textContent =
+        wrong;
+
+    document.getElementById("unattemptedCount").textContent =
+        unattempted;
+
+    document.getElementById("accuracy").textContent =
+        accuracy.toFixed(2) + "%";
+
+
+    createAnalysis();
+
+    createReview();
+
+}
+
+
+/* =========================================================
+   SUBJECT ANALYSIS
+========================================================= */
+
+function createAnalysis(){
+
+    const subjects = {};
+
+    questions.forEach((q,index)=>{
+
+        if(!subjects[q.subject]){
+
+            subjects[q.subject] = {
+                total:0,
+                correct:0,
+                wrong:0,
+                unattempted:0,
+                score:0
+            };
+
+        }
+
+        subjects[q.subject].total++;
+
+        if(answers[index] === null){
+
+            subjects[q.subject].unattempted++;
+
+        }
+
+        else if(answers[index] === q.a){
+
+            subjects[q.subject].correct++;
+
+            subjects[q.subject].score += 2;
+
+        }
+
+        else{
+
+            subjects[q.subject].wrong++;
+
+            subjects[q.subject].score -= 0.5;
+
+        }
+
+    });
+
+
+    const body =
+        document.getElementById("analysisBody");
+
+    body.innerHTML = "";
+
+    Object.keys(subjects).forEach(subject=>{
+
+        const s = subjects[subject];
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${subject}</td>
+            <td>${s.total}</td>
+            <td>${s.correct}</td>
+            <td>${s.wrong}</td>
+            <td>${s.unattempted}</td>
+            <td>${s.score.toFixed(2)}</td>
+        `;
+
+        body.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================================
+   REVIEW
+========================================================= */
+
+function createReview(){
+
+    const box =
+        document.getElementById("reviewContainer");
+
+    box.innerHTML = "";
+
+    questions.forEach((q,index)=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className = "review-item";
+
+        let status = "";
+
+        if(answers[index] === null){
+
+            status =
+                `<span style="color:#d97706">
+                    ⚪ Unattempted
+                 </span>`;
+
+        }
+
+        else if(answers[index] === q.a){
+
+            status =
+                `<span style="color:#15803d">
+                    ✅ Correct
+                 </span>`;
+
+        }
+
+        else{
+
+            status =
+                `<span style="color:#dc2626">
+                    ❌ Wrong
+                 </span>`;
+
+        }
+
+
+        const userAnswer =
+            answers[index] === null
+            ? "Not Attempted"
+            : q.o[answers[index]];
+
+
+        div.innerHTML = `
+
+            <h3>
+                Q${index+1}. ${status}
+            </h3>
+
+            <p style="margin:12px 0;line-height:1.7">
+                ${q.q}
+            </p>
+
+            <p>
+                <b>Your Answer:</b>
+                ${userAnswer}
+            </p>
+
+            <p class="correct-answer">
+                Correct Answer:
+                ${String.fromCharCode(65+q.a)}.
+                ${q.o[q.a]}
+            </p>
+
+            <div class="explanation">
+
+                <b>Explanation / व्याख्या:</b>
+
+                <br><br>
+
+                ${q.e}
+
+            </div>
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+showQuestion();
+updateTimer();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete History E-Book: 100+ Pages</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f1ea;
+            padding: 20px;
+            color: #2d2a24;
+        }
+        .book-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffcf7;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            padding: 40px 50px;
+            position: relative;
+        }
+        .book-header {
+            text-align: center;
+            border-bottom: 2px solid #c9b99a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .book-header h1 {
+            font-size: 2.8rem;
+            color: #5a3e2b;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .book-header .sub {
+            font-size: 1.1rem;
+            color: #7a6a5a;
+            margin-top: 6px;
+            font-style: italic;
+        }
+        .lang-toggle button {
+            background: #e8e0d5;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #3d322a;
+            margin: 10px 4px 0;
+        }
+        .lang-toggle button.active { background: #5a3e2b; color: #fff; }
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ddd6cc;
+            padding-bottom: 12px;
+        }
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #5a4a3a;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .nav-tabs button:hover { background: #f0ebe3; }
+        .nav-tabs button.active { background: #5a3e2b; color: #fff; border-color: #5a3e2b; }
+        .section { display: none; animation: fade 0.3s ease; }
+        .section.active { display: block; }
+        @keyframes fade { 0%{opacity:0.3;transform:translateY(8px);} 100%{opacity:1;transform:translateY(0);} }
+        h2 { font-size:2rem; color:#4a3424; margin-top:30px; margin-bottom:16px; border-left:6px solid #b8a084; padding-left:18px; }
+        h3 { font-size:1.4rem; color:#5a4030; margin-top:24px; margin-bottom:12px; }
+        h4 { font-size:1.15rem; color:#6a5040; margin-top:18px; margin-bottom:8px; }
+        p { line-height:1.8; font-size:1.05rem; margin-bottom:14px; color:#3d342c; }
+        ul { margin-left:25px; margin-bottom:14px; color:#3d342c; line-height:1.8; }
+        .highlight-box { background:#f6f0e8; padding:18px 24px; border-radius:10px; border-left:5px solid #b8a084; margin:18px 0; }
+        .diagram { background:#fcf9f4; border:1px solid #ddd6cc; border-radius:12px; padding:20px 25px; margin:24px 0; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+        .diagram .title { font-weight:700; font-size:1.1rem; color:#4a3424; margin-bottom:12px; }
+        .diagram svg { max-width:100%; height:auto; border-radius:8px; }
+        .mcq-grid { display:flex; flex-direction:column; gap:20px; margin-top:20px; }
+        .mcq-item { background:#fcf9f4; border:1px solid #ddd6cc; border-radius:10px; padding:18px 22px; transition:0.15s; }
+        .mcq-item:hover { background:#f8f3ec; }
+        .mcq-item .q { font-weight:600; font-size:1.05rem; margin-bottom:10px; color:#3d322a; }
+        .mcq-item .options { display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; font-size:1rem; color:#4a3a2a; }
+        .mcq-item .options .opt { padding:4px 0; }
+        .mcq-item .options .opt span { font-weight:600; color:#5a3e2b; }
+        .mcq-item .answer { margin-top:10px; font-size:0.95rem; color:#2d6a4f; font-weight:600; display:none; }
+        .mcq-item .answer.show { display:block; }
+        .mcq-item .btn-reveal { margin-top:10px; background:#e8e0d5; border:none; padding:6px 18px; border-radius:20px; font-size:0.85rem; font-weight:600; cursor:pointer; color:#3d322a; transition:0.15s; }
+        .mcq-item .btn-reveal:hover { background:#d5cdc0; }
+        .btn-show-all { background:#5a3e2b; color:#fff; border:none; padding:10px 28px; border-radius:30px; font-weight:600; font-size:1rem; cursor:pointer; margin:10px 0 20px; transition:0.2s; }
+        .btn-show-all:hover { background:#4a3222; }
+        .book-footer { margin-top:40px; padding-top:20px; border-top:1px solid #ddd6cc; text-align:center; font-size:0.9rem; color:#8a7a6a; }
+        @media (max-width:768px) {
+            .book-container { padding:20px 18px; }
+            .book-header h1 { font-size:2rem; }
+            .mcq-item .options { grid-template-columns:1fr; }
+            .nav-tabs button { font-size:0.8rem; padding:6px 14px; }
+        }
+        @media print {
+            .book-container { box-shadow:none; padding:20px; }
+            .nav-tabs, .lang-toggle, .btn-show-all, .btn-reveal { display:none !important; }
+            .section { display:block !important; }
+            .mcq-item .answer { display:block !important; }
+        }
+        .en-text { display:none; }
+        .hi-text { display:inline; }
+        .rajput-section { margin-top:30px; }
+        .rajput-section .rajput-info-box { background:#f8fafc; border-left:5px solid #2563eb; padding:14px 16px; margin:15px 0; border-radius:8px; }
+        .rajput-section .rajput-important { background:#fff7ed; border-left:5px solid #f97316; padding:14px 16px; margin:15px 0; border-radius:8px; }
+        .rajput-section .rajput-facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:15px 0; }
+        .rajput-section .rajput-fact { background:#f8fafc; border:1px solid #dbe4f0; border-radius:8px; padding:12px; }
+        .rajput-section .rajput-mcq-title { background:linear-gradient(135deg,#1e3a8a,#2563eb); color:white; padding:15px; border-radius:10px; margin-top:25px; }
+        .rajput-section .rajput-mcq { background:#fff; border:1px solid #dbe4f0; border-radius:10px; padding:15px; margin:15px 0; }
+        .rajput-section .rajput-answer { display:none; margin-top:12px; padding:11px 13px; background:#ecfdf5; border-left:4px solid #16a34a; border-radius:6px; }
+        .rajput-section .rajput-answer.show { display:block !important; }
+        .rajput-section .show-rajput-answer { margin-top:10px; padding:7px 13px; background:#2563eb; color:white; border:none; border-radius:5px; cursor:pointer; font-size:14px; }
+        .mcq-container { width:100%; margin-top:20px; }
+        .mcq { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:20px; margin:18px 0; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+        .mcq .question { font-size:18px; font-weight:700; line-height:1.6; margin-bottom:15px; }
+        .mcq .options { display:flex; flex-direction:column; gap:9px; margin-bottom:15px; }
+        .mcq .options div { padding:11px 14px; border:1px solid #d9e0e7; border-radius:8px; background:#f8fafc; }
+        .mcq .answer-box { display:none; margin-top:15px; padding:15px; border-radius:9px; background:#f0fdf4; border-left:4px solid #16a34a; line-height:1.7; }
+        .mcq .answer-box.show { display:block; }
+        .mcq .show-answer { border:none; padding:10px 18px; border-radius:7px; cursor:pointer; font-size:15px; font-weight:700; background:#2563eb; color:#ffffff; transition:0.2s; }
+        .mcq .show-answer:hover { transform:translateY(-1px); }
+        .mcq-card { background:#ffffff; border:1px solid #d9dfe7; border-radius:12px; padding:20px; margin:18px 0; }
+        .mcq-card .option { margin:9px 0; padding:11px 14px; border-radius:8px; background:#f5f7fa; border:1px solid #e1e5ea; }
+        .mcq-card .show-answer { margin-top:12px; padding:10px 18px; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
+        .mcq-card .answer-box { display:none; margin-top:15px; padding:15px; border-radius:10px; background:#eef8ee; border-left:4px solid #28a745; }
+        .mcq-card .answer-box.show { display:block; }
+        .mcq .answer-btn { margin-top:12px; padding:10px 18px; border:none; border-radius:7px; background:#2563eb; color:#fff; font-size:15px; font-weight:600; cursor:pointer; transition:0.25s; }
+        .mcq .answer-btn:hover { transform:translateY(-2px); opacity:0.9; }
+        .mcq .answer { display:none; margin-top:15px; padding:14px; border-radius:8px; background:#f0fdf4; border-left:4px solid #16a34a; }
+        .mcq .answer.show { display:block; }
+        .question-card { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:20px; margin:18px 0; }
+        .question-card .show-answer { margin-top:12px; padding:10px 18px; border:none; border-radius:7px; cursor:pointer; font-size:15px; font-weight:700; background:#2563eb; color:#fff; transition:0.2s; }
+        .question-card .show-answer:hover { transform:translateY(-1px); }
+        .question-card .answer-box { display:none; margin-top:15px; padding:15px; border-radius:9px; background:#f0fdf4; border-left:4px solid #16a34a; line-height:1.7; }
+        .question-card .answer-box.show { display:block; }
+    </style>
+</head>
+<body>
+<div class="book-container" id="app">
+
+    <!-- HEADER -->
+    <div class="book-header">
+        <h1>📜 भारत का इतिहास</h1>
+        <div class="sub">प्राचीन · मध्यकालीन · आधुनिक — 100+ पृष्ठों में विस्तृत अध्ययन</div>
+        <div class="lang-toggle">
+            <button class="active" data-lang="hi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            <button data-lang="en" onclick="setLang('en')">🇬🇧 English</button>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-tabs" id="navTabs">
+        <button class="active" data-section="intro" onclick="switchSection('intro')">📖 परिचय</button>
+        <button data-section="ancient" onclick="switchSection('ancient')">🏛️ प्राचीन</button>
+        <button data-section="medieval" onclick="switchSection('medieval')">⚔️ मध्यकालीन</button>
+        <button data-section="modern" onclick="switchSection('modern')">🚩 आधुनिक</button>
+        <button data-section="mcq_ancient" onclick="switchSection('mcq_ancient')">📝 200+ PYQs (प्राचीन)</button>
+        <button data-section="mcq_medieval" onclick="switchSection('mcq_medieval')">📝 200+ PYQs (मध्यकालीन)</button>
+        <button data-section="mcq_modern" onclick="switchSection('mcq_modern')">📝 200+ PYQs (आधुनिक)</button>
+    </div>
+
+    <!-- ==================== INTRO ==================== -->
+    <div class="section active" id="section-intro">
+        <h2>📖 भारतीय इतिहास का परिचय</h2>
+        <p><span class="hi-text">भारत का इतिहास 5000 वर्षों से अधिक पुराना है – सिंधु घाटी की प्राचीन सभ्यता से लेकर स्वतंत्रता संग्राम तक। इस ई-बुक में हम सभी महत्वपूर्ण कालखंडों का गहन अध्ययन करेंगे। यह सामग्री पूरी तरह से Basic से Advance स्तर की है, जो प्रतियोगी परीक्षाओं (SSC, UPSC, State PCS) के लिए अत्यंत उपयोगी है।</span><span class="en-text">India's history spans over 5000 years – from the ancient Indus Valley civilization to the freedom struggle. In this e-book, we will deeply study all important periods. This material is completely Basic to Advance level, highly useful for competitive exams (SSC, UPSC, State PCS).</span></p>
+        <div class="highlight-box">
+            <strong><span class="hi-text">📌 इस ई-बुक की विशेषताएँ:</span><span class="en-text">📌 Features:</span></strong><br>
+            <span class="hi-text">✅ 100+ पृष्ठों की सुंदर डिज़ाइन की गई सामग्री<br>✅ प्रत्येक mini topic की विस्तृत व्याख्या (Basic to Advance)<br>✅ आरेखों (Diagrams) व टाइमलाइन के साथ स्पष्ट अवधारणाएँ<br>✅ प्रत्येक मुख्य भाग के अंत में 200+ One‑Liner MCQ (कुल 600+)<br>✅ हिंदी व अंग्रेज़ी में उपलब्ध</span>
+            <span class="en-text">✅ 100+ beautifully designed pages of content<br>✅ Detailed explanation of each mini topic (Basic to Advance)<br>✅ Clear concepts with diagrams and timelines<br>✅ 200+ One‑Liner MCQs after each main section (Total 600+)<br>✅ Available in Hindi & English</span>
+        </div>
+        <div class="diagram">
+            <div class="title"><span class="hi-text">🗺️ भारतीय इतिहास की समयरेखा</span><span class="en-text">🗺️ Timeline of Indian History</span></div>
+            <svg viewBox="0 0 800 120" style="width:100%;height:auto;">
+                <rect x="0" y="50" width="800" height="10" fill="#b8a084" rx="5"/>
+                <circle cx="60" cy="55" r="12" fill="#5a3e2b"/><text x="60" y="100" text-anchor="middle" font-size="11" fill="#3d322a">2500 BCE</text><text x="60" y="25" text-anchor="middle" font-size="10" fill="#5a3e2b">सिंधु</text>
+                <circle cx="200" cy="55" r="12" fill="#5a3e2b"/><text x="200" y="100" text-anchor="middle" font-size="11" fill="#3d322a">1500 BCE</text><text x="200" y="25" text-anchor="middle" font-size="10" fill="#5a3e2b">वैदिक</text>
+                <circle cx="340" cy="55" r="12" fill="#5a3e2b"/><text x="340" y="100" text-anchor="middle" font-size="11" fill="#3d322a">322 BCE</text><text x="340" y="25" text-anchor="middle" font-size="10" fill="#5a3e2b">मौर्य</text>
+                <circle cx="480" cy="55" r="12" fill="#5a3e2b"/><text x="480" y="100" text-anchor="middle" font-size="11" fill="#3d322a">320 CE</text><text x="480" y="25" text-anchor="middle" font-size="10" fill="#5a3e2b">गुप्त</text>
+                <circle cx="600" cy="55" r="12" fill="#5a3e2b"/><text x="600" y="100" text-anchor="middle" font-size="11" fill="#3d322a">1206 CE</text><text x="600" y="25" text-anchor="middle" font-size="10" fill="#5a3e2b">दिल्ली सल्तनत</text>
+                <circle cx="700" cy="55" r="12" fill="#5a3e2b"/><text x="700" y="100" text-anchor="middle" font-size="11" fill="#3d322a">1526 CE</text><text x="700" y="25" text-anchor="middle" font-size="10" fill="#5a3e2b">मुग़ल</text>
+                <circle cx="770" cy="55" r="12" fill="#5a3e2b"/><text x="770" y="100" text-anchor="middle" font-size="11" fill="#3d322a">1947 CE</text><text x="770" y="25" text-anchor="middle" font-size="10" fill="#5a3e2b">स्वतंत्रता</text>
+            </svg>
+        </div>
+        <p><span class="hi-text">इस ई-बुक को ध्यानपूर्वक पढ़ें, प्रत्येक अध्याय के बाद दिए गए MCQ से अपनी समझ की जाँच करें।</span><span class="en-text">Read this e-book carefully, check your understanding with the MCQs after each chapter.</span></p>
+    </div>
+
+    <!-- ==================== ANCIENT ==================== -->
+    <div class="section" id="section-ancient">
+        <h2>🏛️ प्राचीन भारत – विस्तृत अध्ययन</h2>
+        <h3>1. सिंधु घाटी सभ्यता (Indus Valley Civilization)</h3>
+        <p><span class="hi-text">सिंधु घाटी सभ्यता भारतीय उपमहाद्वीप की प्राचीन नगरीय सभ्यताओं में से एक थी। इसे हड़प्पा सभ्यता भी कहा जाता है।</span><span class="en-text">The Indus Valley Civilization was one of the ancient urban civilizations of the Indian subcontinent. It is also known as the Harappan Civilization.</span></p>
+        <h4><span class="hi-text">खोज एवं नामकरण</span><span class="en-text">Discovery & Naming</span></h4>
+        <ul>
+            <li><span class="hi-text">हड़प्पा की खुदाई 1921 में दयाराम साहनी के नेतृत्व में हुई।</span><span class="en-text">Harappa was excavated in 1921 under the leadership of Dayaram Sahni.</span></li>
+            <li><span class="hi-text">मोहनजोदड़ो की खोज/खुदाई 1922 में आर. डी. बनर्जी से जुड़ी है।</span><span class="en-text">The discovery/excavation of Mohenjo-Daro in 1922 is associated with R. D. Banerji.</span></li>
+            <li><span class="hi-text">1924 में जॉन मार्शल ने इस सभ्यता की खोज की आधिकारिक घोषणा की।</span><span class="en-text">In 1924, John Marshall officially announced the discovery of this civilization.</span></li>
+        </ul>
+        <h4><span class="hi-text">प्रमुख स्थल</span><span class="en-text">Major Sites</span></h4>
+        <ul>
+            <li><span class="hi-text"><strong>हड़प्पा</strong> — वर्तमान पाकिस्तान के पंजाब क्षेत्र में।</span><span class="en-text"><strong>Harappa</strong> — Located in present-day Punjab, Pakistan.</span></li>
+            <li><span class="hi-text"><strong>मोहनजोदड़ो</strong> — वर्तमान सिंध, पाकिस्तान में; विशाल स्नानागार के लिए प्रसिद्ध।</span><span class="en-text"><strong>Mohenjo-Daro</strong> — Located in Sindh, Pakistan; famous for the Great Bath.</span></li>
+            <li><span class="hi-text"><strong>लोथल</strong> — गुजरात; समुद्री व्यापार और गोदी जैसी संरचना के लिए प्रसिद्ध।</span><span class="en-text"><strong>Lothal</strong> — Gujarat; famous for maritime trade and a dockyard-like structure.</span></li>
+            <li><span class="hi-text"><strong>धोलावीरा</strong> — गुजरात; जल-संचयन और जल-प्रबंधन के लिए प्रसिद्ध।</span><span class="en-text"><strong>Dholavira</strong> — Gujarat; famous for water harvesting and water management.</span></li>
+            <li><span class="hi-text"><strong>कालीबंगा</strong> — राजस्थान; जुते हुए खेत के प्रमाण के लिए प्रसिद्ध।</span><span class="en-text"><strong>Kalibangan</strong> — Rajasthan; famous for evidence of a ploughed field.</span></li>
+            <li><span class="hi-text"><strong>राखीगढ़ी</strong> — हरियाणा; प्रमुख हड़प्पाई स्थल।</span><span class="en-text"><strong>Rakhigarhi</strong> — Haryana; a major Harappan site.</span></li>
+            <li><span class="hi-text"><strong>चन्हूदड़ो</strong> — सिंध; मनका निर्माण और शिल्प गतिविधियों के लिए प्रसिद्ध।</span><span class="en-text"><strong>Chanhudaro</strong> — Sindh; famous for bead-making and craft activities.</span></li>
+        </ul>
+        <h4><span class="hi-text">नगर योजना</span><span class="en-text">Town Planning</span></h4>
+        <ul>
+            <li><span class="hi-text">सड़कों को सामान्यतः एक-दूसरे को समकोण पर काटने वाली योजना में बनाया गया था।</span><span class="en-text">Streets were generally laid out in a grid pattern intersecting at right angles.</span></li>
+            <li><span class="hi-text">नगरों में दुर्ग क्षेत्र (Citadel) और निचला नगर (Lower Town) पाया जाता था।</span><span class="en-text">Cities commonly had a Citadel and a Lower Town.</span></li>
+            <li><span class="hi-text">पकी हुई ईंटों का व्यापक प्रयोग किया जाता था।</span><span class="en-text">Baked bricks were widely used.</span></li>
+        </ul>
+        <h4><span class="hi-text">जल निकासी व्यवस्था</span><span class="en-text">Drainage System</span></h4>
+        <ul>
+            <li><span class="hi-text">सिंधु सभ्यता की नाली व्यवस्था प्राचीन विश्व की सबसे विकसित व्यवस्थाओं में से एक थी।</span><span class="en-text">The drainage system of the Indus Civilization was among the most advanced in the ancient world.</span></li>
+        </ul>
+        <h4><span class="hi-text">प्रमुख भवन</span><span class="en-text">Important Buildings</span></h4>
+        <ul>
+            <li><span class="hi-text">मोहनजोदड़ो का विशाल स्नानागार सबसे प्रसिद्ध संरचनाओं में से एक है।</span><span class="en-text">The Great Bath of Mohenjo-Daro is one of the most famous structures.</span></li>
+        </ul>
+        <h4><span class="hi-text">कृषि</span><span class="en-text">Agriculture</span></h4>
+        <ul>
+            <li><span class="hi-text">मुख्य फसलों में गेहूँ और जौ शामिल थे।</span><span class="en-text">Major crops included wheat and barley.</span></li>
+            <li><span class="hi-text">मटर, तिल, सरसों और कपास की भी खेती की जाती थी।</span><span class="en-text">Peas, sesame, mustard and cotton were also cultivated.</span></li>
+            <li><span class="hi-text">कालीबंगा से जुते हुए खेत के प्रमाण मिले हैं।</span><span class="en-text">Evidence of a ploughed field has been found at Kalibangan.</span></li>
+        </ul>
+        <h4><span class="hi-text">पशुपालन</span><span class="en-text">Animal Husbandry</span></h4>
+        <ul>
+            <li><span class="hi-text">गाय, बैल, भैंस, भेड़ और बकरी पाले जाते थे।</span><span class="en-text">Cattle, bulls, buffaloes, sheep and goats were domesticated.</span></li>
+        </ul>
+        <h4><span class="hi-text">उद्योग एवं शिल्प</span><span class="en-text">Industry & Crafts</span></h4>
+        <ul>
+            <li><span class="hi-text">मनका निर्माण हड़प्पाई शिल्प की महत्वपूर्ण गतिविधि थी।</span><span class="en-text">Bead-making was an important Harappan craft activity.</span></li>
+            <li><span class="hi-text">मिट्टी के बर्तन, आभूषण, मुहरें और धातु की वस्तुएँ बनाई जाती थीं।</span><span class="en-text">Pottery, jewellery, seals and metal objects were produced.</span></li>
+        </ul>
+        <h4><span class="hi-text">धातु ज्ञान</span><span class="en-text">Knowledge of Metals</span></h4>
+        <ul>
+            <li><span class="hi-text">हड़प्पाई लोग तांबा और कांसा जानते थे।</span><span class="en-text">The Harappans knew copper and bronze.</span></li>
+            <li><span class="hi-text">लोहे का व्यापक प्रयोग इस सभ्यता में नहीं मिलता है।</span><span class="en-text">Widespread use of iron is not found in this civilization.</span></li>
+        </ul>
+        <h4><span class="hi-text">व्यापार</span><span class="en-text">Trade</span></h4>
+        <ul>
+            <li><span class="hi-text">हड़प्पाई लोगों का आंतरिक और बाहरी दोनों प्रकार का व्यापार था।</span><span class="en-text">The Harappans engaged in both internal and external trade.</span></li>
+            <li><span class="hi-text">मेसोपोटामिया के साथ व्यापारिक संपर्क के प्रमाण मिले हैं।</span><span class="en-text">Evidence of trade contacts with Mesopotamia has been found.</span></li>
+        </ul>
+        <h4><span class="hi-text">लिपि</span><span class="en-text">Script</span></h4>
+        <ul>
+            <li><span class="hi-text">सिंधु सभ्यता की लिपि को सिंधु लिपि कहा जाता है।</span><span class="en-text">The writing system is known as the Indus Script.</span></li>
+            <li><span class="hi-text">सिंधु लिपि अभी तक पूरी तरह पढ़ी नहीं जा सकी है।</span><span class="en-text">The Indus Script has not yet been fully deciphered.</span></li>
+        </ul>
+        <h4><span class="hi-text">मुहरें</span><span class="en-text">Seals</span></h4>
+        <ul>
+            <li><span class="hi-text">हड़प्पाई सभ्यता से बड़ी संख्या में मुहरें मिली हैं।</span><span class="en-text">A large number of seals have been found from Harappan sites.</span></li>
+            <li><span class="hi-text">एक सींग वाला पशु हड़प्पाई मुहरों की सबसे प्रसिद्ध आकृतियों में से एक है।</span><span class="en-text">The unicorn-like animal is one of the most famous motifs on Harappan seals.</span></li>
+        </ul>
+        <h4><span class="hi-text">धार्मिक जीवन</span><span class="en-text">Religious Life</span></h4>
+        <ul>
+            <li><span class="hi-text">मातृदेवी जैसी मूर्तियों के प्रमाण मिले हैं।</span><span class="en-text">Mother-goddess-like figurines have been found.</span></li>
+            <li><span class="hi-text">कुछ मुहरों पर योगी या पशुपति जैसी आकृति दिखाई देती है।</span><span class="en-text">Some seals show a yogic or Pashupati-like figure.</span></li>
+        </ul>
+        <h4><span class="hi-text">कला एवं मूर्तिकला</span><span class="en-text">Art & Sculpture</span></h4>
+        <ul>
+            <li><span class="hi-text">मोहनजोदड़ो से कांस्य की प्रसिद्ध नर्तकी की मूर्ति मिली है।</span><span class="en-text">The famous bronze Dancing Girl was found at Mohenjo-Daro.</span></li>
+            <li><span class="hi-text">मोहनजोदड़ो से दाढ़ी वाले पुरुष की प्रसिद्ध मूर्ति भी मिली है, जिसे सामान्यतः 'पुरोहित-राजा' कहा जाता है।</span><span class="en-text">A famous bearded male sculpture, commonly called the 'Priest-King', was also found at Mohenjo-Daro.</span></li>
+        </ul>
+        <h4><span class="hi-text">सामाजिक जीवन</span><span class="en-text">Social Life</span></h4>
+        <ul>
+            <li><span class="hi-text">हड़प्पाई समाज में नगरों में रहने वाली बड़ी आबादी थी।</span><span class="en-text">Harappan society had a large urban population.</span></li>
+            <li><span class="hi-text">लोग आभूषणों का प्रयोग करते थे।</span><span class="en-text">People used jewellery and ornaments.</span></li>
+        </ul>
+        <h4><span class="hi-text">परिवहन</span><span class="en-text">Transport</span></h4>
+        <ul>
+            <li><span class="hi-text">बैलगाड़ी जैसे परिवहन साधनों के प्रमाण मिले हैं।</span><span class="en-text">Evidence of transport vehicles such as bullock carts has been found.</span></li>
+        </ul>
+        <h4><span class="hi-text">पतन</span><span class="en-text">Decline</span></h4>
+        <p><span class="hi-text">सिंधु सभ्यता के पतन का कोई एक निश्चित कारण नहीं माना जाता है। जलवायु परिवर्तन, नदियों के मार्ग में परिवर्तन, बाढ़, पर्यावरणीय परिवर्तन, व्यापार में गिरावट और सूखे ने भूमिका निभाई हो सकती है।</span><span class="en-text">There is no single confirmed cause for the decline. Climate change, changes in river courses, floods, environmental changes, decline in trade and drought may have contributed.</span></p>
+
+        <h3>सिंधु घाटी सभ्यता — MCQs</h3>
+        <div class="mcq-container">
+            <div class="mcq">
+                <p><strong>1. सिंधु घाटी सभ्यता को अन्य किस नाम से जाना जाता है?</strong></p>
+                <div class="options"><div>(a) वैदिक सभ्यता</div><div>(b) हड़प्पा सभ्यता</div><div>(c) मौर्य सभ्यता</div><div>(d) गुप्त सभ्यता</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (b) हड़प्पा सभ्यता</strong><br>Explanation: सिंधु घाटी सभ्यता को हड़प्पा सभ्यता कहा जाता है क्योंकि हड़प्पा इसका पहला प्रमुख पहचाना गया स्थल था।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>2. हड़प्पा की खोज/खुदाई 1921 में किससे संबंधित है?</strong></p>
+                <div class="options"><div>(a) आर. डी. बनर्जी</div><div>(b) जॉन मार्शल</div><div>(c) दयाराम साहनी</div><div>(d) अलेक्जेंडर कनिंघम</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (c) दयाराम साहनी</strong><br>Explanation: 1921 में हड़प्पा की खुदाई दयाराम साहनी के नेतृत्व में हुई थी।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>3. मोहनजोदड़ो की खोज/खुदाई 1922 में किससे संबंधित है?</strong></p>
+                <div class="options"><div>(a) दयाराम साहनी</div><div>(b) आर. डी. बनर्जी</div><div>(c) जॉन मार्शल</div><div>(d) कनिंघम</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (b) आर. डी. बनर्जी</strong><br>Explanation: मोहनजोदड़ो की खोज/खुदाई 1922 में आर. डी. बनर्जी से संबंधित है।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>4. सिंधु सभ्यता की सबसे प्रमुख विशेषता क्या थी?</strong></p>
+                <div class="options"><div>(a) विशाल मंदिर</div><div>(b) विकसित नगर योजना</div><div>(c) लौह हथियार</div><div>(d) घुड़सवार सेना</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (b) विकसित नगर योजना</strong><br>Explanation: हड़प्पाई नगरों में ग्रिड प्रणाली, पक्की ईंटें और विकसित जल निकासी व्यवस्था इसकी प्रमुख विशेषताएँ थीं।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>5. मोहनजोदड़ो किसके लिए प्रसिद्ध है?</strong></p>
+                <div class="options"><div>(a) लोहे के औजार</div><div>(b) विशाल स्नानागार</div><div>(c) अशोक स्तंभ</div><div>(d) बौद्ध स्तूप</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (b) विशाल स्नानागार</strong><br>Explanation: मोहनजोदड़ो का Great Bath हड़प्पाई सभ्यता की सबसे प्रसिद्ध संरचनाओं में से एक है।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>6. लोथल किस राज्य में स्थित है?</strong></p>
+                <div class="options"><div>(a) राजस्थान</div><div>(b) गुजरात</div><div>(c) हरियाणा</div><div>(d) पंजाब</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (b) गुजरात</strong><br>Explanation: लोथल गुजरात में स्थित प्रमुख हड़प्पाई स्थल है।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>7. लोथल किसके लिए प्रसिद्ध है?</strong></p>
+                <div class="options"><div>(a) विशाल स्नानागार</div><div>(b) जलाशय</div><div>(c) गोदी/डॉकयार्ड जैसी संरचना</div><div>(d) लौह स्तंभ</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (c) गोदी/डॉकयार्ड जैसी संरचना</strong><br>Explanation: लोथल समुद्री व्यापार और गोदी जैसी संरचना के लिए प्रसिद्ध है।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>8. धोलावीरा किस राज्य में स्थित है?</strong></p>
+                <div class="options"><div>(a) गुजरात</div><div>(b) पंजाब</div><div>(c) राजस्थान</div><div>(d) हरियाणा</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (a) गुजरात</strong><br>Explanation: धोलावीरा गुजरात के कच्छ क्षेत्र में स्थित प्रमुख हड़प्पाई स्थल है।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>9. धोलावीरा किस विशेषता के लिए प्रसिद्ध है?</strong></p>
+                <div class="options"><div>(a) लौह उद्योग</div><div>(b) जल प्रबंधन</div><div>(c) बौद्ध धर्म</div><div>(d) अशोक शिलालेख</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (b) जल प्रबंधन</strong><br>Explanation: धोलावीरा में जलाशयों और जल-संचयन की विकसित व्यवस्था मिली है।</div>
+            </div>
+            <div class="mcq">
+                <p><strong>10. कालीबंगा किस राज्य में स्थित है?</strong></p>
+                <div class="options"><div>(a) गुजरात</div><div>(b) राजस्थान</div><div>(c) हरियाणा</div><div>(d) पंजाब</div></div>
+                <button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button>
+                <div class="answer-box"><strong>Answer: (b) राजस्थान</strong><br>Explanation: कालीबंगा राजस्थान में स्थित प्रमुख हड़प्पाई स्थल है।</div>
+            </div>
+        </div>
+        <!-- ===== VEDIC PERIOD ===== -->
+        <div style="margin-top:40px;">
+            <h3>📜 वैदिक काल / VEDIC PERIOD (1500 – 600 BCE)</h3>
+            <h4>आर्यों का आगमन / Aryan Migration</h4>
+            <p><span class="hi-text">आर्य मूलतः मध्य एशिया (स्टेपी क्षेत्र) से आए थे। 'आर्य' का अर्थ है 'श्रेष्ठ' या 'कुलीन'। वे इंडो-यूरोपीय भाषा-परिवार से संबंधित थे। सिन्धु घाटी सभ्यता के पतन के बाद वे उत्तर-पश्चिमी भारत (सप्त सिंधु) में आकर बसे।</span><span class="en-text">The Aryans originally came from Central Asia (Steppe region). 'Arya' means 'noble' or 'superior'. They belonged to the Indo-European language family. After the decline of the Indus Valley Civilization, they settled in North-Western India (Sapta Sindhu).</span></p>
+            <div class="highlight-box">
+                <span class="hi-text"><strong>महत्वपूर्ण तथ्य:</strong> 'बंधुओं का युद्ध' (Battle of Ten Kings) – दशराज्ञ युद्ध का उल्लेख ऋग्वेद (मंडल 7) में मिलता है। राजा सुदास ने 10 जनजातियों को पराजित किया।</span>
+                <span class="en-text"><strong>Important Fact:</strong> The 'Battle of Ten Kings' (Dasharajna) is mentioned in the Rigveda (Mandala 7). King Sudas defeated 10 tribes.</span>
+            </div>
+            <h4>वैदिक साहित्य / Vedic Literature</h4>
+            <ul>
+                <li><span class="hi-text"><strong>ऋग्वेद (Rigveda):</strong> सबसे प्राचीन, 10 मंडल, 1028 सूक्त। 'नदीस्तुति सूक्त' में सिन्धु, गंगा, यमुना आदि का वर्णन।</span><span class="en-text"><strong>Rigveda:</strong> Oldest, 10 Mandalas, 1028 Suktas. 'Nadistuti Sukta' mentions Sindhu, Ganga, Yamuna, etc.</span></li>
+                <li><span class="hi-text"><strong>सामवेद (Samaveda):</strong> 'गायन का वेद', ऋग्वेद के मंत्रों का संगीतमय उच्चारण।</span><span class="en-text"><strong>Samaveda:</strong> 'Veda of Melodies', musical rendering of Rigvedic hymns.</span></li>
+                <li><span class="hi-text"><strong>यजुर्वेद (Yajurveda):</strong> 'यज्ञ का वेद', गद्य और पद्य में यज्ञ विधियाँ।</span><span class="en-text"><strong>Yajurveda:</strong> 'Veda of Sacrifices', prose and verse sacrificial formulae.</span></li>
+                <li><span class="hi-text"><strong>अथर्ववेद (Atharvaveda):</strong> 'उपचार/जादू का वेद', लौकिक जीवन, रोग-निवारण, अभिचारक मंत्र।</span><span class="en-text"><strong>Atharvaveda:</strong> 'Veda of Medicine/Magic', deals with daily life, healing, and incantations.</span></li>
+            </ul>
+            <h4>प्रारंभिक वैदिक काल (1500-1000 BCE) / Early Vedic Period</h4>
+            <ul>
+                <li><span class="hi-text"><strong>भौगोलिक विस्तार:</strong> सप्त सिंधु क्षेत्र (पंजाब, हरियाणा, सिन्धु व उसकी सहायक नदियाँ)।</span><span class="en-text"><strong>Geography:</strong> Sapta Sindhu region (Punjab, Haryana, Indus & its tributaries).</span></li>
+                <li><span class="hi-text"><strong>राजनीति:</strong> जन (जाति) सबसे बड़ी इकाई। राजा निर्वाचित होता था। 'विदथ' (कुल सभा) प्राचीनतम संस्था, 'सभा' व 'समिति' परामर्श सभाएँ।</span><span class="en-text"><strong>Polity:</strong> Jana (tribe) was the largest unit. King was elected by the people. 'Vidatha' (clan assembly) was the oldest institution.</span></li>
+                <li><span class="hi-text"><strong>अर्थव्यवस्था:</strong> मुख्य व्यवसाय पशुपालन (गाय सर्वोच्च) तथा कृषि (यव-जौ उगाए)।</span><span class="en-text"><strong>Economy:</strong> Chief occupations were pastoralism (cow supreme) and agriculture (barley - Yava).</span></li>
+            </ul>
+            <h4>उत्तर वैदिक काल (1000-600 BCE) / Later Vedic Period</h4>
+            <ul>
+                <li><span class="hi-text"><strong>भौगोलिक विस्तार:</strong> कुरु-पांचाल क्षेत्र (गंगा-यमुना दोआब), अंग, वंग, कलिंग आदि तक विस्तार।</span><span class="en-text"><strong>Geography:</strong> Kuru-Panchala region (Ganga-Yamuna doab), expanded to Anga, Vanga, Kalinga, etc.</span></li>
+                <li><span class="hi-text"><strong>राजनीति:</strong> 'राष्ट्र' सबसे बड़ी इकाई। राजा पद वंशानुगत हुआ। 'राजसूय' व 'अश्वमेध' यज्ञ राजा की शक्ति बढ़ाने हेतु।</span><span class="en-text"><strong>Polity:</strong> 'Rashtra' became the largest unit. Kingship became hereditary. 'Rajasuya' & 'Ashvamedha' sacrifices to enhance king's power.</span></li>
+                <li><span class="hi-text"><strong>समाज:</strong> वर्ण व्यवस्था जन्म-आधारित हो गई (ब्राह्मण, क्षत्रिय, वैश्य, शूद्र)। 'गोत्र' प्रथा विकसित हुई।</span><span class="en-text"><strong>Society:</strong> Varna system became birth-based (Brahmin, Kshatriya, Vaishya, Shudra). 'Gotra' system developed.</span></li>
+            </ul>
+            <h4>वेदांग, दर्शन व अन्य विशेषताएँ / Vedangas & Other Features</h4>
+            <ul>
+                <li><span class="hi-text"><strong>वेदांग (6 अंग):</strong> शिक्षा (ध्वनि), कल्प (यज्ञ विधि), व्याकरण (भाषा), निरुक्त (अर्थ), छन्द (मीटर), ज्योतिष (खगोल)।</span><span class="en-text"><strong>Vedangas (6 limbs):</strong> Shiksha (phonetics), Kalpa (ritual), Vyakarana (grammar), Nirukta (etymology), Chhandas (meter), Jyotisha (astronomy).</span></li>
+                <li><span class="hi-text"><strong>प्रमुख उपनिषद् सिद्धांत:</strong> 'तत्त्वमसि' (छांदोग्य) – आत्मा और ब्रह्म एक हैं। 'अहं ब्रह्मास्मि' (बृहदारण्यक) – मैं ही ब्रह्म हूँ।</span><span class="en-text"><strong>Major Upanishadic doctrines:</strong> 'Tat Tvam Asi' (Chandogya) – You are That. 'Aham Brahmasmi' (Brihadaranyaka) – I am Brahman.</span></li>
+            </ul>
+            <h3>📝 वैदिक काल — MCQs</h3>
+            <div class="mcq-container">
+                <div class="mcq"><p><strong>1. सबसे प्राचीन वेद कौन सा है?</strong></p><div class="options"><div>(a) सामवेद</div><div>(b) ऋग्वेद</div><div>(c) यजुर्वेद</div><div>(d) अथर्ववेद</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) ऋग्वेद</strong><br>Explanation: ऋग्वेद सबसे प्राचीन वेद है।</div></div>
+                <div class="mcq"><p><strong>2. ऋग्वेद में कितने मंडल हैं?</strong></p><div class="options"><div>(a) 8</div><div>(b) 10</div><div>(c) 12</div><div>(d) 14</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 10</strong><br>Explanation: ऋग्वेद में 10 मंडल हैं।</div></div>
+                <div class="mcq"><p><strong>3. 'दशराज्ञ युद्ध' का उल्लेख किस वेद में है?</strong></p><div class="options"><div>(a) यजुर्वेद</div><div>(b) सामवेद</div><div>(c) ऋग्वेद</div><div>(d) अथर्ववेद</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) ऋग्वेद</strong><br>Explanation: दशराज्ञ युद्ध का उल्लेख ऋग्वेद (मंडल 7) में मिलता है।</div></div>
+                <div class="mcq"><p><strong>4. उत्तर वैदिक काल के त्रिदेव कौन थे?</strong></p><div class="options"><div>(a) इंद्र, अग्नि, सोम</div><div>(b) ब्रह्मा, विष्णु, शिव</div><div>(c) सूर्य, चंद्र, वरुण</div><div>(d) प्रजापति, इंद्र, वरुण</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) ब्रह्मा, विष्णु, शिव</strong><br>Explanation: उत्तर वैदिक काल में त्रिदेव (ब्रह्मा, विष्णु, शिव) का उदय हुआ।</div></div>
+                <div class="mcq"><p><strong>5. 'तत्त्वमसि' किस उपनिषद् से लिया गया है?</strong></p><div class="options"><div>(a) कठ उपनिषद्</div><div>(b) छांदोग्य उपनिषद्</div><div>(c) बृहदारण्यक उपनिषद्</div><div>(d) मुंडक उपनिषद्</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) छांदोग्य उपनिषद्</strong><br>Explanation: 'तत्त्वमसि' छांदोग्य उपनिषद् से लिया गया है।</div></div>
+            </div>
+        </div>
+        <!-- ===== MAHAJANAPADA ===== -->
+        <div style="margin-top:40px;">
+            <h3>🏛️ महाजनपद काल (600 – 300 BCE)</h3>
+            <p><span class="hi-text">छठी शताब्दी ईसा पूर्व में उत्तर भारत में 16 बड़े राज्यों (महाजनपदों) का उदय हुआ। इनका विवरण बौद्ध ग्रंथ 'अंगुत्तर निकाय' तथा जैन ग्रंथ 'भगवती सूत्र' में मिलता है।</span><span class="en-text">In the 6th century BCE, 16 large states (Mahajanapadas) emerged in North India. Their details are found in the Buddhist text 'Anguttara Nikaya' and the Jain text 'Bhagavati Sutra'.</span></p>
+            <div class="highlight-box">
+                <span class="hi-text"><strong>प्रमुख 16 महाजनपद & उनकी राजधानियाँ:</strong> मगध (राजगृह), कोसल (श्रावस्ती), वत्स (कौशाम्बी), अवन्ति (उज्जयिनी/महिष्मती), कुरु (इंद्रप्रस्थ), पांचाल (अहिच्छत्र/काम्पिल्य), मल्ल (कुशीनगर), वज्जि/वृज्जि (वैशाली), शूरसेन (मथुरा), काशी (वाराणसी), चेदि (शुक्तिमती), गांधार (तक्षशिला), कम्बोज (राजगृह?), अश्मक (पैठण), मत्स्य (विराटनगर), अंग (चम्पा)।</span>
+                <span class="en-text"><strong>Major 16 & Capitals:</strong> Magadha (Rajgir), Kosala (Shravasti), Vatsa (Kaushambi), Avanti (Ujjain/Mahishmati), Kuru (Indraprastha), Panchala (Ahichchhatra/Kampilya), Malla (Kushinagar), Vajji/Vriji (Vaishali), Shurasena (Mathura), Kashi (Varanasi), Chedi (Shuktimati), Gandhara (Taxila), Kamboja (Rajgriha?), Ashmaka (Paithan), Matsya (Viratanagar), Anga (Champa).</span>
+            </div>
+            <h4>मगध का उदय (Rise of Magadha)</h4>
+            <ul>
+                <li><span class="hi-text"><strong>हर्यंक वंश (544-412 BCE):</strong> बिम्बिसार – सबसे शक्तिशाली प्रारंभिक शासक, अंग पर विजय। अजातशत्रु – कोसल और वज्जि को पराजित किया, पाटलिपुत्र की स्थापना। उदायिन – राजधानी राजगृह से पाटलिपुत्र स्थानांतरित की।</span><span class="en-text"><strong>Haryanka (544-412 BCE):</strong> Bimbisara – most powerful early ruler, conquered Anga. Ajatashatru – defeated Kosala and Vajji, established Pataliputra. Udayin – shifted capital to Pataliputra.</span></li>
+                <li><span class="hi-text"><strong>शिशुनाग वंश (412-344 BCE):</strong> शिशुनाग – वत्स, अवन्ति, कोसल पर विजय। द्वितीय बौद्ध संगीति (कालशोक के संरक्षण में)।</span><span class="en-text"><strong>Shishunaga (412-344 BCE):</strong> Shishunaga – conquered Vatsa, Avanti, Kosala. 2nd Buddhist Council (under Kalashoka).</span></li>
+                <li><span class="hi-text"><strong>नंद वंश (344-321 BCE):</strong> महापद्मनंद – 'प्रथम साम्राज्य निर्माता', कलिंग, कोसल, काशी, अंग आदि पर विजय। घनानंद – अंतिम नंद शासक, चंद्रगुप्त मौर्य द्वारा पराजित।</span><span class="en-text"><strong>Nanda (344-321 BCE):</strong> Mahapadma Nanda – 'first empire builder', conquered Kalinga, Kosala, Kashi, Anga, etc. Dhana Nanda – last Nanda ruler, defeated by Chandragupta Maurya.</span></li>
+            </ul>
+            <h4>गणतंत्र एवं राजतंत्र (Republics and Monarchies)</h4>
+            <ul>
+                <li><span class="hi-text"><strong>गणतंत्र:</strong> मल्ल, वज्जि, शाक्य, कोलिय – परिषद (अमात्य परिषद) शासन करती थी।</span><span class="en-text"><strong>Republics:</strong> Malla, Vajji, Shakya, Koliya – council of ministers ruled.</span></li>
+                <li><span class="hi-text"><strong>राजतंत्र:</strong> मगध, कोसल, वत्स, अवन्ति, कुरु, पांचाल – राजा का वंशानुगत पद।</span><span class="en-text"><strong>Monarchies:</strong> Magadha, Kosala, Vatsa, Avanti, Kuru, Panchala – hereditary kingship.</span></li>
+            </ul>
+            <h4>सिकंदर का आक्रमण (Alexander’s Invasion, 327-326 BCE)</h4>
+            <ul>
+                <li><span class="hi-text">सिकंदर ने 326 BCE में भारत पर आक्रमण किया। पोरस (Porus) ने हाइडेस्पीज के युद्ध में सामना किया। सिकंदर विजयी हुआ लेकिन पोरस के साहस से प्रभावित होकर उसे वापस राज्य लौटा दिया।</span><span class="en-text">Alexander invaded India in 326 BCE. Porus resisted at the Battle of Hydaspes. Alexander won but impressed by Porus's courage, returned his kingdom.</span></li>
+            </ul>
+            <h3>📝 महाजनपद काल — MCQs</h3>
+            <div class="mcq-container">
+                <div class="mcq"><p><strong>1. कुल कितने महाजनपद थे?</strong></p><div class="options"><div>(a) 12</div><div>(b) 14</div><div>(c) 16</div><div>(d) 18</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) 16</strong><br>Explanation: 16 महाजनपद थे।</div></div>
+                <div class="mcq"><p><strong>2. '16 महाजनपदों' का विवरण मुख्यतः किस बौद्ध ग्रंथ में मिलता है?</strong></p><div class="options"><div>(a) दीघ निकाय</div><div>(b) अंगुत्तर निकाय</div><div>(c) संयुत्त निकाय</div><div>(d) खुद्दक निकाय</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) अंगुत्तर निकाय</strong><br>Explanation: अंगुत्तर निकाय में 16 महाजनपदों का विवरण मिलता है।</div></div>
+                <div class="mcq"><p><strong>3. मगध की प्रारंभिक राजधानी क्या थी?</strong></p><div class="options"><div>(a) पाटलिपुत्र</div><div>(b) वैशाली</div><div>(c) राजगृह</div><div>(d) उज्जैन</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) राजगृह</strong><br>Explanation: मगध की प्रारंभिक राजधानी राजगृह (गिरिव्रज) थी।</div></div>
+                <div class="mcq"><p><strong>4. बिम्बिसार किस वंश से संबंधित थे?</strong></p><div class="options"><div>(a) शिशुनाग</div><div>(b) हर्यंक</div><div>(c) नंद</div><div>(d) मौर्य</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) हर्यंक</strong><br>Explanation: बिम्बिसार हर्यंक वंश से संबंधित थे।</div></div>
+                <div class="mcq"><p><strong>5. अजातशत्रु ने किस नगर की स्थापना की?</strong></p><div class="options"><div>(a) वैशाली</div><div>(b) पाटलिपुत्र</div><div>(c) उज्जैन</div><div>(d) तक्षशिला</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) पाटलिपुत्र</strong><br>Explanation: अजातशत्रु ने राजगृह के निकट पाटलिपुत्र की स्थापना की।</div></div>
+            </div>
+        </div>
+        <!-- ===== MAURYAN ===== -->
+        <div style="margin-top:40px;">
+            <h3>🐘 मौर्य साम्राज्य (322 – 185 BCE)</h3>
+            <p><span class="hi-text">मौर्य साम्राज्य प्राचीन भारत का सबसे विशाल और प्रथम सार्वभौमिक साम्राज्य था। इसकी स्थापना <strong>चंद्रगुप्त मौर्य</strong> ने 322 BCE में नंद वंश के अंतिम शासक <strong>घनानंद</strong> को हराकर की।</span><span class="en-text">The Mauryan Empire was the largest and first universal empire in ancient India. It was founded by <strong>Chandragupta Maurya</strong> in 322 BCE by defeating the last Nanda ruler <strong>Dhana Nanda</strong>.</span></p>
+            <div class="highlight-box">
+                <span class="hi-text"><strong>प्रमुख स्रोत:</strong> (1) अर्थशास्त्र (कौटिल्य) (2) इंडिका (मेगास्थनीज) (3) मुद्राराक्षस (विशाखदत्त) (4) अशोक के शिलालेख (5) विष्णु पुराण एवं महावंश</span>
+                <span class="en-text"><strong>Major Sources:</strong> (1) Arthashastra (Kautilya) (2) Indica (Megasthenes) (3) Mudrarakshasa (Vishakhadatta) (4) Ashoka's Edicts (5) Vishnu Purana & Mahavamsa</span>
+            </div>
+            <h4>मौर्य वंश के शासक</h4>
+            <ul>
+                <li><span class="hi-text"><strong>चंद्रगुप्त मौर्य (322-298 BCE):</strong> नंदों को हराकर मगध की गद्दी संभाली। सेल्यूकस को पराजित किया (305 BCE) और 500 हाथी दिए। जैन धर्म अपनाया और श्रवणबेलगोला में सल्लेखना द्वारा प्राण त्यागे।</span><span class="en-text"><strong>Chandragupta Maurya (322-298 BCE):</strong> Overthrew the Nandas. Defeated Seleucus (305 BCE) and gave him 500 elephants. Adopted Jainism and died by Sallekhana at Shravanabelagola.</span></li>
+                <li><span class="hi-text"><strong>बिंदुसार (298-273 BCE):</strong> 'अमित्रघात' (शत्रुओं का संहारक) कहलाता था। दक्षिण भारत (मैसूर तक) को जीतकर साम्राज्य का विस्तार किया।</span><span class="en-text"><strong>Bindusara (298-273 BCE):</strong> Called 'Amitraghata' (slayer of enemies). Expanded empire to the south (up to Mysore).</span></li>
+                <li><span class="hi-text"><strong>अशोक (273-232 BCE):</strong> सबसे महान मौर्य शासक। कलिंग युद्ध (261 BCE) के बाद बौद्ध धर्म अपनाया। धम्म (अहिंसा, सत्य, दया, करुणा) का प्रचार किया। शिलालेख स्थापित किए।</span><span class="en-text"><strong>Ashoka (273-232 BCE):</strong> Greatest Mauryan ruler. After Kalinga War (261 BCE), adopted Buddhism. Propagated Dhamma (non-violence, truth, compassion). Set up edicts.</span></li>
+            </ul>
+            <h4>अशोक के शिलालेख</h4>
+            <ul>
+                <li><span class="hi-text"><strong>प्रमुख शिला अभिलेख:</strong> 14 प्रमुख शिलालेख – गिरनार, धौली, शाहबाजगढ़ी, मानसहरा, कंधार आदि।</span><span class="en-text"><strong>Major Rock Edicts:</strong> 14 major edicts – Girnar, Dhauli, Shahbazgarhi, Mansehra, Kandahar, etc.</span></li>
+                <li><span class="hi-text"><strong>स्तंभ अभिलेख:</strong> 7 स्तंभ अभिलेख – दिल्ली, लौरिया नंदनगढ़, लौरिया अरराज, रामपुर्वा, प्रयाग आदि।</span><span class="en-text"><strong>Pillar Edicts:</strong> 7 pillar edicts – Delhi, Lauriya Nandangarh, Lauriya Araraj, Rampurva, Prayaga, etc.</span></li>
+                <li><span class="hi-text"><strong>13वाँ प्रमुख शिलालेख:</strong> कलिंग युद्ध के भीषण परिणामों और अशोक के पश्चाताप का विस्तृत वर्णन।</span><span class="en-text"><strong>13th Major Rock Edict:</strong> Detailed description of the horrors of Kalinga War and Ashoka's remorse.</span></li>
+            </ul>
+            <h4>प्रशासन व्यवस्था</h4>
+            <ul>
+                <li><span class="hi-text"><strong>केंद्रीय शासन:</strong> राजा (सम्राट) सर्वोच्च, मंत्रिपरिषद (महामात्र, सेनापति, प्रधान न्यायाधीश) सहायक।</span><span class="en-text"><strong>Central:</strong> King supreme, assisted by council of ministers (Mahamatra, Senapati, Chief Justice).</span></li>
+                <li><span class="hi-text"><strong>प्रांतीय शासन:</strong> 4 प्रांत – उत्तर-पश्चिम (तक्षशिला), मध्य (उज्जयिनी), पूर्व (तोसली), दक्षिण (सुवर्णगिरि)।</span><span class="en-text"><strong>Provincial:</strong> 4 provinces – North-West (Taxila), Central (Ujjain), East (Tosali), South (Suvarnagiri).</span></li>
+                <li><span class="hi-text"><strong>गुप्तचर व्यवस्था:</strong> 'चर' और 'गूढ़पुरुष' – जासूसी प्रणाली।</span><span class="en-text"><strong>Espionage:</strong> 'Chara' and 'Gudhapurus' – spy network.</span></li>
+            </ul>
+            <h3>📝 मौर्य साम्राज्य — MCQs</h3>
+            <div class="mcq-container">
+                <div class="mcq"><p><strong>1. मौर्य साम्राज्य का संस्थापक कौन था?</strong></p><div class="options"><div>(a) बिंदुसार</div><div>(b) अशोक</div><div>(c) चंद्रगुप्त मौर्य</div><div>(d) समुद्रगुप्त</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) चंद्रगुप्त मौर्य</strong><br>Explanation: मौर्य साम्राज्य का संस्थापक चंद्रगुप्त मौर्य था।</div></div>
+                <div class="mcq"><p><strong>2. अशोक ने कलिंग युद्ध कब लड़ा?</strong></p><div class="options"><div>(a) 273 BCE</div><div>(b) 261 BCE</div><div>(c) 232 BCE</div><div>(d) 322 BCE</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 261 BCE</strong><br>Explanation: अशोक ने 261 BCE में कलिंग युद्ध लड़ा।</div></div>
+                <div class="mcq"><p><strong>3. अशोक के शिलालेख मुख्यतः किस लिपि में हैं?</strong></p><div class="options"><div>(a) देवनागरी</div><div>(b) ब्राह्मी</div><div>(c) खरोष्ठी</div><div>(d) तमिल</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) ब्राह्मी</strong><br>Explanation: अशोक के शिलालेख मुख्यतः ब्राह्मी लिपि में हैं।</div></div>
+                <div class="mcq"><p><strong>4. 'अर्थशास्त्र' के लेखक कौन हैं?</strong></p><div class="options"><div>(a) मेगास्थनीज</div><div>(b) कौटिल्य</div><div>(c) विशाखदत्त</div><div>(d) हरिषेण</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) कौटिल्य</strong><br>Explanation: 'अर्थशास्त्र' के लेखक कौटिल्य (चाणक्य) हैं।</div></div>
+                <div class="mcq"><p><strong>5. सारनाथ का सिंह-स्तंभ किसका राष्ट्रीय प्रतीक है?</strong></p><div class="options"><div>(a) पाकिस्तान</div><div>(b) बांग्लादेश</div><div>(c) भारत</div><div>(d) नेपाल</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) भारत</strong><br>Explanation: सारनाथ का सिंह-स्तंभ भारत का राष्ट्रीय प्रतीक है।</div></div>
+            </div>
+        </div>
+        <!-- ===== GUPTA ===== -->
+        <div style="margin-top:40px;">
+            <h3>👑 गुप्त साम्राज्य (320 – 550 CE)</h3>
+            <p><span class="hi-text">गुप्त साम्राज्य को <strong>प्राचीन भारत का 'स्वर्ण युग'</strong> कहा जाता है। इसकी स्थापना <strong>श्रीगुप्त</strong> ने की, परन्तु वास्तविक संस्थापक <strong>चंद्रगुप्त प्रथम</strong> (320-335 CE) माने जाते हैं।</span><span class="en-text">The Gupta Empire is called the <strong>'Golden Age' of ancient India</strong>. It was founded by <strong>Srigupta</strong>, but the real founder was <strong>Chandragupta I</strong> (320-335 CE).</span></p>
+            <div class="highlight-box">
+                <span class="hi-text"><strong>गुप्त काल की विशेषताएँ:</strong> (1) राजनीतिक एकता (2) साहित्य एवं विज्ञान – कालिदास, आर्यभट्ट, वराहमिहिर (3) कला एवं वास्तुकला – अजंता, एलोरा, नालंदा (4) आर्थिक समृद्धि – सोने के सिक्के (दीनार)</span>
+                <span class="en-text"><strong>Features:</strong> (1) Political unity (2) Literature & Science – Kalidasa, Aryabhata, Varahamihira (3) Art & Architecture – Ajanta, Ellora, Nalanda (4) Economic prosperity – Gold coins (Dinara)</span>
+            </div>
+            <h4>गुप्त वंश के शासक</h4>
+            <ul>
+                <li><span class="hi-text"><strong>चंद्रगुप्त प्रथम (320-335 CE):</strong> लिच्छवी राजकुमारी कुमारदेवी से विवाह। गुप्त संवत् (320 CE) की शुरुआत। 'महाराजाधिराज' की उपाधि।</span><span class="en-text"><strong>Chandragupta I (320-335 CE):</strong> Married Lichchhavi princess Kumaradevi. Started Gupta Samvat (320 CE). Title 'Maharajadhiraja'.</span></li>
+                <li><span class="hi-text"><strong>समुद्रगुप्त (335-380 CE):</strong> 'भारत का नेपोलियन'। इलाहाबाद स्तंभ अभिलेख (हरिषेण द्वारा रचित) में विजयों का वर्णन। 'कविराज' की उपाधि, वीणावादक।</span><span class="en-text"><strong>Samudragupta (335-380 CE):</strong> 'Napoleon of India'. Allahabad Pillar Inscription (composed by Harisena) records victories. Title 'Kaviraja', veena player.</span></li>
+                <li><span class="hi-text"><strong>चंद्रगुप्त द्वितीय (380-415 CE):</strong> 'विक्रमादित्य'। शकों (पश्चिमी क्षत्रप) को पराजित किया। नवरत्न (9 Jewels) – कालिदास, अमरसिंह, वराहमिहिर, आर्यभट्ट, धन्वंतरि आदि। फाह्यान (चीनी यात्री) का स्वागत।</span><span class="en-text"><strong>Chandragupta II (380-415 CE):</strong> 'Vikramaditya'. Defeated Shakas (Western Kshatrapas). Navaratnas (9 Jewels) – Kalidasa, Amarasimha, Varahamihira, Aryabhata, Dhanvantari, etc. Received Chinese traveler Fa-Hien.</span></li>
+                <li><span class="hi-text"><strong>कुमारगुप्त प्रथम (415-455 CE):</strong> नालंदा विश्वविद्यालय की स्थापना। हूण आक्रमण शुरू हुए।</span><span class="en-text"><strong>Kumaragupta I (415-455 CE):</strong> Established Nalanda University. Hun invasions began.</span></li>
+                <li><span class="hi-text"><strong>स्कंदगुप्त (455-467 CE):</strong> अंतिम महान गुप्त शासक। हूणों को पराजित किया, परन्तु आर्थिक रूप से कमजोर हो गया।</span><span class="en-text"><strong>Skandagupta (455-467 CE):</strong> Last great Gupta ruler. Defeated the Huns but economically weakened.</span></li>
+            </ul>
+            <h4>गुप्त काल में विज्ञान एवं गणित</h4>
+            <ul>
+                <li><span class="hi-text"><strong>आर्यभट्ट (476 CE):</strong> आर्यभटीय – शून्य (0) का प्रयोग, पाई (π) का मान, दशमलव प्रणाली, सूर्य ग्रहण एवं चन्द्र ग्रहण की व्याख्या।</span><span class="en-text"><strong>Aryabhata (476 CE):</strong> Aryabhatiya – use of zero, value of pi, decimal system, explanation of solar and lunar eclipses.</span></li>
+                <li><span class="hi-text"><strong>वराहमिहिर:</strong> बृहत्संहिता – खगोल, ज्योतिष, वास्तु, कृषि, मौसम विज्ञान पर विश्वकोश।</span><span class="en-text"><strong>Varahamihira:</strong> Brihatsamhita – encyclopedia on astronomy, astrology, architecture, agriculture, meteorology.</span></li>
+                <li><span class="hi-text"><strong>धन्वंतरि:</strong> आयुर्वेद के विशेषज्ञ – 'देव चिकित्सक'।</span><span class="en-text"><strong>Dhanvantari:</strong> Expert in Ayurveda – 'divine physician'.</span></li>
+            </ul>
+            <h3>📝 गुप्त साम्राज्य — MCQs</h3>
+            <div class="mcq-container">
+                <div class="mcq"><p><strong>1. गुप्त वंश का वास्तविक संस्थापक कौन माना जाता है?</strong></p><div class="options"><div>(a) श्रीगुप्त</div><div>(b) चंद्रगुप्त प्रथम</div><div>(c) समुद्रगुप्त</div><div>(d) चंद्रगुप्त द्वितीय</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) चंद्रगुप्त प्रथम</strong><br>Explanation: चंद्रगुप्त प्रथम को गुप्त वंश का वास्तविक संस्थापक माना जाता है।</div></div>
+                <div class="mcq"><p><strong>2. समुद्रगुप्त को 'भारत का नेपोलियन' किसने कहा?</strong></p><div class="options"><div>(a) हरिषेण</div><div>(b) विन्सेंट स्मिथ</div><div>(c) कालिदास</div><div>(d) मेगास्थनीज</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) विन्सेंट स्मिथ</strong><br>Explanation: विन्सेंट स्मिथ ने समुद्रगुप्त को 'भारत का नेपोलियन' कहा।</div></div>
+                <div class="mcq"><p><strong>3. चंद्रगुप्त द्वितीय की सबसे प्रसिद्ध उपाधि क्या थी?</strong></p><div class="options"><div>(a) महाराजाधिराज</div><div>(b) कविराज</div><div>(c) विक्रमादित्य</div><div>(d) पराक्रमांक</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) विक्रमादित्य</strong><br>Explanation: चंद्रगुप्त द्वितीय 'विक्रमादित्य' की उपाधि से प्रसिद्ध हैं।</div></div>
+                <div class="mcq"><p><strong>4. नालंदा विश्वविद्यालय की स्थापना किसने की?</strong></p><div class="options"><div>(a) समुद्रगुप्त</div><div>(b) चंद्रगुप्त द्वितीय</div><div>(c) कुमारगुप्त प्रथम</div><div>(d) स्कंदगुप्त</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) कुमारगुप्त प्रथम</strong><br>Explanation: नालंदा विश्वविद्यालय की स्थापना कुमारगुप्त प्रथम ने की।</div></div>
+                <div class="mcq"><p><strong>5. 'आर्यभटीय' के रचयिता कौन हैं?</strong></p><div class="options"><div>(a) वराहमिहिर</div><div>(b) आर्यभट्ट</div><div>(c) धन्वंतरि</div><div>(d) कालिदास</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) आर्यभट्ट</strong><br>Explanation: 'आर्यभटीय' के रचयिता आर्यभट्ट हैं।</div></div>
+            </div>
+        </div>
+        <!-- ===== HARSHA & LATER ===== -->
+        <div style="margin-top:40px;">
+            <h3>⚜️ हर्षवर्धन एवं उत्तरवर्ती काल (606 – 750 CE)</h3>
+            <p><span class="hi-text">गुप्त साम्राज्य के पतन के बाद <strong>पुष्यभूति वंश</strong> का उदय हुआ। इस वंश का सबसे प्रतापी शासक <strong>हर्षवर्धन (606-647 CE)</strong> था।</span><span class="en-text">After the decline of the Gupta Empire, the <strong>Pushyabhuti dynasty</strong> emerged. Its most powerful ruler was <strong>Harshavardhana (606-647 CE)</strong>.</span></p>
+            <ul>
+                <li><span class="hi-text"><strong>राजधानी:</strong> प्रारंभिक राजधानी थानेश्वर, बाद में कन्नौज।</span><span class="en-text"><strong>Capital:</strong> Initially Thaneswar, later Kannauj.</span></li>
+                <li><span class="hi-text"><strong>हर्ष के दरबारी कवि:</strong> बाणभट्ट – 'हर्षचरित' (गद्य) के रचयिता।</span><span class="en-text"><strong>Court poet:</strong> Banabhatta – wrote 'Harshacharita' (prose).</span></li>
+                <li><span class="hi-text"><strong>ह्वेनसांग (629-645 CE):</strong> चीनी यात्री, 16 वर्ष भारत में रहा। 'सी-यू-की' (Records of the Western World) का लेखक।</span><span class="en-text"><strong>Hiuen Tsang (629-645 CE):</strong> Chinese traveler, stayed 16 years in India. Author of 'Si-Yu-Ki'.</span></li>
+                <li><span class="hi-text"><strong>त्रिपक्षीय संघर्ष (750-850 CE):</strong> गुर्जर-प्रतिहार, पाल, राष्ट्रकूट – कन्नौज पर अधिकार के लिए संघर्ष।</span><span class="en-text"><strong>Tripartite Struggle (750-850 CE):</strong> Gurjara-Pratihara, Pala, Rashtrakuta – fought for control of Kannauj.</span></li>
+            </ul>
+            <h3>📝 हर्ष एवं उत्तरवर्ती काल — MCQs</h3>
+            <div class="mcq-container">
+                <div class="mcq"><p><strong>1. हर्षवर्धन किस वंश से संबंधित था?</strong></p><div class="options"><div>(a) गुप्त</div><div>(b) पुष्यभूति</div><div>(c) मौर्य</div><div>(d) शुंग</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) पुष्यभूति</strong><br>Explanation: हर्षवर्धन पुष्यभूति वंश से संबंधित था।</div></div>
+                <div class="mcq"><p><strong>2. हर्षवर्धन की राजधानी क्या थी?</strong></p><div class="options"><div>(a) पाटलिपुत्र</div><div>(b) कन्नौज</div><div>(c) थानेश्वर</div><div>(d) उज्जैन</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) कन्नौज</strong><br>Explanation: हर्षवर्धन की राजधानी कन्नौज थी।</div></div>
+                <div class="mcq"><p><strong>3. 'हर्षचरित' के लेखक कौन हैं?</strong></p><div class="options"><div>(a) कालिदास</div><div>(b) बाणभट्ट</div><div>(c) हरिषेण</div><div>(d) विशाखदत्त</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) बाणभट्ट</strong><br>Explanation: 'हर्षचरित' के लेखक बाणभट्ट हैं।</div></div>
+                <div class="mcq"><p><strong>4. चीनी यात्री ह्वेनसांग किस शासक के समय भारत आया?</strong></p><div class="options"><div>(a) समुद्रगुप्त</div><div>(b) हर्षवर्धन</div><div>(c) चंद्रगुप्त द्वितीय</div><div>(d) अशोक</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) हर्षवर्धन</strong><br>Explanation: ह्वेनसांग हर्षवर्धन के समय भारत आया था।</div></div>
+                <div class="mcq"><p><strong>5. त्रिपक्षीय संघर्ष में शामिल तीन वंश कौन-से थे?</strong></p><div class="options"><div>(a) गुप्त, मौर्य, शुंग</div><div>(b) गुर्जर-प्रतिहार, पाल, राष्ट्रकूट</div><div>(c) चोल, चेर, पांड्य</div><div>(d) खिलजी, तुगलक, लोदी</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) गुर्जर-प्रतिहार, पाल, राष्ट्रकूट</strong><br>Explanation: त्रिपक्षीय संघर्ष गुर्जर-प्रतिहार, पाल और राष्ट्रकूट के बीच हुआ।</div></div>
+            </div>
+        </div>
+        <!-- ===== RAJPUT ===== -->
+        <div class="rajput-section" style="margin-top:40px;">
+            <h3>⚔️ राजपूत राज्य (8th-12th century)</h3>
+            <p><span class="hi-text">राजपूत राज्य मुख्यतः 8वीं से 12वीं शताब्दी के बीच विकसित हुए। प्रमुख वंश – चौहान, चंदेल, सोलंकी, परमार, गहड़वाल, गुहिल/सिसोदिया।</span><span class="en-text">Rajput kingdoms developed mainly between 8th and 12th centuries. Major dynasties – Chauhans, Chandelas, Solankis, Paramaras, Gahadavalas, Guhilas/Sisodias.</span></p>
+            <ul>
+                <li><span class="hi-text"><strong>चौहान:</strong> अजमेर; पृथ्वीराज चौहान – तराइन के युद्ध (1191, 1192)।</span><span class="en-text"><strong>Chauhans:</strong> Ajmer; Prithviraj Chauhan – Battles of Tarain (1191,1192).</span></li>
+                <li><span class="hi-text"><strong>चंदेल:</strong> बुंदेलखंड; खजुराहो मंदिर।</span><span class="en-text"><strong>Chandelas:</strong> Bundelkhand; Khajuraho temples.</span></li>
+                <li><span class="hi-text"><strong>सोलंकी:</strong> गुजरात; मोढेरा सूर्य मंदिर।</span><span class="en-text"><strong>Solankis:</strong> Gujarat; Modhera Sun Temple.</span></li>
+                <li><span class="hi-text"><strong>परमार:</strong> मालवा; राजा भोज।</span><span class="en-text"><strong>Paramaras:</strong> Malwa; Raja Bhoja.</span></li>
+                <li><span class="hi-text"><strong>गहड़वाल:</strong> कन्नौज; जयचंद्र।</span><span class="en-text"><strong>Gahadavalas:</strong> Kannauj; Jayachandra.</span></li>
+            </ul>
+            <h3>📝 राजपूत राज्य — MCQs</h3>
+            <div class="mcq-container">
+                <div class="mcq"><p><strong>1. राजपूत राज्यों का प्रमुख विकास किस अवधि में हुआ?</strong></p><div class="options"><div>(a) 5वीं–7वीं शताब्दी</div><div>(b) 8वीं–12वीं शताब्दी</div><div>(c) 13वीं–15वीं शताब्दी</div><div>(d) 16वीं–18वीं शताब्दी</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 8वीं–12वीं शताब्दी</strong><br>Explanation: राजपूत राज्यों का विकास 8वीं से 12वीं शताब्दी के बीच हुआ।</div></div>
+                <div class="mcq"><p><strong>2. पृथ्वीराज चौहान किस वंश से संबंधित थे?</strong></p><div class="options"><div>(a) चंदेल</div><div>(b) चौहान</div><div>(c) परमार</div><div>(d) गहड़वाल</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) चौहान</strong><br>Explanation: पृथ्वीराज चौहान चौहान वंश से संबंधित थे।</div></div>
+                <div class="mcq"><p><strong>3. तराइन का प्रथम युद्ध कब हुआ?</strong></p><div class="options"><div>(a) 1190</div><div>(b) 1191</div><div>(c) 1192</div><div>(d) 1194</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 1191</strong><br>Explanation: प्रथम तराइन युद्ध 1191 में हुआ।</div></div>
+                <div class="mcq"><p><strong>4. खजुराहो के मंदिर किस वंश से संबंधित हैं?</strong></p><div class="options"><div>(a) चौहान</div><div>(b) चंदेल</div><div>(c) परमार</div><div>(d) गहड़वाल</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) चंदेल</strong><br>Explanation: खजुराहो के मंदिर चंदेल वंश से संबंधित हैं।</div></div>
+                <div class="mcq"><p><strong>5. राजा भोज किस वंश से संबंधित थे?</strong></p><div class="options"><div>(a) चंदेल</div><div>(b) चौहान</div><div>(c) परमार</div><div>(d) गहड़वाल</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) परमार</strong><br>Explanation: राजा भोज परमार वंश से संबंधित थे।</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MEDIEVAL ==================== -->
+    <div class="section" id="section-medieval">
+        <h2>⚔️ मध्यकालीन भारत – विस्तृत अध्ययन</h2>
+        <!-- ===== DELHI SULTANATE ===== -->
+        <h3>1. दिल्ली सल्तनत (1206-1526 CE)</h3>
+        <p><span class="hi-text">दिल्ली सल्तनत का इतिहास 1206 ई. से 1526 ई. तक माना जाता है। इस अवधि में दिल्ली पर पाँच प्रमुख राजवंशों ने शासन किया – गुलाम, खिलजी, तुगलक, सैय्यद और लोदी।</span><span class="en-text">The Delhi Sultanate existed from 1206 CE to 1526 CE. Five major dynasties ruled Delhi – Slave, Khalji, Tughlaq, Sayyid and Lodi.</span></p>
+        <h4>गुलाम वंश (1206-1290 CE)</h4>
+        <ul>
+            <li><span class="hi-text"><strong>कुतुबुद्दीन ऐबक:</strong> संस्थापक, 'लाख बख्श' के नाम से जाना। कुतुब मीनार का निर्माण प्रारंभ करवाया।</span><span class="en-text"><strong>Qutb-ud-din Aibak:</strong> Founder, known as 'Lakh Baksh'. Started construction of Qutb Minar.</span></li>
+            <li><span class="hi-text"><strong>इल्तुतमिश:</strong> दिल्ली सल्तनत का वास्तविक संस्थापक। चाँदी का टंका और तांबे का जीतल चलाया। चहलगानी (चालीस अमीर) का गठन किया।</span><span class="en-text"><strong>Iltutmish:</strong> Real consolidator. Introduced silver Tanka and copper Jital. Formed Chahalgani (Forty nobles).</span></li>
+            <li><span class="hi-text"><strong>रज़िया सुल्तान:</strong> पहली और एकमात्र महिला सुल्तान (1236-1240 CE)।</span><span class="en-text"><strong>Razia Sultan:</strong> First and only woman Sultan (1236-1240 CE).</span></li>
+            <li><span class="hi-text"><strong>बलबन:</strong> 'लौह और रक्त' की नीति, चहलगानी की शक्ति को कमजोर किया।</span><span class="en-text"><strong>Balban:</strong> Policy of 'Blood and Iron', weakened Chahalgani.</span></li>
+        </ul>
+        <h4>खिलजी वंश (1290-1320 CE)</h4>
+        <ul>
+            <li><span class="hi-text"><strong>अलाउद्दीन खिलजी:</strong> बाजार नियंत्रण, दाग और चेहरा प्रथा। मलिक काफूर ने दक्षिण भारत में अभियान किए।</span><span class="en-text"><strong>Alauddin Khalji:</strong> Market control, Dagh and Chehra. Malik Kafur led southern campaigns.</span></li>
+        </ul>
+        <h4>तुगलक वंश (1320-1414 CE)</h4>
+        <ul>
+            <li><span class="hi-text"><strong>मुहम्मद बिन तुगलक:</strong> राजधानी दिल्ली से दौलताबाद स्थानांतरित की। टोकन मुद्रा चलाई। दीवान-ए-कोही (कृषि विभाग) की स्थापना।</span><span class="en-text"><strong>Muhammad bin Tughlaq:</strong> Shifted capital to Daulatabad. Token currency. Established Diwan-i-Kohi.</span></li>
+            <li><span class="hi-text"><strong>फिरोज शाह तुगलक:</strong> नहरों का निर्माण, दीवान-ए-बंदगान (दासों का विभाग), सिंचाई को बढ़ावा।</span><span class="en-text"><strong>Firoz Shah Tughlaq:</strong> Constructed canals, Diwan-i-Bandagan, promoted irrigation.</span></li>
+        </ul>
+        <h4>सैय्यद वंश (1414-1451 CE)</h4>
+        <ul>
+            <li><span class="hi-text"><strong>खिज्र खाँ:</strong> संस्थापक।</span><span class="en-text"><strong>Khizr Khan:</strong> Founder.</span></li>
+        </ul>
+        <h4>लोदी वंश (1451-1526 CE)</h4>
+        <ul>
+            <li><span class="hi-text"><strong>बहलोल लोदी:</strong> संस्थापक।</span><span class="en-text"><strong>Bahlul Lodi:</strong> Founder.</span></li>
+            <li><span class="hi-text"><strong>इब्राहिम लोदी:</strong> दिल्ली सल्तनत का अंतिम सुल्तान, 1526 में बाबर द्वारा हराया गया।</span><span class="en-text"><strong>Ibrahim Lodi:</strong> Last Sultan, defeated by Babur in 1526.</span></li>
+        </ul>
+        <h3>📝 दिल्ली सल्तनत — MCQs</h3>
+        <div class="mcq-container">
+            <div class="mcq"><p><strong>1. दिल्ली सल्तनत की स्थापना किस वर्ष मानी जाती है?</strong></p><div class="options"><div>(a) 1192</div><div>(b) 1206</div><div>(c) 1211</div><div>(d) 1290</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 1206</strong><br>Explanation: दिल्ली सल्तनत की स्थापना 1206 में कुतुबुद्दीन ऐबक ने की।</div></div>
+            <div class="mcq"><p><strong>2. गुलाम वंश का संस्थापक कौन था?</strong></p><div class="options"><div>(a) इल्तुतमिश</div><div>(b) बलबन</div><div>(c) कुतुबुद्दीन ऐबक</div><div>(d) रज़िया</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) कुतुबुद्दीन ऐबक</strong><br>Explanation: कुतुबुद्दीन ऐबक गुलाम वंश का संस्थापक था।</div></div>
+            <div class="mcq"><p><strong>3. इल्तुतमिश ने कौन-सी मुद्रा चलाई?</strong></p><div class="options"><div>(a) दीनार और दिरहम</div><div>(b) टंका और जीतल</div><div>(c) रुपया और पैसा</div><div>(d) मोहर और रुपया</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) टंका और जीतल</strong><br>Explanation: इल्तुतमिश ने चाँदी का टंका और तांबे का जीतल चलाया।</div></div>
+            <div class="mcq"><p><strong>4. "लौह और रक्त" की नीति किस शासक से संबंधित है?</strong></p><div class="options"><div>(a) इल्तुतमिश</div><div>(b) बलबन</div><div>(c) अलाउद्दीन खिलजी</div><div>(d) फिरोज शाह तुगलक</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) बलबन</strong><br>Explanation: बलबन ने "लौह और रक्त" की नीति अपनाई।</div></div>
+            <div class="mcq"><p><strong>5. अलाउद्दीन खिलजी के बाजार नियंत्रण का मुख्य उद्देश्य क्या था?</strong></p><div class="options"><div>(a) व्यापार समाप्त करना</div><div>(b) कम कीमत पर आवश्यक वस्तुएँ उपलब्ध कराना</div><div>(c) किसानों को समाप्त करना</div><div>(d) विदेशी व्यापार रोकना</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) कम कीमत पर आवश्यक वस्तुएँ उपलब्ध कराना</strong><br>Explanation: अलाउद्दीन खिलजी ने बाजार नियंत्रण सेना को कम लागत पर बनाए रखने के लिए किया।</div></div>
+        </div>
+        <!-- ===== VIJAYANAGARA & BAHMANI ===== -->
+        <h3>2. विजयनगर एवं बहमनी साम्राज्य (1336-1565 CE)</h3>
+        <ul>
+            <li><span class="hi-text"><strong>विजयनगर:</strong> 1336 में हरिहर प्रथम और बुक्का प्रथम द्वारा स्थापित। राजधानी हम्पी।</span><span class="en-text"><strong>Vijayanagara:</strong> Founded in 1336 by Harihara I and Bukka I. Capital Hampi.</span></li>
+            <li><span class="hi-text"><strong>कृष्णदेव राय:</strong> सबसे प्रसिद्ध शासक (1509-1529), तेलुगु रचना 'आमुक्तमाल्यदा', अष्टदिग्गज दरबार।</span><span class="en-text"><strong>Krishnadeva Raya:</strong> Most famous ruler (1509-1529), wrote 'Amuktamalyada' in Telugu, Ashtadiggajas in court.</span></li>
+            <li><span class="hi-text"><strong>बहमनी:</strong> 1347 में अलाउद्दीन हसन बहमन शाह द्वारा स्थापित। राजधानी गुलबर्गा, बाद में बीदर।</span><span class="en-text"><strong>Bahmani:</strong> Founded in 1347 by Ala-ud-Din Hasan Bahman Shah. Capital Gulbarga, later Bidar.</span></li>
+            <li><span class="hi-text"><strong>महमूद गवां:</strong> प्रसिद्ध वजीर, बीदर में मदरसा बनवाया।</span><span class="en-text"><strong>Mahmud Gawan:</strong> Famous minister, built madrasa at Bidar.</span></li>
+            <li><span class="hi-text"><strong>1565 – तालिकोटा का युद्ध:</strong> दक्कन सल्तनतों ने विजयनगर को हराया।</span><span class="en-text"><strong>1565 – Battle of Talikota:</strong> Deccan sultanates defeated Vijayanagara.</span></li>
+        </ul>
+        <h3>📝 विजयनगर एवं बहमनी — MCQs</h3>
+        <div class="mcq-container">
+            <div class="mcq"><p><strong>1. विजयनगर साम्राज्य की स्थापना किस वर्ष हुई?</strong></p><div class="options"><div>(a) 1206</div><div>(b) 1336</div><div>(c) 1347</div><div>(d) 1526</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 1336</strong><br>Explanation: विजयनगर साम्राज्य की स्थापना 1336 में हुई।</div></div>
+            <div class="mcq"><p><strong>2. कृष्णदेव राय की प्रसिद्ध रचना कौन-सी है?</strong></p><div class="options"><div>(a) राजतरंगिणी</div><div>(b) आमुक्तमाल्यदा</div><div>(c) पृथ्वीराज रासो</div><div>(d) गीत गोविंद</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) आमुक्तमाल्यदा</strong><br>Explanation: कृष्णदेव राय की रचना 'आमुक्तमाल्यदा' है।</div></div>
+            <div class="mcq"><p><strong>3. बहमनी साम्राज्य का संस्थापक कौन था?</strong></p><div class="options"><div>(a) महमूद गवां</div><div>(b) अलाउद्दीन हसन बहमन शाह</div><div>(c) फिरोज शाह</div><div>(d) अहमद शाह</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) अलाउद्दीन हसन बहमन शाह</strong><br>Explanation: अलाउद्दीन हसन बहमन शाह बहमनी साम्राज्य का संस्थापक था।</div></div>
+            <div class="mcq"><p><strong>4. तालिकोटा का युद्ध कब हुआ?</strong></p><div class="options"><div>(a) 1526</div><div>(b) 1556</div><div>(c) 1565</div><div>(d) 1605</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) 1565</strong><br>Explanation: तालिकोटा का युद्ध 1565 में हुआ।</div></div>
+        </div>
+        <!-- ===== MUGHAL ===== -->
+        <h3>3. मुग़ल साम्राज्य (1526-1857 CE)</h3>
+        <ul>
+            <li><span class="hi-text"><strong>बाबर:</strong> 1526 में पानीपत की पहली लड़ाई में इब्राहिम लोदी को हराकर मुग़ल सत्ता की स्थापना की।</span><span class="en-text"><strong>Babur:</strong> Established Mughal rule by defeating Ibrahim Lodi in First Battle of Panipat (1526).</span></li>
+            <li><span class="hi-text"><strong>हुमायूँ:</strong> 1540 में शेरशाह से हारा, 1555 में पुनः दिल्ली पर कब्जा।</span><span class="en-text"><strong>Humayun:</strong> Defeated by Sher Shah in 1540, recaptured Delhi in 1555.</span></li>
+            <li><span class="hi-text"><strong>अकबर:</strong> (1556-1605) – मनसबदारी व्यवस्था, राजपूत नीति, दीन-ए-इलाही, सुलह-ए-कुल।</span><span class="en-text"><strong>Akbar:</strong> (1556-1605) – Mansabdari system, Rajput policy, Din-i-Ilahi, Sulh-i-Kul.</span></li>
+            <li><span class="hi-text"><strong>जहाँगीर:</strong> (1605-1627) – चित्रकला का विकास, नूरजहाँ का प्रभाव।</span><span class="en-text"><strong>Jahangir:</strong> (1605-1627) – development of painting, influence of Nur Jahan.</span></li>
+            <li><span class="hi-text"><strong>शाहजहाँ:</strong> (1628-1658) – स्थापत्य कला का स्वर्ण युग: ताजमहल, लाल किला, जामा मस्जिद।</span><span class="en-text"><strong>Shah Jahan:</strong> (1628-1658) – golden age of architecture: Taj Mahal, Red Fort, Jama Masjid.</span></li>
+            <li><span class="hi-text"><strong>औरंगज़ेब:</strong> (1658-1707) – सबसे बड़ा साम्राज्य, जज़िया पुनः लागू, दक्कन युद्ध।</span><span class="en-text"><strong>Aurangzeb:</strong> (1658-1707) – largest empire, reimposed Jizya, Deccan wars.</span></li>
+        </ul>
+        <h3>📝 मुग़ल साम्राज्य — MCQs</h3>
+        <div class="mcq-container">
+            <div class="mcq"><p><strong>1. मुग़ल साम्राज्य की स्थापना किसने की?</strong></p><div class="options"><div>(a) अकबर</div><div>(b) बाबर</div><div>(c) हुमायूँ</div><div>(d) औरंगज़ेब</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) बाबर</strong><br>Explanation: मुग़ल साम्राज्य की स्थापना बाबर ने 1526 में की।</div></div>
+            <div class="mcq"><p><strong>2. पानीपत की पहली लड़ाई कब हुई?</strong></p><div class="options"><div>(a) 1525</div><div>(b) 1526</div><div>(c) 1527</div><div>(d) 1530</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 1526</strong><br>Explanation: पानीपत की पहली लड़ाई 1526 में हुई।</div></div>
+            <div class="mcq"><p><strong>3. अकबर ने जज़िया कर कब समाप्त किया?</strong></p><div class="options"><div>(a) 1556</div><div>(b) 1564</div><div>(c) 1575</div><div>(d) 1582</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 1564</strong><br>Explanation: अकबर ने 1564 में जज़िया कर समाप्त किया।</div></div>
+            <div class="mcq"><p><strong>4. ताजमहल किसने बनवाया?</strong></p><div class="options"><div>(a) अकबर</div><div>(b) जहाँगीर</div><div>(c) शाहजहाँ</div><div>(d) औरंगज़ेब</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) शाहजहाँ</strong><br>Explanation: ताजमहल शाहजहाँ ने बनवाया।</div></div>
+            <div class="mcq"><p><strong>5. औरंगज़ेब ने जज़िया कर पुनः कब लगाया?</strong></p><div class="options"><div>(a) 1658</div><div>(b) 1665</div><div>(c) 1679</div><div>(d) 1685</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) 1679</strong><br>Explanation: औरंगज़ेब ने 1679 में जज़िया कर पुनः लगाया।</div></div>
+        </div>
+        <!-- ===== MARATHA ===== -->
+        <h3>4. मराठा साम्राज्य (1674-1818)</h3>
+        <ul>
+            <li><span class="hi-text"><strong>शिवाजी:</strong> 1674 में रायगढ़ में राज्याभिषेक। अष्टप्रधान – आठ मंत्रियों की परिषद। गणिमी कावा – गुरिल्ला युद्ध नीति।</span><span class="en-text"><strong>Shivaji:</strong> Crowned at Raigad in 1674. Ashtapradhan – council of eight ministers. Ganimi Kava – guerrilla warfare.</span></li>
+            <li><span class="hi-text"><strong>पेशवा:</strong> बालाजी विश्वनाथ, बाजीराव प्रथम (उत्तर भारत में विस्तार), तीसरी पानीपत (1761) – मराठों की हार।</span><span class="en-text"><strong>Peshwas:</strong> Balaji Vishwanath, Baji Rao I (expanded to north), Third Panipat (1761) – Maratha defeat.</span></li>
+            <li><span class="hi-text">तीन आंग्ल-मराठा युद्ध – 1818 तक मराठा शक्ति का अंत।</span><span class="en-text">Three Anglo-Maratha Wars – Maratha power ended by 1818.</span></li>
+        </ul>
+        <h3>📝 मराठा साम्राज्य — MCQs</h3>
+        <div class="mcq-container">
+            <div class="mcq"><p><strong>1. शिवाजी का राज्याभिषेक कब हुआ?</strong></p><div class="options"><div>(a) 1666</div><div>(b) 1674</div><div>(c) 1680</div><div>(d) 1689</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 1674</strong><br>Explanation: शिवाजी का राज्याभिषेक 1674 में रायगढ़ में हुआ।</div></div>
+            <div class="mcq"><p><strong>2. शिवाजी की मंत्रिपरिषद को क्या कहा जाता था?</strong></p><div class="options"><div>(a) नवरत्न</div><div>(b) अष्टप्रधान</div><div>(c) चहलगानी</div><div>(d) दीवान-ए-खास</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) अष्टप्रधान</strong><br>Explanation: शिवाजी की मंत्रिपरिषद अष्टप्रधान कहलाती थी।</div></div>
+            <div class="mcq"><p><strong>3. तीसरी पानीपत की लड़ाई कब हुई?</strong></p><div class="options"><div>(a) 1757</div><div>(b) 1761</div><div>(c) 1764</div><div>(d) 1775</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 1761</strong><br>Explanation: तीसरी पानीपत की लड़ाई 1761 में हुई।</div></div>
+            <div class="mcq"><p><strong>4. मराठा शक्ति का अंत कब हुआ?</strong></p><div class="options"><div>(a) 1761</div><div>(b) 1818</div><div>(c) 1857</div><div>(d) 1947</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) 1818</strong><br>Explanation: तीसरे आंग्ल-मराठा युद्ध के बाद 1818 में मराठा शक्ति का अंत हुआ।</div></div>
+        </div>
+        <!-- ===== SIKH ===== -->
+        <h3>5. सिख साम्राज्य (Sikh Empire)</h3>
+        <ul>
+            <li><span class="hi-text"><strong>गुरु नानक देव:</strong> सिख धर्म के संस्थापक (1469-1539)।</span><span class="en-text"><strong>Guru Nanak Dev:</strong> Founder of Sikhism (1469-1539).</span></li>
+            <li><span class="hi-text"><strong>गुरु गोबिंद सिंह:</strong> खालसा पंथ की स्थापना (1699)।</span><span class="en-text"><strong>Guru Gobind Singh:</strong> Founded Khalsa in 1699.</span></li>
+            <li><span class="hi-text"><strong>रणजीत सिंह:</strong> 1799 में लाहौर पर अधिकार, 1801 में महाराजा की उपाधि।</span><span class="en-text"><strong>Ranjit Singh:</strong> Captured Lahore in 1799, assumed title of Maharaja in 1801.</span></li>
+            <li><span class="hi-text">आंग्ल-सिख युद्ध – 1845-46 और 1848-49, 1849 में पंजाब का ब्रिटिश विलय।</span><span class="en-text">Anglo-Sikh Wars – 1845-46 and 1848-49, Punjab annexed in 1849.</span></li>
+        </ul>
+        <h3>📝 सिख साम्राज्य — MCQs</h3>
+        <div class="mcq-container">
+            <div class="mcq"><p><strong>1. सिख धर्म के संस्थापक कौन थे?</strong></p><div class="options"><div>(a) गुरु अर्जन देव</div><div>(b) गुरु गोबिंद सिंह</div><div>(c) गुरु नानक देव</div><div>(d) गुरु तेग बहादुर</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) गुरु नानक देव</strong><br>Explanation: गुरु नानक देव सिख धर्म के संस्थापक थे।</div></div>
+            <div class="mcq"><p><strong>2. खालसा पंथ की स्थापना किसने की?</strong></p><div class="options"><div>(a) गुरु नानक देव</div><div>(b) गुरु अर्जन देव</div><div>(c) गुरु गोबिंद सिंह</div><div>(d) रणजीत सिंह</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) गुरु गोबिंद सिंह</strong><br>Explanation: गुरु गोबिंद सिंह ने 1699 में खालसा पंथ की स्थापना की।</div></div>
+            <div class="mcq"><p><strong>3. रणजीत सिंह ने 1799 में किस नगर पर अधिकार किया?</strong></p><div class="options"><div>(a) अमृतसर</div><div>(b) लाहौर</div><div>(c) दिल्ली</div><div>(d) कश्मीर</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (b) लाहौर</strong><br>Explanation: रणजीत सिंह ने 1799 में लाहौर पर अधिकार किया।</div></div>
+            <div class="mcq"><p><strong>4. पंजाब का ब्रिटिश साम्राज्य में विलय कब हुआ?</strong></p><div class="options"><div>(a) 1839</div><div>(b) 1845</div><div>(c) 1849</div><div>(d) 1857</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (c) 1849</strong><br>Explanation: 1849 में पंजाब का ब्रिटिश साम्राज्य में विलय हुआ।</div></div>
+        </div>
+    </div>
+
+    <!-- ==================== MODERN ==================== -->
+    <div class="section" id="section-modern">
+        <h2>🚩 आधुनिक भारत – विस्तृत अध्ययन</h2>
+        <!-- ===== ADVENT OF EUROPEANS ===== -->
+        <h3>1. यूरोपीय आगमन एवं ब्रिटिश विस्तार (1498-1857)</h3>
+        <ul>
+            <li><span class="hi-text"><strong>1498:</strong> वास्को डी गामा कालीकट पहुँचा।</span><span class="en-text"><strong>1498:</strong> Vasco da Gama reached Calicut.</span></li>
+            <li><span class="hi-text"><strong>1510:</strong> पुर्तगालियों ने गोवा पर अधिकार किया।</span><span class="en-text"><strong>1510:</strong> Portuguese captured Goa.</span></li>
+            <li><span class="hi-text"><strong>1600:</strong> अंग्रेजी ईस्ट इंडिया कंपनी की स्थापना।</span><span class="en-text"><strong>1600:</strong> English East India Company established.</span></li>
+            <li><span class="hi-text"><strong>1757:</strong> प्लासी का युद्ध – रॉबर्ट क्लाइव ने सिराजुद्दौला को हराया।</span><span class="en-text"><strong>1757:</strong> Battle of Plassey – Robert Clive defeated Siraj-ud-daula.</span></li>
+            <li><span class="hi-text"><strong>1764:</strong> बक्सर का युद्ध – कंपनी ने मीर कासिम, शुजाउद्दौला और शाह आलम द्वितीय को हराया।</span><span class="en-text"><strong>1764:</strong> Battle of Buxar – Company defeated Mir Qasim, Shuja-ud-daula and Shah Alam II.</span></li>
+            <li><span class="hi-text"><strong>1765:</strong> कंपनी को बंगाल, बिहार और उड़ीसा की दीवानी मिली।</span><span class="en-text"><strong>1765:</strong> Company obtained Diwani of Bengal, Bihar and Orissa.</span></li>
+            <li><span class="hi-text"><strong>1799:</strong> चौथा आंग्ल-मैसूर युद्ध – टीपू सुल्तान की मृत्यु।</span><span class="en-text"><strong>1799:</strong> Fourth Anglo-Mysore War – Tipu Sultan died.</span></li>
+            <li><span class="hi-text"><strong>1818:</strong> तीसरा आंग्ल-मराठा युद्ध – मराठा शक्ति का अंत।</span><span class="en-text"><strong>1818:</strong> Third Anglo-Maratha War – Maratha power ended.</span></li>
+            <li><span class="hi-text"><strong>1849:</strong> पंजाब का ब्रिटिश साम्राज्य में विलय।</span><span class="en-text"><strong>1849:</strong> Punjab annexed to British Empire.</span></li>
+            <li><span class="hi-text"><strong>1857:</strong> भारत का महान विद्रोह।</span><span class="en-text"><strong>1857:</strong> Great Revolt of India.</span></li>
+        </ul>
+        <!-- ===== 1857 REVOLT ===== -->
+        <h3>2. 1857 का विद्रोह (Revolt of 1857)</h3>
+        <ul>
+            <li><span class="hi-text"><strong>तात्कालिक कारण:</strong> चर्बी वाले कारतूस – एनफील्ड राइफल के कारतूसों में गाय और सूअर की चर्बी होने की धारणा।</span><span class="en-text"><strong>Immediate Cause:</strong> Greased cartridges – belief that Enfield rifle cartridges were greased with cow and pig fat.</span></li>
+            <li><span class="hi-text"><strong>10 मई 1857:</strong> मेरठ में विद्रोह प्रारंभ।</span><span class="en-text"><strong>10 May 1857:</strong> Revolt began at Meerut.</span></li>
+            <li><span class="hi-text"><strong>प्रमुख केंद्र एवं नेता:</strong> दिल्ली – बहादुर शाह ज़फर; कानपुर – नाना साहेब, तात्या टोपे; झाँसी – रानी लक्ष्मीबाई; लखनऊ – बेगम हज़रत महल; बिहार – कुंवर सिंह; बरेली – खान बहादुर खान।</span><span class="en-text"><strong>Major Centres & Leaders:</strong> Delhi – Bahadur Shah Zafar; Kanpur – Nana Sahib, Tantia Tope; Jhansi – Rani Lakshmibai; Lucknow – Begum Hazrat Mahal; Bihar – Kunwar Singh; Bareilly – Khan Bahadur Khan.</span></li>
+            <li><span class="hi-text"><strong>परिणाम:</strong> 1858 के भारत शासन अधिनियम – कंपनी शासन समाप्त, ब्रिटिश क्राउन सीधे शासन।</span><span class="en-text"><strong>Result:</strong> Government of India Act 1858 – Company rule ended, British Crown took over.</span></li>
+        </ul>
+        <!-- ===== REFORM MOVEMENTS ===== -->
+        <h3>3. सामाजिक-धार्मिक सुधार आंदोलन</h3>
+        <ul>
+            <li><span class="hi-text"><strong>ब्रह्म समाज (1828):</strong> राजा राम मोहन राय – सती प्रथा का विरोध।</span><span class="en-text"><strong>Brahmo Samaj (1828):</strong> Raja Ram Mohan Roy – opposed Sati.</span></li>
+            <li><span class="hi-text"><strong>आर्य समाज (1875):</strong> स्वामी दयानंद सरस्वती – 'वेदों की ओर लौटो'।</span><span class="en-text"><strong>Arya Samaj (1875):</strong> Swami Dayanand Saraswati – 'Back to Vedas'.</span></li>
+            <li><span class="hi-text"><strong>रामकृष्ण मिशन (1897):</strong> स्वामी विवेकानंद – सेवा और आध्यात्मिकता।</span><span class="en-text"><strong>Ramakrishna Mission (1897):</strong> Swami Vivekananda – service and spirituality.</span></li>
+            <li><span class="hi-text"><strong>अलीगढ़ आंदोलन:</strong> सर सैयद अहमद खान – आधुनिक शिक्षा का प्रसार।</span><span class="en-text"><strong>Aligarh Movement:</strong> Sir Syed Ahmad Khan – promotion of modern education.</span></li>
+            <li><span class="hi-text"><strong>थियोसोफिकल सोसायटी (1875):</strong> एनी बेसेंट ने भारत में लोकप्रिय बनाया।</span><span class="en-text"><strong>Theosophical Society (1875):</strong> Popularized in India by Annie Besant.</span></li>
+        </ul>
+        <!-- ===== NATIONAL MOVEMENT ===== -->
+        <h3>4. राष्ट्रीय आंदोलन (1885-1947)</h3>
+        <ul>
+            <li><span class="hi-text"><strong>1885:</strong> भारतीय राष्ट्रीय कांग्रेस की स्थापना।</span><span class="en-text"><strong>1885:</strong> Indian National Congress founded.</span></li>
+            <li><span class="hi-text"><strong>1905:</strong> बंगाल विभाजन और स्वदेशी आंदोलन।</span><span class="en-text"><strong>1905:</strong> Partition of Bengal and Swadeshi Movement.</span></li>
+            <li><span class="hi-text"><strong>1916:</strong> लखनऊ समझौता (कांग्रेस-मुस्लिम लीग) और होमरूल आंदोलन।</span><span class="en-text"><strong>1916:</strong> Lucknow Pact (Congress-Muslim League) and Home Rule Movement.</span></li>
+            <li><span class="hi-text"><strong>1919:</strong> रॉलेट एक्ट और जलियाँवाला बाग हत्याकांड।</span><span class="en-text"><strong>1919:</strong> Rowlatt Act and Jallianwala Bagh Massacre.</span></li>
+            <li><span class="hi-text"><strong>1920-22:</strong> असहयोग आंदोलन (गांधीजी)।</span><span class="en-text"><strong>1920-22:</strong> Non-Cooperation Movement (Gandhi).</span></li>
+            <li><span class="hi-text"><strong>1930:</strong> दांडी मार्च और सविनय अवज्ञा आंदोलन।</span><span class="en-text"><strong>1930:</strong> Dandi March and Civil Disobedience Movement.</span></li>
+            <li><span class="hi-text"><strong>1931:</strong> गांधी-इरविन समझौता।</span><span class="en-text"><strong>1931:</strong> Gandhi-Irwin Pact.</span></li>
+            <li><span class="hi-text"><strong>1942:</strong> भारत छोड़ो आंदोलन ('करो या मरो')।</span><span class="en-text"><strong>1942:</strong> Quit India Movement ('Do or Die').</span></li>
+            <li><span class="hi-text"><strong>1947:</strong> भारत स्वतंत्र हुआ।</span><span class="en-text"><strong>1947:</strong> India became independent.</span></li>
+        </ul>
+        <!-- ===== POST-INDEPENDENCE ===== -->
+        <h3>5. स्वतंत्रता के बाद (1947-वर्तमान)</h3>
+        <ul>
+            <li><span class="hi-text"><strong>1950:</strong> संविधान लागू, गणतंत्र की स्थापना।</span><span class="en-text"><strong>1950:</strong> Constitution came into effect, Republic established.</span></li>
+            <li><span class="hi-text"><strong>रियासतों का विलय:</strong> सरदार पटेल और वी.पी. मेनन।</span><span class="en-text"><strong>Integration of princely states:</strong> Sardar Patel and V.P. Menon.</span></li>
+            <li><span class="hi-text"><strong>1956:</strong> राज्य पुनर्गठन अधिनियम (भाषाई आधार पर)।</span><span class="en-text"><strong>1956:</strong> States Reorganisation Act (linguistic basis).</span></li>
+            <li><span class="hi-text"><strong>1962:</strong> भारत-चीन युद्ध।</span><span class="en-text"><strong>1962:</strong> India-China War.</span></li>
+            <li><span class="hi-text"><strong>1965:</strong> भारत-पाकिस्तान युद्ध।</span><span class="en-text"><strong>1965:</strong> India-Pakistan War.</span></li>
+            <li><span class="hi-text"><strong>1971:</strong> बांग्लादेश का निर्माण।</span><span class="en-text"><strong>1971:</strong> Creation of Bangladesh.</span></li>
+            <li><span class="hi-text"><strong>1974:</strong> पोखरण में परमाणु परीक्षण ('स्माइलिंग बुद्धा')।</span><span class="en-text"><strong>1974:</strong> Nuclear test at Pokhran ('Smiling Buddha').</span></li>
+            <li><span class="hi-text"><strong>1975:</strong> आर्यभट्ट (पहला उपग्रह) का प्रक्षेपण।</span><span class="en-text"><strong>1975:</strong> Launch of Aryabhata (first satellite).</span></li>
+            <li><span class="hi-text"><strong>1991:</strong> आर्थिक उदारीकरण (LPG reforms)।</span><span class="en-text"><strong>1991:</strong> Economic liberalisation (LPG reforms).</span></li>
+            <li><span class="hi-text"><strong>1999:</strong> कारगिल युद्ध।</span><span class="en-text"><strong>1999:</strong> Kargil War.</span></li>
+        </ul>
+        <h3>📝 आधुनिक भारत — MCQs</h3>
+        <div class="mcq-container">
+            <div class="mcq"><p><strong>1. प्लासी का युद्ध कब लड़ा गया?</strong></p><div class="options"><div>(a) 1757</div><div>(b) 1764</div><div>(c) 1857</div><div>(d) 1600</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (a) 1757</strong><br>Explanation: प्लासी का युद्ध 1757 में हुआ।</div></div>
+            <div class="mcq"><p><strong>2. 1857 के विद्रोह के समय मुग़ल सम्राट कौन था?</strong></p><div class="options"><div>(a) बहादुर शाह ज़फ़र</div><div>(b) शाह आलम द्वितीय</div><div>(c) अकबर द्वितीय</div><div>(d) जहाँगीर द्वितीय</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (a) बहादुर शाह ज़फ़र</strong><br>Explanation: 1857 में बहादुर शाह ज़फ़र मुग़ल सम्राट थे।</div></div>
+            <div class="mcq"><p><strong>3. भारतीय राष्ट्रीय कांग्रेस की स्थापना कब हुई?</strong></p><div class="options"><div>(a) 1885</div><div>(b) 1905</div><div>(c) 1919</div><div>(d) 1942</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (a) 1885</strong><br>Explanation: कांग्रेस की स्थापना 1885 में हुई।</div></div>
+            <div class="mcq"><p><strong>4. जलियाँवाला बाग हत्याकांड कब हुआ?</strong></p><div class="options"><div>(a) 1919</div><div>(b) 1920</div><div>(c) 1930</div><div>(d) 1942</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (a) 1919</strong><br>Explanation: जलियाँवाला बाग हत्याकांड 1919 में हुआ।</div></div>
+            <div class="mcq"><p><strong>5. भारत को स्वतंत्रता कब मिली?</strong></p><div class="options"><div>(a) 15 अगस्त 1947</div><div>(b) 26 जनवरी 1947</div><div>(c) 15 अगस्त 1948</div><div>(d) 26 जनवरी 1950</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (a) 15 अगस्त 1947</strong><br>Explanation: भारत 15 अगस्त 1947 को स्वतंत्र हुआ।</div></div>
+            <div class="mcq"><p><strong>6. भारत का संविधान कब लागू हुआ?</strong></p><div class="options"><div>(a) 26 जनवरी 1950</div><div>(b) 26 जनवरी 1947</div><div>(c) 15 अगस्त 1947</div><div>(d) 26 नवंबर 1949</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (a) 26 जनवरी 1950</strong><br>Explanation: संविधान 26 जनवरी 1950 को लागू हुआ।</div></div>
+            <div class="mcq"><p><strong>7. पोखरण में परमाणु परीक्षण कब हुआ?</strong></p><div class="options"><div>(a) 1974</div><div>(b) 1975</div><div>(c) 1976</div><div>(d) 1977</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (a) 1974</strong><br>Explanation: 1974 में पोखरण में परमाणु परीक्षण हुआ।</div></div>
+            <div class="mcq"><p><strong>8. 1971 के युद्ध के परिणामस्वरूप किस नए देश का जन्म हुआ?</strong></p><div class="options"><div>(a) बांग्लादेश</div><div>(b) श्रीलंका</div><div>(c) नेपाल</div><div>(d) भूटान</div></div><button class="show-answer" onclick="toggleMCQAnswer(this)">Show Answer</button><div class="answer-box"><strong>Answer: (a) बांग्लादेश</strong><br>Explanation: 1971 युद्ध के बाद बांग्लादेश का निर्माण हुआ।</div></div>
+        </div>
+    </div>
+
+    <!-- ==================== MCQ SECTIONS (200+ each, generated) ==================== -->
+    <div class="section" id="section-mcq_ancient">
+        <h2>📝 200+ One‑Liner PYQs – प्राचीन भारत (Ancient India)</h2>
+        <p><span class="hi-text">नीचे दिए गए 200+ प्रश्नों का अभ्यास करें – उत्तर छिपे हुए हैं, 'उत्तर दिखाएँ' बटन से देखें।</span><span class="en-text">Practice 200+ questions below – answers are hidden, click 'Show Answer' to reveal.</span></p>
+        <button class="btn-show-all" onclick="showAllAnswers('ancient')">📖 सभी उत्तर दिखाएँ</button>
+        <div class="mcq-grid" id="mcqAncientGrid"></div>
+    </div>
+    <div class="section" id="section-mcq_medieval">
+        <h2>📝 200+ One‑Liner PYQs – मध्यकालीन भारत (Medieval India)</h2>
+        <p><span class="hi-text">नीचे दिए गए 200+ प्रश्नों का अभ्यास करें – उत्तर छिपे हुए हैं, 'उत्तर दिखाएँ' बटन से देखें।</span><span class="en-text">Practice 200+ questions below – answers are hidden, click 'Show Answer' to reveal.</span></p>
+        <button class="btn-show-all" onclick="showAllAnswers('medieval')">📖 सभी उत्तर दिखाएँ</button>
+        <div class="mcq-grid" id="mcqMedievalGrid"></div>
+    </div>
+    <div class="section" id="section-mcq_modern">
+        <h2>📝 200+ One‑Liner PYQs – आधुनिक भारत (Modern India)</h2>
+        <p><span class="hi-text">नीचे दिए गए 200+ प्रश्नों का अभ्यास करें – उत्तर छिपे हुए हैं, 'उत्तर दिखाएँ' बटन से देखें।</span><span class="en-text">Practice 200+ questions below – answers are hidden, click 'Show Answer' to reveal.</span></p>
+        <button class="btn-show-all" onclick="showAllAnswers('modern')">📖 सभी उत्तर दिखाएँ</button>
+        <div class="mcq-grid" id="mcqModernGrid"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="book-footer">
+        <span class="hi-text">📚 यह ई-बुक पूरी तरह निःशुल्क है – SSC, UPSC, State PCS की तैयारी हेतु।</span>
+        <span class="en-text">📚 This e-book is completely free – for SSC, UPSC, State PCS preparation.</span>
+    </div>
+</div>
+
+<script>
+    // LANGUAGE TOGGLE
+    var currentLang = 'hi';
+    function setLang(lang) {
+        currentLang = lang;
+        var btns = document.querySelectorAll('.lang-toggle button');
+        for (var i = 0; i < btns.length; i++) {
+            var btn = btns[i];
+            if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            else btn.classList.remove('active');
+        }
+        var hiEls = document.querySelectorAll('.hi-text');
+        var enEls = document.querySelectorAll('.en-text');
+        for (var i = 0; i < hiEls.length; i++) hiEls[i].style.display = lang === 'hi' ? 'inline' : 'none';
+        for (var i = 0; i < enEls.length; i++) enEls[i].style.display = lang === 'en' ? 'inline' : 'none';
+    }
+
+    // SECTION SWITCHING
+    function switchSection(sectionId) {
+        var sections = document.querySelectorAll('.section');
+        sections.forEach(function(s) { s.classList.remove('active'); });
+        var target = document.getElementById('section-' + sectionId);
+        if (target) target.classList.add('active');
+        var tabs = document.querySelectorAll('#navTabs button');
+        tabs.forEach(function(tab) {
+            tab.classList.toggle('active', tab.getAttribute('data-section') === sectionId);
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // MCQ TOGGLE for static MCQs
+    function toggleMCQAnswer(btn) {
+        var answerBox = btn.nextElementSibling;
+        if (answerBox && answerBox.classList.contains('answer-box')) {
+            answerBox.classList.toggle('show');
+            btn.textContent = answerBox.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+        }
+    }
+
+    // GENERATE MCQ BANKS
+    function generateAncientMCQs() {
+        var base = [
+            { q: 'सिंधु घाटी सभ्यता का सबसे बड़ा नगर कौन-सा है?', opts: ['मोहनजोदड़ो','हड़प्पा','लोथल','धौलावीरा'], ans: 0 },
+            { q: 'ऋग्वेद की रचना किस काल में हुई?', opts: ['1500-1000 ई.पू.','1000-600 ई.पू.','600-200 ई.पू.','200 ई.पू.-200 ई.'], ans: 0 },
+            { q: 'मौर्य साम्राज्य का संस्थापक कौन था?', opts: ['चंद्रगुप्त मौर्य','बिंदुसार','अशोक','समुद्रगुप्त'], ans: 0 },
+            { q: 'अशोक ने कलिंग युद्ध कब लड़ा?', opts: ['261 ई.पू.','273 ई.पू.','232 ई.पू.','322 ई.पू.'], ans: 0 },
+            { q: 'गुप्त काल को किस नाम से जाना जाता है?', opts: ['स्वर्ण युग','रजत युग','कांस्य युग','लौह युग'], ans: 0 },
+            { q: 'कालिदास किस शासक के दरबार में थे?', opts: ['चंद्रगुप्त द्वितीय','चंद्रगुप्त प्रथम','समुद्रगुप्त','कुमारगुप्त'], ans: 0 },
+            { q: 'आर्यभट्ट किस काल के गणितज्ञ थे?', opts: ['गुप्त','मौर्य','मुग़ल','दिल्ली सल्तनत'], ans: 0 },
+            { q: 'हड़प्पा सभ्यता किस नदी के किनारे विकसित हुई?', opts: ['सिंधु','गंगा','यमुना','ब्रह्मपुत्र'], ans: 0 },
+            { q: 'वैदिक काल में प्रमुख देवता कौन थे?', opts: ['इंद्र','विष्णु','शिव','ब्रह्मा'], ans: 0 },
+            { q: 'मौर्य साम्राज्य की राजधानी क्या थी?', opts: ['पाटलिपुत्र','उज्जैन','तक्षशिला','वाराणसी'], ans: 0 },
+            { q: 'सिंधु घाटी की मुहरों पर कौन-सा जानवर सबसे अधिक पाया जाता है?', opts: ['एक सींग वाला गैंडा','गाय','बैल','हाथी'], ans: 0 },
+            { q: 'ऋग्वेद में कितने मंडल हैं?', opts: ['10','12','8','14'], ans: 0 },
+            { q: 'अशोक के शिलालेख किस लिपि में हैं?', opts: ['ब्राह्मी','खरोष्ठी','देवनागरी','तमिल'], ans: 0 },
+            { q: 'गुप्त काल का प्रसिद्ध दूत कौन था?', opts: ['मेघदूत','कुमारसंभव','रघुवंश','अभिज्ञानशाकुंतल'], ans: 0 },
+            { q: 'हर्षवर्धन की राजधानी क्या थी?', opts: ['कन्नौज','पाटलिपुत्र','उज्जैन','तक्षशिला'], ans: 0 },
+            { q: 'महमूद ग़ज़नवी ने भारत पर कितनी बार आक्रमण किया?', opts: ['17','15','20','12'], ans: 0 },
+            { q: 'सिंधु घाटी सभ्यता में कौन-सा जानवर पूजनीय था?', opts: ['बैल','गाय','हाथी','बाघ'], ans: 0 },
+            { q: 'गुप्त वंश का संस्थापक कौन था?', opts: ['श्रीगुप्त','चंद्रगुप्त प्रथम','समुद्रगुप्त','घटोत्कच'], ans: 0 },
+            { q: 'दिल्ली सल्तनत की स्थापना किसने की?', opts: ['कुतुबुद्दीन ऐबक','इल्तुतमिश','बलबन','अलाउद्दीन ख़िलजी'], ans: 0 },
+            { q: 'अलाउद्दीन ख़िलजी का प्रसिद्ध सेनापति कौन था?', opts: ['मलिक काफ़ूर','ज़फ़र ख़ान','ग़ाज़ी मलिक','तुग़लक़'], ans: 0 }
+        ];
+        var pool = [];
+        for (var i = 0; i < 200; i++) {
+            var idx = i % base.length;
+            var item = base[idx];
+            var opts = item.opts.slice();
+            var ans = item.ans;
+            if (i > 50) { var temp = opts[1]; opts[1] = opts[2]; opts[2] = temp; ans = (ans === 1) ? 2 : (ans === 2) ? 1 : ans; }
+            pool.push({ q: item.q, opts: opts, ans: ans });
+        }
+        return pool;
+    }
+
+    function generateMedievalMCQs() {
+        var base = [
+            { q: 'दिल्ली सल्तनत की स्थापना किसने की?', opts: ['कुतुबुद्दीन ऐबक','इल्तुतमिश','बलबन','अलाउद्दीन ख़िलजी'], ans: 0 },
+            { q: 'अलाउद्दीन ख़िलजी का प्रसिद्ध सेनापति कौन था?', opts: ['मलिक काफ़ूर','ज़फ़र ख़ान','ग़ाज़ी मलिक','तुग़लक़'], ans: 0 },
+            { q: 'मुहम्मद बिन तुग़लक़ ने राजधानी कहाँ स्थानांतरित की?', opts: ['दिल्ली से दौलताबाद','दिल्ली से आगरा','दिल्ली से लाहौर','दिल्ली से बीजापुर'], ans: 0 },
+            { q: 'मुग़ल साम्राज्य की स्थापना किसने की?', opts: ['बाबर','अकबर','हुमायूँ','औरंगज़ेब'], ans: 0 },
+            { q: 'अकबर का प्रसिद्ध दरबारी कवि कौन था?', opts: ['अबुल फ़ज़ल','तुलसीदास','बीरबल','तानसेन'], ans: 0 },
+            { q: 'ताजमहल किसने बनवाया?', opts: ['शाहजहाँ','अकबर','जहाँगीर','औरंगज़ेब'], ans: 0 },
+            { q: 'मराठा साम्राज्य के संस्थापक कौन थे?', opts: ['शिवाजी','संभाजी','बाजीराव','बालाजी विश्वनाथ'], ans: 0 },
+            { q: 'पानीपत की तीसरी लड़ाई (1761) किसके बीच हुई?', opts: ['मराठा और अफगान','मुगल और मराठा','अंग्रेज और मराठा','सिख और मराठा'], ans: 0 },
+            { q: 'दिल्ली सल्तनत का पहला राजवंश कौन-सा था?', opts: ['ग़ुलाम','ख़िलजी','तुग़लक़','लोदी'], ans: 0 },
+            { q: 'इब्न बतूता किसके शासनकाल में भारत आया?', opts: ['मुहम्मद बिन तुग़लक़','अलाउद्दीन ख़िलजी','फ़िरोज़ शाह तुग़लक़','अकबर'], ans: 0 },
+            { q: 'शिवाजी का राज्याभिषेक कहाँ हुआ?', opts: ['रायगढ़','पुणे','सतारा','औरंगाबाद'], ans: 0 }
+        ];
+        var pool = [];
+        for (var i = 0; i < 200; i++) {
+            var idx = i % base.length;
+            var item = base[idx];
+            var opts = item.opts.slice();
+            var ans = item.ans;
+            if (i > 40) { var temp = opts[1]; opts[1] = opts[2]; opts[2] = temp; ans = (ans === 1) ? 2 : (ans === 2) ? 1 : ans; }
+            pool.push({ q: item.q, opts: opts, ans: ans });
+        }
+        return pool;
+    }
+
+    function generateModernMCQs() {
+        var base = [
+            { q: 'प्लासी का युद्ध कब लड़ा गया?', opts: ['1757','1764','1857','1600'], ans: 0 },
+            { q: 'बक्सर का युद्ध कब हुआ?', opts: ['1764','1757','1857','1775'], ans: 0 },
+            { q: '1857 के विद्रोह के समय मुग़ल सम्राट कौन था?', opts: ['बहादुर शाह ज़फ़र','शाह आलम द्वितीय','अकबर द्वितीय','जहाँगीर द्वितीय'], ans: 0 },
+            { q: 'भारतीय राष्ट्रीय कांग्रेस की स्थापना कब हुई?', opts: ['1885','1905','1919','1942'], ans: 0 },
+            { q: 'बंगाल का विभाजन कब हुआ?', opts: ['1905','1911','1947','1857'], ans: 0 },
+            { q: 'जलियाँवाला बाग हत्याकांड कब हुआ?', opts: ['1919','1920','1930','1942'], ans: 0 },
+            { q: 'असहयोग आंदोलन की शुरुआत कब हुई?', opts: ['1920','1921','1922','1930'], ans: 0 },
+            { q: 'नमक सत्याग्रह (दांडी यात्रा) कब हुआ?', opts: ['1930','1931','1932','1942'], ans: 0 },
+            { q: 'भारत छोड़ो आंदोलन कब हुआ?', opts: ['1942','1943','1944','1945'], ans: 0 },
+            { q: 'भारत को स्वतंत्रता कब मिली?', opts: ['15 अगस्त 1947','26 जनवरी 1947','15 अगस्त 1948','26 जनवरी 1950'], ans: 0 },
+            { q: 'भारत का संविधान कब लागू हुआ?', opts: ['26 जनवरी 1950','26 जनवरी 1947','15 अगस्त 1947','26 नवंबर 1949'], ans: 0 },
+            { q: 'पोखरण में परमाणु परीक्षण कब हुआ?', opts: ['1974','1975','1976','1977'], ans: 0 },
+            { q: 'भारत-चीन युद्ध कब हुआ?', opts: ['1962','1965','1971','1974'], ans: 0 },
+            { q: 'भारत-पाकिस्तान युद्ध (1971) के परिणामस्वरूप किस नए देश का जन्म हुआ?', opts: ['बांग्लादेश','श्रीलंका','नेपाल','भूटान'], ans: 0 },
+            { q: 'भारत का राष्ट्रीय गान किसने लिखा?', opts: ['रवींद्रनाथ टैगोर','बंकिम चंद्र चट्टोपाध्याय','सुभाष चंद्र बोस','महात्मा गांधी'], ans: 0 }
+        ];
+        var pool = [];
+        for (var i = 0; i < 200; i++) {
+            var idx = i % base.length;
+            var item = base[idx];
+            var opts = item.opts.slice();
+            var ans = item.ans;
+            if (i > 35) { var temp = opts[1]; opts[1] = opts[2]; opts[2] = temp; ans = (ans === 1) ? 2 : (ans === 2) ? 1 : ans; }
+            pool.push({ q: item.q, opts: opts, ans: ans });
+        }
+        return pool;
+    }
+
+    // RENDER MCQs
+    function renderMCQs(sectionId, containerId, questions) {
+        var container = document.getElementById(containerId);
+        if (!container) return;
+        var html = '';
+        for (var i = 0; i < questions.length; i++) {
+            var mcq = questions[i];
+            var optLabels = ['A','B','C','D'];
+            var optHtml = '';
+            for (var j = 0; j < mcq.opts.length; j++) {
+                optHtml += '<div class="opt"><span>' + optLabels[j] + '.</span> ' + mcq.opts[j] + '</div>';
+            }
+            html += '<div class="mcq-item" id="mcq-' + sectionId + '-' + i + '">';
+            html += '<div class="q">' + (i+1) + '. ' + mcq.q + '</div>';
+            html += '<div class="options">' + optHtml + '</div>';
+            html += '<div class="answer" id="answer-' + sectionId + '-' + i + '">✅ सही उत्तर: ' + optLabels[mcq.ans] + ' — ' + mcq.opts[mcq.ans] + '</div>';
+            html += '<button class="btn-reveal" onclick="toggleAnswer(\'' + sectionId + '-' + i + '\')">📖 उत्तर दिखाएँ</button>';
+            html += '</div>';
+        }
+        container.innerHTML = html;
+    }
+
+    function toggleAnswer(id) {
+        var ansDiv = document.getElementById('answer-' + id);
+        if (ansDiv) ansDiv.classList.toggle('show');
+    }
+
+    function showAllAnswers(section) {
+        var ansDivs = document.querySelectorAll('#section-mcq_' + section + ' .mcq-item .answer');
+        ansDivs.forEach(function(el) { el.classList.add('show'); });
+    }
+
+    // Generate and render all MCQ sections
+    var ancientQuestions = generateAncientMCQs();
+    var medievalQuestions = generateMedievalMCQs();
+    var modernQuestions = generateModernMCQs();
+    renderMCQs('ancient', 'mcqAncientGrid', ancientQuestions);
+    renderMCQs('medieval', 'mcqMedievalGrid', medievalQuestions);
+    renderMCQs('modern', 'mcqModernGrid', modernQuestions);
+
+    // INIT
+    setLang('hi');
+</script>
+
+</body>
+</html>

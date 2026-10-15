@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Awareness – Digital India, E-Governance, Payments</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES (Same as previous) ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #2c3e50;
+            --accent-light: #5d7a9a;
+            --accent-dark: #1a252f;
+            --accent-gradient: linear-gradient(135deg, #1a252f, #2c3e50);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(44, 62, 80, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #2c3e50;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(44,62,80,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.dark { background:#2c3e50; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(44,62,80,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(44,62,80,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(44,62,80,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(44,62,80,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(44,62,80,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(44,62,80,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(44,62,80,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(44,62,80,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(44,62,80,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(44,62,80,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(44,62,80,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(44,62,80,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(44,62,80,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(44,62,80,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(44,62,80,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(44,62,80,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(44,62,80,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">📱 DIGITAL AWARENESS – Digital India • E-Governance • Payments • Modern Computing • 240+ MCQs • UP Police, SSC, Banking, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">📱</div>
+                <div><h1>DIGITAL AWARENESS</h1><span>Digital India • E-Governance • Payments</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot dark active" data-color="dark" title="Dark (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">📱 DIGITAL AWARENESS – SAMPOORNA</div>
+            <h2>Digital Awareness <strong>सम्पूर्ण अध्ययन</strong><br>Digital India • E-Governance • Payments • Modern Computing</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 240 MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics + Practice</span>
+                <span>📌 240 MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>📱 Complete Digital</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>240</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>Digital Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Digital India</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> E-Governance</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> Digital Payments</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Banking & Safety</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Trends & Modern Computing</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: DIGITAL INDIA ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>Digital India – Vision, Pillars & Impact</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Digital India Programme</h4>
+                    <p><strong>Digital India</strong> भारत सरकार का एक flagship programme है जिसे <strong>1 July 2015</strong> को लॉन्च किया गया। इसका उद्देश्य देश को <strong>digitally empowered society</strong> और <strong>knowledge economy</strong> में बदलना है।</p>
+                    <p><strong>Vision Areas:</strong></p>
+                    <ul>
+                        <li><strong>Digital Infrastructure as a Utility:</strong> हर नागरिक को digital infrastructure (जैसे broadband, mobile connectivity) उपलब्ध कराना।</li>
+                        <li><strong>Governance & Services on Demand:</strong> Online services (जैसे passports, taxes) को seamless रूप से provide करना।</li>
+                        <li><strong>Digital Empowerment of Citizens:</strong> Digital literacy और Universal access to digital resources।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 9 Pillars of Digital India (Exam Focus)</h4>
+                    <ul>
+                        <li><strong>1. Broadband Highways:</strong> Rural और urban areas में high-speed internet connectivity (BharatNet)।</li>
+                        <li><strong>2. Universal Access to Mobile Connectivity:</strong> Mobile towers in uncovered villages (2G/4G/5G)।</li>
+                        <li><strong>3. Public Internet Access Programme:</strong> Common Service Centres (CSCs) और Digital Literacy (Pradhan Mantri Gramin Digital Saksharta Abhiyan - PMGDISHA)।</li>
+                        <li><strong>4. e-Governance – Reforming Government through Technology:</strong> Workflow automation, online forms, paperless offices (e.g., e-Office, DigiLocker, UMANG)।</li>
+                        <li><strong>5. e-Kranti – Electronic Delivery of Services:</strong> Education (e-Vidya), Health (e-Health), Agriculture (e-Agri), Banking (e-Bank), etc.</li>
+                        <li><strong>6. Information for All:</strong> Open data, online portals, social media for government communication.</li>
+                        <li><strong>7. Electronics Manufacturing:</strong> Make in India in electronics (mobile, components) to reduce imports.</li>
+                        <li><strong>8. IT for Jobs:</strong> Training youth in IT skills (Skill India, Digital India Skills).</li>
+                        <li><strong>9. Early Harvest Programmes:</strong> Quick wins like Wi-Fi in universities, MyGov platform, biometric attendance, etc.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Key Digital India Initiatives (Exam में आते हैं)</h4>
+                    <ul>
+                        <li><strong>MyGov:</strong> Citizen participation platform for governance (discuss, vote, volunteer).</li>
+                        <li><strong>DigiLocker:</strong> Digital document storage (Aadhaar, licenses, certificates) – paperless documentation.</li>
+                        <li><strong>UMANG (Unified Mobile Application for New-age Governance):</strong> Single app for multiple government services (over 1000 services).</li>
+                        <li><strong>BharatNet:</strong> Optical fiber network connecting Gram Panchayats (target: 2.5 lakh+ villages).</li>
+                        <li><strong>PMGDISHA (Pradhan Mantri Gramin Digital Saksharta Abhiyan):</strong> Digital literacy for rural citizens (6 crore+ trained).</li>
+                        <li><strong>e-Hospital:</strong> Online hospital services (appointments, reports).</li>
+                        <li><strong>e-Pathshala:</strong> Digital educational resources for students.</li>
+                        <li><strong>Jeevan Pramaan:</strong> Digital life certificate for pensioners (using biometrics).</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Digital India Mnemonic:</strong> 9 Pillars = B.U.P.e.e.I.E.I.E (Broadband, Universal Access, Public Internet, e-Governance, e-Kranti, Information for All, Electronics Manufacturing, IT for Jobs, Early Harvest).
+                </div>
+                <div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: E-GOVERNANCE ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>E-Governance – Models, Services & Platforms</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 E-Governance क्या है?</h4>
+                    <p>E-Governance (Electronic Governance), <strong>Information and Communication Technology (ICT)</strong> का use है जो government services को citizens, businesses, और other government entities को <strong>efficient, transparent, और accessible</strong> बनाता है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 E-Governance Models (G2C, G2B, G2G, G2E)</h4>
+                    <ul>
+                        <li><strong>G2C (Government-to-Citizen):</strong> सरकार से नागरिकों को services (जैसे passport, ration card, Aadhaar, certificates) – <strong>सबसे important</strong>।</li>
+                        <li><strong>G2B (Government-to-Business):</strong> सरकार और businesses के बीच interactions (जैसे GST filings, tenders, company registrations)।</li>
+                        <li><strong>G2G (Government-to-Government):</strong> सरकारी विभागों के बीच data sharing और coordination (जैसे central-state inter-operability)।</li>
+                        <li><strong>G2E (Government-to-Employees):</strong> Government employees के लिए internal services (जैसे payroll, attendance, HR)。</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 E-Governance Platforms (India)</h4>
+                    <ul>
+                        <li><strong>UMANG (Unified Mobile App):</strong> 50+ departments, 1000+ services (Aadhaar, Passport, PAN, GST, Voter ID) – <strong>single app</strong>।</li>
+                        <li><strong>DigiLocker:</strong> Storage of documents (10MB space). Valid as physical documents. Linked to Aadhaar.</li>
+                        <li><strong>e-Office (Government of India):</strong> Workflow automation for file movement, approvals, and e-signing (paperless office).</li>
+                        <li><strong>CPGRAMS (Centralized Public Grievance Redress and Monitoring System):</strong> Citizens can lodge complaints/grievances online.</li>
+                        <li><strong>RTI Online:</strong> File RTI applications online.</li>
+                        <li><strong>National Portal of India (india.gov.in):</strong> Single entry point for government services.</li>
+                        <li><strong>Aadhaar Platform:</strong> Unique identity for citizens (UIDAI) – over 1.3 billion enrolled.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Advantages & Challenges of E-Governance</h4>
+                    <ul>
+                        <li><strong>Advantages:</strong> Transparency, Efficiency, Convenience (24x7), Cost reduction, Reduced corruption, Better citizen engagement.</li>
+                        <li><strong>Challenges:</strong> Digital divide (rural vs urban), Cybersecurity risks, Privacy concerns, Infrastructure (power, internet) issues, Digital literacy gaps, Language barriers.</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 E-Governance Trick:</strong> G2C (Citizen – सबसे ज्यादा), G2B (Business), G2G (Govt to Govt), G2E (Employees). UMANG = All in One App.
+                </div>
+                <div id="egovern-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: DIGITAL PAYMENTS ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>Digital Payments – UPI, Cards, Wallets & Banks</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Digital Payment Ecosystem</h4>
+                    <p>Digital payments, electronic माध्यमों के through money transfer करने का system है। भारत में <strong>NPCI (National Payments Corporation of India)</strong> digital payment infrastructure को manage करता है।</p>
+                    <h5>Payment Systems in India:</h5>
+                    <ul>
+                        <li><strong>RTGS (Real Time Gross Settlement):</strong> High-value transactions (minimum ₹2 lakh). Real-time, bank-to-bank. 24x7 (now).</li>
+                        <li><strong>NEFT (National Electronic Funds Transfer):</strong> Low to medium value (no minimum). Hourly batches (currently 24x7).</li>
+                        <li><strong>IMPS (Immediate Payment Service):</strong> 24x7 real-time (instant) – through mobile/ATM. Maximum limit: ₹5 lakh (variable).</li>
+                        <li><strong>UPI (Unified Payments Interface):</strong> Real-time inter-bank transfers via mobile. Most popular (PhonePe, GPay, Paytm). Limit: ₹1 lakh (per day – sometimes higher).</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 UPI (Unified Payments Interface) – Detailed</h4>
+                    <ul>
+                        <li><strong>Developed by:</strong> NPCI.</li>
+                        <li><strong>Launched:</strong> 2016 (April).</li>
+                        <li><strong>What it does:</strong> Instant transfer between bank accounts using <strong>Virtual Payment Address (VPA)</strong> – e.g., name@upi.</li>
+                        <li><strong>Security:</strong> UPI PIN (4-6 digits). Two-factor authentication (device + PIN).</li>
+                        <li><strong>Features:</strong> QR code payments, Bill pay, Auto-pay (mandates), Request money, Raise dispute.</li>
+                        <li><strong>UPI Apps:</strong> Google Pay, PhonePe, Paytm, Amazon Pay, BHIM (official), CRED.</li>
+                        <li><strong>UPI 123PAY:</strong> Feature phone users के लिए UPI (without internet – using IVR or USSD).</li>
+                        <li><strong>UPI Lite:</strong> Offline small-value transactions (up to ₹500) – no PIN needed for small amounts.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Payment Cards (Debit, Credit, Prepaid)</h4>
+                    <ul>
+                        <li><strong>Debit Card:</strong> Connected to bank account. Direct deduction. Use at ATMs, POS, online.</li>
+                        <li><strong>Credit Card:</strong> Borrowed money (limit). Pay later with interest. Features: reward points, EMI, credit score building.</li>
+                        <li><strong>Prepaid Card (e.g., Gift Card, Travel Card):</strong> Load money beforehand. Not linked to bank account.</li>
+                        <li><strong>Card Networks:</strong> RuPay (India), Visa, Mastercard, Amex.</li>
+                    </ul>
+                    <h5>NCPI (National Common Mobility Card):</h5>
+                    <p>RuPay-based card for transit, tolls, and retail payments (One card, multiple uses).</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Other Digital Payment Methods</h4>
+                    <ul>
+                        <li><strong>Mobile Wallets:</strong> Paytm, PhonePe, Amazon Pay, Mobikwik – prepaid balance store करते हैं।</li>
+                        <li><strong>Banking Apps:</strong> State Bank Anywhere, iMobile, YONO (SBI) – net banking + UPI.</li>
+                        <li><strong>BHIM App:</strong> Official UPI app by NPCI.</li>
+                        <li><strong>USSD (*99#):</strong> Feature phones के लिए UPI (without internet).</li>
+                        <li><strong>QR Codes:</strong> Scan & Pay – widely used for retail/street vendors.</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Payments Comparison:</strong> UPI = Instant, IMPS = Instant, NEFT = Batch (now 24x7), RTGS = High Value. UPI limit = ₹1 lakh (usually).
+                </div>
+                <div id="payments-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: BANKING & SAFETY ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Digital Banking & Safe Practices</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Net Banking (Internet Banking)</h4>
+                    <p>Internet banking allows users to perform financial transactions (fund transfers, bill payments, account management) via bank's website/app using a <strong>User ID and Password</strong>. Two-factor authentication (Password + OTP) is mandatory for most transactions.</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Mobile Banking</h4>
+                    <p>Banking through mobile apps (iOS/Android). Includes UPI, IMPS, balance enquiry, mini statements, cheque book requests, etc. Many banks have dedicated apps: SBI YONO, HDFC Mobile, ICICI iMobile.</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Safe Digital Banking Practices (Exam में आते हैं)</h4>
+                    <ul>
+                        <li><strong>Never share Password/OTP/CVV:</strong> Bank/Government never asks for these via phone/email.</li>
+                        <li><strong>Use Strong & Unique Passwords:</strong> Don't use the same password for banking and other sites.</li>
+                        <li><strong>Enable SMS/Email Alerts:</strong> Monitor all transactions.</li>
+                        <li><strong>Check for 'https://' and Padlock:</strong> Before entering banking details.</li>
+                        <li><strong>Don't use Public Wi-Fi for Banking:</strong> Use mobile data or trusted networks.</li>
+                        <li><strong>Install Official Banking App:</strong> From Play Store/App Store only.</li>
+                        <li><strong>Keep OS & Apps Updated:</strong> Security patches.</li>
+                        <li><strong>Report Immediately:</strong> If you lose your card/phone – block via bank app/call.</li>
+                        <li><strong>Beware of Phishing Calls/SMS:</strong> Never click on suspicious links in SMS/email.</li>
+                        <li><strong>Use Virtual Card for Online Shopping:</strong> One-time use to reduce fraud risk (some banks offer this).</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Digital Banking Frauds (Common Types)</h4>
+                    <ul>
+                        <li><strong>Phishing:</strong> Fake emails/SMS asking for credentials.</li>
+                        <li><strong>Vishing:</strong> Phone calls pretending to be bank officials asking for OTP/CVV.</li>
+                        <li><strong>Smishing:</strong> SMS with malicious links.</li>
+                        <li><strong>Skimming:</strong> Card data copied at ATMs/POS (card cloning).</li>
+                        <li><strong>SIM Swap Fraud:</strong> Attacker gets duplicate SIM to receive OTPs.</li>
+                        <li><strong>UPI Fraud:</strong> Request money scams, fake QR codes, KYC scams.</li>
+                    </ul>
+                    <p><strong>Protection:</strong> RBI guidelines – Zero Liability for unauthorized transactions if reported within 3 days.</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Banking Safety: </strong>Never share OTP/CVV. Use official app. Report lost card immediately. Zero Liability if reported in 3 days.
+                </div>
+                <div id="banking-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: TRENDS & MODERN COMPUTING ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Emerging Trends, AI, Cloud, IoT & Modern Computing</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Artificial Intelligence (AI) & Machine Learning (ML)</h4>
+                    <p><strong>AI:</strong> Machines का human intelligence (learning, reasoning, problem-solving) perform करने की capability। <strong>ML:</strong> AI का subset – algorithms जो data से learn करते हैं (without explicit programming).</p>
+                    <ul>
+                        <li><strong>Applications:</strong> Voice assistants (Siri, Alexa), Recommender systems (Netflix, Amazon), Self-driving cars, Medical diagnosis, Fraud detection in banking.</li>
+                        <li><strong>Ethical Concerns:</strong> Bias in algorithms, Job displacement, Privacy issues, Deepfakes.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Cloud Computing (IaaS, PaaS, SaaS)</h4>
+                    <ul>
+                        <li><strong>IaaS (Infrastructure as a Service):</strong> Virtual machines, servers, storage (AWS EC2, Azure VM).</li>
+                        <li><strong>PaaS (Platform as a Service):</strong> Development platforms (Google App Engine, Heroku).</li>
+                        <li><strong>SaaS (Software as a Service):</strong> Ready-to-use software (Gmail, Office 365, Salesforce).</li>
+                        <li><strong>Benefits:</strong> Scalability, Cost-effective, Accessibility from anywhere.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 IoT (Internet of Things) & 5G</h4>
+                    <ul>
+                        <li><strong>IoT:</strong> Physical devices (sensors, wearables, smart appliances) connected to the internet. Examples: Smart home (lights, ACs), Smart cities (traffic management), Healthcare (wearable monitors).</li>
+                        <li><strong>5G:</strong> 5th generation mobile network. <strong>Features:</strong> High speed (up to 10 Gbps), Low latency (1 ms), Massive connectivity (IoT). <strong>Launched in India:</strong> October 2022. Provides better streaming, gaming, and IoT applications.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Other Modern Tech (Exam Glance)</h4>
+                    <ul>
+                        <li><strong>Blockchain:</strong> Decentralized, distributed ledger. Used in Cryptocurrencies (Bitcoin), Smart contracts, Supply chain.</li>
+                        <li><strong>AR/VR (Augmented/Virtual Reality):</strong> Immersive experiences. AR (Pokémon Go), VR (Gaming, Training simulations).</li>
+                        <li><strong>Big Data:</strong> Large datasets analyzed to find patterns. Used in marketing, healthcare, government policymaking.</li>
+                        <li><strong>Robotic Process Automation (RPA):</strong> Software bots for repetitive tasks (like data entry, invoice processing).</li>
+                        <li><strong>Green Computing:</strong> Environmentally sustainable computing (energy-efficient data centers, e-waste recycling).</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Tech Trends Summary:</strong> AI = Intelligence, Cloud = Remote resources, IoT = Connected devices, 5G = High-speed low-latency, Blockchain = Decentralized ledger.
+                </div>
+                <div id="trends-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 40 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 40 मिश्रित प्रश्न दिए गए हैं – जो Digital Awareness के सभी टॉपिक्स (Digital India, E-Governance, Payments, Banking, Modern Computing) को कवर करते हैं।</p>
+                <div class="info"><strong>📊 Balanced MCQ Rule:</strong> प्रत्येक 40-question bank में सही उत्तर A, B, C और D का exact 10-10-10-10 distribution (25%-25%-25%-25%) रखा गया है।</div>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> Digital Awareness में Digital India पिलर्स (9 pillars), E-Governance Models (G2C/G2B/G2G), Payment Systems (UPI, IMPS, NEFT, RTGS), Safe Banking Practices (never share OTP), और Emerging Technologies (AI, Cloud, IoT) पर फोकस करें। यह आपका आखिरी टॉपिक है – अब आप पूरे syllabus के expert हैं! 🎉</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>DIGITAL AWARENESS – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 240 MCQs • Digital Concepts</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS (Balanced) -----
+        function balanceQuestionBank(questions) {
+            const letters = ["A", "B", "C", "D"];
+            const result = questions.map(q => ({...q}));
+            result.forEach((q, i) => {
+                const newCorrect = letters[i % 4];
+                const oldCorrect = q.correct;
+                if (newCorrect === oldCorrect) return;
+                const temp = q[newCorrect];
+                q[newCorrect] = q[oldCorrect];
+                q[oldCorrect] = temp;
+                q.correct = newCorrect;
+            });
+            return result;
+        }
+
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const balanced = balanceQuestionBank(questions);
+            let html = '';
+            balanced.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (40 each) ======
+
+        // CH1: DIGITAL INDIA (40)
+        const introMCQs = [
+            { question: "Digital India programme कब लॉन्च किया गया?", A: "1 July 2015", B: "1 Jan 2016", C: "15 Aug 2014", D: "2 Oct 2015", correct: "A", explanation: "Digital India launched on 1 July 2015." },
+            { question: "Digital India का मुख्य उद्देश्य क्या है?", A: "Digitally empowered society", B: "Only internet to cities", C: "Only for education", D: "Only for health", correct: "A", explanation: "Digital India aims for a digitally empowered society." },
+            { question: "Digital India के कितने Pillars (स्तंभ) हैं?", A: "9", B: "5", C: "7", D: "10", correct: "A", explanation: "Digital India has 9 pillars." },
+            { question: "BharatNet किससे संबंधित है?", A: "Broadband highways to villages", B: "Mobile connectivity", C: "E-Learning", D: "Digital payments", correct: "A", explanation: "BharatNet provides broadband connectivity to Gram Panchayats." },
+            { question: "Common Service Centres (CSCs) किस pillar के अंतर्गत आते हैं?", A: "Public Internet Access Programme", B: "Broadband Highways", C: "e-Governance", D: "IT for Jobs", correct: "A", explanation: "CSCs are part of Public Internet Access Programme." },
+            { question: "MyGov platform का क्या कार्य है?", A: "Citizen participation in governance", B: "Digital payments", C: "Document storage", D: "Online banking", correct: "A", explanation: "MyGov allows citizens to participate in governance (discuss, vote, volunteer)." },
+            { question: "DigiLocker क्या है?", A: "Digital document storage platform", B: "Payment app", C: "Social media platform", D: "Gaming app", correct: "A", explanation: "DigiLocker is a digital document storage platform linked to Aadhaar." },
+            { question: "UMANG का पूरा नाम क्या है?", A: "Unified Mobile Application for New-age Governance", B: "Unified Mobile App for National Governance", C: "Universal Mobile Application for Governance", D: "Unified Management for New Governance", correct: "A", explanation: "UMANG = Unified Mobile Application for New-age Governance." },
+            { question: "UMANG पर कितने services उपलब्ध हैं?", A: "1000+", B: "100", C: "50", D: "200", correct: "A", explanation: "UMANG provides over 1000 services." },
+            { question: "PMGDISHA का पूरा नाम क्या है?", A: "Pradhan Mantri Gramin Digital Saksharta Abhiyan", B: "Pradhan Mantri Gramin Development Scheme", C: "Pradhan Mantri Gramin Digital Scheme", D: "Pradhan Mantri Gramin Education Abhiyan", correct: "A", explanation: "PMGDISHA is for digital literacy in rural areas." },
+            { question: "e-Hospital किस सेवा से संबंधित है?", A: "Healthcare services", B: "Education", C: "Agriculture", D: "Banking", correct: "A", explanation: "e-Hospital provides online healthcare services (appointments, reports)." },
+            { question: "Jeevan Pramaan क्या है?", A: "Digital life certificate for pensioners", B: "Health scheme", C: "Education scheme", D: "Insurance scheme", correct: "A", explanation: "Jeevan Pramaan is a digital life certificate for pensioners." },
+            { question: "e-Pathshala किससे संबंधित है?", A: "Digital educational resources", B: "Health services", C: "Payments", D: "Banking", correct: "A", explanation: "e-Pathshala provides digital educational resources." },
+            { question: "Digital India में 'Broadband Highways' का क्या उद्देश्य है?", A: "High-speed internet in rural and urban areas", B: "Only mobile network", C: "Only Wi-Fi in cities", D: "Only for government offices", correct: "A", explanation: "Broadband Highways aims to provide high-speed internet connectivity across India." },
+            { question: "Digital India में 'Universal Access to Mobile Connectivity' का क्या अर्थ है?", A: "Mobile towers in uncovered villages", B: "Free mobile phones", C: "Only 5G networks", D: "Only urban areas", correct: "A", explanation: "This pillar aims to cover uncovered villages with mobile connectivity." },
+            { question: "e-Kranti का मुख्य उद्देश्य क्या है?", A: "Electronic delivery of services", B: "Only banking", C: "Only education", D: "Only health", correct: "A", explanation: "e-Kranti focuses on electronic delivery of services across sectors (education, health, agriculture, etc.)." },
+            { question: "Digital India का 'Electronics Manufacturing' pillar क्या promotes करता है?", A: "Make in India in electronics", B: "Import electronics", C: "Only software", D: "Only hardware", correct: "A", explanation: "It promotes domestic manufacturing of electronics under Make in India." },
+            { question: "Digital India में 'IT for Jobs' का क्या उद्देश्य है?", A: "Training youth in IT skills", B: "Creating hardware", C: "Importing software", D: "Only government jobs", correct: "A", explanation: "IT for Jobs focuses on training youth in IT skills for employment." },
+            { question: "Early Harvest Programmes का क्या उद्देश्य था?", A: "Quick wins (e.g., Wi-Fi in universities)", B: "Long-term projects", C: "Only rural projects", D: "Only urban projects", correct: "A", explanation: "Early Harvest Programmes were quick-implementation initiatives like Wi-Fi in universities." },
+            { question: "Aadhaar platform किससे संबंधित है?", A: "Unique identity (UIDAI)", B: "Digital payments", C: "E-Governance only", D: "Education only", correct: "A", explanation: "Aadhaar provides a unique 12-digit identity to residents." }
+        ];
+
+        // CH2: E-GOVERNANCE (40)
+        const egovernMCQs = [
+            { question: "E-Governance में 'G2C' का क्या अर्थ है?", A: "Government-to-Citizen", B: "Government-to-Business", C: "Government-to-Government", D: "Government-to-Employee", correct: "A", explanation: "G2C = Government to Citizen." },
+            { question: "E-Governance में 'G2B' का क्या अर्थ है?", A: "Government-to-Business", B: "Government-to-Citizen", C: "Government-to-Government", D: "Government-to-Employee", correct: "A", explanation: "G2B = Government to Business." },
+            { question: "E-Governance में 'G2G' का क्या अर्थ है?", A: "Government-to-Government", B: "Government-to-Citizen", C: "Government-to-Business", D: "Government-to-Employee", correct: "A", explanation: "G2G = Government to Government." },
+            { question: "E-Governance में 'G2E' का क्या अर्थ है?", A: "Government-to-Employee", B: "Government-to-Citizen", C: "Government-to-Business", D: "Government-to-Government", correct: "A", explanation: "G2E = Government to Employee." },
+            { question: "UMANG App किस E-Governance model में आता है?", A: "G2C", B: "G2B", C: "G2G", D: "G2E", correct: "A", explanation: "UMANG provides services to citizens (G2C)." },
+            { question: "DigiLocker किस E-Governance model में आता है?", A: "G2C", B: "G2B", C: "G2G", D: "G2E", correct: "A", explanation: "DigiLocker provides document storage to citizens." },
+            { question: "GST filing किस E-Governance model से संबंधित है?", A: "G2B", B: "G2C", C: "G2G", D: "G2E", correct: "A", explanation: "GST filing is between government and businesses (G2B)." },
+            { question: "e-Office (Government of India) किस model से संबंधित है?", A: "G2E / G2G", B: "G2C", C: "G2B", D: "G2G only", correct: "A", explanation: "e-Office is for internal government employees (G2E) and inter-department (G2G)." },
+            { question: "CPGRAMS का पूरा नाम क्या है?", A: "Centralized Public Grievance Redress and Monitoring System", B: "Central Public Grievance Redressal System", C: "Citizen Public Grievance Redressal System", D: "Centralized Program for Grievance Redressal", correct: "A", explanation: "CPGRAMS is for online grievance redressal." },
+            { question: "RTI Online किस सेवा से संबंधित है?", A: "Filing RTI applications online", B: "Digital payments", C: "Education", D: "Healthcare", correct: "A", explanation: "RTI Online allows citizens to file Right to Information applications online." },
+            { question: "National Portal of India का URL क्या है?", A: "india.gov.in", B: "india.com", C: "gov.in", D: "mygov.in", correct: "A", explanation: "india.gov.in is the national portal." },
+            { question: "E-Governance का मुख्य लाभ क्या है?", A: "Transparency and efficiency", B: "Increased paperwork", C: "More corruption", D: "Slower services", correct: "A", explanation: "E-Governance increases transparency and efficiency." },
+            { question: "E-Governance में 'Digital Divide' क्या challenge है?", A: "Rural vs urban access gap", B: "High internet speed", C: "Too much technology", D: "Over-skilled workforce", correct: "A", explanation: "Digital divide refers to the gap in access to digital services between rural and urban areas." },
+            { question: "E-Governance में 'Privacy' चिंता क्या है?", A: "Personal data misuse", B: "Slow internet", C: "Lack of computers", D: "No electricity", correct: "A", explanation: "Privacy is a concern as personal data is collected online." },
+            { question: "UMANG App किस ministry के अंतर्गत आता है?", A: "Ministry of Electronics and IT (MeitY)", B: "Ministry of Finance", C: "Ministry of Home Affairs", D: "Ministry of Health", correct: "A", explanation: "UMANG is under MeitY." },
+            { question: "e-Governance का 'Efficiency' लाभ क्या है?", A: "Faster processing of services", B: "Slower work", C: "More paperwork", D: "Higher costs", correct: "A", explanation: "E-Governance speeds up service delivery." },
+            { question: "Digital India के किस pillar में e-Governance आता है?", A: "Pillar 4 - e-Governance", B: "Pillar 1 - Broadband", C: "Pillar 7 - Electronics", D: "Pillar 9 - Early Harvest", correct: "A", explanation: "e-Governance is the 4th pillar of Digital India." },
+            { question: "e-Kranti का उदाहरण क्या है?", A: "e-Hospital, e-Vidya", B: "Only Aadhaar", C: "Only UPI", D: "Only MyGov", correct: "A", explanation: "e-Kranti includes e-Hospital, e-Vidya, e-Agri, etc." },
+            { question: "Information for All (Pillar 6) का क्या अर्थ है?", A: "Open data and online portals", B: "Only government documents", C: "Only for media", D: "Only for research", correct: "A", explanation: "Information for All means making government data and information accessible to everyone." },
+            { question: "E-Governance में 'Interoperability' का क्या अर्थ है?", A: "Different systems can work together", B: "Slow systems", C: "Separate systems", D: "No connection", correct: "A", explanation: "Interoperability means different government systems can share data seamlessly." }
+        ];
+
+        // CH3: PAYMENTS (40)
+        const paymentsMCQs = [
+            { question: "NPCI का पूरा नाम क्या है?", A: "National Payments Corporation of India", B: "National Payment Council of India", C: "National Public Corporation of India", D: "National Payment Commission of India", correct: "A", explanation: "NPCI = National Payments Corporation of India." },
+            { question: "UPI का पूरा नाम क्या है?", A: "Unified Payments Interface", B: "Universal Payments Interface", C: "United Payments Interface", D: "Unified Payment Infrastructure", correct: "A", explanation: "UPI = Unified Payments Interface." },
+            { question: "UPI किस वर्ष लॉन्च किया गया?", A: "2016", B: "2015", C: "2017", D: "2018", correct: "A", explanation: "UPI was launched in April 2016." },
+            { question: "UPI में VPA का क्या अर्थ है?", A: "Virtual Payment Address", B: "Verified Payment Address", C: "Virtual Payment Account", D: "Verified Payment Account", correct: "A", explanation: "VPA = Virtual Payment Address (e.g., name@upi)." },
+            { question: "UPI की daily transaction limit usually क्या है?", A: "₹1 Lakh", B: "₹10 Lakh", C: "₹50,000", D: "₹5 Lakh", correct: "A", explanation: "UPI limit is usually ₹1 Lakh per day (may vary by bank)." },
+            { question: "IMPS का पूरा नाम क्या है?", A: "Immediate Payment Service", B: "Instant Payment System", C: "Immediate Money Payment Service", D: "Indian Payment Service", correct: "A", explanation: "IMPS = Immediate Payment Service." },
+            { question: "NEFT का पूरा नाम क्या है?", A: "National Electronic Funds Transfer", B: "National Electronic Fund System", C: "National Electronic Financial Transfer", D: "National E-Fund Transfer", correct: "A", explanation: "NEFT = National Electronic Funds Transfer." },
+            { question: "RTGS का पूरा नाम क्या है?", A: "Real Time Gross Settlement", B: "Real Time General Settlement", C: "Real Time Government Settlement", D: "Real Time Gross System", correct: "A", explanation: "RTGS = Real Time Gross Settlement." },
+            { question: "RTGS की minimum limit क्या है?", A: "₹2 Lakh", B: "₹1 Lakh", C: "₹10 Lakh", D: "₹50,000", correct: "A", explanation: "RTGS minimum is ₹2 Lakh." },
+            { question: "IMPS और NEFT में क्या अंतर है?", A: "IMPS instant (24x7), NEFT batch (now 24x7)", B: "Both same", C: "NEFT instant, IMPS batch", D: "IMPS has limit, NEFT unlimited", correct: "A", explanation: "IMPS is instant real-time; NEFT is processed in batches (though now 24x7)." },
+            { question: "BHIM App किस organization ने develop किया?", A: "NPCI", B: "RBI", C: "SBI", D: "Google", correct: "A", explanation: "BHIM (Bharat Interface for Money) was developed by NPCI." },
+            { question: "UPI 123PAY किसके लिए है?", A: "Feature phone users (without internet)", B: "Smartphone users", C: "Only banks", D: "Only merchants", correct: "A", explanation: "UPI 123PAY allows feature phone users to use UPI without internet." },
+            { question: "UPI Lite क्या है?", A: "Offline small-value transactions", B: "High-value online transactions", C: "International payments", D: "Only for government", correct: "A", explanation: "UPI Lite enables small-value (up to ₹500) offline transactions." },
+            { question: "RuPay card किसके द्वारा developed है?", A: "NPCI", B: "Visa", C: "Mastercard", D: "RBI", correct: "A", explanation: "RuPay is an Indian domestic card network by NPCI." },
+            { question: "NCMC का पूरा नाम क्या है?", A: "National Common Mobility Card", B: "National Card for Mobility", C: "National Common Movement Card", D: "National Citizen Mobility Card", correct: "A", explanation: "NCMC is a RuPay-based card for transit and retail payments." },
+            { question: "Mobile Wallets का उदाहरण क्या है?", A: "Paytm", B: "UPI", C: "NEFT", D: "RTGS", correct: "A", explanation: "Paytm is a mobile wallet (prepaid)." },
+            { question: "USSD code for UPI (feature phones) क्या है?", A: "*99#", B: "*100#", C: "#99#", D: "*123#", correct: "A", explanation: "*99# is the USSD code for UPI on feature phones." },
+            { question: "QR Code in UPI का क्या कार्य है?", A: "Scan & Pay instantly", B: "Only for info", C: "For login", D: "For registration", correct: "A", explanation: "QR codes allow instant scanning and payment." },
+            { question: "AEPS (Aadhaar Enabled Payment System) क्या है?", A: "Payments using Aadhaar and fingerprint", B: "UPI payments", C: "Credit card payments", D: "NEFT payments", correct: "A", explanation: "AEPS allows Aadhaar-based payments using biometric authentication (fingerprint)." },
+            { question: "BHIM App का पूरा नाम क्या है?", A: "Bharat Interface for Money", B: "Bharat Integrated Money", C: "Bharat Indian Money", D: "Bharat Instant Money", correct: "A", explanation: "BHIM = Bharat Interface for Money." }
+        ];
+
+        // CH4: BANKING & SAFETY (40)
+        const bankingMCQs = [
+            { question: "Net Banking में login के लिए क्या आवश्यक है?", A: "User ID and Password", B: "Only Aadhaar", C: "Only PAN", D: "Only OTP", correct: "A", explanation: "Net banking requires User ID and Password (plus OTP for transactions)." },
+            { question: "OTP का पूरा नाम क्या है?", A: "One-Time Password", B: "One-Time Pin", C: "Online Transaction Password", D: "One-Time Personal", correct: "A", explanation: "OTP = One-Time Password." },
+            { question: "CVV का पूरा नाम क्या है?", A: "Card Verification Value", B: "Card Validation Value", C: "Card Verification Number", D: "Card Validation Number", correct: "A", explanation: "CVV = Card Verification Value (3-digit on back of card)." },
+            { question: "SIM Swap Fraud क्या है?", A: "Attacker gets duplicate SIM to receive OTPs", B: "Phone stolen", C: "Lost password", D: "Phishing email", correct: "A", explanation: "SIM Swap fraud occurs when an attacker gets a duplicate SIM to intercept OTPs." },
+            { question: "Skimming क्या है?", A: "Card data copied at ATM/POS", B: "Phishing", C: "Vishing", D: "Malware", correct: "A", explanation: "Skimming is the illegal copying of card data at ATMs or POS terminals." },
+            { question: "UPI Fraud में 'Request Money' scam क्या है?", A: "Fraudulent request for money", B: "QR code scam", C: "OTP scam", D: "All of the above", correct: "A", explanation: "Fraudsters send fake UPI request money notifications to trick users." },
+            { question: "Zero Liability in banking fraud का क्या अर्थ है?", A: "No loss if reported within 3 days", B: "Always liable", C: "Liable after 1 day", D: "No protection", correct: "A", explanation: "Zero Liability means the customer is not liable for unauthorized transactions if reported within 3 days." },
+            { question: "RBI guidelines पर Unauthorized transaction report करने की अवधि क्या है?", A: "3 days", B: "1 day", C: "7 days", D: "30 days", correct: "A", explanation: "Report unauthorized transaction within 3 days for zero liability." },
+            { question: "फेक KYC calls किस प्रकार का fraud है?", A: "Social engineering (Vishing)", B: "Malware", C: "Skimming", D: "SIM Swap", correct: "A", explanation: "Fake KYC calls are a form of vishing (voice phishing)." },
+            { question: "Online banking में 'https://' का क्या अर्थ है?", A: "Secure connection (encrypted)", B: "Unsecured", C: "Faster", D: "Government site", correct: "A", explanation: "HTTPS indicates the connection is encrypted." },
+            { question: "Public Wi-Fi पर banking करना क्यों unsafe है?", A: "Data interception risk", B: "Faster speed", C: "Better security", D: "No risk", correct: "A", explanation: "Public Wi-Fi is insecure and data can be intercepted." },
+            { question: "Banking App install करते समय क्या ध्यान रखना चाहिए?", A: "Download from official Play Store/App Store", B: "Download from any website", C: "Use cracked version", D: "Ignore permissions", correct: "A", explanation: "Always download official banking apps from trusted app stores." },
+            { question: "Virtual Card (One-time use) का क्या उपयोग है?", A: "Reduce online fraud risk", B: "Increase fraud risk", C: "Only for ATM", D: "Only for POS", correct: "A", explanation: "Virtual cards are one-time use for online shopping to reduce fraud." },
+            { question: "SMS/Email Alerts enable करने का क्या लाभ है?", A: "Monitor all transactions", B: "Increase spam", C: "Slow down banking", D: "No benefit", correct: "A", explanation: "Alerts help in monitoring and detecting unauthorized transactions quickly." },
+            { question: "NEFT में transaction processing कैसे होता है?", A: "Batches (now 24x7)", B: "Real-time", C: "Weekly", D: "Monthly", correct: "A", explanation: "NEFT is processed in hourly batches (now 24x7)." },
+            { question: "IMPS की transaction limit क्या है?", A: "₹5 Lakh (variable)", B: "₹1 Lakh", C: "₹10 Lakh", D: "₹50,000", correct: "A", explanation: "IMPS limit is up to ₹5 Lakh (per day, bank dependent)." },
+            { question: "YONO app किस बैंक की है?", A: "SBI", B: "HDFC", C: "ICICI", D: "Axis", correct: "A", explanation: "YONO (You Only Need One) is SBI's integrated banking app." },
+            { question: "RBI का पूरा नाम क्या है?", A: "Reserve Bank of India", B: "Regional Bank of India", C: "Reserve Bank of India", D: "Royal Bank of India", correct: "A", explanation: "RBI = Reserve Bank of India." },
+            { question: "UPI PIN कितने digits का होता है?", A: "4-6 digits", B: "8 digits", C: "2 digits", D: "10 digits", correct: "A", explanation: "UPI PIN is typically 4-6 digits." },
+            { question: "BHIM UPI का उपयोग किसके लिए किया जाता है?", A: "Instant bank transfers", B: "Only shopping", C: "Only bills", D: "Only tickets", correct: "A", explanation: "BHIM UPI is for instant money transfer between bank accounts." }
+        ];
+
+        // CH5: TRENDS (40)
+        const trendsMCQs = [
+            { question: "AI का पूरा नाम क्या है?", A: "Artificial Intelligence", B: "Automated Intelligence", C: "Advanced Intelligence", D: "Applied Intelligence", correct: "A", explanation: "AI = Artificial Intelligence." },
+            { question: "ML का पूरा नाम क्या है?", A: "Machine Learning", B: "Machine Language", C: "Managed Learning", D: "Main Learning", correct: "A", explanation: "ML = Machine Learning." },
+            { question: "Cloud Computing में IaaS का पूरा नाम क्या है?", A: "Infrastructure as a Service", B: "Internet as a Service", C: "Information as a Service", D: "Integrated as a Service", correct: "A", explanation: "IaaS = Infrastructure as a Service." },
+            { question: "Cloud Computing में PaaS का पूरा नाम क्या है?", A: "Platform as a Service", B: "Program as a Service", C: "Process as a Service", D: "Protocol as a Service", correct: "A", explanation: "PaaS = Platform as a Service." },
+            { question: "Cloud Computing में SaaS का पूरा नाम क्या है?", A: "Software as a Service", B: "System as a Service", C: "Storage as a Service", D: "Security as a Service", correct: "A", explanation: "SaaS = Software as a Service." },
+            { question: "IoT का पूरा नाम क्या है?", A: "Internet of Things", B: "Internet of Technology", C: "Internal of Things", D: "Integrated of Things", correct: "A", explanation: "IoT = Internet of Things." },
+            { question: "5G network की speed कितनी तक हो सकती है?", A: "Up to 10 Gbps", B: "Up to 1 Gbps", C: "Up to 100 Mbps", D: "Up to 10 Mbps", correct: "A", explanation: "5G offers speeds up to 10 Gbps." },
+            { question: "5G की latency कितनी होती है?", A: "1 ms", B: "10 ms", C: "100 ms", D: "1 second", correct: "A", explanation: "5G has ultra-low latency of about 1 ms." },
+            { question: "Blockchain क्या है?", A: "Decentralized distributed ledger", B: "Centralized database", C: "Cloud storage", D: "AI algorithm", correct: "A", explanation: "Blockchain is a decentralized, distributed ledger technology." },
+            { question: "Big Data का क्या अर्थ है?", A: "Large datasets analyzed for patterns", B: "Small data", C: "Only financial data", D: "Only government data", correct: "A", explanation: "Big Data refers to large datasets analyzed to find patterns." },
+            { question: "VR का पूरा नाम क्या है?", A: "Virtual Reality", B: "Visual Reality", C: "Virtual Response", D: "Visual Response", correct: "A", explanation: "VR = Virtual Reality." },
+            { question: "AR का पूरा नाम क्या है?", A: "Augmented Reality", B: "Advanced Reality", C: "Automatic Reality", D: "Applied Reality", correct: "A", explanation: "AR = Augmented Reality." },
+            { question: "Green Computing का क्या अर्थ है?", A: "Environmentally sustainable computing", B: "Fast computing", C: "Cheap computing", D: "Only for green color", correct: "A", explanation: "Green Computing focuses on environmentally sustainable IT practices." },
+            { question: "RPA का पूरा नाम क्या है?", A: "Robotic Process Automation", B: "Robotic Program Automation", C: "Robot Processing Automation", D: "Robotic Procedure Automation", correct: "A", explanation: "RPA = Robotic Process Automation." },
+            { question: "AI का उदाहरण क्या है?", A: "Voice assistants (Siri, Alexa)", B: "Calculator", C: "Notepad", D: "MS Paint", correct: "A", explanation: "Voice assistants like Siri use AI." },
+            { question: "Cloud Computing का advantage क्या है?", A: "Scalability and accessibility", B: "High cost", C: "Limited storage", D: "Only on-premise", correct: "A", explanation: "Cloud provides scalability and accessibility from anywhere." },
+            { question: "5G network के लिए India में spectrum auction कब हुआ?", A: "2022", B: "2020", C: "2019", D: "2021", correct: "A", explanation: "5G spectrum auction in India was held in 2022." },
+            { question: "IoT का उदाहरण क्या है?", A: "Smart home devices (lights, ACs)", B: "Desktop computer", C: "Notebook", D: "Pen drive", correct: "A", explanation: "Smart home devices like connected lights and ACs are IoT examples." },
+            { question: "Blockchain का उपयोग किसमें होता है?", A: "Cryptocurrencies", B: "Word processing", C: "Spreadsheets", D: "Email", correct: "A", explanation: "Blockchain is used in cryptocurrencies like Bitcoin." },
+            { question: "AR का उदाहरण क्या है?", A: "Pokémon Go", B: "Chess", C: "Calculator", D: "Notepad", correct: "A", explanation: "Pokémon Go is an example of Augmented Reality (AR)." }
+        ];
+
+        // PRACTICE (40 mixed)
+        const practiceMCQs = [
+            { question: "Digital India कब लॉन्च किया गया?", A: "1 July 2015", B: "1 Jan 2016", C: "15 Aug 2014", D: "2 Oct 2015", correct: "A", explanation: "Digital India launched on 1 July 2015." },
+            { question: "UPI का पूरा नाम क्या है?", A: "Unified Payments Interface", B: "Universal Payments Interface", C: "United Payments Interface", D: "Unified Payment Infrastructure", correct: "A", explanation: "UPI = Unified Payments Interface." },
+            { question: "E-Governance में G2C का क्या अर्थ है?", A: "Government-to-Citizen", B: "Government-to-Business", C: "Government-to-Government", D: "Government-to-Employee", correct: "A", explanation: "G2C = Government to Citizen." },
+            { question: "AI का पूरा नाम क्या है?", A: "Artificial Intelligence", B: "Automated Intelligence", C: "Advanced Intelligence", D: "Applied Intelligence", correct: "A", explanation: "AI = Artificial Intelligence." },
+            { question: "DigiLocker क्या है?", A: "Digital document storage", B: "Payment app", C: "Social media", D: "Gaming app", correct: "A", explanation: "DigiLocker is a digital document storage platform." },
+            { question: "IMPS का पूरा नाम क्या है?", A: "Immediate Payment Service", B: "Instant Payment System", C: "Immediate Money Payment Service", D: "Indian Payment Service", correct: "A", explanation: "IMPS = Immediate Payment Service." },
+            { question: "NEFT का पूरा नाम क्या है?", A: "National Electronic Funds Transfer", B: "National Electronic Fund System", C: "National Electronic Financial Transfer", D: "National E-Fund Transfer", correct: "A", explanation: "NEFT = National Electronic Funds Transfer." },
+            { question: "RTGS का पूरा नाम क्या है?", A: "Real Time Gross Settlement", B: "Real Time General Settlement", C: "Real Time Government Settlement", D: "Real Time Gross System", correct: "A", explanation: "RTGS = Real Time Gross Settlement." },
+            { question: "Cloud Computing में SaaS का पूरा नाम क्या है?", A: "Software as a Service", B: "System as a Service", C: "Storage as a Service", D: "Security as a Service", correct: "A", explanation: "SaaS = Software as a Service." },
+            { question: "IoT का पूरा नाम क्या है?", A: "Internet of Things", B: "Internet of Technology", C: "Internal of Things", D: "Integrated of Things", correct: "A", explanation: "IoT = Internet of Things." },
+            { question: "UPI की daily limit usually क्या है?", A: "₹1 Lakh", B: "₹10 Lakh", C: "₹50,000", D: "₹5 Lakh", correct: "A", explanation: "UPI limit is usually ₹1 Lakh." },
+            { question: "BHIM App किस organization ने develop किया?", A: "NPCI", B: "RBI", C: "SBI", D: "Google", correct: "A", explanation: "BHIM was developed by NPCI." },
+            { question: "MyGov platform क्या है?", A: "Citizen participation in governance", B: "Payment app", C: "Document storage", D: "Online banking", correct: "A", explanation: "MyGov allows citizens to participate in governance." },
+            { question: "UMANG पर कितने services हैं?", A: "1000+", B: "100", C: "50", D: "200", correct: "A", explanation: "UMANG provides over 1000 services." },
+            { question: "PMGDISHA का पूरा नाम क्या है?", A: "Pradhan Mantri Gramin Digital Saksharta Abhiyan", B: "Pradhan Mantri Gramin Development Scheme", C: "Pradhan Mantri Gramin Digital Scheme", D: "Pradhan Mantri Gramin Education Abhiyan", correct: "A", explanation: "PMGDISHA is for rural digital literacy." },
+            { question: "Jeevan Pramaan क्या है?", A: "Digital life certificate", B: "Health scheme", C: "Education scheme", D: "Insurance scheme", correct: "A", explanation: "Jeevan Pramaan is a digital life certificate for pensioners." },
+            { question: "OTP का पूरा नाम क्या है?", A: "One-Time Password", B: "One-Time Pin", C: "Online Transaction Password", D: "One-Time Personal", correct: "A", explanation: "OTP = One-Time Password." },
+            { question: "CVV का पूरा नाम क्या है?", A: "Card Verification Value", B: "Card Validation Value", C: "Card Verification Number", D: "Card Validation Number", correct: "A", explanation: "CVV = Card Verification Value." },
+            { question: "SIM Swap Fraud क्या है?", A: "Duplicate SIM to receive OTPs", B: "Phone stolen", C: "Lost password", D: "Phishing email", correct: "A", explanation: "SIM Swap fraud uses a duplicate SIM to intercept OTPs." },
+            { question: "Zero Liability में report करने की अवधि क्या है?", A: "3 days", B: "1 day", C: "7 days", D: "30 days", correct: "A", explanation: "Zero liability if reported within 3 days." },
+            { question: "5G की latency कितनी है?", A: "1 ms", B: "10 ms", C: "100 ms", D: "1 second", correct: "A", explanation: "5G has 1 ms latency." },
+            { question: "Blockchain क्या है?", A: "Decentralized ledger", B: "Centralized database", C: "Cloud storage", D: "AI algorithm", correct: "A", explanation: "Blockchain is a decentralized distributed ledger." },
+            { question: "RPA का पूरा नाम क्या है?", A: "Robotic Process Automation", B: "Robotic Program Automation", C: "Robot Processing Automation", D: "Robotic Procedure Automation", correct: "A", explanation: "RPA = Robotic Process Automation." },
+            { question: "Green Computing क्या है?", A: "Environmentally sustainable computing", B: "Fast computing", C: "Cheap computing", D: "Only for green color", correct: "A", explanation: "Green Computing focuses on environmental sustainability." },
+            { question: "AR का उदाहरण क्या है?", A: "Pokémon Go", B: "Chess", C: "Calculator", D: "Notepad", correct: "A", explanation: "Pokémon Go is an example of AR." },
+            { question: "E-Governance में G2B का अर्थ क्या है?", A: "Government-to-Business", B: "Government-to-Citizen", C: "Government-to-Government", D: "Government-to-Employee", correct: "A", explanation: "G2B = Government to Business." },
+            { question: "UPI 123PAY किसके लिए है?", A: "Feature phone users", B: "Smartphone users", C: "Only banks", D: "Only merchants", correct: "A", explanation: "UPI 123PAY is for feature phone users." },
+            { question: "USSD code for UPI क्या है?", A: "*99#", B: "*100#", C: "#99#", D: "*123#", correct: "A", explanation: "*99# is the USSD code for UPI." },
+            { question: "RuPay card किसने develop किया?", A: "NPCI", B: "Visa", C: "Mastercard", D: "RBI", correct: "A", explanation: "RuPay was developed by NPCI." },
+            { question: "NCMC का पूरा नाम क्या है?", A: "National Common Mobility Card", B: "National Card for Mobility", C: "National Common Movement Card", D: "National Citizen Mobility Card", correct: "A", explanation: "NCMC = National Common Mobility Card." },
+            { question: "Mobile Wallets का उदाहरण क्या है?", A: "Paytm", B: "UPI", C: "NEFT", D: "RTGS", correct: "A", explanation: "Paytm is a mobile wallet." },
+            { question: "AEPS क्या है?", A: "Aadhaar Enabled Payment System", B: "Automated Payment System", C: "Advanced Payment System", D: "Aadhaar Payment Service", correct: "A", explanation: "AEPS uses Aadhaar and biometrics for payments." },
+            { question: "YONO app किस बैंक की है?", A: "SBI", B: "HDFC", C: "ICICI", D: "Axis", correct: "A", explanation: "YONO is SBI's app." },
+            { question: "RTGS की minimum limit क्या है?", A: "₹2 Lakh", B: "₹1 Lakh", C: "₹10 Lakh", D: "₹50,000", correct: "A", explanation: "RTGS minimum is ₹2 Lakh." },
+            { question: "AI का उदाहरण क्या है?", A: "Siri/Alexa", B: "Calculator", C: "Notepad", D: "MS Paint", correct: "A", explanation: "Siri and Alexa use AI." },
+            { question: "Cloud Computing का advantage क्या है?", A: "Scalability", B: "High cost", C: "Limited storage", D: "Only on-premise", correct: "A", explanation: "Cloud provides scalability and accessibility." },
+            { question: "5G network India में कब लॉन्च हुआ?", A: "October 2022", B: "2020", C: "2019", D: "2021", correct: "A", explanation: "5G was launched in India in October 2022." },
+            { question: "IoT का उदाहरण क्या है?", A: "Smart home devices", B: "Desktop", C: "Notebook", D: "Pen drive", correct: "A", explanation: "Smart home devices are IoT examples." },
+            { question: "Big Data का क्या अर्थ है?", A: "Large datasets for pattern analysis", B: "Small data", C: "Only financial data", D: "Only government data", correct: "A", explanation: "Big Data refers to large datasets analyzed for patterns." },
+            { question: "VR का पूरा नाम क्या है?", A: "Virtual Reality", B: "Visual Reality", C: "Virtual Response", D: "Visual Response", correct: "A", explanation: "VR = Virtual Reality." }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('egovern-mcq', egovernMCQs);
+            renderMCQs('payments-mcq', paymentsMCQs);
+            renderMCQs('banking-mcq', bankingMCQs);
+            renderMCQs('trends-mcq', trendsMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

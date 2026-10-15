@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Mock.com - Vacancy Details</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Main Container - Clickable */
+        .main-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #ffffff;
+            border: 5px solid #000000;
+            position: relative;
+            padding: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
+
+        /* Vertical Side Text */
+        .vertical-text {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 25px;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 2px;
+            z-index: 10;
+            border-left: 2px solid #000;
+            border-right: 2px solid #000;
+        }
+
+        .vertical-text.left { left: 0; }
+        .vertical-text.right { right: 0; }
+
+        /* Header Section */
+        header {
+            border-bottom: 2px solid #000;
+            padding: 10px 30px;
+            background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+        }
+
+        .header-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+        }
+
+        .logo-placeholder {
+            width: 100px;
+            height: 50px;
+            background-color: #2b2b2b;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 10px;
+            text-align: center;
+            padding: 5px;
+            border: 2px solid #000;
+            flex-shrink: 0;
+        }
+
+        .header-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .header-text h1 {
+            font-size: 20px;
+            font-weight: 900;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .header-text h2 {
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Main Content */
+        main {
+            padding: 15px 35px;
+            text-align: left;
+        }
+
+        .post-title {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .company-info {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .date-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .total-vacancy {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #d32f2f;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #000;
+            background-color: #f2f2f2;
+            padding: 8px;
+            border-left: 5px solid #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #d9e1f2;
+            font-weight: bold;
+        }
+
+        /* Alternating row colors */
+        tbody tr:nth-child(even) { background-color: #f9f9f9; }
+        tbody tr:nth-child(odd) { background-color: #ffffff; }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .details-grid div {
+            padding: 5px;
+        }
+
+        .details-grid strong {
+            color: #000;
+        }
+
+        .job-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .district-list {
+            font-size: 14px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .note-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #856404;
+        }
+
+        .note-box strong {
+            color: #d32f2f;
+        }
+
+        .apply-text {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 30px;
+            text-align: center;
+            color: #000;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #ffd700;
+            border-top: 4px solid #000;
+            padding: 10px 30px;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+        }
+
+        .footer-logo {
+            width: 90px;
+            height: 60px;
+            background-color: #2b2b2b;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 50%;
+            text-align: center;
+            border: 2px solid #000;
+            flex-shrink: 0;
+        }
+
+        .footer-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .footer-text p {
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .footer-text h2 {
+            font-size: 22px;
+            font-weight: 900;
+            color: #000;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .vertical-text { display: none; }
+            header, main, footer { padding-left: 10px; padding-right: 10px; }
+            .header-link, .footer-link { flex-direction: column; text-align: center; gap: 10px; }
+            .header-text h1 { font-size: 16px; }
+            .header-text h2 { font-size: 10px; }
+            table { font-size: 12px; }
+            .details-grid { grid-template-columns: 1fr; }
+            .footer-text h2 { font-size: 16px; }
+            .footer-logo { border-radius: 10px; width: 100%; height: auto; padding: 10px; }
+            .date-info { flex-direction: column; gap: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- onclick event makes the entire container clickable -->
+    <div class="main-container" onclick="window.open('https://www.sscmock.com', '_blank')">
+        
+        <!-- Vertical Side Texts -->
+        <div class="vertical-text left">SSC MOCK.COM SSC MOCK.COM SSC MOCK.COM SSC MOCK.COM</div>
+        <div class="vertical-text right">SSC MOCK.COM SSC MOCK.COM SSC MOCK.COM SSC MOCK.COM</div>
+
+        <!-- Header -->
+        <header>
+            <a href="https://www.sscmock.com" target="_blank" class="header-link">
+                <div class="logo-placeholder">SSC<br>Mock</div>
+                <div class="header-text">
+                    <h1>SSC Mock.com® | WWW.SSCMOCK.COM</h1>
+                    <h2>Latest Jobs, Result, Admit Card (No. 1 Education Portal) Since 2012</h2>
+                </div>
+            </a>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div class="post-title">रिक्ति का विवरण (Vacancy Details)</div>
+            
+            <div class="company-info">
+                <strong>संस्थान/कंपनी:</strong> T and M Services Consulting Private Limited<br>
+                <strong>पदनाम:</strong> Block Program Manager<br>
+                <strong>विभाग का नाम:</strong> कोशल विकास मिशन
+            </div>
+
+            <div class="date-info">
+                <span><strong>आवेदन की अंतिम तिथि:</strong> 16-09-2026</span>
+                <span><strong>रिक्ति पोस्ट करने की तिथि:</strong> 08-09-2026</span>
+            </div>
+
+            <div class="total-vacancy">कुल रिक्तियां: 275</div>
+
+            <div class="section-title">अनिवार्य योग्यता (Essential Qualification)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>अनुक्रमांक</th>
+                        <th>योग्यता विवरण</th>
+                        <th>वर्ग (श्रेणी)</th>
+                        <th>न्यूनतम योग्यता</th>
+                        <th>विषय</th>
+                        <th>अधिकतम योग्यता</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>SSC / High School</td>
+                        <td>All Stream</td>
+                        <td>All Degree</td>
+                        <td>All Subject</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>HSC / Intermediate</td>
+                        <td>All Stream</td>
+                        <td>All Degree</td>
+                        <td>All Subject</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Graduate</td>
+                        <td>All Stream</td>
+                        <td>All Degree</td>
+                        <td>All Subject</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="details-grid">
+                <div><strong>रिक्ति की प्रकृति:</strong> Third Party</div>
+                <div><strong>अनुभवित विभाग:</strong> पुरुष, महिला</div>
+                <div><strong>वेतन श्रेणी:</strong> 20001 - 30000</div>
+                <div><strong>वेतन (न्यूनतम):</strong> 23500</div>
+                <div><strong>न्यूनतम आयु (वर्ष):</strong> 21</div>
+                <div><strong>अधिकतम आयु (वर्ष):</strong> 50</div>
+                <div><strong>अनुभवित अनुभाग (क्षेत्र):</strong> Administrative and support service activities.</div>
+                <div><strong>अनुभव:</strong> 2 वर्ष</div>
+            </div>
+
+            <div class="section-title">कार्य का विवरण (Job Description)</div>
+            <div class="job-desc">
+                Post Type-Block Program Manager. The role holder will be responsible for assisting the end-to-end process of collaboration with all project implementing agencies at block and district level. He/She will be responsible to ensure that the conduct the awareness program mobilization camp training and placement activities in line with the objectives of UPSDM.
+            </div>
+
+            <div class="section-title">कार्य स्थल (Workplace / District Details)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>अनुक्रमांक</th>
+                        <th>जिला</th>
+                        <th>विवरण</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>उत्तर प्रदेश</td>
+                        <td class="district-list">
+                            अमेठी, अमरोहा, अंबेडकर नगर, अयोध्या, आजमगढ़, उन्नाव, इटावा, कन्नौज, कानपुर देहात, कानपुर नगर, कासगंज, कुशीनगर, गाजीपुर, गोंडा, गोरखपुर, चंदौली, चित्रकूट, जालौन, जौनपुर, झांसी, देवरिया, प्रतापगढ़, प्रयागराज, फतेहपुर, फैजाबाद, बस्ती, बदायूं, बलरामपुर, बहराइच, बाराबंकी, बिजनौर, बुलंदशहर, मऊ, महाराजगंज, महोबा, मिर्जापुर, मुजफ्फरनगर, मेरठ, रामपुर, रायबरेली, लखीमपुर खीरी, लखनऊ, ललितपुर, वाराणसी, शाहजहांपुर, श्रावस्ती, संत कबीर नगर, संत रविदास नगर, सहारनपुर, सिद्धार्थनगर, सीतापुर, सुल्तानपुर, हमीरपुर, हरदोई, आगरा, औरैया, कौशांबी, फिरोजाबाद, बागपत, बरेली, बांदा, मथुरा, मैनपुरी, मुरादाबाद, संभल, हापुड़।
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="section-title">अन्य विवरण (Other Details)</div>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 15px;">
+                Priority will be given to the candidate having qualifications and experience in social work. Candidates should have 2 years of experience in Skill Development/Other relevant field.
+            </p>
+
+            <div class="note-box">
+                <strong>Note:</strong> You are requested to go through the job requirement in Detail and ensure that you fulfill the given eligibility criteria including essential/preferential qualification along with required/desired experience before applying for the job.
+            </div>
+
+            <div class="apply-text">For Apply & Details Visit Official SSC Mock.com : SSCMOCK.COM</div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <a href="https://www.sscmock.com" target="_blank" class="footer-link">
+                <div class="footer-logo">SSC<br>Mock</div>
+                <div class="footer-text">
+                    <p>Resume CV Maker, Image Resizer, Age Calculator, JPG to PDF, Typing Test and More Tools</p>
+                    <h2>VISIT : WWW.SSCMOCK.COM</h2>
+                </div>
+            </a>
+        </footer>
+    </div>
+
+</body>
+</html>

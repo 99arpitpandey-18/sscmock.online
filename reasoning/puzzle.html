@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle & Arrangement – Deep Explanation (पहेली और व्यवस्था)</title>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --blue:#2563eb; --dark:#0b1f4b; --navy:#102a68; --bg:#f5f7fb; --white:#ffffff; --text:#172033; --muted:#667085; --border:#e1e6ef; --green:#16a34a; --red:#dc2626; --lightblue:#eef5ff; }
+body{ font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); }
+.header{ background:linear-gradient(135deg,#07183d,#2445a0); color:white; padding:28px 6%; }
+.header-inner{ max-width:1250px; margin:auto; }
+.back-btn{ color:white; text-decoration:none; font-size:15px; font-weight:bold; display:inline-block; margin-bottom:20px; background:rgba(255,255,255,0.1); padding:6px 18px; border-radius:30px; }
+.back-btn:hover{ background:rgba(255,255,255,0.25); }
+.header-content{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.header-icon{ width:76px; height:76px; border-radius:18px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:40px; flex-shrink:0; }
+.header h1{ font-size:34px; margin-bottom:7px; }
+.header p{ font-size:15px; opacity:.85; }
+.lang-toggle{ display:flex; gap:8px; background:rgba(255,255,255,0.15); padding:4px; border-radius:30px; margin-left:auto; }
+.lang-btn{ background:transparent; border:2px solid transparent; color:white; padding:6px 16px; border-radius:30px; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.lang-btn.active{ background:white; color:#0b1f4b; border-color:white; }
+.lang-btn:hover{ background:rgba(255,255,255,0.3); }
+.container{ width:92%; max-width:1200px; margin:30px auto; }
+.hero{ background:white; border:1px solid var(--border); border-radius:18px; padding:25px; box-shadow:0 8px 25px rgba(15,35,80,.06); }
+.hero h2{ color:var(--dark); margin-bottom:9px; }
+.hero p{ color:var(--muted); line-height:1.6; }
+.hero .description-box{ background:#f4f7ff; border-left:5px solid var(--blue); padding:16px 20px; border-radius:10px; margin-top:12px; color:#1f3a5f; line-height:1.8; }
+.stats{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.stat{ background:var(--lightblue); color:#21438f; border:1px solid #d9e5ff; padding:10px 15px; border-radius:10px; font-weight:bold; font-size:14px; }
+.controls{ margin:22px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.search-box{ flex:1; min-width:200px; padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; font-size:14px; outline:none; }
+.search-box:focus{ border-color:var(--blue); }
+select{ padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+.btn{ padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.btn-blue{ background:var(--blue); color:white; }
+.btn-blue:hover{ background:#1d4ed8; }
+.btn-white{ background:white; border:1px solid #ccd3df; color:#26344d; }
+.btn-white:hover{ background:#f0f2f5; }
+.btn-green{ background:var(--green); color:white; }
+.btn-green:hover{ background:#15803d; }
+.progress-info{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:var(--muted); font-weight:bold; }
+.progress{ width:100%; height:9px; background:#e5e9f0; border-radius:20px; overflow:hidden; margin-bottom:25px; }
+.progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); transition:.3s; }
+.question-card{ background:white; border:1px solid var(--border); border-radius:17px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 18px rgba(15,35,80,.05); }
+.question-top{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px 8px; }
+.question-number{ color:var(--blue); font-weight:800; }
+.question-type{ background:#eef2f7; color:#526071; padding:6px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.question-body{ padding:8px 20px 20px; }
+.question-text{ font-size:17px; line-height:1.65; font-weight:650; margin-bottom:16px; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.option{ background:#f8fafc; border:1px solid #dce2eb; border-radius:10px; padding:13px; text-align:left; cursor:pointer; font-size:15px; transition:.2s; }
+.option:hover{ background:#eff6ff; border-color:#2563eb; }
+.option.correct{ background:#ecfdf3; border-color:#22c55e; color:#166534; }
+.option.wrong{ background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+.answer-result{ margin-top:12px; font-weight:bold; }
+.explanation{ display:none; margin-top:15px; padding:18px 20px; background:#f4f7ff; border-left:5px solid #2563eb; border-radius:8px; line-height:1.8; }
+.explanation.show{ display:block; }
+.explanation-title{ color:#17449c; font-weight:bold; margin-bottom:8px; font-size:16px; }
+.footer{ text-align:center; padding:35px 10px; color:#667085; }
+@media(max-width:700px){ .header h1{ font-size:25px; } .header-content{ align-items:flex-start; } .header-icon{ width:60px; height:60px; font-size:30px; } .options{ grid-template-columns:1fr; } .question-text{ font-size:16px; } .container{ width:94%; } .controls{ flex-direction:column; } .controls .btn{ width:100%; text-align:center; } .lang-toggle{ margin-left:0; width:100%; justify-content:center; } }
+</style>
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="back-btn">← Topics पर वापस जाएँ</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+                <button class="lang-btn" id="langHi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">🧩</div>
+            <div>
+                <h1 id="mainTitle">Puzzle & Arrangement (Deep Explanation)</h1>
+                <p id="mainSub">SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <h2 id="heroTitle">Puzzle & Arrangement – Complete SSC Practice</h2>
+        <div id="descriptionBox" class="description-box"></div>
+        <div class="stats" id="statsRow">
+            <div class="stat" data-lang-en="510+ Questions" data-lang-hi="510+ प्रश्न">510+ Questions</div>
+            <div class="stat" data-lang-en="Linear Arrangement" data-lang-hi="रेखीय व्यवस्था">Linear Arrangement</div>
+            <div class="stat" data-lang-en="Seating Arrangement" data-lang-hi="बैठक व्यवस्था">Seating Arrangement</div>
+            <div class="stat" data-lang-en="Floor Puzzle" data-lang-hi="मंजिल पहेली">Floor Puzzle</div>
+            <div class="stat" data-lang-en="Box Puzzle" data-lang-hi="बक्सा पहेली">Box Puzzle</div>
+            <div class="stat" data-lang-en="Detailed Explanation" data-lang-hi="विस्तृत व्याख्या">Detailed Explanation</div>
+        </div>
+    </section>
+
+    <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="Search question...">
+        <select id="filter">
+            <option value="all" data-lang-en="All Questions" data-lang-hi="सभी प्रश्न">All Questions</option>
+            <option value="Linear Arrangement" data-lang-en="Linear Arrangement" data-lang-hi="रेखीय व्यवस्था">Linear Arrangement</option>
+            <option value="Seating Arrangement" data-lang-en="Seating Arrangement" data-lang-hi="बैठक व्यवस्था">Seating Arrangement</option>
+            <option value="Floor Puzzle" data-lang-en="Floor Puzzle" data-lang-hi="मंजिल पहेली">Floor Puzzle</option>
+            <option value="Box Puzzle" data-lang-en="Box Puzzle" data-lang-hi="बक्सा पहेली">Box Puzzle</option>
+        </select>
+        <button class="btn btn-blue" onclick="showAllExplanations()" data-lang-en="Show Explanations" data-lang-hi="सभी व्याख्याएँ दिखाएँ">Show Explanations</button>
+        <button class="btn btn-green" onclick="resetQuiz()" data-lang-en="Reset" data-lang-hi="रीसेट करें">Reset</button>
+    </div>
+
+    <div class="progress-info">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <div id="questionsContainer"></div>
+</main>
+<footer class="footer" data-lang-en="Puzzle & Arrangement · SSC Reasoning" data-lang-hi="पहेली और व्यवस्था · SSC रीजनिंग">Puzzle & Arrangement · SSC Reasoning</footer>
+
+<script>
+// ================================================================
+//  LANGUAGE TOGGLE
+// ================================================================
+var currentLang = 'en';
+
+var descriptions = {
+    en: '<b>What are Puzzle & Arrangement Questions?</b><br> These questions test your logical ability to arrange people/objects based on given conditions. The key is to identify direct clues and use them to eliminate possibilities step by step. <br><br> <b>📌 Types:</b><br> • <b>Linear Arrangement:</b> Arranging items in a straight line (left-right).<br> • <b>Seating Arrangement:</b> Circular or rectangular seating (around a table).<br> • <b>Floor Puzzle:</b> People living on different floors of a building.<br> • <b>Box Puzzle:</b> Different boxes stacked one above another.',
+    hi: '<b>पहेली और व्यवस्था (Puzzle & Arrangement) क्या है?</b><br> ये प्रश्न दी गई शर्तों के आधार पर लोगों/वस्तुओं को व्यवस्थित करने की आपकी तार्किक क्षमता का परीक्षण करते हैं। कुंजी प्रत्यक्ष सुरागों की पहचान करना और चरणबद्ध रूप से संभावनाओं को समाप्त करना है। <br><br> <b>📌 प्रकार:</b><br> • <b>रेखीय व्यवस्था:</b> वस्तुओं को एक सीधी रेखा (बाएँ-दाएँ) में व्यवस्थित करना।<br> • <b>बैठक व्यवस्था:</b> वृत्ताकार या आयताकार (मेज के चारों ओर) बैठना।<br> • <b>मंजिल पहेली:</b> इमारत की विभिन्न मंजिलों पर रहने वाले लोग।<br> • <b>बक्सा पहेली:</b> विभिन्न बक्से एक के ऊपर एक रखे गए।'
+};
+
+function updateUI() {
+    var els = document.querySelectorAll('[data-lang-en]');
+    for (var i = 0; i < els.length; i++) {
+        var el = els[i];
+        var key = el.getAttribute('data-lang-en');
+        var hi = el.getAttribute('data-lang-hi');
+        if (currentLang === 'en') {
+            if (el.tagName === 'OPTION') el.textContent = key;
+            else el.textContent = key;
+        } else {
+            if (el.tagName === 'OPTION') el.textContent = hi;
+            else el.textContent = hi;
+        }
+    }
+    document.getElementById('mainTitle').textContent = (currentLang === 'en') ? 'Puzzle & Arrangement (Deep Explanation)' : 'पहेली और व्यवस्था (गहन व्याख्या)';
+    document.getElementById('mainSub').textContent = (currentLang === 'en') ? 'SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions' : 'SSC CGL • CHSL • CPO • MTS | 510+ द्विभाषी प्रश्न';
+    document.getElementById('heroTitle').textContent = (currentLang === 'en') ? 'Puzzle & Arrangement – Complete SSC Practice' : 'पहेली और व्यवस्था – पूर्ण SSC अभ्यास';
+    document.getElementById('descriptionBox').innerHTML = descriptions[currentLang];
+    document.getElementById('search').placeholder = (currentLang === 'en') ? 'Search question...' : 'प्रश्न खोजें...';
+    document.getElementById('langEn').className = 'lang-btn' + (currentLang === 'en' ? ' active' : '');
+    document.getElementById('langHi').className = 'lang-btn' + (currentLang === 'hi' ? ' active' : '');
+    renderQuestions();
+    updateProgress();
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    updateUI();
+}
+
+// ================================================================
+//  QUESTION GENERATOR
+// ================================================================
+var questions = [];
+
+function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+
+// ---- Helper: generate random names ----
+var namePool = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+var colorPool = ['Red', 'Blue', 'Green', 'Yellow', 'White', 'Black', 'Pink', 'Purple'];
+var fruitPool = ['Apple', 'Banana', 'Cherry', 'Mango', 'Orange', 'Grapes', 'Papaya', 'Kiwi'];
+
+// ---- Linear Arrangement ----
+function generateLinearArrangement() {
+    var num = Math.floor(Math.random() * 4) + 4; // 4-7 people
+    var people = shuffle([].concat(namePool)).slice(0, num);
+    var arrangement = shuffle([].concat(people));
+    // Ask: who is at extreme left/right or between two?
+    var askType = Math.floor(Math.random() * 3);
+    var correct, question_en, question_hi, opts, exp_en, exp_hi;
+    if (askType === 0) {
+        // leftmost
+        correct = arrangement[0];
+        question_en = 'In a row, the people are ' + arrangement.join(', ') + '. Who is at the left end?';
+        question_hi = 'एक पंक्ति में लोग हैं: ' + arrangement.join(', ') + '. बाएँ छोर पर कौन है?';
+    } else if (askType === 1) {
+        // rightmost
+        correct = arrangement[arrangement.length-1];
+        question_en = 'In a row, the people are ' + arrangement.join(', ') + '. Who is at the right end?';
+        question_hi = 'एक पंक्ति में लोग हैं: ' + arrangement.join(', ') + '. दाएँ छोर पर कौन है?';
+    } else {
+        // between two specific people (pick two adjacent)
+        var idx = Math.floor(Math.random() * (arrangement.length - 2)) + 1;
+        var left = arrangement[idx-1];
+        var right = arrangement[idx+1];
+        correct = arrangement[idx];
+        question_en = 'In a row, the people are ' + arrangement.join(', ') + '. Who is sitting between ' + left + ' and ' + right + '?';
+        question_hi = 'एक पंक्ति में लोग हैं: ' + arrangement.join(', ') + '. ' + left + ' और ' + right + ' के बीच कौन बैठा है?';
+    }
+    // Generate options: correct + 3 distractors (other people)
+    var optsPool = [].concat(people);
+    var opts = [correct];
+    for (var i = 0; i < optsPool.length; i++) {
+        if (optsPool[i] !== correct && opts.length < 4) {
+            opts.push(optsPool[i]);
+        }
+    }
+    while (opts.length < 4) opts.push('None');
+    shuffle(opts);
+    var ansIdx = opts.indexOf(correct);
+    var exp_en = '🔍 Linear Arrangement Solution:<br><b>Step 1:</b> The given order is: ' + arrangement.join(' → ') + '.<br><b>Step 2:</b> ' + (askType===0?'Left end is ' + correct : askType===1?'Right end is ' + correct : correct + ' is between ' + left + ' and ' + right) + '.<br>✅ <b>Correct answer: ' + correct + '</b>';
+    var exp_hi = '🔍 रेखीय व्यवस्था समाधान:<br><b>चरण 1:</b> दी गई व्यवस्था: ' + arrangement.join(' → ') + '.<br><b>चरण 2:</b> ' + (askType===0?'बाएँ छोर ' + correct : askType===1?'दाएँ छोर ' + correct : correct + ' ' + left + ' और ' + right + ' के बीच है') + '.<br>✅ <b>सही उत्तर: ' + correct + '</b>';
+    return { q_en: question_en, q_hi: question_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: 'Linear Arrangement', exp_en: exp_en, exp_hi: exp_hi };
+}
+
+// ---- Seating Arrangement (Circular) ----
+function generateSeatingArrangement() {
+    var num = Math.floor(Math.random() * 4) + 5; // 5-8 people
+    var people = shuffle([].concat(namePool)).slice(0, num);
+    // Arrange in a circle randomly
+    var arrangement = shuffle([].concat(people));
+    // Ask: who is opposite to X or immediate left/right of X
+    var askType = Math.floor(Math.random() * 3);
+    var correct, question_en, question_hi, opts, exp_en, exp_hi;
+    var target = arrangement[0];
+    if (askType === 0) {
+        // immediate right (clockwise)
+        var idx = arrangement.indexOf(target);
+        var rightIdx = (idx + 1) % num;
+        correct = arrangement[rightIdx];
+        question_en = 'People are seated around a circular table: ' + arrangement.join(', ') + '. Who is immediate right of ' + target + '? (clockwise)';
+        question_hi = 'लोग एक गोल मेज के चारों ओर बैठे हैं: ' + arrangement.join(', ') + '. ' + target + ' के ठीक दाएँ (clockwise) कौन है?';
+    } else if (askType === 1) {
+        // immediate left (anticlockwise)
+        var idx = arrangement.indexOf(target);
+        var leftIdx = (idx - 1 + num) % num;
+        correct = arrangement[leftIdx];
+        question_en = 'People are seated around a circular table: ' + arrangement.join(', ') + '. Who is immediate left of ' + target + '? (anticlockwise)';
+        question_hi = 'लोग एक गोल मेज के चारों ओर बैठे हैं: ' + arrangement.join(', ') + '. ' + target + ' के ठीक बाएँ (anticlockwise) कौन है?';
+    } else {
+        // opposite
+        var idx = arrangement.indexOf(target);
+        var oppIdx = (idx + Math.floor(num/2)) % num;
+        correct = arrangement[oppIdx];
+        question_en = 'People are seated around a circular table: ' + arrangement.join(', ') + '. Who is opposite to ' + target + '?';
+        question_hi = 'लोग एक गोल मेज के चारों ओर बैठे हैं: ' + arrangement.join(', ') + '. ' + target + ' के विपरीत (opposite) कौन है?';
+    }
+    var optsPool = [].concat(people);
+    var opts = [correct];
+    for (var i = 0; i < optsPool.length; i++) {
+        if (optsPool[i] !== correct && opts.length < 4) {
+            opts.push(optsPool[i]);
+        }
+    }
+    while (opts.length < 4) opts.push('None');
+    shuffle(opts);
+    var ansIdx = opts.indexOf(correct);
+    var exp_en = '🔍 Seating Arrangement Solution:<br><b>Step 1:</b> The circle order (clockwise) is: ' + arrangement.join(' → ') + '.<br><b>Step 2:</b> ' + (askType===0?'Immediate right of ' + target + ' is ' + correct : askType===1?'Immediate left of ' + target + ' is ' + correct : 'Opposite of ' + target + ' is ' + correct) + '.<br>✅ <b>Correct answer: ' + correct + '</b>';
+    var exp_hi = '🔍 बैठक व्यवस्था समाधान:<br><b>चरण 1:</b> वृत्त क्रम (clockwise): ' + arrangement.join(' → ') + '.<br><b>चरण 2:</b> ' + (askType===0?target + ' के ठीक दाएँ ' + correct : askType===1?target + ' के ठीक बाएँ ' + correct : target + ' के विपरीत ' + correct) + '.<br>✅ <b>सही उत्तर: ' + correct + '</b>';
+    return { q_en: question_en, q_hi: question_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: 'Seating Arrangement', exp_en: exp_en, exp_hi: exp_hi };
+}
+
+// ---- Floor Puzzle ----
+function generateFloorPuzzle() {
+    var numFloors = Math.floor(Math.random() * 4) + 4; // 4-7 floors (bottom to top)
+    var people = shuffle([].concat(namePool)).slice(0, numFloors);
+    // Assign each person to a floor (1=ground, highest = top)
+    var floors = [];
+    for (var i = 0; i < numFloors; i++) {
+        floors.push(i+1); // 1 to numFloors
+    }
+    shuffle(floors);
+    var mapping = {};
+    for (var i = 0; i < people.length; i++) {
+        mapping[people[i]] = floors[i];
+    }
+    // Ask: who lives on top floor or bottom floor or between
+    var askType = Math.floor(Math.random() * 3);
+    var correct, question_en, question_hi, opts, exp_en, exp_hi;
+    if (askType === 0) {
+        // top floor
+        var topFloor = Math.max.apply(null, floors);
+        for (var p in mapping) {
+            if (mapping[p] === topFloor) { correct = p; break; }
+        }
+        question_en = 'There are ' + numFloors + ' floors. People and their floors: ' + JSON.stringify(mapping).replace(/["{}]/g,'') + '. Who lives on the top floor?';
+        question_hi = numFloors + ' मंजिलें हैं। लोग और उनकी मंजिलें: ' + JSON.stringify(mapping).replace(/["{}]/g,'') + '. सबसे ऊपर (top floor) कौन रहता है?';
+    } else if (askType === 1) {
+        // bottom floor
+        var bottomFloor = Math.min.apply(null, floors);
+        for (var p in mapping) {
+            if (mapping[p] === bottomFloor) { correct = p; break; }
+        }
+        question_en = 'There are ' + numFloors + ' floors. People and their floors: ' + JSON.stringify(mapping).replace(/["{}]/g,'') + '. Who lives on the ground floor?';
+        question_hi = numFloors + ' मंजिलें हैं। लोग और उनकी मंजिलें: ' + JSON.stringify(mapping).replace(/["{}]/g,'') + '. सबसे नीचे (ground floor) कौन रहता है?';
+    } else {
+        // who lives between two specific floors
+        var floor1 = Math.floor(Math.random() * (numFloors-2)) + 2;
+        var floor2 = floor1 + 1;
+        // find person on floor1
+        var person1 = null, person2 = null;
+        for (var p in mapping) {
+            if (mapping[p] === floor1) person1 = p;
+            if (mapping[p] === floor2) person2 = p;
+        }
+        if (!person1 || !person2) { // fallback
+            var keys = Object.keys(mapping);
+            correct = keys[0];
+        } else {
+            // find person living between them (floor between)
+            var midFloor = (floor1 + floor2) / 2;
+            if (midFloor % 1 === 0) {
+                for (var p in mapping) {
+                    if (mapping[p] === midFloor) { correct = p; break; }
+                }
+            } else {
+                // no one exactly between, choose random
+                var keys = Object.keys(mapping);
+                correct = keys[Math.floor(Math.random()*keys.length)];
+            }
+        }
+        question_en = 'There are ' + numFloors + ' floors. People and their floors: ' + JSON.stringify(mapping).replace(/["{}]/g,'') + '. Who lives between ' + person1 + ' and ' + person2 + '?';
+        question_hi = numFloors + ' मंजिलें हैं। लोग और उनकी मंजिलें: ' + JSON.stringify(mapping).replace(/["{}]/g,'') + '. ' + person1 + ' और ' + person2 + ' के बीच कौन रहता है?';
+    }
+    var optsPool = [].concat(people);
+    var opts = [correct];
+    for (var i = 0; i < optsPool.length; i++) {
+        if (optsPool[i] !== correct && opts.length < 4) {
+            opts.push(optsPool[i]);
+        }
+    }
+    while (opts.length < 4) opts.push('None');
+    shuffle(opts);
+    var ansIdx = opts.indexOf(correct);
+    var exp_en = '🔍 Floor Puzzle Solution:<br><b>Step 1:</b> Mapping: ' + JSON.stringify(mapping).replace(/["{}]/g,'') + '.<br><b>Step 2:</b> ' + (askType===0?'Top floor is floor ' + topFloor + ', occupied by ' + correct : askType===1?'Ground floor is floor ' + bottomFloor + ', occupied by ' + correct : correct + ' is between ' + person1 + ' and ' + person2) + '.<br>✅ <b>Correct answer: ' + correct + '</b>';
+    var exp_hi = '🔍 मंजिल पहेली समाधान:<br><b>चरण 1:</b> मानचित्र: ' + JSON.stringify(mapping).replace(/["{}]/g,'') + '.<br><b>चरण 2:</b> ' + (askType===0?'सबसे ऊपर मंजिल ' + topFloor + ', जहाँ ' + correct + ' रहता है' : askType===1?'सबसे नीचे मंजिल ' + bottomFloor + ', जहाँ ' + correct + ' रहता है' : correct + ' ' + person1 + ' और ' + person2 + ' के बीच रहता है') + '.<br>✅ <b>सही उत्तर: ' + correct + '</b>';
+    return { q_en: question_en, q_hi: question_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: 'Floor Puzzle', exp_en: exp_en, exp_hi: exp_hi };
+}
+
+// ---- Box Puzzle ----
+function generateBoxPuzzle() {
+    var numBoxes = Math.floor(Math.random() * 4) + 4; // 4-7 boxes
+    var colors = shuffle([].concat(colorPool)).slice(0, numBoxes);
+    var fruits = shuffle([].concat(fruitPool)).slice(0, numBoxes);
+    // Create mapping: box number (1 bottom to top) has color and fruit
+    var boxOrder = [];
+    for (var i = 0; i < numBoxes; i++) {
+        boxOrder.push({color: colors[i], fruit: fruits[i]});
+    }
+    // Ask: which box (color) has a given fruit?
+    var targetFruit = fruits[Math.floor(Math.random() * fruits.length)];
+    var correctColor = '';
+    for (var i = 0; i < boxOrder.length; i++) {
+        if (boxOrder[i].fruit === targetFruit) { correctColor = boxOrder[i].color; break; }
+    }
+    var question_en = 'There are ' + numBoxes + ' boxes stacked one above another. The colors (bottom to top) are: ' + colors.join(', ') + ' and the fruits (in same order) are: ' + fruits.join(', ') + '. Which color box contains ' + targetFruit + '?';
+    var question_hi = numBoxes + ' बक्से एक के ऊपर एक रखे हैं। रंग (नीचे से ऊपर): ' + colors.join(', ') + ' और फल (उसी क्रम में): ' + fruits.join(', ') + '. ' + targetFruit + ' किस रंग के बक्से में है?';
+    var opts = shuffle([].concat(colors));
+    var ansIdx = opts.indexOf(correctColor);
+    var exp_en = '🔍 Box Puzzle Solution:<br><b>Step 1:</b> Order (bottom to top):<br>';
+    for (var i = 0; i < numBoxes; i++) {
+        exp_en += (i+1) + '. ' + colors[i] + ' box → ' + fruits[i] + '<br>';
+    }
+    exp_en += '<b>Step 2:</b> ' + targetFruit + ' is in the ' + correctColor + ' box.<br>✅ <b>Correct answer: ' + correctColor + '</b>';
+    var exp_hi = '🔍 बक्सा पहेली समाधान:<br><b>चरण 1:</b> क्रम (नीचे से ऊपर):<br>';
+    for (var i = 0; i < numBoxes; i++) {
+        exp_hi += (i+1) + '. ' + colors[i] + ' बक्सा → ' + fruits[i] + '<br>';
+    }
+    exp_hi += '<b>चरण 2:</b> ' + targetFruit + ' ' + correctColor + ' बक्से में है।<br>✅ <b>सही उत्तर: ' + correctColor + '</b>';
+    return { q_en: question_en, q_hi: question_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: 'Box Puzzle', exp_en: exp_en, exp_hi: exp_hi };
+}
+
+// Generate 510 questions (mix of all types)
+var types = ['Linear Arrangement', 'Seating Arrangement', 'Floor Puzzle', 'Box Puzzle'];
+while (questions.length < 510) {
+    var t = types[Math.floor(Math.random() * types.length)];
+    var q;
+    if (t === 'Linear Arrangement') q = generateLinearArrangement();
+    else if (t === 'Seating Arrangement') q = generateSeatingArrangement();
+    else if (t === 'Floor Puzzle') q = generateFloorPuzzle();
+    else q = generateBoxPuzzle();
+    // avoid duplicates
+    var exists = false;
+    for (var i = 0; i < questions.length; i++) {
+        if (questions[i].q_en === q.q_en && questions[i].type === q.type) {
+            exists = true;
+            break;
+        }
+    }
+    if (!exists) questions.push(q);
+}
+shuffle(questions);
+
+// ================================================================
+//  RENDER ENGINE
+// ================================================================
+var container = document.getElementById('questionsContainer');
+var search = document.getElementById('search');
+var filter = document.getElementById('filter');
+var attemptText = document.getElementById('attemptText');
+var scoreText = document.getElementById('scoreText');
+var progressBar = document.getElementById('progressBar');
+var attempted = new Set();
+var score = 0;
+
+function renderQuestions() {
+    container.innerHTML = '';
+    var keyword = search.value.toLowerCase().trim();
+    var selectedType = filter.value;
+    for (var idx = 0; idx < questions.length; idx++) {
+        var q = questions[idx];
+        if (selectedType !== 'all' && q.type !== selectedType) continue;
+        var qText = (currentLang === 'en') ? q.q_en : q.q_hi;
+        var opts = (currentLang === 'en') ? q.opts_en : q.opts_hi;
+        var exp = (currentLang === 'en') ? q.exp_en : q.exp_hi;
+        var fullText = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && fullText.indexOf(keyword) === -1) continue;
+        
+        var card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = 'question-' + idx;
+        var optHTML = '';
+        for (var oi = 0; oi < opts.length; oi++) {
+            optHTML += '<button class="option" onclick="checkAnswer(' + idx + ',' + oi + ',this)">(' + String.fromCharCode(65+oi) + ') ' + opts[oi] + '</button>';
+        }
+        var expTitle = (currentLang === 'en') ? '💡 Detailed Explanation (Step-by-Step Logic)' : '💡 विस्तृत व्याख्या (चरण-दर-चरण तर्क)';
+        card.innerHTML = '<div class="question-top"><span class="question-number">Q' + (idx+1) + '</span><span class="question-type">' + q.type + '</span></div><div class="question-body"><div class="question-text">' + qText + '</div><div class="options">' + optHTML + '</div><div class="answer-result" id="result-' + idx + '"></div><div class="explanation" id="explanation-' + idx + '"><div class="explanation-title">' + expTitle + '</div>' + exp + '</div></div>';
+        container.appendChild(card);
+    }
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attempted.has(qIdx)) return;
+    attempted.add(qIdx);
+    var q = questions[qIdx];
+    var card = document.getElementById('question-' + qIdx);
+    var btns = card.querySelectorAll('.option');
+    for (var i = 0; i < btns.length; i++) {
+        if (i === q.answer) btns[i].classList.add('correct');
+    }
+    var res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) {
+        score++;
+        res.innerHTML = (currentLang === 'en') ? '✅ Correct Answer!' : '✅ सही उत्तर!';
+        res.style.color = '#16a34a';
+    } else {
+        btn.classList.add('wrong');
+        res.innerHTML = (currentLang === 'en') ? '❌ Incorrect. See explanation below.' : '❌ गलत। नीचे व्याख्या देखें।';
+        res.style.color = '#dc2626';
+    }
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    var total = questions.length;
+    var done = attempted.size;
+    attemptText.textContent = ((currentLang === 'en') ? 'Attempted' : 'हल किए') + ': ' + done + ' / ' + total;
+    scoreText.textContent = ((currentLang === 'en') ? 'Score' : 'स्कोर') + ': ' + score;
+    progressBar.style.width = (done / total * 100) + '%';
+}
+
+function showAllExplanations() {
+    var exps = document.querySelectorAll('.explanation');
+    for (var i = 0; i < exps.length; i++) {
+        exps[i].classList.add('show');
+    }
+}
+
+function resetQuiz() {
+    attempted.clear();
+    score = 0;
+    renderQuestions();
+    updateProgress();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+search.addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+
+// Init
+updateUI();
+</script>
+</body>
+</html>

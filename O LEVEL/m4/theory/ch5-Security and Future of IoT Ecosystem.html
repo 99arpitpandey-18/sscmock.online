@@ -1,0 +1,2217 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M4-R5 Chapter 5 | Security and Future of IoT Ecosystem | NIELIT O Level</title>
+
+<meta name="description" content="NIELIT O Level M4-R5 Chapter 5 bilingual notes on Security and Future of IoT Ecosystem. Learn IoT security threats, vulnerabilities, authentication, encryption, privacy, attacks, secure communication and future IoT technologies.">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%,var(--glow1),transparent 25%),
+        radial-gradient(circle at 90% 20%,var(--glow2),transparent 25%),
+        linear-gradient(135deg,#07111f,#10172c,#07111f);
+
+    color:var(--text);
+    min-height:100vh;
+    transition:.4s;
+}
+
+/* =========================================================
+   THEMES
+========================================================= */
+
+:root{
+    --primary:#38dcff;
+    --secondary:#8b7cff;
+    --accent:#00f5a0;
+    --text:#eef7ff;
+    --muted:#91a3ba;
+    --card:rgba(16,31,52,.82);
+    --border:rgba(255,255,255,.10);
+    --glow1:rgba(0,220,255,.12);
+    --glow2:rgba(130,90,255,.12);
+}
+
+/* BLUE THEME */
+
+body.blue{
+    --primary:#38dcff;
+    --secondary:#5c7cff;
+    --accent:#00f5a0;
+    --glow1:rgba(0,220,255,.15);
+    --glow2:rgba(60,100,255,.13);
+}
+
+/* PURPLE THEME */
+
+body.purple{
+    --primary:#c084fc;
+    --secondary:#8b5cf6;
+    --accent:#f472b6;
+    --glow1:rgba(192,132,252,.14);
+    --glow2:rgba(139,92,246,.15);
+}
+
+/* GREEN THEME */
+
+body.green{
+    --primary:#00f5a0;
+    --secondary:#22c55e;
+    --accent:#38dcff;
+    --glow1:rgba(0,245,160,.13);
+    --glow2:rgba(34,197,94,.12);
+}
+
+/* ORANGE THEME */
+
+body.orange{
+    --primary:#ffb347;
+    --secondary:#ff7043;
+    --accent:#ffd166;
+    --glow1:rgba(255,179,71,.15);
+    --glow2:rgba(255,112,67,.12);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    padding:14px 5%;
+
+    background:rgba(5,12,24,.78);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:900;
+
+    color:var(--primary);
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid var(--primary);
+
+    box-shadow:0 0 25px var(--glow1);
+}
+
+.brand-title{
+    font-size:17px;
+    font-weight:800;
+}
+
+.brand-sub{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+.actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.back-btn{
+    text-decoration:none;
+    color:var(--text);
+
+    padding:9px 14px;
+
+    border-radius:10px;
+
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.04);
+
+    font-size:12px;
+}
+
+/* =========================================================
+   THEME SELECTOR
+========================================================= */
+
+.theme-box{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.theme-btn{
+    width:27px;
+    height:27px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,255,255,.25);
+
+    cursor:pointer;
+}
+
+.t-blue{background:#38dcff;}
+.t-purple{background:#c084fc;}
+.t-green{background:#00f5a0;}
+.t-orange{background:#ffb347;}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+
+    padding:40px 5% 80px;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:42px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(20,38,65,.92),
+            rgba(9,20,37,.82)
+        );
+
+    border:1px solid var(--border);
+
+    overflow:hidden;
+
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
+
+    margin-bottom:35px;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    right:-130px;
+    top:-130px;
+
+    background:var(--glow1);
+
+    filter:blur(50px);
+
+    border-radius:50%;
+}
+
+.badge{
+    display:inline-block;
+
+    padding:8px 13px;
+
+    border-radius:30px;
+
+    color:var(--primary);
+
+    border:1px solid var(--primary);
+
+    background:rgba(255,255,255,.04);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    margin-bottom:17px;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,47px);
+
+    margin-bottom:13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            var(--primary),
+            var(--accent)
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:900px;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    line-height:1.8;
+}
+
+/* =========================================================
+   QUICK INFO
+========================================================= */
+
+.info-grid{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:13px;
+
+    margin-top:27px;
+}
+
+.info{
+    padding:17px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.info strong{
+    display:block;
+
+    font-size:21px;
+
+    color:var(--primary);
+
+    margin-bottom:5px;
+}
+
+.info span{
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+    margin-top:38px;
+}
+
+.section-title{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:18px;
+}
+
+.icon{
+    width:40px;
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid var(--primary);
+
+    font-size:18px;
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+/* =========================================================
+   CONTENT CARD
+========================================================= */
+
+.content-card{
+    padding:26px;
+
+    border-radius:19px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    margin-bottom:17px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+.content-card h3{
+    color:var(--primary);
+
+    margin-bottom:12px;
+
+    font-size:18px;
+}
+
+.content-card h4{
+    color:var(--accent);
+
+    margin:17px 0 8px;
+
+    font-size:14px;
+}
+
+.content-card p{
+    color:#b5c3d5;
+
+    font-size:13px;
+
+    line-height:1.8;
+}
+
+.hindi{
+    color:#d5deeb;
+    margin-top:5px;
+}
+
+/* =========================================================
+   DEFINITION
+========================================================= */
+
+.definition{
+    padding:21px;
+
+    border-left:4px solid var(--primary);
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.04);
+
+    margin-top:15px;
+}
+
+.definition strong{
+    color:var(--primary);
+}
+
+.definition p{
+    margin-top:7px;
+}
+
+/* =========================================================
+   GRID CARDS
+========================================================= */
+
+.grid{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:17px;
+}
+
+.mini-card{
+    padding:22px;
+
+    border-radius:17px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+}
+
+.mini-card:hover{
+    transform:translateY(-5px);
+
+    border-color:var(--primary);
+
+    box-shadow:0 15px 35px var(--glow1);
+}
+
+.mini-card h3{
+    color:var(--primary);
+
+    margin-bottom:8px;
+}
+
+.mini-card p{
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+/* =========================================================
+   THREAT CARDS
+========================================================= */
+
+.threat-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+}
+
+.threat{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.threat-number{
+    width:35px;
+    height:35px;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(255,255,255,.06);
+
+    color:var(--primary);
+
+    font-weight:800;
+
+    margin-bottom:12px;
+}
+
+.threat h3{
+    font-size:14px;
+
+    margin-bottom:8px;
+
+    color:#fff;
+}
+
+.threat p{
+    color:var(--muted);
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:650px;
+}
+
+th,td{
+    padding:13px;
+
+    border-bottom:1px solid var(--border);
+
+    text-align:left;
+
+    font-size:12px;
+}
+
+th{
+    color:var(--primary);
+
+    background:rgba(255,255,255,.04);
+}
+
+td{
+    color:#b7c4d5;
+}
+
+/* =========================================================
+   CODE BOX
+========================================================= */
+
+.example{
+    margin-top:16px;
+
+    padding:17px;
+
+    border-radius:12px;
+
+    background:#050b14;
+
+    border:1px solid var(--border);
+
+    overflow:auto;
+}
+
+.example-title{
+    color:var(--accent);
+
+    font-size:11px;
+
+    margin-bottom:9px;
+
+    font-weight:800;
+}
+
+pre{
+    color:#ccecff;
+
+    font-size:12px;
+
+    line-height:1.6;
+}
+
+/* =========================================================
+   EXAM BOX
+========================================================= */
+
+.exam-box{
+    padding:23px;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56,220,255,.08),
+            rgba(139,124,255,.07)
+        );
+
+    border:1px solid var(--primary);
+}
+
+.exam-box h3{
+    color:var(--primary);
+
+    margin-bottom:13px;
+}
+
+.exam-list{
+    list-style:none;
+}
+
+.exam-list li{
+    padding:9px 0;
+
+    border-bottom:1px solid var(--border);
+
+    color:#c4d0df;
+
+    font-size:12px;
+}
+
+.exam-list li::before{
+    content:"✓";
+
+    color:var(--accent);
+
+    margin-right:9px;
+
+    font-weight:bold;
+}
+
+/* =========================================================
+   MCQ
+========================================================= */
+
+.mcq{
+    padding:21px;
+
+    border-radius:16px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    margin-bottom:13px;
+}
+
+.question{
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    margin-bottom:12px;
+}
+
+.option{
+    display:block;
+
+    padding:9px 11px;
+
+    margin:6px 0;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.035);
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.answer{
+    margin-top:11px;
+
+    color:var(--accent);
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:50px;
+
+    padding:25px;
+
+    text-align:center;
+
+    border-top:1px solid var(--border);
+
+    color:#71839b;
+
+    font-size:11px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .info-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .threat-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .actions{
+        flex-wrap:wrap;
+        justify-content:flex-end;
+    }
+
+    .container{
+        padding:25px 4% 60px;
+    }
+
+    .hero{
+        padding:27px 20px;
+    }
+
+    .info-grid,
+    .grid,
+    .threat-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+}
+
+</style>
+</head>
+
+<body class="blue">
+
+<!-- =========================================================
+HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+<div class="logo-area">
+
+<div class="logo">M4</div>
+
+<div>
+<div class="brand-title">
+M4-R5 Study Zone
+</div>
+
+<div class="brand-sub">
+Chapter 5 • IoT Security & Future
+</div>
+</div>
+
+</div>
+
+<div class="actions">
+
+<div class="theme-box">
+
+<button class="theme-btn t-blue"
+onclick="setTheme('blue')"></button>
+
+<button class="theme-btn t-purple"
+onclick="setTheme('purple')"></button>
+
+<button class="theme-btn t-green"
+onclick="setTheme('green')"></button>
+
+<button class="theme-btn t-orange"
+onclick="setTheme('orange')"></button>
+
+</div>
+
+<a href="m4.html" class="back-btn">
+← M4 Home
+</a>
+
+</div>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<!-- =========================================================
+HERO
+========================================================= -->
+
+<section class="hero">
+
+<span class="badge">
+✦ NIELIT O LEVEL • M4-R5 • CHAPTER 05
+</span>
+
+<h1>
+Security and Future of IoT Ecosystem
+</h1>
+
+<p>
+Complete bilingual exam-oriented notes covering IoT security,
+threats, vulnerabilities, authentication, authorization,
+encryption, privacy, secure communication, common attacks,
+security practices and the future evolution of the IoT ecosystem.
+</p>
+
+<div class="info-grid">
+
+<div class="info">
+<strong>05</strong>
+<span>Chapter Number</span>
+</div>
+
+<div class="info">
+<strong>2×</strong>
+<span>Extra Examples</span>
+</div>
+
+<div class="info">
+<strong>EN + HI</strong>
+<span>Bilingual Notes</span>
+</div>
+
+<div class="info">
+<strong>EXAM</strong>
+<span>Focused Revision</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+1 INTRODUCTION
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🔐</div>
+
+<div>
+<h2>1. IoT Security क्या है?</h2>
+<p>Understanding the need for security in connected devices</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<div class="definition">
+
+<strong>Definition:</strong>
+
+<p>
+IoT Security refers to the methods, technologies and practices
+used to protect IoT devices, networks, applications and data
+from unauthorized access, attacks, misuse and damage.
+</p>
+
+<p class="hindi">
+<strong>हिंदी:</strong>
+IoT Security का अर्थ IoT devices, networks, applications और data
+को unauthorized access, cyber attacks, misuse और damage से सुरक्षित रखना है।
+</p>
+
+</div>
+
+<h4>Simple Example / सरल उदाहरण</h4>
+
+<p>
+Consider a smart home containing smart bulbs, cameras,
+door locks and sensors. If an attacker gains access to the
+network, the attacker may attempt to control or misuse these devices.
+</p>
+
+<p class="hindi">
+एक smart home में smart bulb, camera, smart lock और sensors हैं।
+यदि attacker network में unauthorized access प्राप्त कर ले,
+तो वह इन devices का गलत उपयोग करने का प्रयास कर सकता है।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+2 WHY SECURITY
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🛡️</div>
+
+<div>
+<h2>2. Why IoT Security is Important?</h2>
+<p>IoT devices handle real-world data and operations</p>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="mini-card">
+
+<h3>🔒 Confidentiality</h3>
+
+<p>
+Only authorized users should be able to access sensitive data.
+</p>
+
+<p class="hindi">
+केवल authorized users को sensitive data access करने की अनुमति होनी चाहिए।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>🧾 Integrity</h3>
+
+<p>
+Data should not be modified by unauthorized persons.
+</p>
+
+<p class="hindi">
+Unauthorized व्यक्ति data में बदलाव नहीं कर सके।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>⚡ Availability</h3>
+
+<p>
+IoT services should remain available when legitimate users need them.
+</p>
+
+<p class="hindi">
+जब authorized user को service की जरूरत हो तब service उपलब्ध रहनी चाहिए।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>👤 Privacy</h3>
+
+<p>
+Personal and sensitive information collected by IoT systems must be protected.
+</p>
+
+<p class="hindi">
+IoT systems द्वारा collect की गई personal information की सुरक्षा जरूरी है।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+3 CIA TRIAD
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🎯</div>
+
+<div>
+<h2>3. CIA Triad</h2>
+<p>Very important for examination</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Security Principle</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>Confidentiality</td>
+<td>Prevent unauthorized information access</td>
+<td>Encryption of sensor data</td>
+</tr>
+
+<tr>
+<td>Integrity</td>
+<td>Prevent unauthorized modification</td>
+<td>Protecting device commands</td>
+</tr>
+
+<tr>
+<td>Availability</td>
+<td>Keep services accessible</td>
+<td>Keeping IoT server operational</td>
+</tr>
+
+</table>
+
+</div>
+
+<h4>Exam Trick</h4>
+
+<p>
+<strong>CIA = Confidentiality + Integrity + Availability</strong>
+</p>
+
+<p class="hindi">
+CIA Triad IoT और cybersecurity का एक बहुत important security concept है।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+4 VULNERABILITIES
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">⚠️</div>
+
+<div>
+<h2>4. Common IoT Vulnerabilities</h2>
+<p>Weaknesses that attackers may exploit</p>
+</div>
+
+</div>
+
+<div class="threat-grid">
+
+<div class="threat">
+
+<div class="threat-number">01</div>
+
+<h3>Weak Passwords</h3>
+
+<p>
+Default or easily guessable passwords can make devices vulnerable.
+</p>
+
+<p class="hindi">
+Weak या default passwords attacker के लिए आसान target बन सकते हैं।
+</p>
+
+</div>
+
+<div class="threat">
+
+<div class="threat-number">02</div>
+
+<h3>Outdated Firmware</h3>
+
+<p>
+Old firmware may contain known security vulnerabilities.
+</p>
+
+<p class="hindi">
+पुराने firmware में known security vulnerabilities हो सकती हैं।
+</p>
+
+</div>
+
+<div class="threat">
+
+<div class="threat-number">03</div>
+
+<h3>Insecure Communication</h3>
+
+<p>
+Unprotected communication can expose data during transmission.
+</p>
+
+<p class="hindi">
+Unencrypted communication से data transmission के दौरान expose हो सकता है।
+</p>
+
+</div>
+
+<div class="threat">
+
+<div class="threat-number">04</div>
+
+<h3>Poor Authentication</h3>
+
+<p>
+Weak authentication can allow unauthorized users to access devices.
+</p>
+
+<p class="hindi">
+Weak authentication unauthorized access का कारण बन सकती है।
+</p>
+
+</div>
+
+<div class="threat">
+
+<div class="threat-number">05</div>
+
+<h3>Insecure APIs</h3>
+
+<p>
+Poorly protected APIs can expose device functions and data.
+</p>
+
+<p class="hindi">
+Insecure APIs device functions और data को expose कर सकती हैं।
+</p>
+
+</div>
+
+<div class="threat">
+
+<div class="threat-number">06</div>
+
+<h3>Physical Exposure</h3>
+
+<p>
+IoT devices installed in public locations may be physically accessible.
+</p>
+
+<p class="hindi">
+Public places में लगे devices physical tampering के risk में हो सकते हैं।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+5 ATTACKS
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🚨</div>
+
+<div>
+<h2>5. Common IoT Security Attacks</h2>
+<p>Important attack types for exams</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<h3>1. Denial of Service (DoS)</h3>
+
+<p>
+A DoS attack attempts to make a service or device unavailable
+to legitimate users by overwhelming it with requests or traffic.
+</p>
+
+<p class="hindi">
+DoS attack में system को excessive requests या traffic देकर
+legitimate users के लिए unavailable करने का प्रयास किया जाता है।
+</p>
+
+<h4>Example</h4>
+
+<p>
+A smart gateway receives an unusually large number of requests
+and becomes unable to process normal user requests.
+</p>
+
+
+<h3 style="margin-top:25px;">2. Distributed Denial of Service (DDoS)</h3>
+
+<p>
+DDoS is similar to DoS, but traffic may originate from multiple
+compromised systems.
+</p>
+
+<p class="hindi">
+DDoS में attack traffic कई compromised systems से आ सकता है।
+</p>
+
+
+<h3 style="margin-top:25px;">3. Man-in-the-Middle (MITM)</h3>
+
+<p>
+An attacker attempts to intercept communication between two parties.
+</p>
+
+<p class="hindi">
+MITM attack में attacker दो communicating parties के बीच communication
+को intercept करने का प्रयास करता है।
+</p>
+
+
+<h3 style="margin-top:25px;">4. Malware</h3>
+
+<p>
+Malicious software can compromise IoT devices and affect their operation.
+</p>
+
+<p class="hindi">
+Malware IoT device को compromise करके उसके operation को प्रभावित कर सकता है।
+</p>
+
+
+<h3 style="margin-top:25px;">5. Eavesdropping</h3>
+
+<p>
+An attacker attempts to listen to or capture communication data.
+</p>
+
+<p class="hindi">
+Eavesdropping में attacker communication को secretly observe या capture
+करने का प्रयास करता है।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+6 AUTHENTICATION
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">👤</div>
+
+<div>
+<h2>6. Authentication & Authorization</h2>
+<p>Two important security concepts</p>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="mini-card">
+
+<h3>Authentication</h3>
+
+<p>
+Authentication verifies who the user or device is.
+</p>
+
+<p class="hindi">
+Authentication यह verify करता है कि user या device वास्तव में कौन है।
+</p>
+
+<h4>Examples</h4>
+
+<p>
+Password, OTP, biometric authentication and digital certificates.
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>Authorization</h3>
+
+<p>
+Authorization determines what an authenticated user or device is allowed to do.
+</p>
+
+<p class="hindi">
+Authorization यह निर्धारित करता है कि authenticated user को क्या करने की permission है।
+</p>
+
+<h4>Example</h4>
+
+<p>
+A user may be allowed to view sensor data but not modify device configuration.
+</p>
+
+</div>
+
+</div>
+
+<div class="content-card">
+
+<h4>Exam Difference</h4>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Authentication</th>
+<th>Authorization</th>
+</tr>
+
+<tr>
+<td>Who are you?</td>
+<td>What are you allowed to do?</td>
+</tr>
+
+<tr>
+<td>Identity verification</td>
+<td>Permission control</td>
+</tr>
+
+<tr>
+<td>Password / OTP / Biometrics</td>
+<td>Access permissions / roles</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+7 ENCRYPTION
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🔑</div>
+
+<div>
+<h2>7. Encryption</h2>
+<p>Protecting data from unauthorized reading</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<div class="definition">
+
+<strong>Encryption:</strong>
+
+<p>
+Encryption converts readable information, called plaintext,
+into an encoded form called ciphertext using an encryption method
+and key.
+</p>
+
+<p class="hindi">
+Encryption readable data (plaintext) को encrypted form (ciphertext)
+में convert करता है ताकि unauthorized person उसे आसानी से न पढ़ सके।
+</p>
+
+</div>
+
+<h4>Decryption</h4>
+
+<p>
+Decryption converts ciphertext back into readable plaintext.
+</p>
+
+<p class="hindi">
+Decryption ciphertext को वापस readable plaintext में बदलने की प्रक्रिया है।
+</p>
+
+<div class="example">
+
+<div class="example-title">
+SIMPLE CONCEPT
+</div>
+
+<pre>
+Plaintext
+   ↓
+Encryption + Key
+   ↓
+Ciphertext
+   ↓
+Decryption + Key
+   ↓
+Plaintext
+</pre>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+8 SECURE COMMUNICATION
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🌐</div>
+
+<div>
+<h2>8. Secure IoT Communication</h2>
+<p>Protecting data while it travels across networks</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<p>
+IoT devices frequently communicate through wireless and wired networks.
+Secure communication helps protect information from unauthorized interception
+and modification.
+</p>
+
+<p class="hindi">
+IoT devices wireless और wired networks के माध्यम से communicate करते हैं।
+Secure communication data को unauthorized interception और modification
+से protect करने में मदद करता है।
+</p>
+
+<h4>Important Security Measures</h4>
+
+<ul class="exam-list">
+
+<li>Use encrypted communication</li>
+<li>Use strong authentication</li>
+<li>Protect communication endpoints</li>
+<li>Keep firmware and software updated</li>
+<li>Use secure network configuration</li>
+<li>Monitor unusual activity</li>
+
+</ul>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+9 DATA PRIVACY
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🔏</div>
+
+<div>
+<h2>9. IoT Data Privacy</h2>
+<p>Protection of personal and sensitive information</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<p>
+IoT devices can collect large amounts of information from users,
+homes, industries, vehicles and other environments.
+Therefore, privacy protection is an important part of IoT security.
+</p>
+
+<p class="hindi">
+IoT devices users, homes, industries, vehicles और environments से
+बहुत अधिक data collect कर सकते हैं। इसलिए data privacy IoT security
+का important हिस्सा है।
+</p>
+
+<h4>Privacy Principles</h4>
+
+<ul class="exam-list">
+
+<li>Collect only necessary data</li>
+<li>Protect stored data</li>
+<li>Use secure transmission</li>
+<li>Control who can access information</li>
+<li>Provide transparency about data collection</li>
+
+</ul>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+10 SECURITY BEST PRACTICES
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">✅</div>
+
+<div>
+<h2>10. IoT Security Best Practices</h2>
+<p>Important points for practical and theory exams</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<ul class="exam-list">
+
+<li>Change default passwords.</li>
+
+<li>Use strong and unique passwords.</li>
+
+<li>Update device firmware regularly.</li>
+
+<li>Use secure communication protocols.</li>
+
+<li>Disable unnecessary services and ports.</li>
+
+<li>Use authentication and authorization.</li>
+
+<li>Encrypt sensitive information.</li>
+
+<li>Monitor device and network activity.</li>
+
+<li>Backup important configurations and data.</li>
+
+<li>Physically protect IoT devices.</li>
+
+</ul>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+11 FUTURE
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🚀</div>
+
+<div>
+<h2>11. Future of IoT Ecosystem</h2>
+<p>Emerging technologies shaping IoT</p>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="mini-card">
+
+<h3>🤖 AI + IoT</h3>
+
+<p>
+Artificial Intelligence can help IoT systems analyze data,
+identify patterns and support intelligent decision-making.
+</p>
+
+<p class="hindi">
+AI और IoT के combination से devices data analyze करके
+intelligent decisions में सहायता कर सकते हैं।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>⚡ Edge Computing</h3>
+
+<p>
+Edge computing processes data closer to where it is generated,
+reducing the need to send all data to a distant cloud server.
+</p>
+
+<p class="hindi">
+Edge Computing data को source के पास process करता है,
+जिससे latency कम हो सकती है।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>📡 5G + IoT</h3>
+
+<p>
+5G networks can support high-speed, low-latency connectivity
+for many connected devices.
+</p>
+
+<p class="hindi">
+5G high-speed और low-latency connectivity के कारण IoT applications
+को support कर सकता है।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>🪞 Digital Twin</h3>
+
+<p>
+A digital twin is a digital representation of a physical object,
+system or process that can be used for monitoring and analysis.
+</p>
+
+<p class="hindi">
+Digital Twin किसी physical object या system का digital representation होता है।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>🏭 Industrial IoT</h3>
+
+<p>
+IoT will continue to expand in manufacturing, monitoring,
+automation and predictive maintenance.
+</p>
+
+<p class="hindi">
+Industrial IoT manufacturing, automation, monitoring और predictive
+maintenance में महत्वपूर्ण भूमिका निभा सकता है।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>🏙️ Smart Cities</h3>
+
+<p>
+IoT can support intelligent traffic systems, smart utilities,
+environment monitoring and public infrastructure.
+</p>
+
+<p class="hindi">
+IoT smart traffic, utilities, environment monitoring और public
+infrastructure को improve करने में सहायता कर सकता है।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+12 FUTURE TRENDS TABLE
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">📊</div>
+
+<div>
+<h2>12. Important Future Trends</h2>
+<p>Quick revision table</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Technology</th>
+<th>Role in IoT</th>
+</tr>
+
+<tr>
+<td>AI</td>
+<td>Intelligent analysis and automation</td>
+</tr>
+
+<tr>
+<td>Machine Learning</td>
+<td>Pattern recognition and prediction</td>
+</tr>
+
+<tr>
+<td>Edge Computing</td>
+<td>Local/near-source data processing</td>
+</tr>
+
+<tr>
+<td>5G</td>
+<td>Fast and low-latency connectivity</td>
+</tr>
+
+<tr>
+<td>Digital Twin</td>
+<td>Digital representation and monitoring</td>
+</tr>
+
+<tr>
+<td>Industrial IoT</td>
+<td>Smart industrial automation</td>
+</tr>
+
+<tr>
+<td>Smart Cities</td>
+<td>Connected public infrastructure</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+13 REAL WORLD EXAMPLES
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🌍</div>
+
+<div>
+<h2>13. Real-World Examples</h2>
+<p>Concepts को practical examples से समझें</p>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="mini-card">
+
+<h3>🏠 Smart Home</h3>
+
+<p>
+Smart lights, locks, thermostats and sensors communicate
+with mobile applications and cloud services.
+</p>
+
+<p class="hindi">
+Smart home में lights, locks, thermostats और sensors connected रहते हैं।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>❤️ Healthcare IoT</h3>
+
+<p>
+Connected medical monitoring devices can collect and transmit
+health-related measurements.
+</p>
+
+<p class="hindi">
+Healthcare IoT connected devices के माध्यम से monitoring data collect
+और transmit कर सकता है।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>🏭 Smart Factory</h3>
+
+<p>
+Sensors can monitor machines and production processes.
+</p>
+
+<p class="hindi">
+Smart factory में sensors machines और production processes को monitor कर सकते हैं।
+</p>
+
+</div>
+
+<div class="mini-card">
+
+<h3>🚦 Smart Traffic</h3>
+
+<p>
+Connected sensors and systems can help monitor traffic conditions.
+</p>
+
+<p class="hindi">
+Connected sensors traffic conditions की monitoring में सहायता कर सकते हैं।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+14 EXAM CAPSULE
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🎯</div>
+
+<div>
+<h2>14. NIELIT Exam Capsule</h2>
+<p>Most important points to remember</p>
+</div>
+
+</div>
+
+<div class="exam-box">
+
+<h3>🔥 Must Remember</h3>
+
+<ul class="exam-list">
+
+<li>CIA stands for Confidentiality, Integrity and Availability.</li>
+
+<li>Authentication verifies identity.</li>
+
+<li>Authorization determines permissions.</li>
+
+<li>Encryption converts plaintext into ciphertext.</li>
+
+<li>Decryption converts ciphertext back into plaintext.</li>
+
+<li>DoS attempts to make a service unavailable.</li>
+
+<li>DDoS can involve multiple compromised systems.</li>
+
+<li>MITM involves interception of communication.</li>
+
+<li>Strong passwords improve device security.</li>
+
+<li>Firmware updates can address known vulnerabilities.</li>
+
+<li>Edge Computing processes data closer to its source.</li>
+
+<li>AI can make IoT systems more intelligent.</li>
+
+<li>5G can provide high-speed and low-latency connectivity.</li>
+
+<li>Digital Twin represents a physical object or system digitally.</li>
+
+</ul>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+15 MCQ
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">🧠</div>
+
+<div>
+<h2>15. Quick MCQ Practice</h2>
+<p>Chapter 5 exam-oriented questions</p>
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+Q1. CIA Triad में C का अर्थ क्या है?
+</div>
+
+<div class="option">A. Connectivity</div>
+<div class="option">B. Confidentiality</div>
+<div class="option">C. Computing</div>
+<div class="option">D. Control</div>
+
+<div class="answer">
+✓ Answer: B. Confidentiality
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+Q2. Authentication किसे verify करता है?
+</div>
+
+<div class="option">A. Identity</div>
+<div class="option">B. Permission</div>
+<div class="option">C. Network speed</div>
+<div class="option">D. Storage</div>
+
+<div class="answer">
+✓ Answer: A. Identity
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+Q3. Authorization किससे related है?
+</div>
+
+<div class="option">A. Identity verification</div>
+<div class="option">B. Permission</div>
+<div class="option">C. Encryption only</div>
+<div class="option">D. Hardware manufacturing</div>
+
+<div class="answer">
+✓ Answer: B. Permission
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+Q4. Encryption का मुख्य उद्देश्य क्या है?
+</div>
+
+<div class="option">A. Data protection</div>
+<div class="option">B. Increase screen size</div>
+<div class="option">C. Increase battery size</div>
+<div class="option">D. Create hardware</div>
+
+<div class="answer">
+✓ Answer: A. Data protection
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+Q5. Edge Computing का मुख्य idea क्या है?
+</div>
+
+<div class="option">A. Data को source के पास process करना</div>
+<div class="option">B. केवल paper पर data रखना</div>
+<div class="option">C. Internet बंद करना</div>
+<div class="option">D. Device हटाना</div>
+
+<div class="answer">
+✓ Answer: A. Data को source के पास process करना
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="question">
+Q6. Digital Twin क्या है?
+</div>
+
+<div class="option">A. Digital representation of a physical system</div>
+<div class="option">B. Password manager</div>
+<div class="option">C. Network cable</div>
+<div class="option">D. Antivirus only</div>
+
+<div class="answer">
+✓ Answer: A. Digital representation of a physical system
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+16 FINAL REVISION
+========================================================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div class="icon">⚡</div>
+
+<div>
+<h2>16. One-Minute Revision</h2>
+<p>Chapter पूरा करने के बाद इसे जरूर पढ़ें</p>
+</div>
+
+</div>
+
+<div class="content-card">
+
+<p>
+<strong>IoT Security →</strong>
+Confidentiality + Integrity + Availability
+</p>
+
+<p style="margin-top:10px;">
+<strong>Authentication →</strong>
+Who are you?
+</p>
+
+<p style="margin-top:10px;">
+<strong>Authorization →</strong>
+What can you access?
+</p>
+
+<p style="margin-top:10px;">
+<strong>Encryption →</strong>
+Plaintext → Ciphertext
+</p>
+
+<p style="margin-top:10px;">
+<strong>Decryption →</strong>
+Ciphertext → Plaintext
+</p>
+
+<p style="margin-top:10px;">
+<strong>DoS →</strong>
+Service unavailable
+</p>
+
+<p style="margin-top:10px;">
+<strong>MITM →</strong>
+Communication interception
+</p>
+
+<p style="margin-top:10px;">
+<strong>Edge Computing →</strong>
+Processing near the source
+</p>
+
+<p style="margin-top:10px;">
+<strong>5G →</strong>
+High-speed + low-latency connectivity
+</p>
+
+<p style="margin-top:10px;">
+<strong>Digital Twin →</strong>
+Digital representation of physical system
+</p>
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<p>
+M4-R5 • Chapter 5 • Security and Future of IoT Ecosystem
+</p>
+
+<p style="margin-top:6px;">
+Bilingual • Exam Oriented • NIELIT O Level Preparation
+</p>
+
+</footer>
+
+</main>
+
+
+<script>
+
+function setTheme(theme){
+
+    document.body.className = theme;
+
+    localStorage.setItem("m4Theme",theme);
+
+}
+
+const savedTheme =
+localStorage.getItem("m4Theme");
+
+if(savedTheme){
+    document.body.className=savedTheme;
+}
+
+</script>
+
+</body>
+</html>
+ 

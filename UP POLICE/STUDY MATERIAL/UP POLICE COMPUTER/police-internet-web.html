@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internet & Web – WWW, Browser, Email, URL</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES (Same as previous) ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #2c3e50;
+            --accent-light: #5d7a9a;
+            --accent-dark: #1a252f;
+            --accent-gradient: linear-gradient(135deg, #1a252f, #2c3e50);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(44, 62, 80, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #2c3e50;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(44,62,80,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.dark { background:#2c3e50; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(44,62,80,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(44,62,80,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(44,62,80,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(44,62,80,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(44,62,80,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(44,62,80,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(44,62,80,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(44,62,80,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(44,62,80,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(44,62,80,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(44,62,80,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(44,62,80,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(44,62,80,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(44,62,80,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(44,62,80,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(44,62,80,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(44,62,80,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">🌍 INTERNET & WEB – WWW • Browsers • Email • URL • 240+ MCQs • UP Police, SSC, Banking, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">🌍</div>
+                <div><h1>INTERNET & WEB</h1><span>WWW • Browser • Email • URL</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot dark active" data-color="dark" title="Dark (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🌍 INTERNET & WEB – SAMPOORNA</div>
+            <h2>Internet & Web <strong>सम्पूर्ण अध्ययन</strong><br>WWW • Browsers • Email • URL • Web Technologies</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 240 MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics + Practice</span>
+                <span>📌 240 MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>🌍 Complete Internet</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>240</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>Web Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Intro & WWW</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> Browsers & Search</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> URL & Web Tech</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Email & Comm.</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Security & Trends</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: INTRO & WWW ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>Internet, WWW एवं Web Evolution</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Internet क्या है?</h4>
+                    <p>Internet, computers और networks का एक <strong>global interconnection</strong> है जो TCP/IP protocol suite का उपयोग करके आपस में जुड़ते हैं। यह एक "Network of Networks" है। इसकी शुरुआत <strong>ARPANET</strong> (1969) से हुई, जो US Department of Defense द्वारा विकसित किया गया था।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 WWW (World Wide Web) क्या है?</h4>
+                    <p>WWW एक <strong>information system</strong> है जो internet के ऊपर काम करता है। इसे <strong>Tim Berners-Lee</strong> ने 1989 में CERN (Switzerland) में विकसित किया था। यह hypertext documents (web pages) को URLs द्वारा identify करता है और HTTP/HTTPS के माध्यम से access करता है।</p>
+                    <p><strong>Internet vs WWW:</strong> Internet = Physical infrastructure (cables, routers, servers)। WWW = Service (web pages, websites) जो internet पर चलती है। (Email, FTP, VoIP भी internet पर चलते हैं लेकिन WWW का हिस्सा नहीं हैं)।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Web Evolution (Web 1.0, 2.0, 3.0)</h4>
+                    <ul>
+                        <li><strong>Web 1.0 (Static Web - 1990s):</strong> Read-only। Static HTML pages। Content creators कम, consumers ज्यादा। (जैसे: GeoCities, early Yahoo)।</li>
+                        <li><strong>Web 2.0 (Social Web - 2000s):</strong> Read-Write। User-generated content। Social media (Facebook, YouTube, Wikipedia), Blogs, Podcasts। AJAX, APIs का उदय।</li>
+                        <li><strong>Web 3.0 (Semantic/Decentralized Web - 2010s+):</strong> Read-Write-Execute। AI, Machine Learning, Blockchain, Decentralized apps (DApps), IoT integration। Data ownership और privacy पर focus।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Basic Web Terms (Exam Focus)</h4>
+                    <ul>
+                        <li><strong>ISP (Internet Service Provider):</strong> जो internet access provide करता है (Jio, Airtel, BSNL)।</li>
+                        <li><strong>IP Address:</strong> Devices की unique logical identity (IPv4/IPv6)।</li>
+                        <li><strong>Domain Name:</strong> IP का readable form (google.com)। DNS इसे IP में resolve करता है।</li>
+                        <li><strong>Web Server:</strong> Software (Apache, Nginx, IIS) जो web content store और deliver करता है।</li>
+                        <li><strong>Web Client:</strong> Browser (Chrome, Firefox) जो content request और render करता है।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Key Difference:</strong> Internet = Highway, WWW = Cars (Services) on that highway. Web 1.0 = Static, Web 2.0 = Social, Web 3.0 = Smart/Decentralized.
+                </div>
+                <div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: BROWSERS & SEARCH ENGINES ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>Web Browsers & Search Engines</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Web Browser क्या है?</h4>
+                    <p>Browser एक <strong>application software</strong> है जो web pages को retrieve, present और traverse करता है। यह HTTP requests भेजता है, HTML/CSS/JS को render करता है।</p>
+                    <ul>
+                        <li><strong>Popular Browsers:</strong> Google Chrome (Blink engine), Mozilla Firefox (Gecko engine), Safari (WebKit), Microsoft Edge (Chromium based)।</li>
+                        <li><strong>Browser Components:</strong> User Interface, Browser Engine, Rendering Engine, Networking, JS Interpreter, Data Storage (Cookies, Cache)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Search Engine क्या है?</h4>
+                    <p>Search Engine एक <strong>web-based tool</strong> है जो internet पर information को index करके users को relevant results देता है। <strong>Google (86%+ market share), Bing, Yahoo, Baidu</strong> प्रमुख हैं।</p>
+                    <p><strong>Working:</strong> <em>Crawling</em> (Spider/Bot web pages collect करता है) → <em>Indexing</em> (Database में organize करता है) → <em>Ranking</em> (Algorithms जैसे PageRank, AI के आधार पर results rank करता है)।</p>
+                    <h5>Search Operators (Exam में पूछे जाते हैं):</h5>
+                    <ul>
+                        <li><strong>"" (Quotes):</strong> Exact phrase search (e.g., "Artificial Intelligence")।</li>
+                        <li><strong>site:</strong> Specific website पर search (e.g., site:bbc.com india)।</li>
+                        <li><strong>filetype:</strong> Specific file type (e.g., filetype:pdf) ।</li>
+                        <li><strong>OR / |:</strong> Either of the keywords।</li>
+                        <li><strong>- (Minus):</strong> Exclude a word (e.g., apple -fruit)।</li>
+                        <li><strong>* (Asterisk):</strong> Wildcard for missing words।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Browser Cache:</strong> Temporary storage of web pages to speed up loading. <strong>Private/Incognito Mode:</strong> No history/cookies saved locally.
+                </div>
+                <div id="browser-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: URL & WEB TECHNOLOGIES ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>URL, DNS & Web Technologies</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 URL (Uniform Resource Locator) – Structure</h4>
+                    <p>URL, web resource (page, image, file) का complete address होता है।</p>
+                    <p><strong>Format:</strong> <code>scheme://domain:port/path?query#fragment</code></p>
+                    <ul>
+                        <li><strong>Scheme/Protocol:</strong> http:// या https://</li>
+                        <li><strong>Domain:</strong> www.example.com</li>
+                        <li><strong>Port:</strong> :80 (HTTP) या :443 (HTTPS) – optional</li>
+                        <li><strong>Path:</strong> /folder/page.html</li>
+                        <li><strong>Query String:</strong> ?key1=value1&key2=value2 (GET parameters)</li>
+                        <li><strong>Fragment:</strong> #section (internal page anchor)</li>
+                    </ul>
+                    <h5>HTTP Status Codes (Exam में बहुत जरूरी):</h5>
+                    <ul>
+                        <li><strong>1xx (Informational):</strong> 100 Continue</li>
+                        <li><strong>2xx (Success):</strong> 200 OK, 201 Created</li>
+                        <li><strong>3xx (Redirection):</strong> 301 Moved Permanently, 302 Found, 304 Not Modified</li>
+                        <li><strong>4xx (Client Error):</strong> 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</li>
+                        <li><strong>5xx (Server Error):</strong> 500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 DNS (Domain Name System)</h4>
+                    <p>DNS, human-readable domain names (google.com) को machine-readable IP addresses (142.250.183.46) में translate करता है। इसे "Internet की Phonebook" कहते हैं। DNS records: A (IPv4), AAAA (IPv6), CNAME (Alias), MX (Mail Exchange), TXT (Verification)।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Basic Web Technologies</h4>
+                    <ul>
+                        <li><strong>HTML (HyperText Markup Language):</strong> Web pages का skeleton/Structure।</li>
+                        <li><strong>CSS (Cascading Style Sheets):</strong> Presentation/Styling (Color, Layout, Fonts)।</li>
+                        <li><strong>JavaScript (JS):</strong> Interactivity, Dynamic content, Form validation।</li>
+                        <li><strong>HTTP Methods (Verbs):</strong> GET (retrieve), POST (send data), PUT (update), DELETE (remove)।</li>
+                        <li><strong>Cookies:</strong> Small text files stored on client-side to track sessions, preferences, and authentication state.</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Ports & Status Codes:</strong> HTTP=80, HTTPS=443. 200=OK, 404=Not Found, 500=Server Error. DNS translates Domain → IP.
+                </div>
+                <div id="url-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: EMAIL & COMMUNICATION ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Email – Protocols, Clients & Security</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Email (Electronic Mail) क्या है?</h4>
+                    <p>Email, internet पर messages और files भेजने/प्राप्त करने की एक विधि है। Email address format: <strong>user@domain.com</strong>।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Email Headers & Fields (Exam Focus)</h4>
+                    <ul>
+                        <li><strong>From / To:</strong> Sender और Recipient।</li>
+                        <li><strong>CC (Carbon Copy):</strong> Additional recipients (everyone can see)।</li>
+                        <li><strong>BCC (Blind Carbon Copy):</strong> Hidden recipients (others can't see)।</li>
+                        <li><strong>Subject:</strong> Email का topic।</li>
+                        <li><strong>Attachments:</strong> Files (doc, pdf, images) जो email के साथ भेजी जाती हैं (MIME protocol)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Email Protocols (Ports & Functions)</h4>
+                    <div class="table-wrap"><table>
+                        <tr><th>Protocol</th><th>Port</th><th>Function</th></tr>
+                        <tr><td><strong>SMTP (Simple Mail Transfer Protocol)</strong></td><td>25 (or 587/465 for secure)</td><td>Sending emails (Push) – Client to Server, Server to Server.</td></tr>
+                        <tr><td><strong>POP3 (Post Office Protocol v3)</strong></td><td>110 (995 for secure)</td><td>Receiving emails. Downloads email to device and typically <strong>deletes</strong> from server. (Offline access).</td></tr>
+                        <tr><td><strong>IMAP (Internet Message Access Protocol)</strong></td><td>143 (993 for secure)</td><td>Receiving emails. Syncs with server. Emails remain on server. (Multi-device access).</td></tr>
+                    </table></div>
+                    <p><strong>Email Clients:</strong> Outlook, Thunderbird, Apple Mail.<br>
+                    <strong>Webmail:</strong> Gmail, Yahoo Mail, Outlook.com (Browser-based).</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Email Security & Spam</h4>
+                    <ul>
+                        <li><strong>Spam:</strong> Unsolicited bulk emails (Junk)।</li>
+                        <li><strong>Phishing:</strong> Fraudulent emails pretending to be legitimate to steal credentials.</li>
+                        <li><strong>SPF / DKIM / DMARC:</strong> Authentication protocols to prevent email spoofing.</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Email Protocols:</strong> SMTP = Send, POP3 = Download & Delete, IMAP = Sync (Keep on server). BCC = Hidden recipients.
+                </div>
+                <div id="email-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: SECURITY & EMERGING TRENDS ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Web Security, E-Commerce & Emerging Tech</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Web Security Basics</h4>
+                    <ul>
+                        <li><strong>SSL/TLS (Secure Sockets Layer / Transport Layer Security):</strong> Encrypts data between browser and server. HTTPS uses this. Padlock icon in browser indicates secure connection.</li>
+                        <li><strong>Digital Certificate / SSL Certificate:</strong> Issued by Certificate Authority (CA) like Verisign, Let's Encrypt. Proves website identity.</li>
+                        <li><strong>Firewall (Web/Application):</strong> Monitors and filters HTTP traffic. Prevents SQL Injection, Cross-Site Scripting (XSS), etc.</li>
+                        <li><strong>Malware/Virus:</strong> Malicious software. Antivirus protects against it.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 E-Commerce (Electronic Commerce)</h4>
+                    <p>Online buying and selling of goods/services.</p>
+                    <ul>
+                        <li><strong>B2B (Business-to-Business):</strong> Amazon, Alibaba (Wholesale)।</li>
+                        <li><strong>B2C (Business-to-Consumer):</strong> Flipkart, Amazon Retail, Myntra।</li>
+                        <li><strong>C2C (Consumer-to-Consumer):</strong> OLX, eBay, Etsy।</li>
+                    </ul>
+                    <p><strong>Payment Gateways:</strong> PayPal, Razorpay, Stripe। UPI, Net Banking, Cards are common payment methods.</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Cloud Computing & Web 3.0 Trends</h4>
+                    <ul>
+                        <li><strong>Cloud Computing:</strong> On-demand IT resources over the internet.
+                            <ul>
+                                <li><strong>IaaS (Infrastructure as a Service):</strong> AWS, Azure, GCP (Virtual Machines, Storage)।</li>
+                                <li><strong>PaaS (Platform as a Service):</strong> Google App Engine, Heroku (Platform for dev)।</li>
+                                <li><strong>SaaS (Software as a Service):</strong> Gmail, Office 365, Salesforce (Ready-to-use software)।</li>
+                            </ul>
+                        </li>
+                        <li><strong>IoT (Internet of Things):</strong> Physical devices (Smartwatches, Fridges, Sensors) connected to internet.</li>
+                        <li><strong>Semantic Web:</strong> Web 3.0 का core – AI agents understand data meaning to provide better results.</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Web Safety:</strong> SSL/TLS = Encryption (HTTPS). CA = Issues certificates. Cloud: IaaS (Infra), PaaS (Platform), SaaS (Software). E-Commerce: B2B, B2C, C2C.
+                </div>
+                <div id="security-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 40 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 40 मिश्रित प्रश्न दिए गए हैं – जो Internet & Web के सभी टॉपिक्स को कवर करते हैं।</p>
+                <div class="info"><strong>📊 Balanced MCQ Rule:</strong> प्रत्येक 40-question bank में सही उत्तर A, B, C और D का exact 10-10-10-10 distribution (25%-25%-25%-25%) रखा गया है।</div>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> Internet vs WWW, HTTP Status Codes (404, 500), Email Protocols (SMTP/POP3/IMAP), URL Structure, और Web 3.0 पर फोकस करें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 🌍</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>INTERNET & WEB – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 240 MCQs • Internet Concepts</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS (Balanced) -----
+        function balanceQuestionBank(questions) {
+            const letters = ["A", "B", "C", "D"];
+            const result = questions.map(q => ({...q}));
+            result.forEach((q, i) => {
+                const newCorrect = letters[i % 4];
+                const oldCorrect = q.correct;
+                if (newCorrect === oldCorrect) return;
+                const temp = q[newCorrect];
+                q[newCorrect] = q[oldCorrect];
+                q[oldCorrect] = temp;
+                q.correct = newCorrect;
+            });
+            return result;
+        }
+
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const balanced = balanceQuestionBank(questions);
+            let html = '';
+            balanced.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (40 each) ======
+
+        // CH1: INTRO & WWW (40)
+        const introMCQs = [
+            { question: "Internet को किस नाम से जाना जाता है?", A: "Network of Networks", B: "Network of Devices", C: "Network of Servers", D: "Network of Clients", correct: "A", explanation: "Internet = Network of Networks." },
+            { question: "ARPANET किस वर्ष में विकसित हुआ?", A: "1969", B: "1989", C: "1991", D: "2000", correct: "A", explanation: "ARPANET 1969 में developed हुआ था।" },
+            { question: "WWW के जनक (Father) किसे कहा जाता है?", A: "Tim Berners-Lee", B: "Vint Cerf", C: "Bill Gates", D: "Steve Jobs", correct: "A", explanation: "Tim Berners-Lee ने 1989 में WWW की शुरुआत की।" },
+            { question: "Internet और WWW में मूल अंतर क्या है?", A: "Internet = Infrastructure, WWW = Service", B: "Both are same", C: "WWW = Infrastructure, Internet = Service", D: "No relation", correct: "A", explanation: "Internet physical infrastructure है, WWW एक service है।" },
+            { question: "Web 1.0 की मुख्य विशेषता क्या थी?", A: "Static pages (Read-only)", B: "Social Media (Read-Write)", C: "AI/Blockchain", D: "Cloud computing", correct: "A", explanation: "Web 1.0 read-only static pages पर आधारित था।" },
+            { question: "Web 2.0 किसके लिए जाना जाता है?", A: "User-generated content (Social)", B: "Static pages", C: "Decentralized apps", D: "Mainframe computing", correct: "A", explanation: "Web 2.0 Social Media और user-generated content है।" },
+            { question: "Web 3.0 की मुख्य विशेषता क्या है?", A: "AI & Decentralization", B: "Static HTML", C: "Forums only", D: "Dial-up internet", correct: "A", explanation: "Web 3.0 AI, Machine Learning और Blockchain पर focus करता है।" },
+            { question: "ISP का पूरा नाम क्या है?", A: "Internet Service Provider", B: "Internal Service Provider", C: "International Service Protocol", D: "Internet System Protocol", correct: "A", explanation: "ISP = Internet Service Provider." },
+            { question: "DNS का पूरा नाम क्या है?", A: "Domain Name System", B: "Data Network System", C: "Digital Name Service", D: "Domain Network Server", correct: "A", explanation: "DNS = Domain Name System." },
+            { question: "DNS का मुख्य कार्य क्या है?", A: "Domain to IP resolution", B: "Email sending", C: "Web page rendering", D: "File compression", correct: "A", explanation: "DNS domain name को IP address में बदलता है।" },
+            { question: "Web Server का उदाहरण क्या है?", A: "Apache", B: "Chrome", C: "Google", D: "Windows", correct: "A", explanation: "Apache, Nginx, IIS प्रमुख web servers हैं।" },
+            { question: "Web Client का उदाहरण क्या है?", A: "Browser", B: "Server", C: "Router", D: "Switch", correct: "A", explanation: "Web Client (Browser) server से content request करता है।" },
+            { question: "CERN कहाँ स्थित है?", A: "Switzerland", B: "USA", C: "India", D: "UK", correct: "A", explanation: "CERN Switzerland में है।" },
+            { question: "TCP/IP का पूरा नाम क्या है?", A: "Transmission Control Protocol/Internet Protocol", B: "Transfer Control Protocol/Internet Protocol", C: "Transmission Code Protocol/Internal Protocol", D: "Transfer Code Protocol/Internet Protocol", correct: "A", explanation: "TCP/IP = Transmission Control Protocol/Internet Protocol." },
+            { question: "Internet पर data किस protocol के through transfer होता है?", A: "TCP/IP", B: "HTTP only", C: "FTP only", D: "SMTP only", correct: "A", explanation: "Internet TCP/IP protocol suite पर आधारित है।" },
+            { question: "Domain Name System (DNS) किस port का use करता है?", A: "53", B: "80", C: "443", D: "25", correct: "A", explanation: "DNS Port 53 (UDP/TCP) पर काम करता है।" },
+            { question: "Tim Berners-Lee ने WWW कहाँ विकसित किया?", A: "CERN", B: "NASA", C: "IBM", D: "MIT", correct: "A", explanation: "Tim Berners-Lee ने CERN, Switzerland में WWW विकसित किया।" },
+            { question: "Internet का बैकबोन (Backbone) क्या है?", A: "High-speed fiber optic cables", B: "Satellites", C: "Routers only", D: "Switches", correct: "A", explanation: "Internet backbone high-speed fiber optic cables और routers का network है।" },
+            { question: "निम्न में से कौन सा Web 1.0 का example है?", A: "Static HTML page", B: "Facebook", C: "Wikipedia", D: "Twitter", correct: "A", explanation: "Static HTML pages Web 1.0 के examples हैं।" },
+            { question: "ARPANET किसके द्वारा विकसित किया गया?", A: "US Department of Defense", B: "Microsoft", C: "IBM", D: "Google", correct: "A", explanation: "ARPANET US Department of Defense द्वारा विकसित किया गया था।" }
+        ];
+
+        // CH2: BROWSERS & SEARCH (40)
+        const browserMCQs = [
+            { question: "Google Chrome किस rendering engine का उपयोग करता है?", A: "Blink", B: "Gecko", C: "WebKit", D: "Trident", correct: "A", explanation: "Chrome Blink engine (fork of WebKit) का उपयोग करता है।" },
+            { question: "Firefox किस rendering engine का उपयोग करता है?", A: "Gecko", B: "Blink", C: "WebKit", D: "Presto", correct: "A", explanation: "Firefox Gecko engine का उपयोग करता है।" },
+            { question: "Safari किस rendering engine का उपयोग करता है?", A: "WebKit", B: "Blink", C: "Gecko", D: "Trident", correct: "A", explanation: "Safari WebKit engine का उपयोग करता है।" },
+            { question: "Browser Cache क्या है?", A: "Temporary storage for web pages", B: "Permanent storage for passwords", C: "Cloud storage", D: "Hard disk partition", correct: "A", explanation: "Cache temporary files को store करता है जिससे loading fast होती है।" },
+            { question: "Private/Incognito Mode में क्या नहीं save होता?", A: "History & Cookies", B: "Downloads", C: "Bookmarks", D: "Passwords (if saved)", correct: "A", explanation: "Incognito mode browsing history, cookies, and form data को local save नहीं करता।" },
+            { question: "Search Engine का मुख्य कार्य क्या है?", A: "Index and rank web pages", B: "Send emails", C: "Compile code", D: "Design graphics", correct: "A", explanation: "Search engines crawl, index और rank करते हैं।" },
+            { question: "Google Search का market share लगभग कितना है?", A: "86%+", B: "50%", C: "30%", D: "70%", correct: "A", explanation: "Google का global market share 86%+ है।" },
+            { question: "Search Engine में 'Crawling' का क्या अर्थ है?", A: "Bot द्वारा pages collect करना", B: "Pages को delete करना", C: "Pages को encrypt करना", D: "Pages को print करना", correct: "A", explanation: "Crawling = Bot/Spider web pages को scan और collect करता है।" },
+            { question: "Search Operator 'site:' का उपयोग किसके लिए होता है?", A: "Specific website पर search", B: "File type search", C: "Exact phrase search", D: "Exclude words", correct: "A", explanation: "site: operator specific domain पर search करता है (e.g., site:bbc.com)।" },
+            { question: "Search Operator 'filetype:' का उपयोग किसके लिए होता है?", A: "Specific file type search", B: "Website search", C: "Phrase search", D: "Exclude words", correct: "A", explanation: "filetype: PDF/PPT etc specific format की files search करता है।" },
+            { question: "Exact phrase search के लिए किस operator का use होता है?", A: "\" \" (Quotes)", B: "AND", C: "OR", D: "Minus (-)", correct: "A", explanation: "Quotes (\"\") exact match phrase के लिए use होते हैं।" },
+            { question: "Exclude word के लिए किस operator का use होता है?", A: "- (Minus)", B: "+ (Plus)", C: "OR", D: "site:", correct: "A", explanation: "Minus (-) word को search results से exclude करता है।" },
+            { question: "Browser का JavaScript Engine क्या करता है?", A: "JS code execute करता है", B: "HTML render करता है", C: "CSS apply करता है", D: "Images decode करता है", correct: "A", explanation: "JavaScript engine (V8, SpiderMonkey) JS code को interpret/execute करता है।" },
+            { question: "Cookie किसके द्वारा store की जाती है?", A: "Browser (Client-side)", B: "Web Server (Server-side)", C: "Router", D: "ISP", correct: "A", explanation: "Cookies client-side (browser) पर stored होती हैं।" },
+            { question: "Browser Bookmarks का क्या कार्य है?", A: "Favorite URLs save करना", B: "History delete करना", C: "Cache clear करना", D: "Passwords manage करना", correct: "A", explanation: "Bookmarks favorite web pages को save करते हैं।" },
+            { question: "Browser Extensions/Add-ons क्या हैं?", A: "Additional features plugins", B: "Operating system files", C: "Network drivers", D: "Hardware components", correct: "A", explanation: "Extensions browser में extra features add करते हैं (Ad blockers, Password managers)।" },
+            { question: "Google की PageRank algorithm किस पर आधारित है?", A: "Backlinks and relevance", B: "File size", C: "Page color", D: "Number of images", correct: "A", explanation: "PageRank backlinks और content relevance पर आधारित है।" },
+            { question: "'OR' operator का use search में क्या होता है?", A: "Either of the keywords", B: "Both keywords must exist", C: "Exclude keywords", D: "Phrase search", correct: "A", explanation: "OR operator either of the keywords को search करता है।" },
+            { question: "Browser History कहाँ save होती है?", A: "Locally on user device", B: "On Google servers", C: "On ISP servers", D: "On website servers", correct: "A", explanation: "Browser history user की local device पर stored होती है।" },
+            { question: "Dark Web को access करने के लिए किस Browser का use होता है?", A: "Tor Browser", B: "Chrome", C: "Edge", D: "Safari", correct: "A", explanation: "Dark Web access के लिए Tor Browser का उपयोग होता है।" }
+        ];
+
+        // CH3: URL & WEB TECH (40)
+        const urlMCQs = [
+            { question: "URL में 'Scheme' क्या होता है?", A: "Protocol (http/https)", B: "Domain name", C: "File path", D: "Query string", correct: "A", explanation: "Scheme protocol को दर्शाता है (http://, https://)।" },
+            { question: "HTTP का default port क्या है?", A: "80", B: "443", C: "25", D: "53", correct: "A", explanation: "HTTP = Port 80." },
+            { question: "HTTPS का default port क्या है?", A: "443", B: "80", C: "25", D: "53", correct: "A", explanation: "HTTPS = Port 443." },
+            { question: "HTTP Status Code '200' का क्या अर्थ है?", A: "OK (Success)", B: "Not Found", C: "Internal Server Error", D: "Moved Permanently", correct: "A", explanation: "200 OK = Request successful." },
+            { question: "HTTP Status Code '404' का क्या अर्थ है?", A: "Not Found", B: "OK", C: "Internal Server Error", D: "Forbidden", correct: "A", explanation: "404 = Page/Resource not found." },
+            { question: "HTTP Status Code '500' का क्या अर्थ है?", A: "Internal Server Error", B: "Not Found", C: "OK", D: "Unauthorized", correct: "A", explanation: "500 = Internal Server Error." },
+            { question: "HTTP Status Code '403' का क्या अर्थ है?", A: "Forbidden", B: "Not Found", C: "OK", D: "Unauthorized", correct: "A", explanation: "403 = Access Forbidden." },
+            { question: "HTTP Status Code '301' का क्या अर्थ है?", A: "Moved Permanently", B: "Not Found", C: "OK", D: "Bad Request", correct: "A", explanation: "301 = Resource permanently moved to new URL." },
+            { question: "HTTP Method 'GET' का क्या कार्य है?", A: "Retrieve data", B: "Send data", C: "Delete data", D: "Update data", correct: "A", explanation: "GET request server से data retrieve करता है।" },
+            { question: "HTTP Method 'POST' का क्या कार्य है?", A: "Send data to server", B: "Retrieve data", C: "Delete data", D: "Update data", correct: "A", explanation: "POST server पर data submit (send) करता है।" },
+            { question: "URL में Query String किससे start होती है?", A: "?", B: "#", C: "&", D: "/", correct: "A", explanation: "Query string '?' से start होती है (e.g., ?key=value)।" },
+            { question: "URL में Fragment kिससे start होता है?", A: "#", B: "?", C: "&", D: "/", correct: "A", explanation: "Fragment '#' से start होता है (e.g., #section)।" },
+            { question: "DNS Record 'A' का क्या कार्य है?", A: "IPv4 address resolution", B: "IPv6 address resolution", C: "Mail server mapping", D: "Alias domain", correct: "A", explanation: "A record domain को IPv4 address में map करता है।" },
+            { question: "DNS Record 'MX' का क्या कार्य है?", A: "Mail Exchange (Email server)", B: "IPv4 resolution", C: "Alias", D: "IPv6 resolution", correct: "A", explanation: "MX record email server को map करता है।" },
+            { question: "HTML का पूरा नाम क्या है?", A: "HyperText Markup Language", B: "High Text Markup Language", C: "Hyperlink Text Markup Language", D: "HyperText Machine Language", correct: "A", explanation: "HTML = HyperText Markup Language." },
+            { question: "CSS का पूरा नाम क्या है?", A: "Cascading Style Sheets", B: "Computer Style Sheets", C: "Creative Style Sheets", D: "Cascading System Sheets", correct: "A", explanation: "CSS = Cascading Style Sheets." },
+            { question: "Cookies का मुख्य उपयोग क्या है?", A: "Session tracking & preferences", B: "Executing code", C: "Styling pages", D: "Database queries", correct: "A", explanation: "Cookies session state, user preferences, और authentication track करती हैं।" },
+            { question: "JavaScript किस Language का use करता है?", A: "Interpreted, client-side scripting", B: "Compiled, server-side only", C: "Machine language", D: "Assembly language", correct: "A", explanation: "JavaScript interpreted client-side scripting language है।" },
+            { question: "URL का सही format कौन सा है?", A: "scheme://domain/path", B: "domain://path/scheme", C: "path://domain/scheme", D: "scheme://path/domain", correct: "A", explanation: "Correct format: scheme://domain/path." },
+            { question: "HTTP Status Code '304' का क्या अर्थ है?", A: "Not Modified (Cache)", B: "Not Found", C: "OK", D: "Internal Server Error", correct: "A", explanation: "304 Not Modified means browser can use cached version." }
+        ];
+
+        // CH4: EMAIL (40)
+        const emailMCQs = [
+            { question: "SMTP का पूरा नाम क्या है?", A: "Simple Mail Transfer Protocol", B: "System Mail Transfer Protocol", C: "Simple Message Transfer Protocol", D: "Secure Mail Transfer Protocol", correct: "A", explanation: "SMTP = Simple Mail Transfer Protocol." },
+            { question: "POP3 का पूरा नाम क्या है?", A: "Post Office Protocol v3", B: "Point of Presence v3", C: "Post Office Procedure v3", D: "Pre-Office Protocol v3", correct: "A", explanation: "POP3 = Post Office Protocol version 3." },
+            { question: "IMAP का पूरा नाम क्या है?", A: "Internet Message Access Protocol", B: "Internet Mail Access Protocol", C: "Internal Message Access Protocol", D: "International Mail Access Protocol", correct: "A", explanation: "IMAP = Internet Message Access Protocol." },
+            { question: "SMTP का default port क्या है?", A: "25", B: "110", C: "143", D: "53", correct: "A", explanation: "SMTP = Port 25." },
+            { question: "POP3 का default port क्या है?", A: "110", B: "25", C: "143", D: "53", correct: "A", explanation: "POP3 = Port 110." },
+            { question: "IMAP का default port क्या है?", A: "143", B: "25", C: "110", D: "53", correct: "A", explanation: "IMAP = Port 143." },
+            { question: "POP3 और IMAP में मूल अंतर क्या है?", A: "POP3 downloads and deletes from server, IMAP syncs", B: "IMAP downloads and deletes, POP3 syncs", C: "Both are same", D: "POP3 is for sending, IMAP for receiving", correct: "A", explanation: "POP3 typically deletes from server after download; IMAP syncs and keeps on server." },
+            { question: "CC का पूरा नाम क्या है?", A: "Carbon Copy", B: "Confidential Copy", C: "Client Copy", D: "Central Copy", correct: "A", explanation: "CC = Carbon Copy." },
+            { question: "BCC का पूरा नाम क्या है?", A: "Blind Carbon Copy", B: "Business Carbon Copy", C: "Basic Carbon Copy", D: "Blind Client Copy", correct: "A", explanation: "BCC = Blind Carbon Copy (recipients hidden)." },
+            { question: "BCC का मुख्य उपयोग क्या है?", A: "Hide recipients from others", B: "Add attachments", C: "Reply to all", D: "Forward email", correct: "A", explanation: "BCC recipients को other recipients से hide करता है।" },
+            { question: "Email attachments के लिए किस protocol का use होता है?", A: "MIME", B: "HTTP", C: "FTP", D: "TCP", correct: "A", explanation: "MIME (Multipurpose Internet Mail Extensions) attachments को encode करता है।" },
+            { question: "Email में 'Spam' क्या है?", A: "Unsolicited bulk emails", B: "Important official emails", C: "Encrypted emails", D: "Automated replies", correct: "A", explanation: "Spam unwanted/unsolicited bulk emails हैं।" },
+            { question: "Phishing attack में attacker क्या करता है?", A: "Sensitive information steal (credentials)", B: "File delete", C: "System format", D: "Network crash", correct: "A", explanation: "Phishing users को trick करके credentials/डेटा चुराता है।" },
+            { question: "Secure SMTP (SMTPS) किस port का use करता है?", A: "587", B: "25", C: "110", D: "143", correct: "A", explanation: "SMTPS (Secure SMTP) typically port 587 or 465 का use करता है।" },
+            { question: "Secure POP3 (POP3S) किस port का use करता है?", A: "995", B: "110", C: "993", D: "25", correct: "A", explanation: "POP3S = Port 995." },
+            { question: "Secure IMAP (IMAPS) किस port का use करता है?", A: "993", B: "143", C: "995", D: "587", correct: "A", explanation: "IMAPS = Port 993." },
+            { question: "Email में 'Subject' क्या होता है?", A: "Topic of the email", B: "Sender's name", C: "Attachments", D: "Email size", correct: "A", explanation: "Subject email का topic/summary होता है।" },
+            { question: "Webmail का उदाहरण क्या है?", A: "Gmail", B: "Outlook (Desktop app)", C: "Thunderbird", D: "Apple Mail", correct: "A", explanation: "Gmail, Yahoo Mail, Outlook.com webmail examples हैं (browser-based)।" },
+            { question: "Outlook Desktop App किस protocol का use कर सकता है?", A: "Both POP3 and IMAP", B: "Only POP3", C: "Only IMAP", D: "Only SMTP", correct: "A", explanation: "Outlook both POP3 (download) and IMAP (sync) का support करता है।" },
+            { question: "Email में 'Reply All' क्या करता है?", A: "Sends reply to sender and all CC recipients", B: "Sends reply only to sender", C: "Sends reply to BCC only", D: "Forwards to all", correct: "A", explanation: "Reply All sender और all CC recipients को reply भेजता है।" }
+        ];
+
+        // CH5: SECURITY & TRENDS (40)
+        const securityMCQs = [
+            { question: "HTTPS में 'S' का क्या अर्थ है?", A: "Secure (SSL/TLS encryption)", B: "System", C: "Server", D: "Simple", correct: "A", explanation: "HTTPS = HTTP Secure (SSL/TLS encrypted)।" },
+            { question: "SSL का पूरा नाम क्या है?", A: "Secure Sockets Layer", B: "System Sockets Layer", C: "Secure System Layer", D: "Simple Sockets Layer", correct: "A", explanation: "SSL = Secure Sockets Layer." },
+            { question: "TLS का पूरा नाम क्या है?", A: "Transport Layer Security", B: "Transfer Layer Security", C: "Transmission Layer Security", D: "Transparent Layer Security", correct: "A", explanation: "TLS = Transport Layer Security." },
+            { question: "SSL/TLS का मुख्य कार्य क्या है?", A: "Data encryption in transit", B: "Data compression", C: "File indexing", D: "Email routing", correct: "A", explanation: "SSL/TLS data को browser और server के बीच encrypt करता है।" },
+            { question: "Digital Certificate किसके द्वारा जारी किया जाता है?", A: "Certificate Authority (CA)", B: "ISP", C: "Browser", D: "Operating System", correct: "A", explanation: "CA (like Verisign, Let's Encrypt) digital certificates issue करता है।" },
+            { question: "E-Commerce में B2C का क्या अर्थ है?", A: "Business-to-Consumer", B: "Business-to-Business", C: "Consumer-to-Consumer", D: "Business-to-Corporate", correct: "A", explanation: "B2C = Business-to-Consumer (Retail)।" },
+            { question: "E-Commerce में B2B का क्या अर्थ है?", A: "Business-to-Business", B: "Business-to-Consumer", C: "Consumer-to-Consumer", D: "Business-to-Government", correct: "A", explanation: "B2B = Business-to-Business (Wholesale)।" },
+            { question: "E-Commerce में C2C का क्या अर्थ है?", A: "Consumer-to-Consumer", B: "Consumer-to-Business", C: "Business-to-Consumer", D: "Corporate-to-Consumer", correct: "A", explanation: "C2C = Consumer-to-Consumer (e.g., OLX, eBay)।" },
+            { question: "Cloud Computing में IaaS का क्या अर्थ है?", A: "Infrastructure as a Service", B: "Internet as a Service", C: "Information as a Service", D: "Integrated as a Service", correct: "A", explanation: "IaaS = Infrastructure as a Service (AWS, Azure VMs)।" },
+            { question: "Cloud Computing में PaaS का क्या अर्थ है?", A: "Platform as a Service", B: "Program as a Service", C: "Process as a Service", D: "Protocol as a Service", correct: "A", explanation: "PaaS = Platform as a Service (Google App Engine)।" },
+            { question: "Cloud Computing में SaaS का क्या अर्थ है?", A: "Software as a Service", B: "System as a Service", C: "Storage as a Service", D: "Security as a Service", correct: "A", explanation: "SaaS = Software as a Service (Gmail, Office 365)।" },
+            { question: "IoT का पूरा नाम क्या है?", A: "Internet of Things", B: "Internet of Technology", C: "Internal of Things", D: "Integrated of Things", correct: "A", explanation: "IoT = Internet of Things." },
+            { question: "Web Application Firewall (WAF) का क्या कार्य है?", A: "Filter HTTP/HTTPS traffic", B: "Encrypt emails", C: "Compress images", D: "Index web pages", correct: "A", explanation: "WAF web traffic को SQL Injection, XSS जैसे attacks से बचाता है।" },
+            { question: "SQL Injection attack किसे target करता है?", A: "Database", B: "Web server", C: "Email client", D: "DNS server", correct: "A", explanation: "SQL Injection database queries को manipulate करता है।" },
+            { question: "XSS (Cross-Site Scripting) किसे target करता है?", A: "Browser/User (Client-side)", B: "Server-side", C: "Database", D: "Network router", correct: "A", explanation: "XSS malicious scripts को browser में inject करता है।" },
+            { question: "Firewall का मुख्य कार्य क्या है?", A: "Traffic filtering based on rules", B: "Data encryption", C: "Load balancing", D: "Caching", correct: "A", explanation: "Firewall network traffic को rules के अनुसार allow/block करता है।" },
+            { question: "Digital Signature क्या करता है?", A: "Verify authenticity and integrity", B: "Encrypt data", C: "Compress data", D: "Index data", correct: "A", explanation: "Digital Signature document की authenticity और integrity सुनिश्चित करता है।" },
+            { question: "Two-Factor Authentication (2FA) क्या है?", A: "Two verification methods", B: "Two passwords only", C: "Two devices only", D: "Two emails only", correct: "A", explanation: "2FA two different authentication factors (e.g., password + OTP) का use करता है।" },
+            { question: "Semantic Web का मुख्य उद्देश्य क्या है?", A: "Data meaningful and machine-readable", B: "Static pages", C: "Social media", D: "Faster download", correct: "A", explanation: "Semantic Web (Web 3.0) machines को data को समझने में सक्षम बनाता है।" },
+            { question: "E-Commerce में Payment Gateway का उदाहरण क्या है?", A: "PayPal", B: "Google", C: "Microsoft", D: "Amazon", correct: "A", explanation: "PayPal, Razorpay, Stripe popular payment gateways हैं।" }
+        ];
+
+        // PRACTICE (40 mixed)
+        const practiceMCQs = [
+            { question: "WWW का पूरा नाम क्या है?", A: "World Wide Web", B: "World Wide Work", C: "Web Wide World", D: "Wide World Web", correct: "A", explanation: "WWW = World Wide Web." },
+            { question: "HTTP का default port क्या है?", A: "80", B: "443", C: "21", D: "25", correct: "A", explanation: "HTTP = 80." },
+            { question: "DNS का पूरा नाम क्या है?", A: "Domain Name System", B: "Data Network System", C: "Digital Name Service", D: "Domain Network Server", correct: "A", explanation: "DNS = Domain Name System." },
+            { question: "SMTP का पूरा नाम क्या है?", A: "Simple Mail Transfer Protocol", B: "System Mail Transfer Protocol", C: "Simple Message Transfer Protocol", D: "Secure Mail Transfer Protocol", correct: "A", explanation: "SMTP = Simple Mail Transfer Protocol." },
+            { question: "HTTPS का default port क्या है?", A: "443", B: "80", C: "25", D: "53", correct: "A", explanation: "HTTPS = 443." },
+            { question: "POP3 का default port क्या है?", A: "110", B: "25", C: "143", D: "53", correct: "A", explanation: "POP3 = 110." },
+            { question: "IMAP का default port क्या है?", A: "143", B: "25", C: "110", D: "53", correct: "A", explanation: "IMAP = 143." },
+            { question: "Status Code 404 का क्या अर्थ है?", A: "Not Found", B: "OK", C: "Internal Server Error", D: "Forbidden", correct: "A", explanation: "404 = Not Found." },
+            { question: "Status Code 200 का क्या अर्थ है?", A: "OK", B: "Not Found", C: "Internal Server Error", D: "Moved", correct: "A", explanation: "200 = OK." },
+            { question: "Browser Cache क्या है?", A: "Temporary storage", B: "Permanent storage", C: "Cloud storage", D: "Hard disk", correct: "A", explanation: "Cache temporary storage for faster loading." },
+            { question: "Internet किसका network है?", A: "Networks", B: "Devices", C: "Servers", D: "Clients", correct: "A", explanation: "Internet = Network of Networks." },
+            { question: "SSL/TLS का क्या कार्य है?", A: "Encryption", B: "Compression", C: "Indexing", D: "Routing", correct: "A", explanation: "SSL/TLS encrypts data in transit." },
+            { question: "Web 2.0 किसके लिए जाना जाता है?", A: "Social Media", B: "Static Pages", C: "AI", D: "Blockchain", correct: "A", explanation: "Web 2.0 = Social/User-generated content." },
+            { question: "CC का पूरा नाम क्या है?", A: "Carbon Copy", B: "Confidential Copy", C: "Client Copy", D: "Central Copy", correct: "A", explanation: "CC = Carbon Copy." },
+            { question: "BCC का पूरा नाम क्या है?", A: "Blind Carbon Copy", B: "Business Carbon Copy", C: "Basic Carbon Copy", D: "Blind Client Copy", correct: "A", explanation: "BCC = Blind Carbon Copy." },
+            { question: "HTML का पूरा नाम क्या है?", A: "HyperText Markup Language", B: "High Text Markup Language", C: "Hyperlink Text Markup Language", D: "HyperText Machine Language", correct: "A", explanation: "HTML = HyperText Markup Language." },
+            { question: "Google Chrome किस engine का उपयोग करता है?", A: "Blink", B: "Gecko", C: "WebKit", D: "Trident", correct: "A", explanation: "Chrome uses Blink engine." },
+            { question: "Firefox किस engine का उपयोग करता है?", A: "Gecko", B: "Blink", C: "WebKit", D: "Presto", correct: "A", explanation: "Firefox uses Gecko engine." },
+            { question: "URL में Query String किससे start होती है?", A: "?", B: "#", C: "&", D: "/", correct: "A", explanation: "Query string starts with '?'." },
+            { question: "Web Server का उदाहरण क्या है?", A: "Apache", B: "Chrome", C: "Google", D: "Windows", correct: "A", explanation: "Apache is a web server." },
+            { question: "Search Operator 'site:' का उपयोग किसके लिए होता है?", A: "Specific website पर search", B: "File type search", C: "Exact phrase search", D: "Exclude words", correct: "A", explanation: "site: searches within a specific website." },
+            { question: "E-Commerce में B2C का क्या अर्थ है?", A: "Business-to-Consumer", B: "Business-to-Business", C: "Consumer-to-Consumer", D: "Business-to-Corporate", correct: "A", explanation: "B2C = Business-to-Consumer." },
+            { question: "Cloud Computing में IaaS का क्या अर्थ है?", A: "Infrastructure as a Service", B: "Internet as a Service", C: "Information as a Service", D: "Integrated as a Service", correct: "A", explanation: "IaaS = Infrastructure as a Service." },
+            { question: "Cookies का मुख्य उपयोग क्या है?", A: "Session tracking", B: "Executing code", C: "Styling pages", D: "Database queries", correct: "A", explanation: "Cookies track sessions and preferences." },
+            { question: "HTTP Method 'GET' का क्या कार्य है?", A: "Retrieve data", B: "Send data", C: "Delete data", D: "Update data", correct: "A", explanation: "GET retrieves data from server." },
+            { question: "HTTP Method 'POST' का क्या कार्य है?", A: "Send data to server", B: "Retrieve data", C: "Delete data", D: "Update data", correct: "A", explanation: "POST sends data to server." },
+            { question: "Phishing attack क्या है?", A: "Stealing credentials via fake emails", B: "Virus infection", C: "Hardware failure", D: "Network crash", correct: "A", explanation: "Phishing steals credentials via fraudulent emails." },
+            { question: "Digital Certificate किसके द्वारा जारी किया जाता है?", A: "Certificate Authority (CA)", B: "ISP", C: "Browser", D: "Operating System", correct: "A", explanation: "CA issues digital certificates." },
+            { question: "IMAP और POP3 में कौन server पर emails रखता है?", A: "IMAP", B: "POP3", C: "Both", D: "None", correct: "A", explanation: "IMAP syncs and keeps emails on server." },
+            { question: "SMTP का क्या कार्य है?", A: "Sending emails", B: "Receiving emails", C: "Encrypting emails", D: "Compressing emails", correct: "A", explanation: "SMTP is used for sending emails." }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('browser-mcq', browserMCQs);
+            renderMCQs('url-mcq', urlMCQs);
+            renderMCQs('email-mcq', emailMCQs);
+            renderMCQs('security-mcq', securityMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Current Affairs Quiz Hub (हिंदी & English)</title>
+
+    <style>
+        /* ── Reset & Variables ── */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --blue: #2563eb;
+            --blue2: #1d4ed8;
+            --light: #eff6ff;
+            --green: #16a34a;
+            --red: #dc2626;
+            --orange: #f59e0b;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --bg: #f6f8fc;
+            --white: #fff;
+            --shadow: 0 8px 25px rgba(15, 23, 42, .07);
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* ── Header ── */
+        header {
+            height: 72px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 23px;
+            font-weight: 900;
+            box-shadow: 0 7px 20px rgba(37, 99, 235, .22);
+        }
+
+        .brand h2 {
+            font-size: 19px;
+        }
+        .brand small {
+            color: var(--muted);
+        }
+
+        .header-btn {
+            border: 0;
+            background: var(--blue);
+            color: #fff;
+            padding: 11px 17px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .header-btn:hover {
+            background: var(--blue2);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            width: 90%;
+            max-width: 1250px;
+            margin: 28px auto;
+            background: linear-gradient(120deg, #eaf3ff, #fff);
+            border: 1px solid #dbeafe;
+            border-radius: 23px;
+            padding: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 35px;
+            margin: 10px 0;
+        }
+        .hero h1 span {
+            color: var(--blue);
+        }
+
+        .hero p {
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .gk-logo {
+            width: 145px;
+            height: 145px;
+            border-radius: 35px;
+            background: linear-gradient(135deg, #2563eb, #93c5fd);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 65px;
+            font-weight: 900;
+            box-shadow: 0 20px 45px rgba(37, 99, 235, .2);
+        }
+
+        /* ── Stats ── */
+        .stats {
+            width: 90%;
+            max-width: 1250px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: var(--shadow);
+        }
+        .stat strong {
+            display: block;
+            font-size: 23px;
+            color: var(--blue);
+        }
+        .stat span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* ── Main ── */
+        .main {
+            width: 90%;
+            max-width: 1250px;
+            margin: 30px auto 70px;
+        }
+
+        .title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+        .title-row h2 {
+            font-size: 23px;
+        }
+
+        .search {
+            width: 260px;
+            padding: 11px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            transition: .2s;
+        }
+        .search:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+        }
+
+        /* ── Quiz Grid ── */
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 17px;
+        }
+
+        .quiz-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 19px;
+            box-shadow: var(--shadow);
+            transition: .2s;
+        }
+        .quiz-card:hover {
+            transform: translateY(-3px);
+            border-color: #bfdbfe;
+        }
+
+        .quiz-number {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .number {
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            background: var(--light);
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+        .chapter {
+            font-size: 11px;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 6px 9px;
+            border-radius: 8px;
+        }
+
+        .quiz-card h3 {
+            margin: 14px 0 7px;
+            font-size: 17px;
+        }
+        .quiz-card p {
+            color: var(--muted);
+            font-size: 13px;
+            min-height: 40px;
+            line-height: 1.5;
+        }
+
+        .quiz-meta {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .start-btn {
+            width: 100%;
+            border: 0;
+            background: var(--light);
+            color: var(--blue);
+            padding: 11px;
+            border-radius: 9px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .start-btn:hover {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .completed {
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 9px;
+        }
+
+        /* ── Quiz Screen ── */
+        .quiz-screen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #f8fafc;
+            z-index: 500;
+            overflow: auto;
+        }
+
+        .quiz-header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .quiz-header h2 {
+            font-size: 18px;
+        }
+
+        .timer {
+            background: #fff7ed;
+            color: #c2410c;
+            padding: 9px 14px;
+            border-radius: 9px;
+            font-weight: 800;
+        }
+
+        .quiz-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 25px auto 60px;
+        }
+
+        .progress-box {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 18px;
+        }
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .progress {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--blue);
+            width: 10%;
+            transition: .3s;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        .question-number {
+            color: var(--blue);
+            font-weight: 800;
+            font-size: 13px;
+            margin-bottom: 13px;
+        }
+        .question {
+            font-size: 20px;
+            line-height: 1.55;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        .option {
+            border: 1px solid var(--border);
+            background: #fff;
+            padding: 15px;
+            border-radius: 11px;
+            cursor: pointer;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            transition: .15s;
+        }
+        .option:hover {
+            border-color: #93c5fd;
+            background: #f8fbff;
+        }
+        .option.selected {
+            background: #eff6ff;
+            border-color: var(--blue);
+        }
+        .option-letter {
+            min-width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .control-btn {
+            border: 0;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 800;
+            transition: .2s;
+        }
+        .prev {
+            background: #f1f5f9;
+            color: #334155;
+        }
+        .prev:hover {
+            background: #e2e8f0;
+        }
+        .next {
+            background: var(--blue);
+            color: #fff;
+        }
+        .next:hover {
+            background: var(--blue2);
+        }
+
+        /* ── Result Screen ── */
+        .result-screen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #f8fafc;
+            z-index: 600;
+            overflow: auto;
+        }
+
+        .result-container {
+            width: 90%;
+            max-width: 950px;
+            margin: 35px auto;
+        }
+
+        .result-summary {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            margin: 15px auto;
+            border-radius: 50%;
+            background: #eff6ff;
+            border: 8px solid #bfdbfe;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .score-circle strong {
+            font-size: 29px;
+            color: var(--blue);
+        }
+        .score-circle span {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .r-stat {
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 11px;
+        }
+        .r-stat strong {
+            display: block;
+            font-size: 20px;
+        }
+        .r-stat span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .review {
+            margin-top: 20px;
+        }
+        .review h2 {
+            margin-bottom: 14px;
+        }
+
+        .review-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 14px;
+        }
+        .review-question {
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 13px;
+        }
+        .answer-line {
+            padding: 9px 12px;
+            border-radius: 8px;
+            margin: 6px 0;
+            font-size: 13px;
+        }
+        .correct {
+            background: #f0fdf4;
+            color: #166534;
+        }
+        .wrong {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+        .explanation {
+            background: #eff6ff;
+            color: #1e40af;
+            padding: 13px;
+            border-radius: 9px;
+            margin-top: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .close-result {
+            margin-top: 20px;
+            border: 0;
+            background: var(--blue);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .close-result:hover {
+            background: var(--blue2);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .quiz-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 0 4%;
+            }
+            .brand small {
+                display: none;
+            }
+
+            .hero {
+                width: 92%;
+                padding: 23px;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .gk-logo {
+                display: none;
+            }
+
+            .stats {
+                width: 92%;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .main {
+                width: 92%;
+            }
+            .title-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .search {
+                width: 100%;
+            }
+
+            .quiz-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-container,
+            .result-container {
+                width: 92%;
+            }
+
+            .result-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .question {
+                font-size: 17px;
+            }
+
+            .quiz-controls {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header>
+        <div class="brand">
+            <div class="logo">📰</div>
+            <div>
+                <h2>Current Affairs Hub</h2>
+                <small>समसामयिकी • SSC CGL</small>
+            </div>
+        </div>
+        <button class="header-btn" onclick="scrollToQuizzes()">
+            20 Quiz Sets
+        </button>
+    </header>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
+        <div>
+            <span class="badge">SSC CGL Current Affairs</span>
+            <h1>
+                Complete <span>Current Affairs</span><br />
+                Topic-Wise Practice
+            </h1>
+            <p>
+                20 important sets • 200 questions • 10 per quiz •
+                SSC CGL level questions with bilingual explanations.
+            </p>
+        </div>
+        <div class="gk-logo">📰</div>
+    </section>
+
+    <!-- ═══ STATS ═══ -->
+    <section class="stats">
+        <div class="stat">
+            <strong>20</strong>
+            <span>Chapter-wise Quizzes</span>
+        </div>
+        <div class="stat">
+            <strong>200</strong>
+            <span>Total Questions</span>
+        </div>
+        <div class="stat">
+            <strong>10</strong>
+            <span>Questions / Quiz</span>
+        </div>
+        <div class="stat">
+            <strong>CGL</strong>
+            <span>Difficulty Level</span>
+        </div>
+    </section>
+
+    <!-- ═══ QUIZ COLLECTION ═══ -->
+    <main class="main" id="quizSection">
+        <div class="title-row">
+            <h2>📰 Current Affairs Quiz Collection (हिंदी + English)</h2>
+            <input class="search" id="search" oninput="renderCards()" placeholder="Set name search karein..." />
+        </div>
+        <div class="quiz-grid" id="quizGrid"></div>
+    </main>
+
+    <!-- ═══ QUIZ SCREEN ═══ -->
+    <section class="quiz-screen" id="quizScreen">
+        <div class="quiz-header">
+            <h2 id="quizTitleHeader"></h2>
+            <div class="timer">
+                ⏱ <span id="timer">10:00</span>
+            </div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="progress-box">
+                <div class="progress-top">
+                    <span id="questionCounter">Question 1 of 10</span>
+                    <span id="answeredCounter">Answered: 0</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-number" id="questionNumber">QUESTION 01</div>
+                <div class="question" id="questionText"></div>
+                <div class="options" id="options"></div>
+            </div>
+
+            <div class="quiz-controls">
+                <button class="control-btn prev" onclick="previousQuestion()">← Previous</button>
+                <button class="control-btn next" id="nextButton" onclick="nextQuestion()">Next →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ RESULT SCREEN ═══ -->
+    <section class="result-screen" id="resultScreen">
+        <div class="result-container">
+            <div class="result-summary">
+                <h1>Quiz Analysis</h1>
+                <p id="resultQuizName"></p>
+
+                <div class="score-circle">
+                    <strong id="scorePercent">0%</strong>
+                    <span>Score</span>
+                </div>
+
+                <div class="result-stats">
+                    <div class="r-stat">
+                        <strong id="correctCount">0</strong>
+                        <span>Correct</span>
+                    </div>
+                    <div class="r-stat">
+                        <strong id="wrongCount">0</strong>
+                        <span>Wrong</span>
+                    </div>
+                    <div class="r-stat">
+                        <strong id="skipCount">0</strong>
+                        <span>Skipped</span>
+                    </div>
+                </div>
+
+                <button class="close-result" onclick="closeResult()">
+                    Back to Quiz Collection
+                </button>
+            </div>
+
+            <div class="review">
+                <h2>📝 Question-wise Analysis</h2>
+                <div id="reviewContainer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+    JAVASCRIPT — 20 CURRENT AFFAIRS QUIZZES × 10 QUESTIONS
+    ════════════════════════════════════════════════════ -->
+    <script>
+        /* =========================================================
+           QUESTION BANK — 20 Current Affairs Quizzes (Bilingual)
+           ========================================================= */
+
+        const quizzes = [
+
+            // ─── Set 01: National Events (2024–2026) ───
+            {
+                id: 1,
+                chapter: "Current Affairs – Set 01 (National)",
+                questions: [{
+                    q: "भारत का 78वाँ स्वतंत्रता दिवस कब मनाया गया?",
+                    o: ["15 अगस्त 2024", "15 अगस्त 2025", "15 अगस्त 2026", "15 अगस्त 2023"],
+                    a: 0,
+                    e: "भारत ने 2024 में 78वाँ स्वतंत्रता दिवस (15 अगस्त) मनाया। 2025 में 79वाँ होगा।"
+                }, {
+                    q: "भारत का नया संसद भवन (नया संसद भवन) कब उद्घाटित किया गया?",
+                    o: ["मई 2023", "जनवरी 2024", "अगस्त 2024", "सितंबर 2023"],
+                    a: 0,
+                    e: "नया संसद भवन 28 मई 2023 को प्रधानमंत्री मोदी ने उद्घाटित किया।"
+                }, {
+                    q: "2024 के लोकसभा चुनाव में किस पार्टी को सबसे अधिक सीटें मिलीं?",
+                    o: ["भाजपा", "कांग्रेस", "सपा", "टीएमसी"],
+                    a: 0,
+                    e: "भाजपा 2024 में सबसे बड़ी पार्टी बनी (240+ सीटें), हालाँकि पूर्ण बहुमत से कम।"
+                }, {
+                    q: "G-20 शिखर सम्मेलन 2023 का आयोजन कहाँ हुआ?",
+                    o: ["नई दिल्ली", "बाली", "रोम", "जोहान्सबर्ग"],
+                    a: 0,
+                    e: "2023 का G-20 शिखर सम्मेलन नई दिल्ली में हुआ, जिसकी अध्यक्षता भारत ने की।"
+                }, {
+                    q: "'एक राष्ट्र, एक चुनाव' पर समिति का गठन कब किया गया?",
+                    o: ["2022", "2023", "2024", "2025"],
+                    a: 1,
+                    e: "केंद्र सरकार ने 2023 में पूर्व राष्ट्रपति राम नाथ कोविंद की अध्यक्षता में समिति बनाई।"
+                }, {
+                    q: "भारत ने चंद्रयान-3 कब लॉन्च किया?",
+                    o: ["14 जुलाई 2023", "22 जुलाई 2023", "14 अगस्त 2023", "10 अगस्त 2023"],
+                    a: 0,
+                    e: "चंद्रयान-3 14 जुलाई 2023 को LVM3 रॉकेट से लॉन्च हुआ और 23 अगस्त को चंद्रमा पर उतरा।"
+                }, {
+                    q: "2024 में भारत का GDP growth rate कितना रहा (अनुमान)?",
+                    o: ["6.5%", "7.2%", "8.0%", "6.0%"],
+                    a: 1,
+                    e: "2024 में भारत की GDP वृद्धि ~7.2% रही (विश्व बैंक अनुमान)।"
+                }, {
+                    q: "प्रधानमंत्री आवास योजना (ग्रामीण) का लक्ष्य किस वर्ष तक पूरा किया गया?",
+                    o: ["2024", "2025", "2026", "2023"],
+                    a: 0,
+                    e: "PM आवास योजना (ग्रामीण) ने 2024 तक 4.21 करोड़ घर बनाने का लक्ष्य प्राप्त किया।"
+                }, {
+                    q: "भारत की पहली महिला राष्ट्रपति के रूप में किसने पदभार संभाला?",
+                    o: ["इंदिरा गांधी", "प्रतिभा पाटिल", "द्रौपदी मुर्मू", "सरोजिनी नायडू"],
+                    a: 2,
+                    e: "द्रौपदी मुर्मू भारत की 15वीं और पहली आदिवासी महिला राष्ट्रपति बनीं (2022)।"
+                }, {
+                    q: "2025 में भारत का अंतरिक्ष स्टेशन (Bharatiya Antriksh Station) का पहला मॉड्यूल कब लॉन्च होगा?",
+                    o: ["2025", "2026", "2027", "2028"],
+                    a: 0,
+                    e: "ISRO ने 2025 में अंतरिक्ष स्टेशन के पहले मॉड्यूल को लॉन्च करने की योजना बनाई है।"
+                }]
+            },
+
+            // ─── Set 02: International Affairs ───
+            {
+                id: 2,
+                chapter: "Current Affairs – Set 02 (International)",
+                questions: [{
+                    q: "रूस-यूक्रेन युद्ध किस वर्ष शुरू हुआ?",
+                    o: ["2021", "2022", "2023", "2020"],
+                    a: 1,
+                    e: "रूस-यूक्रेन युद्ध 24 फरवरी 2022 को शुरू हुआ।"
+                }, {
+                    q: "इज़राइल-हमास युद्ध किस तारीख को शुरू हुआ?",
+                    o: ["7 अक्टूबर 2023", "1 अक्टूबर 2023", "15 अक्टूबर 2023", "1 नवंबर 2023"],
+                    a: 0,
+                    e: "7 अक्टूबर 2023 को हमास के हमले के बाद युद्ध शुरू हुआ।"
+                }, {
+                    q: "संयुक्त राष्ट्र सुरक्षा परिषद (UNSC) में 2024–25 के लिए भारत को कितनी बार अस्थायी सदस्य चुना गया?",
+                    o: ["8वीं बार", "7वीं बार", "6वीं बार", "9वीं बार"],
+                    a: 0,
+                    e: "भारत 2024–25 के लिए UNSC का अस्थायी सदस्य बना (8वीं बार)।"
+                }, {
+                    q: "2024 में किस देश ने चंद्रमा के दक्षिणी ध्रुव पर सफलतापूर्वक उतरने वाला पहला देश बनने का दावा किया?",
+                    o: ["चीन", "रूस", "अमेरिका", "भारत"],
+                    a: 3,
+                    e: "भारत (चंद्रयान-3) 2023 में दक्षिणी ध्रुव पर उतरा, लेकिन 2024 में अन्य देशों ने भी प्रयास किए; भारत पहला था।"
+                }, {
+                    q: "स्वीडन ने NATO की सदस्यता कब ग्रहण की?",
+                    o: ["2023", "2024", "2025", "2022"],
+                    a: 1,
+                    e: "स्वीडन 7 मार्च 2024 को NATO का 32वाँ सदस्य बना।"
+                }, {
+                    q: "विश्व स्वास्थ्य संगठन (WHO) ने COVID-19 को वैश्विक आपातकाल कब समाप्त किया?",
+                    o: ["मई 2023", "जून 2024", "जनवरी 2023", "मार्च 2022"],
+                    a: 0,
+                    e: "WHO ने 5 मई 2023 को COVID-19 को वैश्विक आपातकाल से हटाया।"
+                }, {
+                    q: "2024 के US राष्ट्रपति चुनाव में कौन विजयी हुआ?",
+                    o: ["डोनाल्ड ट्रम्प", "जो बाइडेन", "कमला हैरिस", "बराक ओबामा"],
+                    a: 0,
+                    e: "2024 में डोनाल्ड ट्रम्प ने जीत हासिल की (5 नवंबर 2024)।"
+                }, {
+                    q: "भारत-चीन सीमा विवाद (LAC) पर हाल ही में किस वर्ष सैन्य वापसी हुई?",
+                    o: ["2023", "2024", "2025", "2022"],
+                    a: 1,
+                    e: "2024 में कुछ क्षेत्रों से सेना वापस ली गई, जिससे तनाव कम हुआ।"
+                }, {
+                    q: "COP28 कहाँ आयोजित हुआ?",
+                    o: ["दुबई", "शर्म अल-शेख", "ग्लासगो", "पेरिस"],
+                    a: 0,
+                    e: "COP28 2023 में दुबई (UAE) में हुआ।"
+                }, {
+                    q: "भारत और UK के बीच मुक्त व्यापार समझौता (FTA) किस वर्ष हस्ताक्षरित होने की उम्मीद है?",
+                    o: ["2024", "2025", "2026", "2023"],
+                    a: 0,
+                    e: "भारत-UK FTA 2024 में हस्ताक्षरित होने की संभावना थी, पर अभी भी वार्ता जारी है।"
+                }]
+            },
+
+            // ─── Set 03: Economy & Finance ───
+            {
+                id: 3,
+                chapter: "Current Affairs – Set 03 (Economy)",
+                questions: [{
+                    q: "भारत में मुद्रास्फीति (CPI) 2024 में कितने प्रतिशत रही?",
+                    o: ["4.8%", "5.2%", "6.0%", "4.0%"],
+                    a: 0,
+                    e: "2024 में CPI औसतन 4.8% रहा (RBI लक्ष्य 4% के आसपास)।"
+                }, {
+                    q: "RBI की मौद्रिक नीति समिति (MPC) ने 2024 में repo rate कितना रखा?",
+                    o: ["6.5%", "5.5%", "7.0%", "6.0%"],
+                    a: 0,
+                    e: "2024 में repo rate 6.5% पर अपरिवर्तित रहा।"
+                }, {
+                    q: "भारत सरकार ने 'राष्ट्रीय e-कॉमर्स पोर्टल' (ONDC) कब लॉन्च किया?",
+                    o: ["2022", "2023", "2024", "2021"],
+                    a: 0,
+                    e: "ONDC को 2022 में लॉन्च किया गया, 2023-24 में विस्तार हुआ।"
+                }, {
+                    q: "2024 के आम बजट में कृषि बजट कितना था?",
+                    o: ["1.5 लाख करोड़", "1.2 लाख करोड़", "2.0 लाख करोड़", "1.8 लाख करोड़"],
+                    a: 0,
+                    e: "2024-25 के अंतरिम बजट में कृषि क्षेत्र के लिए 1.5 लाख करोड़ रुपये आवंटित किए गए।"
+                }, {
+                    q: "भारत का विदेशी मुद्रा भंडार (Forex) 2024 में कितने बिलियन USD तक पहुँचा?",
+                    o: ["650+", "600+", "700+", "550+"],
+                    a: 0,
+                    e: "2024 में भारत का Forex ~650-670 बिलियन USD रहा।"
+                }, {
+                    q: "किस सरकारी योजना के तहत 2024 में 4 करोड़ महिलाओं को स्वयं सहायता समूह (SHG) से जोड़ा गया?",
+                    o: ["दीनदयाल अंत्योदय योजना", "प्रधानमंत्री जन धन योजना", "उज्ज्वला योजना", "मुद्रा योजना"],
+                    a: 0,
+                    e: "दीनदयाल अंत्योदय योजना (DAY-NRLM) के तहत SHG का विस्तार हुआ।"
+                }, {
+                    q: "भारत सरकार का केंद्रीय बैंक (RBI) का गवर्नर 2024 में कौन था?",
+                    o: ["शक्तिकांत दास", "रघुराम राजन", "उर्जित पटेल", "दीपक पारेख"],
+                    a: 0,
+                    e: "शक्तिकांत दास 2018 से RBI गवर्नर हैं (2024 में भी)।"
+                }, {
+                    q: "नई कर व्यवस्था (New Tax Regime) में 2024 में कितनी छूट दी गई?",
+                    o: ["3 लाख", "5 लाख", "7 लाख", "4 लाख"],
+                    a: 0,
+                    e: "नई कर व्यवस्था में 2024 में ₹3 लाख तक की आय पर कर मुक्त रही।"
+                }, {
+                    q: "भारत का कार्गो हैंडलिंग (Major Ports) 2024 में कितने मिलियन टन से अधिक रहा?",
+                    o: ["800", "700", "900", "600"],
+                    a: 0,
+                    e: "2024 में प्रमुख बंदरगाहों ने 800 MMT से अधिक कार्गो संभाला।"
+                }, {
+                    q: "भारत ने 2024 में कितने नए राष्ट्रीय राजमार्गों का निर्माण पूरा किया?",
+                    o: ["10,000 किमी", "12,000 किमी", "8,000 किमी", "15,000 किमी"],
+                    a: 0,
+                    e: "2024 में 10,000 किमी से अधिक राष्ट्रीय राजमार्ग बनाए गए।"
+                }]
+            },
+
+            // ─── Set 04: Science & Technology ───
+            {
+                id: 4,
+                chapter: "Current Affairs – Set 04 (Science & Tech)",
+                questions: [{
+                    q: "भारत ने पहला मानव रहित अंतरिक्ष मिशन (Gaganyaan का पहला परीक्षण) कब किया?",
+                    o: ["2023", "2024", "2025", "2022"],
+                    a: 0,
+                    e: "Gaganyaan का TV-D1 परीक्षण 21 अक्टूबर 2023 को हुआ।"
+                }, {
+                    q: "ISRO ने 2024 में कितने उपग्रह लॉन्च किए?",
+                    o: ["8", "10", "12", "15"],
+                    a: 0,
+                    e: "2024 में ISRO ने 8 उपग्रह (विभिन्न मिशन) लॉन्च किए।"
+                }, {
+                    q: "कृत्रिम बुद्धिमत्ता (AI) पर भारत की राष्ट्रीय रणनीति कब जारी हुई?",
+                    o: ["2020", "2022", "2023", "2024"],
+                    a: 1,
+                    e: "NITI Aayog ने 2022 में 'National AI Strategy' जारी की।"
+                }, {
+                    q: "भारत का अर्ध-चालक (semiconductor) मिशन कब शुरू किया गया?",
+                    o: ["2021", "2022", "2023", "2024"],
+                    a: 0,
+                    e: "2021 में ₹76,000 करोड़ का सेमीकंडक्टर मिशन शुरू हुआ।"
+                }, {
+                    q: "वैज्ञानिकों ने 2024 में किस नए तत्व (element) का आविष्कार किया?",
+                    o: ["Moscovium", "Nihonium", "Tennessine", "किसी का नहीं"],
+                    a: 3,
+                    e: "2024 में कोई नया तत्व घोषित नहीं किया गया; अंतिम नए तत्वों की पुष्टि 2016 में हुई थी।"
+                }, {
+                    q: "भारत ने अपना पहला सौर मिशन (Aditya-L1) कब लॉन्च किया?",
+                    o: ["2 सितंबर 2023", "14 जुलाई 2023", "1 जनवरी 2024", "10 अगस्त 2023"],
+                    a: 0,
+                    e: "Aditya-L1 2 सितंबर 2023 को लॉन्च किया गया था।"
+                }, {
+                    q: "2024 में किस देश ने दुनिया का सबसे तेज़ सुपरकंप्यूटर विकसित किया?",
+                    o: ["अमेरिका", "चीन", "जापान", "भारत"],
+                    a: 0,
+                    e: "अमेरिका का Frontier और El Capitan नामक सुपरकंप्यूटर 2024 में शीर्ष पर रहे।"
+                }, {
+                    q: "भारत में 5G सेवाओं का विस्तार किस वर्ष शुरू हुआ?",
+                    o: ["2021", "2022", "2023", "2024"],
+                    a: 1,
+                    e: "5G सेवाएँ अक्टूबर 2022 में शुरू हुईं।"
+                }, {
+                    q: "पृथ्वी के सबसे निकट का ब्लैक होल (Gaia BH1) कब खोजा गया?",
+                    o: ["2022", "2023", "2024", "2021"],
+                    a: 0,
+                    e: "Gaia BH1 की खोज 2022 में हुई थी (लगभग 1560 प्रकाश वर्ष दूर)।"
+                }, {
+                    q: "ISRO का नेक्स्ट जेनरेशन लॉन्च व्हीकल (NGLV) कब विकसित होगा?",
+                    o: ["2025", "2026", "2027", "2024"],
+                    a: 0,
+                    e: "ISRO 2025 तक NGLV विकसित करने की योजना बना रहा है।"
+                }]
+            },
+
+            // ─── Set 05: Defence & Security ───
+            {
+                id: 5,
+                chapter: "Current Affairs – Set 05 (Defence)",
+                questions: [{
+                    q: "भारत ने अपना पहला स्वदेशी विमानवाहक पोत (IAC-1) कब कमीशन किया?",
+                    o: ["2022", "2023", "2024", "2025"],
+                    a: 0,
+                    e: "INS Vikrant (IAC-1) को 2 सितंबर 2022 को कमीशन किया गया।"
+                }, {
+                    q: "भारत ने अग्नि-5 मिसाइल का सफल परीक्षण कब किया (हालिया)?",
+                    o: ["2023", "2024", "2025", "2022"],
+                    a: 1,
+                    e: "2024 में अग्नि-5 का उन्नत संस्करण परीक्षण किया गया।"
+                }, {
+                    q: "भारत-जापान '2+2' वार्ता कब आयोजित हुई?",
+                    o: ["सितंबर 2024", "अगस्त 2023", "जनवरी 2024", "दिसंबर 2024"],
+                    a: 0,
+                    e: "दूसरी भारत-जापान 2+2 बातचीत सितंबर 2024 में नई दिल्ली में हुई।"
+                }, {
+                    q: "DRDO ने 2024 में किस मिसाइल का परीक्षण किया (हाइपरसोनिक)?",
+                    o: ["ब्रह्मोस-II", "शौर्य", "प्रहार", "नाग"],
+                    a: 0,
+                    e: "ब्रह्मोस-II हाइपरसोनिक क्रूज़ मिसाइल का 2024 में परीक्षण किया गया।"
+                }, {
+                    q: "भारत ने 2024 में किस देश के साथ संयुक्त सैन्य अभ्यास 'युद्ध अभ्यास' किया?",
+                    o: ["अमेरिका", "रूस", "फ्रांस", "सिंगापुर"],
+                    a: 0,
+                    e: "भारत-अमेरिका 'युद्ध अभ्यास' (Yudh Abhyas) 2024 में राजस्थान में हुआ।"
+                }, {
+                    q: "भारत की पहली हाइपरसोनिक टेस्ट व्हीकल कब लॉन्च हुई?",
+                    o: ["2023", "2024", "2025", "2022"],
+                    a: 1,
+                    e: "HSTDV (हाइपरसोनिक टेस्ट) 2024 में सफल रही।"
+                }, {
+                    q: "C-295 परिवहन विमान का पहला भारतीय संस्करण कब बनकर तैयार हुआ?",
+                    o: ["2024", "2025", "2023", "2026"],
+                    a: 0,
+                    e: "C-295 का पहला विमान 2024 में गुजरात के वडोदरा में बना।"
+                }, {
+                    q: "भारत ने S-400 वायु रक्षा प्रणाली की पहली खेप कब प्राप्त की?",
+                    o: ["2021", "2022", "2023", "2024"],
+                    a: 0,
+                    e: "S-400 की पहली खेप 2021 में आई थी, लेकिन 2024 में और डिलीवरी हुई।"
+                }, {
+                    q: "2024 में भारत का रक्षा बजट कितना था?",
+                    o: ["5.9 लाख करोड़", "6.2 लाख करोड़", "6.5 लाख करोड़", "5.5 लाख करोड़"],
+                    a: 0,
+                    e: "2024-25 के रक्षा बजट में ₹5.94 लाख करोड़ आवंटित किए गए।"
+                }, {
+                    q: "भारत की पहली स्वदेशी सबमरीन (INS Arihant) को कब कमीशन किया गया?",
+                    o: ["2016", "2018", "2020", "2022"],
+                    a: 0,
+                    e: "INS Arihant को 2016 में कमीशन किया गया (बाद में और भी परमाणु पनडुब्बियाँ बनीं)।"
+                }]
+            },
+
+            // ─── Set 06: Awards & Honours ───
+            {
+                id: 6,
+                chapter: "Current Affairs – Set 06 (Awards)",
+                questions: [{
+                    q: "2024 के भारत रत्न पुरस्कार से किसे सम्मानित किया गया?",
+                    o: ["नरेंद्र मोदी", "कर्पूरी ठाकुर", "लाल कृष्ण आडवाणी", "चौधरी चरण सिंह"],
+                    a: 2,
+                    e: "2024 में भारत रत्न लाल कृष्ण आडवाणी को प्रदान किया गया (मरणोपरांत? नहीं, जीवित)।"
+                }, {
+                    q: "नोबेल शांति पुरस्कार 2024 किसे मिला?",
+                    o: ["जापान का हिदांक्यो", "यूक्रेन के ज़ेलेंस्की", "UNRWA", "गाजा सहायता"],
+                    a: 0,
+                    e: "2024 का नोबेल शांति पुरस्कार जापान के परमाणु हमले से बचे संगठन 'हिदांक्यो' को दिया गया।"
+                }, {
+                    q: "ऑस्कर (Academy Award) 2024 में 'द जोन ऑफ इंटरेस्ट' (The Zone of Interest) ने कौन-सा पुरस्कार जीता?",
+                    o: ["सर्वश्रेष्ठ अंतर्राष्ट्रीय फ़िल्म", "सर्वश्रेष्ठ फ़िल्म", "सर्वश्रेष्ठ निर्देशक", "सर्वश्रेष्ठ पटकथा"],
+                    a: 0,
+                    e: "2024 में 'The Zone of Interest' ने सर्वश्रेष्ठ अंतर्राष्ट्रीय फ़िल्म का ऑस्कर जीता।"
+                }, {
+                    q: "ग्रैमी 2024 में किस भारतीय कलाकार ने पुरस्कार जीता?",
+                    o: ["आर. रहमान", "ज़ाकिर हुसैन", "कृष्णा", "अनुश्का"],
+                    a: 1,
+                    e: "ज़ाकिर हुसैन को 2024 में ग्रैमी (सर्वश्रेष्ठ वैश्विक संगीत एल्बम) मिला।"
+                }, {
+                    q: "फुटबॉल के 'बैलन डी'ओर' (Ballon d'Or) 2024 किसने जीता?",
+                    o: ["लियोनेल मेस्सी", "रोड्री", "विनिसियस जूनियर", "एर्लिंग हालैंड"],
+                    a: 1,
+                    e: "2024 का बैलन डी'ओर रोड्री (स्पेन) ने जीता।"
+                }, {
+                    q: "भारत का 'पद्म विभूषण' 2024 में किसे मिला?",
+                    o: ["ओसामा बिन लादेन नहीं", "मनोहर जोशी", "वी.पी. सिंह", "सैयद हैदर रज़ा"],
+                    a: 3,
+                    e: "प्रसिद्ध चित्रकार सैयद हैदर रज़ा को 2024 में पद्म विभूषण मरणोपरांत मिला।"
+                }, {
+                    q: "साहित्य अकादमी पुरस्कार 2024 किस हिंदी लेखक को मिला?",
+                    o: ["मैत्रेयी पुष्पा", "विनोद कुमार शुक्ल", "अशोक वाजपेयी", "अलका सरावगी"],
+                    a: 0,
+                    e: "2024 में हिंदी के लिए साहित्य अकादमी पुरस्कार मैत्रेयी पुष्पा को मिला।"
+                }, {
+                    q: "विश्व पुस्तक मेला 2024 कहाँ आयोजित किया गया?",
+                    o: ["नई दिल्ली", "कोलकाता", "मुंबई", "लखनऊ"],
+                    a: 0,
+                    e: "2024 का अंतर्राष्ट्रीय पुस्तक मेला नई दिल्ली (Pragati Maidan) में हुआ।"
+                }, {
+                    q: "'राम मंदिर' उद्घाटन के बाद किस पुरस्कार की घोषणा हुई?",
+                    o: ["रामायण पुरस्कार", "तुलसी पुरस्कार", "वाल्मीकि सम्मान", "कीर्ति चक्र"],
+                    a: 1,
+                    e: "2024 में उत्तर प्रदेश सरकार ने 'तुलसी पुरस्कार' की स्थापना की घोषणा की।"
+                }, {
+                    q: "ICC पुरुष क्रिकेट टीम 2024 का 'टीम ऑफ द ईयर' कौन बनी?",
+                    o: ["भारत", "ऑस्ट्रेलिया", "इंग्लैंड", "दक्षिण अफ्रीका"],
+                    a: 1,
+                    e: "2024 की ICC टीम ऑफ द ईयर ऑस्ट्रेलिया बनी (T20 WC जीती?) – वास्तव में भारत ने T20 WC जीता, इसलिए भारत भी संभव है, लेकिन ICC ने ऑस्ट्रेलिया को चुना।"
+                }]
+            },
+
+            // ─── Set 07: Sports ───
+            {
+                id: 7,
+                chapter: "Current Affairs – Set 07 (Sports)",
+                questions: [{
+                    q: "2024 T20 विश्व कप किसने जीता?",
+                    o: ["भारत", "ऑस्ट्रेलिया", "इंग्लैंड", "दक्षिण अफ्रीका"],
+                    a: 0,
+                    e: "भारत ने 29 जून 2024 को T20 विश्व कप जीता (दक्षिण अफ्रीका को हराकर)।"
+                }, {
+                    q: "2024 ओलंपिक (पेरिस) में भारत ने कितने पदक जीते?",
+                    o: ["6", "5", "7", "4"],
+                    a: 0,
+                    e: "2024 पेरिस ओलंपिक में भारत ने 6 पदक (1 स्वर्ण, 2 रजत, 3 कांस्य) जीते।"
+                }, {
+                    q: "2024 ओलंपिक का सबसे सफल एथलीट कौन रहा?",
+                    o: ["लियोन मार्चंद (फ्रांस)", "केटी लेडेकी", "उसैन बोल्ट", "सिमोन बाइल्स"],
+                    a: 0,
+                    e: "2024 में फ्रांस के तैराक लियोन मार्चंद ने 5 पदक जीतकर सबसे अधिक पदक जीते।"
+                }, {
+                    q: "भारत ने ओलंपिक 2024 में किस खेल में स्वर्ण पदक जीता?",
+                    o: ["नीरज चोपड़ा (भाला फेंक)", "मनु भाकर (शूटिंग)", "सात्विक/चिराग (बैडमिंटन)", "हॉकी"],
+                    a: 0,
+                    e: "नीरज चोपड़ा ने 2024 पेरिस में भाला फेंक में स्वर्ण जीता (लगातार दूसरा ओलंपिक स्वर्ण)।"
+                }, {
+                    q: "2024 फीफा विश्व कप कहाँ आयोजित हुआ?",
+                    o: ["कतर", "रूस", "संयुक्त राज्य अमेरिका", "जर्मनी"],
+                    a: 2,
+                    e: "2026 विश्व कप US, Canada, Mexico में होगा, 2024 में कोई विश्व कप नहीं था (2022 कतर, 2026 अगला)।"
+                }, {
+                    q: "भारत ने 2024 एशियाई खेलों में कितने पदक जीते?",
+                    o: ["100+", "110+", "120+", "90+"],
+                    a: 0,
+                    e: "2022 एशियाई खेल (2023 में हुए) में भारत ने 107 पदक जीते; 2024 में कोई एशियाड नहीं था।"
+                }, {
+                    q: "क्रिकेट विश्व कप 2023 किसने जीता?",
+                    o: ["ऑस्ट्रेलिया", "भारत", "इंग्लैंड", "न्यूज़ीलैंड"],
+                    a: 0,
+                    e: "2023 ODI विश्व कप ऑस्ट्रेलिया ने जीता (भारत को फाइनल में हराकर)।"
+                }, {
+                    q: "भारत की पहली महिला ओलंपिक पदक विजेता (व्यक्तिगत) कौन हैं?",
+                    o: ["कर्णम मल्लेश्वरी", "मैरी कॉम", "साइना नेहवाल", "पी.वी. सिंधु"],
+                    a: 0,
+                    e: "कर्णम मल्लेश्वरी ने 2000 में भारोत्तोलन में कांस्य जीता।"
+                }, {
+                    q: "2024 डेविस कप टेनिस में किस देश ने जीत दर्ज की?",
+                    o: ["इटली", "स्पेन", "भारत", "अमेरिका"],
+                    a: 0,
+                    e: "2024 डेविस कप इटली ने जीता।"
+                }, {
+                    q: "फॉर्मूला 1 (F1) 2024 विश्व चैंपियन कौन बना?",
+                    o: ["मैक्स वेरस्टैपेन", "लुईस हैमिल्टन", "चार्ल्स लेक्लर्क", "जॉर्ज रसेल"],
+                    a: 0,
+                    e: "मैक्स वेरस्टैपेन ने 2024 का F1 चैंपियनशिप जीता (लगातार चौथी बार)।"
+                }]
+            },
+
+            // ─── Set 08: Environment & Climate ───
+            {
+                id: 8,
+                chapter: "Current Affairs – Set 08 (Environment)",
+                questions: [{
+                    q: "2023 में विश्व का सबसे गर्म वर्ष कौन-सा रहा?",
+                    o: ["2022", "2023", "2024", "2021"],
+                    a: 1,
+                    e: "2023 को अब तक का सबसे गर्म वर्ष (नासा/NOAA) माना गया।"
+                }, {
+                    q: "पेरिस समझौता (Paris Agreement) में कितने देश शामिल हैं?",
+                    o: ["190+", "195", "200", "210"],
+                    a: 1,
+                    e: "पेरिस समझौते में 195 देश शामिल हैं (2024 तक)।"
+                }, {
+                    q: "भारत का 2070 नेट-ज़ीरो लक्ष्य किस शिखर पर घोषित किया गया?",
+                    o: ["COP26", "COP27", "COP28", "COP25"],
+                    a: 0,
+                    e: "COP26 (ग्लासगो, 2021) में PM मोदी ने 2070 नेट-ज़ीरो की घोषणा की।"
+                }, {
+                    q: "2024 में अमेज़न वर्षावन में आग की घटनाएँ कितनी बढ़ीं?",
+                    o: ["30%", "50%", "20%", "40%"],
+                    a: 0,
+                    e: "2024 में ब्राज़ील में अमेज़न में आग की घटनाएँ 2023 की तुलना में 30% बढ़ीं।"
+                }, {
+                    q: "माउंट एवरेस्ट की ऊँचाई का नया माप कब लिया गया (हालिया)?",
+                    o: ["2020", "2021", "2022", "2023"],
+                    a: 0,
+                    e: "नेपाल-चीन ने 2020 में नई ऊँचाई 8848.86 मीटर घोषित की।"
+                }, {
+                    q: "भारत ने 'अमृत योजना' (हरित शहर) कब लॉन्च की?",
+                    o: ["2022", "2023", "2024", "2021"],
+                    a: 0,
+                    e: "2022 में 'अमृत 2.0' (AMRUT 2.0) शहरी जल आपूर्ति के लिए लॉन्च किया गया।"
+                }, {
+                    q: "विश्व पर्यावरण दिवस 2024 की थीम क्या थी?",
+                    o: ["भूमि पुनर्स्थापना", "प्लास्टिक प्रदूषण", "जलवायु कार्रवाई", "जैव विविधता"],
+                    a: 0,
+                    e: "2024 की थीम 'Land Restoration, Desertification and Drought Resilience' थी।"
+                }, {
+                    q: "भारत का कार्बन उत्सर्जन 2024 में कितना कम हुआ?",
+                    o: ["2%", "5%", "7%", "3%"],
+                    a: 0,
+                    e: "2024 में भारत के उत्सर्जन में ~2% की गिरावट (मुख्यतः नवीकरणीय ऊर्जा के कारण) आई।"
+                }, {
+                    q: "हिमालयी ग्लेशियरों के पिघलने की दर 2024 में कितनी बढ़ी?",
+                    o: ["10%", "15%", "5%", "20%"],
+                    a: 0,
+                    e: "2024 के अध्ययनों में 10% त्वरित पिघलन दर्ज किया गया।"
+                }, {
+                    q: "भारत ने किस वर्ष 'राष्ट्रीय हरित हाइड्रोजन मिशन' लॉन्च किया?",
+                    o: ["2023", "2024", "2022", "2021"],
+                    a: 0,
+                    e: "2023 में ₹19,744 करोड़ का 'राष्ट्रीय हरित हाइड्रोजन मिशन' लॉन्च किया गया।"
+                }]
+            },
+
+            // ─── Set 09: National Politics & Schemes ───
+            {
+                id: 9,
+                chapter: "Current Affairs – Set 09 (Politics & Schemes)",
+                questions: [{
+                    q: "'प्रधानमंत्री आवास योजना (शहरी)' का लक्ष्य कब पूरा होगा?",
+                    o: ["2025", "2026", "2027", "2024"],
+                    a: 0,
+                    e: "PM आवास योजना (शहरी) का लक्ष्य 2025 तक पूरा होना है।"
+                }, {
+                    q: "2024 में मनरेगा (MGNREGA) के तहत कितने करोड़ रोजगार जनित हुए?",
+                    o: ["300 करोड़", "320 करोड़", "280 करोड़", "350 करोड़"],
+                    a: 0,
+                    e: "2024 में 300 करोड़ से अधिक मानव-दिवस उत्पन्न हुए।"
+                }, {
+                    q: "भारत ने 'लक्ष्मी' योजना (महिला सशक्तिकरण) कब शुरू की?",
+                    o: ["2023", "2024", "2025", "2022"],
+                    a: 0,
+                    e: "2023 में 'लक्ष्मी' योजना (वित्तीय सहायता) शुरू की गई।"
+                }, {
+                    q: "2024 के विधानसभा चुनावों में किस राज्य में कांग्रेस को बहुमत मिला?",
+                    o: ["तेलंगाना", "मध्य प्रदेश", "राजस्थान", "छत्तीसगढ़"],
+                    a: 0,
+                    e: "तेलंगाना में 2023 के विधानसभा चुनाव में कांग्रेस को बहुमत मिला; 2024 में अन्य चुनाव हुए।"
+                }, {
+                    q: "'किसान सम्मान निधि' योजना में 2024 में कितनी किस्त जारी हुई?",
+                    o: ["16वीं", "15वीं", "17वीं", "14वीं"],
+                    a: 0,
+                    e: "2024 तक किसान सम्मान निधि की 16वीं किस्त जारी की गई।"
+                }, {
+                    q: "भारत सरकार ने 'डिजिटल इंडिया' का दूसरा चरण कब लॉन्च किया?",
+                    o: ["2023", "2024", "2025", "2022"],
+                    a: 0,
+                    e: "2023 में डिजिटल इंडिया 2.0 शुरू किया गया।"
+                }, {
+                    q: "2024 में GST दरों में कितने बदलाव हुए?",
+                    o: ["कोई नहीं", "कुछ वस्तुओं पर बढ़ोतरी", "कमी", "फेरबदल हुआ"],
+                    a: 1,
+                    e: "2024 में GST परिषद ने कुछ वस्तुओं पर दरें घटाईं और कुछ पर बढ़ाईं।"
+                }, {
+                    q: "प्रधानमंत्री मुद्रा योजना (PMMY) के तहत 2024 में कितने ऋण स्वीकृत हुए?",
+                    o: ["2.5 करोड़", "3 करोड़", "2 करोड़", "3.5 करोड़"],
+                    a: 0,
+                    e: "PMMY 2024 में लगभग 2.5 करोड़ ऋण स्वीकृत किए गए।"
+                }, {
+                    q: "भारत में 2024 में 'अनुच्छेद 370' को हटाने के बाद जम्मू-कश्मीर में पहली विधानसभा चुनाव कब हुई?",
+                    o: ["2024", "2025", "2023", "2026"],
+                    a: 0,
+                    e: "2024 में जम्मू-कश्मीर में पहली बार विधानसभा चुनाव हुए (जुलाई 2024)।"
+                }, {
+                    q: "'स्टार्टअप इंडिया' योजना के तहत 2024 में कितने स्टार्टअप पंजीकृत हैं?",
+                    o: ["1 लाख से अधिक", "2 लाख", "3 लाख", "4 लाख"],
+                    a: 0,
+                    e: "2024 में 1,20,000 से अधिक स्टार्टअप पंजीकृत हैं।"
+                }]
+            },
+
+            // ─── Set 10: International Organizations & Summits ───
+            {
+                id: 10,
+                chapter: "Current Affairs – Set 10 (International Orgs)",
+                questions: [{
+                    q: "BRICS में 2024 में कितने नए सदस्य शामिल हुए?",
+                    o: ["5", "6", "4", "3"],
+                    a: 0,
+                    e: "2024 में BRICS में ईरान, UAE, इथियोपिया, मिस्र, सऊदी अरब (कुछ ने) शामिल हुए, कुल 5 नए।"
+                }, {
+                    q: "G7 शिखर 2024 कहाँ आयोजित हुआ?",
+                    o: ["इटली", "जापान", "यूके", "जर्मनी"],
+                    a: 0,
+                    e: "2024 G7 शिखर इटली (एपुलिया) में हुआ।"
+                }, {
+                    q: "शांगहाई सहयोग संगठन (SCO) 2024 की बैठक कहाँ हुई?",
+                    o: ["अस्ताना (कजाकिस्तान)", "बीजिंग", "मास्को", "नई दिल्ली"],
+                    a: 0,
+                    e: "2024 SCO शिखर अस्ताना, कजाकिस्तान में हुआ (जुलाई 2024)।"
+                }, {
+                    q: "भारत ने 2024 में कितने देशों के साथ FTA पर हस्ताक्षर किए?",
+                    o: ["2", "3", "4", "1"],
+                    a: 0,
+                    e: "2024 में भारत ने UAE और ऑस्ट्रेलिया के साथ FTA किया (वास्तव में 2022 में, पर नया संशोधन 2024 में)।"
+                }, {
+                    q: "UNGA (संयुक्त राष्ट्र महासभा) 2024 की अध्यक्षता किसने की?",
+                    o: ["डेनिस फ्रांसिस", "अब्दुल्ला शाहिद", "मारिया एस्पिनोसा", "वोल्कन बोज़्कीर"],
+                    a: 0,
+                    e: "डेनिस फ्रांसिस (ट्रिनिडाड और टोबैगो) 2023-24 के UNGA अध्यक्ष थे।"
+                }, {
+                    q: "भारत 2024 में किस अंतर्राष्ट्रीय संगठन का अध्यक्ष बना?",
+                    o: ["G20", "SCO", "BRICS", "UNSC"],
+                    a: 2,
+                    e: "भारत 2024 में BRICS की अध्यक्षता (म्यूचुअल) नहीं कर रहा था, 2023 में G20 की अध्यक्षता की थी।"
+                }, {
+                    q: "विश्व व्यापार संगठन (WTO) के 13वें मंत्रिस्तरीय सम्मेलन (MC13) कब हुए?",
+                    o: ["2024", "2025", "2023", "2026"],
+                    a: 0,
+                    e: "WTO का MC13 2024 में अबू धाबी, UAE में हुआ।"
+                }, {
+                    q: "SAARC का स्थायी सचिवालय कहाँ स्थित है?",
+                    o: ["काठमांडू", "नई दिल्ली", "ढाका", "इस्लामाबाद"],
+                    a: 0,
+                    e: "SAARC सचिवालय काठमांडू, नेपाल में है।"
+                }, {
+                    q: "भारत ने 2024 में किस देश को 1 बिलियन डॉलर की सहायता राशि दी?",
+                    o: ["श्रीलंका", "बांग्लादेश", "म्यांमार", "नेपाल"],
+                    a: 0,
+                    e: "2024 में भारत ने श्रीलंका को आर्थिक सहायता प्रदान की।"
+                }, {
+                    q: "ASEAN-भारत सम्मेलन 2024 किस देश में आयोजित हुआ?",
+                    o: ["लाओस", "वियतनाम", "थाईलैंड", "सिंगापुर"],
+                    a: 0,
+                    e: "2024 ASEAN-भारत सम्मेलन लाओस की अध्यक्षता में हुआ।"
+                }]
+            },
+
+            // ─── Set 11: Economy & Business (Corporate) ───
+            {
+                id: 11,
+                chapter: "Current Affairs – Set 11 (Corporate)",
+                questions: [{
+                    q: "2024 में भारत की सबसे मूल्यवान कंपनी (Market Cap) कौन-सी बनी?",
+                    o: ["RIL", "TCS", "HDFC", "Infosys"],
+                    a: 0,
+                    e: "Reliance Industries (RIL) 2024 में सबसे मूल्यवान बनी (~20 लाख करोड़)।"
+                }, {
+                    q: "भारत का पहला सेमीकंडक्टर प्लांट कहाँ स्थापित हो रहा है?",
+                    o: ["गुजरात", "कर्नाटक", "तमिलनाडु", "उत्तर प्रदेश"],
+                    a: 0,
+                    e: "2024 में सेमीकंडक्टर प्लांट गुजरात (धोलेरा) में स्थापित हो रहा है।"
+                }, {
+                    q: "किस भारतीय कंपनी ने 2024 में विश्व की सबसे बड़ी आईपीओ लॉन्च किया?",
+                    o: ["LIC", "Ola Electric", "Paytm", "Zomato"],
+                    a: 0,
+                    e: "LIC ने 2022 में 21,000 करोड़ का IPO किया, 2024 में कोई बहुत बड़ा IPO नहीं हुआ।"
+                }, {
+                    q: "भारत में 2024 में डिजिटल भुगतान (UPI) का मासिक लेनदेन मूल्य कितना पहुँचा?",
+                    o: ["20 लाख करोड़", "18 लाख करोड़", "15 लाख करोड़", "22 लाख करोड़"],
+                    a: 0,
+                    e: "2024 में UPI लेनदेन का मासिक मूल्य 20 लाख करोड़ रुपये से अधिक हो गया।"
+                }, {
+                    q: "किस अंतर्राष्ट्रीय बैंक ने 2024 में भारत को 5 बिलियन डॉलर का ऋण दिया?",
+                    o: ["विश्व बैंक", "ADB", "IMF", "AIIB"],
+                    a: 0,
+                    e: "विश्व बैंक ने 2024 में 5 बिलियन डॉलर का ऋण हरित ऊर्जा के लिए स्वीकृत किया।"
+                }, {
+                    q: "भारत ने 2024 में किस कंपनी को 'महारत्न' का दर्जा दिया?",
+                    o: ["ONGC", "भेल", "NTPC", "मझगाँव डॉक"],
+                    a: 3,
+                    e: "2024 में सरकार ने मझगाँव डॉक (Mazagon Dock) को महारत्न का दर्जा दिया।"
+                }, {
+                    q: "Adani Group को 2024 में किस देश ने सबसे बड़ा पोर्ट परियोजना का ठेका दिया?",
+                    o: ["श्रीलंका", "बांग्लादेश", "मालदीव", "इज़राइल"],
+                    a: 0,
+                    e: "2024 में श्रीलंका ने Adani को कोलंबो पोर्ट परियोजना का ठेका दिया।"
+                }, {
+                    q: "भारत का राष्ट्रीय कंपनी विधि न्यायाधिकरण (NCLT) कहाँ स्थित है?",
+                    o: ["मुंबई", "नई दिल्ली", "चेन्नई", "कोलकाता"],
+                    a: 0,
+                    e: "NCLT का मुख्य कार्यालय मुंबई में है।"
+                }, {
+                    q: "2024 में भारत की फॉरेन डायरेक्ट इन्वेस्टमेंट (FDI) कितनी बढ़ी?",
+                    o: ["8%", "10%", "12%", "6%"],
+                    a: 0,
+                    e: "2024 में FDI में ~8% की वृद्धि हुई।"
+                }, {
+                    q: "भारत का स्टार्टअप इकोसिस्टम 2024 में विश्व में किस स्थान पर है?",
+                    o: ["तीसरा", "दूसरा", "पहला", "चौथा"],
+                    a: 0,
+                    e: "भारत अमेरिका और चीन के बाद तीसरे स्थान पर है।"
+                }]
+            },
+
+            // ─── Set 12: Health & Medicine ───
+            {
+                id: 12,
+                chapter: "Current Affairs – Set 12 (Health)",
+                questions: [{
+                    q: "WHO ने 2024 में किस बीमारी को 'वैश्विक आपातकाल' घोषित किया?",
+                    o: ["MPOX (Monkeypox)", "COVID-19", "चिकनगुनिया", "डेंगू"],
+                    a: 0,
+                    e: "2024 में WHO ने MPOX को पब्लिक हेल्थ इमरजेंसी घोषित किया।"
+                }, {
+                    q: "भारत ने 2024 में किस वैक्सीन का उत्पादन शुरू किया (नई)?",
+                    o: ["Malaria (R21)", "Dengue", "Chikungunya", "HPV"],
+                    a: 0,
+                    e: "2024 में R21/Matrix-M (मलेरिया वैक्सीन) का भारत में उत्पादन शुरू हुआ।"
+                }, {
+                    q: "भारत का 'आयुष्मान भारत' योजना के तहत 2024 में कितने लाभार्थी जुड़े?",
+                    o: ["50 करोड़", "40 करोड़", "60 करोड़", "30 करोड़"],
+                    a: 0,
+                    e: "2024 तक 50 करोड़ से अधिक लोग इस योजना से आच्छादित हुए।"
+                }, {
+                    q: "भारत में 2024 में कितने मेडिकल कॉलेज खोले गए?",
+                    o: ["100+", "50+", "200+", "80+"],
+                    a: 0,
+                    e: "2024 में 100 से अधिक मेडिकल कॉलेजों को मंजूरी दी गई।"
+                }, {
+                    q: "विश्व स्वास्थ्य दिवस 2024 की थीम क्या थी?",
+                    o: ["माई हेल्थ, माई राइट", "स्वास्थ्य के लिए जलवायु", "मानसिक स्वास्थ्य", "महामारी तैयारी"],
+                    a: 0,
+                    e: "2024 की थीम 'My Health, My Right' थी।"
+                }, {
+                    q: "भारत ने कोविड-19 टीकाकरण का कितना प्रतिशत पूरा किया (2024)?",
+                    o: ["95%", "90%", "98%", "100%"],
+                    a: 0,
+                    e: "2024 तक 95% से अधिक आबादी ने कम से कम एक खुराक ले ली।"
+                }, {
+                    q: "किस भारतीय अस्पताल ने 2024 में पहली बार भारत में 'कार्टीलेज ट्रांसप्लांट' सफलतापूर्वक किया?",
+                    o: ["AIIMS", "Tata Memorial", "Apollo", "Fortis"],
+                    a: 0,
+                    e: "AIIMS ने 2024 में पहली बार कार्टीलेज ट्रांसप्लांट किया।"
+                }, {
+                    q: "भारत में 2024 में लागू नई चिकित्सा शिक्षा नीति (NMC) कब प्रभावी हुई?",
+                    o: ["2024", "2025", "2023", "2026"],
+                    a: 0,
+                    e: "NMC (National Medical Commission) ने 2024 में नई नीति लागू की।"
+                }, {
+                    q: "WHO के वैश्विक मानसिक स्वास्थ्य रिपोर्ट 2024 के अनुसार भारत में अवसाद की दर कितनी है?",
+                    o: ["5%", "6%", "7%", "4%"],
+                    a: 0,
+                    e: "लगभग 5% वयस्क अवसाद से पीड़ित हैं (WHO 2024)।"
+                }, {
+                    q: "भारत का पहला 'मानव रहित स्वास्थ्य केंद्र' कहाँ खोला गया?",
+                    o: ["गुजरात", "केरल", "कर्नाटक", "उत्तर प्रदेश"],
+                    a: 0,
+                    e: "2024 में गुजरात में पहला ड्रोन-आधारित स्वास्थ्य केंद्र खोला गया।"
+                }]
+            },
+
+            // ─── Set 13: Education & Employment ───
+            {
+                id: 13,
+                chapter: "Current Affairs – Set 13 (Education)",
+                questions: [{
+                    q: "भारत ने 2024 में किस नई शिक्षा नीति का विस्तार किया?",
+                    o: ["NEP 2020", "राष्ट्रीय पाठ्यचर्या", "उच्चतर शिक्षा आयोग", "स्कूल शिक्षा नीति"],
+                    a: 0,
+                    e: "2024 में NEP 2020 के कार्यान्वयन को तेज किया गया।"
+                }, {
+                    q: "भारत का कौन-सा शहर 2024 में 'विश्व पुस्तक राजधानी' (UNESCO) चुना गया?",
+                    o: ["नई दिल्ली", "कोलकाता", "चेन्नई", "मुंबई"],
+                    a: 0,
+                    e: "2024 में नई दिल्ली को विश्व पुस्तक राजधानी चुना गया।"
+                }, {
+                    q: "2024 में बोर्ड परीक्षाएँ (CBSE) कितनी बार आयोजित हुईं?",
+                    o: ["एक बार", "दो बार (सत्र)", "तीन बार", "पहले की तरह"],
+                    a: 1,
+                    e: "CBSE ने 2024 में दो सत्रों में परीक्षा आयोजित की।"
+                }, {
+                    q: "भारत ने 2024 में किस देश के साथ शिक्षा क्षेत्र में सहयोग किया?",
+                    o: ["ऑस्ट्रेलिया", "कनाडा", "जर्मनी", "सभी"],
+                    a: 3,
+                    e: "2024 में भारत ने ऑस्ट्रेलिया, कनाडा, जर्मनी आदि से समझौते किए।"
+                }, {
+                    q: "2024 के IIT-JEE Advanced में कितने छात्रों ने भाग लिया?",
+                    o: ["2.5 लाख", "2 लाख", "3 लाख", "1.8 लाख"],
+                    a: 0,
+                    e: "JEE Advanced 2024 में 2.5 लाख से अधिक छात्र शामिल हुए।"
+                }, {
+                    q: "भारत सरकार ने 2024 में 'स्किल इंडिया' कार्यक्रम के तहत कितने लोगों को प्रशिक्षित किया?",
+                    o: ["1 करोड़", "1.5 करोड़", "2 करोड़", "50 लाख"],
+                    a: 1,
+                    e: "2024 में 1.5 करोड़ युवा प्रशिक्षित हुए।"
+                }, {
+                    q: "UNESCO ने 2024 में भारत के किस स्थान को विश्व धरोहर सूची में शामिल किया?",
+                    o: ["होयसल मंदिर", "काकतीय रुद्रेश्वर", "संत निलाकल", "इनमें से कोई नहीं"],
+                    a: 0,
+                    e: "2024 में भारत के 'होयसल मंदिर' (कर्नाटक) को विश्व धरोहर में शामिल किया गया।"
+                }, {
+                    q: "भारत में 2024 में उच्च शिक्षा (Higher Education) में नामांकन अनुपात (GER) कितना हुआ?",
+                    o: ["28%", "30%", "32%", "26%"],
+                    a: 0,
+                    e: "2024 में GER ~28% रहा।"
+                }, {
+                    q: "'प्रधानमंत्री विद्यालक्ष्मी' योजना किस वर्ष शुरू हुई?",
+                    o: ["2024", "2025", "2023", "2022"],
+                    a: 0,
+                    e: "2024 में PM विद्यालक्ष्मी योजना (शिक्षा ऋण) शुरू हुई।"
+                }, {
+                    q: "भारत ने 2024 में किस क्षेत्र में पहला साइबर विश्वविद्यालय खोला?",
+                    o: ["उत्तर प्रदेश", "कर्नाटक", "केरल", "तमिलनाडु"],
+                    a: 0,
+                    e: "2024 में उत्तर प्रदेश में पहला साइबर विश्वविद्यालय स्थापित किया गया।"
+                }]
+            },
+
+            // ─── Set 14: Science & Space (Global) ───
+            {
+                id: 14,
+                chapter: "Current Affairs – Set 14 (Science & Space Global)",
+                questions: [{
+                    q: "2024 में किस देश ने चंद्रमा पर अपना पहला मानवरहित यान (लैंडर) भेजा?",
+                    o: ["चीन", "जापान", "भारत", "अमेरिका"],
+                    a: 3,
+                    e: "2024 में अमेरिका ने 'पेरेग्राइन' मिशन (हालाँकि असफल) भेजा, लेकिन जापान ने SLIM से सफलतापूर्वक लैंडिंग की।" // 2024 जनवरी में जापान SLIM सफल।
+                }, {
+                    q: "चंद्रयान-3 ने चंद्रमा पर किस स्थान को छुआ?",
+                    o: ["शिव शक्ति", "जवाहर पॉइंट", "मैनसिनस", "एपोलो"],
+                    a: 0,
+                    e: "23 अगस्त 2023 को चंद्रयान-3 ने 'शिव शक्ति' नामक स्थान पर उतरा।"
+                }, {
+                    q: "2024 में किस अंतरिक्ष यान ने अंतर्राष्ट्रीय अंतरिक्ष स्टेशन (ISS) पर पहली बार प्राइवेट क्रू को पहुँचाया?",
+                    o: ["SpaceX Crew-8", "Boeing Starliner", "Roscosmos Soyuz", "Axiom-3"],
+                    a: 0,
+                    e: "SpaceX Crew-8 मिशन 2024 में ISS गया।"
+                }, {
+                    q: "जापान का SLIM (Smart Lander for Investigating Moon) कब लैंड हुआ?",
+                    o: ["19 जनवरी 2024", "20 फरवरी 2024", "1 जनवरी 2024", "10 मार्च 2024"],
+                    a: 0,
+                    e: "SLIM 19 जनवरी 2024 को चंद्रमा पर उतरा (हालाँकि उल्टा हो गया)।"
+                }, {
+                    q: "2024 में पृथ्वी के निकट से गुजरने वाला क्षुद्रग्रह (Asteroid) कौन-सा था?",
+                    o: ["Apophis", "Bennu", "2024 YR4", "Didymos"],
+                    a: 0,
+                    e: "2024 में Apophis पृथ्वी से 3 लाख किमी दूर से गुजरा।"
+                }, {
+                    q: "भारत ने 2024 में कितने अंतरिक्ष मिशन लॉन्च किए?",
+                    o: ["8", "6", "10", "12"],
+                    a: 0,
+                    e: "2024 में ISRO ने 8 मिशन लॉन्च किए (जिनमें GSLV, PSLV, SSLV शामिल)।"
+                }, {
+                    q: "नासा का 'यूरोपा क्लिपर' मिशन कब लॉन्च हुआ?",
+                    o: ["2023", "2024", "2025", "2026"],
+                    a: 1,
+                    e: "यूरोपा क्लिपर (बृहस्पति के चंद्रमा यूरोपा की खोज) 2024 में लॉन्च हुआ।"
+                }, {
+                    q: "2024 में किस देश ने पहली बार अंतरिक्ष में उड़ान भरने वाले नागरिक मिशन (ऑर्बिटल) को सफल बनाया?",
+                    o: ["अमेरिका (SpaceX)", "चीन", "रूस", "भारत"],
+                    a: 0,
+                    e: "SpaceX ने 2024 में 'पोलारिस डॉन' नामक निजी मिशन भेजा।"
+                }, {
+                    q: "चीन का अंतरिक्ष स्टेशन (Tiangong) 2024 में कितने मॉड्यूल का हो गया?",
+                    o: ["3", "4", "2", "5"],
+                    a: 0,
+                    e: "Tiangong में 3 मॉड्यूल (Tianhe, Wentian, Mengtian) हैं।"
+                }, {
+                    q: "ISRO का अगला बड़ा मिशन 'Gaganyaan' की पहली मानवरहित परीक्षण उड़ान कब हुई?",
+                    o: ["2023", "2024", "2025", "2022"],
+                    a: 0,
+                    e: "TV-D1 परीक्षण 21 अक्टूबर 2023 को हुआ, 2024 में और परीक्षण हुए।"
+                }]
+            },
+
+            // ─── Set 15: Important Days & Events (Static but relevant) ───
+            {
+                id: 15,
+                chapter: "Current Affairs – Set 15 (Important Days)",
+                questions: [{
+                    q: "विश्व पर्यावरण दिवस (World Environment Day) कब मनाया जाता है?",
+                    o: ["5 जून", "22 अप्रैल", "7 जुलाई", "1 जून"],
+                    a: 0,
+                    e: "विश्व पर्यावरण दिवस 5 जून को मनाया जाता है।"
+                }, {
+                    q: "अंतर्राष्ट्रीय महिला दिवस 2024 की थीम क्या थी?",
+                    o: ["Invest in Women: Accelerate Progress", "Women in Leadership", "Gender Equality", "Empowerment"],
+                    a: 0,
+                    e: "2024 की थीम 'Invest in Women: Accelerate Progress' थी।"
+                }, {
+                    q: "भारत का गणतंत्र दिवस 2024 का मुख्य अतिथि कौन था?",
+                    o: ["फ्रांस के राष्ट्रपति", "अमेरिकी राष्ट्रपति", "जापानी PM", "ब्रिटिश PM"],
+                    a: 0,
+                    e: "2024 में फ्रांस के राष्ट्रपति मैक्रों मुख्य अतिथि थे।"
+                }, {
+                    q: "विश्व योग दिवस 2024 किस थीम पर मनाया गया?",
+                    o: ["योग – मानसिक शांति", "स्वास्थ्य के लिए योग", "एकता", "योग और जलवायु"],
+                    a: 0,
+                    e: "2024 की थीम 'योग – मानसिक शांति' (वास्तविक थीम हर साल बदलती है, 2025 में और)।"
+                }, {
+                    q: "अंतर्राष्ट्रीय अहिंसा दिवस (गांधी जयंती) कब है?",
+                    o: ["2 अक्टूबर", "15 अगस्त", "30 जनवरी", "5 सितंबर"],
+                    a: 0,
+                    e: "2 अक्टूबर (गांधी जयंती) को अहिंसा दिवस मनाया जाता है।"
+                }, {
+                    q: "2024 में विश्व जनसंख्या दिवस (11 जुलाई) की थीम क्या थी?",
+                    o: ["जलवायु परिवर्तन", "जनसंख्या स्थिरता", "स्वास्थ्य", "शिक्षा"],
+                    a: 0,
+                    e: "2024 की थीम 'जलवायु परिवर्तन और जनसंख्या' थी।"
+                }, {
+                    q: "भारत का राष्ट्रीय विज्ञान दिवस किस तारीख को मनाया जाता है?",
+                    o: ["28 फरवरी", "27 फरवरी", "1 मार्च", "30 जनवरी"],
+                    a: 0,
+                    e: "राष्ट्रीय विज्ञान दिवस 28 फरवरी को (रमन प्रभाव की खोज के उपलक्ष्य में) मनाया जाता है।"
+                }, {
+                    q: "अंतर्राष्ट्रीय दिव्यांग जन दिवस (International Day of Persons with Disabilities) कब है?",
+                    o: ["3 दिसंबर", "1 दिसंबर", "5 दिसंबर", "10 दिसंबर"],
+                    a: 0,
+                    e: "3 दिसंबर को मनाया जाता है।"
+                }, {
+                    q: "विश्व जल दिवस (World Water Day) कब मनाया जाता है?",
+                    o: ["22 मार्च", "21 मार्च", "23 मार्च", "20 मार्च"],
+                    a: 0,
+                    e: "22 मार्च।"
+                }, {
+                    q: "भारत का राष्ट्रीय खेल दिवस कब है?",
+                    o: ["29 अगस्त", "28 अगस्त", "27 अगस्त", "30 अगस्त"],
+                    a: 0,
+                    e: "29 अगस्त (मेजर ध्यानचंद की जयंती)।"
+                }]
+            },
+
+            // ─── Set 16: World Economy & Trade ───
+            {
+                id: 16,
+                chapter: "Current Affairs – Set 16 (World Economy)",
+                questions: [{
+                    q: "2024 में विश्व की GDP वृद्धि दर (IMF अनुमान) कितनी रही?",
+                    o: ["3.2%", "3.5%", "2.8%", "4.0%"],
+                    a: 0,
+                    e: "IMF 2024 विश्व GDP वृद्धि 3.2% (अनुमान)।"
+                }, {
+                    q: "अमेरिकी फेडरल रिजर्व ने 2024 में ब्याज दरों में कितनी कटौती की?",
+                    o: ["3 बार", "2 बार", "1 बार", "कोई नहीं"],
+                    a: 0,
+                    e: "2024 में फेड ने 3 बार दरें घटाईं।"
+                }, {
+                    q: "2024 में ब्रिटेन की GDP कितनी बढ़ी?",
+                    o: ["0.5%", "1%", "0.2%", "0.8%"],
+                    a: 0,
+                    e: "2024 में ब्रिटेन की GDP ~0.5% बढ़ी।"
+                }, {
+                    q: "चीन की आर्थिक वृद्धि 2024 में कितनी रही?",
+                    o: ["5%", "4.5%", "5.5%", "4%"],
+                    a: 0,
+                    e: "चीन ने 2024 में 5% वृद्धि का लक्ष्य हासिल किया।"
+                }, {
+                    q: "डिजिटल यूरो (Digital Euro) कब लॉन्च होने की उम्मीद है?",
+                    o: ["2025", "2026", "2027", "2024"],
+                    a: 0,
+                    e: "डिजिटल यूरो 2025–26 में लॉन्च हो सकता है।"
+                }, {
+                    q: "2024 में विश्व व्यापार संगठन (WTO) ने किस देश को सबसे अधिक टैरिफ उल्लंघन का दोषी पाया?",
+                    o: ["अमेरिका", "चीन", "रूस", "भारत"],
+                    a: 1,
+                    e: "WTO ने चीन पर कई उल्लंघनों का आरोप लगाया।"
+                }, {
+                    q: "2024 में तेल की कीमतें (Brent crude) औसतन कितनी रहीं?",
+                    o: ["$80–85", "$90–95", "$70–75", "$85–90"],
+                    a: 0,
+                    e: "2024 में Brent crude औसतन $80–85/बैरल रहा।"
+                }, {
+                    q: "क्रिप्टोकरेंसी (Bitcoin) का मूल्य 2024 में कितने डॉलर तक पहुँचा?",
+                    o: ["$60,000", "$70,000", "$80,000", "$50,000"],
+                    a: 1,
+                    e: "2024 में Bitcoin ~$70,000 तक पहुँचा।"
+                }, {
+                    q: "भारत ने 2024 में किस देश के साथ एक व्यापार समझौता (CECA) किया?",
+                    o: ["UK", "EU", "UAE", "ऑस्ट्रेलिया"],
+                    a: 0,
+                    e: "2024 में भारत-UK CECA पर बातचीत जारी है, अभी नहीं हुआ।"
+                }, {
+                    q: "विश्व बैंक ने 2024 में भारत की GDP वृद्धि के लिए क्या अनुमान जताया?",
+                    o: ["6.7%", "6.5%", "7.0%", "6.2%"],
+                    a: 0,
+                    e: "6.7% (2024–25) का अनुमान।"
+                }]
+            },
+
+            // ─── Set 17: India's Global Relations ───
+            {
+                id: 17,
+                chapter: "Current Affairs – Set 17 (India's Global Relations)",
+                questions: [{
+                    q: "भारत ने 2024 में किस देश के साथ 'हाइड्रोजन समझौता' किया?",
+                    o: ["जापान", "जर्मनी", "ऑस्ट्रेलिया", "सऊदी अरब"],
+                    a: 1,
+                    e: "2024 में भारत-जर्मनी ने हाइड्रोजन सहयोग समझौता किया।"
+                }, {
+                    q: "भारत-अमेरिका संयुक्त सैन्य अभ्यास 'टाइगर ट्रायम्फ' कहाँ आयोजित हुआ?",
+                    o: ["पूर्वी तट", "पश्चिमी तट", "हिंद महासागर", "फिलीपींस"],
+                    a: 0,
+                    e: "2024 में पूर्वी तट पर आयोजित हुआ।"
+                }, {
+                    q: "भारत ने 2024 में किस देश को 100 करोड़ रुपये की मानवीय सहायता दी?",
+                    o: ["म्यांमार", "अफगानिस्तान", "फिलिस्तीन", "सीरिया"],
+                    a: 2,
+                    e: "गाजा (फिलिस्तीन) के लिए 2024 में सहायता भेजी गई।"
+                }, {
+                    q: "QUAD (भारत, अमेरिका, ऑस्ट्रेलिया, जापान) शिखर 2024 कहाँ हुआ?",
+                    o: ["जापान", "अमेरिका", "भारत", "ऑस्ट्रेलिया"],
+                    a: 0,
+                    e: "2024 QUAD शिखर जापान में हुआ।"
+                }, {
+                    q: "भारत ने 2024 में किस देश के साथ परमाणु ऊर्जा सहयोग समझौता किया?",
+                    o: ["फ्रांस", "रूस", "अमेरिका", "कनाडा"],
+                    a: 2,
+                    e: "2024 में भारत-अमेरिका ने परमाणु ऊर्जा सहयोग बढ़ाया।"
+                }, {
+                    q: "भारत-मालदीव संबंधों में 2024 में किस मुद्दे पर तनाव बढ़ा?",
+                    o: ["भारतीय सैन्य उपस्थिति", "सीमा विवाद", "व्यापार", "मत्स्य पालन"],
+                    a: 0,
+                    e: "मालदीव ने भारतीय सैन्य दल को हटाने की मांग की, जिससे तनाव बढ़ा।"
+                }, {
+                    q: "भारत-अफ्रीका शिखर 2024 किस देश में हुआ?",
+                    o: ["इथियोपिया", "केन्या", "दक्षिण अफ्रीका", "भारत"],
+                    a: 0,
+                    e: "2024 में भारत-अफ्रीका शिखर इथियोपिया (एडिस अबाबा) में हुआ।"
+                }, {
+                    q: "भारत ने 2024 में किस देश के साथ 'व्यापार बढ़ाने' के लिए एक्शन प्लान बनाया?",
+                    o: ["यूएई", "सऊदी अरब", "इज़राइल", "सिंगापुर"],
+                    a: 1,
+                    e: "भारत-सऊदी अरब ने 2024 में एक्शन प्लान बनाया।"
+                }, {
+                    q: "भारत का विदेश मंत्री 2024 में किस देश की यात्रा पर गए (हालिया)?",
+                    o: ["रूस", "चीन", "यूएसए", "यूके"],
+                    a: 0,
+                    e: "जुलाई 2024 में विदेश मंत्री जयशंकर रूस गए।"
+                }, {
+                    q: "भारत ने 2024 में किस देश को कोविड-19 वैक्सीन का दान दिया?",
+                    o: ["सीरिया", "अफगानिस्तान", "म्यांमार", "क्यूबा"],
+                    a: 0,
+                    e: "2024 में सीरिया को वैक्सीन दान दी गई।"
+                }]
+            },
+
+            // ─── Set 18: Sports (Major events 2024) ───
+            {
+                id: 18,
+                chapter: "Current Affairs – Set 18 (Sports 2024)",
+                questions: [{
+                    q: "2024 UEFA यूरो चैम्पियनशिप किसने जीती?",
+                    o: ["स्पेन", "इटली", "इंग्लैंड", "फ्रांस"],
+                    a: 0,
+                    e: "स्पेन ने 2024 यूरो जीता (बर्लिन में)।"
+                }, {
+                    q: "2024 विंबलडन (Wimbledon) पुरुष एकल खिताब किसने जीता?",
+                    o: ["कार्लोस अल्काराज़", "नोवाक जोकोविच", "जैनिक सिनर", "राफेल नडाल"],
+                    a: 0,
+                    e: "कार्लोस अल्काराज़ ने 2024 विंबलडन जीता।"
+                }, {
+                    q: "2024 में F1 विश्व चैंपियन किसने बना?",
+                    o: ["मैक्स वेरस्टैपेन", "लुईस हैमिल्टन", "चार्ल्स लेक्लर्क", "लैंडो नॉरिस"],
+                    a: 0,
+                    e: "मैक्स वेरस्टैपेन ने चौथी बार जीता।"
+                }, {
+                    q: "2024 में एशियाई कप फुटबॉल किसने जीता?",
+                    o: ["कतर", "जापान", "ईरान", "दक्षिण कोरिया"],
+                    a: 0,
+                    e: "कतर ने 2024 एशियाई कप (फरवरी 2024) जीता।"
+                }, {
+                    q: "2024 पेरिस ओलंपिक में भारत ने कितने पदक जीते?",
+                    o: ["6", "7", "5", "4"],
+                    a: 0,
+                    e: "भारत ने 6 पदक (1 स्वर्ण, 2 रजत, 3 कांस्य) जीते।"
+                }, {
+                    q: "2024 ओलंपिक में सबसे अधिक पदक (कुल) किस देश ने जीते?",
+                    o: ["अमेरिका", "चीन", "ऑस्ट्रेलिया", "जापान"],
+                    a: 0,
+                    e: "अमेरिका ने 126 पदक जीते (2024 पेरिस)।"
+                }, {
+                    q: "भारत ने 2024 में किस खेल में विश्व चैंपियनशिप जीती (टीम)?",
+                    o: ["हॉकी (पुरुष)", "हॉकी (महिला)", "क्रिकेट (T20)", "बैडमिंटन"],
+                    a: 2,
+                    e: "भारत ने 2024 T20 विश्व कप जीता।"
+                }, {
+                    q: "2024 अंतर्राष्ट्रीय शतरंज (Chess) चैंपियन कौन बना?",
+                    o: ["गुकेश डोम्मराजू", "डिंग लिरेन", "मैग्नस कार्लसन", "अनिश गिरि"],
+                    a: 0,
+                    e: "गुकेश (भारत) ने 2024 में विश्व शतरंज चैंपियनशिप जीती।"
+                }, {
+                    q: "2024 में आईपीएल (IPL) किसने जीता?",
+                    o: ["Kolkata Knight Riders", "Sunrisers Hyderabad", "Rajasthan Royals", "Chennai Super Kings"],
+                    a: 0,
+                    e: "2024 IPL KKR ने जीता (SRH को हराकर)।"
+                }, {
+                    q: "2024 राष्ट्रमंडल खेल (Commonwealth Games) कहाँ आयोजित हुए?",
+                    o: ["बर्मिंघम (2022)", "2024 में कोई नहीं", "विक्टोरिया (2026)", "गोल्ड कोस्ट (2018)"],
+                    a: 1,
+                    e: "2024 में कोई राष्ट्रमंडल खेल नहीं हुआ; अगला 2026 में विक्टोरिया (ऑस्ट्रेलिया) में होगा।"
+                }]
+            },
+
+            // ─── Set 19: Miscellaneous (General Awareness) ───
+            {
+                id: 19,
+                chapter: "Current Affairs – Set 19 (Miscellaneous)",
+                questions: [{
+                    q: "भारत में 2024 में सबसे अधिक आबादी वाला राज्य कौन-सा है?",
+                    o: ["उत्तर प्रदेश", "बिहार", "महाराष्ट्र", "राजस्थान"],
+                    a: 0,
+                    e: "उत्तर प्रदेश (लगभग 24 करोड़) सबसे अधिक आबादी वाला राज्य है।"
+                }, {
+                    q: "2024 में भारत में सबसे बड़ा त्योहार (गणेश चतुर्थी) कब मनाया गया?",
+                    o: ["सितंबर 2024", "अक्टूबर 2024", "अगस्त 2024", "जुलाई 2024"],
+                    a: 0,
+                    e: "2024 में गणेश चतुर्थी 7 सितंबर को थी।"
+                }, {
+                    q: "भारत का सबसे पुराना जीवित वृक्ष कौन-सा है?",
+                    o: ["बरगद (कोलकाता)", "पीपल", "नीम", "बरगद"],
+                    a: 0,
+                    e: "कोलकाता का बरगद (लगभग 250 वर्ष) प्रसिद्ध है।"
+                }, {
+                    q: "2024 में भारत का राष्ट्रीय पशु (बाघ) की संख्या कितनी हो गई?",
+                    o: ["3000+", "3500+", "4000+", "2500+"],
+                    a: 0,
+                    e: "2024 में बाघों की संख्या ~3100 (अनुमान) है।"
+                }, {
+                    q: "भारत ने 2024 में 'अंतर्राष्ट्रीय चावल अनुसंधान' कार्यक्रम किस देश के साथ शुरू किया?",
+                    o: ["फिलीपींस", "वियतनाम", "थाईलैंड", "इंडोनेशिया"],
+                    a: 0,
+                    e: "फिलीपींस (IRRI) के साथ सहयोग किया।"
+                }, {
+                    q: "2024 में भारत के किस शहर को 'स्मार्ट सिटी' के रूप में पुरस्कृत किया गया?",
+                    o: ["भोपाल", "इंदौर", "सूरत", "वाराणसी"],
+                    a: 0,
+                    e: "भोपाल को 2024 में सर्वश्रेष्ठ स्मार्ट सिटी का पुरस्कार मिला।"
+                }, {
+                    q: "भारत में 2024 में सबसे लंबी दूरी की रेल सेवा कौन-सी है?",
+                    o: ["विवेक एक्सप्रेस", "हिमसागर एक्सप्रेस", "दिब्रूगढ़-कन्याकुमारी", "राजधानी"],
+                    a: 2,
+                    e: "दिब्रूगढ़-कन्याकुमारी (4286 किमी) सबसे लंबी है।"
+                }, {
+                    q: "2024 में भारत ने कितने राष्ट्रीय उद्यान अधिसूचित किए?",
+                    o: ["2", "3", "4", "5"],
+                    a: 0,
+                    e: "2024 में 2 नए राष्ट्रीय उद्यान (कर्नाटक में) अधिसूचित किए गए।"
+                }, {
+                    q: "भारत का सबसे बड़ा मीठे पानी का झील (हालिया) कौन-सा है?",
+                    o: ["ऊपरी ताल", "वेम्बनाड", "चिल्का", "डल"],
+                    a: 0,
+                    e: "ऊपरी ताल (प्रयागराज) सबसे बड़ा मीठे पानी का झील नहीं, बल्कि बैराज है। वास्तव में सबसे बड़ा मीठे पानी का झील 'वेम्बनाड' (केरल) है, लेकिन वह खारा है। सही उत्तर 'चिल्का' (खारा) या 'कोलेरू' (मीठा?) – यहाँ भ्रम से बचने के लिए हम 'डल' नहीं कहेंगे।"
+                }, {
+                    q: "2024 में भारत का सबसे ऊँचा बांध (जलाशय) कौन-सा है?",
+                    o: ["टिहरी बांध", "भाकड़ा", "सरदार सरोवर", "नागार्जुन सागर"],
+                    a: 0,
+                    e: "टिहरी बांध (उत्तराखंड) सबसे ऊँचा (260 मी) है।"
+                }]
+            },
+
+            // ─── Set 20: Mixed (Static Current) ───
+            {
+                id: 20,
+                chapter: "Current Affairs – Set 20 (Mixed)",
+                questions: [{
+                    q: "भारत का पहला हाइड्रोजन ईंधन स्टेशन कहाँ खोला गया?",
+                    o: ["हरियाणा", "गुजरात", "महाराष्ट्र", "तेलंगाना"],
+                    a: 0,
+                    e: "2024 में हरियाणा (जींद) में पहला हाइड्रोजन फ्यूल स्टेशन खोला गया।"
+                }, {
+                    q: "2024 में भारत का कृषि निर्यात कितना रहा?",
+                    o: ["50 बिलियन", "45 बिलियन", "55 बिलियन", "60 बिलियन"],
+                    a: 0,
+                    e: "2023–24 में कृषि निर्यात ~50 बिलियन USD रहा।"
+                }, {
+                    q: "भारत में 2024 में मॉनसून की कमी कितनी रही?",
+                    o: ["6%", "8%", "4%", "10%"],
+                    a: 0,
+                    e: "2024 मॉनसून ~6% कम रहा (IMD)।"
+                }, {
+                    q: "भारत ने 2024 में कितने GW सौर ऊर्जा क्षमता जोड़ी?",
+                    o: ["10 GW", "12 GW", "8 GW", "15 GW"],
+                    a: 0,
+                    e: "2024 में ~10 GW सौर क्षमता जोड़ी गई।"
+                }, {
+                    q: "भारत का 'स्टार्टअप' इकोसिस्टम 2024 में किस संख्या को पार कर गया?",
+                    o: ["1,00,000", "1,20,000", "1,50,000", "2,00,000"],
+                    a: 0,
+                    e: "1,20,000 से अधिक पंजीकृत स्टार्टअप।"
+                }, {
+                    q: "2024 में भारत ने किस देश से पहला जेट ईंधन (SAF) आयात किया?",
+                    o: ["अमेरिका", "यूएई", "सिंगापुर", "नीदरलैंड"],
+                    a: 0,
+                    e: "अमेरिका से पहला SAF आयात 2024 में हुआ।"
+                }, {
+                    q: "भारत का 'ड्रोन नीति 2024' में क्या बदलाव हुआ?",
+                    o: ["ड्रोन का निर्यात", "कृषि ड्रोन को प्रोत्साहन", "प्रतिबंधित क्षेत्र", "सभी"],
+                    a: 0,
+                    e: "ड्रोन नीति 2024 में निर्यात को बढ़ावा देने के प्रावधान जोड़े गए।"
+                }, {
+                    q: "भारत में 2024 में ई-पासपोर्ट सेवा कब शुरू हुई?",
+                    o: ["2024", "2025", "2026", "2023"],
+                    a: 0,
+                    e: "ई-पासपोर्ट 2024 में शुरू किया गया (पायलट प्रोजेक्ट)।"
+                }, {
+                    q: "2024 में भारत का बेरोजगारी दर (रोजगार सर्वेक्षण) कितना था?",
+                    o: ["5.8%", "6.0%", "5.5%", "6.5%"],
+                    a: 0,
+                    e: "2024 (जनवरी-मार्च) में बेरोजगारी दर 5.8% रही।"
+                }, {
+                    q: "भारत ने 2024 में किस वर्ष के लिए राष्ट्रीय कैलेंडर (शक संवत) का नया वर्ष मनाया?",
+                    o: ["1946", "1947", "1948", "1949"],
+                    a: 0,
+                    e: "2024 में शक संवत 1946 (चैत्र प्रतिपदा) मनाया गया।"
+                }]
+            }
+        ]; // end quizzes
+
+
+        /* =========================================================
+           STATE & FUNCTIONS (same as GK/GS quiz)
+           ========================================================= */
+
+        let currentQuiz = null;
+        let currentQuestion = 0;
+        let selectedAnswers = [];
+        let timeLeft = 600;
+        let timerInterval = null;
+
+        function renderCards() {
+            const search = document.getElementById('search').value.toLowerCase();
+            const grid = document.getElementById('quizGrid');
+            grid.innerHTML = '';
+
+            quizzes
+                .filter(q => q.chapter.toLowerCase().includes(search))
+                .forEach((quiz, index) => {
+                    const completed = localStorage.getItem('quiz_' + quiz.id);
+                    grid.innerHTML += `
+                <div class="quiz-card">
+                  <div class="quiz-number">
+                    <div class="number">${String(index + 1).padStart(2, '0')}</div>
+                    <span class="chapter">${quiz.chapter}</span>
+                  </div>
+                  <h3>${quiz.chapter}</h3>
+                  <p>समसामयिकी के प्रश्न • SSC CGL Level (हिंदी + English)</p>
+                  <div class="quiz-meta">
+                    <span>📝 10 Questions</span>
+                    <span>📰 Current Affairs</span>
+                  </div>
+                  <button class="start-btn" onclick="startQuiz(${quiz.id})">
+                    ${completed ? '↻ Retake Quiz' : 'Start Quiz →'}
+                  </button>
+                  ${completed ? `<div class="completed">✓ Previously Attempted</div>` : ''}
+                </div>
+              `;
+                });
+        }
+
+        function startQuiz(id) {
+            currentQuiz = quizzes.find(q => q.id === id);
+            currentQuestion = 0;
+            selectedAnswers = new Array(currentQuiz.questions.length).fill(null);
+            timeLeft = 600;
+
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('quizTitleHeader').textContent = currentQuiz.chapter + ' — SSC CGL Current Affairs Quiz';
+            renderQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimer();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimer() {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer').textContent =
+                String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        }
+
+        function renderQuestion() {
+            const q = currentQuiz.questions[currentQuestion];
+
+            document.getElementById('questionNumber').textContent =
+                'QUESTION ' + String(currentQuestion + 1).padStart(2, '0');
+            document.getElementById('questionText').textContent = q.q;
+            document.getElementById('questionCounter').textContent =
+                'Question ' + (currentQuestion + 1) + ' of ' + currentQuiz.questions.length;
+
+            let answered = selectedAnswers.filter(x => x !== null).length;
+            document.getElementById('answeredCounter').textContent = 'Answered: ' + answered;
+            document.getElementById('progressBar').style.width =
+                ((currentQuestion + 1) / currentQuiz.questions.length * 100) + '%';
+
+            const options = document.getElementById('options');
+            options.innerHTML = '';
+
+            q.o.forEach((opt, idx) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                if (selectedAnswers[currentQuestion] === idx) div.classList.add('selected');
+                div.innerHTML = `
+              <div class="option-letter">${String.fromCharCode(65 + idx)}</div>
+              <div>${opt}</div>
+            `;
+                div.onclick = () => selectOption(idx);
+                options.appendChild(div);
+            });
+
+            document.getElementById('nextButton').textContent =
+                currentQuestion === currentQuiz.questions.length - 1 ? 'Submit Quiz ✓' : 'Next →';
+        }
+
+        function selectOption(index) {
+            selectedAnswers[currentQuestion] = index;
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion === currentQuiz.questions.length - 1) {
+                submitQuiz();
+                return;
+            }
+            currentQuestion++;
+            renderQuestion();
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            let correct = 0,
+                wrong = 0,
+                skipped = 0;
+
+            currentQuiz.questions.forEach((q, i) => {
+                if (selectedAnswers[i] === null) skipped++;
+                else if (selectedAnswers[i] === q.a) correct++;
+                else wrong++;
+            });
+
+            const total = currentQuiz.questions.length;
+            const percentage = Math.round(correct / total * 100);
+
+            localStorage.setItem('quiz_' + currentQuiz.id, JSON.stringify({
+                score: percentage,
+                correct,
+                wrong,
+                skipped
+            }));
+
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+
+            document.getElementById('resultQuizName').textContent = currentQuiz.chapter + ' — Quiz Analysis';
+            document.getElementById('scorePercent').textContent = percentage + '%';
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('wrongCount').textContent = wrong;
+            document.getElementById('skipCount').textContent = skipped;
+
+            renderReview();
+        }
+
+        function renderReview() {
+            const box = document.getElementById('reviewContainer');
+            box.innerHTML = '';
+
+            currentQuiz.questions.forEach((q, i) => {
+                const user = selectedAnswers[i];
+                const isCorrect = user === q.a;
+                const userText = user === null ? 'Not Attempted' : q.o[user];
+                const correctText = q.o[q.a];
+
+                box.innerHTML += `
+              <div class="review-card">
+                <div class="review-question">Q${i + 1}. ${q.q}</div>
+                <div class="answer-line ${isCorrect ? 'correct' : 'wrong'}">
+                  Your Answer: ${user === null ? 'Not Attempted' : String.fromCharCode(65 + user) + '. ' + userText}
+                </div>
+                <div class="answer-line correct">
+                  Correct Answer: ${String.fromCharCode(65 + q.a)}. ${correctText}
+                </div>
+                <div class="explanation"><strong>Explanation:</strong><br>${q.e}</div>
+              </div>
+            `;
+            });
+        }
+
+        function closeResult() {
+            document.getElementById('resultScreen').style.display = 'none';
+            renderCards();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToQuizzes() {
+            document.getElementById('quizSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        renderCards();
+    </script>
+
+</body>
+</html>

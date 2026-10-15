@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASI Computer – Advanced Computer & Technical Preparation</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #6f42c1;
+            --accent-light: #a78bfa;
+            --accent-dark: #5b21b6;
+            --accent-gradient: linear-gradient(135deg, #5b21b6, #6f42c1);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(111, 66, 193, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #6f42c1;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #6f42c1; --accent-light: #a78bfa; --accent-dark: #5b21b6; --accent-gradient: linear-gradient(135deg, #5b21b6, #6f42c1); --glow: 0 0 30px rgba(111,66,193,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(111,66,193,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.purple { background:#6f42c1; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(111,66,193,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(111,66,193,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(111,66,193,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(111,66,193,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(111,66,193,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(111,66,193,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+
+        .info { background:rgba(111,66,193,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(111,66,193,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(111,66,193,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(111,66,193,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(111,66,193,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:12px 18px; }
+        .option { padding:6px 10px; border-bottom:1px dashed var(--border-color); color:var(--text-secondary); }
+        .option:last-child { border-bottom:none; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(111,66,193,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(111,66,193,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(111,66,193,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(111,66,193,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">🛡️ ASI COMPUTER – Advanced Computer & Technical Preparation • Advanced Concepts • Networking • Cyber Security • Technical MCQs • 250+ Practice Questions • UP Police ASI, SSC, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">🛡️</div>
+                <div><h1>ASI COMPUTER</h1><span>Advanced Computer & Technical</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot purple active" data-color="purple" title="Purple (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🛡️ ASI COMPUTER – SAMPOORNA</div>
+            <h2>ASI स्तर कंप्यूटर <strong>संपूर्ण अध्ययन</strong><br>Advanced Computer • Networking • Cyber • Technical MCQs</h2>
+            <div class="subtitle">UP Police ASI • Computer Operator • SSC • Technical Exams • Advanced Concepts + 250+ MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics</span>
+                <span>📌 250+ MCQs</span>
+                <span>🎯 Advanced Level</span>
+                <span>🛡️ ASI Focus</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>250+</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>Advanced Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Technical Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Advanced Computer</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> Networking</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> Cyber Security</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Technical MCQs</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Open Preparation</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: ADVANCED COMPUTER ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>Advanced Computer – उन्नत कंप्यूटर अवधारणाएँ</h3></div>
+                <p><strong>Advanced Computer Concepts</strong> ASI स्तर की परीक्षा के लिए अत्यंत महत्वपूर्ण हैं। यहाँ कंप्यूटर आर्किटेक्चर, मेमोरी प्रबंधन, प्रोसेसर, डेटा संरचना, एल्गोरिदम, सॉफ्टवेयर इंजीनियरिंग, डेटाबेस प्रबंधन प्रणाली (DBMS), ऑपरेटिंग सिस्टम के गहन पहलुओं, कंप्यूटर भाषाओं की उन्नत विशेषताओं, डेटा एन्क्रिप्शन, कंप्यूटर ग्राफ़िक्स, AI/ML बुनियादी अवधारणाएँ, क्लाउड कंप्यूटिंग के प्रकार, वर्चुअलाइजेशन, कंटेनरीकरण, आदि पर चर्चा की गई है।</p>
+
+                <h4>🔹 कंप्यूटर आर्किटेक्चर</h4>
+                <ul>
+                    <li><strong>हार्वर्ड आर्किटेक्चर:</strong> डेटा और निर्देशों के लिए अलग-अलग मेमोरी बसें – तेज़ प्रसंस्करण।</li>
+                    <li><strong>वॉन न्यूमैन आर्किटेक्चर:</strong> डेटा और निर्देश एक ही मेमोरी में – सरल, लागत प्रभावी।</li>
+                    <li><strong>RISC (Reduced Instruction Set Computer):</strong> कम निर्देश, तेज़, सरल – ARM, MIPS।</li>
+                    <li><strong>CISC (Complex Instruction Set Computer):</strong> अधिक निर्देश, जटिल – x86 (Intel, AMD)।</li>
+                </ul>
+
+                <h4>🔹 मेमोरी प्रबंधन</h4>
+                <ul>
+                    <li><strong>कैश मेमोरी:</strong> L1, L2, L3 – CPU के निकट, सबसे तेज़, छोटी क्षमता।</li>
+                    <li><strong>वर्चुअल मेमोरी:</strong> हार्ड डिस्क का उपयोग RAM की तरह – पेजिंग, स्वैपिंग।</li>
+                    <li><strong>SRAM (Static RAM):</strong> तेज़, महंगी, कैश में प्रयोग।</li>
+                    <li><strong>DRAM (Dynamic RAM):</strong> धीमी, सस्ती, मुख्य मेमोरी में प्रयोग।</li>
+                </ul>
+
+                <h4>🔹 प्रोसेसर (CPU)</h4>
+                <ul>
+                    <li><strong>ALU (Arithmetic Logic Unit):</strong> अंकगणितीय एवं तार्किक संक्रियाएँ।</li>
+                    <li><strong>CU (Control Unit):</strong> निर्देशों का डिकोडिंग एवं नियंत्रण सिग्नल।</li>
+                    <li><strong>पाइपलाइनिंग (Pipelining):</strong> एक साथ कई निर्देशों पर कार्य – गति बढ़ाती है।</li>
+                    <li><strong>सुपरस्केलर (Superscalar):</strong> एक साथ कई निर्देशों का निष्पादन।</li>
+                    <li><strong>मल्टी-कोर प्रोसेसर:</strong> एक CPU में कई कोर – समानांतर प्रसंस्करण।</li>
+                </ul>
+
+                <h4>🔹 डेटा संरचना (Data Structures)</h4>
+                <ul>
+                    <li><strong>Array, Stack, Queue, Linked List, Tree, Graph, Hash Table</strong> – डेटा संगठन एवं संचालन।</li>
+                    <li><strong>Big-O Notation:</strong> एल्गोरिदम की जटिलता मापन – O(1), O(n), O(log n), O(n²), O(2ⁿ)।</li>
+                </ul>
+
+                <h4>🔹 ऑपरेटिंग सिस्टम (गहन)</h4>
+                <ul>
+                    <li><strong>प्रोसेस शेड्यूलिंग:</strong> FCFS, SJF, Round Robin, Priority Scheduling।</li>
+                    <li><strong>डेडलॉक (Deadlock):</strong> प्रोसेसों का परस्पर प्रतीक्षा – Avoidance, Prevention, Detection।</li>
+                    <li><strong>सेमाफोर (Semaphore):</strong> प्रोसेस सिंक्रोनाइज़ेशन।</li>
+                    <li><strong>फाइल सिस्टम:</strong> FAT, NTFS, ext4, HFS+।</li>
+                </ul>
+
+                <h4>🔹 DBMS (डेटाबेस प्रबंधन प्रणाली)</h4>
+                <ul>
+                    <li><strong>RDBMS:</strong> MySQL, PostgreSQL, Oracle, SQL Server – टेबल, रिलेशन, SQL।</li>
+                    <li><strong>NoSQL:</strong> MongoDB (Document), Cassandra (Column), Redis (Key-Value), Neo4j (Graph)।</li>
+                    <li><strong>ACID गुण:</strong> Atomicity, Consistency, Isolation, Durability – लेनदेन की विश्वसनीयता।</li>
+                    <li><strong>Normalization:</strong> 1NF, 2NF, 3NF, BCNF – डेटा अतिरेक कम करना।</li>
+                </ul>
+
+                <h4>🔹 क्लाउड कंप्यूटिंग (गहन)</h4>
+                <ul>
+                    <li><strong>IaaS:</strong> AWS EC2, Azure VMs – Infrastructure</li>
+                    <li><strong>PaaS:</strong> AWS Elastic Beanstalk, Google App Engine – Platform</li>
+                    <li><strong>SaaS:</strong> Google Workspace, Salesforce – Software</li>
+                    <li><strong>Public Cloud, Private Cloud, Hybrid Cloud, Multi-Cloud</strong></li>
+                </ul>
+
+                <div class="info"><strong>💡 महत्वपूर्ण:</strong> ASI परीक्षा में Computer Architecture, Pipelining, Deadlock, Normalization, Cloud Computing के प्रश्न अक्सर पूछे जाते हैं।</div>
+
+                <div id="advanced-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: NETWORKING ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>Networking – एडवांस्ड नेटवर्किंग</h3></div>
+                <p><strong>Advanced Networking</strong> में OSI एवं TCP/IP मॉडल की गहन समझ, रूटिंग प्रोटोकॉल, IP एड्रेसिंग (CIDR, VLSM), नेटवर्क सुरक्षा, VLAN, VPN, नेटवर्क टोपोलॉजीज़, नेटवर्क डिवाइस, सबनेटिंग, सुपरनेटिंग, नेटवर्क प्रोटोकॉल (BGP, OSPF, EIGRP, RIP), DNS, DHCP, NAT, PAT, नेटवर्क परफॉर्मेंस, QoS, नेटवर्क मॉनिटरिंग टूल्स, आदि शामिल हैं।</p>
+
+                <h4>🔹 OSI मॉडल (7 परतें)</h4>
+                <ul>
+                    <li><strong>Physical (भौतिक):</strong> केबल, सिग्नल, बिट्स – RJ45, Ethernet, Fiber</li>
+                    <li><strong>Data Link (डेटा लिंक):</strong> फ्रेम, MAC एड्रेस, स्विच – Ethernet, PPP</li>
+                    <li><strong>Network (नेटवर्क):</strong> IP एड्रेस, रूटिंग, राउटर – IPv4, IPv6, ICMP</li>
+                    <li><strong>Transport (ट्रांसपोर्ट):</strong> TCP (कनेक्शन-उन्मुख), UDP (कनेक्शन रहित) – पोर्ट्स</li>
+                    <li><strong>Session (सत्र):</strong> कनेक्शन प्रबंधन – NetBIOS, RPC</li>
+                    <li><strong>Presentation (प्रेजेंटेशन):</strong> डेटा स्वरूप, एन्क्रिप्शन, कम्प्रेशन – SSL/TLS</li>
+                    <li><strong>Application (एप्लिकेशन):</strong> उपयोगकर्ता इंटरफेस – HTTP, FTP, SMTP, DNS, DHCP</li>
+                </ul>
+
+                <h4>🔹 IP एड्रेसिंग (IPv4, IPv6)</h4>
+                <ul>
+                    <li><strong>IPv4:</strong> 32 बिट, 4 ऑक्टेट – 192.168.1.1</li>
+                    <li><strong>IPv6:</strong> 128 बिट, 8 ग्रुप – 2001:0db8:85a3::8a2e:0370:7334</li>
+                    <li><strong>CIDR (Classless Inter-Domain Routing):</strong> 192.168.1.0/24 – सबनेट मास्क</li>
+                    <li><strong>VLSM (Variable Length Subnet Mask):</strong> अलग-अलग सबनेट्स के लिए अलग-अलग मास्क</li>
+                    <li><strong>सबनेटिंग:</strong> एक नेटवर्क को छोटे-छोटे सबनेट्स में विभाजित करना</li>
+                    <li><strong>NAT (Network Address Translation):</strong> प्राइवेट IP को पब्लिक IP में बदलना</li>
+                    <li><strong>PAT (Port Address Translation):</strong> पोर्ट के साथ NAT – एक IP पर कई डिवाइस</li>
+                </ul>
+
+                <h4>🔹 रूटिंग प्रोटोकॉल</h4>
+                <ul>
+                    <li><strong>RIP (Routing Information Protocol):</strong> दूरी-सदिश, 15 हॉप सीमा, सरल</li>
+                    <li><strong>OSPF (Open Shortest Path First):</strong> लिंक-स्टेट, तेज़, बड़े नेटवर्क</li>
+                    <li><strong>BGP (Border Gateway Protocol):</strong> इंटरनेट का मुख्य रूटिंग प्रोटोकॉल</li>
+                    <li><strong>EIGRP (Enhanced Interior Gateway Routing Protocol):</strong> Cisco का उन्नत प्रोटोकॉल</li>
+                </ul>
+
+                <h4>🔹 नेटवर्क सुरक्षा</h4>
+                <ul>
+                    <li><strong>VPN (Virtual Private Network):</strong> सुरक्षित कनेक्शन – IPSec, OpenVPN, WireGuard</li>
+                    <li><strong>VLAN (Virtual Local Area Network):</strong> लॉजिकल रूप से नेटवर्क को विभाजित करना</li>
+                    <li><strong>DMZ (Demilitarized Zone):</strong> आंतरिक और बाहरी नेटवर्क के बीच बफ़र ज़ोन</li>
+                    <li><strong>Firewall:</strong> नेटवर्क ट्रैफ़िक को फ़िल्टर करना – Packet Filtering, Stateful, Proxy</li>
+                    <li><strong>IDS/IPS:</strong> Intrusion Detection/Prevention System – अज्ञात गतिविधि पहचान/रोक</li>
+                </ul>
+
+                <div class="highlight-box"><strong>💡 महत्वपूर्ण:</strong> ASI परीक्षा में CIDR, VLSM, NAT, OSPF, BGP, VLAN, VPN, Firewall पर प्रश्न अत्यंत महत्वपूर्ण हैं।</div>
+
+                <div id="networking-adv-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: CYBER SECURITY ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>Cyber Security – साइबर सुरक्षा एवं डिजिटल सुरक्षा</h3></div>
+                <p><strong>Cyber Security</strong> आधुनिक युग की सबसे महत्वपूर्ण आवश्यकताओं में से एक है। ASI स्तर पर साइबर सुरक्षा से संबंधित जानकारी – साइबर अपराध के प्रकार, सुरक्षा उपाय, एन्क्रिप्शन, डिजिटल हस्ताक्षर, प्रमाणीकरण, सुरक्षा प्रोटोकॉल, SSL/TLS, हाशिंग, साइबर कानून, IT Act, साइबर अपराधों की रोकथाम, साइबर फोरेंसिक, पेनेट्रेशन टेस्टिंग, सुरक्षा ऑडिट, आपातकालीन प्रतिक्रिया, आदि को शामिल किया गया है।</p>
+
+                <h4>🔹 साइबर अपराध के प्रकार</h4>
+                <ul>
+                    <li><strong>फ़िशिंग (Phishing):</strong> नकली ई-मेल/वेबसाइट द्वारा व्यक्तिगत जानकारी चुराना</li>
+                    <li><strong>रैंसमवेयर (Ransomware):</strong> डेटा को एन्क्रिप्ट करके फिरौती माँगना</li>
+                    <li><strong>मैलवेयर (Malware):</strong> हानिकारक सॉफ्टवेयर – वायरस, वर्म्स, ट्रोजन, Spyware, Adware</li>
+                    <li><strong>DDoS (Distributed Denial of Service):</strong> सर्वर को ट्रैफ़िक से भरकर सेवा बंद करना</li>
+                    <li><strong>मैन-इन-द-मिडल (MITM):</strong> दो पक्षों के बीच संचार को इंटरसेप्ट करना</li>
+                    <li><strong>सोशल इंजीनियरिंग:</strong> मानवीय भावनाओं का शोषण कर जानकारी प्राप्त करना</li>
+                </ul>
+
+                <h4>🔹 एन्क्रिप्शन (Encryption)</h4>
+                <ul>
+                    <li><strong>सिमेट्रिक एन्क्रिप्शन:</strong> एक ही कुंजी (Key) – AES, DES, 3DES</li>
+                    <li><strong>असिमेट्रिक एन्क्रिप्शन:</strong> सार्वजनिक और निजी कुंजी – RSA, ECC</li>
+                    <li><strong>हाशिंग (Hashing):</strong> एकतरफा एल्गोरिदम – MD5, SHA-1, SHA-256, SHA-512</li>
+                    <li><strong>डिजिटल हस्ताक्षर (Digital Signature):</strong> दस्तावेज़/संदेश की प्रामाणिकता सुनिश्चित करना</li>
+                    <li><strong>SSL/TLS:</strong> वेब ब्राउज़र और सर्वर के बीच सुरक्षित कनेक्शन</li>
+                </ul>
+
+                <h4>🔹 प्रमाणीकरण (Authentication)</h4>
+                <ul>
+                    <li><strong>MFA (Multi-Factor Authentication):</strong> दो या अधिक प्रकार के प्रमाणीकरण</li>
+                    <li><strong>2FA (Two-Factor Authentication):</strong> पासवर्ड + OTP/बायोमेट्रिक</li>
+                    <li><strong>बायोमेट्रिक:</strong> फिंगरप्रिंट, आईरिस, फेस रिकग्निशन</li>
+                    <li><strong>OAuth 2.0, SAML, OpenID Connect:</strong> मानक प्रमाणीकरण प्रोटोकॉल</li>
+                </ul>
+
+                <h4>🔹 भारत में साइबर कानून</h4>
+                <ul>
+                    <li><strong>IT Act 2000:</strong> भारत का प्रमुख साइबर कानून – डिजिटल हस्ताक्षर, साइबर अपराध, दंड</li>
+                    <li><strong>IT (Amendment) Act 2008:</strong> साइबर अपराधों की नई श्रेणियाँ, डेटा संरक्षण, GDPR जैसी आवश्यकताएँ</li>
+                    <li><strong>CERT-In:</strong> भारतीय कंप्यूटर इमरजेंसी रिस्पॉन्स टीम</li>
+                    <li><strong>DPDP Act 2023:</strong> डिजिटल पर्सनल डेटा संरक्षण अधिनियम</li>
+                </ul>
+
+                <h4>🔹 सुरक्षा उपाय एवं अच्छी प्रथाएँ</h4>
+                <ul>
+                    <li><strong>मजबूत पासवर्ड:</strong> जटिल एवं अद्वितीय पासवर्ड, पासवर्ड मैनेजर</li>
+                    <li><strong>सॉफ्टवेयर अपडेट:</strong> नियमित पैच प्रबंधन</li>
+                    <li><strong>एंटीवायरस/ईडीआर:</strong> एंडपॉइंट सुरक्षा</li>
+                    <li><strong>ज़ीरो ट्रस्ट आर्किटेक्चर:</strong> कभी विश्वास न करें, हमेशा सत्यापित करें</li>
+                    <li><strong>सुरक्षा जागरूकता प्रशिक्षण:</strong> कर्मचारियों को सुरक्षा जोखिमों के बारे में शिक्षित करना</li>
+                </ul>
+
+                <div class="info"><strong>💡 महत्वपूर्ण:</strong> ASI परीक्षा में IT Act 2000, संशोधन, साइबर अपराधों के प्रकार, एन्क्रिप्शन, CERT-In, DDoS, फ़िशिंग पर प्रश्न पूछे जाते हैं।</div>
+
+                <div id="cyber-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: TECHNICAL MCQs ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Technical MCQs – तकनीकी अभ्यास (Advanced Level)</h3></div>
+                <p>इस अध्याय में ASI स्तर के <strong>उच्च-स्तरीय तकनीकी प्रश्न</strong> दिए गए हैं – जो Data Structures, Algorithms, Operating Systems, DBMS, Computer Architecture, Networking, Cyber Security, Cloud Computing, Software Engineering, Programming Languages (C, C++, Java, Python), SQL, Linux, Scripting, Automation, DevOps, आदि को कवर करते हैं।</p>
+
+                <div id="technical-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: OPEN PREPARATION ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Open Preparation – सामान्य तकनीकी जागरूकता</h3></div>
+                <p><strong>Open Preparation</strong> में ASI परीक्षा के लिए आवश्यक सभी तकनीकी विषयों का मिश्रण – प्रमुख तकनीकी कंपनियाँ, IT क्षेत्र के प्रमुख व्यक्तित्व, महत्वपूर्ण तिथियाँ, तकनीकी शब्दावली, नवीनतम तकनीक (AI, ML, Blockchain, IoT, AR/VR, 5G, 6G, Quantum Computing), तकनीकी नीतियाँ, स्टार्टअप, डिजिटल इंडिया, मेक इन इंडिया, स्टार्टअप इंडिया, साइबर सुरक्षा अभियान, प्रमुख तकनीकी पुरस्कार, IT क्षेत्र के आँकड़े, आदि शामिल हैं।</p>
+
+                <div id="openprep-tech-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 50 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 50 मिश्रित प्रश्न दिए गए हैं – जो Advanced Computer, Networking, Cyber Security, Technical MCQs, Open Preparation – सभी टॉपिक्स को कवर करते हैं।</p>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> ASI Computer परीक्षा में Advanced Concepts, Networking, Cyber Security, DBMS, OS, Data Structures, और Technical Awareness पर फोकस करें। नियमित अभ्यास से आप उत्कृष्ट प्रदर्शन कर सकते हैं। शुभकामनाएँ! 🛡️</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>ASI COMPUTER – Advanced Technical E-Book</strong></p>
+        <p>UP Police ASI • Computer Operator • SSC • Technical Exams • सभी उन्नत कंप्यूटर परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 250+ MCQs • Advanced Concepts • ASI Focus</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ -----
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            let html = '';
+            questions.forEach((q, i) => {
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<div class="option">(A) ${q.A}</div>`;
+                html += `<div class="option">(B) ${q.B}</div>`;
+                html += `<div class="option">(C) ${q.C}</div>`;
+                html += `<div class="option">(D) ${q.D}</div>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== ADVANCED COMPUTER (50) ======
+        const advancedMCQs = [
+            { question: "वॉन न्यूमैन आर्किटेक्चर में डेटा और निर्देश किस मेमोरी में संग्रहीत होते हैं?", A: "एक ही मेमोरी", B: "अलग-अलग मेमोरी", C: "कैश मेमोरी", D: "रजिस्टर में", correct: "A", explanation: "वॉन न्यूमैन आर्किटेक्चर में डेटा और निर्देश एक ही मेमोरी में संग्रहीत होते हैं।" },
+            { question: "RISC का पूर्ण रूप क्या है?", A: "Reduced Instruction Set Computer", B: "Reduced Instruction System Computer", C: "Reduced Integrated Set Computer", D: "Reduced Instruction Set Core", correct: "A", explanation: "RISC का पूर्ण रूप Reduced Instruction Set Computer है।" },
+            { question: "CPU में ALU का कार्य क्या है?", A: "अंकगणितीय एवं तार्किक संक्रियाएँ", B: "निर्देशों का डिकोडिंग", C: "मेमोरी प्रबंधन", D: "इनपुट/आउटपुट नियंत्रण", correct: "A", explanation: "ALU अंकगणितीय एवं तार्किक संक्रियाएँ करता है।" },
+            { question: "पाइपलाइनिंग (Pipelining) का मुख्य लाभ क्या है?", A: "प्रसंस्करण गति बढ़ाना", B: "मेमोरी बचाना", C: "बिजली बचाना", D: "आकार कम करना", correct: "A", explanation: "पाइपलाइनिंग एक साथ कई निर्देशों पर कार्य करके प्रसंस्करण गति बढ़ाती है।" },
+            { question: "निम्न में से कौन सा डेटा संरचना (Data Structure) है?", A: "Stack", B: "Queue", C: "Tree", D: "सभी", correct: "D", explanation: "Stack, Queue, Tree सभी डेटा संरचनाएँ हैं।" },
+            { question: "O(n²) किस जटिलता को दर्शाता है?", A: "रेखीय", B: "वर्ग", C: "लघुगणकीय", D: "घातांकीय", correct: "B", explanation: "O(n²) वर्ग (Quadratic) जटिलता को दर्शाता है।" },
+            { question: "DBMS में ACID का 'A' किसका प्रतिनिधित्व करता है?", A: "Atomicity", B: "Automation", C: "Authorization", D: "Accuracy", correct: "A", explanation: "ACID का 'A' Atomicity (परमाणुता) है।" },
+            { question: "NoSQL डेटाबेस का उदाहरण क्या है?", A: "MySQL", B: "MongoDB", C: "Oracle", D: "PostgreSQL", correct: "B", explanation: "MongoDB एक NoSQL डेटाबेस है, बाकी RDBMS हैं।" },
+            { question: "सामान्यीकरण (Normalization) का उद्देश्य क्या है?", A: "डेटा अतिरेक कम करना", B: "गति बढ़ाना", C: "सुरक्षा बढ़ाना", D: "बैकअप बनाना", correct: "A", explanation: "Normalization डेटा अतिरेक और विसंगतियों को कम करता है।" },
+            { question: "IaaS का पूर्ण रूप क्या है?", A: "Infrastructure as a Service", B: "Integration as a Service", C: "Interface as a Service", D: "Internet as a Service", correct: "A", explanation: "IaaS – Infrastructure as a Service" },
+            { question: "सुपरस्केलर (Superscalar) किससे संबंधित है?", A: "मेमोरी प्रबंधन", B: "CPU आर्किटेक्चर", C: "नेटवर्किंग", D: "डेटाबेस", correct: "B", explanation: "Superscalar CPU आर्किटेक्चर से संबंधित है – एक साथ कई निर्देश।" },
+            { question: "L1 कैश किस प्रकार की मेमोरी है?", A: "DRAM", B: "NAND", C: "SRAM", D: "Flash", correct: "C", explanation: "L1 कैश SRAM (Static RAM) है, जो सबसे तेज़ होती है।" },
+            { question: "वर्चुअल मेमोरी किस तकनीक का उपयोग करती है?", A: "पेजिंग", B: "सेगमेंटेशन", C: "पेजिंग और सेगमेंटेशन", D: "स्वैपिंग", correct: "C", explanation: "वर्चुअल मेमोरी पेजिंग और सेगमेंटेशन दोनों का उपयोग करती है।" },
+            { question: "डेडलॉक (Deadlock) क्या है?", A: "मेमोरी की कमी", B: "प्रोसेसों का परस्पर प्रतीक्षा", C: "CPU ओवरलोड", D: "डिस्क पूर्ण", correct: "B", explanation: "Deadlock दो या अधिक प्रोसेसों का परस्पर प्रतीक्षा है।" },
+            { question: "सेमाफोर (Semaphore) का उपयोग किस लिए होता है?", A: "मेमोरी आवंटन", B: "प्रोसेस सिंक्रोनाइज़ेशन", C: "फाइल प्रबंधन", D: "नेटवर्क संचार", correct: "B", explanation: "सेमाफोर प्रोसेस सिंक्रोनाइज़ेशन के लिए उपयोग होता है।" },
+            { question: "NTFS किसका फाइल सिस्टम है?", A: "Linux", B: "macOS", C: "Windows", D: "Unix", correct: "C", explanation: "NTFS Windows का मुख्य फाइल सिस्टम है।" },
+            { question: "ext4 किसका फाइल सिस्टम है?", A: "Linux", B: "Windows", C: "macOS", D: "FreeBSD", correct: "A", explanation: "ext4 Linux का फाइल सिस्टम है।" },
+            { question: "RDBMS में 'R' का क्या अर्थ है?", A: "Real", B: "Redundant", C: "Relational", D: "Random", correct: "C", explanation: "RDBMS – Relational Database Management System" },
+            { question: "3NF (Third Normal Form) का क्या उद्देश्य है?", A: "पार्शियल डिपेंडेंसी हटाना", B: "ट्रांज़िटिव डिपेंडेंसी हटाना", C: "रिपीटिंग ग्रुप हटाना", D: "सभी", correct: "B", explanation: "3NF ट्रांज़िटिव डिपेंडेंसी को हटाता है।" },
+            { question: "पब्लिक क्लाउड का उदाहरण क्या है?", A: "Private Cloud", B: "Hybrid Cloud", C: "On-premise", D: "AWS", correct: "D", explanation: "AWS पब्लिक क्लाउड का एक उदाहरण है।" },
+            { question: "हार्वर्ड आर्किटेक्चर में डेटा और निर्देश कैसे संग्रहीत होते हैं?", A: "एक ही मेमोरी में", B: "अलग-अलग मेमोरी में", C: "कैश में", D: "रजिस्टर में", correct: "B", explanation: "हार्वर्ड आर्किटेक्चर में डेटा और निर्देशों के लिए अलग-अलग मेमोरी होती हैं।" },
+            { question: "Big-O Notation O(1) क्या दर्शाता है?", A: "रेखीय समय", B: "स्थिर समय", C: "लघुगणकीय समय", D: "घातांकीय समय", correct: "B", explanation: "O(1) स्थिर (Constant) समय को दर्शाता है।" },
+            { question: "सॉफ्टवेयर इंजीनियरिंग में SDLC का क्या अर्थ है?", A: "System Design Life Cycle", B: "Software Development Life Cycle", C: "Software Deployment Life Cycle", D: "System Development Life Cycle", correct: "B", explanation: "SDLC – Software Development Life Cycle" },
+            { question: "ऑब्जेक्ट-ओरिएंटेड प्रोग्रामिंग (OOP) में 'Inheritance' का क्या अर्थ है?", A: "गुणों को छिपाना", B: "गुणों को प्राप्त करना", C: "गुणों को बदलना", D: "गुणों को हटाना", correct: "B", explanation: "Inheritance – एक क्लास दूसरी क्लास के गुणों को प्राप्त करता है।" },
+            { question: "जावा (Java) किस प्रकार की भाषा है?", A: "प्रोसीजरल", B: "फंक्शनल", C: "ऑब्जेक्ट-ओरिएंटेड", D: "स्क्रिप्टिंग", correct: "C", explanation: "Java ऑब्जेक्ट-ओरिएंटेड प्रोग्रामिंग भाषा है।" },
+            { question: "Python में 'list' और 'tuple' में मुख्य अंतर क्या है?", A: "list immutable, tuple mutable", B: "list mutable, tuple immutable", C: "दोनों mutable", D: "दोनों immutable", correct: "B", explanation: "list mutable (बदलने योग्य) है, tuple immutable (अपरिवर्तनीय) है।" },
+            { question: "C भाषा में पॉइंटर (Pointer) का उपयोग किस लिए होता है?", A: "डेटा संग्रहित करने", B: "मेमोरी एड्रेस संग्रहित करने", C: "फ़ंक्शन कॉल करने", D: "ऑब्जेक्ट बनाने", correct: "B", explanation: "पॉइंटर का उपयोग मेमोरी एड्रेस संग्रहित करने के लिए होता है।" },
+            { question: "SQL में 'JOIN' का उपयोग किस लिए किया जाता है?", A: "डेटा फ़िल्टर करने", B: "दो टेबलों को जोड़ने", C: "डेटा सॉर्ट करने", D: "डेटा ग्रुप करने", correct: "B", explanation: "JOIN दो या अधिक टेबलों को जोड़ने के लिए उपयोग किया जाता है।" },
+            { question: "Linux में 'grep' कमांड का उपयोग किस लिए होता है?", A: "फाइल सूचीबद्ध करने", B: "पैटर्न खोजने", C: "फाइल हटाने", D: "डायरेक्टरी बदलने", correct: "B", explanation: "grep कमांड का उपयोग पैटर्न (text) खोजने के लिए होता है।" },
+            { question: "Docker किस तकनीक से संबंधित है?", A: "वर्चुअलाइजेशन", B: "कंटेनरीकरण", C: "क्लाउड कंप्यूटिंग", D: "नेटवर्किंग", correct: "B", explanation: "Docker कंटेनरीकरण (Containerization) तकनीक है।" },
+            { question: "Kubernetes का मुख्य कार्य क्या है?", A: "डेटा एन्क्रिप्शन", B: "कंटेनर ऑर्केस्ट्रेशन", C: "नेटवर्क मॉनिटरिंग", D: "डेटाबेस प्रबंधन", correct: "B", explanation: "Kubernetes कंटेनर ऑर्केस्ट्रेशन के लिए उपयोग किया जाता है।" },
+            { question: "AI का पूर्ण रूप क्या है?", A: "Advanced Intelligence", B: "Automated Intelligence", C: "Artificial Intelligence", D: "Augmented Intelligence", correct: "C", explanation: "AI – Artificial Intelligence" },
+            { question: "मशीन लर्निंग में 'Supervised Learning' का क्या अर्थ है?", A: "लेबल रहित डेटा पर प्रशिक्षण", B: "लेबल किए गए डेटा पर प्रशिक्षण", C: "रीइन्फोर्समेंट लर्निंग", D: "डीप लर्निंग", correct: "B", explanation: "Supervised Learning में लेबल किए गए (labeled) डेटा पर प्रशिक्षण होता है।" },
+            { question: "ब्लॉकचेन (Blockchain) किस तकनीक पर आधारित है?", A: "केंद्रीकृत डेटाबेस", B: "वितरित खाता", C: "क्लाउड स्टोरेज", D: "पारंपरिक डेटाबेस", correct: "B", explanation: "ब्लॉकचेन एक वितरित खाता (Distributed Ledger) तकनीक है।" },
+            { question: "IoT का पूर्ण रूप क्या है?", A: "Internet of Technology", B: "Integration of Things", C: "Internet of Things", D: "Internet of Tools", correct: "C", explanation: "IoT – Internet of Things" },
+            { question: "5G तकनीक किस बैंड का उपयोग करती है?", A: "2.4 GHz", B: "5 GHz", C: "mmWave", D: "900 MHz", correct: "C", explanation: "5G mmWave (मिलीमीटर वेव) बैंड का उपयोग करती है।" },
+            { question: "क्वांटम कंप्यूटिंग में किसका उपयोग किया जाता है?", A: "बिट्स", B: "बाइट्स", C: "क्यूबिट्स", D: "ट्रांजिस्टर", correct: "C", explanation: "क्वांटम कंप्यूटिंग में क्यूबिट्स (Qubits) का उपयोग किया जाता है।" },
+            { question: "अग्नि (Agni) सुपर कंप्यूटर किस संगठन द्वारा विकसित किया गया?", A: "ISRO", B: "DRDO", C: "C-DAC", D: "BARC", correct: "C", explanation: "अग्नि सुपर कंप्यूटर C-DAC द्वारा विकसित किया गया।" },
+            { question: "PARAM सुपर कंप्यूटर किसने विकसित किया?", A: "ISRO", B: "C-DAC", C: "DRDO", D: "IBM", correct: "B", explanation: "PARAM सुपर कंप्यूटर C-DAC द्वारा विकसित किया गया।" },
+            { question: "DNS में 'A' रिकॉर्ड का क्या अर्थ है?", A: "Alias Record", B: "Address Record", C: "Authoritative Record", D: "Access Record", correct: "B", explanation: "DNS में 'A' रिकॉर्ड Address Record है, जो डोमेन को IP से मैप करता है।" },
+            { question: "SMTP किस पोर्ट का उपयोग करता है?", A: "110", B: "143", C: "993", D: "25", correct: "D", explanation: "SMTP पोर्ट 25 का उपयोग करता है।" },
+            { question: "FTP किस पोर्ट का उपयोग करता है?", A: "22", B: "23", C: "21", D: "25", correct: "C", explanation: "FTP पोर्ट 21 का उपयोग करता है।" },
+            { question: "SSH किस पोर्ट का उपयोग करता है?", A: "21", B: "22", C: "23", D: "25", correct: "B", explanation: "SSH पोर्ट 22 का उपयोग करता है।" },
+            { question: "Telnet किस पोर्ट का उपयोग करता है?", A: "21", B: "22", C: "23", D: "25", correct: "C", explanation: "Telnet पोर्ट 23 का उपयोग करता है।" },
+            { question: "DNS किस पोर्ट का उपयोग करता है?", A: "80", B: "53", C: "443", D: "25", correct: "B", explanation: "DNS पोर्ट 53 का उपयोग करता है (TCP और UDP दोनों)।" },
+            { question: "DHCP का पूर्ण रूप क्या है?", A: "Domain Host Configuration Protocol", B: "Dynamic Host Configuration Protocol", C: "Dynamic Host Control Protocol", D: "Domain Host Control Protocol", correct: "B", explanation: "DHCP – Dynamic Host Configuration Protocol" },
+            { question: "NAT का पूर्ण रूप क्या है?", A: "Network Address Transfer", B: "Network Access Translation", C: "Network Address Translation", D: "Network Address Transformation", correct: "C", explanation: "NAT – Network Address Translation" },
+            { question: "IPv4 में कितने ऑक्टेट होते हैं?", A: "6", B: "8", C: "10", D: "4", correct: "D", explanation: "IPv4 में 4 ऑक्टेट होते हैं (जैसे 192.168.1.1)।" },
+            { question: "IPv6 में कितने बिट होते हैं?", A: "32", B: "64", C: "128", D: "48", correct: "C", explanation: "IPv6 128 बिट का होता है।" },
+            { question: "MAC Address कितने बिट का होता है?", A: "32", B: "64", C: "128", D: "48", correct: "D", explanation: "MAC Address 48 बिट (6 बाइट) का होता है।" }
+        ];
+
+        // ====== NETWORKING ADVANCED (50) ======
+        const networkingAdvMCQs = [
+            { question: "OSI मॉडल में रूटिंग किस परत पर होती है?", A: "Data Link Layer", B: "Network Layer", C: "Transport Layer", D: "Application Layer", correct: "B", explanation: "रूटिंग Network Layer (Layer 3) पर होती है।" },
+            { question: "TCP/IP मॉडल में IP किस परत से संबंधित है?", A: "Transport Layer", B: "Application Layer", C: "Internet Layer", D: "Network Access Layer", correct: "C", explanation: "IP Internet Layer से संबंधित है।" },
+            { question: "स्विच (Switch) किस परत पर कार्य करता है?", A: "Physical Layer", B: "Network Layer", C: "Data Link Layer", D: "Transport Layer", correct: "C", explanation: "स्विच Data Link Layer (Layer 2) पर कार्य करता है।" },
+            { question: "राउटर (Router) किस परत पर कार्य करता है?", A: "Data Link Layer", B: "Physical Layer", C: "Transport Layer", D: "Network Layer", correct: "D", explanation: "राउटर Network Layer (Layer 3) पर कार्य करता है।" },
+            { question: "CIDR का पूर्ण रूप क्या है?", A: "Classful Inter-Domain Routing", B: "Classless Inter-Domain Routing", C: "Classless Intra-Domain Routing", D: "Classful Intra-Domain Routing", correct: "B", explanation: "CIDR – Classless Inter-Domain Routing" },
+            { question: "VLSM का पूर्ण रूप क्या है?", A: "Virtual Length Subnet Mask", B: "Variable Length Subnet Mask", C: "Variable Length Subnet Management", D: "Virtual Length Subnet Management", correct: "B", explanation: "VLSM – Variable Length Subnet Mask" },
+            { question: "NAT का मुख्य कार्य क्या है?", A: "पब्लिक IP को प्राइवेट IP में बदलना", B: "प्राइवेट IP को पब्लिक IP में बदलना", C: "IP को MAC में बदलना", D: "MAC को IP में बदलना", correct: "B", explanation: "NAT प्राइवेट IP को पब्लिक IP में बदलता है।" },
+            { question: "PAT का पूर्ण रूप क्या है?", A: "Port Address Transfer", B: "Port Address Translation", C: "Protocol Address Translation", D: "Port Access Translation", correct: "B", explanation: "PAT – Port Address Translation" },
+            { question: "RIP रूटिंग प्रोटोकॉल की अधिकतम हॉप सीमा क्या है?", A: "30", B: "60", C: "15", D: "255", correct: "C", explanation: "RIP की अधिकतम हॉप सीमा 15 है।" },
+            { question: "OSPF किस प्रकार का रूटिंग प्रोटोकॉल है?", A: "दूरी-सदिश", B: "पाथ-वेक्टर", C: "लिंक-स्टेट", D: "हाइब्रिड", correct: "C", explanation: "OSPF लिंक-स्टेट (Link-State) रूटिंग प्रोटोकॉल है।" },
+            { question: "BGP का पूर्ण रूप क्या है?", A: "Basic Gateway Protocol", B: "Border Gateway Protocol", C: "Border Global Protocol", D: "Backup Gateway Protocol", correct: "B", explanation: "BGP – Border Gateway Protocol" },
+            { question: "VPN का पूर्ण रूप क्या है?", A: "Virtual Public Network", B: "Virtual Protocol Network", C: "Virtual Private Network", D: "Virtual Private Net", correct: "C", explanation: "VPN – Virtual Private Network" },
+            { question: "VLAN का पूर्ण रूप क्या है?", A: "Virtual Wide Area Network", B: "Virtual Local Area Network", C: "Virtual Large Area Network", D: "Virtual Limited Area Network", correct: "B", explanation: "VLAN – Virtual Local Area Network" },
+            { question: "DMZ का पूर्ण रूप क्या है?", A: "Demilitarized Zero", B: "Dynamic Managed Zone", C: "Digital Managed Zone", D: "Demilitarized Zone", correct: "D", explanation: "DMZ – Demilitarized Zone" },
+            { question: "फायरवॉल (Firewall) का मुख्य कार्य क्या है?", A: "डेटा एन्क्रिप्ट करना", B: "नेटवर्क ट्रैफ़िक को फ़िल्टर करना", C: "डेटा संग्रहित करना", D: "प्रोसेस प्रबंधित करना", correct: "B", explanation: "फायरवॉल नेटवर्क ट्रैफ़िक को फ़िल्टर करता है।" },
+            { question: "IDS का पूर्ण रूप क्या है?", A: "Intrusion Defense System", B: "Internet Detection System", C: "Intrusion Detection System", D: "Internal Detection System", correct: "C", explanation: "IDS – Intrusion Detection System" },
+            { question: "IPS का पूर्ण रूप क्या है?", A: "Intrusion Protection System", B: "Internet Prevention System", C: "Intrusion Prevention System", D: "Internal Prevention System", correct: "C", explanation: "IPS – Intrusion Prevention System" },
+            { question: "SSL का पूर्ण रूप क्या है?", A: "System Security Layer", B: "Secure Sockets Layer", C: "Secure System Layer", D: "System Sockets Layer", correct: "B", explanation: "SSL – Secure Sockets Layer" },
+            { question: "TLS का पूर्ण रूप क्या है?", A: "Transfer Layer Security", B: "Transport Layer Security", C: "Transport Level Security", D: "Transfer Level Security", correct: "B", explanation: "TLS – Transport Layer Security" },
+            { question: "DNS में कितने प्रकार के रिकॉर्ड होते हैं?", A: "A, B, C, D", B: "1, 2, 3, 4", C: "A, CNAME, MX, NS, TXT, PTR, SRV, AAAA", D: "HTTP, FTP, SMTP", correct: "C", explanation: "DNS के कई प्रकार के रिकॉर्ड होते हैं – A, CNAME, MX, NS, TXT, PTR, SRV, AAAA आदि।" },
+            { question: "CNAME रिकॉर्ड का क्या अर्थ है?", A: "Common Name", B: "Canonical Name", C: "Certificate Name", D: "Control Name", correct: "B", explanation: "CNAME – Canonical Name (उपनाम) रिकॉर्ड है।" },
+            { question: "MX रिकॉर्ड का क्या अर्थ है?", A: "Message Exchange", B: "Mail Exchange", C: "Mail Extension", D: "Message Extension", correct: "B", explanation: "MX – Mail Exchange (ई-मेल सर्वर) रिकॉर्ड है।" },
+            { question: "NS रिकॉर्ड का क्या अर्थ है?", A: "Name System", B: "Name Server", C: "Network Server", D: "Node Server", correct: "B", explanation: "NS – Name Server रिकॉर्ड है।" },
+            { question: "PTR रिकॉर्ड का क्या अर्थ है?", A: "Primary Record", B: "Pointer Record", C: "Private Record", D: "Public Record", correct: "B", explanation: "PTR – Pointer Record (IP से डोमेन नाम) है।" },
+            { question: "SOA रिकॉर्ड का क्या अर्थ है?", A: "Start of Access", B: "Start of Authority", C: "System of Authority", D: "Start of Authentication", correct: "B", explanation: "SOA – Start of Authority (DNS ज़ोन की शुरुआत) है।" },
+            { question: "DHCP का मुख्य कार्य क्या है?", A: "डोमेन नाम पंजीकृत करना", B: "IP एड्रेस स्वचालित रूप से प्रदान करना", C: "ई-मेल भेजना", D: "वेबसाइट होस्ट करना", correct: "B", explanation: "DHCP IP एड्रेस को स्वचालित रूप से प्रदान करता है।" },
+            { question: "NTP का पूर्ण रूप क्या है?", A: "Network Transfer Protocol", B: "Network Time Protocol", C: "Network Transmission Protocol", D: "Network Transport Protocol", correct: "B", explanation: "NTP – Network Time Protocol" },
+            { question: "ARP का पूर्ण रूप क्या है?", A: "Address Routing Protocol", B: "Address Resolution Protocol", C: "Advanced Resolution Protocol", D: "Address Request Protocol", correct: "B", explanation: "ARP – Address Resolution Protocol" },
+            { question: "RARP का पूर्ण रूप क्या है?", A: "Reverse Address Routing Protocol", B: "Reverse Address Resolution Protocol", C: "Reverse ARP", D: "Remote Address Resolution Protocol", correct: "B", explanation: "RARP – Reverse Address Resolution Protocol" },
+            { question: "ICMP का पूर्ण रूप क्या है?", A: "Internet Control Management Protocol", B: "Internet Control Message Protocol", C: "Internet Communication Protocol", D: "Integrated Control Message Protocol", correct: "B", explanation: "ICMP – Internet Control Message Protocol" },
+            { question: "ping कमांड किस प्रोटोकॉल का उपयोग करता है?", A: "TCP", B: "UDP", C: "ICMP", D: "HTTP", correct: "C", explanation: "ping कमांड ICMP प्रोटोकॉल का उपयोग करता है।" },
+            { question: "tracert कमांड का उपयोग किस लिए होता है?", A: "IP एड्रेस प्राप्त करने", B: "नेटवर्क पथ का पता लगाने", C: "DNS रिकॉर्ड जाँचने", D: "MAC एड्रेस प्राप्त करने", correct: "B", explanation: "tracert नेटवर्क पथ (रूट) का पता लगाने के लिए उपयोग किया जाता है।" },
+            { question: "netstat कमांड का उपयोग किस लिए होता है?", A: "IP एड्रेस दिखाने", B: "नेटवर्क कनेक्शन दिखाने", C: "MAC एड्रेस दिखाने", D: "DNS रिकॉर्ड दिखाने", correct: "B", explanation: "netstat नेटवर्क कनेक्शन और स्टेटस दिखाता है।" },
+            { question: "nslookup कमांड का उपयोग किस लिए होता है?", A: "IP एड्रेस प्राप्त करने", B: "DNS क्वेरी करने", C: "MAC एड्रेस प्राप्त करने", D: "नेटवर्क पथ जाँचने", correct: "B", explanation: "nslookup DNS क्वेरी करने के लिए उपयोग किया जाता है।" },
+            { question: "OSI मॉडल में Data Link Layer का क्या कार्य है?", A: "रूटिंग", B: "फ्रेमिंग, MAC एड्रेसिंग", C: "सत्र प्रबंधन", D: "एन्क्रिप्शन", correct: "B", explanation: "Data Link Layer फ्रेमिंग और MAC एड्रेसिंग का कार्य करती है।" },
+            { question: "Network Layer का मुख्य कार्य क्या है?", A: "डेटा संचारण", B: "रूटिंग और IP एड्रेसिंग", C: "एन्क्रिप्शन", D: "सत्र प्रबंधन", correct: "B", explanation: "Network Layer रूटिंग और IP एड्रेसिंग का कार्य करती है।" },
+            { question: "Transport Layer का मुख्य कार्य क्या है?", A: "रूटिंग", B: "TCP/UDP प्रबंधन", C: "MAC एड्रेसिंग", D: "सत्र प्रबंधन", correct: "B", explanation: "Transport Layer TCP/UDP और पोर्ट प्रबंधन का कार्य करती है।" },
+            { question: "Application Layer के प्रोटोकॉल कौन से हैं?", A: "TCP, UDP", B: "HTTP, FTP, SMTP, DNS", C: "IP, ICMP", D: "Ethernet, PPP", correct: "B", explanation: "Application Layer के प्रोटोकॉल HTTP, FTP, SMTP, DNS आदि हैं।" },
+            { question: "पोर्ट 443 किस प्रोटोकॉल द्वारा उपयोग किया जाता है?", A: "HTTP", B: "FTP", C: "HTTPS", D: "SMTP", correct: "C", explanation: "पोर्ट 443 HTTPS द्वारा उपयोग किया जाता है।" },
+            { question: "पोर्ट 80 किस प्रोटोकॉल द्वारा उपयोग किया जाता है?", A: "HTTPS", B: "HTTP", C: "FTP", D: "SMTP", correct: "B", explanation: "पोर्ट 80 HTTP द्वारा उपयोग किया जाता है।" },
+            { question: "पोर्ट 21 किस प्रोटोकॉल द्वारा उपयोग किया जाता है?", A: "HTTP", B: "HTTPS", C: "FTP", D: "SMTP", correct: "C", explanation: "पोर्ट 21 FTP द्वारा उपयोग किया जाता है।" },
+            { question: "पोर्ट 25 किस प्रोटोकॉल द्वारा उपयोग किया जाता है?", A: "HTTP", B: "HTTPS", C: "FTP", D: "SMTP", correct: "D", explanation: "पोर्ट 25 SMTP द्वारा उपयोग किया जाता है।" },
+            { question: "पोर्ट 110 किस प्रोटोकॉल द्वारा उपयोग किया जाता है?", A: "IMAP", B: "SMTP", C: "POP3", D: "HTTP", correct: "C", explanation: "पोर्ट 110 POP3 द्वारा उपयोग किया जाता है।" },
+            { question: "पोर्ट 143 किस प्रोटोकॉल द्वारा उपयोग किया जाता है?", A: "POP3", B: "SMTP", C: "IMAP", D: "HTTP", correct: "C", explanation: "पोर्ट 143 IMAP द्वारा उपयोग किया जाता है।" },
+            { question: "पोर्ट 22 किस प्रोटोकॉल द्वारा उपयोग किया जाता है?", A: "Telnet", B: "SSH", C: "FTP", D: "HTTP", correct: "B", explanation: "पोर्ट 22 SSH द्वारा उपयोग किया जाता है।" },
+            { question: "पोर्ट 23 किस प्रोटोकॉल द्वारा उपयोग किया जाता है?", A: "SSH", B: "FTP", C: "Telnet", D: "HTTP", correct: "C", explanation: "पोर्ट 23 Telnet द्वारा उपयोग किया जाता है।" },
+            { question: "VLAN का मुख्य लाभ क्या है?", A: "नेटवर्क की गति बढ़ाना", B: "नेटवर्क को लॉजिकल रूप से विभाजित करना", C: "नेटवर्क की सुरक्षा बढ़ाना", D: "B और C दोनों", correct: "D", explanation: "VLAN नेटवर्क को लॉजिकल रूप से विभाजित करता है और सुरक्षा बढ़ाता है।" },
+            { question: "VPN का मुख्य उपयोग क्या है?", A: "तेज़ इंटरनेट", B: "सुरक्षित दूरस्थ कनेक्शन", C: "डेटा संग्रहण", D: "वेब होस्टिंग", correct: "B", explanation: "VPN सुरक्षित दूरस्थ कनेक्शन (Remote Access) के लिए उपयोग किया जाता है।" }
+        ];
+
+        // ====== CYBER SECURITY (50) ======
+        const cyberMCQs = [
+            { question: "फ़िशिंग (Phishing) क्या है?", A: "डेटा एन्क्रिप्ट करना", B: "नेटवर्क हैक करना", C: "नकली ई-मेल द्वारा जानकारी चुराना", D: "पासवर्ड क्रैक करना", correct: "C", explanation: "फ़िशिंग नकली ई-मेल या वेबसाइट द्वारा व्यक्तिगत जानकारी चुराना है।" },
+            { question: "रैंसमवेयर (Ransomware) क्या करता है?", A: "डेटा हटा देता है", B: "डेटा को एन्क्रिप्ट कर फिरौती माँगता है", C: "नेटवर्क को धीमा कर देता है", D: "पासवर्ड चुराता है", correct: "B", explanation: "रैंसमवेयर डेटा को एन्क्रिप्ट करके फिरौती माँगता है।" },
+            { question: "DDoS का पूर्ण रूप क्या है?", A: "Distributed Defense of Service", B: "Dynamic Denial of Service", C: "Distributed Denial of Service", D: "Distributed Denial of System", correct: "C", explanation: "DDoS – Distributed Denial of Service" },
+            { question: "MITM का पूर्ण रूप क्या है?", A: "Machine-in-the-Middle", B: "Monitor-in-the-Middle", C: "Man-in-the-Middle", D: "Module-in-the-Middle", correct: "C", explanation: "MITM – Man-in-the-Middle (मैन-इन-द-मिडल) हमला है।" },
+            { question: "SSL/TLS का उपयोग किस लिए किया जाता है?", A: "डेटा संग्रहण", B: "सुरक्षित संचार के लिए", C: "नेटवर्क प्रबंधन", D: "प्रोसेस शेड्यूलिंग", correct: "B", explanation: "SSL/TLS सुरक्षित संचार (Secure Communication) के लिए उपयोग किया जाता है।" },
+            { question: "सिमेट्रिक एन्क्रिप्शन का उदाहरण क्या है?", A: "RSA", B: "ECC", C: "AES", D: "DSA", correct: "C", explanation: "AES (Advanced Encryption Standard) सिमेट्रिक एन्क्रिप्शन है।" },
+            { question: "असिमेट्रिक एन्क्रिप्शन का उदाहरण क्या है?", A: "AES", B: "RSA", C: "DES", D: "3DES", correct: "B", explanation: "RSA असिमेट्रिक एन्क्रिप्शन है।" },
+            { question: "हाशिंग (Hashing) का उदाहरण क्या है?", A: "AES", B: "RSA", C: "SHA-256", D: "DES", correct: "C", explanation: "SHA-256 हाशिंग एल्गोरिदम है।" },
+            { question: "MD5 कितने बिट का हैश उत्पन्न करता है?", A: "160", B: "256", C: "128", D: "512", correct: "C", explanation: "MD5 128-बिट हैश उत्पन्न करता है।" },
+            { question: "SHA-256 कितने बिट का हैश उत्पन्न करता है?", A: "128", B: "160", C: "512", D: "256", correct: "D", explanation: "SHA-256 256-बिट हैश उत्पन्न करता है।" },
+            { question: "IT Act 2000 कब लागू हुआ?", A: "2001", B: "2002", C: "2000", D: "2003", correct: "C", explanation: "IT Act 2000, 2000 में लागू हुआ था।" },
+            { question: "IT Act 2008 में क्या संशोधन किए गए?", A: "केवल ऑनलाइन लेनदेन", B: "साइबर अपराधों की नई श्रेणियाँ", C: "डेटा संरक्षण", D: "सभी", correct: "D", explanation: "IT Act 2008 में साइबर अपराधों, डेटा संरक्षण, ऑनलाइन लेनदेन में संशोधन किए गए।" },
+            { question: "CERT-In का पूर्ण रूप क्या है?", A: "Computer Emergency Response Team - International", B: "Computer Emergency Response Team - India", C: "Cyber Emergency Response Team - India", D: "Cyber Emergency Response Team - International", correct: "B", explanation: "CERT-In – Computer Emergency Response Team – India" },
+            { question: "DPDP Act 2023 का पूर्ण रूप क्या है?", A: "Digital Public Data Protection Act, 2023", B: "Digital Personal Data Protection Act, 2023", C: "Data Privacy and Protection Act, 2023", D: "Digital Privacy and Data Protection Act, 2023", correct: "B", explanation: "DPDP Act – Digital Personal Data Protection Act, 2023" },
+            { question: "MFA का पूर्ण रूप क्या है?", A: "Multi-Factor Authorization", B: "Multi-Factor Authentication", C: "Managed Factor Authentication", D: "Master Factor Authentication", correct: "B", explanation: "MFA – Multi-Factor Authentication" },
+            { question: "2FA का पूर्ण रूप क्या है?", A: "Two-Factor Authorization", B: "Transfer Factor Authentication", C: "Two-Factor Authentication", D: "Technical Factor Authentication", correct: "C", explanation: "2FA – Two-Factor Authentication" },
+            { question: "OAuth 2.0 का उपयोग किस लिए किया जाता है?", A: "डेटा एन्क्रिप्शन", B: "प्रमाणीकरण और अधिकार", C: "नेटवर्क प्रबंधन", D: "फाइल ट्रांसफर", correct: "B", explanation: "OAuth 2.0 प्रमाणीकरण (Authentication) और प्राधिकरण (Authorization) के लिए है।" },
+            { question: "सोशल इंजीनियरिंग (Social Engineering) क्या है?", A: "तकनीकी हैकिंग", B: "मानवीय भावनाओं का शोषण", C: "नेटवर्क हैकिंग", D: "डेटा एन्क्रिप्शन", correct: "B", explanation: "सोशल इंजीनियरिंग मानवीय भावनाओं (विश्वास, डर) का शोषण कर जानकारी प्राप्त करना है।" },
+            { question: "ज़ीरो ट्रस्ट (Zero Trust) का क्या अर्थ है?", A: "हमेशा विश्वास करें", B: "कभी विश्वास न करें, हमेशा सत्यापित करें", C: "केवल बाहरी नेटवर्क पर विश्वास करें", D: "केवल आंतरिक नेटवर्क पर विश्वास करें", correct: "B", explanation: "Zero Trust का अर्थ है 'कभी विश्वास न करें, हमेशा सत्यापित करें'।" },
+            { question: "EDR का पूर्ण रूप क्या है?", A: "Endpoint Defense and Response", B: "Endpoint Detection and Response", C: "Enterprise Detection and Response", D: "Endpoint Data and Response", correct: "B", explanation: "EDR – Endpoint Detection and Response" },
+            { question: "SIEM का पूर्ण रूप क्या है?", A: "Security Intelligence and Event Management", B: "Security Information and Event Management", C: "System Information and Event Management", D: "Security Information and Emergency Management", correct: "B", explanation: "SIEM – Security Information and Event Management" },
+            { question: "VPN में IPSec का क्या अर्थ है?", A: "IP Security", B: "Internet Protocol Security", C: "Internal Protocol Security", D: "Integrated Protocol Security", correct: "B", explanation: "IPSec – Internet Protocol Security" },
+            { question: "बायोमेट्रिक प्रमाणीकरण के उदाहरण क्या हैं?", A: "पासवर्ड, OTP", B: "पिन, पैटर्न", C: "फिंगरप्रिंट, आईरिस, फेस रिकग्निशन", D: "सभी", correct: "C", explanation: "फिंगरप्रिंट, आईरिस, फेस रिकग्निशन बायोमेट्रिक हैं।" },
+            { question: "IT Act 2000 के तहत साइबर अपराधों पर क्या दंड हो सकता है?", A: "केवल जुर्माना", B: "केवल कारावास", C: "जुर्माना और कारावास", D: "चेतावनी", correct: "C", explanation: "IT Act 2000 के तहत जुर्माना और कारावास दोनों हो सकते हैं।" },
+            { question: "डिजिटल हस्ताक्षर (Digital Signature) का क्या उपयोग है?", A: "डेटा एन्क्रिप्ट करना", B: "दस्तावेज़ की प्रामाणिकता सुनिश्चित करना", C: "नेटवर्क प्रबंधित करना", D: "प्रोसेस शेड्यूल करना", correct: "B", explanation: "डिजिटल हस्ताक्षर दस्तावेज़ की प्रामाणिकता और अखंडता सुनिश्चित करता है।" },
+            { question: "साइबर फोरेंसिक (Cyber Forensics) क्या है?", A: "डेटा एन्क्रिप्शन", B: "साइबर अपराध की जाँच", C: "नेटवर्क प्रबंधन", D: "प्रोसेस शेड्यूलिंग", correct: "B", explanation: "साइबर फोरेंसिक साइबर अपराधों की जाँच और डिजिटल साक्ष्य एकत्र करने की प्रक्रिया है।" },
+            { question: "पेनेट्रेशन टेस्टिंग (Penetration Testing) का क्या अर्थ है?", A: "नेटवर्क प्रबंधन", B: "सुरक्षा कमजोरियों का परीक्षण", C: "डेटा एन्क्रिप्शन", D: "प्रोसेस अनुकूलन", correct: "B", explanation: "पेनेट्रेशन टेस्टिंग सिस्टम/नेटवर्क की सुरक्षा कमजोरियों का पता लगाने के लिए किया जाता है।" },
+            { question: "वायरस और वर्म (Worm) में क्या अंतर है?", A: "वायरस नेटवर्क में फैलता है, वर्म फ़ाइल से फ़ाइल", B: "वर्म नेटवर्क में फैलता है, वायरस फ़ाइल से फ़ाइल", C: "दोनों समान हैं", D: "वर्म केवल ई-मेल से फैलता है", correct: "B", explanation: "वर्म नेटवर्क में स्व-प्रतिकृति बनाकर फैलता है, वायरस फ़ाइलों को संक्रमित करता है।" },
+            { question: "ट्रोजन (Trojan) क्या है?", A: "एक सुरक्षित सॉफ्टवेयर", B: "हानिकारक सॉफ्टवेयर जो वैध प्रतीत होता है", C: "एक ब्राउज़र", D: "एक सर्च इंजन", correct: "B", explanation: "ट्रोजन एक हानिकारक सॉफ्टवेयर है जो वैध सॉफ्टवेयर की तरह दिखता है।" },
+            { question: "स्पाइवेयर (Spyware) क्या है?", A: "सुरक्षा सॉफ्टवेयर", B: "उपयोगकर्ता की जासूसी करने वाला सॉफ्टवेयर", C: "एंटीवायरस", D: "फ़ायरवॉल", correct: "B", explanation: "स्पाइवेयर उपयोगकर्ता की गतिविधियों की जासूसी करता है।" },
+            { question: "एडवेयर (Adware) क्या है?", A: "सुरक्षा सॉफ्टवेयर", B: "विज्ञापन दिखाने वाला सॉफ्टवेयर", C: "एंटीवायरस", D: "फ़ायरवॉल", correct: "B", explanation: "एडवेयर अवांछित विज्ञापन दिखाता है।" },
+            { question: "साइबर सुरक्षा में 'Phishing' और 'Spear Phishing' में क्या अंतर है?", A: "Phishing किसी विशिष्ट व्यक्ति को लक्ष्य बनाता है", B: "Spear Phishing किसी विशिष्ट व्यक्ति को लक्ष्य बनाता है", C: "दोनों समान हैं", D: "Spear Phishing बड़े समूह को लक्ष्य बनाता है", correct: "B", explanation: "Spear Phishing किसी विशिष्ट व्यक्ति या संगठन को लक्षित करता है, जबकि Phishing बड़े समूह को।" },
+            { question: "Ransomware से बचने का सबसे अच्छा तरीका क्या है?", A: "केवल एंटीवायरस", B: "केवल फ़ायरवॉल", C: "नियमित बैकअप और सुरक्षा अपडेट", D: "पासवर्ड न बदलना", correct: "C", explanation: "नियमित बैकअप और सुरक्षा अपडेट रैंसमवेयर से बचाव के सबसे अच्छे तरीके हैं।" },
+            { question: "द्वि-कारक प्रमाणीकरण (2FA) में क्या शामिल होता है?", A: "केवल पासवर्ड", B: "केवल OTP", C: "पासवर्ड + OTP/बायोमेट्रिक", D: "केवल बायोमेट्रिक", correct: "C", explanation: "2FA में पासवर्ड और OTP/बायोमेट्रिक जैसे दो कारक होते हैं।" },
+            { question: "अच्छी साइबर सुरक्षा अभ्यास क्या है?", A: "सभी पासवर्ड एक जैसे रखना", B: "मजबूत पासवर्ड, नियमित अपडेट, बैकअप", C: "एंटीवायरस बंद रखना", D: "अज्ञात लिंक पर क्लिक करना", correct: "B", explanation: "मजबूत पासवर्ड, नियमित अपडेट और बैकअप अच्छी साइबर सुरक्षा अभ्यास हैं।" },
+            { question: "साइबर सुरक्षा में 'जोखिम' का क्या अर्थ है?", A: "केवल हमले की संभावना", B: "किसी हमले की संभावना और उसका प्रभाव", C: "केवल हमले का प्रभाव", D: "हमले की गति", correct: "B", explanation: "जोखिम = संभावना × प्रभाव (Likelihood × Impact)।" },
+            { question: "सुरक्षा ऑडिट (Security Audit) का क्या अर्थ है?", A: "नेटवर्क प्रबंधन", B: "सिस्टम की सुरक्षा का व्यवस्थित मूल्यांकन", C: "डेटा एन्क्रिप्शन", D: "प्रोसेस शेड्यूलिंग", correct: "B", explanation: "सुरक्षा ऑडिट सिस्टम/नेटवर्क की सुरक्षा का व्यवस्थित मूल्यांकन है।" },
+            { question: "GDPR का पूर्ण रूप क्या है?", A: "General Data Privacy Regulation", B: "General Data Protection Regulation", C: "Global Data Protection Regulation", D: "General Data Protection Rule", correct: "B", explanation: "GDPR – General Data Protection Regulation (EU का डेटा संरक्षण कानून)।" },
+            { question: "CERT-In की स्थापना कब हुई?", A: "2000", B: "2008", C: "2004", D: "2010", correct: "C", explanation: "CERT-In की स्थापना 2004 में हुई थी।" },
+            { question: "साइबर अपराधों की रिपोर्ट करने के लिए राष्ट्रीय हेल्पलाइन नंबर क्या है?", A: "100", B: "1930", C: "112", D: "1098", correct: "B", explanation: "साइबर अपराधों के लिए राष्ट्रीय हेल्पलाइन नंबर 1930 है।" },
+            { question: "India के साइबर सुरक्षा निदेशालय का मुख्यालय कहाँ है?", A: "मुंबई", B: "नई दिल्ली", C: "बेंगलुरु", D: "हैदराबाद", correct: "B", explanation: "India का साइबर सुरक्षा निदेशालय नई दिल्ली में है।" },
+            { question: "RSA एन्क्रिप्शन किस पर आधारित है?", A: "एक अभाज्य संख्या पर", B: "दो बड़ी अभाज्य संख्याओं के गुणनफल पर", C: "डेसिमल संख्या पर", D: "बाइनरी संख्या पर", correct: "B", explanation: "RSA दो बड़ी अभाज्य संख्याओं के गुणनफल पर आधारित है।" },
+            { question: "क्वांटम कंप्यूटिंग साइबर सुरक्षा के लिए क्यों खतरा है?", A: "यह धीमा है", B: "यह मौजूदा एन्क्रिप्शन को तोड़ सकता है", C: "यह महंगा है", D: "यह अविश्वसनीय है", correct: "B", explanation: "क्वांटम कंप्यूटर मौजूदा एन्क्रिप्शन (RSA, ECC) को तोड़ सकता है।" },
+            { question: "पोस्ट-क्वांटम क्रिप्टोग्राफी का क्या अर्थ है?", A: "पुरानी एन्क्रिप्शन", B: "क्वांटम-प्रतिरोधी एन्क्रिप्शन", C: "कोई एन्क्रिप्शन नहीं", D: "केवल सिमेट्रिक एन्क्रिप्शन", correct: "B", explanation: "पोस्ट-क्वांटम क्रिप्टोग्राफी क्वांटम कंप्यूटरों के प्रतिरोधी एन्क्रिप्शन है।" }
+        ];
+
+        // ====== TECHNICAL MCQS (50) ======
+        const technicalMCQs = [
+            { question: "C भाषा में 'printf' किस लाइब्रेरी से संबंधित है?", A: "stdlib.h", B: "stdio.h", C: "string.h", D: "math.h", correct: "B", explanation: "printf stdio.h (Standard Input Output) लाइब्रेरी से संबंधित है।" },
+            { question: "जावा में 'public static void main' का क्या अर्थ है?", A: "एक फंक्शन", B: "एक वेरिएबल", C: "प्रोग्राम का प्रवेश बिंदु", D: "एक क्लास", correct: "C", explanation: "public static void main Java प्रोग्राम का प्रवेश बिंदु (Entry Point) है।" },
+            { question: "Python में 'if __name__ == \"__main__\"' का क्या अर्थ है?", A: "मॉड्यूल को इम्पोर्ट करना", B: "मॉड्यूल को सीधे चलाना", C: "फंक्शन को परिभाषित करना", D: "क्लास को परिभाषित करना", correct: "B", explanation: "यह चेक करता है कि मॉड्यूल सीधे चलाया जा रहा है या इम्पोर्ट किया जा रहा है।" },
+            { question: "SQL में 'SELECT * FROM table' का क्या अर्थ है?", A: "एक कॉलम चुनना", B: "सभी कॉलम चुनना", C: "डेटा हटाना", D: "डेटा अपडेट करना", correct: "B", explanation: "SELECT * सभी कॉलम्स को चुनता है।" },
+            { question: "Linux में 'ls -la' कमांड का क्या अर्थ है?", A: "केवल हिडन फाइलें दिखाना", B: "सभी फाइलें (हिडन सहित) विस्तृत सूची में दिखाना", C: "फाइलें हटाना", D: "डायरेक्टरी बनाना", correct: "B", explanation: "ls -la सभी फाइलें (हिडन सहित) विस्तृत सूची में दिखाता है।" },
+            { question: "Git में 'commit' का क्या अर्थ है?", A: "परिवर्तनों को अस्थायी रूप से सहेजना", B: "परिवर्तनों को स्थायी रूप से सहेजना", C: "परिवर्तनों को हटाना", D: "परिवर्तनों को देखना", correct: "B", explanation: "commit परिवर्तनों को स्थायी रूप से रिपॉजिटरी में सहेजता है।" },
+            { question: "DevOps में CI/CD का क्या अर्थ है?", A: "Continuous Improvement / Continuous Development", B: "Continuous Integration / Continuous Deployment", C: "Continuous Integration / Continuous Delivery", D: "B और C दोनों", correct: "D", explanation: "CI/CD – Continuous Integration और Continuous Delivery/Deployment" },
+            { question: "कंटेनरीकरण (Containerization) का उदाहरण क्या है?", A: "VMware", B: "Docker", C: "VirtualBox", D: "Hyper-V", correct: "B", explanation: "Docker कंटेनरीकरण का एक प्रमुख उदाहरण है।" },
+            { question: "ऑर्केस्ट्रेशन (Orchestration) का उदाहरण क्या है?", A: "Docker", B: "Jenkins", C: "Kubernetes", D: "Ansible", correct: "C", explanation: "Kubernetes कंटेनर ऑर्केस्ट्रेशन का उदाहरण है।" },
+            { question: "इंफ्रास्ट्रक्चर ऑटोमेशन का उदाहरण क्या है?", A: "Kubernetes", B: "Docker", C: "Ansible", D: "Jenkins", correct: "C", explanation: "Ansible इंफ्रास्ट्रक्चर ऑटोमेशन (Configuration Management) का उदाहरण है।" },
+            { question: "CI/CD टूल का उदाहरण क्या है?", A: "Docker", B: "Kubernetes", C: "Jenkins", D: "Ansible", correct: "C", explanation: "Jenkins CI/CD (Continuous Integration/Continuous Delivery) टूल है।" },
+            { question: "माइक्रोसर्विसेज (Microservices) आर्किटेक्चर का क्या लाभ है?", A: "कम लागत", B: "स्केलेबिलिटी और स्वतंत्रता", C: "सरलता", D: "कम कोड", correct: "B", explanation: "माइक्रोसर्विसेज स्केलेबिलिटी और स्वतंत्र डिप्लॉयमेंट प्रदान करती हैं।" },
+            { question: "मोनोलिथिक (Monolithic) आर्किटेक्चर का क्या अर्थ है?", A: "कई छोटी सेवाएँ", B: "एक ही कोडबेस में सभी कार्य", C: "केवल फ्रंटएंड", D: "केवल बैकएंड", correct: "B", explanation: "मोनोलिथिक आर्किटेक्चर में सभी कार्य एक ही कोडबेस में होते हैं।" },
+            { question: "REST API का पूर्ण रूप क्या है?", A: "Remote State Transfer API", B: "Representational State Transfer API", C: "Representational State Transfer Application", D: "Remote State Transfer Application", correct: "B", explanation: "REST API – Representational State Transfer API" },
+            { question: "SOAP का पूर्ण रूप क्या है?", A: "Simple Object Application Protocol", B: "Simple Object Access Protocol", C: "System Object Access Protocol", D: "Standard Object Access Protocol", correct: "B", explanation: "SOAP – Simple Object Access Protocol" },
+            { question: "GraphQL का उपयोग किस लिए किया जाता है?", A: "डेटाबेस भाषा", B: "API क्वेरी भाषा", C: "प्रोग्रामिंग भाषा", D: "मार्कअप भाषा", correct: "B", explanation: "GraphQL एक API क्वेरी भाषा है।" },
+            { question: "JSON का पूर्ण रूप क्या है?", A: "JavaScript Object Navigation", B: "JavaScript Object Notation", C: "Java System Object Notation", D: "JavaScript Online Notation", correct: "B", explanation: "JSON – JavaScript Object Notation" },
+            { question: "XML का पूर्ण रूप क्या है?", A: "eXtensible Marking Language", B: "eXtensible Markup Language", C: "eXtensible Management Language", D: "eXtensible Module Language", correct: "B", explanation: "XML – eXtensible Markup Language" },
+            { question: "कौन सी भाषा स्टैटिकली टाइप्ड है?", A: "Python", B: "JavaScript", C: "Java", D: "Ruby", correct: "C", explanation: "Java स्टैटिकली टाइप्ड (Static Typed) भाषा है।" },
+            { question: "कौन सी भाषा डायनैमिकली टाइप्ड है?", A: "Java", B: "C++", C: "Python", D: "Rust", correct: "C", explanation: "Python डायनैमिकली टाइप्ड (Dynamically Typed) भाषा है।" },
+            { question: "TypeScript किस भाषा का सुपरसेट है?", A: "Java", B: "Python", C: "JavaScript", D: "C#", correct: "C", explanation: "TypeScript JavaScript का सुपरसेट है।" },
+            { question: "Rust भाषा का मुख्य लाभ क्या है?", A: "गति", B: "सरलता", C: "मेमोरी सुरक्षा", D: "लोकप्रियता", correct: "C", explanation: "Rust मेमोरी सुरक्षा (Memory Safety) के लिए जाना जाता है।" },
+            { question: "Go भाषा किसने विकसित की?", A: "Microsoft", B: "Google", C: "Apple", D: "Amazon", correct: "B", explanation: "Go भाषा Google द्वारा विकसित की गई है।" },
+            { question: "Kotlin भाषा किसके साथ इंटरऑपरेबल है?", A: "Python", B: "Java", C: "C++", D: "Rust", correct: "B", explanation: "Kotlin Java के साथ इंटरऑपरेबल (Interoperable) है।" },
+            { question: "स्क्रिप्टिंग भाषा का उदाहरण क्या है?", A: "C", B: "C++", C: "Java", D: "Python", correct: "D", explanation: "Python एक स्क्रिप्टिंग भाषा है।" },
+            { question: "कम्पाइल्ड भाषा का उदाहरण क्या है?", A: "Python", B: "JavaScript", C: "C", D: "Ruby", correct: "C", explanation: "C एक कम्पाइल्ड (Compiled) भाषा है।" },
+            { question: "इंटरप्रिटेड भाषा का उदाहरण क्या है?", A: "C", B: "C++", C: "Python", D: "Rust", correct: "C", explanation: "Python एक इंटरप्रिटेड (Interpreted) भाषा है।" },
+            { question: "डेटा स्ट्रक्चर में Stack का LIFO क्या है?", A: "Last In First Out", B: "Last In First Out", C: "First In First Out", D: "Last Out First In", correct: "A", explanation: "Stack LIFO (Last In First Out) सिद्धांत पर कार्य करता है।" },
+            { question: "Queue का FIFO क्या है?", A: "First In First Out", B: "First In First Out", C: "Last In First Out", D: "First Out Last In", correct: "A", explanation: "Queue FIFO (First In First Out) सिद्धांत पर कार्य करता है।" },
+            { question: "लिंक्ड लिस्ट (Linked List) का क्या लाभ है?", A: "यादृच्छिक पहुँच", B: "डायनैमिक आकार", C: "तेज़ पहुँच", D: "कम मेमोरी", correct: "B", explanation: "लिंक्ड लिस्ट का आकार डायनैमिक (गतिशील) होता है।" },
+            { question: "बाइनरी सर्च ट्री (BST) का क्या लाभ है?", A: "सर्च O(n)", B: "सर्च O(n²)", C: "सर्च O(log n)", D: "सर्च O(1)", correct: "C", explanation: "BST में सर्च O(log n) (संतुलित होने पर) की जटिलता है।" },
+            { question: "ग्राफ (Graph) डेटा संरचना का उपयोग किस लिए किया जाता है?", A: "फाइल सिस्टम", B: "नेटवर्क प्रतिनिधित्व", C: "डेटाबेस", D: "कैशिंग", correct: "B", explanation: "ग्राफ का उपयोग नेटवर्क, मार्ग, कनेक्शन आदि के प्रतिनिधित्व के लिए किया जाता है।" },
+            { question: "हैश टेबल (Hash Table) का उपयोग किस लिए किया जाता है?", A: "सॉर्टिंग", B: "तेज़ खोज", C: "फ़िल्टरिंग", D: "समूहीकरण", correct: "B", explanation: "हैश टेबल O(1) जटिलता में खोज (Search) प्रदान करती है।" },
+            { question: "बबल सॉर्ट (Bubble Sort) की जटिलता क्या है?", A: "O(n log n)", B: "O(n)", C: "O(n²)", D: "O(log n)", correct: "C", explanation: "बबल सॉर्ट की जटिलता O(n²) है।" },
+            { question: "क्विक सॉर्ट (Quick Sort) की औसत जटिलता क्या है?", A: "O(n²)", B: "O(n)", C: "O(n log n)", D: "O(log n)", correct: "C", explanation: "क्विक सॉर्ट की औसत जटिलता O(n log n) है।" },
+            { question: "मर्ज सॉर्ट (Merge Sort) की जटिलता क्या है?", A: "O(n²)", B: "O(n)", C: "O(n log n)", D: "O(log n)", correct: "C", explanation: "मर्ज सॉर्ट की जटिलता O(n log n) है।" },
+            { question: "बाइनरी सर्च (Binary Search) की जटिलता क्या है?", A: "O(n)", B: "O(n²)", C: "O(1)", D: "O(log n)", correct: "D", explanation: "बाइनरी सर्च की जटिलता O(log n) है।" },
+            { question: "लीनियर सर्च (Linear Search) की जटिलता क्या है?", A: "O(log n)", B: "O(1)", C: "O(n)", D: "O(n²)", correct: "C", explanation: "लीनियर सर्च की जटिलता O(n) है।" },
+            { question: "डेटाबेस में इंडेक्स (Index) का क्या उपयोग है?", A: "डेटा हटाना", B: "खोज गति बढ़ाना", C: "डेटा अपडेट करना", D: "डेटा समूहीकृत करना", correct: "B", explanation: "इंडेक्स डेटाबेस में खोज (Search) गति बढ़ाता है।" },
+            { question: "प्राइमरी की (Primary Key) का क्या अर्थ है?", A: "डुप्लिकेट हो सकता है", B: "अद्वितीय पहचानकर्ता", C: "NULL हो सकता है", D: "सभी", correct: "B", explanation: "Primary Key टेबल में प्रत्येक पंक्ति की अद्वितीय पहचानकर्ता है।" },
+            { question: "फॉरेन की (Foreign Key) का क्या अर्थ है?", A: "अद्वितीय पहचानकर्ता", B: "दूसरी टेबल से संबंध", C: "NULL हो सकता है", D: "सभी", correct: "B", explanation: "Foreign Key दूसरी टेबल के Primary Key से संबंध स्थापित करता है।" },
+            { question: "UNIQUE और PRIMARY KEY में क्या अंतर है?", A: "PRIMARY में NULL हो सकता है, UNIQUE में नहीं", B: "UNIQUE में NULL हो सकता है, PRIMARY में नहीं", C: "दोनों समान हैं", D: "UNIQUE डिफ़ॉल्ट नहीं है", correct: "B", explanation: "UNIQUE NULL होने की अनुमति देता है, PRIMARY KEY में NULL नहीं हो सकता।" },
+            { question: "SQL में 'JOIN' के कितने प्रकार होते हैं?", A: "INNER, OUTER", B: "LEFT, RIGHT", C: "INNER, LEFT, RIGHT, FULL, CROSS, SELF", D: "ONLY INNER", correct: "C", explanation: "JOIN के कई प्रकार हैं – INNER, LEFT, RIGHT, FULL, CROSS, SELF।" },
+            { question: "INNER JOIN का क्या अर्थ है?", A: "केवल बायीं टेबल की पंक्तियाँ", B: "दोनों टेबलों में मिलान पंक्तियाँ", C: "केवल दायीं टेबल की पंक्तियाँ", D: "सभी पंक्तियाँ", correct: "B", explanation: "INNER JOIN दोनों टेबलों में मिलान (Matching) पंक्तियों को दिखाता है।" },
+            { question: "LEFT JOIN का क्या अर्थ है?", A: "दोनों टेबलों में मिलान", B: "बायीं टेबल की सभी पंक्तियाँ + दायीं से मिलान", C: "केवल बायीं टेबल", D: "केवल दायीं टेबल", correct: "B", explanation: "LEFT JOIN बायीं टेबल (Left Table) की सभी पंक्तियाँ और दायीं से मिलान दिखाता है।" },
+            { question: "SQL में 'GROUP BY' का उपयोग किस लिए किया जाता है?", A: "डेटा सॉर्ट करने", B: "डेटा समूहीकृत करने", C: "डेटा फ़िल्टर करने", D: "डेटा हटाने", correct: "B", explanation: "GROUP BY डेटा को समूहीकृत (Group) करने के लिए किया जाता है।" },
+            { question: "HAVING और WHERE में क्या अंतर है?", A: "HAVING SELECT के साथ, WHERE GROUP BY के साथ", B: "HAVING GROUP BY के साथ, WHERE SELECT के साथ", C: "दोनों समान हैं", D: "HAVING फ़िल्टर नहीं करता", correct: "B", explanation: "HAVING GROUP BY के साथ प्रयोग होता है, WHERE SELECT के साथ।" },
+            { question: "SQL में 'ORDER BY' का उपयोग किस लिए किया जाता है?", A: "डेटा समूहीकृत करने", B: "डेटा सॉर्ट करने", C: "डेटा फ़िल्टर करने", D: "डेटा हटाने", correct: "B", explanation: "ORDER BY डेटा को सॉर्ट (Sort) करने के लिए किया जाता है।" }
+        ];
+
+        // ====== OPEN PREPARATION TECH (50) ======
+        const openprepTechMCQs = [
+            { question: "Microsoft की स्थापना कब हुई थी?", A: "1980", B: "1985", C: "1975", D: "1990", correct: "C", explanation: "Microsoft की स्थापना 1975 में बिल गेट्स और पॉल एलन ने की थी।" },
+            { question: "Google की स्थापना कब हुई थी?", A: "1995", B: "1998", C: "2000", D: "2005", correct: "B", explanation: "Google की स्थापना 1998 में लैरी पेज और सर्गेई ब्रिन ने की थी।" },
+            { question: "Apple की स्थापना कब हुई थी?", A: "1980", B: "1970", C: "1985", D: "1976", correct: "D", explanation: "Apple की स्थापना 1976 में स्टीव जॉब्स और स्टीव वोज्नियाक ने की थी।" },
+            { question: "Facebook का लॉन्च किस वर्ष हुआ था?", A: "2005", B: "2006", C: "2004", D: "2007", correct: "C", explanation: "Facebook को 2004 में मार्क जुकरबर्ग ने लॉन्च किया था।" },
+            { question: "Amazon का लॉन्च किस वर्ष हुआ था?", A: "1995", B: "1996", C: "1994", D: "1997", correct: "C", explanation: "Amazon को 1994 में जेफ बेजोस ने लॉन्च किया था।" },
+            { question: "YouTube का लॉन्च किस वर्ष हुआ था?", A: "2004", B: "2005", C: "2006", D: "2007", correct: "B", explanation: "YouTube को 2005 में चाड हर्ले, स्टीव चेन और जावेद करीम ने लॉन्च किया था।" },
+            { question: "Twitter (X) का लॉन्च किस वर्ष हुआ था?", A: "2005", B: "2006", C: "2007", D: "2008", correct: "B", explanation: "Twitter को 2006 में जैक डोरसी ने लॉन्च किया था।" },
+            { question: "Instagram का लॉन्च किस वर्ष हुआ था?", A: "2009", B: "2010", C: "2011", D: "2012", correct: "B", explanation: "Instagram को 2010 में केविन सिस्ट्रोम और माइक क्राइगर ने लॉन्च किया था।" },
+            { question: "WhatsApp का लॉन्च किस वर्ष हुआ था?", A: "2008", B: "2009", C: "2010", D: "2011", correct: "B", explanation: "WhatsApp को 2009 में जान कौम और ब्रायन एक्टन ने लॉन्च किया था।" },
+            { question: "LinkedIn का लॉन्च किस वर्ष हुआ था?", A: "2002", B: "2003", C: "2004", D: "2005", correct: "B", explanation: "LinkedIn को 2003 में रीड हॉफमैन ने लॉन्च किया था।" },
+            { question: "डिजिटल इंडिया मिशन कब शुरू किया गया था?", A: "2014", B: "2015", C: "2016", D: "2017", correct: "B", explanation: "डिजिटल इंडिया मिशन 1 जुलाई 2015 को शुरू किया गया था।" },
+            { question: "मेक इन इंडिया अभियान कब शुरू किया गया था?", A: "2015", B: "2014", C: "2016", D: "2013", correct: "B", explanation: "मेक इन इंडिया अभियान 25 सितंबर 2014 को शुरू किया गया था।" },
+            { question: "स्टार्टअप इंडिया अभियान कब शुरू किया गया था?", A: "2015", B: "2016", C: "2017", D: "2018", correct: "B", explanation: "स्टार्टअप इंडिया अभियान 16 जनवरी 2016 को शुरू किया गया था।" },
+            { question: "स्किल इंडिया मिशन कब शुरू किया गया था?", A: "2014", B: "2015", C: "2016", D: "2017", correct: "B", explanation: "स्किल इंडिया मिशन 15 जुलाई 2015 को शुरू किया गया था।" },
+            { question: "राष्ट्रीय साइबर सुरक्षा नीति किस वर्ष आई?", A: "2012", B: "2013", C: "2014", D: "2015", correct: "B", explanation: "राष्ट्रीय साइबर सुरक्षा नीति 2013 में आई थी।" },
+            { question: "IT Act 2000 को संसद में कब पारित किया गया था?", A: "1999", B: "2000", C: "2001", D: "2002", correct: "B", explanation: "IT Act 2000 को 2000 में संसद में पारित किया गया था।" },
+            { question: "भारत का पहला सुपर कंप्यूटर कौन सा था?", A: "PARAM 10000", B: "Agni", C: "SahasraT", D: "PARAM 8000", correct: "D", explanation: "भारत का पहला सुपर कंप्यूटर PARAM 8000 (1991) था।" },
+            { question: "भारत का सबसे तेज़ सुपर कंप्यूटर कौन सा है?", A: "PARAM 8000", B: "Agni", C: "PARAM Siddhi", D: "SahasraT", correct: "C", explanation: "PARAM Siddhi (C-DAC) भारत का सबसे तेज़ सुपर कंप्यूटर है।" },
+            { question: "डिजिटल इंडिया के तहत कितने स्तंभ (Pillars) हैं?", A: "6", B: "5", C: "9", D: "10", correct: "C", explanation: "डिजिटल इंडिया के 9 स्तंभ हैं।" },
+            { question: "राष्ट्रीय ई-गवर्नेंस योजना (NeGP) कब शुरू हुई?", A: "2005", B: "2006", C: "2007", D: "2008", correct: "B", explanation: "NeGP 2006 में शुरू की गई थी।" },
+            { question: "भारत में 5G सेवा कब शुरू हुई?", A: "2021", B: "2022", C: "2023", D: "2020", correct: "B", explanation: "भारत में 5G सेवा अक्टूबर 2022 में शुरू हुई थी।" },
+            { question: "भारत में 4G सेवा कब शुरू हुई?", A: "2010", B: "2012", C: "2013", D: "2014", correct: "B", explanation: "भारत में 4G सेवा 2012 में Airtel द्वारा शुरू की गई थी।" },
+            { question: "भारत में 3G सेवा कब शुरू हुई?", A: "2007", B: "2008", C: "2009", D: "2010", correct: "B", explanation: "भारत में 3G सेवा 2008 में शुरू हुई थी।" },
+            { question: "भारत में ब्रॉडबैंड कनेक्टिविटी का लक्ष्य वर्ष क्या है?", A: "2024", B: "2025", C: "2026", D: "2023", correct: "B", explanation: "भारत में ब्रॉडबैंड कनेक्टिविटी का लक्ष्य 2025 है।" },
+            { question: "डिजिटल पर्सनल डेटा प्रोटेक्शन (DPDP) अधिनियम कब पारित हुआ?", A: "2022", B: "2023", C: "2024", D: "2021", correct: "B", explanation: "DPDP अधिनियम 2023 में पारित हुआ था।" },
+            { question: "भारत में स्टार्टअप इंडिया के तहत कितने स्टार्टअप पंजीकृत हैं? (2025 अनुसार)", A: "50 हजार", B: "75 हजार", C: "1 लाख से अधिक", D: "2 लाख", correct: "C", explanation: "2025 तक 1.2 लाख से अधिक स्टार्टअप पंजीकृत हैं।" },
+            { question: "भारत का IT सेवा निर्यात 2025 में लगभग कितना है?", A: "150 अरब डॉलर", B: "200 अरब डॉलर", C: "250 अरब डॉलर", D: "300 अरब डॉलर", correct: "B", explanation: "भारत का IT सेवा निर्यात 2025 में ~200 अरब डॉलर है।" },
+            { question: "भारत में कितने यूनिकोर्न स्टार्टअप हैं? (2025 अनुसार)", A: "50+", B: "100+", C: "150+", D: "200+", correct: "B", explanation: "2025 तक भारत में 100+ यूनिकोर्न स्टार्टअप हैं।" },
+            { question: "भारत का पहला यूनिकोर्न स्टार्टअप कौन सा था?", A: "Paytm", B: "Flipkart", C: "Ola", D: "Zomato", correct: "B", explanation: "Flipkart भारत का पहला यूनिकोर्न स्टार्टअप था।" },
+            { question: "राष्ट्रीय क्वांटम मिशन कब शुरू किया गया?", A: "2022", B: "2023", C: "2024", D: "2021", correct: "B", explanation: "राष्ट्रीय क्वांटम मिशन 2023 में शुरू किया गया था।" },
+            { question: "भारत का क्वांटम कंप्यूटर किस संगठन द्वारा विकसित किया जा रहा है?", A: "ISRO", B: "DRDO", C: "C-DAC", D: "BARC", correct: "C", explanation: "भारत का क्वांटम कंप्यूटर C-DAC द्वारा विकसित किया जा रहा है।" },
+            { question: "विश्व का पहला क्वांटम कंप्यूटर किसने विकसित किया?", A: "Google", B: "IBM", C: "Microsoft", D: "Amazon", correct: "B", explanation: "IBM ने पहला क्वांटम कंप्यूटर विकसित किया था।" },
+            { question: "सुपर कंप्यूटर में गति मापने की इकाई क्या है?", A: "MIPS", B: "FLOPS", C: "GHz", D: "MBps", correct: "B", explanation: "सुपर कंप्यूटर की गति FLOPS (Floating Point Operations Per Second) में मापी जाती है।" },
+            { question: "भारत का पहला मोबाइल नेटवर्क कब शुरू हुआ था?", A: "1994", B: "1995", C: "1996", D: "1997", correct: "B", explanation: "भारत का पहला मोबाइल नेटवर्क 1995 में शुरू हुआ था।" },
+            { question: "भारत में इंटरनेट सेवा कब शुरू हुई थी?", A: "1994", B: "1995", C: "1996", D: "1997", correct: "B", explanation: "भारत में इंटरनेट सेवा 1995 में शुरू हुई थी।" },
+            { question: "विश्व की पहली वेबसाइट कब बनी थी?", A: "1990", B: "1991", C: "1992", D: "1993", correct: "B", explanation: "पहली वेबसाइट 1991 में बनाई गई थी (info.cern.ch)।" },
+            { question: "HTML 5 कब रिलीज़ हुआ था?", A: "2012", B: "2013", C: "2014", D: "2015", correct: "C", explanation: "HTML 5 को 2014 में W3C द्वारा रिकमेंडेशन दिया गया था।" },
+            { question: "CSS 3 कब रिलीज़ हुआ था?", A: "2010", B: "2011", C: "2012", D: "2013", correct: "B", explanation: "CSS 3 2011 में रिलीज़ हुआ था।" },
+            { question: "Python 3.0 कब रिलीज़ हुआ था?", A: "2007", B: "2008", C: "2009", D: "2010", correct: "B", explanation: "Python 3.0 3 दिसम्बर 2008 को रिलीज़ हुआ था।" },
+            { question: "Java 8 कब रिलीज़ हुआ था?", A: "2013", B: "2014", C: "2015", D: "2016", correct: "B", explanation: "Java 8 18 मार्च 2014 को रिलीज़ हुआ था।" },
+            { question: "Windows 10 कब रिलीज़ हुआ था?", A: "2014", B: "2015", C: "2016", D: "2017", correct: "B", explanation: "Windows 10 29 जुलाई 2015 को रिलीज़ हुआ था।" },
+            { question: "Linux Kernel 1.0 कब रिलीज़ हुआ था?", A: "1993", B: "1994", C: "1995", D: "1996", correct: "B", explanation: "Linux Kernel 1.0 14 मार्च 1994 को रिलीज़ हुआ था।" },
+            { question: "Git कब रिलीज़ हुआ था?", A: "2004", B: "2005", C: "2006", D: "2007", correct: "B", explanation: "Git 7 अप्रैल 2005 को रिलीज़ हुआ था।" },
+            { question: "Docker कब रिलीज़ हुआ था?", A: "2012", B: "2013", C: "2014", D: "2015", correct: "B", explanation: "Docker 13 मार्च 2013 को रिलीज़ हुआ था।" },
+            { question: "Kubernetes कब रिलीज़ हुआ था?", A: "2014", B: "2015", C: "2016", D: "2017", correct: "B", explanation: "Kubernetes 21 जुलाई 2015 को रिलीज़ हुआ था।" },
+            { question: "Android 1.0 कब रिलीज़ हुआ था?", A: "2007", B: "2008", C: "2009", D: "2010", correct: "B", explanation: "Android 1.0 23 सितम्बर 2008 को रिलीज़ हुआ था।" },
+            { question: "iOS 1.0 कब रिलीज़ हुआ था?", A: "2006", B: "2007", C: "2008", D: "2009", correct: "B", explanation: "iOS 1.0 29 जून 2007 को रिलीज़ हुआ था।" },
+            { question: "macOS X कब रिलीज़ हुआ था?", A: "2000", B: "2001", C: "2002", D: "2003", correct: "B", explanation: "macOS X (Cheetah) 24 मार्च 2001 को रिलीज़ हुआ था।" },
+            { question: "Ubuntu Linux पहला रिलीज़ कब हुआ था?", A: "2003", B: "2004", C: "2005", D: "2006", correct: "B", explanation: "Ubuntu 4.10 (Warty Warthog) 20 अक्टूबर 2004 को रिलीज़ हुआ था।" },
+            { question: "Debian Linux का पहला रिलीज़ कब हुआ था?", A: "1993", B: "1994", C: "1995", D: "1996", correct: "A", explanation: "Debian 0.01 1993 में रिलीज़ हुआ था।" }
+        ];
+
+        // ====== PRACTICE (50 MIXED) ======
+        const practiceMCQs = [
+            { question: "कंप्यूटर की पहली पीढ़ी में किसका उपयोग किया गया था?", A: "ट्रांजिस्टर", B: "वैक्यूम ट्यूब", C: "इंटीग्रेटेड सर्किट", D: "माइक्रोप्रोसेसर", correct: "B", explanation: "पहली पीढ़ी (1946-1959) में वैक्यूम ट्यूब का उपयोग किया गया था।" },
+            { question: "OSI मॉडल में रूटिंग किस परत पर होती है?", A: "Data Link Layer", B: "Physical Layer", C: "Network Layer", D: "Transport Layer", correct: "C", explanation: "रूटिंग Network Layer (Layer 3) पर होती है।" },
+            { question: "फ़िशिंग (Phishing) क्या है?", A: "डेटा एन्क्रिप्ट करना", B: "नेटवर्क हैक करना", C: "नकली ई-मेल द्वारा जानकारी चुराना", D: "पासवर्ड क्रैक करना", correct: "C", explanation: "फ़िशिंग नकली ई-मेल या वेबसाइट द्वारा व्यक्तिगत जानकारी चुराना है।" },
+            { question: "C भाषा में 'printf' किस लाइब्रेरी से संबंधित है?", A: "stdlib.h", B: "string.h", C: "stdio.h", D: "math.h", correct: "C", explanation: "printf stdio.h (Standard Input Output) लाइब्रेरी से संबंधित है।" },
+            { question: "Microsoft की स्थापना कब हुई थी?", A: "1980", B: "1985", C: "1990", D: "1975", correct: "D", explanation: "Microsoft की स्थापना 1975 में बिल गेट्स और पॉल एलन ने की थी।" },
+            { question: "RAM का पूर्ण रूप क्या है?", A: "Read Access Memory", B: "Random Access Memory", C: "Real Access Memory", D: "Raw Access Memory", correct: "B", explanation: "RAM का पूर्ण रूप Random Access Memory है।" },
+            { question: "CPU में ALU का कार्य क्या है?", A: "निर्देशों का डिकोडिंग", B: "मेमोरी प्रबंधन", C: "अंकगणितीय एवं तार्किक संक्रियाएँ", D: "इनपुट/आउटपुट नियंत्रण", correct: "C", explanation: "ALU अंकगणितीय एवं तार्किक संक्रियाएँ करता है।" },
+            { question: "स्विच (Switch) किस परत पर कार्य करता है?", A: "Physical Layer", B: "Network Layer", C: "Data Link Layer", D: "Transport Layer", correct: "C", explanation: "स्विच Data Link Layer (Layer 2) पर कार्य करता है।" },
+            { question: "रैंसमवेयर (Ransomware) क्या करता है?", A: "डेटा हटा देता है", B: "नेटवर्क को धीमा कर देता है", C: "डेटा को एन्क्रिप्ट कर फिरौती माँगता है", D: "पासवर्ड चुराता है", correct: "C", explanation: "रैंसमवेयर डेटा को एन्क्रिप्ट करके फिरौती माँगता है।" },
+            { question: "जावा (Java) किस प्रकार की भाषा है?", A: "प्रोसीजरल", B: "ऑब्जेक्ट-ओरिएंटेड", C: "फंक्शनल", D: "स्क्रिप्टिंग", correct: "B", explanation: "Java ऑब्जेक्ट-ओरिएंटेड प्रोग्रामिंग भाषा है।" },
+            { question: "Google की स्थापना कब हुई थी?", A: "1995", B: "2000", C: "1998", D: "2005", correct: "C", explanation: "Google की स्थापना 1998 में लैरी पेज और सर्गेई ब्रिन ने की थी।" },
+            { question: "निम्न में से कौन सा इनपुट डिवाइस है?", A: "मॉनिटर", B: "प्रिंटर", C: "कीबोर्ड", D: "स्पीकर", correct: "C", explanation: "कीबोर्ड इनपुट डिवाइस है, बाकी आउटपुट हैं।" },
+            { question: "SMTP किस पोर्ट का उपयोग करता है?", A: "110", B: "143", C: "25", D: "993", correct: "C", explanation: "SMTP पोर्ट 25 का उपयोग करता है।" },
+            { question: "SSL/TLS का उपयोग किस लिए किया जाता है?", A: "डेटा संग्रहण", B: "सुरक्षित संचार के लिए", C: "नेटवर्क प्रबंधन", D: "प्रोसेस शेड्यूलिंग", correct: "B", explanation: "SSL/TLS सुरक्षित संचार (Secure Communication) के लिए उपयोग किया जाता है।" },
+            { question: "Python में 'list' और 'tuple' में मुख्य अंतर क्या है?", A: "list immutable, tuple mutable", B: "list mutable, tuple immutable", C: "दोनों mutable", D: "दोनों immutable", correct: "B", explanation: "list mutable (बदलने योग्य) है, tuple immutable (अपरिवर्तनीय) है।" },
+            { question: "कंप्यूटर की सबसे छोटी मेमोरी इकाई क्या है?", A: "बाइट", B: "KB", C: "MB", D: "बिट", correct: "D", explanation: "बिट (0 या 1) सबसे छोटी इकाई है।" },
+            { question: "NAT का मुख्य कार्य क्या है?", A: "पब्लिक IP को प्राइवेट IP में बदलना", B: "IP को MAC में बदलना", C: "प्राइवेट IP को पब्लिक IP में बदलना", D: "MAC को IP में बदलना", correct: "C", explanation: "NAT प्राइवेट IP को पब्लिक IP में बदलता है।" },
+            { question: "DDoS का पूर्ण रूप क्या है?", A: "Distributed Defense of Service", B: "Distributed Denial of Service", C: "Dynamic Denial of Service", D: "Distributed Denial of System", correct: "B", explanation: "DDoS – Distributed Denial of Service" },
+            { question: "SQL में 'SELECT * FROM table' का क्या अर्थ है?", A: "एक कॉलम चुनना", B: "सभी कॉलम चुनना", C: "डेटा हटाना", D: "डेटा अपडेट करना", correct: "B", explanation: "SELECT * सभी कॉलम्स को चुनता है।" },
+            { question: "Apple की स्थापना कब हुई थी?", A: "1980", B: "1970", C: "1976", D: "1985", correct: "C", explanation: "Apple की स्थापना 1976 में स्टीव जॉब्स और स्टीव वोज्नियाक ने की थी।" },
+            { question: "MS Excel में कितने कॉलम होते हैं?", A: "256", B: "1024", C: "65536", D: "16384", correct: "D", explanation: "MS Excel में 16384 कॉलम (A से XFD) हैं।" },
+            { question: "फायरवॉल (Firewall) का मुख्य कार्य क्या है?", A: "डेटा एन्क्रिप्ट करना", B: "नेटवर्क ट्रैफ़िक को फ़िल्टर करना", C: "डेटा संग्रहित करना", D: "प्रोसेस प्रबंधित करना", correct: "B", explanation: "फायरवॉल नेटवर्क ट्रैफ़िक को फ़िल्टर करता है।" },
+            { question: "MD5 कितने बिट का हैश उत्पन्न करता है?", A: "160", B: "256", C: "128", D: "512", correct: "C", explanation: "MD5 128-बिट हैश उत्पन्न करता है।" },
+            { question: "Linux में 'grep' कमांड का उपयोग किस लिए होता है?", A: "फाइल सूचीबद्ध करने", B: "पैटर्न खोजने", C: "फाइल हटाने", D: "डायरेक्टरी बदलने", correct: "B", explanation: "grep कमांड का उपयोग पैटर्न (text) खोजने के लिए होता है।" },
+            { question: "Facebook का लॉन्च किस वर्ष हुआ था?", A: "2005", B: "2006", C: "2004", D: "2007", correct: "C", explanation: "Facebook को 2004 में मार्क जुकरबर्ग ने लॉन्च किया था।" },
+            { question: "निम्न में से कौन सा आउटपुट डिवाइस है?", A: "माउस", B: "कीबोर्ड", C: "मॉनिटर", D: "स्कैनर", correct: "C", explanation: "मॉनिटर आउटपुट डिवाइस है।" },
+            { question: "VLAN का मुख्य लाभ क्या है?", A: "नेटवर्क की गति बढ़ाना", B: "नेटवर्क को लॉजिकल रूप से विभाजित करना", C: "नेटवर्क की सुरक्षा बढ़ाना", D: "B और C दोनों", correct: "D", explanation: "VLAN नेटवर्क को लॉजिकल रूप से विभाजित करता है और सुरक्षा बढ़ाता है।" },
+            { question: "IT Act 2000 कब लागू हुआ?", A: "2001", B: "2002", C: "2000", D: "2003", correct: "C", explanation: "IT Act 2000, 2000 में लागू हुआ था।" },
+            { question: "डेटा स्ट्रक्चर में Stack का LIFO क्या है?", A: "First In First Out", B: "Last In First Out", C: "Last Out First In", D: "First In Last Out", correct: "B", explanation: "Stack LIFO (Last In First Out) सिद्धांत पर कार्य करता है।" },
+            { question: "डिजिटल इंडिया मिशन कब शुरू किया गया था?", A: "2014", B: "2015", C: "2016", D: "2017", correct: "B", explanation: "डिजिटल इंडिया मिशन 1 जुलाई 2015 को शुरू किया गया था।" },
+            { question: "1 बाइट में कितने बिट होते हैं?", A: "4", B: "6", C: "8", D: "16", correct: "C", explanation: "1 बाइट = 8 बिट होते हैं।" },
+            { question: "RIP रूटिंग प्रोटोकॉल की अधिकतम हॉप सीमा क्या है?", A: "30", B: "60", C: "15", D: "255", correct: "C", explanation: "RIP की अधिकतम हॉप सीमा 15 है।" },
+            { question: "साइबर सुरक्षा में 'Phishing' और 'Spear Phishing' में क्या अंतर है?", A: "Phishing किसी विशिष्ट व्यक्ति को लक्ष्य बनाता है", B: "Spear Phishing किसी विशिष्ट व्यक्ति को लक्ष्य बनाता है", C: "दोनों समान हैं", D: "Spear Phishing बड़े समूह को लक्ष्य बनाता है", correct: "B", explanation: "Spear Phishing किसी विशिष्ट व्यक्ति या संगठन को लक्षित करता है, जबकि Phishing बड़े समूह को।" },
+            { question: "SQL में 'JOIN' का उपयोग किस लिए किया जाता है?", A: "डेटा फ़िल्टर करने", B: "दो टेबलों को जोड़ने", C: "डेटा सॉर्ट करने", D: "डेटा ग्रुप करने", correct: "B", explanation: "JOIN दो या अधिक टेबलों को जोड़ने के लिए उपयोग किया जाता है।" },
+            { question: "Amazon का लॉन्च किस वर्ष हुआ था?", A: "1995", B: "1996", C: "1994", D: "1997", correct: "C", explanation: "Amazon को 1994 में जेफ बेजोस ने लॉन्च किया था।" },
+            { question: "निम्न में से कौन सा स्टोरेज डिवाइस है?", A: "RAM", B: "ROM", C: "HDD", D: "CPU", correct: "C", explanation: "HDD (Hard Disk Drive) एक स्टोरेज डिवाइस है।" },
+            { question: "OSPF किस प्रकार का रूटिंग प्रोटोकॉल है?", A: "दूरी-सदिश", B: "पाथ-वेक्टर", C: "लिंक-स्टेट", D: "हाइब्रिड", correct: "C", explanation: "OSPF लिंक-स्टेट (Link-State) रूटिंग प्रोटोकॉल है।" },
+            { question: "कंप्यूटर का जनक किसे कहा जाता है?", A: "एलन ट्यूरिंग", B: "बिल गेट्स", C: "चार्ल्स बैबेज", D: "स्टीव जॉब्स", correct: "C", explanation: "चार्ल्स बैबेज को कंप्यूटर का जनक कहा जाता है।" },
+            { question: "IT Act 2008 में क्या संशोधन किए गए?", A: "केवल ऑनलाइन लेनदेन", B: "साइबर अपराधों की नई श्रेणियाँ", C: "डेटा संरक्षण", D: "सभी", correct: "D", explanation: "IT Act 2008 में साइबर अपराधों, डेटा संरक्षण, ऑनलाइन लेनदेन में संशोधन किए गए।" },
+            { question: "Docker किस तकनीक से संबंधित है?", A: "वर्चुअलाइजेशन", B: "कंटेनरीकरण", C: "क्लाउड कंप्यूटिंग", D: "नेटवर्किंग", correct: "B", explanation: "Docker कंटेनरीकरण (Containerization) तकनीक है।" },
+            { question: "YouTube का लॉन्च किस वर्ष हुआ था?", A: "2004", B: "2005", C: "2006", D: "2007", correct: "B", explanation: "YouTube को 2005 में चाड हर्ले, स्टीव चेन और जावेद करीम ने लॉन्च किया था।" },
+            { question: "1 KB में कितने बाइट होते हैं?", A: "512", B: "1000", C: "1024", D: "2048", correct: "C", explanation: "1 KB = 1024 बाइट होते हैं।" },
+            { question: "VPN का मुख्य उपयोग क्या है?", A: "तेज़ इंटरनेट", B: "सुरक्षित दूरस्थ कनेक्शन", C: "डेटा संग्रहण", D: "वेब होस्टिंग", correct: "B", explanation: "VPN सुरक्षित दूरस्थ कनेक्शन (Remote Access) के लिए उपयोग किया जाता है।" },
+            { question: "साइबर अपराधों की रिपोर्ट करने के लिए राष्ट्रीय हेल्पलाइन नंबर क्या है?", A: "100", B: "1930", C: "112", D: "1098", correct: "B", explanation: "साइबर अपराधों के लिए राष्ट्रीय हेल्पलाइन नंबर 1930 है।" },
+            { question: "Kubernetes का मुख्य कार्य क्या है?", A: "डेटा एन्क्रिप्शन", B: "कंटेनर ऑर्केस्ट्रेशन", C: "नेटवर्क मॉनिटरिंग", D: "डेटाबेस प्रबंधन", correct: "B", explanation: "Kubernetes कंटेनर ऑर्केस्ट्रेशन के लिए उपयोग किया जाता है।" },
+            { question: "मेक इन इंडिया अभियान कब शुरू किया गया था?", A: "2015", B: "2014", C: "2016", D: "2013", correct: "B", explanation: "मेक इन इंडिया अभियान 25 सितंबर 2014 को शुरू किया गया था।" },
+            { question: "BIOS का पूर्ण रूप क्या है?", A: "Binary Input Output System", B: "Basic Input Output System", C: "Basic Integrated Output System", D: "Binary Integrated Output System", correct: "B", explanation: "BIOS का पूर्ण रूप Basic Input Output System है।" },
+            { question: "DNS में 'A' रिकॉर्ड का क्या अर्थ है?", A: "Alias Record", B: "Address Record", C: "Authoritative Record", D: "Access Record", correct: "B", explanation: "DNS में 'A' रिकॉर्ड Address Record है, जो डोमेन को IP से मैप करता है।" },
+            { question: "CERT-In का पूर्ण रूप क्या है?", A: "Computer Emergency Response Team - International", B: "Computer Emergency Response Team - India", C: "Cyber Emergency Response Team - India", D: "Cyber Emergency Response Team - International", correct: "B", explanation: "CERT-In – Computer Emergency Response Team – India" }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('advanced-mcq', advancedMCQs);
+            renderMCQs('networking-adv-mcq', networkingAdvMCQs);
+            renderMCQs('cyber-mcq', cyberMCQs);
+            renderMCQs('technical-mcq', technicalMCQs);
+            renderMCQs('openprep-tech-mcq', openprepTechMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

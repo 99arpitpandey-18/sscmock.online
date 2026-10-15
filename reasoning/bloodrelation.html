@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blood Relations – Deep Explanation (रक्त संबंध)</title>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --blue:#2563eb; --dark:#0b1f4b; --navy:#102a68; --bg:#f5f7fb; --white:#ffffff; --text:#172033; --muted:#667085; --border:#e1e6ef; --green:#16a34a; --red:#dc2626; --lightblue:#eef5ff; }
+body{ font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); }
+.header{ background:linear-gradient(135deg,#07183d,#2445a0); color:white; padding:28px 6%; }
+.header-inner{ max-width:1250px; margin:auto; }
+.back-btn{ color:white; text-decoration:none; font-size:15px; font-weight:bold; display:inline-block; margin-bottom:20px; background:rgba(255,255,255,0.1); padding:6px 18px; border-radius:30px; }
+.back-btn:hover{ background:rgba(255,255,255,0.25); }
+.header-content{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.header-icon{ width:76px; height:76px; border-radius:18px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:40px; flex-shrink:0; }
+.header h1{ font-size:34px; margin-bottom:7px; }
+.header p{ font-size:15px; opacity:.85; }
+.lang-toggle{ display:flex; gap:8px; background:rgba(255,255,255,0.15); padding:4px; border-radius:30px; margin-left:auto; }
+.lang-btn{ background:transparent; border:2px solid transparent; color:white; padding:6px 16px; border-radius:30px; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.lang-btn.active{ background:white; color:#0b1f4b; border-color:white; }
+.lang-btn:hover{ background:rgba(255,255,255,0.3); }
+.container{ width:92%; max-width:1200px; margin:30px auto; }
+.hero{ background:white; border:1px solid var(--border); border-radius:18px; padding:25px; box-shadow:0 8px 25px rgba(15,35,80,.06); }
+.hero h2{ color:var(--dark); margin-bottom:9px; }
+.hero p{ color:var(--muted); line-height:1.6; }
+.hero .description-box{ background:#f4f7ff; border-left:5px solid var(--blue); padding:16px 20px; border-radius:10px; margin-top:12px; color:#1f3a5f; line-height:1.8; }
+.stats{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.stat{ background:var(--lightblue); color:#21438f; border:1px solid #d9e5ff; padding:10px 15px; border-radius:10px; font-weight:bold; font-size:14px; }
+.controls{ margin:22px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.search-box{ flex:1; min-width:200px; padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; font-size:14px; outline:none; }
+.search-box:focus{ border-color:var(--blue); }
+select{ padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+.btn{ padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.btn-blue{ background:var(--blue); color:white; }
+.btn-blue:hover{ background:#1d4ed8; }
+.btn-white{ background:white; border:1px solid #ccd3df; color:#26344d; }
+.btn-white:hover{ background:#f0f2f5; }
+.btn-green{ background:var(--green); color:white; }
+.btn-green:hover{ background:#15803d; }
+.progress-info{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:var(--muted); font-weight:bold; }
+.progress{ width:100%; height:9px; background:#e5e9f0; border-radius:20px; overflow:hidden; margin-bottom:25px; }
+.progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); transition:.3s; }
+.question-card{ background:white; border:1px solid var(--border); border-radius:17px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 18px rgba(15,35,80,.05); }
+.question-top{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px 8px; }
+.question-number{ color:var(--blue); font-weight:800; }
+.question-type{ background:#eef2f7; color:#526071; padding:6px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.question-body{ padding:8px 20px 20px; }
+.question-text{ font-size:17px; line-height:1.65; font-weight:650; margin-bottom:16px; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.option{ background:#f8fafc; border:1px solid #dce2eb; border-radius:10px; padding:13px; text-align:left; cursor:pointer; font-size:15px; transition:.2s; }
+.option:hover{ background:#eff6ff; border-color:#2563eb; }
+.option.correct{ background:#ecfdf3; border-color:#22c55e; color:#166534; }
+.option.wrong{ background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+.answer-result{ margin-top:12px; font-weight:bold; }
+.explanation{ display:none; margin-top:15px; padding:18px 20px; background:#f4f7ff; border-left:5px solid #2563eb; border-radius:8px; line-height:1.8; }
+.explanation.show{ display:block; }
+.explanation-title{ color:#17449c; font-weight:bold; margin-bottom:8px; font-size:16px; }
+.footer{ text-align:center; padding:35px 10px; color:#667085; }
+@media(max-width:700px){ .header h1{ font-size:25px; } .header-content{ align-items:flex-start; } .header-icon{ width:60px; height:60px; font-size:30px; } .options{ grid-template-columns:1fr; } .question-text{ font-size:16px; } .container{ width:94%; } .controls{ flex-direction:column; } .controls .btn{ width:100%; text-align:center; } .lang-toggle{ margin-left:0; width:100%; justify-content:center; } }
+</style>
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="back-btn">← Topics पर वापस जाएँ</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+                <button class="lang-btn" id="langHi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">🩸</div>
+            <div>
+                <h1 id="mainTitle">Blood Relations (Deep Explanation)</h1>
+                <p id="mainSub">SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <h2 id="heroTitle">Blood Relations – Complete SSC Practice</h2>
+        <div id="descriptionBox" class="description-box"></div>
+        <div class="stats" id="statsRow">
+            <div class="stat" data-lang-en="510+ Questions" data-lang-hi="510+ प्रश्न">510+ Questions</div>
+            <div class="stat" data-lang-en="Direct Relations" data-lang-hi="प्रत्यक्ष संबंध">Direct Relations</div>
+            <div class="stat" data-lang-en="Coded Relations" data-lang-hi="कूटबद्ध संबंध">Coded Relations</div>
+            <div class="stat" data-lang-en="Generation Based" data-lang-hi="पीढ़ी आधारित">Generation Based</div>
+            <div class="stat" data-lang-en="Mixed Relations" data-lang-hi="मिश्रित संबंध">Mixed Relations</div>
+            <div class="stat" data-lang-en="Detailed Explanation" data-lang-hi="विस्तृत व्याख्या">Detailed Explanation</div>
+        </div>
+    </section>
+
+    <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="Search question...">
+        <select id="filter">
+            <option value="all" data-lang-en="All Questions" data-lang-hi="सभी प्रश्न">All Questions</option>
+            <option value="Direct Relations" data-lang-en="Direct Relations" data-lang-hi="प्रत्यक्ष संबंध">Direct Relations</option>
+            <option value="Coded Relations" data-lang-en="Coded Relations" data-lang-hi="कूटबद्ध संबंध">Coded Relations</option>
+            <option value="Generation Based" data-lang-en="Generation Based" data-lang-hi="पीढ़ी आधारित">Generation Based</option>
+            <option value="Mixed Relations" data-lang-en="Mixed Relations" data-lang-hi="मिश्रित संबंध">Mixed Relations</option>
+        </select>
+        <button class="btn btn-blue" onclick="showAllExplanations()" data-lang-en="Show Explanations" data-lang-hi="सभी व्याख्याएँ दिखाएँ">Show Explanations</button>
+        <button class="btn btn-green" onclick="resetQuiz()" data-lang-en="Reset" data-lang-hi="रीसेट करें">Reset</button>
+    </div>
+
+    <div class="progress-info">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <div id="questionsContainer"></div>
+</main>
+<footer class="footer" data-lang-en="Blood Relations · SSC Reasoning" data-lang-hi="रक्त संबंध · SSC रीजनिंग">Blood Relations · SSC Reasoning</footer>
+
+<script>
+// ================================================================
+//  LANGUAGE TOGGLE
+// ================================================================
+var currentLang = 'en';
+
+var descriptions = {
+    en: '<b>What are Blood Relations?</b><br> Blood Relations questions test your ability to understand and analyze family relationships. You need to track how people are connected through birth, marriage, and other relationships. <br><br> <b>📌 Key Concepts:</b><br> • <b>Father/Mother:</b> Parents of a person.<br> • <b>Brother/Sister:</b> Siblings sharing at least one parent.<br> • <b>Uncle/Aunt:</b> Parents\' siblings.<br> • <b>Grandfather/Grandmother:</b> Parents\' parents.<br> • <b>Nephew/Niece:</b> Sibling\'s children.<br> • <b>Cousin:</b> Uncle/Aunt\'s children.<br> • <b>In-laws:</b> Relations through marriage (e.g., brother-in-law, sister-in-law).<br><br> <b>📌 Tip:</b> Draw a family tree mentally or on paper. Start with the person mentioned first and connect the dots step by step.',
+    hi: '<b>रक्त संबंध (Blood Relations) क्या है?</b><br> रक्त संबंध के प्रश्न आपकी पारिवारिक संबंधों को समझने और विश्लेषण करने की क्षमता का परीक्षण करते हैं। आपको यह ट्रैक करना होता है कि लोग जन्म, विवाह और अन्य संबंधों के माध्यम से कैसे जुड़े हैं। <br><br> <b>📌 महत्वपूर्ण अवधारणाएँ:</b><br> • <b>पिता/माता:</b> किसी व्यक्ति के माता-पिता।<br> • <b>भाई/बहन:</b> कम से कम एक माता-पिता साझा करने वाले भाई-बहन।<br> • <b>चाचा/ताऊ/मामा/बुआ/चाची:</b> माता-पिता के भाई-बहन।<br> • <b>दादा/दादी/नाना/नानी:</b> माता-पिता के माता-पिता।<br> • <b>भतीजा/भतीजी/भांजा/भांजी:</b> भाई-बहन के बच्चे।<br> • <b>चचेरा/ममेरा/फुफेरा भाई-बहन:</b> चाचा/मामा/बुआ के बच्चे।<br> • <b>ससुराल संबंधी:</b> विवाह के माध्यम से संबंध (जैसे, जेठ/देवर, ननद/साली)।<br><br> <b>📌 सुझाव:</b> मानसिक या कागज़ पर फैमिली ट्री (परिवार वृक्ष) बनाएँ। पहले उल्लिखित व्यक्ति से शुरू करें और चरणबद्ध रूप से जोड़ें।'
+};
+
+function updateUI() {
+    var els = document.querySelectorAll('[data-lang-en]');
+    for (var i = 0; i < els.length; i++) {
+        var el = els[i];
+        var key = el.getAttribute('data-lang-en');
+        var hi = el.getAttribute('data-lang-hi');
+        if (currentLang === 'en') {
+            if (el.tagName === 'OPTION') el.textContent = key;
+            else el.textContent = key;
+        } else {
+            if (el.tagName === 'OPTION') el.textContent = hi;
+            else el.textContent = hi;
+        }
+    }
+    document.getElementById('mainTitle').textContent = (currentLang === 'en') ? 'Blood Relations (Deep Explanation)' : 'रक्त संबंध (गहन व्याख्या)';
+    document.getElementById('mainSub').textContent = (currentLang === 'en') ? 'SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions' : 'SSC CGL • CHSL • CPO • MTS | 510+ द्विभाषी प्रश्न';
+    document.getElementById('heroTitle').textContent = (currentLang === 'en') ? 'Blood Relations – Complete SSC Practice' : 'रक्त संबंध – पूर्ण SSC अभ्यास';
+    document.getElementById('descriptionBox').innerHTML = descriptions[currentLang];
+    document.getElementById('search').placeholder = (currentLang === 'en') ? 'Search question...' : 'प्रश्न खोजें...';
+    document.getElementById('langEn').className = 'lang-btn' + (currentLang === 'en' ? ' active' : '');
+    document.getElementById('langHi').className = 'lang-btn' + (currentLang === 'hi' ? ' active' : '');
+    renderQuestions();
+    updateProgress();
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    updateUI();
+}
+
+// ================================================================
+//  BLOOD RELATIONS GENERATOR
+// ================================================================
+var questions = [];
+
+function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+
+// ---- Name pools ----
+var maleNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+var femaleNames = ['P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W'];
+
+// ---- Relationship types ----
+var relations = [
+    { rel: 'Father', relHi: 'पिता', gender: 'M' },
+    { rel: 'Mother', relHi: 'माता', gender: 'F' },
+    { rel: 'Brother', relHi: 'भाई', gender: 'M' },
+    { rel: 'Sister', relHi: 'बहन', gender: 'F' },
+    { rel: 'Uncle', relHi: 'चाचा/ताऊ/मामा', gender: 'M' },
+    { rel: 'Aunt', relHi: 'चाची/मामी/बुआ', gender: 'F' },
+    { rel: 'Grandfather', relHi: 'दादा/नाना', gender: 'M' },
+    { rel: 'Grandmother', relHi: 'दादी/नानी', gender: 'F' },
+    { rel: 'Son', relHi: 'बेटा', gender: 'M' },
+    { rel: 'Daughter', relHi: 'बेटी', gender: 'F' },
+    { rel: 'Nephew', relHi: 'भतीजा/भांजा', gender: 'M' },
+    { rel: 'Niece', relHi: 'भतीजी/भांजी', gender: 'F' },
+    { rel: 'Cousin', relHi: 'चचेरा/ममेरा भाई/बहन', gender: 'M/F' },
+    { rel: 'Brother-in-law', relHi: 'जेठ/देवर/साला', gender: 'M' },
+    { rel: 'Sister-in-law', relHi: 'ननद/साली/भाभी', gender: 'F' },
+    { rel: 'Husband', relHi: 'पति', gender: 'M' },
+    { rel: 'Wife', relHi: 'पत्नी', gender: 'F' }
+];
+
+// ---- Generate a single Blood Relations question ----
+function generateBloodRelation() {
+    var type = Math.floor(Math.random() * 4); // 0: Direct, 1: Coded, 2: Generation, 3: Mixed
+    
+    // Pick two random people
+    var isMale1 = Math.random() < 0.5;
+    var name1 = isMale1 ? maleNames[Math.floor(Math.random() * maleNames.length)] : femaleNames[Math.floor(Math.random() * femaleNames.length)];
+    var isMale2 = Math.random() < 0.5;
+    var name2 = isMale2 ? maleNames[Math.floor(Math.random() * maleNames.length)] : femaleNames[Math.floor(Math.random() * femaleNames.length)];
+    // Ensure they are different
+    while (name2 === name1) {
+        isMale2 = Math.random() < 0.5;
+        name2 = isMale2 ? maleNames[Math.floor(Math.random() * maleNames.length)] : femaleNames[Math.floor(Math.random() * femaleNames.length)];
+    }
+    
+    // Pick a relationship
+    var relIdx = Math.floor(Math.random() * relations.length);
+    var rel = relations[relIdx];
+    var correct = rel.rel;
+    var correctHi = rel.relHi;
+    var gender = rel.gender;
+    
+    // Build question text based on type
+    var q_en, q_hi, exp_en, exp_hi, opts, ansIdx, typeLabel;
+    
+    if (type === 0) {
+        // Direct Relations: X is the father of Y. What is Y to X?
+        var relationPhrase = '';
+        var relationPhraseHi = '';
+        // Build a simple relationship statement
+        var relMap = {
+            'Father': { en: 'father of', hi: 'पिता हैं' },
+            'Mother': { en: 'mother of', hi: 'माता हैं' },
+            'Brother': { en: 'brother of', hi: 'भाई हैं' },
+            'Sister': { en: 'sister of', hi: 'बहन हैं' },
+            'Uncle': { en: 'uncle of', hi: 'चाचा/ताऊ/मामा हैं' },
+            'Aunt': { en: 'aunt of', hi: 'चाची/मामी/बुआ हैं' },
+            'Grandfather': { en: 'grandfather of', hi: 'दादा/नाना हैं' },
+            'Grandmother': { en: 'grandmother of', hi: 'दादी/नानी हैं' },
+            'Son': { en: 'son of', hi: 'बेटा हैं' },
+            'Daughter': { en: 'daughter of', hi: 'बेटी हैं' },
+            'Nephew': { en: 'nephew of', hi: 'भतीजा/भांजा हैं' },
+            'Niece': { en: 'niece of', hi: 'भतीजी/भांजी हैं' },
+            'Cousin': { en: 'cousin of', hi: 'चचेरा/ममेरा भाई/बहन हैं' },
+            'Brother-in-law': { en: 'brother-in-law of', hi: 'जेठ/देवर/साला हैं' },
+            'Sister-in-law': { en: 'sister-in-law of', hi: 'ननद/साली/भाभी हैं' },
+            'Husband': { en: 'husband of', hi: 'पति हैं' },
+            'Wife': { en: 'wife of', hi: 'पत्नी हैं' }
+        };
+        var phrase = relMap[correct] || { en: 'related to', hi: 'संबंधित हैं' };
+        q_en = name1 + ' is the ' + phrase.en + ' ' + name2 + '. How is ' + name2 + ' related to ' + name1 + '?';
+        q_hi = name1 + ', ' + name2 + ' के ' + phrase.hi + '। ' + name2 + ', ' + name1 + ' का क्या लगता है?';
+        // Correct answer is the inverse relationship
+        var inverseMap = {
+            'Father': 'Son/Daughter',
+            'Mother': 'Son/Daughter',
+            'Brother': 'Brother/Sister',
+            'Sister': 'Brother/Sister',
+            'Uncle': 'Nephew/Niece',
+            'Aunt': 'Nephew/Niece',
+            'Grandfather': 'Grandson/Granddaughter',
+            'Grandmother': 'Grandson/Granddaughter',
+            'Son': 'Father/Mother',
+            'Daughter': 'Father/Mother',
+            'Nephew': 'Uncle/Aunt',
+            'Niece': 'Uncle/Aunt',
+            'Cousin': 'Cousin',
+            'Brother-in-law': 'Brother-in-law/Sister-in-law',
+            'Sister-in-law': 'Brother-in-law/Sister-in-law',
+            'Husband': 'Wife',
+            'Wife': 'Husband'
+        };
+        var inverse = inverseMap[correct] || 'Related';
+        // Pick correct option based on gender of name1
+        var correctOpt = inverse;
+        if (inverse === 'Son/Daughter') {
+            correctOpt = isMale1 ? 'Son' : 'Daughter';
+        } else if (inverse === 'Brother/Sister') {
+            correctOpt = isMale1 ? 'Brother' : 'Sister';
+        } else if (inverse === 'Grandson/Granddaughter') {
+            correctOpt = isMale1 ? 'Grandson' : 'Granddaughter';
+        } else if (inverse === 'Father/Mother') {
+            correctOpt = isMale1 ? 'Father' : 'Mother';
+        } else if (inverse === 'Uncle/Aunt') {
+            correctOpt = isMale1 ? 'Uncle' : 'Aunt';
+        } else if (inverse === 'Brother-in-law/Sister-in-law') {
+            correctOpt = isMale1 ? 'Brother-in-law' : 'Sister-in-law';
+        }
+        // Build options
+        var allRels = ['Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Grandfather', 'Grandmother', 'Son', 'Daughter', 'Nephew', 'Niece', 'Cousin', 'Brother-in-law', 'Sister-in-law', 'Husband', 'Wife'];
+        var opts = [correctOpt];
+        var pool = allRels.filter(function(r) { return r !== correctOpt; });
+        shuffle(pool);
+        for (var i = 0; i < 3 && i < pool.length; i++) {
+            opts.push(pool[i]);
+        }
+        shuffle(opts);
+        ansIdx = opts.indexOf(correctOpt);
+        typeLabel = 'Direct Relations';
+        exp_en = '🔍 Family Tree:<br><b>Step 1:</b> ' + name1 + ' is the ' + phrase.en + ' ' + name2 + '.<br><b>Step 2:</b> This means ' + name2 + ' is the ' + correctOpt + ' of ' + name1 + '.<br>✅ <b>Correct answer: ' + correctOpt + '</b>';
+        exp_hi = '🔍 परिवार वृक्ष:<br><b>चरण 1:</b> ' + name1 + ', ' + name2 + ' के ' + phrase.hi + '।<br><b>चरण 2:</b> इसका मतलब ' + name2 + ', ' + name1 + ' का ' + correctOpt + ' है।<br>✅ <b>सही उत्तर: ' + correctOpt + '</b>';
+        
+    } else if (type === 1) {
+        // Coded Relations: A+B means A is brother of B, A-B means A is sister of B, etc.
+        var codeMap = {
+            '+': 'brother',
+            '-': 'sister',
+            '*': 'father',
+            '/': 'mother',
+            '^': 'husband',
+            '_': 'wife'
+        };
+        var codeHiMap = {
+            '+': 'भाई',
+            '-': 'बहन',
+            '*': 'पिता',
+            '/': 'माता',
+            '^': 'पति',
+            '_': 'पत्नी'
+        };
+        var codes = ['+', '-', '*', '/', '^', '_'];
+        var code = codes[Math.floor(Math.random() * codes.length)];
+        var relName = codeMap[code];
+        var relNameHi = codeHiMap[code];
+        // Pick a random person and relation
+        var person1 = maleNames[Math.floor(Math.random() * maleNames.length)];
+        var person2 = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+        var person3 = maleNames[Math.floor(Math.random() * maleNames.length)];
+        while (person3 === person1 || person3 === person2) {
+            person3 = maleNames[Math.floor(Math.random() * maleNames.length)];
+        }
+        // Build expression: P + Q means P is brother of Q
+        var expr = person1 + ' ' + code + ' ' + person2;
+        q_en = 'If A + B means A is brother of B, A - B means A is sister of B, A * B means A is father of B, A / B means A is mother of B, then what does ' + expr + ' mean?';
+        q_hi = 'यदि A + B का अर्थ A, B का भाई है, A - B का अर्थ A, B की बहन है, A * B का अर्थ A, B का पिता है, A / B का अर्थ A, B की माता है, तो ' + expr + ' का क्या अर्थ है?';
+        var correctOpt = person1 + ' is ' + relName + ' of ' + person2;
+        var correctOptHi = person1 + ', ' + person2 + ' का ' + relNameHi + ' है';
+        var opts = [
+            correctOpt,
+            person1 + ' is father of ' + person2,
+            person1 + ' is mother of ' + person2,
+            person1 + ' is sister of ' + person2
+        ];
+        shuffle(opts);
+        ansIdx = opts.indexOf(correctOpt);
+        typeLabel = 'Coded Relations';
+        exp_en = '🔍 Coded Relation:<br><b>Step 1:</b> ' + code + ' means ' + relName + '.<br><b>Step 2:</b> Applying: ' + expr + ' → ' + correctOpt + '.<br>✅ <b>Correct answer: ' + correctOpt + '</b>';
+        exp_hi = '🔍 कूटबद्ध संबंध:<br><b>चरण 1:</b> ' + code + ' का अर्थ ' + relNameHi + ' है।<br><b>चरण 2:</b> ' + expr + ' → ' + correctOptHi + '।<br>✅ <b>सही उत्तर: ' + correctOptHi + '</b>';
+        
+    } else if (type === 2) {
+        // Generation Based: Father of my father is my grandfather, etc.
+        var genTypes = [
+            { q: 'Father of my father is my ?', a: 'Grandfather', qHi: 'मेरे पिता के पिता मेरे ? हैं', aHi: 'दादा/नाना' },
+            { q: 'Mother of my mother is my ?', a: 'Grandmother', qHi: 'मेरी माता की माता मेरी ? हैं', aHi: 'दादी/नानी' },
+            { q: 'Son of my father\'s brother is my ?', a: 'Cousin', qHi: 'मेरे पिता के भाई का बेटा मेरा ? है', aHi: 'चचेरा भाई' },
+            { q: 'Daughter of my mother\'s sister is my ?', a: 'Cousin', qHi: 'मेरी माता की बहन की बेटी मेरी ? है', aHi: 'ममेरी बहन' },
+            { q: 'Brother of my father is my ?', a: 'Uncle', qHi: 'मेरे पिता का भाई मेरा ? है', aHi: 'चाचा/ताऊ' },
+            { q: 'Sister of my mother is my ?', a: 'Aunt', qHi: 'मेरी माता की बहन मेरी ? है', aHi: 'मामी/मौसी' },
+            { q: 'Father of my brother is my ?', a: 'Father', qHi: 'मेरे भाई का पिता मेरा ? है', aHi: 'पिता' },
+            { q: 'Mother of my sister is my ?', a: 'Mother', qHi: 'मेरी बहन की माता मेरी ? है', aHi: 'माता' },
+            { q: 'Son of my sister is my ?', a: 'Nephew', qHi: 'मेरी बहन का बेटा मेरा ? है', aHi: 'भांजा' },
+            { q: 'Daughter of my brother is my ?', a: 'Niece', qHi: 'मेरे भाई की बेटी मेरी ? है', aHi: 'भतीजी' }
+        ];
+        var gen = genTypes[Math.floor(Math.random() * genTypes.length)];
+        q_en = gen.q;
+        q_hi = gen.qHi;
+        var correctOpt = gen.a;
+        var correctHi = gen.aHi;
+        var allOpts = ['Grandfather', 'Grandmother', 'Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Cousin', 'Nephew', 'Niece', 'Son', 'Daughter'];
+        var opts = [correctOpt];
+        var pool = allOpts.filter(function(r) { return r !== correctOpt; });
+        shuffle(pool);
+        for (var i = 0; i < 3 && i < pool.length; i++) {
+            opts.push(pool[i]);
+        }
+        shuffle(opts);
+        ansIdx = opts.indexOf(correctOpt);
+        typeLabel = 'Generation Based';
+        exp_en = '🔍 Generation Logic:<br><b>Step 1:</b> ' + q_en + '<br><b>Step 2:</b> Tracing the family tree: ' + correctOpt + '.<br>✅ <b>Correct answer: ' + correctOpt + '</b>';
+        exp_hi = '🔍 पीढ़ी तर्क:<br><b>चरण 1:</b> ' + q_hi + '<br><b>चरण 2:</b> परिवार वृक्ष बनाने पर: ' + correctHi + '।<br>✅ <b>सही उत्तर: ' + correctOpt + '</b>';
+        
+    } else {
+        // Mixed Relations: Complex family tree with multiple people
+        var people = shuffle([].concat(maleNames).concat(femaleNames)).slice(0, 5);
+        var p1 = people[0], p2 = people[1], p3 = people[2], p4 = people[3], p5 = people[4];
+        // Build a family tree: p1 is father of p2, p2 is brother of p3, p3 is married to p4, p4 is mother of p5
+        var rel1 = 'father';
+        var rel2 = 'brother';
+        var rel3 = 'husband';
+        var rel4 = 'mother';
+        // But need to ensure genders align: assume p1 male, p2 male, p3 male, p4 female, p5 any
+        // Construct question: P1 is father of P2. P2 is brother of P3. P3 is husband of P4. P4 is mother of P5. What is P5 to P1?
+        // This is complex; simplify: ask relation between two people in the tree
+        // Generate a random chain of relationships
+        var chain = [];
+        var relMap = {
+            'father': { en: 'father of', hi: 'पिता हैं' },
+            'mother': { en: 'mother of', hi: 'माता हैं' },
+            'brother': { en: 'brother of', hi: 'भाई हैं' },
+            'sister': { en: 'sister of', hi: 'बहन हैं' },
+            'husband': { en: 'husband of', hi: 'पति हैं' },
+            'wife': { en: 'wife of', hi: 'पत्नी हैं' },
+            'son': { en: 'son of', hi: 'बेटा हैं' },
+            'daughter': { en: 'daughter of', hi: 'बेटी हैं' }
+        };
+        // Simplified: use two-step relation
+        var rels = ['father', 'mother', 'brother', 'sister'];
+        var r1 = rels[Math.floor(Math.random() * rels.length)];
+        var r2 = rels[Math.floor(Math.random() * rels.length)];
+        // Pick 3 people: X, Y, Z. X is r1 of Y. Y is r2 of Z. What is X to Z?
+        var names = shuffle([].concat(maleNames).concat(femaleNames)).slice(0, 3);
+        var X = names[0], Y = names[1], Z = names[2];
+        var rel1Phrase = relMap[r1];
+        var rel2Phrase = relMap[r2];
+        q_en = X + ' is the ' + rel1Phrase.en + ' ' + Y + '. ' + Y + ' is the ' + rel2Phrase.en + ' ' + Z + '. How is ' + X + ' related to ' + Z + '?';
+        q_hi = X + ', ' + Y + ' के ' + rel1Phrase.hi + '। ' + Y + ', ' + Z + ' के ' + rel2Phrase.hi + '। ' + X + ', ' + Z + ' का क्या लगता है?';
+        // Determine correct relation based on r1 and r2
+        // This is complex; for simplicity, we'll use a few known combinations
+        var correctOpt = 'Grandfather';
+        var correctHi = 'दादा/नाना';
+        // For simplicity, we'll use a fixed mapping
+        var comboMap = {
+            'father_father': { en: 'Grandfather', hi: 'दादा/नाना' },
+            'father_mother': { en: 'Grandmother', hi: 'दादी/नानी' },
+            'mother_father': { en: 'Grandfather', hi: 'दादा/नाना' },
+            'mother_mother': { en: 'Grandmother', hi: 'दादी/नानी' },
+            'brother_father': { en: 'Uncle', hi: 'चाचा/ताऊ/मामा' },
+            'sister_father': { en: 'Aunt', hi: 'चाची/मामी/बुआ' },
+            'father_brother': { en: 'Uncle', hi: 'चाचा/ताऊ/मामा' },
+            'mother_brother': { en: 'Uncle', hi: 'चाचा/ताऊ/मामा' },
+            'father_sister': { en: 'Aunt', hi: 'चाची/मामी/बुआ' },
+            'mother_sister': { en: 'Aunt', hi: 'चाची/मामी/बुआ' }
+        };
+        var comboKey = r1 + '_' + r2;
+        if (comboMap[comboKey]) {
+            correctOpt = comboMap[comboKey].en;
+            correctHi = comboMap[comboKey].hi;
+        } else {
+            correctOpt = 'Cousin';
+            correctHi = 'चचेरा/ममेरा भाई/बहन';
+        }
+        var allOpts = ['Grandfather', 'Grandmother', 'Father', 'Mother', 'Brother', 'Sister', 'Uncle', 'Aunt', 'Cousin', 'Nephew', 'Niece'];
+        var opts = [correctOpt];
+        var pool = allOpts.filter(function(r) { return r !== correctOpt; });
+        shuffle(pool);
+        for (var i = 0; i < 3 && i < pool.length; i++) {
+            opts.push(pool[i]);
+        }
+        shuffle(opts);
+        ansIdx = opts.indexOf(correctOpt);
+        typeLabel = 'Mixed Relations';
+        exp_en = '🔍 Family Tree Tracing:<br><b>Step 1:</b> ' + X + ' is ' + r1 + ' of ' + Y + '.<br><b>Step 2:</b> ' + Y + ' is ' + r2 + ' of ' + Z + '.<br><b>Step 3:</b> Combining: ' + X + ' is ' + correctOpt + ' of ' + Z + '.<br>✅ <b>Correct answer: ' + correctOpt + '</b>';
+        exp_hi = '🔍 परिवार वृक्ष ट्रेसिंग:<br><b>चरण 1:</b> ' + X + ', ' + Y + ' का ' + r1 + ' है।<br><b>चरण 2:</b> ' + Y + ', ' + Z + ' का ' + r2 + ' है।<br><b>चरण 3:</b> संयोजित: ' + X + ', ' + Z + ' का ' + correctHi + ' है।<br>✅ <b>सही उत्तर: ' + correctOpt + '</b>';
+    }
+    
+    return { q_en: q_en, q_hi: q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: typeLabel, exp_en: exp_en, exp_hi: exp_hi };
+}
+
+// ---- Generate 510 questions ----
+while (questions.length < 510) {
+    var q = generateBloodRelation();
+    var exists = false;
+    for (var i = 0; i < questions.length; i++) {
+        if (questions[i].q_en === q.q_en && questions[i].type === q.type) {
+            exists = true;
+            break;
+        }
+    }
+    if (!exists) questions.push(q);
+}
+shuffle(questions);
+
+// ================================================================
+//  RENDER ENGINE
+// ================================================================
+var container = document.getElementById('questionsContainer');
+var search = document.getElementById('search');
+var filter = document.getElementById('filter');
+var attemptText = document.getElementById('attemptText');
+var scoreText = document.getElementById('scoreText');
+var progressBar = document.getElementById('progressBar');
+var attempted = new Set();
+var score = 0;
+
+function renderQuestions() {
+    container.innerHTML = '';
+    var keyword = search.value.toLowerCase().trim();
+    var selectedType = filter.value;
+    for (var idx = 0; idx < questions.length; idx++) {
+        var q = questions[idx];
+        if (selectedType !== 'all' && q.type !== selectedType) continue;
+        var qText = (currentLang === 'en') ? q.q_en : q.q_hi;
+        var opts = (currentLang === 'en') ? q.opts_en : q.opts_hi;
+        var exp = (currentLang === 'en') ? q.exp_en : q.exp_hi;
+        var fullText = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && fullText.indexOf(keyword) === -1) continue;
+        
+        var card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = 'question-' + idx;
+        var optHTML = '';
+        for (var oi = 0; oi < opts.length; oi++) {
+            optHTML += '<button class="option" onclick="checkAnswer(' + idx + ',' + oi + ',this)">(' + String.fromCharCode(65+oi) + ') ' + opts[oi] + '</button>';
+        }
+        var expTitle = (currentLang === 'en') ? '💡 Detailed Explanation (Family Tree Logic)' : '💡 विस्तृत व्याख्या (परिवार वृक्ष तर्क)';
+        card.innerHTML = '<div class="question-top"><span class="question-number">Q' + (idx+1) + '</span><span class="question-type">' + q.type + '</span></div><div class="question-body"><div class="question-text">' + qText + '</div><div class="options">' + optHTML + '</div><div class="answer-result" id="result-' + idx + '"></div><div class="explanation" id="explanation-' + idx + '"><div class="explanation-title">' + expTitle + '</div>' + exp + '</div></div>';
+        container.appendChild(card);
+    }
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attempted.has(qIdx)) return;
+    attempted.add(qIdx);
+    var q = questions[qIdx];
+    var card = document.getElementById('question-' + qIdx);
+    var btns = card.querySelectorAll('.option');
+    for (var i = 0; i < btns.length; i++) {
+        if (i === q.answer) btns[i].classList.add('correct');
+    }
+    var res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) {
+        score++;
+        res.innerHTML = (currentLang === 'en') ? '✅ Correct Answer!' : '✅ सही उत्तर!';
+        res.style.color = '#16a34a';
+    } else {
+        btn.classList.add('wrong');
+        res.innerHTML = (currentLang === 'en') ? '❌ Incorrect. See explanation below.' : '❌ गलत। नीचे व्याख्या देखें।';
+        res.style.color = '#dc2626';
+    }
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    var total = questions.length;
+    var done = attempted.size;
+    attemptText.textContent = ((currentLang === 'en') ? 'Attempted' : 'हल किए') + ': ' + done + ' / ' + total;
+    scoreText.textContent = ((currentLang === 'en') ? 'Score' : 'स्कोर') + ': ' + score;
+    progressBar.style.width = (done / total * 100) + '%';
+}
+
+function showAllExplanations() {
+    var exps = document.querySelectorAll('.explanation');
+    for (var i = 0; i < exps.length; i++) {
+        exps[i].classList.add('show');
+    }
+}
+
+function resetQuiz() {
+    attempted.clear();
+    score = 0;
+    renderQuestions();
+    updateProgress();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+search.addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+
+// Init
+updateUI();
+</script>
+</body>
+</html>

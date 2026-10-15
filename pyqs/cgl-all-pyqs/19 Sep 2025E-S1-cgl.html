@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC CGL 2025 (English) – Interactive Quiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f4f7fc;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #1a2b4a;
+            border-left: 6px solid #2563eb;
+            padding-left: 16px;
+            margin-bottom: 28px;
+        }
+        .question-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e9edf4;
+        }
+        .q-header {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .q-number {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2563eb;
+            min-width: 48px;
+        }
+        .q-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #0b1e33;
+            line-height: 1.5;
+        }
+        .options {
+            margin: 16px 0 12px 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 20px;
+        }
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+        .option {
+            padding: 6px 0;
+            color: #1e3a5f;
+            font-size: 0.98rem;
+        }
+        .option strong {
+            color: #0b2b4a;
+        }
+        .action-area {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px 24px;
+        }
+        .btn {
+            background: #eef2f9;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a3a6a;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .btn:hover {
+            background: #dce4f0;
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+        }
+        .btn-outline {
+            background: transparent;
+            border-color: #bcc9dd;
+        }
+        .btn-outline:hover {
+            background: #eef2f9;
+        }
+        .answer-box {
+            margin-top: 16px;
+            padding: 16px 20px;
+            background: #eaf6ff;
+            border-left: 5px solid #2563eb;
+            border-radius: 10px;
+            display: none;
+        }
+        .answer-box.visible {
+            display: block;
+        }
+        .answer-label {
+            font-weight: 700;
+            color: #0a2a4a;
+            font-size: 1rem;
+        }
+        .answer-label span {
+            background: #2563eb;
+            color: white;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            margin-left: 8px;
+        }
+        .explanation {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #b8d1ed;
+            color: #1e3a5f;
+            line-height: 1.6;
+        }
+        .explanation strong {
+            color: #0b2b4a;
+        }
+        .stats {
+            text-align: center;
+            margin: 30px 0 10px;
+            color: #4b5e77;
+            font-size: 0.95rem;
+        }
+        .footer-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0 40px;
+        }
+        .badge {
+            display: inline-block;
+            background: #e9edf4;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #2a4a6a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <h1>📘 SSC CGL T-I (Similar Paper) – English (19 Sep 2025 S1)</h1>
+        <div id="questions-container"></div>
+        <div class="footer-actions">
+            <button class="btn btn-primary" id="showAllBtn">🔓 Show All Answers</button>
+            <button class="btn btn-outline" id="hideAllBtn">🔒 Hide All Answers</button>
+        </div>
+        <div class="stats" id="stats"></div>
+    </div>
+
+    <script>
+        // --------------------------------------------------------------
+        // 1. RAW PAPER TEXT
+        // --------------------------------------------------------------
+        const rawText = `SSC CGL T-I Similar Paper (Held on 19 Sep 2025 S1) - English 
+Q1. If '+' means '×', '−' means '÷', '×' means '+', and '÷' means '−', then find: 
+18 + 6 × 16 − 4 ÷ 2 = ? 
+(a) 108 
+(b) 110 
+(c) 112 
+(d) 114 
+Ans.(b) 
+Q2. A is the mother of B. B is the sister of C. C is the father of D. How is A related to C? 
+(a) Aunt 
+(b) Mother 
+(c) Grandmother 
+(d) Sister 
+Ans.(b) 
+Q3. Find the odd one out. 
+(a) Newton 
+(b) Einstein 
+(c) Galileo 
+(d) Shakespeare 
+Ans.(d) 
+Q4. Statement: 
+A growing number of students are enrolling in online certification courses. 
+Conclusions: 
+I. Students want flexible learning options. 
+II. Traditional colleges are shutting down.  
+(a) Only I follows 
+(b) Only II follows 
+(c) Both follow 
+(d) Neither follows 
+Ans.(a) 
+Q5. Statement: 
+A ≥ B < C ≤ D = E > F 
+Conclusion: 
+I. C > B 
+II. F < D  
+(a) Only Conclusion I is true 
+(b) Only Conclusion II is true 
+(c) Both are true 
+(d) Both are false 
+Ans.(c) 
+
+Q6. P is the only son of Q. Q is the only daughter of R. How is P related to R? 
+(a) Son 
+(b) Grandson 
+(c) Nephew 
+(d) Cousin 
+Ans.(b) 
+Q7. What comes next? 
+BZ, CY, DX, ? 
+(a) EW 
+(b) EV 
+(c) FV 
+(d) FW 
+Ans.(a) 
+Q8. If 6 men can complete a work in 10 days, how many men are needed to complete it in 5 days? 
+(a) 10 
+(b) 12 
+(c) 8 
+(d) 6 
+Ans.(b) 
+Q9. The series below contains a sequence of numbers. Identify the incorrect number. 
+5, 20, 80, 310, 1280 
+(a) 20 
+(b) 80 
+(c) 310 
+(d) 1280 
+Ans.(c) 
+Q10. Select the letter-cluster from among the given options that can replace the question mark (?) in the following 
+series. 
+DGK, ILP, NQU, ? 
+(a) RVW 
+(b) RWX 
+(c) TXY 
+(d) SVZ 
+Ans.(d) 
+Q11. A and B invest in a business in the ratio 3:4. If the total profit is ₹14,000, what is B’s share? 
+(a) ₹6,000 
+(b) ₹7,000 
+(c) ₹8,000 
+(d) ₹9,000 
+Ans.(c) 
+Q12. Statements: 
+I. The company introduced a work-from-home policy. 
+II. Employee productivity increased.  
+(a) I is the cause and II is the effect 
+(b) II is the cause and I is the effect 
+(c) Both are effects of the same cause 
+(d) No relation 
+Ans.(a) 
+Q13. Statement: 
+Many people prefer electric vehicles over petrol vehicles. 
+Conclusions: 
+I. Electric vehicles are eco-friendly. 
+II. Petrol vehicles are banned. 
+(a) Only I follows 
+(b) Only II follows 
+(c) Both follow 
+(d) Neither follows 
+Ans.(a) 
+Q14. If 7 # 1 = 36 and 6 # 1 = 25, then 5 # 1 = ? 
+(a) 12 
+(b) 16 
+(c) 9 
+(d) 7 
+Ans.(b) 
+Q15. Find out the WRONG number in the given series. 
+420, 400, 380, 370, 340 
+(a) 400 
+(b) 380 
+(c) 370 
+(d) 340 
+Ans.(c) 
+Q16. If "MOON" is coded as "QSSR", how is "STAR" coded? 
+(a) WXEV 
+(b) WUET 
+(c) VXEQ 
+(d) WXFV 
+Ans.(a) 
+Q17. In the following question, find the alternative that will replace the question mark. 
+STOP : TOPS :: DRAW : ? 
+(a) WARD 
+(b) RADW 
+(c) ADRW 
+(d) RAWD 
+Ans.(d) 
+Q18. If COLD is coded as DPME, how is WARM coded? 
+(a) XBSN 
+(b) XBSL 
+(c) VZQL 
+(d) XCRM 
+Ans.(a) 
+Q19. Choose the address that is the same as the one given below. 
+B-22, Shanti Vihar, Ring Road, Bhopal, Madhya Pradesh - 462001 
+(a) B-22, Shanti Vihar, Ring Road, Bhopal, Rajasthan - 462001 
+(b) B-22, Shanti Vihar, Ring Road, Bhopal, Madhya Pradesh - 462001 
+(c) B-22, Shanti Vihar, Ring Rd, Bhopal, Madhya Pradesh - 462010 
+(d) B-23, Shanti Vihar, Ring Road, Bhopal, Madhya Pradesh - 462001 
+Ans.(b) 
+Q20. Statement: 
+Employees are advised to switch off computers after office hours. 
+Conclusions: 
+I. This reduces electricity consumption. 
+II. Computers are unsafe to use.  
+(a) Only I follows 
+(b) Only II follows 
+(c) Both follow 
+(d) Neither follows 
+Ans.(a) 
+Q21. What comes next? 
+1, 9, 25, 49, 81, ? 
+(a) 121 
+(b) 144 
+(c) 100 
+(d) 169 
+Ans.(a) 
+Q22. If '+' means '÷', '-' means '+', '×' means '-', and '÷' means '×', then find: 
+16 + 8 × 4 - 2 ÷ 2 = ? 
+(a) 6 
+(b) 8 
+(c) 2 
+(d) 4 
+Ans.(c) 
+Q23. If "+" means "×", "-" means "+", "×" means "÷", and "÷" means "-", then find: 
+18 + 6 × 3 - 4 ÷ 2 = ? 
+(a) 38 
+(b) 36 
+(c) 40 
+(d) 39 
+Ans.(a) 
+Q24. Choose the address that is the same as the one given below. 
+Sample Address: 14, Blue Lotus Tower, M.G. Road, Pune, Maharashtra - 411001 
+(a) 14, Blue Lotus Tower, M.G. Road, Pune, Maharashtra - 411001 
+(b) 14 Blue Lotus Tower, MG Road, Pune, Maharashtra - 411001 
+(c) 14, Blue Lotus Tower, M.G Road, Pune, Maharashtra - 411010 
+(d) 14, Blue Lotus Towers, M.G. Road, Pune, Maharashtra - 411001 
+Ans.(a) 
+Q25. Find the next number in the series. 
+3, 7, 15, 31, 63, ? 
+(a) 95 
+(b) 125 
+(c) 127 
+(d) 131 
+Ans.(c) 
+Q26. Mixed economy implies: 
+(a) State ownership only 
+(b) Private ownership only 
+(c) Coexistence of public and private sectors 
+(d) Foreign investment only 
+Ans.(c) 
+Q27. As per international standards, the weight of a table tennis ball is: 
+(a) 2.7 g 
+(b) 3.0 g 
+(c) 3.5 g 
+(d) 4.0 g 
+Ans.(a) 
+Q28. Standard athletics tracks mark each lane with lines of: 
+(a) 2 cm 
+(b) 5 cm 
+(c) 10 cm 
+(d) 15 cm 
+Ans.(b) 
+Q29. Which of the following best describes the constitutional status of the Finance Commission of India ? 
+(a) It functions as a permanent body with continuous existence. 
+(b) It is constituted periodically by the President to make recommendations on fiscal distribution. 
+(c) It has the power to levy and collect taxes on behalf of states. 
+(d) It is a statutory body created by an Act of Parliament. 
+Ans.(b) 
+Q30. About enzymes: 
+1. They lower activation energy. 
+2. They are substrate specific. 
+3. They are unaffected by temperature. 
+(a) 1 and 2 
+(b) 2 and 3 
+(c) 1 and 3 
+(d) 1, 2, and 3 
+Ans.(a) 
+Q31. Consider the following statements: 
+1. Article 136 empowers the Supreme Court to grant Special Leave to Appeal from any court or tribunal in India. 
+2. Article 136 applies automatically to all military court (court-martial) decisions without exception. 
+Which of the statements given above is/are correct? 
+(a) Only 1 
+(b) Only 2 
+(c) Both 1 and 2 
+(d) Neither 1 nor 2 
+Ans.(a) 
+Q32. Assertion (A): India has increased coastal radar cooperation with neighbors. 
+Reason (R): Maritime domain awareness is vital for regional security. 
+(a) Both A and R true, R explains A 
+(b) Both true but R not explanation 
+(c) A true R false 
+(d) A false R true 
+Ans.(a) 
+Q33. Taxes on professions are limited by Article: 
+(a) 276 
+(b) 265 
+(c) 280 
+(d) 246 
+Ans.(a) 
+Q34. Arrange the following monuments in chronological order (earliest to latest): 
+(a) Qutub Minar -> Humayun’s Tomb -> Taj Mahal 
+(b) Humayun’s Tomb -> Qutub Minar -> Taj Mahal 
+(c) Taj Mahal -> Humayun’s Tomb -> Qutub Minar 
+(d) Qutub Minar -> Taj Mahal -> Humayun’s Tomb 
+Ans.(a) 
+Q35. Which pair is correctly matched? 
+(a) Lord Dalhousie – Doctrine of Lapse 
+(b) Lord Curzon – Vernacular Press Act 
+(c) Lord Ripon – Subsidiary Alliance 
+(d) Lord Hastings – Permanent Settlement 
+Ans.(a) 
+Q36. The composition “Vaishnava Jana To” is commonly rendered in which tala? 
+(a) Dadra 
+(b) Teentaal 
+(c) Ektaal 
+(d) Jhaptaal 
+Ans.(d) 
+Q37. The Nehru Trophy Boat Race held in Kerala is mainly associated with which activity? 
+(a) Elephant processions 
+(b) Snake boat racing 
+(c) Temple rituals 
+(d) Folk theatre 
+Ans.(b) 
+Q38. Read the following statements carefully and choose the correct option regarding Assertion (A) and Reason (R). 
+Assertion (A): Disinvestment in India has often sparked public and political debate. 
+Reason (R): Disinvestment involves dilution of government ownership in public sector enterprises. 
+(a) Both A and R are true and R is the correct explanation of A. 
+(b) Both A and R are true but R is not the correct explanation of A. 
+(c) A is true but R is false. 
+(d) A is false but R is true. 
+Ans.(a) 
+Q39. Entry of MNCs is linked with: 
+(a) Liberalisation 
+(b) Nationalisation 
+(c) Swadeshi 
+(d) Protectionism 
+Ans.(a) 
+Q40. Identify the correctly matched Gupta-era term and meaning: 
+(a) Uparikara – Additional tax 
+(b) Vishti – Land grant 
+(c) Bhoga – Judicial penalty 
+(d) Kara – Religious donation 
+Ans.(a) 
+Q41. Which Western Chalukya ruler is known for defeating the Chola king Rajadhiraja I in the Battle of Koppam (1054 
+CE)? 
+(a) Pulakeshin II 
+(b) Vikramaditya VI 
+(c) Someshvara I 
+(d) Tailapa II 
+Ans.(c) 
+Q42. At the 87th Senior National Badminton Championships 2025 , held in Vijayawada, who won the men’s and 
+women’s singles titles , respectively? 
+(a) Kiran George and Tanvi Sharma 
+(b) Rithvik Sanjeevi and Surya Charishma Tamiri 
+(c) Rithvik Sanjeevi and Tanvi Patri 
+(d) Kiran George and Surya Charishma Tamiri 
+Ans.(c) 
+Q43. ‘ The Ministry of Utmost Happiness was written by which author who is also a recipient of the Sahitya Akademi 
+Award? 
+(a) Kiran Desai 
+(b) Arundhati Roy 
+(c) Jhumpa Lahiri 
+(d) Anita Desai 
+Ans.(b) 
+Q44. The traditional dance Gaur Maria , featuring headgear with bison horns and vigorous movements, is associated 
+with which tribe and state? 
+(a) Santhal — Jharkhand 
+(b) Gaur (Maria) — Chhattisgarh 
+(c) Bhil — Rajasthan 
+(d) Toda — Tamil Nadu 
+Ans.(b) 
+Q45. Green Credit Programme rewards: 
+(a) Polluters 
+(b) Voluntary eco-friendly actions 
+(c) Industrial taxes 
+(d) Mining firms 
+Ans.(b) 
+Q46. Regarding the 75th All India Inter Services Basketball Championship 2025 : 
+1. It was hosted by the Western Command at the DSOI Stadium, Pune. 
+2. The Indian Air Force team defeated the Indian Army team to clinch the title. 
+(a) Only 1 is correct 
+(b) Only 2 is correct 
+(c) Both 1 and 2 are correct 
+(d) Neither 1 nor 2 is correct 
+Ans.(c) 
+Q47. Core inflation declines when: 
+(a) Commodity prices fall 
+(b) Wages rise 
+(c) Taxes increase 
+(d) Currency weakens 
+Ans.(a) 
+Q48. Energy transition investment depends greatly on: 
+(a) Fossil fuel imports 
+(b) Policy stability 
+(c) High tariffs 
+(d) Coal reserves 
+Ans.(b) 
+Q49. The traditional Dumhal dance of Jammu & Kashmir is especially known for which distinctive feature? 
+(a) Dancers carrying tall conical headgear 
+(b) Performers balancing earthen pots 
+(c) Use of large percussion drums only 
+(d) Solo devotional singing 
+Ans.(a) 
+Q50. Incorrect match: 
+(a) Troposphere – weather 
+(b) Stratosphere – ozone 
+(c) Mesosphere – satellites 
+(d) Thermosphere – auroras 
+Ans.(c) 
+Q51. 183 + 143 - 323 + 24192 is equal to: 
+(a) 0 
+(b) 1 
+(c) -24192 
+(d) 48384 
+Ans.(a) 
+Q52. If sin⁡𝛼 = 4
+5
+(a) 3/7 
+(b) 1/4 
+(c) -1/7 
+(d) 1/7 
+Ans.(d) 
+and 𝛼 ∈ (0,𝜋/2), then find 1−cot⁡𝛼
+1+cot⁡𝛼
+= ? 
+Q53. tan⁡𝜃 +cot⁡𝜃 = 2 and 𝜃 ∈ (0,𝜋/2),that what is sec⁡𝜃 +cosec⁡𝜃 = ? 
+(a) 2√2
+(b) √2
+(c) 2 
+(d) 4√2
+Ans.(a) 
+� 
+� 
+Q54. A tree is 30 meters tall. What is the length of the shadow cast by the tree when the sun’s elevation is 30°? 
+(a) 10 m 
+(b) 15√3
+(c) 30√3
+𝑚 
+(d) 30 m 
+Ans.(c) 
+Q55. A refrigerator is priced at ₹45,000. A customer gets a discount of ₹5,000 on it. After the discount, the customer 
+buys a voltage stabilizer for ₹2,000 at a 15% discount. What is the total amount the customer spends on both items? 
+(a) ₹42,000 
+(b) ₹41,500 
+(c) ₹42,700 
+(d) ₹41,700 
+Ans.(d) 
+Q56. Two pipes A and B can fill a tank in 10 and 15 minutes respectively. After both are opened together for 3 minutes, 
+the rate of pipe A becomes one-third, and pipe B becomes 2.5 times its original. In how many more minutes will the 
+tank be full? 
+(a) 2 min 15 sec 
+(b) 3 min 10 sec 
+(c) 2 min 30 sec 
+(d) 1 min 45 sec 
+Ans.(c) 
+Q57. In △ ABC, AD is the perpendicular bisector of BC. Are the triangles ABD and ACD congruent? If so, by what rule? 
+(a) Yes, by SSS 
+(b) Yes, by ASA 
+(c) Yes, by SAS 
+(d) No, they are not congruent 
+Ans.(c) 
+Q58. A conical vessel is cut at one-fourth its height from the top, parallel to its base. What is the ratio of the volume of 
+the top part to the bottom frustum part? 
+(a) 1:15 
+(b) 1:63 
+(c) 1:64 
+(d) 1:27 
+Ans.(b) 
+Q59. Simplify the expression: √14 + 6√5
+(a) 2 + √5
+(b) 5 + √3
+(c) 3 + √5
+(d) 4 + √2
+Ans.(c) 
+Q60. Sneha lent ₹24,000 to Vikas on 4 April 2024 at a simple interest rate of 5% per annum. Vikas plans to pay back 
+the entire amount on 16 June 2024. What is the total amount Vikas needs to return? 
+(a) ₹24,120 
+(b) ₹24,180 
+(c) ₹24,240 
+(d) ₹24,300 
+Ans.(c) 
+Q61. What is the result of (0.73 + 0.23 − 0.93) ÷ (3 × 0.7 × 0.2 × (−0.9)) = ? 
+(a) 1 
+(b) -1 
+(c) 0 
+(d) 2 
+Ans.(a) 
+Q62. If P, Q, and R are three amounts of money such that Q is the simple interest on P, and R is the simple interest on 
+Q, all for the same time and at the same rate of interest, then which of the following is true? 
+(a) 𝑄2 = 𝑃𝑅 
+(b) 𝑃2 = 𝑄𝑅 
+(c) 𝑅2 = 𝑃𝑄 
+(d) P + Q = R 
+Ans.(a) 
+Q63. The graph of the equation 2x + 5y = 10 passes through which point? 
+(a) (5, 0) 
+(b) (0, 2) 
+(c) (-5, 4) 
+(d) All of the above 
+Ans.(d) 
+/2 
+(c) 0 
+(d) 1 
+Q64. A circle is inscribed in a right triangle with legs of length 10 and 24. What is the radius of the circle? 
+(a) 2 
+(b) 4 
+(c) 6 
+(d) 8 
+Ans.(b) 
+Q65. What is the value of sin⁡75∘cos⁡15∘ + cos⁡75∘sin⁡15∘ = ? 
+(a) 1/2 
+(b) √3
+Ans.(d) 
+Q66. The sides of a rectangular prism are in the ratio 1:2:3. If the volume of the prism is 384 cm³, what is the length of 
+its longest side? 
+(a) 8 cm 
+(b) 16 cm 
+(c) 12 cm 
+(d) 24 cm 
+Ans.(c) 
+Q67. If 𝑥 + 1
+𝑥
+(a) 4 
+(b) 7 
+(c) -3 
+(d) 5 
+Ans.(b) 
+Q68. If 20% of P = 15% of Q = 12% of R, find P : Q : R. 
+(a) 3 : 4 : 5 
+(b) 5 : 4 : 3 
+(c) 15 : 20 : 12 
+(d) 4 : 5 : 6 
+Ans.(a) 
+=−1 , then compute:𝑥5 + 1
+𝑥5
++4𝑥3 + 4
+𝑥3
+Q69. A right-angled triangle has legs of 9 cm and 12 cm. A second right-angled triangle is similar to the first, and its 
+hypotenuse is 45 cm. What is the area of the second triangle? 
+(a) 216 cm² 
+(b) 324 cm² 
+(c) 405 cm² 
+(d) 486 cm² 
+Ans.(d) 
++√3
+Q70. Which of the following is correct? 
+√10
+>√8
+(a) i 
+(b) ii 
+(c) iii 
+(d) None of the above 
+Ans.(b) 
++√5
+√10
++√3
+<√8
++√5
+√10
++√3
+=√8
++√5
+Q71. A solid sphere is placed inside a cube such that it touches all six faces. What percentage of the cube's volume is 
+occupied by the sphere? 
+(a) 47.64% 
+(b) 42.54% 
+(c) 55.45% 
+(d) 52.36% 
+Ans.(d) 
+Q72. A rectangle is a quadrilateral in which: 
+(a) All four interior angles are 90° and opposite sides are equal. 
+(b) Diagonals intersect at 90° and bisect angles. 
+(c) Only one pair of opposite sides is parallel. 
+(d) All four sides are equal in length. 
+Ans.(a) 
+Q73. A sector of a circle has a central angle of 60° and a radius of 12 cm. Another sector of the same circle has a central 
+angle of 𝜋/2 radians. What is the ratio of the area of the first sector to the area of the second sector? 
+(a) 1:2 
+(b) 2:3 
+(c) 3:4 
+(d) 4:5 
+Ans.(b) 
+Q74. A hemisphere of radius 6 cm is carved from a sphere. What is the volume of the hemisphere? 
+(a) 72𝜋 cm³ 
+(b) 144𝜋 cm³ 
+(c) 216𝜋 cm³ 
+(d) 288𝜋 cm³ 
+Ans.(b) 
+Q75. The length of each of two tangents drawn from an external point to a circle is 15 cm. What is the distance from 
+the external point to the center of the circle, if the radius is 8 cm? 
+(a) 12 cm 
+(b) 15 cm 
+(c) 17 cm 
+(d) 23 cm 
+Ans.(c) 
+Q76. Choose the correct meaning of idiom: Hoist with one's own petard 
+(a) To rise unexpectedly 
+(b) To gain fame unfairly 
+(c) To be ruined by one’s own device 
+(d) To be praised excessively 
+Ans.(c) 
+Q77. Select the correct spelling of a word meaning ‘a person who avoids work or effort’. 
+(a) Sluggard 
+(b) Sluggurd 
+(c) Sluggared 
+(d) Slugard 
+Ans.(a) 
+Q78. Select the most appropriate antonym of the given word: Refulgent 
+(a) Radiant 
+(b) Gleaming 
+(c) Dull 
+(d) Shining 
+Ans.(c) 
+Q79. Choose the correct semantic fit: 
+The regulatory intervention was regarded as a ______ to escalating hostilities between the rival factions. 
+(a) deterrent 
+(b) detraction 
+(c) detention 
+(d) deviation 
+Ans.(a) 
+Q80. Find the part of the sentence that contains an error: 
+No sooner had the policy been announced (1)/ when the opposition not only criticized it (2)/ but also (3)/ demanded 
+its immediate withdrawal. (4) 
+(a) (1) 
+(b) (2) 
+(c) (3) 
+(d) (4) 
+Ans.(b) 
+Q81. Convert the sentence provided below from its passive voice structure to an active voice structure: 
+The amendments are believed to have been approved by the regulatory authority last quarter. 
+(a) The regulatory authority approved the amendments last quarter. 
+(b) The amendments were approved last quarter. 
+(c) The regulatory authority is believed to have approved the amendments last quarter. 
+(d) The regulatory authority has approved the amendments last quarter. 
+Ans.(c) 
+Q82. What central idea does the passage emphasize about authority and legitimacy? 
+Read the following passage and answer the questions based on the passage: 
+The relationship between authority and legitimacy is neither automatic nor absolute. Though frequently treated as 
+interchangeable in political discourse, they operate within distinct philosophical frameworks. Authority refers to the 
+recognized right to exercise power, often codified through constitutional or institutional mechanisms, whereas 
+legitimacy is rooted in public consent and ethical justification. The tension between authority and legitimacy 
+constitutes a persistent concern in political theory and civic governance. Institutions derive authority from legal 
+mandates, electoral processes, or historical precedent, thereby ensuring procedural continuity and administrative 
+order. However, legitimacy is contingent upon societal trust and normative approval, which may fluctuate over time. 
+Regimes that maintain authority without sustaining legitimacy often encounter dissent, civil unrest, or moral criticism. 
+Historical examples include governments that enacted discriminatory policies under lawful authority yet faced 
+widespread resistance for violating ethical norms. Conversely, reform movements—though initially lacking formal 
+authority—may acquire legitimacy through collective endorsement and moral persuasion. This distinction reveals that 
+authority does not invariably command legitimacy, and legitimacy can at times challenge established authority. 
+Nevertheless, conflating the two concepts can undermine democratic balance. In pluralistic societies, diverse 
+constituencies interpret legitimacy through varying cultural, ideological, and historical lenses. If authority were to 
+enforce a singular conception of legitimacy, it might suppress dissent and erode institutional neutrality. Contemporary 
+debates surrounding surveillance, digital governance, and environmental regulation further illuminate this dynamic. 
+Legal authorization may permit certain actions, yet public legitimacy may question their ethical ramifications. 
+Therefore, a resilient political system must harmonize institutional authority with evolving standards of legitimacy, 
+while citizens remain vigilant participants in shaping both. 
+(a) Authority always guarantees legitimacy 
+(b) They are distinct and not always aligned 
+(c) Legitimacy is legally enforced 
+(d) Authority replaces ethical standards 
+Ans.(b) 
+Q83. Why does the author refer to reform movements lacking formal authority? 
+Read the following passage and answer the questions based on the passage: 
+The relationship between authority and legitimacy is neither automatic nor absolute. Though frequently treated as 
+interchangeable in political discourse, they operate within distinct philosophical frameworks. Authority refers to the 
+recognized right to exercise power, often codified through constitutional or institutional mechanisms, whereas 
+legitimacy is rooted in public consent and ethical justification. The tension between authority and legitimacy 
+constitutes a persistent concern in political theory and civic governance. Institutions derive authority from legal 
+mandates, electoral processes, or historical precedent, thereby ensuring procedural continuity and administrative 
+order. However, legitimacy is contingent upon societal trust and normative approval, which may fluctuate over time. 
+Regimes that maintain authority without sustaining legitimacy often encounter dissent, civil unrest, or moral criticism. 
+Historical examples include governments that enacted discriminatory policies under lawful authority yet faced 
+widespread resistance for violating ethical norms. Conversely, reform movements—though initially lacking formal 
+authority—may acquire legitimacy through collective endorsement and moral persuasion. This distinction reveals that 
+authority does not invariably command legitimacy, and legitimacy can at times challenge established authority. 
+Nevertheless, conflating the two concepts can undermine democratic balance. In pluralistic societies, diverse 
+constituencies interpret legitimacy through varying cultural, ideological, and historical lenses. If authority were to 
+enforce a singular conception of legitimacy, it might suppress dissent and erode institutional neutrality. Contemporary 
+debates surrounding surveillance, digital governance, and environmental regulation further illuminate this dynamic. 
+Legal authorization may permit certain actions, yet public legitimacy may question their ethical ramifications. 
+Therefore, a resilient political system must harmonize institutional authority with evolving standards of legitimacy, 
+while citizens remain vigilant participants in shaping both. 
+(a) To criticize constitutional systems 
+(b) To illustrate authority’s permanence 
+(c) To demonstrate legitimacy emerging without official power 
+(d) To argue against democratic governance 
+Ans.(c) 
+Q84. What risk does the passage associate with conflating authority and legitimacy? 
+Read the following passage and answer the questions based on the passage: 
+The relationship between authority and legitimacy is neither automatic nor absolute. Though frequently treated as 
+interchangeable in political discourse, they operate within distinct philosophical frameworks. Authority refers to the 
+recognized right to exercise power, often codified through constitutional or institutional mechanisms, whereas 
+legitimacy is rooted in public consent and ethical justification. The tension between authority and legitimacy 
+constitutes a persistent concern in political theory and civic governance. Institutions derive authority from legal 
+mandates, electoral processes, or historical precedent, thereby ensuring procedural continuity and administrative 
+order. However, legitimacy is contingent upon societal trust and normative approval, which may fluctuate over time. 
+Regimes that maintain authority without sustaining legitimacy often encounter dissent, civil unrest, or moral criticism. 
+Historical examples include governments that enacted discriminatory policies under lawful authority yet faced 
+widespread resistance for violating ethical norms. Conversely, reform movements—though initially lacking formal 
+authority—may acquire legitimacy through collective endorsement and moral persuasion. This distinction reveals that 
+authority does not invariably command legitimacy, and legitimacy can at times challenge established authority. 
+Nevertheless, conflating the two concepts can undermine democratic balance. In pluralistic societies, diverse 
+constituencies interpret legitimacy through varying cultural, ideological, and historical lenses. If authority were to 
+enforce a singular conception of legitimacy, it might suppress dissent and erode institutional neutrality. Contemporary 
+debates surrounding surveillance, digital governance, and environmental regulation further illuminate this dynamic. 
+Legal authorization may permit certain actions, yet public legitimacy may question their ethical ramifications. 
+Therefore, a resilient political system must harmonize institutional authority with evolving standards of legitimacy, 
+while citizens remain vigilant participants in shaping both. 
+(a) Institutional growth 
+(b) Administrative efficiency 
+(c) Suppression of dissent 
+(d) Economic stagnation 
+Ans.(c) 
+Q85. What contemporary issue does the passage cite to highlight the authority–legitimacy tension? 
+Read the following passage and answer the questions based on the passage: 
+The relationship between authority and legitimacy is neither automatic nor absolute. Though frequently treated as 
+interchangeable in political discourse, they operate within distinct philosophical frameworks. Authority refers to the 
+recognized right to exercise power, often codified through constitutional or institutional mechanisms, whereas 
+legitimacy is rooted in public consent and ethical justification. The tension between authority and legitimacy 
+constitutes a persistent concern in political theory and civic governance. Institutions derive authority from legal 
+mandates, electoral processes, or historical precedent, thereby ensuring procedural continuity and administrative 
+order. However, legitimacy is contingent upon societal trust and normative approval, which may fluctuate over time. 
+Regimes that maintain authority without sustaining legitimacy often encounter dissent, civil unrest, or moral criticism. 
+Historical examples include governments that enacted discriminatory policies under lawful authority yet faced 
+widespread resistance for violating ethical norms. Conversely, reform movements—though initially lacking formal 
+authority—may acquire legitimacy through collective endorsement and moral persuasion. This distinction reveals that 
+authority does not invariably command legitimacy, and legitimacy can at times challenge established authority. 
+Nevertheless, conflating the two concepts can undermine democratic balance. In pluralistic societies, diverse 
+constituencies interpret legitimacy through varying cultural, ideological, and historical lenses. If authority were to 
+enforce a singular conception of legitimacy, it might suppress dissent and erode institutional neutrality. Contemporary 
+debates surrounding surveillance, digital governance, and environmental regulation further illuminate this dynamic. 
+Legal authorization may permit certain actions, yet public legitimacy may question their ethical ramifications. 
+Therefore, a resilient political system must harmonize institutional authority with evolving standards of legitimacy, 
+while citizens remain vigilant participants in shaping both. 
+(a) Agricultural reforms 
+(b) Electoral funding 
+(c) Digital governance and surveillance 
+(d) Maritime trade policies 
+Ans.(c) 
+Q86. . What is the author’s ultimate recommendation? 
+Read the following passage and answer the questions based on the passage: 
+The relationship between authority and legitimacy is neither automatic nor absolute. Though frequently treated as 
+interchangeable in political discourse, they operate within distinct philosophical frameworks. Authority refers to the 
+recognized right to exercise power, often codified through constitutional or institutional mechanisms, whereas 
+legitimacy is rooted in public consent and ethical justification. The tension between authority and legitimacy 
+constitutes a persistent concern in political theory and civic governance. Institutions derive authority from legal 
+mandates, electoral processes, or historical precedent, thereby ensuring procedural continuity and administrative 
+order. However, legitimacy is contingent upon societal trust and normative approval, which may fluctuate over time. 
+Regimes that maintain authority without sustaining legitimacy often encounter dissent, civil unrest, or moral criticism. 
+Historical examples include governments that enacted discriminatory policies under lawful authority yet faced 
+widespread resistance for violating ethical norms. Conversely, reform movements—though initially lacking formal 
+authority—may acquire legitimacy through collective endorsement and moral persuasion. This distinction reveals that 
+authority does not invariably command legitimacy, and legitimacy can at times challenge established authority. 
+Nevertheless, conflating the two concepts can undermine democratic balance. In pluralistic societies, diverse 
+constituencies interpret legitimacy through varying cultural, ideological, and historical lenses. If authority were to 
+enforce a singular conception of legitimacy, it might suppress dissent and erode institutional neutrality. Contemporary 
+debates surrounding surveillance, digital governance, and environmental regulation further illuminate this dynamic. 
+Legal authorization may permit certain actions, yet public legitimacy may question their ethical ramifications. 
+Therefore, a resilient political system must harmonize institutional authority with evolving standards of legitimacy, 
+while citizens remain vigilant participants in shaping both. 
+(a) Authority should override legitimacy 
+(b) Legitimacy must reject authority 
+(c) Authority and legitimacy must be harmonized 
+(d) Citizens should disengage from governance 
+Ans.(c) 
+Q87. Rearrange the following sentences to form a coherent paragraph: 
+1. This mechanism, integral to ecological balance, ensures nutrient recycling within ecosystems. 
+2. Decomposers break down organic matter into simpler substances. 
+3. These substances enrich the soil, promoting plant growth. 
+4. Over time, accumulated biomass undergoes gradual decomposition. 
+(a) 4, 2, 3, 1 
+(b) 2, 3, 4, 1 
+(c) 1, 4, 2, 3 
+(d) 3, 2, 4, 1 
+Ans.(a) 
+Q88. Choose the correct one-word substitute for: ‘A system of governance in which rulers exploit public wealth for 
+personal gain’. 
+(a) Plutocracy 
+(b) Autocracy 
+(c) Kleptocracy 
+(d) Bureaucracy 
+Ans.(c) 
+Q89. A sentence is provided in direct speech. From the four given options, choose the one that most accurately conveys 
+the sentence in its corresponding indirect speech. 
+She said, "Where have you kept the confidential files?" 
+(a) She asked where I had kept the confidential files. 
+(b) She asked where had I kept the confidential files. 
+(c) She said where I have kept the confidential files. 
+(d) She questioned where did I keep the confidential files. 
+Ans.(a) 
+Q90. Rearrange the following sentences in correct order to make a logical passage. 
+1. This necessitates strategic planning and institutional coherence. 
+2. Policy reform frequently encounters bureaucratic inertia. 
+3. Transparent dialogue can mitigate resistance and foster cooperation. 
+4. Nevertheless, reform remains essential for systemic advancement. 
+(a) 2-4-1-3 
+(b) 4-2-1-3 
+(c) 3-1-2-4 
+(d) 1-3-2-4 
+Ans.(a) 
+Q91. Change the following from active to passive: 
+The committee might have revised the regulatory framework during the session. 
+(a) The regulatory framework might revise by the committee during the session. 
+(b) The regulatory framework might be revised by the committee during the session. 
+(c) The regulatory framework might have been revised by the committee during the session. 
+(d) The regulatory framework has been revised by the committee during the session. 
+Ans.(c) 
+Q92. A sentence is provided in indirect speech. From the four given options, choose the one that most accurately 
+conveys the sentence in its corresponding direct speech. 
+The consultant remarked that had the audit been conducted earlier, the discrepancies would have been detected. 
+(a) "If the audit was conducted earlier, the discrepancies would have been detected," said the consultant. 
+(b) "If only the audit had been conducted earlier, the discrepancies were detected," he said. 
+(c) "Had the audit been conducted earlier, the discrepancies would have been detected," said the consultant. 
+(d) "Had we conduct the audit earlier, the discrepancies would be detected," said the consultant. 
+Ans.(c) 
+Q93. Choose the correct one-word substitution for: ‘A person who pretends to be someone else in order to deceive 
+others’. 
+(a) Mimic 
+(b) Actor 
+(c) Impostor 
+(d) Spectator 
+Ans.(c) 
+Q94. A sentence is provided in direct speech. From the four given options, choose the one that most accurately conveys 
+the sentence in its corresponding indirect speech. 
+He said, "Water boils at one hundred degrees Celsius." 
+(a) He said that water boiled at one hundred degrees Celsius. 
+(b) He said that water boils at one hundred degrees Celsius. 
+(c) He said that water had boiled at one hundred degrees Celsius. 
+(d) He said that water has boiled at one hundred degrees Celsius. 
+Ans.(b) 
+Q95. Choose the most suitable option to replace the highlighted part of the sentence: 
+The committee has been reviewing the draft policy since four days. 
+(a) from four days 
+(b) by four days 
+(c) for four days 
+(d) since four day 
+Ans.(c) 
+Q96. Which of these is the correct spelling of a theory centered on utility and consequences? 
+(a) Utilitarianism 
+(b) Utiliterianism 
+
+(c) Utilitarionism 
+(d) Utillitarianism 
+Ans.(a) 
+Q97. Select the most appropriate synonym of the given word: FELICITOUS 
+(a) Inappropriate 
+(b) Awkward 
+(c) Incongruous 
+(d) Suitable 
+Ans.(d) 
+Q98. Select the most appropriate synonym of the given word: DILATORY 
+(a) Sluggish 
+(b) Immediate 
+(c) Active 
+(d) Resolute 
+Ans.(a) 
+Q99. Find the part of the sentence that contains an error: 
+She delivered (1)/ a comprehensive overview of the proposal (2)/ but failed to substantiate her claims (3)/ with 
+sufficient evidences. (4)/ 
+(a) (1) 
+(b) (2) 
+(c) (3) 
+(d) (4) 
+Ans.(d) 
+Q100. Select the sentence containing the homonym of the highlighted word: 
+The basilica dominates the skyline with its ornate domes. 
+(a) The historian studied the architecture of the ancient basilica. 
+(b) Tourists gathered inside the grand basilica at sunset. 
+(c) The chef garnished the dish with freshly chopped basilica leaves. 
+(d) The choir performed hymns within the basilica hall. 
+Ans.(c)`;
+
+        // --------------------------------------------------------------
+        // 2. EXPLANATIONS
+        // --------------------------------------------------------------
+        const explanations = {
+            1: "Replace symbols: '+'→'×', '−'→'÷', '×'→'+', '÷'→'−'. So 18 × 6 + 16 ÷ 4 − 2 = 108 + 4 − 2 = 110.",
+            2: "A is mother of B. B is sister of C ⇒ A is mother of C. So A is C's mother.",
+            3: "Newton, Einstein, Galileo are scientists; Shakespeare is a playwright/poet. Odd one out.",
+            4: "Students enrolling online → they want flexible options (I). Traditional colleges shutting down is not implied (II).",
+            5: "From A ≥ B < C ≤ D = E > F: C > B (true), F < D (true). Both follow.",
+            6: "P is only son of Q. Q is only daughter of R ⇒ R is Q's father, so P is R's grandson.",
+            7: "First letter: B→C→D→E (+1). Second: Z→Y→X→W (−1). So EW.",
+            8: "Total work = 6×10 = 60 man-days. Men needed in 5 days = 60/5 = 12.",
+            9: "Pattern: ×4, ×4, ×4... 80×4=320, not 310. So 310 is wrong.",
+            10: "Each letter advances by +5: D→I→N→S, G→L→Q→V, K→P→U→Z. So SVZ.",
+            11: "Ratio 3:4, total 7 parts. B's share = (4/7)×14000 = 8000.",
+            12: "Work-from-home policy introduced (cause) → productivity increased (effect).",
+            13: "Prefer EVs → assume eco-friendly (I). Petrol banned not implied (II).",
+            14: "Pattern: (a−b)^2. (7−1)^2=36, (6−1)^2=25, so (5−1)^2=16.",
+            15: "Should be -20 each step: 420→400→380→360→340. So 370 is wrong (should be 360).",
+            16: "MOON→QSSR: each letter +4. STAR→WXEV.",
+            17: "STOP→TOPS: left shift by 1 (S T O P → T O P S). DRAW→RAWD.",
+            18: "COLD→DPME: each letter +1. WARM→XBSN.",
+            19: "Option (b) is an exact match.",
+            20: "Switch off to reduce consumption (I). Unsafe not implied (II).",
+            21: "Squares of odd numbers: 1^2,3^2,5^2,7^2,9^2,11^2=121.",
+            22: "Replace: '+'→'÷', '×'→'-', '-'→'+', '÷'→'×'. 16 ÷ 8 − 4 + 2 × 2 = 2 − 4 + 4 = 2.",
+            23: "Replace: '+'→'×', '×'→'÷', '-'→'+', '÷'→'-'. 18 × 6 ÷ 3 + 4 − 2 = 108÷3+4−2 = 36+4−2=38.",
+            24: "Option (a) is an exact match.",
+            25: "Pattern: ×2+1. 63×2+1=127.",
+            26: "Mixed economy = coexistence of public and private sectors.",
+            27: "Standard table tennis ball weight is 2.7g.",
+            28: "Athletics track lane lines are 5 cm wide.",
+            29: "Finance Commission is constituted periodically by the President for fiscal recommendations.",
+            30: "Enzymes lower activation energy (1) and are substrate specific (2). They are affected by temperature (3 false).",
+            31: "Article 136 grants SLP (1 true). It does not apply automatically to military courts (2 false).",
+            32: "Coastal radar cooperation increases maritime awareness, so A and R true, R explains A.",
+            33: "Article 276 limits taxes on professions.",
+            34: "Qutub Minar (1199) → Humayun's Tomb (1569) → Taj Mahal (1632).",
+            35: "Lord Dalhousie introduced Doctrine of Lapse (correct match).",
+            36: "Vaishnava Jana To is in Jhaptaal (7 beats).",
+            37: "Nehru Trophy Boat Race is snake boat racing.",
+            38: "Disinvestment debates because of dilution of govt ownership – both true and R explains A.",
+            39: "MNC entry is linked with Liberalisation.",
+            40: "Uparikara – Additional tax (correct).",
+            41: "Someshvara I defeated Rajadhiraja I at Koppam.",
+            42: "87th Senior National Badminton 2025 winners: Rithvik Sanjeevi and Tanvi Patri.",
+            43: "Ministry of Utmost Happiness – Arundhati Roy.",
+            44: "Gaur Maria dance – Chhattisgarh (Gaur tribe).",
+            45: "Green Credit Programme rewards voluntary eco-friendly actions.",
+            46: "Both statements correct: Western Command hosted, IAF defeated Army.",
+            47: "Core inflation declines when commodity prices fall.",
+            48: "Energy transition investment depends on policy stability.",
+            49: "Dumhal dance – tall conical headgear.",
+            50: "Satellites are in Thermosphere/Exosphere, not Mesosphere. So incorrect match.",
+            51: "18^3 + 14^3 - 32^3 = -24192, then +24192 = 0.",
+            52: "sin α = 4/5, cos=3/5, cot=3/4. (1−3/4)/(1+3/4) = (1/4)/(7/4)=1/7.",
+            53: "tanθ+cotθ=2 ⇒ tanθ=1 ⇒ θ=45°. sec+cosec = √2+√2 = 2√2.",
+            54: "tan30 = 30/shadow ⇒ 1/√3 = 30/shadow ⇒ shadow = 30√3.",
+            55: "Refrigerator: 45000−5000=40000. Stabilizer: 2000−15%=1700. Total = 41700.",
+            56: "First 3 min fill: 3(1/10+1/15)=3(1/6)=1/2. Remaining 1/2. New rates: A=1/30, B=1/6, combined=1/5. Time = (1/2)/(1/5)=2.5 min = 2 min 30 sec.",
+            57: "AD bisects BC ⇒ BD=DC, AD common, right angles ⇒ SAS congruent.",
+            58: "Height ratio small cone : whole = 1:4 ⇒ volume ratio = 1:64. So top part : frustum = 1:63.",
+            59: "√(14+6√5) = √( (3)^2 + (√5)^2 + 2*3*√5 ) = 3+√5.",
+            60: "Days: April 4 to June 16 = 73 days. SI = 24000×5/100×73/365 = 240. Total = 24240.",
+            61: "Numerator: 0.343+0.008−0.729 = −0.378. Denominator: 3×0.7×0.2×(−0.9)=−0.378. Ratio=1.",
+            62: "Q = P*r*t/100, R = Q*r*t/100 ⇒ Q^2 = P*R.",
+            63: "All points satisfy 2x+5y=10: (5,0):10, (0,2):10, (-5,4):−10+20=10. So all.",
+            64: "Right triangle legs 10,24 ⇒ hypotenuse 26. Inradius = (10+24−26)/2 = 4.",
+            65: "sin75 cos15 + cos75 sin15 = sin(75+15)=sin90=1.",
+            66: "Sides x,2x,3x, volume 6x^3=384 ⇒ x=4. Longest = 12.",
+            67: "x+1/x=-1 ⇒ x^3+1/x^3=2, x^5+1/x^5=-1. Expression = -1 + 4*2 = 7.",
+            68: "Let common = k. P=5k, Q=20k/3, R=25k/3 ⇒ ratio 3:4:5.",
+            69: "First triangle area = 54, hypotenuse=15. Scale factor = 45/15=3. Area = 54×9=486.",
+            70: "(√10+√3)^2 = 13+2√30, (√8+√5)^2 = 13+2√40. Since √30<√40, first < second. So (ii) is correct.",
+            71: "Sphere volume / cube volume = (4/3)π(a/2)^3 / a^3 = π/6 ≈ 0.5236 = 52.36%.",
+            72: "Rectangle: all angles 90°, opposite sides equal.",
+            73: "Area ∝ angle. 60° = π/3. Ratio = (π/3) : (π/2) = 2:3.",
+            74: "Hemisphere volume = (2/3)πr^3 = (2/3)π*216 = 144π.",
+            75: "Distance = √(15^2+8^2) = √289 = 17.",
+            76: "Hoist with one's own petard = ruined by one's own device.",
+            77: "Sluggard – correct spelling.",
+            78: "Refulgent = shining, antonym = dull.",
+            79: "Deterrent – something that discourages.",
+            80: "No sooner... than... (not 'when'). Error in part (2).",
+            81: "Passive 'are believed to have been approved' → Active 'is believed to have approved'.",
+            82: "Passage emphasizes that authority and legitimacy are distinct and not always aligned.",
+            83: "To demonstrate legitimacy emerging without official power.",
+            84: "Conflating them can suppress dissent.",
+            85: "Digital governance and surveillance cited.",
+            86: "Recommendation: harmonize authority and legitimacy.",
+            87: "Logical order: 4 (biomass decomposes) → 2 (decomposers break down) → 3 (substances enrich soil) → 1 (mechanism ensures recycling).",
+            88: "Kleptocracy – rulers exploit public wealth.",
+            89: "Indirect: She asked where I had kept...",
+            90: "Policy reform faces inertia (2), but essential (4), needs planning (1), dialogue helps (3). So 2-4-1-3.",
+            91: "Passive of 'might have revised' = 'might have been revised'.",
+            92: "Direct speech: 'Had the audit been conducted earlier, the discrepancies would have been detected'.",
+            93: "Impostor – person who deceives by pretending.",
+            94: "Universal truth – tense stays 'boils'.",
+            95: "'since four days' → 'for four days'.",
+            96: "Utilitarianism – correct spelling.",
+            97: "Felicitous = suitable.",
+            98: "Dilatory = sluggish.",
+            99: "'evidences' is uncountable; should be 'evidence'. Error in (4).",
+            100: "'basilica' – a church. 'basilica' leaves (option c) uses it as a herb (basil), a homonym."
+        };
+
+        // --------------------------------------------------------------
+        // 3. PARSER
+        // --------------------------------------------------------------
+        function parseQuestions(text) {
+            const blocks = text.match(/Q\d+\..*?(?=Q\d+\.|$)/gs);
+            if (!blocks) return [];
+
+            const questions = [];
+            for (const block of blocks) {
+                const numMatch = block.match(/Q(\d+)\./);
+                if (!numMatch) continue;
+                const num = parseInt(numMatch[1], 10);
+
+                const qTextMatch = block.match(/Q\d+\.\s*(.*?)\s*\(a\)/s);
+                let qText = qTextMatch ? qTextMatch[1].trim() : '';
+
+                const optsMatch = block.match(/\(a\)(.*?)\(b\)(.*?)\(c\)(.*?)\(d\)(.*?)Ans\.\(([a-d])\)/is);
+                if (!optsMatch) continue;
+                const options = [
+                    optsMatch[1].trim(),
+                    optsMatch[2].trim(),
+                    optsMatch[3].trim(),
+                    optsMatch[4].trim()
+                ];
+                const answer = optsMatch[5];
+
+                questions.push({ num, qText, options, answer });
+            }
+            return questions;
+        }
+
+        const questions = parseQuestions(rawText);
+        const total = questions.length;
+
+        // --------------------------------------------------------------
+        // 4. RENDER
+        // --------------------------------------------------------------
+        const container = document.getElementById('questions-container');
+
+        questions.forEach((q) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.dataset.qnum = q.num;
+
+            const header = document.createElement('div');
+            header.className = 'q-header';
+            header.innerHTML = `
+                <span class="q-number">Q${q.num}.</span>
+                <span class="q-text">${q.qText}</span>
+            `;
+            card.appendChild(header);
+
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+            const labels = ['a', 'b', 'c', 'd'];
+            q.options.forEach((opt, idx) => {
+                const p = document.createElement('div');
+                p.className = 'option';
+                p.innerHTML = `<strong>(${labels[idx]})</strong> ${opt}`;
+                optsDiv.appendChild(p);
+            });
+            card.appendChild(optsDiv);
+
+            const action = document.createElement('div');
+            action.className = 'action-area';
+
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-primary';
+            btn.textContent = 'Show Answer';
+            btn.dataset.qnum = q.num;
+
+            const badge = document.createElement('span');
+            badge.className = 'badge';
+            badge.textContent = `Answer: (${q.answer})`;
+
+            action.appendChild(btn);
+            action.appendChild(badge);
+            card.appendChild(action);
+
+            const ansBox = document.createElement('div');
+            ansBox.className = 'answer-box';
+            ansBox.id = `ans-${q.num}`;
+
+            const ansLabel = document.createElement('div');
+            ansLabel.className = 'answer-label';
+            ansLabel.innerHTML = `✅ Correct Answer: <span>(${q.answer})</span>`;
+            ansBox.appendChild(ansLabel);
+
+            const expDiv = document.createElement('div');
+            expDiv.className = 'explanation';
+            const expText = explanations[q.num] || 'Explanation not available.';
+            expDiv.innerHTML = `<strong>💡 Explanation:</strong> ${expText}`;
+            ansBox.appendChild(expDiv);
+
+            card.appendChild(ansBox);
+            container.appendChild(card);
+
+            let visible = false;
+            btn.addEventListener('click', () => {
+                visible = !visible;
+                ansBox.classList.toggle('visible', visible);
+                btn.textContent = visible ? 'Hide Answer' : 'Show Answer';
+            });
+        });
+
+        // --------------------------------------------------------------
+        // 5. SHOW / HIDE ALL
+        // --------------------------------------------------------------
+        document.getElementById('showAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.answer-box').forEach((box) => {
+                box.classList.add('visible');
+            });
+            document.querySelectorAll('.action-area .btn-primary').forEach((btn) => {
+                btn.textContent = 'Hide Answer';
+            });
+        });
+
+        document.getElementById('hideAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.answer-box').forEach((box) => {
+                box.classList.remove('visible');
+            });
+            document.querySelectorAll('.action-area .btn-primary').forEach((btn) => {
+                btn.textContent = 'Show Answer';
+            });
+        });
+
+        document.getElementById('stats').textContent = `📊 Total ${total} questions loaded. Click "Show Answer" on any question to see the solution and explanation.`;
+    </script>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar & Clock – Deep Explanation (कैलेंडर और घड़ी)</title>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --blue:#2563eb; --dark:#0b1f4b; --navy:#102a68; --bg:#f5f7fb; --white:#ffffff; --text:#172033; --muted:#667085; --border:#e1e6ef; --green:#16a34a; --red:#dc2626; --lightblue:#eef5ff; }
+body{ font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); }
+/* ===== HEADER ===== */
+.header{ background:linear-gradient(135deg,#07183d,#2445a0); color:white; padding:28px 6%; }
+.header-inner{ max-width:1250px; margin:auto; }
+.back-btn{ color:white; text-decoration:none; font-size:15px; font-weight:bold; display:inline-block; margin-bottom:20px; background:rgba(255,255,255,0.1); padding:6px 18px; border-radius:30px; }
+.back-btn:hover{ background:rgba(255,255,255,0.25); }
+.header-content{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.header-icon{ width:76px; height:76px; border-radius:18px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:40px; flex-shrink:0; }
+.header h1{ font-size:34px; margin-bottom:7px; }
+.header p{ font-size:15px; opacity:.85; }
+.lang-toggle{ display:flex; gap:8px; background:rgba(255,255,255,0.15); padding:4px; border-radius:30px; margin-left:auto; }
+.lang-btn{ background:transparent; border:2px solid transparent; color:white; padding:6px 16px; border-radius:30px; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.lang-btn.active{ background:white; color:#0b1f4b; border-color:white; }
+.lang-btn:hover{ background:rgba(255,255,255,0.3); }
+/* ===== CONTAINER ===== */
+.container{ width:92%; max-width:1200px; margin:30px auto; }
+/* ===== HERO ===== */
+.hero{ background:white; border:1px solid var(--border); border-radius:18px; padding:25px; box-shadow:0 8px 25px rgba(15,35,80,.06); }
+.hero h2{ color:var(--dark); margin-bottom:9px; }
+.hero p{ color:var(--muted); line-height:1.6; }
+.hero .description-box{ background:#f4f7ff; border-left:5px solid var(--blue); padding:16px 20px; border-radius:10px; margin-top:12px; color:#1f3a5f; line-height:1.8; }
+.stats{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.stat{ background:var(--lightblue); color:#21438f; border:1px solid #d9e5ff; padding:10px 15px; border-radius:10px; font-weight:bold; font-size:14px; }
+/* ===== CONTROLS ===== */
+.controls{ margin:22px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.search-box{ flex:1; min-width:200px; padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; font-size:14px; outline:none; }
+.search-box:focus{ border-color:var(--blue); }
+select{ padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+.btn{ padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.btn-blue{ background:var(--blue); color:white; }
+.btn-blue:hover{ background:#1d4ed8; }
+.btn-white{ background:white; border:1px solid #ccd3df; color:#26344d; }
+.btn-white:hover{ background:#f0f2f5; }
+.btn-green{ background:var(--green); color:white; }
+.btn-green:hover{ background:#15803d; }
+/* ===== PROGRESS ===== */
+.progress-info{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:var(--muted); font-weight:bold; }
+.progress{ width:100%; height:9px; background:#e5e9f0; border-radius:20px; overflow:hidden; margin-bottom:25px; }
+.progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); transition:.3s; }
+/* ===== QUESTION CARD ===== */
+.question-card{ background:white; border:1px solid var(--border); border-radius:17px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 18px rgba(15,35,80,.05); }
+.question-top{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px 8px; }
+.question-number{ color:var(--blue); font-weight:800; }
+.question-type{ background:#eef2f7; color:#526071; padding:6px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.question-body{ padding:8px 20px 20px; }
+.question-text{ font-size:17px; line-height:1.65; font-weight:650; margin-bottom:16px; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.option{ background:#f8fafc; border:1px solid #dce2eb; border-radius:10px; padding:13px; text-align:left; cursor:pointer; font-size:15px; transition:.2s; }
+.option:hover{ background:#eff6ff; border-color:#2563eb; }
+.option.correct{ background:#ecfdf3; border-color:#22c55e; color:#166534; }
+.option.wrong{ background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+.answer-result{ margin-top:12px; font-weight:bold; }
+.explanation{ display:none; margin-top:15px; padding:18px 20px; background:#f4f7ff; border-left:5px solid #2563eb; border-radius:8px; line-height:1.8; }
+.explanation.show{ display:block; }
+.explanation-title{ color:#17449c; font-weight:bold; margin-bottom:8px; font-size:16px; }
+.footer{ text-align:center; padding:35px 10px; color:#667085; }
+@media(max-width:700px){ .header h1{ font-size:25px; } .header-content{ align-items:flex-start; } .header-icon{ width:60px; height:60px; font-size:30px; } .options{ grid-template-columns:1fr; } .question-text{ font-size:16px; } .container{ width:94%; } .controls{ flex-direction:column; } .controls .btn{ width:100%; text-align:center; } .lang-toggle{ margin-left:0; width:100%; justify-content:center; } }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="header-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="back-btn">← Topics पर वापस जाएँ</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+                <button class="lang-btn" id="langHi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">📅</div>
+            <div>
+                <h1 id="mainTitle">Calendar & Clock (Deep Explanation)</h1>
+                <p id="mainSub">SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="container">
+    <section class="hero">
+        <h2 id="heroTitle">Calendar & Clock – Complete SSC Practice</h2>
+        <div id="descriptionBox" class="description-box">
+            <!-- Dynamically filled by JS -->
+        </div>
+        <div class="stats" id="statsRow">
+            <div class="stat" data-lang-en="510+ Questions" data-lang-hi="510+ प्रश्न">510+ Questions</div>
+            <div class="stat" data-lang-en="Calendar (Odd Days)" data-lang-hi="कैलेंडर (विषम दिन)">Calendar (Odd Days)</div>
+            <div class="stat" data-lang-en="Clock (Angle)" data-lang-hi="घड़ी (कोण)">Clock (Angle)</div>
+            <div class="stat" data-lang-en="Clock (Coincide/Opposite)" data-lang-hi="घड़ी (संपाती/विपरीत)">Clock (Coincide/Opposite)</div>
+            <div class="stat" data-lang-en="Mirror/Water Image" data-lang-hi="दर्पण/जल प्रतिबिम्ब">Mirror/Water Image</div>
+            <div class="stat" data-lang-en="Detailed Explanation" data-lang-hi="विस्तृत व्याख्या">Detailed Explanation</div>
+        </div>
+    </section>
+
+    <!-- ===== CONTROLS ===== -->
+    <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="Search question...">
+        <select id="filter">
+            <option value="all" data-lang-en="All Questions" data-lang-hi="सभी प्रश्न">All Questions</option>
+            <option value="Calendar" data-lang-en="Calendar" data-lang-hi="कैलेंडर">Calendar</option>
+            <option value="Clock (Angle)" data-lang-en="Clock (Angle)" data-lang-hi="घड़ी (कोण)">Clock (Angle)</option>
+            <option value="Clock (Coincide/Opposite)" data-lang-en="Clock (Coincide/Opposite)" data-lang-hi="घड़ी (संपाती/विपरीत)">Clock (Coincide/Opposite)</option>
+            <option value="Mirror/Water Image" data-lang-en="Mirror/Water Image" data-lang-hi="दर्पण/जल प्रतिबिम्ब">Mirror/Water Image</option>
+        </select>
+        <button class="btn btn-blue" onclick="showAllExplanations()" data-lang-en="Show Explanations" data-lang-hi="सभी व्याख्याएँ दिखाएँ">Show Explanations</button>
+        <button class="btn btn-green" onclick="resetQuiz()" data-lang-en="Reset" data-lang-hi="रीसेट करें">Reset</button>
+    </div>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-info">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <!-- ===== QUESTIONS ===== -->
+    <div id="questionsContainer"></div>
+</main>
+<footer class="footer" data-lang-en="Calendar & Clock · SSC Reasoning" data-lang-hi="कैलेंडर और घड़ी · SSC रीजनिंग">Calendar & Clock · SSC Reasoning</footer>
+
+<script>
+// ================================================================
+//  LANGUAGE TOGGLE & UI TEXTS
+// ================================================================
+let currentLang = 'en';
+
+const descriptions = {
+    en: `<b>What are Calendar & Clock Questions?</b><br> 
+    <b>Calendar:</b> These questions test your ability to find the day of the week for a given date using the concept of "odd days".<br><br>
+    <b>📌 Key Calendar Concepts:</b><br>
+    • <b>Odd Days:</b> Remainder when total days are divided by 7.<br>
+    • <b>Leap Year:</b> 366 days (29 days in Feb) → 2 odd days.<br>
+    • <b>Ordinary Year:</b> 365 days → 1 odd day.<br>
+    • <b>100 years</b> → 5 odd days, <b>200 years</b> → 3 odd days, <b>300 years</b> → 1 odd day, <b>400 years</b> → 0 odd days.<br>
+    • <b>Day codes:</b> Sunday=0, Monday=1, Tuesday=2, Wednesday=3, Thursday=4, Friday=5, Saturday=6.<br><br>
+    <b>Clock:</b> These questions test your understanding of the relationship between hour and minute hands.<br><br>
+    <b>📌 Key Clock Formulas:</b><br>
+    • <b>Angle between hands</b> = |30H − 5.5M| (where H = hour, M = minutes)<br>
+    • <b>Coincide:</b> Hands overlap at 0° angle.<br>
+    • <b>Opposite:</b> Hands are 180° apart.<br>
+    • <b>Right angle:</b> Hands are 90° apart.<br>
+    • <b>Mirror Time:</b> (11:60 − given time) for 12-hour format.<br>
+    • <b>Water Image:</b> (11:60 − given time) + some adjustments.`,
+    
+    hi: `<b>कैलेंडर और घड़ी (Calendar & Clock) क्या है?</b><br> 
+    <b>कैलेंडर:</b> ये प्रश्न "विषम दिनों (Odd Days)" की अवधारणा का उपयोग करके किसी तारीख के लिए सप्ताह का दिन खोजने की आपकी क्षमता का परीक्षण करते हैं।<br><br>
+    <b>📌 कैलेंडर की महत्वपूर्ण अवधारणाएँ:</b><br>
+    • <b>विषम दिन (Odd Days):</b> कुल दिनों को 7 से विभाजित करने पर शेषफल।<br>
+    • <b>लीप वर्ष (Leap Year):</b> 366 दिन (फरवरी में 29 दिन) → 2 विषम दिन।<br>
+    • <b>सामान्य वर्ष (Ordinary Year):</b> 365 दिन → 1 विषम दिन।<br>
+    • <b>100 वर्ष</b> → 5 विषम दिन, <b>200 वर्ष</b> → 3 विषम दिन, <b>300 वर्ष</b> → 1 विषम दिन, <b>400 वर्ष</b> → 0 विषम दिन।<br>
+    • <b>दिन कूट (Day codes):</b> रविवार=0, सोमवार=1, मंगलवार=2, बुधवार=3, गुरुवार=4, शुक्रवार=5, शनिवार=6।<br><br>
+    <b>घड़ी (Clock):</b> ये प्रश्न घंटे और मिनट की सुई के बीच संबंध की आपकी समझ का परीक्षण करते हैं।<br><br>
+    <b>📌 घड़ी के महत्वपूर्ण सूत्र:</b><br>
+    • <b>सुइयों के बीच कोण</b> = |30H − 5.5M| (जहाँ H = घंटा, M = मिनट)<br>
+    • <b>संपाती (Coincide):</b> सुइयाँ 0° कोण पर ओवरलैप होती हैं।<br>
+    • <b>विपरीत (Opposite):</b> सुइयाँ 180° अलग होती हैं।<br>
+    • <b>समकोण (Right angle):</b> सुइयाँ 90° अलग होती हैं।<br>
+    • <b>दर्पण समय (Mirror Time):</b> (11:60 − दिया गया समय) 12-घंटे के प्रारूप के लिए।<br>
+    • <b>जल प्रतिबिम्ब (Water Image):</b> (11:60 − दिया गया समय) + कुछ समायोजन।`
+};
+
+function updateUI() {
+    document.querySelectorAll('[data-lang-en]').forEach(el => {
+        const key = el.dataset.langEn;
+        const hi = el.dataset.langHi;
+        if (currentLang === 'en') {
+            if (el.tagName === 'OPTION') el.textContent = key;
+            else el.textContent = key;
+        } else {
+            if (el.tagName === 'OPTION') el.textContent = hi;
+            else el.textContent = hi;
+        }
+    });
+    document.getElementById('mainTitle').textContent = currentLang === 'en' ? 'Calendar & Clock (Deep Explanation)' : 'कैलेंडर और घड़ी (गहन व्याख्या)';
+    document.getElementById('mainSub').textContent = currentLang === 'en' ? 'SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions' : 'SSC CGL • CHSL • CPO • MTS | 510+ द्विभाषी प्रश्न';
+    document.getElementById('heroTitle').textContent = currentLang === 'en' ? 'Calendar & Clock – Complete SSC Practice' : 'कैलेंडर और घड़ी – पूर्ण SSC अभ्यास';
+    document.getElementById('descriptionBox').innerHTML = descriptions[currentLang];
+    document.getElementById('search').placeholder = currentLang === 'en' ? 'Search question...' : 'प्रश्न खोजें...';
+    document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
+    document.getElementById('langHi').classList.toggle('active', currentLang === 'hi');
+    renderQuestions();
+    updateProgress();
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    updateUI();
+}
+
+// ================================================================
+//  CALENDAR & CLOCK GENERATOR (DEEP EXPLANATION)
+// ================================================================
+const questions = [];
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// ---- Helper: Check Leap Year ----
+function isLeap(year) {
+    return (year % 400 === 0) || (year % 4 === 0 && year % 100 !== 0);
+}
+
+// ---- Helper: Day of Week using Zeller's Congruence (or simple method) ----
+function getDayOfWeek(day, month, year) {
+    // Using known reference: 1 Jan 2000 was Saturday (6)
+    // For simplicity, we'll use a known algorithm
+    const t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+    const y = year - (month < 3 ? 1 : 0);
+    const result = (y + Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400) + t[month-1] + day) % 7;
+    return result; // 0=Sunday, 1=Monday, ...
+}
+
+// ---- Generate Calendar Questions ----
+function generateCalendarQuestion() {
+    const type = Math.floor(Math.random() * 4);
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const daysHi = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
+    
+    if (type === 0) {
+        // Find day of week for a given date
+        let year = Math.floor(Math.random() * 150) + 1950; // 1950-2100
+        let month = Math.floor(Math.random() * 12) + 1;
+        let day = Math.floor(Math.random() * 28) + 1; // up to 28 to avoid invalid dates
+        let dayIdx = getDayOfWeek(day, month, year);
+        let correct = days[dayIdx];
+        let correctHi = daysHi[dayIdx];
+        
+        let opts = shuffle([correct, days[(dayIdx+1)%7], days[(dayIdx+2)%7], days[(dayIdx+3)%7]]);
+        let ansIdx = opts.indexOf(correct);
+        
+        let q_en = `What was the day on ${day}/${month}/${year}?`;
+        let q_hi = `${day}/${month}/${year} को कौन-सा दिन था?`;
+        
+        let exp_en = `🔍 Using Odd Days method:<br>`;
+        let exp_hi = `🔍 विषम दिनों की विधि से:<br>`;
+        // Calculate odd days from reference (2000 = Saturday)
+        let refYear = 2000;
+        let refDay = 6; // Saturday
+        let totalDays = 0;
+        for (let y = refYear; y < year; y++) {
+            totalDays += isLeap(y) ? 366 : 365;
+        }
+        // Add days for months of the current year
+        for (let m = 1; m < month; m++) {
+            let daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            if (m === 2 && isLeap(year)) daysInMonth[1] = 29;
+            totalDays += daysInMonth[m-1];
+        }
+        totalDays += day - 1;
+        let oddDays = totalDays % 7;
+        let resultIdx = (refDay + oddDays) % 7;
+        let dayName = days[resultIdx];
+        
+        exp_en += `Step 1: Reference: 1 Jan 2000 was Saturday.<br>`;
+        exp_en += `Step 2: Total days from 1 Jan 2000 to ${day}/${month}/${year} = ${totalDays} days.<br>`;
+        exp_en += `Step 3: Odd days = ${totalDays} % 7 = ${oddDays}.<br>`;
+        exp_en += `Step 4: Day = Saturday + ${oddDays} = ${dayName}.<br>`;
+        exp_en += `✅ Correct answer: ${dayName}`;
+        
+        exp_hi = `चरण 1: संदर्भ: 1 जनवरी 2000 शनिवार था।<br>`;
+        exp_hi += `चरण 2: 1 जनवरी 2000 से ${day}/${month}/${year} तक कुल दिन = ${totalDays} दिन।<br>`;
+        exp_hi += `चरण 3: विषम दिन = ${totalDays} % 7 = ${oddDays}।<br>`;
+        exp_hi += `चरण 4: दिन = शनिवार + ${oddDays} = ${dayName}।<br>`;
+        exp_hi += `✅ सही उत्तर: ${dayName}`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Calendar", exp_en, exp_hi };
+        
+    } else if (type === 1) {
+        // Find the year or date based on odd days
+        let year = Math.floor(Math.random() * 100) + 2000;
+        let totalOdd = 0;
+        for (let y = 2000; y < year; y++) {
+            totalOdd += isLeap(y) ? 2 : 1;
+        }
+        totalOdd = totalOdd % 7;
+        let q_en = `How many odd days are there from 1 Jan 2000 to 31 Dec ${year-1}?`;
+        let q_hi = `1 जनवरी 2000 से 31 दिसम्बर ${year-1} तक कितने विषम दिन (odd days) हैं?`;
+        let correct = totalOdd;
+        let opts = shuffle([String(correct), String(correct+1), String(correct+2), String(correct+3)]);
+        let ansIdx = opts.indexOf(String(correct));
+        let exp_en = `🔍 Odd Days Calculation:<br>`;
+        exp_en += `Step 1: Each ordinary year has 1 odd day, each leap year has 2 odd days.<br>`;
+        exp_en += `Step 2: From 2000 to ${year-1}, there are ${year-2000} years.<br>`;
+        exp_en += `Step 3: Number of leap years = ${Math.floor((year-1-2000)/4) - Math.floor((year-1-2000)/100) + Math.floor((year-1-2000)/400)}.<br>`;
+        exp_en += `Step 4: Total odd days = (${year-2000}) + (leap years) = ${totalOdd}.<br>`;
+        exp_en += `✅ Correct answer: ${totalOdd}`;
+        
+        exp_hi = `🔍 विषम दिनों की गणना:<br>`;
+        exp_hi += `चरण 1: प्रत्येक सामान्य वर्ष में 1 विषम दिन, प्रत्येक लीप वर्ष में 2 विषम दिन।<br>`;
+        exp_hi += `चरण 2: 2000 से ${year-1} तक ${year-2000} वर्ष।<br>`;
+        exp_hi += `चरण 3: लीप वर्षों की संख्या = ${Math.floor((year-1-2000)/4) - Math.floor((year-1-2000)/100) + Math.floor((year-1-2000)/400)}।<br>`;
+        exp_hi += `चरण 4: कुल विषम दिन = (${year-2000}) + (लीप वर्ष) = ${totalOdd}।<br>`;
+        exp_hi += `✅ सही उत्तर: ${totalOdd}`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Calendar", exp_en, exp_hi };
+        
+    } else if (type === 2) {
+        // What day will be on same date next year
+        let year = Math.floor(Math.random() * 50) + 2000;
+        let month = Math.floor(Math.random() * 12) + 1;
+        let day = Math.floor(Math.random() * 28) + 1;
+        let dayIdx1 = getDayOfWeek(day, month, year);
+        let dayIdx2 = getDayOfWeek(day, month, year+1);
+        let correct = days[dayIdx2];
+        let q_en = `If ${day}/${month}/${year} is ${days[dayIdx1]}, what will be the day on ${day}/${month}/${year+1}?`;
+        let q_hi = `यदि ${day}/${month}/${year} को ${daysHi[dayIdx1]} है, तो ${day}/${month}/${year+1} को कौन-सा दिन होगा?`;
+        let opts = shuffle([correct, days[(dayIdx2+1)%7], days[(dayIdx2+2)%7], days[(dayIdx2+3)%7]]);
+        let ansIdx = opts.indexOf(correct);
+        let shift = isLeap(year) ? 2 : 1;
+        let exp_en = `🔍 Day Shift Logic:<br>`;
+        exp_en += `Step 1: ${year} is ${isLeap(year) ? 'a leap year' : 'an ordinary year'}.<br>`;
+        exp_en += `Step 2: Moving to next year adds ${shift} odd days.<br>`;
+        exp_en += `Step 3: New day = ${days[dayIdx1]} + ${shift} days = ${correct}.<br>`;
+        exp_en += `✅ Correct answer: ${correct}`;
+        
+        exp_hi = `🔍 दिन बदलने का तर्क:<br>`;
+        exp_hi += `चरण 1: ${year} ${isLeap(year) ? 'एक लीप वर्ष है' : 'एक सामान्य वर्ष है'}।<br>`;
+        exp_hi += `चरण 2: अगले वर्ष में जाने पर ${shift} विषम दिन जुड़ते हैं।<br>`;
+        exp_hi += `चरण 3: नया दिन = ${daysHi[dayIdx1]} + ${shift} दिन = ${correct}.<br>`;
+        exp_hi += `✅ सही उत्तर: ${correct}`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Calendar", exp_en, exp_hi };
+        
+    } else {
+        // 100/200/300/400 years odd days
+        let centuries = [100, 200, 300, 400];
+        let c = centuries[Math.floor(Math.random() * centuries.length)];
+        let odd = [5, 3, 1, 0];
+        let idx = centuries.indexOf(c);
+        let correct = odd[idx];
+        let q_en = `How many odd days are there in ${c} years?`;
+        let q_hi = `${c} वर्षों में कितने विषम दिन (odd days) होते हैं?`;
+        let opts = shuffle([String(correct), String(correct+1), String(correct+2), String(correct+3)]);
+        let ansIdx = opts.indexOf(String(correct));
+        let exp_en = `🔍 Odd Days in ${c} years:<br>`;
+        exp_en += `Step 1: 100 years = 5 odd days (because 24 leap years + 76 ordinary years).<br>`;
+        exp_en += `Step 2: 200 years = 5×2 = 10 → 3 odd days.<br>`;
+        exp_en += `Step 3: 300 years = 5×3 = 15 → 1 odd day.<br>`;
+        exp_en += `Step 4: 400 years = 5×4 + 1 extra (because 400 is leap) = 21 → 0 odd days.<br>`;
+        exp_en += `✅ Correct answer: ${correct} odd days.`;
+        
+        exp_hi = `🔍 ${c} वर्षों में विषम दिन:<br>`;
+        exp_hi += `चरण 1: 100 वर्ष = 5 विषम दिन (24 लीप + 76 सामान्य वर्ष)।<br>`;
+        exp_hi += `चरण 2: 200 वर्ष = 5×2 = 10 → 3 विषम दिन।<br>`;
+        exp_hi += `चरण 3: 300 वर्ष = 5×3 = 15 → 1 विषम दिन।<br>`;
+        exp_hi += `चरण 4: 400 वर्ष = 5×4 + 1 अतिरिक्त (क्योंकि 400 लीप है) = 21 → 0 विषम दिन।<br>`;
+        exp_hi += `✅ सही उत्तर: ${correct} विषम दिन।`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Calendar", exp_en, exp_hi };
+    }
+}
+
+// ---- Generate Clock Questions ----
+function generateClockQuestion() {
+    const type = Math.floor(Math.random() * 4);
+    
+    if (type === 0) {
+        // Angle between hands
+        let H = Math.floor(Math.random() * 12);
+        let M = Math.floor(Math.random() * 60);
+        let angle = Math.abs(30 * H - 5.5 * M);
+        if (angle > 180) angle = 360 - angle;
+        let correct = Math.round(angle);
+        let q_en = `What is the angle between the hour and minute hands at ${H}:${String(M).padStart(2,'0')}?`;
+        let q_hi = `${H}:${String(M).padStart(2,'0')} पर घंटे और मिनट की सुइयों के बीच कितना कोण है?`;
+        let opts = shuffle([String(correct), String(correct+10), String(correct-5), String(correct+20)]);
+        let ansIdx = opts.indexOf(String(correct));
+        let exp_en = `🔍 Angle Formula: Angle = |30H − 5.5M|<br>`;
+        exp_en += `Step 1: H = ${H}, M = ${M}<br>`;
+        exp_en += `Step 2: 30×${H} = ${30*H}, 5.5×${M} = ${(5.5*M).toFixed(1)}<br>`;
+        exp_en += `Step 3: Angle = |${30*H} − ${(5.5*M).toFixed(1)}| = ${angle.toFixed(1)}°<br>`;
+        exp_en += `✅ Correct answer: ${Math.round(angle)}°`;
+        
+        exp_hi = `🔍 कोण सूत्र: कोण = |30H − 5.5M|<br>`;
+        exp_hi += `चरण 1: H = ${H}, M = ${M}<br>`;
+        exp_hi += `चरण 2: 30×${H} = ${30*H}, 5.5×${M} = ${(5.5*M).toFixed(1)}<br>`;
+        exp_hi += `चरण 3: कोण = |${30*H} − ${(5.5*M).toFixed(1)}| = ${angle.toFixed(1)}°<br>`;
+        exp_hi += `✅ सही उत्तर: ${Math.round(angle)}°`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Clock (Angle)", exp_en, exp_hi };
+        
+    } else if (type === 1) {
+        // Time when hands coincide (overlap) between H and H+1
+        let H = Math.floor(Math.random() * 11) + 1; // 1 to 11
+        let M = (60 * H) / 11; // formula for coincide: (60/11)*H minutes
+        let minutes = Math.floor(M);
+        let seconds = Math.round((M - minutes) * 60);
+        let correct = `${H}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+        let q_en = `At what time between ${H}:00 and ${H+1}:00 do the hands of a clock coincide?`;
+        let q_hi = `${H}:00 और ${H+1}:00 के बीच घड़ी की सुइयाँ किस समय संपाती (coincide) होती हैं?`;
+        let opts = shuffle([
+            correct,
+            `${H}:${String(minutes+2).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`,
+            `${H+1}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`,
+            `${H}:${String(minutes-1).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`
+        ]);
+        let ansIdx = opts.indexOf(correct);
+        let exp_en = `🔍 Coincide Formula: Time = (60/11) × H minutes after H:00<br>`;
+        exp_en += `Step 1: H = ${H}<br>`;
+        exp_en += `Step 2: Minutes = (60/11) × ${H} = ${M.toFixed(2)} minutes<br>`;
+        exp_en += `Step 3: = ${minutes} min ${seconds} sec<br>`;
+        exp_en += `✅ Correct answer: ${correct}`;
+        
+        exp_hi = `🔍 संपाती सूत्र: समय = (60/11) × H मिनट H:00 के बाद<br>`;
+        exp_hi += `चरण 1: H = ${H}<br>`;
+        exp_hi += `चरण 2: मिनट = (60/11) × ${H} = ${M.toFixed(2)} मिनट<br>`;
+        exp_hi += `चरण 3: = ${minutes} मिनट ${seconds} सेकंड<br>`;
+        exp_hi += `✅ सही उत्तर: ${correct}`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Clock (Coincide/Opposite)", exp_en, exp_hi };
+        
+    } else if (type === 2) {
+        // Time when hands are opposite (180° apart)
+        let H = Math.floor(Math.random() * 11) + 1;
+        let M = (60 * (H + 6)) / 11; // formula: (60/11)*(H+6) minutes for opposite
+        if (M >= 60) M = M - 60; // adjust if > 60
+        let minutes = Math.floor(M);
+        let seconds = Math.round((M - minutes) * 60);
+        if (seconds >= 60) { seconds = 0; minutes++; }
+        let correct = `${H}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+        let q_en = `At what time between ${H}:00 and ${H+1}:00 are the hands of a clock opposite (180° apart)?`;
+        let q_hi = `${H}:00 और ${H+1}:00 के बीच घड़ी की सुइयाँ किस समय विपरीत (opposite) होती हैं?`;
+        let opts = shuffle([
+            correct,
+            `${H}:${String(minutes+2).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`,
+            `${H+1}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`,
+            `${H}:${String(minutes-1).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`
+        ]);
+        let ansIdx = opts.indexOf(correct);
+        let exp_en = `🔍 Opposite Formula: Time = (60/11) × (H + 6) minutes after H:00<br>`;
+        exp_en += `Step 1: H = ${H}<br>`;
+        exp_en += `Step 2: Minutes = (60/11) × ${H+6} = ${M.toFixed(2)} minutes<br>`;
+        exp_en += `Step 3: = ${minutes} min ${seconds} sec<br>`;
+        exp_en += `✅ Correct answer: ${correct}`;
+        
+        exp_hi = `🔍 विपरीत सूत्र: समय = (60/11) × (H + 6) मिनट H:00 के बाद<br>`;
+        exp_hi += `चरण 1: H = ${H}<br>`;
+        exp_hi += `चरण 2: मिनट = (60/11) × ${H+6} = ${M.toFixed(2)} मिनट<br>`;
+        exp_hi += `चरण 3: = ${minutes} मिनट ${seconds} सेकंड<br>`;
+        exp_hi += `✅ सही उत्तर: ${correct}`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Clock (Coincide/Opposite)", exp_en, exp_hi };
+        
+    } else {
+        // Mirror Image Time
+        let H = Math.floor(Math.random() * 11) + 1;
+        let M = Math.floor(Math.random() * 60);
+        // Mirror time: (11:60 - given time) for 12-hour clock
+        let mirrorH = 11 - H;
+        let mirrorM = 60 - M;
+        if (mirrorM === 60) { mirrorM = 0; mirrorH++; }
+        if (mirrorH < 0) mirrorH += 12;
+        let correct = `${mirrorH}:${String(mirrorM).padStart(2,'0')}`;
+        let q_en = `What is the mirror image time of ${H}:${String(M).padStart(2,'0')} on a 12-hour clock?`;
+        let q_hi = `12-घंटे की घड़ी पर ${H}:${String(M).padStart(2,'0')} का दर्पण प्रतिबिम्ब (mirror image) समय क्या है?`;
+        let opts = shuffle([
+            correct,
+            `${mirrorH+1}:${String(mirrorM).padStart(2,'0')}`,
+            `${mirrorH}:${String(mirrorM+10).padStart(2,'0')}`,
+            `${mirrorH-1}:${String(mirrorM).padStart(2,'0')}`
+        ]);
+        let ansIdx = opts.indexOf(correct);
+        let exp_en = `🔍 Mirror Image Formula: Mirror Time = 11:60 − Given Time<br>`;
+        exp_en += `Step 1: Given time = ${H}:${String(M).padStart(2,'0')}<br>`;
+        exp_en += `Step 2: Mirror = 11:60 − ${H}:${String(M).padStart(2,'0')}<br>`;
+        exp_en += `Step 3: = ${correct}<br>`;
+        exp_en += `✅ Correct answer: ${correct}`;
+        
+        exp_hi = `🔍 दर्पण प्रतिबिम्ब सूत्र: दर्पण समय = 11:60 − दिया गया समय<br>`;
+        exp_hi += `चरण 1: दिया गया समय = ${H}:${String(M).padStart(2,'0')}<br>`;
+        exp_hi += `चरण 2: दर्पण = 11:60 − ${H}:${String(M).padStart(2,'0')}<br>`;
+        exp_hi += `चरण 3: = ${correct}<br>`;
+        exp_hi += `✅ सही उत्तर: ${correct}`;
+        
+        return { q_en, q_hi, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Mirror/Water Image", exp_en, exp_hi };
+    }
+}
+
+// ---- Generate 510 Questions ----
+while (questions.length < 510) {
+    let q;
+    if (Math.random() < 0.45) {
+        q = generateCalendarQuestion();
+    } else {
+        q = generateClockQuestion();
+    }
+    const exists = questions.some(ex => ex.q_en === q.q_en && ex.type === q.type);
+    if (!exists) questions.push(q);
+}
+shuffle(questions);
+
+// ================================================================
+//  RENDER ENGINE (EXACT SAME AS PREVIOUS FILES)
+// ================================================================
+const container = document.getElementById('questionsContainer');
+const search = document.getElementById('search');
+const filter = document.getElementById('filter');
+const attemptText = document.getElementById('attemptText');
+const scoreText = document.getElementById('scoreText');
+const progressBar = document.getElementById('progressBar');
+let attempted = new Set();
+let score = 0;
+
+function renderQuestions() {
+    container.innerHTML = '';
+    const keyword = search.value.toLowerCase().trim();
+    const selectedType = filter.value;
+    questions.forEach((q, idx) => {
+        if (selectedType !== 'all' && q.type !== selectedType) return;
+        const qText = currentLang === 'en' ? q.q_en : q.q_hi;
+        const opts = currentLang === 'en' ? q.opts_en : q.opts_hi;
+        const exp = currentLang === 'en' ? q.exp_en : q.exp_hi;
+        let full = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && !full.includes(keyword)) return;
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = 'question-' + idx;
+        let optHTML = '';
+        opts.forEach((opt, oi) => {
+            optHTML += `<button class="option" onclick="checkAnswer(${idx},${oi},this)">(${String.fromCharCode(65+oi)}) ${opt}</button>`;
+        });
+        card.innerHTML = `
+            <div class="question-top">
+                <span class="question-number">Q${idx+1}</span>
+                <span class="question-type">${q.type}</span>
+            </div>
+            <div class="question-body">
+                <div class="question-text">${qText}</div>
+                <div class="options">${optHTML}</div>
+                <div class="answer-result" id="result-${idx}"></div>
+                <div class="explanation" id="explanation-${idx}">
+                    <div class="explanation-title">${currentLang === 'en' ? '💡 Detailed Explanation (Concept + Formula)' : '💡 विस्तृत व्याख्या (अवधारणा + सूत्र)'}</div>
+                    ${exp}
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attempted.has(qIdx)) return;
+    attempted.add(qIdx);
+    const q = questions[qIdx];
+    const card = document.getElementById('question-' + qIdx);
+    const btns = card.querySelectorAll('.option');
+    btns.forEach((b, i) => { if (i === q.answer) b.classList.add('correct'); });
+    const res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) { score++; res.innerHTML = currentLang === 'en' ? '✅ Correct Answer!' : '✅ सही उत्तर!'; res.style.color = '#16a34a'; }
+    else { btn.classList.add('wrong'); res.innerHTML = currentLang === 'en' ? '❌ Incorrect. See explanation below.' : '❌ गलत। नीचे व्याख्या देखें।'; res.style.color = '#dc2626'; }
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    attemptText.textContent = `${currentLang === 'en' ? 'Attempted' : 'हल किए'}: ${attempted.size} / ${questions.length}`;
+    scoreText.textContent = `${currentLang === 'en' ? 'Score' : 'स्कोर'}: ${score}`;
+    progressBar.style.width = (attempted.size / questions.length * 100) + '%';
+}
+
+function showAllExplanations() {
+    document.querySelectorAll('.explanation').forEach(e => e.classList.add('show'));
+}
+function resetQuiz() { attempted.clear(); score = 0; renderQuestions(); updateProgress(); window.scrollTo({top:0, behavior:'smooth'}); }
+search.addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+
+// Init
+updateUI();
+</script>
+</body>
+</html>

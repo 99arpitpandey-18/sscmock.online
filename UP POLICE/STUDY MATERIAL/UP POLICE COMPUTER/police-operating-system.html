@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operating System – ऑपरेटिंग सिस्टम</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #2c3e50;
+            --accent-light: #5d7a9a;
+            --accent-dark: #1a252f;
+            --accent-gradient: linear-gradient(135deg, #1a252f, #2c3e50);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(44, 62, 80, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #2c3e50;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(44,62,80,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.dark { background:#2c3e50; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(44,62,80,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(44,62,80,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(44,62,80,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(44,62,80,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(44,62,80,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(44,62,80,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(44,62,80,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(44,62,80,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(44,62,80,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(44,62,80,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(44,62,80,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(44,62,80,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(44,62,80,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(44,62,80,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(44,62,80,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(44,62,80,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(44,62,80,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">🪟 OPERATING SYSTEM – ऑपरेटिंग सिस्टम • Windows • Files • Processes • Commands • System Utilities • 240+ MCQs • UP Police, SSC, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">🪟</div>
+                <div><h1>OPERATING SYSTEM</h1><span>ऑपरेटिंग सिस्टम – सम्पूर्ण</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot dark active" data-color="dark" title="Dark (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🪟 OPERATING SYSTEM – SAMPOORNA</div>
+            <h2>ऑपरेटिंग सिस्टम <strong>सम्पूर्ण अध्ययन</strong><br>Windows • Files • Processes • Commands • Utilities</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 240 MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics + Practice</span>
+                <span>📌 240 MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>🪟 Complete OS</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>240</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>OS Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Introduction</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> Windows</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> Files & Folders</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> Processes</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Commands</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: INTRODUCTION ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>ऑपरेटिंग सिस्टम – परिचय एवं अवधारणाएँ</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 ऑपरेटिंग सिस्टम (OS) क्या है?</h4>
+                    <p>ऑपरेटिंग सिस्टम एक <strong>सिस्टम सॉफ्टवेयर</strong> है जो कंप्यूटर हार्डवेयर और उपयोगकर्ता (एप्लिकेशन) के बीच इंटरफेस का कार्य करता है। यह सभी हार्डवेयर संसाधनों (CPU, मेमोरी, स्टोरेज, I/O डिवाइस) का प्रबंधन करता है और एप्लिकेशन सॉफ्टवेयर को चलाने का प्लेटफॉर्म प्रदान करता है।</p>
+                    <p><strong>मुख्य कार्य:</strong> प्रोसेस प्रबंधन, मेमोरी प्रबंधन, फाइल प्रबंधन, डिवाइस प्रबंधन, सुरक्षा एवं पहुँच नियंत्रण, नेटवर्किंग।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 OS के प्रकार</h4>
+                    <ul>
+                        <li><strong>बैच OS (Batch OS):</strong> एक समय में एक कार्य, कोई उपयोगकर्ता संपर्क नहीं – पुराने सिस्टम</li>
+                        <li><strong>टाइम-शेयरिंग OS:</strong> कई उपयोगकर्ता एक साथ, प्रत्येक को CPU का थोड़ा समय – Unix, Linux</li>
+                        <li><strong>रियल-टाइम OS (RTOS):</strong> तात्कालिक प्रतिक्रिया – एयरोस्पेस, मिसाइल, चिकित्सा उपकरण (VxWorks)</li>
+                        <li><strong>डिस्ट्रिब्यूटेड OS:</strong> कई मशीनों पर फैला हुआ – नेटवर्क प्रबंधन</li>
+                        <li><strong>नेटवर्क OS:</strong> नेटवर्क संसाधन प्रबंधन – Windows Server, Linux Server</li>
+                        <li><strong>मोबाइल OS:</strong> Android, iOS, Windows Phone</li>
+                        <li><strong>एम्बेडेड OS:</strong> छोटे उपकरणों के लिए – IoT, स्मार्टवॉच</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 OS के घटक (Components)</h4>
+                    <ul>
+                        <li><strong>कर्नेल (Kernel):</strong> OS का मूल भाग, हार्डवेयर को नियंत्रित करता है – माइक्रोकर्नेल, मोनोलिथिक, हाइब्रिड</li>
+                        <li><strong>शेल (Shell):</strong> उपयोगकर्ता और कर्नेल के बीच इंटरफेस – CLI (CMD, PowerShell), GUI (Windows Explorer)</li>
+                        <li><strong>फाइल सिस्टम:</strong> फाइलों को संग्रहीत और व्यवस्थित करता है – NTFS, FAT32, EXT4, APFS</li>
+                        <li><strong>डिवाइस ड्राइवर:</strong> हार्डवेयर को नियंत्रित करने के लिए सॉफ्टवेयर</li>
+                        <li><strong>सिस्टम यूटिलिटीज:</strong> Disk Cleanup, Defragmenter, Task Manager, System Restore</li>
+                    </ul>
+                </div>
+
+                
+<div class="theory-box">
+<h4>🔹 OS के उद्देश्य (Objectives of Operating System)</h4>
+<p>ऑपरेटिंग सिस्टम का उद्देश्य केवल कंप्यूटर को चालू रखना नहीं है, बल्कि उपलब्ध हार्डवेयर और सॉफ्टवेयर संसाधनों का व्यवस्थित, सुरक्षित और कुशल उपयोग कराना है। परीक्षा में OS के objectives से प्रश्न अक्सर सीधे पूछे जाते हैं।</p>
+<ul>
+<li><strong>Convenience:</strong> उपयोगकर्ता के लिए कंप्यूटर का उपयोग आसान बनाना।</li>
+<li><strong>Efficiency:</strong> CPU, मेमोरी, स्टोरेज और I/O संसाधनों का बेहतर उपयोग।</li>
+<li><strong>Resource Management:</strong> अलग-अलग programs/processes के बीच संसाधनों का आवंटन।</li>
+<li><strong>Protection & Security:</strong> अनधिकृत access को रोकना और users/processes को नियंत्रित करना।</li>
+<li><strong>Accounting:</strong> संसाधनों के उपयोग की निगरानी और रिकॉर्ड रखना।</li>
+</ul>
+</div>
+<div class="theory-box">
+<h4>🔹 OS के प्रमुख कार्य — Exam Focus</h4>
+<p><strong>1. Process Management:</strong> processes बनाना, CPU देना, scheduling करना और समाप्त करना। <strong>2. Memory Management:</strong> कौन-सा भाग किस process को दिया गया है, इसका रिकॉर्ड रखना। <strong>3. File Management:</strong> files/directories बनाना, पढ़ना, लिखना, हटाना और permissions संभालना। <strong>4. Device Management:</strong> input/output devices तथा device drivers का प्रबंधन। <strong>5. Security:</strong> authentication और access control। <strong>6. Networking:</strong> network communication और shared resources का समर्थन।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Kernel के प्रकार</h4>
+<ul>
+<li><strong>Monolithic Kernel:</strong> OS की अनेक core services kernel space में चलती हैं।</li>
+<li><strong>Microkernel:</strong> kernel में केवल आवश्यक core functions रखे जाते हैं; कई services user space में रहती हैं।</li>
+<li><strong>Hybrid Kernel:</strong> monolithic और microkernel approaches की कुछ विशेषताओं का मिश्रण।</li>
+</ul>
+<p><strong>याद रखें:</strong> Kernel और Shell एक ही चीज नहीं हैं। Kernel OS का core है, जबकि Shell user और OS के बीच command/interface layer देता है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 User Mode और Kernel Mode</h4>
+<p>आधुनिक OS में सामान्य applications को सीमित privileges के साथ <strong>User Mode</strong> में चलाया जाता है। OS का privileged core <strong>Kernel Mode</strong> में चलता है। जब application को किसी protected OS service की आवश्यकता होती है, तो वह system call के माध्यम से kernel से सेवा मांग सकती है। यह व्यवस्था system stability और security के लिए महत्वपूर्ण है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 System Call क्या है?</h4>
+<p>System call वह mechanism है जिसके द्वारा user-level program OS से कोई service मांगता है, जैसे file खोलना, process बनाना, memory लेना या I/O करना। Exam में इसे <strong>“OS service के लिए program द्वारा किया गया अनुरोध”</strong> याद रखें।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Booting, BIOS/UEFI और Boot Loader</h4>
+<p><strong>Booting</strong> वह प्रक्रिया है जिसमें computer start होने के बाद firmware hardware को initialize करता है और bootable software को खोजकर OS को memory में load करने की प्रक्रिया शुरू करता है। पुराने systems में BIOS और आधुनिक systems में UEFI का उपयोग सामान्य है। <strong>Boot loader</strong> OS kernel को load करने में सहायता करता है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Memory Management की मूल बातें</h4>
+<ul>
+<li><strong>RAM:</strong> वर्तमान में चल रहे programs और data के लिए मुख्य volatile memory।</li>
+<li><strong>Virtual Memory:</strong> disk/SSD के कुछ हिस्से को memory management में backing storage के रूप में उपयोग कर RAM की सीमित क्षमता से बड़े logical address space को support करना।</li>
+<li><strong>Paging:</strong> logical/virtual memory को fixed-size pages और physical memory को frames में बाँटने की technique।</li>
+<li><strong>Swapping:</strong> processes/data को RAM और secondary storage के बीच स्थानांतरित करने की प्रक्रिया।</li>
+</ul>
+</div>
+<div class="highlight-box">
+<strong>🎯 परीक्षा में सबसे महत्वपूर्ण:</strong> OS = System Software, Kernel = Core, Shell = Interface, Scheduler = CPU allocation, File System = File organization, System Call = OS service request, Booting = OS loading/start-up process.
+</div>
+
+<div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: WINDOWS ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>Windows – Microsoft Windows OS</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Microsoft Windows क्या है?</h4>
+                    <p>Microsoft Windows एक <strong>ग्राफ़िकल यूज़र इंटरफेस (GUI)</strong> आधारित ऑपरेटिंग सिस्टम है, जो Microsoft Corporation द्वारा विकसित किया गया है। यह दुनिया का सबसे लोकप्रिय डेस्कटॉप OS है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Windows का इतिहास</h4>
+                    <ul>
+                        <li><strong>Windows 1.0 (1985):</strong> पहला GUI संस्करण, MS-DOS पर आधारित</li>
+                        <li><strong>Windows 3.0 (1990):</strong> बेहतर GUI, प्रोग्राम मैनेजर</li>
+                        <li><strong>Windows 95 (1995):</strong> स्टार्ट मेनू, टास्कबार, प्लग एंड प्ले</li>
+                        <li><strong>Windows XP (2001):</strong> स्थिरता और लोकप्रियता का शिखर, NT कर्नेल</li>
+                        <li><strong>Windows 7 (2009):</strong> सुधरा हुआ इंटरफेस, Aero</li>
+                        <li><strong>Windows 8 (2012):</strong> मॉडर्न UI (स्टार्ट स्क्रीन), टाइल्स</li>
+                        <li><strong>Windows 10 (2015):</strong> स्टार्ट मेनू वापस, कॉर्टाना, एज ब्राउज़र</li>
+                        <li><strong>Windows 11 (2021):</strong> नया डिज़ाइन, विजेट्स, एंड्रॉइड ऐप्स सपोर्ट</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Windows की मुख्य विशेषताएँ</h4>
+                    <ul>
+                        <li><strong>GUI (Graphical User Interface):</strong> आइकन, विंडो, मेनू, माउस – उपयोग में आसान</li>
+                        <li><strong>फाइल एक्सप्लोरर:</strong> फाइलों और फोल्डरों का प्रबंधन (कॉपी, मूव, डिलीट, रीनाम)</li>
+                        <li><strong>टास्क मैनेजर:</strong> प्रोसेस, प्रदर्शन, सेवाओं की निगरानी</li>
+                        <li><strong>कंट्रोल पैनल / सेटिंग्स:</strong> सिस्टम कॉन्फ़िगरेशन, उपयोगकर्ता खाते, नेटवर्क</li>
+                        <li><strong>स्टार्ट मेनू:</strong> एप्लिकेशन, सेटिंग्स, पॉवर विकल्पों तक पहुँच</li>
+                        <li><strong>सिस्टम ट्रे (Notification Area):</strong> घड़ी, वॉल्यूम, नेटवर्क, बैटरी, एंटीवायरस</li>
+                        <li><strong>सुरक्षा:</strong> Windows Defender (एंटीवायरस), फायरवॉल, BitLocker (एन्क्रिप्शन), Windows Update</li>
+                    </ul>
+                </div>
+
+                
+<div class="theory-box">
+<h4>🔹 Windows Architecture और उपयोग</h4>
+<p>Windows एक proprietary operating-system family है जिसमें graphical interface, process/thread management, memory management, file systems, device drivers, networking और security जैसी सुविधाएँ शामिल हैं। Windows के अलग-अलग editions और releases में features अलग हो सकते हैं, इसलिए परीक्षा में version-specific प्रश्न को wording के अनुसार पढ़ना जरूरी है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Windows के महत्वपूर्ण Desktop Components</h4>
+<ul>
+<li><strong>Desktop:</strong> मुख्य कार्यक्षेत्र जहाँ icons और windows दिखाई देते हैं।</li>
+<li><strong>Taskbar:</strong> running/pinned applications, Start और system/notification area तक पहुँच।</li>
+<li><strong>Start Menu:</strong> applications, search और system options तक पहुँच।</li>
+<li><strong>File Explorer:</strong> files, folders, drives और locations को manage करने के लिए।</li>
+<li><strong>Settings:</strong> आधुनिक Windows में system configuration का प्रमुख स्थान।</li>
+<li><strong>Task Manager:</strong> processes, performance, startup आदि की निगरानी।</li>
+</ul>
+</div>
+<div class="theory-box">
+<h4>🔹 Windows में महत्वपूर्ण Keyboard Shortcuts</h4>
+<div class="table-wrap"><table>
+<tr><th>Shortcut</th><th>कार्य</th></tr>
+<tr><td>Win + E</td><td>File Explorer खोलना</td></tr>
+<tr><td>Win + R</td><td>Run dialog खोलना</td></tr>
+<tr><td>Win + L</td><td>Computer lock करना</td></tr>
+<tr><td>Alt + Tab</td><td>Open windows के बीच switch करना</td></tr>
+<tr><td>Ctrl + Shift + Esc</td><td>Task Manager खोलना</td></tr>
+<tr><td>Ctrl + C / Ctrl + V</td><td>Copy / Paste</td></tr>
+<tr><td>Ctrl + X</td><td>Cut</td></tr>
+<tr><td>Ctrl + Z</td><td>Undo</td></tr>
+</table></div>
+</div>
+<div class="theory-box">
+<h4>🔹 Windows Security — परीक्षा उपयोगी बिंदु</h4>
+<p>Windows security ecosystem में antivirus/malware protection, firewall, updates, user-account controls और कुछ editions में drive encryption जैसी सुविधाएँ शामिल हो सकती हैं। <strong>BitLocker</strong> drive encryption से संबंधित है, जबकि <strong>Microsoft Defender</strong> security/antimalware protection से जुड़ा है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Windows में Troubleshooting Tools</h4>
+<ul>
+<li><strong>Task Manager:</strong> unresponsive app/process और resource usage देखने में उपयोगी।</li>
+<li><strong>Device Manager:</strong> hardware devices और उनके drivers की जानकारी/प्रबंधन।</li>
+<li><strong>Event Viewer:</strong> system/application/security logs देखने के लिए।</li>
+<li><strong>System Restore:</strong> उपलब्ध restore point के आधार पर system state को पहले की स्थिति में ले जाने में सहायता।</li>
+<li><strong>Safe Mode:</strong> सीमित drivers/services के साथ troubleshooting के लिए।</li>
+<li><strong>System Configuration (msconfig):</strong> boot और service configuration के लिए।</li>
+</ul>
+</div>
+<div class="highlight-box">
+<strong>🎯 Shortcut Trick:</strong> Explorer = Files, Task Manager = Processes/Performance, Device Manager = Hardware/Drivers, Event Viewer = Logs, BitLocker = Encryption, Defender = Security protection.
+</div>
+
+<div id="windows-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: FILES & FOLDERS ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>Files & Folders – फाइलें और फोल्डर</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 फाइल (File) क्या है?</h4>
+                    <p>फाइल <strong>डेटा का एक संग्रह</strong> है जो किसी विशिष्ट प्रारूप (format) में संग्रहीत होता है। हर फाइल का एक <strong>नाम</strong> और <strong>एक्सटेंशन</strong> होता है (जैसे – document.txt, image.jpg, video.mp4)।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 फाइल एक्सटेंशन (File Extensions)</h4>
+                    <ul>
+                        <li><strong>.txt:</strong> सादा पाठ (Text) फ़ाइल</li>
+                        <li><strong>.docx / .doc:</strong> MS Word दस्तावेज़</li>
+                        <li><strong>.xlsx / .xls:</strong> MS Excel स्प्रेडशीट</li>
+                        <li><strong>.pptx / .ppt:</strong> MS PowerPoint प्रेजेंटेशन</li>
+                        <li><strong>.jpg / .jpeg, .png, .gif:</strong> छवि (Image) फ़ाइलें</li>
+                        <li><strong>.mp3, .wav:</strong> ऑडियो फ़ाइलें</li>
+                        <li><strong>.mp4, .avi, .mkv:</strong> वीडियो फ़ाइलें</li>
+                        <li><strong>.exe:</strong> निष्पादन योग्य (Executable) फ़ाइल – प्रोग्राम</li>
+                        <li><strong>.pdf:</strong> पोर्टेबल दस्तावेज़ प्रारूप (Portable Document Format)</li>
+                        <li><strong>.zip, .rar, .7z:</strong> संपीड़ित (Compressed) फ़ाइलें</li>
+                        <li><strong>.html, .htm:</strong> वेब पेज फ़ाइल</li>
+                        <li><strong>.ini:</strong> कॉन्फ़िगरेशन फ़ाइल</li>
+                        <li><strong>.log:</strong> लॉग फ़ाइल (घटना रिकॉर्ड)</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 फोल्डर (Folder) क्या है?</h4>
+                    <p>फोल्डर (डायरेक्टरी) <strong>फाइलों और अन्य फोल्डरों</strong> को व्यवस्थित करने के लिए एक कंटेनर है। यह डेटा को संगठित रखता है।</p>
+                    <ul>
+                        <li><strong>रूट डायरेक्टरी:</strong> C:\, D:\ – ड्राइव की मूल डायरेक्टरी</li>
+                        <li><strong>सब-डायरेक्टरी:</strong> किसी डायरेक्टरी के अंदर स्थित डायरेक्टरी</li>
+                        <li><strong>पेरेंट डायरेक्टरी:</strong> वह डायरेक्टरी जिसमें सब-डायरेक्टरी स्थित है</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 फाइल सिस्टम (File Systems)</h4>
+                    <ul>
+                        <li><strong>NTFS (New Technology File System):</strong> Windows का मानक फाइल सिस्टम – बड़ी फाइलें, सुरक्षा, एन्क्रिप्शन</li>
+                        <li><strong>FAT32 (File Allocation Table 32):</strong> पुराना, पोर्टेबल डिवाइस (USB, SD Card) – 4GB से बड़ी फाइल नहीं</li>
+                        <li><strong>exFAT (Extended FAT):</strong> फ्लैश ड्राइव, बड़ी फाइलों के लिए</li>
+                        <li><strong>EXT4:</strong> Linux का फाइल सिस्टम</li>
+                        <li><strong>APFS / HFS+:</strong> macOS का फाइल सिस्टम</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 फाइल विशेषताएँ (Attributes)</h4>
+                    <ul>
+                        <li><strong>Read-Only (केवल पढ़ने योग्य):</strong> फाइल को संपादित नहीं किया जा सकता</li>
+                        <li><strong>Hidden (छिपी हुई):</strong> डिफ़ॉल्ट रूप से दिखाई नहीं देती</li>
+                        <li><strong>Archive (संग्रह):</strong> बैकअप के लिए चिह्नित</li>
+                        <li><strong>System (सिस्टम):</strong> OS फ़ाइलें</li>
+                    </ul>
+                </div>
+
+                
+<div class="theory-box">
+<h4>🔹 File, Folder, Directory और Path — अंतर</h4>
+<p><strong>File</strong> वास्तविक data/information का संग्रह है। <strong>Folder/Directory</strong> files और subfolders को organize करने का container है। <strong>Path</strong> किसी file या folder तक पहुँचने का स्थान बताता है। उदाहरण: <code>C:\Users\Student\Documents\notes.txt</code> में drive, folders और file location मिलकर path बनाते हैं।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Absolute Path और Relative Path</h4>
+<ul>
+<li><strong>Absolute Path:</strong> root/drive से शुरू होकर पूरे location को बताता है।</li>
+<li><strong>Relative Path:</strong> वर्तमान working location के संदर्भ में स्थान बताता है।</li>
+<li><strong>Root Directory:</strong> किसी drive/file-system hierarchy का मूल स्तर।</li>
+<li><strong>Parent Directory:</strong> वर्तमान folder के ऊपर वाला directory level।</li>
+<li><strong>Subdirectory:</strong> किसी directory के अंदर स्थित directory।</li>
+</ul>
+</div>
+<div class="theory-box">
+<h4>🔹 File Naming और Extension</h4>
+<p>File name और extension मिलकर file की पहचान और सामान्य प्रकार बताने में मदद करते हैं। उदाहरण: <code>report.docx</code> में <strong>report</strong> नाम और <strong>.docx</strong> extension है। Extension को बदलने से हमेशा file का वास्तविक internal format नहीं बदलता—इसलिए केवल extension rename करना conversion के बराबर नहीं है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 File Systems की तुलना</h4>
+<div class="table-wrap"><table>
+<tr><th>File System</th><th>सामान्य संबंध</th><th>मुख्य परीक्षा बिंदु</th></tr>
+<tr><td>NTFS</td><td>Windows</td><td>Permissions, journaling और बड़े storage के लिए उपयुक्त</td></tr>
+<tr><td>FAT32</td><td>पुराने/portable media में व्यापक</td><td>Single-file size limit लगभग 4 GiB</td></tr>
+<tr><td>exFAT</td><td>Flash/removable storage</td><td>FAT family का आधुनिक removable-media विकल्प</td></tr>
+<tr><td>EXT4</td><td>Linux</td><td>Linux में प्रचलित file system</td></tr>
+<tr><td>APFS</td><td>Apple platforms</td><td>Modern Apple file system</td></tr>
+</table></div>
+</div>
+<div class="theory-box">
+<h4>🔹 File Attributes और Permissions</h4>
+<p><strong>Read-only</strong> attribute editing को सीमित करने के लिए उपयोग हो सकता है; <strong>Hidden</strong> सामान्य view में file को छिपा सकता है; <strong>Archive</strong> traditional backup workflows में file को backup consideration के लिए mark कर सकता है; <strong>System</strong> system-related files से जुड़ा attribute है। File permissions अलग concept हैं और यह निर्धारित कर सकती हैं कि कौन user read/write/execute जैसी actions कर सकता है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Compression और Backup</h4>
+<p><strong>.zip, .rar, .7z</strong> जैसे formats compressed archives के लिए उपयोग होते हैं। Compression का उद्देश्य data को compact representation में रखना है। Backup का उद्देश्य original data की अतिरिक्त copy रखना है। Compression और backup एक ही concept नहीं हैं।</p>
+</div>
+<div class="highlight-box">
+<strong>🎯 Exam Trap:</strong> “Extension” file type का संकेत देता है; “Path” location बताता है; “Folder” organization करता है; “File System” storage structure को manage करता है।
+</div>
+
+<div id="files-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: PROCESSES ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>Processes – प्रोसेस और थ्रेड</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 प्रोसेस (Process) क्या है?</h4>
+                    <p>प्रोसेस <strong>एक निष्पादन योग्य प्रोग्राम की चल रही उदाहरण</strong> है। इसमें प्रोग्राम कोड, डेटा, स्टैक, और रजिस्टर शामिल हैं।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 प्रोसेस की अवस्थाएँ (Process States)</h4>
+                    <ul>
+                        <li><strong>New (नया):</strong> प्रोसेस बन रहा है</li>
+                        <li><strong>Ready (तैयार):</strong> प्रोसेस CPU का इंतज़ार कर रहा है</li>
+                        <li><strong>Running (चालू):</strong> प्रोसेस CPU पर चल रहा है</li>
+                        <li><strong>Waiting (प्रतीक्षा):</strong> I/O या किसी घटना का इंतज़ार</li>
+                        <li><strong>Terminated (समाप्त):</strong> प्रोसेस समाप्त हो गया</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 प्रोसेस शेड्यूलिंग (Scheduling)</h4>
+                    <ul>
+                        <li><strong>FCFS (First Come First Serve):</strong> जो पहले आया, पहले मिला – सरल लेकिन अकुशल</li>
+                        <li><strong>SJF (Shortest Job First):</strong> कम समय वाला कार्य पहले – इष्टतम</li>
+                        <li><strong>Round Robin:</strong> समय-स्लाइस (टाइम क्वांटम) आधारित – निष्पक्ष</li>
+                        <li><strong>Priority Scheduling:</strong> प्राथमिकता (priority) आधारित – उच्च प्राथमिकता पहले</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 थ्रेड (Thread)</h4>
+                    <ul>
+                        <li><strong>थ्रेड:</strong> प्रोसेस के भीतर कार्य की सबसे छोटी इकाई</li>
+                        <li><strong>सिंगल-थ्रेडेड:</strong> एक प्रोसेस में एक थ्रेड</li>
+                        <li><strong>मल्टी-थ्रेडेड:</strong> एक प्रोसेस में कई थ्रेड – समानांतर निष्पादन</li>
+                        <li>थ्रेड्स प्रोसेस के संसाधनों (मेमोरी, फाइलें) को साझा करते हैं</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 प्रोसेस संचार (IPC – Inter Process Communication)</h4>
+                    <ul>
+                        <li><strong>पाइप (Pipe):</strong> एक प्रोसेस से दूसरे में डेटा भेजना</li>
+                        <li><strong>मेसेज क्यू (Message Queue):</strong> संदेशों की कतार</li>
+                        <li><strong>शेयर्ड मेमोरी (Shared Memory):</strong> दो प्रोसेस एक ही मेमोरी का उपयोग करें</li>
+                        <li><strong>सेमाफोर (Semaphore):</strong> सिंक्रोनाइज़ेशन के लिए</li>
+                    </ul>
+                </div>
+
+                
+<div class="theory-box">
+<h4>🔹 Program, Process और Thread में अंतर</h4>
+<p><strong>Program</strong> instructions का stored set है। जब program execution में आता है तो उसकी running instance को <strong>process</strong> कहा जाता है। Process के अंदर execution की छोटी units को <strong>threads</strong> कहा जाता है। एक process में एक या अधिक threads हो सकते हैं।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Process Control Block (PCB)</h4>
+<p>PCB OS द्वारा process की management information रखने के लिए प्रयुक्त data structure है। इसमें सामान्यतः <strong>PID, process state, program counter, CPU registers, scheduling information, memory-management information और accounting information</strong> जैसी जानकारी हो सकती है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 Process State Transition</h4>
+<div class="table-wrap"><table>
+<tr><th>State</th><th>अर्थ</th></tr>
+<tr><td>New</td><td>Process create हो रहा है</td></tr>
+<tr><td>Ready</td><td>CPU मिलने की प्रतीक्षा</td></tr>
+<tr><td>Running</td><td>CPU पर execution</td></tr>
+<tr><td>Waiting/Blocked</td><td>I/O या event की प्रतीक्षा</td></tr>
+<tr><td>Terminated</td><td>Execution समाप्त</td></tr>
+</table></div>
+<p>एक running process I/O request के कारण waiting में जा सकता है; I/O पूरा होने पर वह ready queue में लौट सकता है। Scheduler ready processes में से CPU के लिए selection करता है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 CPU Scheduling के महत्वपूर्ण Concepts</h4>
+<ul>
+<li><strong>FCFS:</strong> arrival order के आधार पर; सरल, पर convoy effect हो सकता है।</li>
+<li><strong>SJF:</strong> shortest CPU burst को preference; औसत waiting time के संदर्भ में optimal हो सकता है जब burst lengths ज्ञात हों।</li>
+<li><strong>Round Robin:</strong> प्रत्येक ready process को time quantum देकर fairness बढ़ाता है।</li>
+<li><strong>Priority Scheduling:</strong> priority के आधार पर selection; starvation की समस्या हो सकती है।</li>
+<li><strong>Preemptive:</strong> OS चल रहे process से CPU वापस ले सकता है।</li>
+<li><strong>Non-preemptive:</strong> process स्वयं CPU छोड़े या block/terminate हो तब switch होता है।</li>
+</ul>
+</div>
+<div class="theory-box">
+<h4>🔹 Context Switching</h4>
+<p>CPU को एक process/thread से दूसरे को देने पर पुराने execution context को save और नए context को restore करना पड़ता है। इस प्रक्रिया को <strong>context switch</strong> कहते हैं। इसमें CPU registers और program counter जैसी state information महत्वपूर्ण होती है। Context switching useful है, लेकिन इसका अपना overhead भी होता है।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 IPC और Synchronization</h4>
+<ul>
+<li><strong>Pipe:</strong> processes के बीच data stream का माध्यम।</li>
+<li><strong>Message Queue:</strong> messages को queue के रूप में exchange करना।</li>
+<li><strong>Shared Memory:</strong> processes के बीच shared memory region।</li>
+<li><strong>Semaphore:</strong> synchronization/resource coordination में उपयोगी primitive।</li>
+<li><strong>Mutex:</strong> critical section/resource पर mutual exclusion के लिए commonly used lock mechanism।</li>
+</ul>
+</div>
+<div class="theory-box">
+<h4>🔹 Deadlock</h4>
+<p>Deadlock में processes एक-दूसरे के resources/events का इंतजार करते रह सकते हैं और आगे नहीं बढ़ते। Classical deadlock conditions हैं: <strong>Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait</strong>। इन चारों का साथ होना deadlock के लिए आवश्यक conditions से संबंधित है।</p>
+</div>
+<div class="highlight-box">
+<strong>🎯 याद रखें:</strong> PCB = Process information, PID = Process identity, Ready = CPU wait, Waiting = I/O/event wait, RR = Time Quantum, Context Switch = CPU execution context बदलना.
+</div>
+
+<div id="processes-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: COMMANDS ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Commands & Utilities – कमांड्स और सिस्टम उपयोगिताएँ</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 कमांड-लाइन इंटरफेस (CLI)</h4>
+                    <p>CLI एक <strong>पाठ-आधारित इंटरफेस</strong> है जहाँ उपयोगकर्ता कमांड टाइप करके OS के साथ संचार करता है। Windows में <strong>CMD (Command Prompt)</strong> और <strong>PowerShell</strong> प्रमुख CLI उपकरण हैं।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 महत्वपूर्ण Windows CMD कमांड्स</h4>
+                    <ul>
+                        <li><strong>dir:</strong> फाइलों और फोल्डरों को सूचीबद्ध करता है</li>
+                        <li><strong>cd:</strong> निर्देशिका (डायरेक्टरी) बदलता है</li>
+                        <li><strong>mkdir (md):</strong> नई डायरेक्टरी बनाता है</li>
+                        <li><strong>rmdir (rd):</strong> डायरेक्टरी हटाता है</li>
+                        <li><strong>del / erase:</strong> फाइलें हटाता है</li>
+                        <li><strong>copy:</strong> फाइलें कॉपी करता है</li>
+                        <li><strong>move:</strong> फाइलें स्थानांतरित करता है</li>
+                        <li><strong>ren / rename:</strong> फाइलों का नाम बदलता है</li>
+                        <li><strong>type:</strong> फाइल की सामग्री दिखाता है</li>
+                        <li><strong>cls:</strong> स्क्रीन साफ़ करता है</li>
+                        <li><strong>exit:</strong> CMD बंद करता है</li>
+                        <li><strong>ipconfig:</strong> नेटवर्क कॉन्फ़िगरेशन दिखाता है</li>
+                        <li><strong>ping:</strong> नेटवर्क कनेक्टिविटी परीक्षण</li>
+                        <li><strong>tasklist:</strong> चल रहे प्रोसेसों की सूची</li>
+                        <li><strong>taskkill:</strong> प्रोसेस को समाप्त करता है</li>
+                        <li><strong>shutdown:</strong> सिस्टम बंद/रीस्टार्ट करता है</li>
+                        <li><strong>systeminfo:</strong> सिस्टम की विस्तृत जानकारी</li>
+                        <li><strong>chkdsk:</strong> डिस्क त्रुटि जाँच</li>
+                        <li><strong>sfc:</strong> सिस्टम फ़ाइलों की जाँच</li>
+                        <li><strong>netstat:</strong> नेटवर्क स्टेटिस्टिक्स</li>
+                        <li><strong>tracert:</strong> नेटवर्क मार्ग ट्रेस</li>
+                        <li><strong>nslookup:</strong> DNS जाँच</li>
+                        <li><strong>attrib:</strong> फाइल विशेषताएँ दिखाना/बदलना</li>
+                        <li><strong>echo:</strong> टेक्स्ट प्रदर्शित करना</li>
+                        <li><strong>path:</strong> खोज पथ दिखाना/बदलना</li>
+                        <li><strong>tree:</strong> डायरेक्टरी वृक्ष दिखाना</li>
+                        <li><strong>find:</strong> फाइल में टेक्स्ट खोजना</li>
+                        <li><strong>robocopy:</strong> मजबूत फाइल कॉपी</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 सिस्टम उपयोगिताएँ (System Utilities)</h4>
+                    <ul>
+                        <li><strong>टास्क मैनेजर (Task Manager):</strong> प्रोसेस, प्रदर्शन, सेवाएँ, स्टार्टअप</li>
+                        <li><strong>कंट्रोल पैनल / सेटिंग्स:</strong> सिस्टम कॉन्फ़िगरेशन</li>
+                        <li><strong>डिस्क क्लीनअप (Disk Cleanup):</strong> अनावश्यक फाइलें हटाना</li>
+                        <li><strong>डिफ़्रैगमेंटर (Defragmenter):</strong> हार्ड डिस्क को व्यवस्थित करना</li>
+                        <li><strong>सिस्टम रिस्टोर (System Restore):</strong> सिस्टम को पुरानी स्थिति में लाना</li>
+                        <li><strong>इवेंट व्यूअर (Event Viewer):</strong> सिस्टम लॉग देखना</li>
+                        <li><strong>डिवाइस मैनेजर (Device Manager):</strong> हार्डवेयर प्रबंधन</li>
+                        <li><strong>सिस्टम कॉन्फ़िगरेशन (msconfig):</strong> बूट विकल्प, सेवाएँ</li>
+                    </ul>
+                </div>
+
+                
+<div class="theory-box">
+<h4>🔹 CMD में Command Structure</h4>
+<p>Windows Command Prompt में सामान्यतः command के बाद options/switches और arguments दिए जा सकते हैं। उदाहरण के लिए <code>dir /p</code> में <code>dir</code> command है और <code>/p</code> एक switch है। अलग-अलग commands के switches अलग हो सकते हैं, इसलिए exam में command के साथ दिया गया option ध्यान से पढ़ें।</p>
+</div>
+<div class="theory-box">
+<h4>🔹 File/Directory Commands — एक साथ याद करें</h4>
+<div class="table-wrap"><table>
+<tr><th>Command</th><th>कार्य</th></tr>
+<tr><td>dir</td><td>Directory contents की listing</td></tr>
+<tr><td>cd</td><td>Current directory बदलना</td></tr>
+<tr><td>mkdir / md</td><td>नई directory बनाना</td></tr>
+<tr><td>rmdir / rd</td><td>Directory हटाना</td></tr>
+<tr><td>copy</td><td>Files copy करना</td></tr>
+<tr><td>move</td><td>Files/directories move करना</td></tr>
+<tr><td>del / erase</td><td>Files delete करना</td></tr>
+<tr><td>ren / rename</td><td>नाम बदलना</td></tr>
+<tr><td>type</td><td>Text file की contents दिखाना</td></tr>
+<tr><td>attrib</td><td>File attributes देखना/बदलना</td></tr>
+<tr><td>tree</td><td>Directory structure को tree form में दिखाना</td></tr>
+</table></div>
+</div>
+<div class="theory-box">
+<h4>🔹 Network Commands — Exam Table</h4>
+<div class="table-wrap"><table>
+<tr><th>Command</th><th>मुख्य उपयोग</th></tr>
+<tr><td>ipconfig</td><td>IP/network configuration की जानकारी</td></tr>
+<tr><td>ping</td><td>Reachability/connectivity test</td></tr>
+<tr><td>tracert</td><td>Network path/hops trace करना</td></tr>
+<tr><td>nslookup</td><td>DNS query/information</td></tr>
+<tr><td>netstat</td><td>Network connections/statistics</td></tr>
+</table></div>
+</div>
+<div class="theory-box">
+<h4>🔹 System और Diagnostic Commands</h4>
+<ul>
+<li><strong>tasklist:</strong> running processes की list।</li>
+<li><strong>taskkill:</strong> process terminate करना।</li>
+<li><strong>systeminfo:</strong> system की विस्तृत configuration information।</li>
+<li><strong>chkdsk:</strong> disk/file-system related errors की जाँच।</li>
+<li><strong>sfc:</strong> protected Windows system files की जाँच/repair workflow में उपयोग।</li>
+<li><strong>shutdown:</strong> shutdown, restart आदि के लिए options देता है।</li>
+<li><strong>echo:</strong> text/command echoing के लिए।</li>
+<li><strong>cls:</strong> Command Prompt screen clear करना।</li>
+<li><strong>exit:</strong> command interpreter से बाहर निकलना।</li>
+</ul>
+</div>
+<div class="theory-box">
+<h4>🔹 GUI Utilities और CLI में अंतर</h4>
+<p><strong>GUI</strong> में icons, windows, menus और pointer जैसे graphical elements के माध्यम से interaction होता है। <strong>CLI</strong> में commands text के रूप में दी जाती हैं। दोनों का उद्देश्य system से interaction कराना है, लेकिन तरीका अलग है।</p>
+</div>
+<div class="highlight-box">
+<strong>🎯 Super Revision:</strong> dir = list, cd = change directory, mkdir = create directory, rmdir = remove directory, copy = copy, move = move, del = delete, ren = rename, ipconfig = configuration, ping = connectivity, tracert = route, nslookup = DNS, tasklist = processes, taskkill = terminate process.
+</div>
+
+<div id="commands-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 50 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 50 मिश्रित प्रश्न दिए गए हैं – जो Introduction, Windows, Files & Folders, Processes, Commands – सभी टॉपिक्स को कवर करते हैं।</p>
+                <div class="info"><strong>📊 Balanced MCQ Rule:</strong> प्रत्येक 40-question bank में सही उत्तर A, B, C और D का exact 10-10-10-10 distribution (25%-25%-25%-25%) रखा गया है। Options की position बदल सकती है, लेकिन question, सही concept और explanation वही रहते हैं।</div>
+<div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> Operating System में OS कार्य, Windows विशेषताएँ, फाइल सिस्टम, प्रोसेस अवस्थाएँ, और महत्वपूर्ण कमांड्स पर फोकस करें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 🪟</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>OPERATING SYSTEM – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 240 MCQs • OS Concepts</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS -----
+
+        // ====== BALANCED ANSWER DISTRIBUTION ======
+        // हर question के options को इस तरह reorder किया जाता है कि
+        // correct answer A/B/C/D में लगभग नहीं बल्कि हर bank में exact
+        // 25%-25%-25%-25% distribution रहे (bank length 4 का multiple है).
+        function balanceQuestionBank(questions) {
+            const letters = ["A", "B", "C", "D"];
+            const result = questions.map(q => ({...q}));
+
+            // हर bank में 40 questions हैं। इसलिए exact 10-10-10-10
+            // distribution रखा गया है। केवल option positions बदलती हैं;
+            // question, option text और explanation का concept नहीं बदला जाता।
+            result.forEach((q, i) => {
+                const newCorrect = letters[i % 4];
+                const oldCorrect = q.correct;
+
+                if (newCorrect === oldCorrect) return;
+
+                const temp = q[newCorrect];
+                q[newCorrect] = q[oldCorrect];
+                q[oldCorrect] = temp;
+                q.correct = newCorrect;
+            });
+
+            return result;
+        }
+
+        function validateBalance(name, questions) {
+            const count = {A:0,B:0,C:0,D:0};
+            questions.forEach(q => count[q.correct]++);
+            const ok = count.A === 10 && count.B === 10 && count.C === 10 && count.D === 10;
+            console.log(name + " distribution:", count, ok ? "✓ EXACT 10-10-10-10" : "✗ NOT BALANCED");
+            if (!ok) console.error(name + " is not balanced:", count);
+        }
+
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const balanced = balanceQuestionBank(questions);
+            validateBalance(containerId, balanced);
+
+            let html = '';
+            balanced.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+
+        // ====== QUESTION BANKS (Balanced A,B,C,D) ======
+
+        // ----- INTRODUCTION (50) -----
+        const introMCQs = [
+            { question: "ऑपरेटिंग सिस्टम का मुख्य कार्य क्या है?", A: "हार्डवेयर प्रबंधन", B: "गेम खेलना", C: "वेब ब्राउज़िंग", D: "डेटा एंट्री", correct: "A", explanation: "OS हार्डवेयर संसाधनों का प्रबंधन करता है।" },
+            { question: "निम्न में से कौन सा ऑपरेटिंग सिस्टम नहीं है?", A: "Windows", B: "Linux", C: "MS Word", D: "macOS", correct: "C", explanation: "MS Word एक एप्लिकेशन है, OS नहीं।" },
+            { question: "किस प्रकार का OS एक समय में एक कार्य करता है?", A: "बैच OS", B: "टाइम-शेयरिंग OS", C: "रियल-टाइम OS", D: "डिस्ट्रिब्यूटेड OS", correct: "A", explanation: "बैच OS एक समय में एक कार्य करता है।" },
+            { question: "टाइम-शेयरिंग OS का क्या लाभ है?", A: "कई उपयोगकर्ता", B: "तेज़ गति", C: "कम लागत", D: "सरलता", correct: "A", explanation: "टाइम-शेयरिंग OS कई उपयोगकर्ताओं को एक साथ कार्य करने की अनुमति देता है।" },
+            { question: "रियल-टाइम OS का उदाहरण क्या है?", A: "Windows", B: "Linux", C: "VxWorks", D: "macOS", correct: "C", explanation: "VxWorks एक रियल-टाइम OS है, जिसका उपयोग एयरोस्पेस और चिकित्सा उपकरणों में होता है।" },
+            { question: "निम्न में से कौन सा मोबाइल OS है?", A: "Android", B: "iOS", C: "Windows Phone", D: "सभी", correct: "D", explanation: "Android, iOS, Windows Phone सभी मोबाइल OS हैं।" },
+            { question: "OS में प्रोसेस शेड्यूलिंग का क्या उद्देश्य है?", A: "CPU का कुशल उपयोग", B: "मेमोरी बचाना", C: "डेटा सुरक्षा", D: "नेटवर्किंग", correct: "A", explanation: "प्रोसेस शेड्यूलिंग CPU का कुशल उपयोग सुनिश्चित करता है।" },
+            { question: "निम्न में से कौन सा OS फ़ंक्शन है?", A: "मेमोरी प्रबंधन", B: "फाइल प्रबंधन", C: "डिवाइस प्रबंधन", D: "सभी", correct: "D", explanation: "मेमोरी, फाइल और डिवाइस प्रबंधन सभी OS फ़ंक्शन हैं।" },
+            { question: "GUI का पूर्ण रूप क्या है?", A: "Graphical User Interface", B: "General User Interface", C: "Graphical Utility Interface", D: "General Utility Interface", correct: "A", explanation: "GUI – Graphical User Interface" },
+            { question: "निम्न में से कौन सा CLI (Command Line Interface) का उदाहरण है?", A: "Windows Explorer", B: "CMD", C: "File Explorer", D: "Control Panel", correct: "B", explanation: "CMD (Command Prompt) एक CLI है।" },
+            { question: "OS का कर्नेल (Kernel) क्या है?", A: "OS का मूल भाग", B: "एक एप्लिकेशन", C: "एक ड्राइवर", D: "एक उपयोगिता", correct: "A", explanation: "कर्नेल OS का मूल भाग है जो हार्डवेयर को नियंत्रित करता है।" },
+            { question: "निम्न में से कौन सा OS ओपन सोर्स है?", A: "Windows", B: "macOS", C: "Linux", D: "इनमें से कोई नहीं", correct: "C", explanation: "Linux ओपन सोर्स OS है।" },
+            { question: "Windows किस प्रकार का OS है?", A: "क्लोज्ड सोर्स", B: "ओपन सोर्स", C: "हाइब्रिड", D: "फ्रीवेयर", correct: "A", explanation: "Windows क्लोज्ड सोर्स (स्वामित्व वाला) OS है।" },
+            { question: "OS का 'बूटिंग' क्या है?", A: "कंप्यूटर चालू करना", B: "कंप्यूटर बंद करना", C: "कंप्यूटर रीस्टार्ट", D: "डेटा बैकअप", correct: "A", explanation: "बूटिंग कंप्यूटर को चालू करने की प्रक्रिया है।" },
+            { question: "BIOS कहाँ संग्रहीत होता है?", A: "RAM", B: "ROM", C: "HDD", D: "SSD", correct: "B", explanation: "BIOS ROM (Read-Only Memory) में संग्रहीत होता है।" },
+            { question: "निम्न में से कौन सा OS यूनिक्स-आधारित है?", A: "Linux", B: "macOS", C: "Solaris", D: "सभी", correct: "D", explanation: "Linux, macOS, Solaris सभी यूनिक्स-आधारित हैं।" },
+            { question: "OS का 'स्वैपिंग' क्या है?", A: "मेमोरी से डिस्क पर डेटा स्थानांतरण", B: "फाइलों का स्थानांतरण", C: "प्रोसेस का समाप्ति", D: "नेटवर्क कनेक्शन", correct: "A", explanation: "स्वैपिंग मेमोरी से डिस्क पर डेटा स्थानांतरित करना है।" },
+            { question: "निम्न में से कौन सा OS सर्वर के रूप में उपयोग किया जाता है?", A: "Windows Server", B: "Linux Server", C: "macOS Server", D: "सभी", correct: "D", explanation: "Windows Server, Linux Server, macOS Server सभी सर्वर OS हैं।" },
+            { question: "OS में 'डेडलॉक' क्या है?", A: "प्रोसेसों का परस्पर प्रतीक्षा", B: "मेमोरी की कमी", C: "CPU ओवरलोड", D: "डिस्क पूर्ण", correct: "A", explanation: "डेडलॉक दो या अधिक प्रोसेसों का परस्पर प्रतीक्षा है।" },
+            { question: "OS का 'कैश' क्या है?", A: "त्वरित पहुँच के लिए डेटा का भंडार", B: "स्थायी भंडारण", C: "नेटवर्क डेटा", D: "इनपुट डेटा", correct: "A", explanation: "कैश त्वरित पहुँच के लिए डेटा का एक अस्थायी भंडार है।" },
+            { question: "निम्न में से कौन सा OS एंबेडेड सिस्टम में उपयोग किया जाता है?", A: "Windows Embedded", B: "Linux", C: "Android", D: "सभी", correct: "D", explanation: "Windows Embedded, Linux, Android सभी एंबेडेड सिस्टम में उपयोग होते हैं।" },
+            { question: "OS में 'थ्रेड' क्या है?", A: "प्रोसेस के भीतर कार्य की इकाई", B: "एक प्रोसेस", C: "एक फ़ंक्शन", D: "एक डेटा संरचना", correct: "A", explanation: "थ्रेड प्रोसेस के भीतर कार्य की सबसे छोटी इकाई है।" },
+            { question: "OS का 'शेड्यूलर' क्या करता है?", A: "प्रोसेसों को CPU आवंटित करता है", B: "मेमोरी आवंटित करता है", C: "फाइलें प्रबंधित करता है", D: "डेटा सुरक्षित करता है", correct: "A", explanation: "शेड्यूलर प्रोसेसों को CPU आवंटित करता है।" },
+            { question: "निम्न में से कौन सा OS 'प्लग एंड प्ले' का समर्थन करता है?", A: "Windows", B: "Linux", C: "macOS", D: "सभी", correct: "D", explanation: "Windows, Linux, macOS सभी प्लग एंड प्ले का समर्थन करते हैं।" },
+            { question: "OS में 'इंटरप्ट' क्या है?", A: "CPU को सिग्नल", B: "मेमोरी एरर", C: "डिस्क एरर", D: "नेटवर्क सिग्नल", correct: "A", explanation: "इंटरप्ट CPU को एक सिग्नल है जो किसी घटना को दर्शाता है।" },
+            { question: "निम्न में से कौन सा OS डिवाइस ड्राइवर का प्रबंधन करता है?", A: "OS", B: "एप्लिकेशन", C: "उपयोगकर्ता", D: "हार्डवेयर", correct: "A", explanation: "OS डिवाइस ड्राइवरों का प्रबंधन करता है।" },
+            { question: "OS का 'फाइल सिस्टम' क्या करता है?", A: "फाइलों को व्यवस्थित करता है", B: "प्रोसेस शेड्यूल करता है", C: "मेमोरी प्रबंधित करता है", D: "नेटवर्क प्रबंधित करता है", correct: "A", explanation: "फाइल सिस्टम फाइलों को संग्रहीत और व्यवस्थित करता है।" },
+            { question: "निम्न में से कौन सा OS 'हाइबरनेट' सुविधा प्रदान करता है?", A: "Windows", B: "Linux", C: "macOS", D: "सभी", correct: "D", explanation: "सभी आधुनिक OS हाइबरनेट सुविधा प्रदान करते हैं।" },
+            { question: "OS का 'सिस्टम कॉल' क्या है?", A: "OS सेवा के लिए अनुरोध", B: "हार्डवेयर कॉल", C: "नेटवर्क कॉल", D: "डेटा कॉल", correct: "A", explanation: "सिस्टम कॉल OS सेवा के लिए एक अनुरोध है।" },
+            { question: "Operating System किस प्रकार का software है?", A: "System Software", B: "Application Software", C: "Utility File", D: "Programming Language", correct: "A", explanation: "OS system software है जो hardware/resources और applications के बीच management interface देता है।" },
+            { question: "CPU को process चुनकर देने का कार्य मुख्यतः किस component से जुड़ा है?", A: "File Manager", B: "Scheduler", C: "Compiler", D: "Editor", correct: "B", explanation: "Scheduler ready processes में से CPU के लिए process चुनता है।" },
+            { question: "कौन-सा memory management से संबंधित है?", A: "Formatting", B: "Routing", C: "Paging", D: "Printing", correct: "C", explanation: "Paging virtual/physical memory management की technique है।" },
+            { question: "User program द्वारा OS service माँगने के mechanism को क्या कहते हैं?", A: "Booting", B: "Spooling", C: "Formatting", D: "System Call", correct: "D", explanation: "System call user-level program और OS service के बीच interface है।" },
+            { question: "कौन-सा OS component hardware के सबसे निकट core control देता है?", A: "Kernel", B: "Browser", C: "Word Processor", D: "Spreadsheet", correct: "A", explanation: "Kernel OS का core component है।" },
+            { question: "GUI में interaction का प्रमुख माध्यम क्या होता है?", A: "केवल machine code", B: "Icons, windows और menus", C: "केवल binary digits", D: "केवल assembly instructions", correct: "B", explanation: "GUI graphical elements के माध्यम से user interaction कराता है।" },
+            { question: "RTOS की प्रमुख विशेषता क्या है?", A: "केवल file compression", B: "केवल gaming", C: "समय-सीमा के भीतर predictable response", D: "केवल document editing", correct: "C", explanation: "Real-time systems में timing/deadline response महत्वपूर्ण होता है।" },
+            { question: "कौन-सा OS type कई users को CPU time share करने देता है?", A: "Single-task OS", B: "Batch-only OS", C: "Embedded-only OS", D: "Time-sharing OS", correct: "D", explanation: "Time-sharing OS CPU time को users/processes के बीच share करता है।" },
+            { question: "Boot loader का प्रमुख कार्य क्या है?", A: "OS kernel को load करने में सहायता", B: "Photo edit करना", C: "Spreadsheet बनाना", D: "Printer ink बदलना", correct: "A", explanation: "Boot loader OS kernel को memory में load/start करने की प्रक्रिया में सहायता करता है।" },
+            { question: "Virtual memory मुख्यतः किसका विस्तार जैसा logical view देती है?", A: "Keyboard", B: "Main memory address space", C: "Monitor", D: "Printer", correct: "B", explanation: "Virtual memory technique secondary storage को backing के रूप में उपयोग करके logical memory space को support करती है।" },
+            { question: "Deadlock में processes सामान्यतः किस स्थिति में फँसते हैं?", A: "एक-दूसरे के resources/events की प्रतीक्षा", B: "सभी files delete करने में", C: "केवल boot होने में", D: "केवल printing में", correct: "A", explanation: "Deadlock में processes आगे बढ़ने के लिए आवश्यक resources की circular/indefinite wait में फँस सकते हैं।" }
+        ];
+
+        // ----- WINDOWS (50) -----
+        const windowsMCQs = [
+            { question: "Windows का पहला GUI संस्करण कौन सा था?", A: "Windows 1.0", B: "Windows 3.0", C: "Windows 95", D: "Windows 98", correct: "A", explanation: "Windows 1.0 (1985) पहला GUI संस्करण था।" },
+            { question: "Windows में स्टार्ट मेनू किस संस्करण में पेश किया गया?", A: "Windows 3.1", B: "Windows 95", C: "Windows 98", D: "Windows 2000", correct: "B", explanation: "स्टार्ट मेनू Windows 95 में पेश किया गया था।" },
+            { question: "Windows XP किस वर्ष रिलीज़ हुआ?", A: "1998", B: "2000", C: "2001", D: "2003", correct: "C", explanation: "Windows XP 2001 में रिलीज़ हुआ था।" },
+            { question: "Windows 10 में डिफ़ॉल्ट ब्राउज़र क्या है?", A: "Internet Explorer", B: "Edge", C: "Chrome", D: "Firefox", correct: "B", explanation: "Windows 10 का डिफ़ॉल्ट ब्राउज़र Edge है।" },
+            { question: "Windows 11 की मुख्य विशेषता क्या है?", A: "नया डिज़ाइन", B: "एंड्रॉइड ऐप्स", C: "विजेट्स", D: "सभी", correct: "D", explanation: "Windows 11 में नया डिज़ाइन, एंड्रॉइड ऐप्स, और विजेट्स शामिल हैं।" },
+            { question: "Windows में फाइल एक्सप्लोरर का क्या कार्य है?", A: "फाइलों का प्रबंधन", B: "प्रोसेस प्रबंधन", C: "नेटवर्क प्रबंधन", D: "डेटा प्रबंधन", correct: "A", explanation: "File Explorer फाइलों और फोल्डरों का प्रबंधन करता है।" },
+            { question: "Windows में टास्क मैनेजर को कैसे खोलें?", A: "Ctrl + Alt + Del", B: "Ctrl + Shift + Esc", C: "Ctrl + Alt + Esc", D: "A और B दोनों", correct: "D", explanation: "Ctrl + Alt + Del और Ctrl + Shift + Esc दोनों से Task Manager खुलता है।" },
+            { question: "Windows में डिफ़ॉल्ट फाइल सिस्टम क्या है?", A: "FAT32", B: "NTFS", C: "exFAT", D: "EXT4", correct: "B", explanation: "Windows का डिफ़ॉल्ट फाइल सिस्टम NTFS है।" },
+            { question: "Windows में कंट्रोल पैनल का क्या कार्य है?", A: "सिस्टम कॉन्फ़िगरेशन", B: "फाइल प्रबंधन", C: "प्रोसेस प्रबंधन", D: "नेटवर्क प्रबंधन", correct: "A", explanation: "Control Panel सिस्टम कॉन्फ़िगरेशन के लिए है।" },
+            { question: "Windows में सिस्टम ट्रे (Notification Area) कहाँ होती है?", A: "टास्कबार के दाईं ओर", B: "स्टार्ट मेनू में", C: "डेस्कटॉप पर", D: "फ़ाइल एक्सप्लोरर में", correct: "A", explanation: "सिस्टम ट्रे टास्कबार के दाईं ओर होती है।" },
+            { question: "Windows 7 का रिलीज़ वर्ष क्या है?", A: "2005", B: "2007", C: "2009", D: "2011", correct: "C", explanation: "Windows 7 2009 में रिलीज़ हुआ था।" },
+            { question: "Windows 8 में स्टार्ट मेनू की जगह क्या आया?", A: "स्टार्ट स्क्रीन", B: "टास्कबार", C: "फ़ाइल एक्सप्लोरर", D: "कंट्रोल पैनल", correct: "A", explanation: "Windows 8 में स्टार्ट मेनू की जगह स्टार्ट स्क्रीन आई।" },
+            { question: "Windows में 'Cortana' क्या है?", A: "वॉइस असिस्टेंट", B: "ब्राउज़र", C: "फ़ाइल मैनेजर", D: "एंटीवायरस", correct: "A", explanation: "Cortana Windows का वॉइस असिस्टेंट है।" },
+            { question: "Windows में 'Snap' फीचर क्या करता है?", A: "विंडोज़ को व्यवस्थित करता है", B: "फ़ाइलें कॉपी करता है", C: "प्रोसेस प्रबंधित करता है", D: "नेटवर्क कनेक्ट करता है", correct: "A", explanation: "Snap फीचर विंडोज़ को स्क्रीन पर व्यवस्थित करता है।" },
+            { question: "Windows में 'Virtual Desktop' क्या है?", A: "कई डेस्कटॉप", B: "वर्चुअल मशीन", C: "क्लाउड डेस्कटॉप", D: "रिमोट डेस्कटॉप", correct: "A", explanation: "Virtual Desktop कई डेस्कटॉप बनाने की सुविधा है।" },
+            { question: "Windows में डिफ़ॉल्ट ब्राउज़र कैसे बदलें?", A: "सेटिंग्स → Apps → Default Apps", B: "कंट्रोल पैनल → ब्राउज़र", C: "फ़ाइल एक्सप्लोरर → ब्राउज़र", D: "टास्क मैनेजर → ब्राउज़र", correct: "A", explanation: "सेटिंग्स → Apps → Default Apps से ब्राउज़र बदला जाता है।" },
+            { question: "Windows में 'This PC' क्या है?", A: "फाइल एक्सप्लोरर का हिस्सा", B: "एक एप्लिकेशन", C: "एक ड्राइव", D: "एक फोल्डर", correct: "A", explanation: "This PC File Explorer का एक हिस्सा है, जो ड्राइव्स दिखाता है।" },
+            { question: "Windows में 'Recycle Bin' का क्या कार्य है?", A: "हटाई गई फाइलें संग्रह", B: "फाइलें कॉपी करना", C: "फाइलें डिलीट करना", D: "फाइलें एन्क्रिप्ट करना", correct: "A", explanation: "Recycle Bin हटाई गई फाइलों को अस्थायी रूप से संग्रहीत करता है।" },
+            { question: "Windows में 'Control Panel' तक कैसे पहुँचें?", A: "स्टार्ट → कंट्रोल पैनल", B: "सेटिंग्स → कंट्रोल पैनल", C: "टास्कबार → कंट्रोल पैनल", D: "File Explorer → कंट्रोल पैनल", correct: "A", explanation: "स्टार्ट → कंट्रोल पैनल से पहुँचा जा सकता है।" },
+            { question: "Windows में 'Update & Security' किस सेटिंग में है?", A: "सेटिंग्स", B: "कंट्रोल पैनल", C: "File Explorer", D: "टास्क मैनेजर", correct: "A", explanation: "Update & Security Windows सेटिंग्स में है।" },
+            { question: "Windows में 'Microsoft Store' का क्या कार्य है?", A: "ऐप्स डाउनलोड", B: "फाइलें कॉपी", C: "प्रोसेस प्रबंधन", D: "नेटवर्क कॉन्फ़िगर", correct: "A", explanation: "Microsoft Store से ऐप्स डाउनलोड और इंस्टॉल किए जाते हैं।" },
+            { question: "Windows में 'File History' का क्या कार्य है?", A: "बैकअप", B: "फाइल कॉपी", C: "फाइल डिलीट", D: "फाइल एन्क्रिप्ट", correct: "A", explanation: "File History फाइलों का बैकअप बनाता है।" },
+            { question: "Windows में 'Defender' क्या है?", A: "एंटीवायरस", B: "ब्राउज़र", C: "फ़ाइल मैनेजर", D: "नेटवर्क टूल", correct: "A", explanation: "Windows Defender एक एंटीवायरस सॉफ्टवेयर है।" },
+            { question: "Windows में 'Safe Mode' का क्या उपयोग है?", A: "समस्या निवारण", B: "तेज़ बूट", C: "गेम खेलना", D: "वेब ब्राउज़िंग", correct: "A", explanation: "Safe Mode समस्या निवारण (troubleshooting) के लिए है।" },
+            { question: "Windows में 'BitLocker' का क्या कार्य है?", A: "डेटा एन्क्रिप्शन", B: "डेटा कम्प्रेशन", C: "डेटा बैकअप", D: "डेटा डिलीट", correct: "A", explanation: "BitLocker डेटा एन्क्रिप्शन के लिए है।" },
+            { question: "Windows में files और folders manage करने का प्रमुख tool कौन-सा है?", A: "File Explorer", B: "Calculator", C: "Paint", D: "Notepad", correct: "A", explanation: "File Explorer files, folders और drives manage करने के लिए है।" },
+            { question: "Windows में Run dialog खोलने का shortcut क्या है?", A: "Win + E", B: "Win + R", C: "Win + L", D: "Alt + F4", correct: "B", explanation: "Win + R Run dialog खोलता है।" },
+            { question: "Windows में computer lock करने का shortcut क्या है?", A: "Ctrl + C", B: "Alt + Tab", C: "Win + L", D: "Win + R", correct: "C", explanation: "Win + L system को lock करता है।" },
+            { question: "Open windows के बीच switch करने के लिए सामान्य shortcut कौन-सा है?", A: "Ctrl + Z", B: "Win + E", C: "Win + D", D: "Alt + Tab", correct: "D", explanation: "Alt + Tab open windows/apps के बीच switch करता है।" },
+            { question: "Device Manager मुख्यतः किसके लिए उपयोगी है?", A: "Hardware और drivers", B: "Documents typing", C: "Music editing", D: "Web search", correct: "A", explanation: "Device Manager hardware devices और उनके drivers की जानकारी/manage करने के लिए है।" },
+            { question: "Event Viewer में मुख्यतः क्या देखा जाता है?", A: "Photos", B: "System/application logs", C: "Music playlists", D: "Browser bookmarks", correct: "B", explanation: "Event Viewer Windows event logs देखने के लिए है।" },
+            { question: "BitLocker किससे संबंधित है?", A: "Video playback", B: "File printing", C: "Drive encryption", D: "Screen brightness", correct: "C", explanation: "BitLocker Windows में drive encryption सुविधा से संबंधित है।" },
+            { question: "Task Manager में कौन-सी जानकारी मिल सकती है?", A: "केवल wallpapers", B: "केवल fonts", C: "केवल documents", D: "Processes और performance", correct: "D", explanation: "Task Manager processes और resource/performance information दिखा सकता है।" },
+            { question: "Windows 95 के साथ कौन-सी feature पहचान विशेष रूप से जुड़ी है?", A: "Start Menu", B: "BitLocker", C: "Widgets", D: "Cortana", correct: "A", explanation: "Start Menu Windows 95 की प्रमुख पहचान वाली सुविधाओं में था।" },
+            { question: "Windows 8 की interface दिशा किससे जुड़ी थी?", A: "केवल DOS prompt", B: "Start Screen और tiles", C: "केवल BIOS", D: "केवल command line", correct: "B", explanation: "Windows 8 में Start Screen और tile-based Modern UI प्रमुख थे।" },
+            { question: "Safe Mode का सामान्य उद्देश्य क्या है?", A: "Gaming speed बढ़ाना", B: "Music recording", C: "Troubleshooting", D: "Video compression", correct: "C", explanation: "Safe Mode limited drivers/services के साथ troubleshooting में मदद करता है।" },
+            { question: "Windows में antivirus/antimalware protection से कौन-सा नाम जुड़ा है?", A: "Notepad", B: "Paint", C: "Calculator", D: "Microsoft Defender", correct: "D", explanation: "Microsoft Defender Windows security/antimalware protection से जुड़ा है।" },
+            { question: "Ctrl + Shift + Esc किस tool को सीधे खोल सकता है?", A: "Task Manager", B: "File Explorer", C: "Settings", D: "Paint", correct: "A", explanation: "Ctrl + Shift + Esc Task Manager खोलने का direct shortcut है।" },
+            { question: "Windows में Win + E किसके लिए है?", A: "Run", B: "File Explorer", C: "Lock", D: "Search only", correct: "B", explanation: "Win + E File Explorer खोलता है।" },
+            { question: "Windows में Ctrl + Z सामान्यतः किस कार्य के लिए है?", A: "Copy", B: "Paste", C: "Undo", D: "Lock", correct: "C", explanation: "Ctrl + Z सामान्यतः last action को undo करता है।" }
+        ];
+
+        // ----- FILES & FOLDERS (50) -----
+        const filesMCQs = [
+            { question: ".txt फ़ाइल एक्सटेंशन किस प्रकार की फ़ाइल को दर्शाता है?", A: "टेक्स्ट फ़ाइल", B: "इमेज फ़ाइल", C: "ऑडियो फ़ाइल", D: "वीडियो फ़ाइल", correct: "A", explanation: ".txt सादा पाठ (text) फ़ाइल को दर्शाता है।" },
+            { question: ".docx एक्सटेंशन किस सॉफ्टवेयर से संबंधित है?", A: "MS Word", B: "MS Excel", C: "MS PowerPoint", D: "MS Access", correct: "A", explanation: ".docx MS Word दस्तावेज़ के लिए है।" },
+            { question: ".xlsx एक्सटेंशन किस सॉफ्टवेयर से संबंधित है?", A: "MS Word", B: "MS Excel", C: "MS PowerPoint", D: "MS Access", correct: "B", explanation: ".xlsx MS Excel स्प्रेडशीट के लिए है।" },
+            { question: ".pptx एक्सटेंशन किस सॉफ्टवेयर से संबंधित है?", A: "MS Word", B: "MS Excel", C: "MS PowerPoint", D: "MS Access", correct: "C", explanation: ".pptx MS PowerPoint प्रेजेंटेशन के लिए है।" },
+            { question: "निम्न में से कौन सा इमेज फ़ाइल एक्सटेंशन है?", A: ".mp3", B: ".mp4", C: ".jpg", D: ".exe", correct: "C", explanation: ".jpg एक इमेज फ़ाइल एक्सटेंशन है।" },
+            { question: "निम्न में से कौन सा ऑडियो फ़ाइल एक्सटेंशन है?", A: ".mp3", B: ".mp4", C: ".jpg", D: ".exe", correct: "A", explanation: ".mp3 एक ऑडियो फ़ाइल एक्सटेंशन है।" },
+            { question: "निम्न में से कौन सा वीडियो फ़ाइल एक्सटेंशन है?", A: ".mp3", B: ".mp4", C: ".jpg", D: ".exe", correct: "B", explanation: ".mp4 एक वीडियो फ़ाइल एक्सटेंशन है।" },
+            { question: ".exe एक्सटेंशन किस प्रकार की फ़ाइल को दर्शाता है?", A: "निष्पादन योग्य फ़ाइल", B: "टेक्स्ट फ़ाइल", C: "इमेज फ़ाइल", D: "ऑडियो फ़ाइल", correct: "A", explanation: ".exe एक निष्पादन योग्य (executable) फ़ाइल है।" },
+            { question: ".pdf एक्सटेंशन किस प्रकार की फ़ाइल को दर्शाता है?", A: "PDF दस्तावेज़", B: "टेक्स्ट फ़ाइल", C: "इमेज फ़ाइल", D: "ऑडियो फ़ाइल", correct: "A", explanation: ".pdf पोर्टेबल दस्तावेज़ (PDF) के लिए है।" },
+            { question: "NTFS का पूर्ण रूप क्या है?", A: "New Technology File System", B: "Network Technology File System", C: "New Transfer File System", D: "Network Transfer File System", correct: "A", explanation: "NTFS – New Technology File System" },
+            { question: "FAT32 का पूर्ण रूप क्या है?", A: "File Allocation Table 32", B: "File Access Table 32", C: "File Allocation Transfer 32", D: "File Access Transfer 32", correct: "A", explanation: "FAT32 – File Allocation Table 32" },
+            { question: "निम्न में से कौन सा Linux का फाइल सिस्टम है?", A: "NTFS", B: "EXT4", C: "FAT32", D: "APFS", correct: "B", explanation: "EXT4 Linux का फाइल सिस्टम है।" },
+            { question: "निम्न में से कौन सा macOS का फाइल सिस्टम है?", A: "NTFS", B: "EXT4", C: "FAT32", D: "APFS", correct: "D", explanation: "APFS macOS का फाइल सिस्टम है।" },
+            { question: "फाइल की 'Read-Only' विशेषता का क्या अर्थ है?", A: "फाइल को संपादित नहीं किया जा सकता", B: "फाइल को हटाया नहीं जा सकता", C: "फाइल को कॉपी नहीं किया जा सकता", D: "फाइल को देखा नहीं जा सकता", correct: "A", explanation: "Read-Only का अर्थ है फाइल को संपादित नहीं किया जा सकता।" },
+            { question: "Hidden फ़ाइल क्या है?", A: "डिफ़ॉल्ट रूप से दिखाई नहीं देती", B: "सुरक्षित फ़ाइल", C: "सिस्टम फ़ाइल", D: "संपीड़ित फ़ाइल", correct: "A", explanation: "Hidden फ़ाइल डिफ़ॉल्ट रूप से दिखाई नहीं देती।" },
+            { question: "फोल्डर क्या है?", A: "फाइलों और उप-फोल्डरों का कंटेनर", B: "एक फ़ाइल", C: "एक ड्राइव", D: "एक प्रोग्राम", correct: "A", explanation: "फोल्डर फाइलों और उप-फोल्डरों का कंटेनर है।" },
+            { question: "निम्न में से कौन सा फ़ाइल एक्सटेंशन संपीड़ित फ़ाइल का है?", A: ".zip", B: ".exe", C: ".txt", D: ".docx", correct: "A", explanation: ".zip एक संपीड़ित (compressed) फ़ाइल एक्सटेंशन है।" },
+            { question: ".rar फ़ाइल एक्सटेंशन किस प्रकार की फ़ाइल है?", A: "संपीड़ित", B: "इमेज", C: "ऑडियो", D: "वीडियो", correct: "A", explanation: ".rar एक संपीड़ित (compressed) फ़ाइल एक्सटेंशन है।" },
+            { question: "exFAT का उपयोग कहाँ किया जाता है?", A: "फ्लैश ड्राइव", B: "हार्ड डिस्क", C: "CD/DVD", D: "टेप ड्राइव", correct: "A", explanation: "exFAT का उपयोग फ्लैश ड्राइव और SD कार्ड में किया जाता है।" },
+            { question: "फाइल सिस्टम का क्या कार्य है?", A: "फाइलों को संग्रहीत और व्यवस्थित करना", B: "प्रोसेस शेड्यूल करना", C: "मेमोरी प्रबंधित करना", D: "नेटवर्क प्रबंधित करना", correct: "A", explanation: "फाइल सिस्टम फाइलों को संग्रहीत और व्यवस्थित करता है।" },
+            { question: "फाइल की 'System' विशेषता क्या है?", A: "OS फ़ाइल", B: "छिपी हुई फ़ाइल", C: "संपीड़ित फ़ाइल", D: "केवल पढ़ने योग्य", correct: "A", explanation: "System विशेषता OS से संबंधित फ़ाइलों को दर्शाती है।" },
+            { question: "फाइल का 'Archive' विशेषता क्या है?", A: "बैकअप के लिए चिह्नित", B: "छिपी हुई", C: "सिस्टम फ़ाइल", D: "केवल पढ़ने योग्य", correct: "A", explanation: "Archive विशेषता फाइल को बैकअप के लिए चिह्नित करती है।" },
+            { question: "फाइल का पूरा नाम (Full Name) क्या होता है?", A: "नाम + एक्सटेंशन", B: "केवल नाम", C: "केवल एक्सटेंशन", D: "पथ + नाम", correct: "D", explanation: "फाइल का पूरा नाम = पथ (Path) + नाम + एक्सटेंशन" },
+            { question: "फाइल का 'पथ' (Path) क्या है?", A: "फाइल का स्थान", B: "फाइल का नाम", C: "फाइल का आकार", D: "फाइल का प्रकार", correct: "A", explanation: "पथ (Path) फाइल का स्थान (डायरेक्टरी) है।" },
+            { question: "C:\\Windows\\System32\\drivers\\etc\\hosts में 'hosts' क्या है?", A: "फाइल", B: "फोल्डर", C: "ड्राइव", D: "प्रोग्राम", correct: "A", explanation: "hosts एक फ़ाइल है (बिना एक्सटेंशन के)।" },
+            { question: "फाइल एक्सटेंशन क्या दर्शाता है?", A: "फाइल का प्रकार", B: "फाइल का आकार", C: "फाइल का नाम", D: "फाइल का पथ", correct: "A", explanation: "एक्सटेंशन फाइल का प्रकार (format) दर्शाता है।" },
+            { question: ".ini फ़ाइल क्या है?", A: "कॉन्फ़िगरेशन फ़ाइल", B: "इमेज फ़ाइल", C: "ऑडियो फ़ाइल", D: "वीडियो फ़ाइल", correct: "A", explanation: ".ini एक कॉन्फ़िगरेशन फ़ाइल है。" },
+            { question: ".log फ़ाइल क्या है?", A: "लॉग फ़ाइल", B: "इमेज फ़ाइल", C: "ऑडियो फ़ाइल", D: "वीडियो फ़ाइल", correct: "A", explanation: ".log एक लॉग (घटना रिकॉर्ड) फ़ाइल है।" },
+            { question: ".tmp फ़ाइल क्या है?", A: "अस्थायी फ़ाइल", B: "स्थायी फ़ाइल", C: "सिस्टम फ़ाइल", D: "संपीड़ित फ़ाइल", correct: "A", explanation: ".tmp एक अस्थायी (temporary) फ़ाइल है।" },
+            { question: ".bak फ़ाइल क्या है?", A: "बैकअप फ़ाइल", B: "इमेज फ़ाइल", C: "ऑडियो फ़ाइल", D: "वीडियो फ़ाइल", correct: "A", explanation: ".bak एक बैकअप फ़ाइल है。" },
+            { question: "किस extension को सामान्यतः webpage document के लिए उपयोग किया जाता है?", A: ".mp3", B: ".jpg", C: ".html", D: ".exe", correct: "C", explanation: ".html web page document के लिए सामान्य extension है।" },
+            { question: "किस extension का संबंध presentation file से है?", A: ".pptx", B: ".xlsx", C: ".docx", D: ".txt", correct: "A", explanation: ".pptx Microsoft PowerPoint presentation format है।" },
+            { question: "किस extension का संबंध spreadsheet से है?", A: ".docx", B: ".xlsx", C: ".pptx", D: ".pdf", correct: "B", explanation: ".xlsx spreadsheet format है।" },
+            { question: "किस extension का संबंध audio से है?", A: ".mp4", B: ".png", C: ".docx", D: ".wav", correct: "D", explanation: ".wav audio file format है।" },
+            { question: "FAT32 की प्रसिद्ध single-file size limit लगभग कितनी है?", A: "4 GiB", B: "64 KiB", C: "1 KiB", D: "1 TiB", correct: "A", explanation: "FAT32 में single file size limit लगभग 4 GiB है।" },
+            { question: "Linux में commonly used file system कौन-सा है?", A: "APFS", B: "EXT4", C: "NTFS only", D: "HFS+ only", correct: "B", explanation: "EXT4 Linux systems में widely used file system है।" },
+            { question: "Modern Apple platforms से कौन-सा file system जुड़ा है?", A: "FAT12", B: "EXT2", C: "APFS", D: "FAT16", correct: "C", explanation: "APFS Apple का modern file system है।" },
+            { question: "File system का मूल उद्देश्य क्या है?", A: "CPU speed बढ़ाना", B: "Monitor चलाना", C: "Keyboard repair", D: "Data/files को organize और manage करना", correct: "D", explanation: "File system storage में files/directories को organize और manage करता है।" },
+            { question: "Absolute path किस बात को बताता है?", A: "पूरा location path", B: "केवल extension", C: "केवल file size", D: "केवल creation date", correct: "A", explanation: "Absolute path root/drive से पूरा location बताता है।" },
+            { question: "Relative path किसके संदर्भ में होता है?", A: "BIOS", B: "Current location", C: "Printer", D: "Monitor", correct: "B", explanation: "Relative path current working/location context के आधार पर होता है।" }
+        ];
+
+        // ----- PROCESSES (50) -----
+        const processesMCQs = [
+            { question: "प्रोसेस क्या है?", A: "चल रहा प्रोग्राम", B: "एक फ़ाइल", C: "एक फोल्डर", D: "एक डेटा संरचना", correct: "A", explanation: "प्रोसेस एक चल रहा (running) प्रोग्राम है।" },
+            { question: "प्रोसेस की 'Ready' अवस्था का क्या अर्थ है?", A: "CPU का इंतज़ार", B: "I/O का इंतज़ार", C: "प्रोसेस समाप्त", D: "प्रोसेस नया", correct: "A", explanation: "Ready अवस्था में प्रोसेस CPU का इंतज़ार करता है।" },
+            { question: "प्रोसेस की 'Running' अवस्था का क्या अर्थ है?", A: "CPU पर चल रहा", B: "I/O का इंतज़ार", C: "प्रोसेस नया", D: "प्रोसेस समाप्त", correct: "A", explanation: "Running अवस्था में प्रोसेस CPU पर चल रहा होता है।" },
+            { question: "प्रोसेस की 'Waiting' अवस्था का क्या अर्थ है?", A: "I/O या घटना का इंतज़ार", B: "CPU का इंतज़ार", C: "प्रोसेस नया", D: "प्रोसेस समाप्त", correct: "A", explanation: "Waiting अवस्था में प्रोसेस I/O या घटना का इंतज़ार करता है。" },
+            { question: "प्रोसेस की 'Terminated' अवस्था का क्या अर्थ है?", A: "प्रोसेस समाप्त", B: "प्रोसेस नया", C: "प्रोसेस चल रहा", D: "प्रोसेस CPU का इंतज़ार", correct: "A", explanation: "Terminated अवस्था में प्रोसेस समाप्त हो गया है।" },
+            { question: "FCFS शेड्यूलिंग का पूर्ण रूप क्या है?", A: "First Come First Serve", B: "First Code First Serve", C: "First Come First Service", D: "First Code First Service", correct: "A", explanation: "FCFS – First Come First Serve" },
+            { question: "SJF शेड्यूलिंग का पूर्ण रूप क्या है?", A: "Shortest Job First", B: "Shortest Job Fast", C: "Simple Job First", D: "Standard Job First", correct: "A", explanation: "SJF – Shortest Job First" },
+            { question: "राउंड रॉबिन (Round Robin) शेड्यूलिंग में क्या उपयोग होता है?", A: "टाइम क्वांटम", B: "प्राथमिकता", C: "फर्स्ट कम", D: "शॉर्टेस्ट जॉब", correct: "A", explanation: "Round Robin में टाइम क्वांटम (time slice) का उपयोग होता है।" },
+            { question: "थ्रेड क्या है?", A: "प्रोसेस के भीतर कार्य की इकाई", B: "एक प्रोसेस", C: "एक फ़ंक्शन", D: "एक डेटा संरचना", correct: "A", explanation: "थ्रेड प्रोसेस के भीतर कार्य की सबसे छोटी इकाई है।" },
+            { question: "मल्टी-थ्रेडिंग का क्या लाभ है?", A: "बेहतर प्रदर्शन", B: "कम मेमोरी", C: "सरलता", D: "सुरक्षा", correct: "A", explanation: "मल्टी-थ्रेडिंग बेहतर प्रदर्शन (parallelism) प्रदान करता है।" },
+            { question: "प्रोसेस शेड्यूलिंग का क्या उद्देश्य है?", A: "CPU उपयोग को अधिकतम करना", B: "मेमोरी बचाना", C: "डेटा सुरक्षा", D: "नेटवर्क गति", correct: "A", explanation: "शेड्यूलिंग CPU उपयोग को अधिकतम करता है।" },
+            { question: "निम्न में से कौन सा शेड्यूलिंग अल्गोरिदम प्राथमिकता पर आधारित है?", A: "Priority Scheduling", B: "FCFS", C: "SJF", D: "Round Robin", correct: "A", explanation: "Priority Scheduling प्राथमिकता (priority) पर आधारित है।" },
+            { question: "प्रोसेस का 'PCB' (Process Control Block) क्या है?", A: "प्रोसेस की जानकारी", B: "एक फ़ाइल", C: "एक फोल्डर", D: "एक डेटा संरचना", correct: "A", explanation: "PCB प्रोसेस की जानकारी (ID, अवस्था, रजिस्टर, आदि) रखता है।" },
+            { question: "निम्न में से कौन सा प्रोसेस के लिए सही है?", A: "प्रोसेस में एक या अधिक थ्रेड हो सकते हैं", B: "प्रोसेस में कोई थ्रेड नहीं होता", C: "प्रोसेस हमेशा सिंगल-थ्रेडेड होता है", D: "प्रोसेस और थ्रेड एक ही हैं", correct: "A", explanation: "एक प्रोसेस में एक या अधिक थ्रेड हो सकते हैं।" },
+            { question: "प्रोसेस की 'ID' (PID) क्या है?", A: "प्रोसेस की पहचान संख्या", B: "प्रोसेस का नाम", C: "प्रोसेस का आकार", D: "प्रोसेस का पथ", correct: "A", explanation: "PID (Process ID) प्रोसेस की अद्वितीय पहचान संख्या है।" },
+            { question: "निम्न में से कौन सा कमांड प्रोसेसों की सूची दिखाता है?", A: "tasklist", B: "dir", C: "ping", D: "ipconfig", correct: "A", explanation: "tasklist चल रहे प्रोसेसों की सूची दिखाता है।" },
+            { question: "प्रोसेस को समाप्त करने के लिए कौन सा कमांड है?", A: "taskkill", B: "del", C: "rm", D: "kill", correct: "A", explanation: "taskkill प्रोसेस को समाप्त करता है (Windows में)।" },
+            { question: "निम्न में से कौन सा OS में प्रोसेस संचार (IPC) का एक तरीका है?", A: "पाइप", B: "मेसेज क्यू", C: "शेयर्ड मेमोरी", D: "सभी", correct: "D", explanation: "पाइप, मेसेज क्यू, शेयर्ड मेमोरी सभी IPC विधियाँ हैं।" },
+            { question: "प्रोसेस में 'स्टैक' (Stack) का क्या उपयोग है?", A: "फ़ंक्शन कॉल संग्रह", B: "डेटा संग्रह", C: "निर्देश संग्रह", D: "रजिस्टर संग्रह", correct: "A", explanation: "स्टैक फ़ंक्शन कॉल, स्थानीय चर, और रिटर्न एड्रेस संग्रहीत करता है।" },
+            { question: "प्रोसेस का 'हीप' (Heap) क्या है?", A: "डायनैमिक मेमोरी", B: "स्थैतिक मेमोरी", C: "रजिस्टर", D: "कैश", correct: "A", explanation: "हीप डायनैमिक (गतिशील) मेमोरी आवंटन के लिए है।" },
+            { question: "प्रोसेस की 'प्राथमिकता' (Priority) क्या निर्धारित करती है?", A: "CPU समय", B: "मेमोरी", C: "I/O", D: "नेटवर्क", correct: "A", explanation: "प्राथमिकता प्रोसेस को CPU समय की मात्रा निर्धारित करती है।" },
+            { question: "निम्न में से कौन सा OS में प्रोसेस के बीच स्विचिंग को कहते हैं?", A: "Context Switching", B: "Swapping", C: "Paging", D: "Segmentation", correct: "A", explanation: "Context Switching एक प्रोसेस से दूसरे प्रोसेस में स्विच करना है।" },
+            { question: "Context Switching के दौरान क्या संग्रहीत किया जाता है?", A: "प्रोसेस का स्टेट", B: "प्रोसेस की फाइलें", C: "प्रोसेस का नाम", D: "प्रोसेस का पथ", correct: "A", explanation: "Context Switching के दौरान प्रोसेस का स्टेट (रजिस्टर, PC, आदि) संग्रहीत किया जाता है।" },
+            { question: "प्रोसेस और थ्रेड में क्या अंतर है?", A: "प्रोसेस भारी, थ्रेड हल्का", B: "प्रोसेस हल्का, थ्रेड भारी", C: "दोनों समान", D: "प्रोसेस तेज़, थ्रेड धीमा", correct: "A", explanation: "प्रोसेस भारी (heavyweight) होता है, थ्रेड हल्का (lightweight) होता है।" },
+            { question: "निम्न में से कौन सा प्रोसेस संचार (IPC) का तरीका नहीं है?", A: "पाइप", B: "शेयर्ड मेमोरी", C: "HTTP", D: "मेसेज क्यू", correct: "C", explanation: "HTTP (HyperText Transfer Protocol) एक IPC नहीं, बल्कि एक नेटवर्क प्रोटोकॉल है।" },
+            { question: "निम्न में से कौन सा प्रोसेस बनाने का तरीका है?", A: "fork()", B: "clone()", C: "CreateProcess()", D: "सभी", correct: "D", explanation: "fork() (Unix/Linux), clone() (Linux), CreateProcess() (Windows) सभी प्रोसेस बनाने के तरीके हैं।" },
+            { question: "ज़ोंबी प्रोसेस (Zombie Process) क्या है?", A: "समाप्त हुआ लेकिन अभिभावक ने नहीं लिया", B: "चल रहा प्रोसेस", C: "I/O का इंतज़ार", D: "नया प्रोसेस", correct: "A", explanation: "ज़ोंबी प्रोसेस वह प्रोसेस है जो समाप्त हो गया लेकिन उसके अभिभावक (parent) ने उसकी स्थिति नहीं ली।" },
+            { question: "ऑर्फन प्रोसेस (Orphan Process) क्या है?", A: "जिसका अभिभावक समाप्त हो गया", B: "समाप्त हुआ प्रोसेस", C: "नया प्रोसेस", D: "I/O का इंतज़ार", correct: "A", explanation: "ऑर्फन प्रोसेस वह प्रोसेस है जिसका अभिभावक (parent) समाप्त हो गया है।" },
+            { question: "PCB का पूर्ण रूप क्या है?", A: "Process Control Block", B: "Program Command Bus", C: "Process Code Base", D: "Primary Control Buffer", correct: "A", explanation: "PCB = Process Control Block." },
+            { question: "PID किसकी पहचान संख्या है?", A: "File", B: "Process", C: "Folder", D: "Keyboard", correct: "B", explanation: "PID Process ID है।" },
+            { question: "Ready queue में process किसका इंतजार करता है?", A: "Printer ink", B: "File extension", C: "CPU", D: "Monitor", correct: "C", explanation: "Ready process CPU allocation का इंतजार करता है।" },
+            { question: "Waiting/Blocked state में process सामान्यतः किसका इंतजार कर सकता है?", A: "Keyboard color", B: "File name", C: "CPU clock brand", D: "I/O या event", correct: "D", explanation: "Blocked process I/O completion या किसी event का इंतजार कर सकता है।" },
+            { question: "Round Robin scheduling का मुख्य parameter क्या है?", A: "Time Quantum", B: "File size", C: "Disk label", D: "IP address", correct: "A", explanation: "Round Robin time quantum/time slice पर आधारित है।" },
+            { question: "Context switch में क्या बदला जाता है?", A: "File extension", B: "Execution context", C: "Monitor size", D: "Folder color", correct: "B", explanation: "Context switching में execution state/context save-restore किया जाता है।" },
+            { question: "Starvation किस scheduling concept से जुड़ी समस्या हो सकती है?", A: "Formatting", B: "Printing", C: "Priority Scheduling", D: "Typing", correct: "C", explanation: "Low-priority process को लंबे समय तक CPU न मिलना starvation कहलाता है।" },
+            { question: "SJF का पूरा नाम क्या है?", A: "System Job File", B: "Simple Job Function", C: "Short Job Format", D: "Shortest Job First", correct: "D", explanation: "SJF = Shortest Job First." },
+            { question: "Mutual exclusion किस concept से जुड़ा है?", A: "Critical resource/section protection", B: "File compression", C: "Screen resolution", D: "Web browsing", correct: "A", explanation: "Mutual exclusion shared critical resources पर concurrent access को नियंत्रित करता है।" },
+            { question: "Shared Memory IPC में processes क्या share करते हैं?", A: "Printer", B: "Memory region", C: "Monitor", D: "Keyboard", correct: "B", explanation: "Shared memory में processes एक shared memory region का उपयोग करते हैं।" },
+            { question: "Zombie process सामान्यतः क्या है?", A: "नया process", B: "Running process", C: "Terminated process जिसकी exit information अभी parent ने collect नहीं की", D: "I/O device", correct: "C", explanation: "Zombie process समाप्त हो चुका होता है, पर parent द्वारा उसकी exit status collection बाकी हो सकती है।" },
+            { question: "Orphan process किस स्थिति में होता है?", A: "File delete होने पर", B: "CPU बंद होने पर", C: "Keyboard disconnect होने पर", D: "Parent process पहले समाप्त हो जाए", correct: "D", explanation: "Orphan वह process है जिसका parent पहले terminate हो गया हो।" }
+        ];
+
+        // ----- COMMANDS (50) -----
+        const commandsMCQs = [
+            { question: "Windows CMD में 'dir' कमांड का क्या कार्य है?", A: "फाइलों की सूची", B: "डायरेक्टरी बदलना", C: "फाइल हटाना", D: "स्क्रीन साफ़ करना", correct: "A", explanation: "dir कमांड फाइलों और फोल्डरों को सूचीबद्ध करता है।" },
+            { question: "Windows CMD में 'cd' कमांड का क्या कार्य है?", A: "डायरेक्टरी बदलना", B: "फाइलों की सूची", C: "फाइल हटाना", D: "स्क्रीन साफ़ करना", correct: "A", explanation: "cd (change directory) डायरेक्टरी बदलता है।" },
+            { question: "नई डायरेक्टरी बनाने के लिए कौन सा कमांड है?", A: "mkdir", B: "rmdir", C: "dir", D: "cd", correct: "A", explanation: "mkdir (make directory) नई डायरेक्टरी बनाता है।" },
+            { question: "डायरेक्टरी हटाने के लिए कौन सा कमांड है?", A: "mkdir", B: "rmdir", C: "dir", D: "cd", correct: "B", explanation: "rmdir (remove directory) डायरेक्टरी हटाता है。" },
+            { question: "फाइलें कॉपी करने के लिए कौन सा कमांड है?", A: "copy", B: "move", C: "del", D: "ren", correct: "A", explanation: "copy कमांड फाइलें कॉपी करता है।" },
+            { question: "फाइलें स्थानांतरित करने के लिए कौन सा कमांड है?", A: "copy", B: "move", C: "del", D: "ren", correct: "B", explanation: "move कमांड फाइलें स्थानांतरित (move) करता है।" },
+            { question: "फाइलें हटाने के लिए कौन सा कमांड है?", A: "copy", B: "move", C: "del", D: "ren", correct: "C", explanation: "del (delete) कमांड फाइलें हटाता है।" },
+            { question: "फाइलों का नाम बदलने के लिए कौन सा कमांड है?", A: "copy", B: "move", C: "del", D: "ren", correct: "D", explanation: "ren (rename) कमांड फाइलों का नाम बदलता है।" },
+            { question: "CMD स्क्रीन साफ़ करने के लिए कौन सा कमांड है?", A: "cls", B: "clear", C: "clean", D: "clr", correct: "A", explanation: "cls कमांड स्क्रीन साफ़ करता है (Clear Screen)。" },
+            { question: "CMD बंद करने के लिए कौन सा कमांड है?", A: "exit", B: "close", C: "stop", D: "end", correct: "A", explanation: "exit कमांड CMD को बंद करता है。" },
+            { question: "नेटवर्क कॉन्फ़िगरेशन देखने के लिए कौन सा कमांड है?", A: "ipconfig", B: "ping", C: "netstat", D: "tracert", correct: "A", explanation: "ipconfig नेटवर्क कॉन्फ़िगरेशन दिखाता है।" },
+            { question: "नेटवर्क कनेक्टिविटी परीक्षण के लिए कौन सा कमांड है?", A: "ipconfig", B: "ping", C: "netstat", D: "tracert", correct: "B", explanation: "ping नेटवर्क कनेक्टिविटी का परीक्षण करता है।" },
+            { question: "चल रहे प्रोसेसों की सूची देखने के लिए कौन सा कमांड है?", A: "tasklist", B: "taskkill", C: "ps", D: "top", correct: "A", explanation: "tasklist चल रहे प्रोसेसों की सूची दिखाता है (Windows)。" },
+            { question: "प्रोसेस को समाप्त करने के लिए कौन सा कमांड है?", A: "tasklist", B: "taskkill", C: "ps", D: "top", correct: "B", explanation: "taskkill प्रोसेस को समाप्त करता है (Windows)。" },
+            { question: "सिस्टम बंद करने के लिए कौन सा कमांड है?", A: "shutdown", B: "restart", C: "stop", D: "end", correct: "A", explanation: "shutdown सिस्टम बंद/रीस्टार्ट करता है。" },
+            { question: "सिस्टम रीस्टार्ट करने के लिए कौन सा कमांड है?", A: "shutdown /r", B: "shutdown /s", C: "shutdown /l", D: "shutdown /a", correct: "A", explanation: "shutdown /r सिस्टम रीस्टार्ट (restart) करता है。" },
+            { question: "सिस्टम को स्लीप (Sleep) करने के लिए क्या उपयोग होता है?", A: "shutdown /h", B: "shutdown /s", C: "shutdown /r", D: "shutdown /l", correct: "A", explanation: "shutdown /h सिस्टम को हाइबरनेट (sleep) करता है。" },
+            { question: "फ़ाइल की सामग्री दिखाने के लिए कौन सा कमांड है?", A: "type", B: "cat", C: "more", D: "less", correct: "A", explanation: "type कमांड फाइल की सामग्री दिखाता है (Windows)。" },
+            { question: "Windows में 'echo' कमांड का क्या कार्य है?", A: "टेक्स्ट प्रदर्शित करना", B: "फाइल बनाना", C: "फाइल हटाना", D: "डायरेक्टरी बदलना", correct: "A", explanation: "echo कमांड टेक्स्ट प्रदर्शित करता है。" },
+            { question: "Windows में 'path' कमांड का क्या कार्य है?", A: "खोज पथ दिखाना/बदलना", B: "फाइलें दिखाना", C: "प्रोसेस दिखाना", D: "नेटवर्क दिखाना", correct: "A", explanation: "path कमांड खोज पथ (search path) दिखाता/बदलता है。" },
+            { question: "Windows में 'color' कमांड का क्या कार्य है?", A: "CMD का रंग बदलना", B: "फाइलों का रंग", C: "प्रोसेस का रंग", D: "नेटवर्क का रंग", correct: "A", explanation: "color कमांड CMD विंडो का पृष्ठभूमि/फ़ॉन्ट रंग बदलता है。" },
+            { question: "Windows में 'time' कमांड का क्या कार्य है?", A: "सिस्टम समय दिखाना/बदलना", B: "फाइल समय", C: "प्रोसेस समय", D: "नेटवर्क समय", correct: "A", explanation: "time कमांड सिस्टम समय दिखाता/बदलता है।" },
+            { question: "Windows में 'date' कमांड का क्या कार्य है?", A: "सिस्टम तिथि दिखाना/बदलना", B: "फाइल तिथि", C: "प्रोसेस तिथि", D: "नेटवर्क तिथि", correct: "A", explanation: "date कमांड सिस्टम तिथि दिखाता/बदलता है。" },
+            { question: "Windows में 'vol' कमांड का क्या कार्य है?", A: "ड्राइव वॉल्यूम लेबल दिखाना", B: "फाइल वॉल्यूम", C: "प्रोसेस वॉल्यूम", D: "नेटवर्क वॉल्यूम", correct: "A", explanation: "vol कमांड ड्राइव का वॉल्यूम लेबल दिखाता है。" },
+            { question: "Windows में 'tree' कमांड का क्या कार्य है?", A: "डायरेक्टरी वृक्ष दिखाना", B: "फाइल वृक्ष", C: "प्रोसेस वृक्ष", D: "नेटवर्क वृक्ष", correct: "A", explanation: "tree कमांड डायरेक्टरी वृक्ष (directory tree) दिखाता है。" },
+            { question: "Windows में 'find' कमांड का क्या कार्य है?", A: "फाइल में टेक्स्ट खोजना", B: "फाइल खोजना", C: "प्रोसेस खोजना", D: "डायरेक्टरी खोजना", correct: "A", explanation: "find कमांड फाइल में टेक्स्ट खोजता है。" },
+            { question: "Windows में 'findstr' कमांड क्या है?", A: "उन्नत टेक्स्ट खोज", B: "फाइल खोज", C: "प्रोसेस खोज", D: "डायरेक्टरी खोज", correct: "A", explanation: "findstr (find string) उन्नत टेक्स्ट खोज के लिए है。" },
+            { question: "Windows में 'robocopy' कमांड क्या है?", A: "मजबूत फाइल कॉपी", B: "फाइल हटाना", C: "प्रोसेस प्रबंधन", D: "नेटवर्क प्रबंधन", correct: "A", explanation: "robocopy (Robust Copy) एक मजबूत फाइल कॉपी टूल है。" },
+            { question: "Windows में 'xcopy' कमांड क्या है?", A: "फाइलों और डायरेक्टरीज़ की कॉपी", B: "फाइल हटाना", C: "प्रोसेस प्रबंधन", D: "नेटवर्क प्रबंधन", correct: "A", explanation: "xcopy फाइलों और डायरेक्टरीज़ को कॉपी करता है。" },
+            { question: "Windows में 'attrib' कमांड का क्या कार्य है?", A: "फाइल विशेषताएँ दिखाना/बदलना", B: "फाइल कॉपी", C: "प्रोसेस प्रबंधन", D: "नेटवर्क प्रबंधन", correct: "A", explanation: "attrib (attribute) फाइल विशेषताएँ (Read-Only, Hidden, आदि) दिखाता/बदलता है。" },
+            { question: "Windows में 'chkdsk' कमांड क्या है?", A: "डिस्क त्रुटि जाँच", B: "फाइल खोज", C: "प्रोसेस प्रबंधन", D: "नेटवर्क प्रबंधन", correct: "A", explanation: "chkdsk (Check Disk) डिस्क त्रुटियों की जाँच करता है。" },
+            { question: "Windows में 'sfc' कमांड क्या है?", A: "सिस्टम फ़ाइलों की जाँच", B: "फाइल खोज", C: "प्रोसेस प्रबंधन", D: "नेटवर्क प्रबंधन", correct: "A", explanation: "sfc (System File Checker) सिस्टम फ़ाइलों की जाँच करता है。" },
+            { question: "Windows में 'netstat' कमांड क्या है?", A: "नेटवर्क स्टेटिस्टिक्स", B: "फाइल स्टेटिस्टिक्स", C: "प्रोसेस स्टेटिस्टिक्स", D: "डिस्क स्टेटिस्टिक्स", correct: "A", explanation: "netstat (Network Statistics) नेटवर्क स्टेटिस्टिक्स दिखाता है。" },
+            { question: "Windows में 'tracert' कमांड क्या है?", A: "नेटवर्क मार्ग ट्रेस", B: "फाइल ट्रेस", C: "प्रोसेस ट्रेस", D: "डिस्क ट्रेस", correct: "A", explanation: "tracert (Trace Route) नेटवर्क मार्ग (route) ट्रेस करता है。" },
+            { question: "Windows में 'nslookup' कमांड क्या है?", A: "DNS जाँच", B: "फाइल जाँच", C: "प्रोसेस जाँच", D: "डिस्क जाँच", correct: "A", explanation: "nslookup DNS (Domain Name System) क्वेरी के लिए है。" },
+            { question: "Windows में 'systeminfo' कमांड क्या है?", A: "सिस्टम जानकारी", B: "फाइल जानकारी", C: "प्रोसेस जानकारी", D: "नेटवर्क जानकारी", correct: "A", explanation: "systeminfo सिस्टम की विस्तृत जानकारी दिखाता है。" },
+            { question: "dir command क्या करता है?", A: "Directory contents दिखाता है", B: "Computer restart करता है", C: "DNS query करता है", D: "Process kill करता है", correct: "A", explanation: "dir files और folders की listing दिखाता है।" },
+            { question: "cd command का उपयोग किस लिए है?", A: "Copy", B: "Directory बदलना", C: "Delete", D: "Shutdown", correct: "B", explanation: "cd = change directory." },
+            { question: "mkdir का उपयोग क्या है?", A: "File delete", B: "Network test", C: "Directory बनाना", D: "Process kill", correct: "C", explanation: "mkdir/mk directory नई directory बनाता है।" },
+            { question: "rmdir का उपयोग क्या है?", A: "File copy", B: "IP दिखाना", C: "File rename", D: "Directory हटाना", correct: "D", explanation: "rmdir/remove directory directory हटाने के लिए है।" }
+        ];
+
+        // ----- PRACTICE (50 MIXED) -----
+        const practiceMCQs = [
+            { question: "ऑपरेटिंग सिस्टम का मुख्य कार्य क्या है?", A: "हार्डवेयर प्रबंधन", B: "गेम खेलना", C: "वेब ब्राउज़िंग", D: "डेटा एंट्री", correct: "A", explanation: "OS हार्डवेयर संसाधनों का प्रबंधन करता है।" },
+            { question: "Windows 95 में कौन सी सुविधा पेश की गई?", A: "स्टार्ट मेनू", B: "टास्कबार", C: "GUI", D: "A और B", correct: "D", explanation: "Windows 95 में स्टार्ट मेनू और टास्कबार पेश किए गए।" },
+            { question: ".docx एक्सटेंशन किस सॉफ्टवेयर से संबंधित है?", A: "MS Word", B: "MS Excel", C: "MS PowerPoint", D: "MS Access", correct: "A", explanation: ".docx MS Word दस्तावेज़ के लिए है।" },
+            { question: "प्रोसेस की 'Ready' अवस्था का क्या अर्थ है?", A: "CPU का इंतज़ार", B: "I/O का इंतज़ार", C: "प्रोसेस समाप्त", D: "प्रोसेस नया", correct: "A", explanation: "Ready अवस्था में प्रोसेस CPU का इंतज़ार करता है।" },
+            { question: "Windows CMD में 'dir' कमांड का क्या कार्य है?", A: "फाइलों की सूची", B: "डायरेक्टरी बदलना", C: "फाइल हटाना", D: "स्क्रीन साफ़ करना", correct: "A", explanation: "dir कमांड फाइलों और फोल्डरों को सूचीबद्ध करता है।" },
+            { question: "निम्न में से कौन सा OS ओपन सोर्स है?", A: "Windows", B: "macOS", C: "Linux", D: "इनमें से कोई नहीं", correct: "C", explanation: "Linux ओपन सोर्स OS है।" },
+            { question: "NTFS का पूर्ण रूप क्या है?", A: "New Technology File System", B: "Network Technology File System", C: "New Transfer File System", D: "Network Transfer File System", correct: "A", explanation: "NTFS – New Technology File System" },
+            { question: "FCFS शेड्यूलिंग का पूर्ण रूप क्या है?", A: "First Come First Serve", B: "First Code First Serve", C: "First Come First Service", D: "First Code First Service", correct: "A", explanation: "FCFS – First Come First Serve" },
+            { question: "फाइलें हटाने के लिए कौन सा कमांड है?", A: "copy", B: "move", C: "del", D: "ren", correct: "C", explanation: "del (delete) कमांड फाइलें हटाता है।" },
+            { question: "Windows 10 का डिफ़ॉल्ट ब्राउज़र क्या है?", A: "Internet Explorer", B: "Edge", C: "Chrome", D: "Firefox", correct: "B", explanation: "Windows 10 का डिफ़ॉल्ट ब्राउज़र Edge है।" },
+            { question: ".jpg एक्सटेंशन किस प्रकार की फ़ाइल है?", A: "इमेज", B: "ऑडियो", C: "वीडियो", D: "टेक्स्ट", correct: "A", explanation: ".jpg एक इमेज फ़ाइल एक्सटेंशन है।" },
+            { question: "थ्रेड क्या है?", A: "प्रोसेस के भीतर कार्य की इकाई", B: "एक प्रोसेस", C: "एक फ़ंक्शन", D: "एक डेटा संरचना", correct: "A", explanation: "थ्रेड प्रोसेस के भीतर कार्य की सबसे छोटी इकाई है。" },
+            { question: "CMD स्क्रीन साफ़ करने के लिए कौन सा कमांड है?", A: "cls", B: "clear", C: "clean", D: "clr", correct: "A", explanation: "cls कमांड स्क्रीन साफ़ करता है。" },
+            { question: "Windows में टास्क मैनेजर को कैसे खोलें?", A: "Ctrl + Alt + Del", B: "Ctrl + Shift + Esc", C: "Ctrl + Alt + Esc", D: "A और B दोनों", correct: "D", explanation: "Ctrl + Alt + Del और Ctrl + Shift + Esc दोनों से Task Manager खुलता है。" },
+            { question: ".mp3 एक्सटेंशन किस प्रकार की फ़ाइल है?", A: "ऑडियो", B: "इमेज", C: "वीडियो", D: "टेक्स्ट", correct: "A", explanation: ".mp3 एक ऑडियो फ़ाइल एक्सटेंशन है।" },
+            { question: "राउंड रॉबिन शेड्यूलिंग में क्या उपयोग होता है?", A: "टाइम क्वांटम", B: "प्राथमिकता", C: "फर्स्ट कम", D: "शॉर्टेस्ट जॉब", correct: "A", explanation: "Round Robin में टाइम क्वांटम का उपयोग होता है。" },
+            { question: "नेटवर्क कॉन्फ़िगरेशन देखने के लिए कौन सा कमांड है?", A: "ipconfig", B: "ping", C: "netstat", D: "tracert", correct: "A", explanation: "ipconfig नेटवर्क कॉन्फ़िगरेशन दिखाता है。" },
+            { question: "Windows 7 किस वर्ष रिलीज़ हुआ?", A: "2005", B: "2007", C: "2009", D: "2011", correct: "C", explanation: "Windows 7 2009 में रिलीज़ हुआ था。" },
+            { question: "प्रोसेस की 'Running' अवस्था का क्या अर्थ है?", A: "CPU पर चल रहा", B: "I/O का इंतज़ार", C: "प्रोसेस नया", D: "प्रोसेस समाप्त", correct: "A", explanation: "Running अवस्था में प्रोसेस CPU पर चल रहा होता है।" },
+            { question: "फाइलें कॉपी करने के लिए कौन सा कमांड है?", A: "copy", B: "move", C: "del", D: "ren", correct: "A", explanation: "copy कमांड फाइलें कॉपी करता है।" },
+            { question: "निम्न में से कौन सा मोबाइल OS है?", A: "Android", B: "iOS", C: "Windows Phone", D: "सभी", correct: "D", explanation: "Android, iOS, Windows Phone सभी मोबाइल OS हैं。" },
+            { question: "फोल्डर क्या है?", A: "फाइलों का कंटेनर", B: "एक फ़ाइल", C: "एक ड्राइव", D: "एक प्रोग्राम", correct: "A", explanation: "फोल्डर फाइलों और उप-फोल्डरों का कंटेनर है。" },
+            { question: "चल रहे प्रोसेसों की सूची देखने के लिए कौन सा कमांड है?", A: "tasklist", B: "taskkill", C: "ps", D: "top", correct: "A", explanation: "tasklist चल रहे प्रोसेसों की सूची दिखाता है (Windows)。" },
+            { question: "GUI का पूर्ण रूप क्या है?", A: "Graphical User Interface", B: "General User Interface", C: "Graphical Utility Interface", D: "General Utility Interface", correct: "A", explanation: "GUI – Graphical User Interface" },
+            { question: "Windows में डिफ़ॉल्ट फाइल सिस्टम क्या है?", A: "FAT32", B: "NTFS", C: "exFAT", D: "EXT4", correct: "B", explanation: "Windows का डिफ़ॉल्ट फाइल सिस्टम NTFS है。" },
+            { question: "प्रोसेस को समाप्त करने के लिए कौन सा कमांड है?", A: "tasklist", B: "taskkill", C: "ps", D: "top", correct: "B", explanation: "taskkill प्रोसेस को समाप्त करता है (Windows)。" },
+            { question: ".exe एक्सटेंशन किस प्रकार की फ़ाइल है?", A: "निष्पादन योग्य", B: "टेक्स्ट", C: "इमेज", D: "ऑडियो", correct: "A", explanation: ".exe एक निष्पादन योग्य (executable) फ़ाइल है।" },
+            { question: "OS का कर्नेल क्या है?", A: "OS का मूल भाग", B: "एक एप्लिकेशन", C: "एक ड्राइवर", D: "एक उपयोगिता", correct: "A", explanation: "कर्नेल OS का मूल भाग है जो हार्डवेयर को नियंत्रित करता है。" },
+            { question: "Windows 8 में स्टार्ट मेनू की जगह क्या आया?", A: "स्टार्ट स्क्रीन", B: "टास्कबार", C: "फ़ाइल एक्सप्लोरर", D: "कंट्रोल पैनल", correct: "A", explanation: "Windows 8 में स्टार्ट मेनू की जगह स्टार्ट स्क्रीन आई。" },
+            { question: ".pdf एक्सटेंशन किस प्रकार की फ़ाइल है?", A: "PDF दस्तावेज़", B: "टेक्स्ट", C: "इमेज", D: "ऑडियो", correct: "A", explanation: ".pdf पोर्टेबल दस्तावेज़ (PDF) के लिए है。" },
+            { question: "System Call किसके बीच interface है?", A: "User program और OS", B: "Monitor और keyboard", C: "Printer और speaker", D: "Mouse और scanner", correct: "A", explanation: "System call user program को OS services request करने का mechanism देता है।" },
+            { question: "Win + R किसे खोलता है?", A: "Task Manager", B: "Run dialog", C: "File Explorer", D: "Lock screen", correct: "B", explanation: "Win + R Run dialog खोलता है।" },
+            { question: "APFS किस platform से संबंधित है?", A: "DOS", B: "Linux", C: "Apple", D: "Android only", correct: "C", explanation: "APFS Apple platforms का modern file system है।" },
+            { question: "PCB में कौन-सी information हो सकती है?", A: "Wallpaper", B: "Printer color", C: "Browser history only", D: "Process state और registers", correct: "D", explanation: "PCB process state, registers और अन्य management information रख सकता है।" },
+            { question: "ping command किसके लिए है?", A: "Connectivity/reachability test", B: "File rename", C: "Directory create", D: "Screen clear", correct: "A", explanation: "ping network host reachability/connectivity test के लिए उपयोगी है।" },
+            { question: "Kernel किसका core भाग है?", A: "Web browser", B: "Operating System", C: "Spreadsheet", D: "Presentation", correct: "B", explanation: "Kernel operating system का core component है।" },
+            { question: "FAT32 में single-file limit लगभग कितनी है?", A: "1 KB", B: "1 MB", C: "4 GiB", D: "1 PiB", correct: "C", explanation: "FAT32 single file size limit लगभग 4 GiB है।" },
+            { question: "Round Robin में किसका उपयोग होता है?", A: "File extension", B: "IP address", C: "Disk label", D: "Time quantum", correct: "D", explanation: "Round Robin time quantum के आधार पर CPU share करता है।" },
+            { question: "Device Manager किससे संबंधित है?", A: "Hardware/drivers", B: "Documents", C: "Music", D: "Photos", correct: "A", explanation: "Device Manager hardware devices और drivers manage/view करने के लिए है।" },
+            { question: "tracert command क्या करता है?", A: "File compress", B: "Network route trace", C: "File rename", D: "Process create", correct: "B", explanation: "tracert network path/hops trace करने के लिए है।" }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('windows-mcq', windowsMCQs);
+            renderMCQs('files-mcq', filesMCQs);
+            renderMCQs('processes-mcq', processesMCQs);
+            renderMCQs('commands-mcq', commandsMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

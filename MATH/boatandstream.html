@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boats & Streams – CGL Level (15 Pages)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Roboto,sans-serif; background:#f0f4f8; color:#1a1a2e; padding:20px; transition:0.3s; }
+        .container { max-width:1100px; margin:0 auto; }
+        .progress-container { position:sticky; top:0; z-index:1000; background:#fff; padding:8px 20px; border-radius:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:25px; display:flex; align-items:center; gap:15px; flex-wrap:wrap; }
+        .progress-container .prog-label { font-weight:600; font-size:14px; color:#1a237e; white-space:nowrap; }
+        .progress-container .prog-bar { flex:1; height:8px; background:#e0e0e0; border-radius:10px; overflow:hidden; min-width:100px; }
+        .progress-container .prog-bar .prog-fill { height:100%; width:0%; background:linear-gradient(90deg,#1a237e,#ffd54f); transition:width 0.3s ease; border-radius:10px; }
+        .progress-container .page-indicator { font-weight:700; color:#1a237e; background:#e8eaf6; padding:4px 14px; border-radius:30px; font-size:14px; }
+        .main-header { background:linear-gradient(135deg,#1a237e,#0d47a1); color:#fff; padding:20px 30px; border-radius:16px; margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); }
+        .main-header .title h1 { font-size:28px; font-weight:800; }
+        .main-header .title h1 span { color:#ffd54f; }
+        .main-header .title p { font-size:14px; opacity:0.9; }
+        .lang-toggle { display:flex; gap:6px; background:rgba(255,255,255,0.15); padding:5px; border-radius:40px; border:1px solid rgba(255,255,255,0.2); }
+        .lang-toggle button { padding:8px 22px; border:none; border-radius:30px; font-weight:700; font-size:15px; cursor:pointer; transition:0.3s; background:transparent; color:#ccc; }
+        .lang-toggle button.active { background:#ffd54f; color:#1a237e; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+        .lang-toggle button:hover:not(.active) { color:#fff; }
+        .topics-index { background:#fff; border-radius:16px; padding:20px 25px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border:1px solid #e9edf2; }
+        .topics-index .index-title { font-size:20px; font-weight:700; color:#1a237e; margin-bottom:12px; }
+        .topics-index .index-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+        .topics-index .index-grid a { display:block; background:#f5f7fa; padding:10px 14px; border-radius:8px; color:#1a237e; text-decoration:none; font-weight:600; font-size:14px; border-left:4px solid #1a237e; transition:0.3s; }
+        .topics-index .index-grid a:hover { background:#e8eaf6; transform:translateX(4px); border-left-color:#ff6f00; }
+        .page-divider { display:flex; align-items:center; gap:20px; margin:40px 0 30px; color:#888; font-weight:300; font-size:14px; }
+        .page-divider hr { flex:1; border:none; height:1px; background:linear-gradient(to right,transparent,#ccc,transparent); }
+        .page-divider .page-label { background:#fff; padding:0 15px; border-radius:30px; font-weight:600; color:#1a237e; border:1px solid #e0e0e0; padding:4px 18px; }
+        .formula-card { background:#fff; border-radius:16px; padding:25px 30px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border-left:5px solid #1a237e; scroll-margin-top:80px; transition:0.2s; }
+        .formula-card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.09); }
+        .formula-card .topic-name { font-size:26px; font-weight:800; color:#1a237e; margin-bottom:2px; }
+        .formula-card .topic-badge { font-size:13px; color:#888; margin-bottom:15px; display:inline-block; background:#f0f4f8; padding:2px 16px; border-radius:20px; }
+        .visual-box { background:#e8eaf6; border-radius:12px; padding:16px 20px; margin-bottom:18px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; border:1px dashed #1a237e; }
+        .visual-box .vis-icon { font-size:36px; color:#1a237e; }
+        .visual-box .vis-text { font-size:14px; color:#333; line-height:1.6; }
+        .visual-box .vis-text strong { color:#1a237e; }
+        .formulas-box { background:#f5f7fa; border-radius:12px; padding:18px 22px; margin-bottom:16px; border-left:4px solid #ff6f00; line-height:1.8; font-size:15px; }
+        .formulas-box .formula-title { font-weight:700; color:#1a237e; font-size:17px; margin-bottom:6px; }
+        .formulas-box code { background:#e0e0e0; padding:2px 8px; border-radius:4px; font-weight:600; }
+        .formula-explanation { background:#fff8e1; border-radius:10px; padding:14px 18px; margin-bottom:18px; border-left:4px solid #ffa000; font-size:14px; line-height:1.7; color:#4e342e; }
+        .formula-explanation .ex-title { font-weight:700; color:#e65100; }
+        .question-item { background:#fafbfc; border-radius:10px; padding:12px 16px; margin-bottom:10px; border:1px solid #e9edf2; transition:0.2s; }
+        .question-item:hover { border-color:#b0c4de; }
+        .question-item .q-text { font-weight:600; font-size:15px; margin-bottom:6px; }
+        .question-item .options { display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:14px; color:#333; margin-bottom:6px; }
+        @media (max-width:600px) { .question-item .options { grid-template-columns:1fr; } }
+        .question-item .options span { display:inline-block; }
+        .question-item .answer-btn { background:#e8eaf6; border:none; padding:4px 16px; border-radius:20px; font-size:13px; font-weight:600; color:#1a237e; cursor:pointer; transition:0.2s; margin-top:4px; }
+        .question-item .answer-btn:hover { background:#1a237e; color:#fff; }
+        .question-item .answer-box { display:none; margin-top:8px; padding:10px 16px; background:#e8f5e9; border-radius:8px; font-size:14px; border-left:4px solid #2e7d32; color:#1b5e20; line-height:1.6; }
+        .question-item .answer-box.show { display:block; }
+        .pyq-badge { display:inline-block; background:#ffd54f; color:#1a237e; font-size:11px; font-weight:800; padding:2px 12px; border-radius:30px; margin-right:10px; letter-spacing:0.5px; }
+        .section-heading { font-weight:700; color:#1a237e; font-size:18px; margin:18px 0 12px; display:flex; align-items:center; gap:10px; }
+        .section-heading i { color:#ff6f00; }
+        .footer { text-align:center; margin-top:30px; color:#777; font-size:14px; border-top:1px solid #ddd; padding-top:20px; }
+        @media (max-width:600px) { .main-header { flex-direction:column; align-items:stretch; } .lang-toggle { align-self:flex-start; } .main-header .title h1 { font-size:22px; } .formula-card { padding:16px; } .topics-index .index-grid { grid-template-columns:1fr 1fr; } .visual-box { flex-direction:column; align-items:flex-start; } .progress-container .prog-label { font-size:12px; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="progress-container" id="progressContainer">
+            <span class="prog-label"><i class="fas fa-book-open"></i> Study Progress</span>
+            <div class="prog-bar"><div class="prog-fill" id="progressFill" style="width:0%;"></div></div>
+            <span class="page-indicator" id="pageIndicator">Page 1 of 15</span>
+        </div>
+
+        <header class="main-header">
+            <div class="title">
+                <h1>⛵ Boats & Streams <span>CGL Level</span></h1>
+                <p id="headerSub">9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual</p>
+            </div>
+            <div class="lang-toggle" id="langToggle">
+                <button class="active" data-lang="en">🇬🇧 English</button>
+                <button data-lang="hi">🇮🇳 हिंदी</button>
+            </div>
+        </header>
+
+        <div class="topics-index" id="topicsIndex">
+            <div class="index-title" id="indexTitle">📑 All 9 Boats & Streams Topics Covered</div>
+            <div class="index-grid" id="indexGrid"></div>
+        </div>
+
+        <div id="content"></div>
+
+        <div class="footer" id="footerText">⚡ Practice makes perfect. SSC CGL / Banking Level.</div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 1. COMPLETE DATA: 9 BOATS & STREAMS TOPICS (CGL Level)
+        // ================================================================
+
+        var TOPICS_DATA = [
+            // Topic 1: Basic Concepts
+            {
+                nameEn: 'Basic Concepts (Downstream, Upstream, Still Water)',
+                nameHi: 'मूल अवधारणाएँ (अनुप्रवाह, उर्ध्वप्रवाह, स्थिर जल)',
+                visualEn: '<i class="fas fa-ship" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Downstream = Boat + Stream, Upstream = Boat - Stream.',
+                visualHi: '<i class="fas fa-ship" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> अनुप्रवाह = नाव + धारा, उर्ध्वप्रवाह = नाव - धारा।',
+                basicFormulaEn: '<b>Downstream Speed (D):</b> (B + S)<br><b>Upstream Speed (U):</b> (B - S)<br><b>Boat speed (B):</b> (D + U)/2<br><b>Stream speed (S):</b> (D - U)/2',
+                basicFormulaHi: '<b>अनुप्रवाह गति (D):</b> (B + S)<br><b>उर्ध्वप्रवाह गति (U):</b> (B - S)<br><b>नाव की गति (B):</b> (D + U)/2<br><b>धारा की गति (S):</b> (D - U)/2',
+                formulaExplanationEn: '<b>Why D = B + S?</b> Stream helps the boat downstream, opposes upstream.',
+                formulaExplanationHi: '<b>D = B + S क्यों?</b> अनुप्रवाह में धारा मदद करती है, उर्ध्वप्रवाह में विरोध करती है।',
+                advancedFormulaEn: '<b>Advanced:</b> If boat takes t1 and t2 hours for same distance, distance = t1×D = t2×U.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि नाव समान दूरी में t1 और t2 घंटे लेती है, तो दूरी = t1×D = t2×U.',
+                practice: [
+                    { qEn: 'Boat speed = 15 km/h, stream = 3 km/h. Find downstream speed.', qHi: 'नाव = 15, धारा = 3। अनुप्रवाह गति?', optsEn: ['12', '15', '18', '20'], optsHi: ['12', '15', '18', '20'], ans: 2, expEn: 'D = 15+3 = 18 km/h', expHi: 'D = 15+3 = 18 km/h' },
+                    { qEn: 'Boat speed = 20 km/h, stream = 4 km/h. Find upstream speed.', qHi: 'नाव = 20, धारा = 4। उर्ध्वप्रवाह गति?', optsEn: ['14', '16', '18', '20'], optsHi: ['14', '16', '18', '20'], ans: 1, expEn: 'U = 20-4 = 16 km/h', expHi: 'U = 20-4 = 16 km/h' },
+                    { qEn: 'Downstream = 24, upstream = 16. Find boat speed.', qHi: 'अनुप्रवाह = 24, उर्ध्वप्रवाह = 16। नाव की गति?', optsEn: ['18', '20', '22', '24'], optsHi: ['18', '20', '22', '24'], ans: 1, expEn: 'B = (24+16)/2 = 20 km/h', expHi: 'B = (24+16)/2 = 20 km/h' },
+                    { qEn: 'Downstream = 30, upstream = 20. Find stream speed.', qHi: 'अनुप्रवाह = 30, उर्ध्वप्रवाह = 20। धारा की गति?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 2, expEn: 'S = (30-20)/2 = 5 km/h', expHi: 'S = (30-20)/2 = 5 km/h' },
+                    { qEn: 'A boat goes 60 km downstream in 3 hours. Stream speed = 5 km/h. Find boat speed.', qHi: '60 km अनुप्रवाह 3 घंटे, धारा = 5। नाव की गति?', optsEn: ['12', '13', '15', '18'], optsHi: ['12', '13', '15', '18'], ans: 2, expEn: 'D = 60/3 = 20, B = 20-5 = 15 km/h', expHi: 'D = 60/3 = 20, B = 20-5 = 15 km/h' },
+                    { qEn: 'Boat goes 40 km upstream in 4 hours. Stream = 3. Find boat speed.', qHi: '40 km उर्ध्वप्रवाह 4 घंटे, धारा = 3। नाव की गति?', optsEn: ['10', '12', '13', '15'], optsHi: ['10', '12', '13', '15'], ans: 2, expEn: 'U = 40/4 = 10, B = 10+3 = 13 km/h', expHi: 'U = 40/4 = 10, B = 10+3 = 13 km/h' },
+                    { qEn: 'Downstream = 18, boat = 12. Find stream speed.', qHi: 'अनुप्रवाह = 18, नाव = 12। धारा?', optsEn: ['4', '5', '6', '8'], optsHi: ['4', '5', '6', '8'], ans: 2, expEn: 'S = 18-12 = 6 km/h', expHi: 'S = 18-12 = 6 km/h' },
+                    { qEn: 'Upstream = 8, boat = 12. Find stream speed.', qHi: 'उर्ध्वप्रवाह = 8, नाव = 12। धारा?', optsEn: ['2', '3', '4', '6'], optsHi: ['2', '3', '4', '6'], ans: 2, expEn: 'S = 12-8 = 4 km/h', expHi: 'S = 12-8 = 4 km/h' },
+                    { qEn: 'Boat = 10, stream = 2. Find downstream speed.', qHi: 'नाव = 10, धारा = 2। अनुप्रवाह?', optsEn: ['8', '10', '12', '14'], optsHi: ['8', '10', '12', '14'], ans: 2, expEn: 'D = 10+2 = 12 km/h', expHi: 'D = 10+2 = 12 km/h' },
+                    { qEn: 'Boat = 25, stream = 5. Find upstream speed.', qHi: 'नाव = 25, धारा = 5। उर्ध्वप्रवाह?', optsEn: ['15', '18', '20', '22'], optsHi: ['15', '18', '20', '22'], ans: 2, expEn: 'U = 25-5 = 20 km/h', expHi: 'U = 25-5 = 20 km/h' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Boat=15, stream=3. Downstream speed?', qHi: 'नाव=15, धारा=3। अनुप्रवाह?', optsEn: ['12', '15', '18', '20'], optsHi: ['12', '15', '18', '20'], ans: 2, expEn: '18', expHi: '18' },
+                    { year: 'CGL 2022', qEn: 'Downstream=24, upstream=16. Boat speed?', qHi: 'अनुप्रवाह=24, उर्ध्वप्रवाह=16। नाव?', optsEn: ['18', '20', '22', '24'], optsHi: ['18', '20', '22', '24'], ans: 1, expEn: '20', expHi: '20' },
+                    { year: 'CGL 2021', qEn: 'Downstream=30, upstream=20. Stream speed?', qHi: 'अनुप्रवाह=30, उर्ध्वप्रवाह=20। धारा?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 2, expEn: '5', expHi: '5' },
+                    { year: 'CGL 2020', qEn: 'Boat=10, stream=2. Downstream?', qHi: 'नाव=10, धारा=2। अनुप्रवाह?', optsEn: ['8', '10', '12', '14'], optsHi: ['8', '10', '12', '14'], ans: 2, expEn: '12', expHi: '12' },
+                    { year: 'CGL 2019', qEn: 'Upstream=8, boat=12. Stream?', qHi: 'उर्ध्वप्रवाह=8, नाव=12। धारा?', optsEn: ['2', '3', '4', '6'], optsHi: ['2', '3', '4', '6'], ans: 2, expEn: '4', expHi: '4' }
+                ]
+            },
+            // Topic 2: Finding Distance from Time and Speeds
+            {
+                nameEn: 'Finding Distance from Time and Speeds',
+                nameHi: 'समय और गति से दूरी ज्ञात करना',
+                visualEn: '<i class="fas fa-arrow-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Distance = Speed × Time.',
+                visualHi: '<i class="fas fa-arrow-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> दूरी = गति × समय।',
+                basicFormulaEn: '<b>Distance:</b> If downstream time = t1, upstream time = t2, and speeds D, U are known, distance = D × t1 = U × t2.',
+                basicFormulaHi: '<b>दूरी:</b> यदि अनुप्रवाह समय = t1, उर्ध्वप्रवाह समय = t2, तो दूरी = D × t1 = U × t2।',
+                formulaExplanationEn: '<b>Why equal?</b> Distance is same in both directions.',
+                formulaExplanationHi: '<b>बराबर क्यों?</b> दोनों दिशाओं में दूरी समान है।',
+                advancedFormulaEn: '<b>Advanced:</b> If boat takes t1 downstream and t2 upstream, distance = D×t1 = U×t2.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि नाव t1 और t2 घंटे लेती है, तो दूरी = D×t1 = U×t2।',
+                practice: [
+                    { qEn: 'Downstream speed=18, upstream=12, downstream time=2h. Distance?', qHi: 'अनुप्रवाह=18, उर्ध्वप्रवाह=12, समय=2h। दूरी?', optsEn: ['30', '36', '40', '48'], optsHi: ['30', '36', '40', '48'], ans: 1, expEn: '18×2=36 km', expHi: '18×2=36 km' },
+                    { qEn: 'Boat takes 3h downstream at 16 km/h. Distance?', qHi: '3 घंटे अनुप्रवाह 16 km/h। दूरी?', optsEn: ['44', '48', '52', '56'], optsHi: ['44', '48', '52', '56'], ans: 1, expEn: '16×3=48 km', expHi: '16×3=48 km' },
+                    { qEn: 'Boat=20, stream=4, downstream time=2h. Distance?', qHi: 'नाव=20, धारा=4, समय=2h। दूरी?', optsEn: ['40', '44', '48', '52'], optsHi: ['40', '44', '48', '52'], ans: 2, expEn: 'D=24, 24×2=48 km', expHi: 'D=24, 24×2=48 km' },
+                    { qEn: 'Upstream speed=10, time=5h. Distance?', qHi: 'उर्ध्वप्रवाह=10, समय=5h। दूरी?', optsEn: ['40', '45', '50', '55'], optsHi: ['40', '45', '50', '55'], ans: 2, expEn: '10×5=50 km', expHi: '10×5=50 km' },
+                    { qEn: 'Downstream time=3h, speed=24. Distance?', qHi: 'अनुप्रवाह समय=3h, गति=24। दूरी?', optsEn: ['60', '64', '72', '80'], optsHi: ['60', '64', '72', '80'], ans: 2, expEn: '24×3=72 km', expHi: '24×3=72 km' },
+                    { qEn: 'Boat=15, stream=3, upstream time=6h. Distance?', qHi: 'नाव=15, धारा=3, समय=6h। दूरी?', optsEn: ['60', '66', '70', '72'], optsHi: ['60', '66', '70', '72'], ans: 2, expEn: 'U=12, 12×6=72 km', expHi: 'U=12, 12×6=72 km' },
+                    { qEn: 'Downstream speed=30, time=1.5h. Distance?', qHi: 'अनुप्रवाह=30, समय=1.5h। दूरी?', optsEn: ['40', '42', '45', '50'], optsHi: ['40', '42', '45', '50'], ans: 2, expEn: '30×1.5=45 km', expHi: '30×1.5=45 km' },
+                    { qEn: 'Upstream speed=8, time=7h. Distance?', qHi: 'उर्ध्वप्रवाह=8, समय=7h। दूरी?', optsEn: ['48', '52', '56', '60'], optsHi: ['48', '52', '56', '60'], ans: 2, expEn: '8×7=56 km', expHi: '8×7=56 km' },
+                    { qEn: 'Boat takes 4h upstream at 12 km/h. Distance?', qHi: '4h उर्ध्वप्रवाह 12 km/h। दूरी?', optsEn: ['44', '46', '48', '50'], optsHi: ['44', '46', '48', '50'], ans: 2, expEn: '12×4=48 km', expHi: '12×4=48 km' },
+                    { qEn: 'Downstream speed=22, time=2.5h. Distance?', qHi: 'अनुप्रवाह=22, समय=2.5h। दूरी?', optsEn: ['50', '55', '60', '65'], optsHi: ['50', '55', '60', '65'], ans: 1, expEn: '22×2.5=55 km', expHi: '22×2.5=55 km' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Downstream=18, upstream=12, downstream time=2h. Distance?', qHi: 'अनुप्रवाह=18, उर्ध्वप्रवाह=12, समय=2h। दूरी?', optsEn: ['30', '36', '40', '48'], optsHi: ['30', '36', '40', '48'], ans: 1, expEn: '36', expHi: '36' },
+                    { year: 'CGL 2022', qEn: 'Boat=20, stream=4, downstream time=2h. Distance?', qHi: 'नाव=20, धारा=4, समय=2h। दूरी?', optsEn: ['40', '44', '48', '52'], optsHi: ['40', '44', '48', '52'], ans: 2, expEn: '48', expHi: '48' },
+                    { year: 'CGL 2021', qEn: 'Upstream speed=10, time=5h. Distance?', qHi: 'उर्ध्वप्रवाह=10, समय=5h। दूरी?', optsEn: ['40', '45', '50', '55'], optsHi: ['40', '45', '50', '55'], ans: 2, expEn: '50', expHi: '50' },
+                    { year: 'CGL 2020', qEn: 'Downstream time=3h, speed=24. Distance?', qHi: 'अनुप्रवाह समय=3h, गति=24। दूरी?', optsEn: ['60', '64', '72', '80'], optsHi: ['60', '64', '72', '80'], ans: 2, expEn: '72', expHi: '72' },
+                    { year: 'CGL 2019', qEn: 'Boat=15, stream=3, upstream time=6h. Distance?', qHi: 'नाव=15, धारा=3, समय=6h। दूरी?', optsEn: ['60', '66', '70', '72'], optsHi: ['60', '66', '70', '72'], ans: 2, expEn: '72', expHi: '72' }
+                ]
+            },
+            // Topic 3: Finding Time from Distance and Speeds
+            {
+                nameEn: 'Finding Time from Distance and Speeds',
+                nameHi: 'दूरी और गति से समय ज्ञात करना',
+                visualEn: '<i class="fas fa-clock" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Time = Distance / Speed.',
+                visualHi: '<i class="fas fa-clock" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> समय = दूरी / गति।',
+                basicFormulaEn: '<b>Downstream time:</b> t_d = D/(B+S)<br><b>Upstream time:</b> t_u = D/(B-S)<br><b>Total time:</b> t_total = t_d + t_u',
+                basicFormulaHi: '<b>अनुप्रवाह समय:</b> t_d = D/(B+S)<br><b>उर्ध्वप्रवाह समय:</b> t_u = D/(B-S)<br><b>कुल समय:</b> t_total = t_d + t_u',
+                formulaExplanationEn: '<b>Why divide?</b> Time = Distance / Speed.',
+                formulaExplanationHi: '<b>भाग क्यों?</b> समय = दूरी / गति।',
+                advancedFormulaEn: '<b>Advanced:</b> Round trip total time = D/(B+S) + D/(B-S).',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> दोनों ओर कुल समय = D/(B+S) + D/(B-S).',
+                practice: [
+                    { qEn: 'Distance=60, boat=20, stream=4. Downstream time?', qHi: 'दूरी=60, नाव=20, धारा=4। अनुप्रवाह समय?', optsEn: ['2', '2.5', '3', '4'], optsHi: ['2', '2.5', '3', '4'], ans: 1, expEn: 'D=24, t=60/24=2.5h', expHi: 'D=24, t=60/24=2.5h' },
+                    { qEn: 'Distance=80, boat=25, stream=5. Upstream time?', qHi: 'दूरी=80, नाव=25, धारा=5। उर्ध्वप्रवाह समय?', optsEn: ['3', '3.5', '4', '5'], optsHi: ['3', '3.5', '4', '5'], ans: 2, expEn: 'U=20, t=80/20=4h', expHi: 'U=20, t=80/20=4h' },
+                    { qEn: 'Distance=120, downstream speed=30. Time?', qHi: 'दूरी=120, अनुप्रवाह=30। समय?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 1, expEn: '120/30=4h', expHi: '120/30=4h' },
+                    { qEn: 'Distance=90, upstream speed=18. Time?', qHi: 'दूरी=90, उर्ध्वप्रवाह=18। समय?', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 1, expEn: '90/18=5h', expHi: '90/18=5h' },
+                    { qEn: 'Boat=18, stream=2, distance=80. Round trip time?', qHi: 'नाव=18, धारा=2, दूरी=80। दोनों ओर समय?', optsEn: ['8', '9', '10', '12'], optsHi: ['8', '9', '10', '12'], ans: 1, expEn: 'D=20, U=16, t=80/20+80/16=4+5=9h', expHi: 'D=20, U=16, t=4+5=9h' },
+                    { qEn: 'Distance=100, boat=30, stream=10. Round trip time?', qHi: 'दूरी=100, नाव=30, धारा=10। दोनों ओर समय?', optsEn: ['6', '7', '7.5', '8'], optsHi: ['6', '7', '7.5', '8'], ans: 2, expEn: 'D=40, U=20, t=100/40+100/20=2.5+5=7.5h', expHi: 'D=40, U=20, t=2.5+5=7.5h' },
+                    { qEn: 'Downstream speed=24, distance=48. Time?', qHi: 'अनुप्रवाह=24, दूरी=48। समय?', optsEn: ['1.5', '2', '2.5', '3'], optsHi: ['1.5', '2', '2.5', '3'], ans: 1, expEn: '48/24=2h', expHi: '48/24=2h' },
+                    { qEn: 'Upstream speed=12, distance=60. Time?', qHi: 'उर्ध्वप्रवाह=12, दूरी=60। समय?', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 1, expEn: '60/12=5h', expHi: '60/12=5h' },
+                    { qEn: 'Boat=15, stream=3, distance=72. Downstream time?', qHi: 'नाव=15, धारा=3, दूरी=72। अनुप्रवाह समय?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 1, expEn: 'D=18, t=72/18=4h', expHi: 'D=18, t=72/18=4h' },
+                    { qEn: 'Boat=12, stream=2, distance=50. Upstream time?', qHi: 'नाव=12, धारा=2, दूरी=50। उर्ध्वप्रवाह समय?', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 1, expEn: 'U=10, t=50/10=5h', expHi: 'U=10, t=50/10=5h' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Distance=60, boat=20, stream=4. Downstream time?', qHi: 'दूरी=60, नाव=20, धारा=4। अनुप्रवाह समय?', optsEn: ['2', '2.5', '3', '4'], optsHi: ['2', '2.5', '3', '4'], ans: 1, expEn: '2.5', expHi: '2.5' },
+                    { year: 'CGL 2022', qEn: 'Distance=80, boat=25, stream=5. Upstream time?', qHi: 'दूरी=80, नाव=25, धारा=5। उर्ध्वप्रवाह समय?', optsEn: ['3', '3.5', '4', '5'], optsHi: ['3', '3.5', '4', '5'], ans: 2, expEn: '4', expHi: '4' },
+                    { year: 'CGL 2021', qEn: 'Distance=120, downstream speed=30. Time?', qHi: 'दूरी=120, अनुप्रवाह=30। समय?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 1, expEn: '4', expHi: '4' },
+                    { year: 'CGL 2020', qEn: 'Boat=18, stream=2, distance=80. Round trip time?', qHi: 'नाव=18, धारा=2, दूरी=80। दोनों ओर समय?', optsEn: ['8', '9', '10', '12'], optsHi: ['8', '9', '10', '12'], ans: 1, expEn: '9', expHi: '9' },
+                    { year: 'CGL 2019', qEn: 'Boat=15, stream=3, distance=72. Downstream time?', qHi: 'नाव=15, धारा=3, दूरी=72। अनुप्रवाह समय?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 1, expEn: '4', expHi: '4' }
+                ]
+            },
+            // Topic 4: Average Speed for Round Trip
+            {
+                nameEn: 'Average Speed for Round Trip',
+                nameHi: 'दोनों ओर यात्रा की औसत गति',
+                visualEn: '<i class="fas fa-arrow-trend-up" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Avg speed = 2×D×U / (D+U).',
+                visualHi: '<i class="fas fa-arrow-trend-up" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> औसत गति = 2×D×U / (D+U).',
+                basicFormulaEn: '<b>Average speed (round trip):</b> 2 × D × U / (D + U)',
+                basicFormulaHi: '<b>औसत गति (दोनों ओर):</b> 2 × D × U / (D + U)',
+                formulaExplanationEn: '<b>Why harmonic mean?</b> Equal distances, different speeds.',
+                formulaExplanationHi: '<b>हार्मोनिक माध्य क्यों?</b> समान दूरियाँ, विभिन्न गति।',
+                advancedFormulaEn: '<b>Advanced:</b> If different distances, use weighted average.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि विभिन्न दूरियाँ, तो भारित औसत।',
+                practice: [
+                    { qEn: 'D=30, U=20. Average speed for round trip?', qHi: 'D=30, U=20। औसत गति?', optsEn: ['24', '25', '26', '28'], optsHi: ['24', '25', '26', '28'], ans: 0, expEn: '2×30×20/(30+20)=24', expHi: '2×30×20/(30+20)=24' },
+                    { qEn: 'D=40, U=24. Average speed?', qHi: 'D=40, U=24। औसत गति?', optsEn: ['28', '30', '32', '36'], optsHi: ['28', '30', '32', '36'], ans: 1, expEn: '2×40×24/(40+24)=30', expHi: '2×40×24/(40+24)=30' },
+                    { qEn: 'Boat=25, stream=5. Avg speed?', qHi: 'नाव=25, धारा=5। औसत गति?', optsEn: ['20', '22', '24', '25'], optsHi: ['20', '22', '24', '25'], ans: 2, expEn: 'D=30, U=20, avg=24', expHi: 'D=30, U=20, avg=24' },
+                    { qEn: 'D=60, U=30. Avg speed?', qHi: 'D=60, U=30। औसत गति?', optsEn: ['35', '38', '40', '45'], optsHi: ['35', '38', '40', '45'], ans: 2, expEn: '2×60×30/(60+30)=40', expHi: '2×60×30/(60+30)=40' },
+                    { qEn: 'Boat=20, stream=4. Avg speed?', qHi: 'नाव=20, धारा=4। औसत गति?', optsEn: ['16', '18', '19.2', '20'], optsHi: ['16', '18', '19.2', '20'], ans: 2, expEn: 'D=24, U=16, avg=19.2', expHi: 'D=24, U=16, avg=19.2' },
+                    { qEn: 'D=45, U=15. Avg speed?', qHi: 'D=45, U=15। औसत गति?', optsEn: ['20', '22.5', '25', '27'], optsHi: ['20', '22.5', '25', '27'], ans: 1, expEn: '2×45×15/(45+15)=22.5', expHi: '2×45×15/(45+15)=22.5' },
+                    { qEn: 'D=32, U=16. Avg speed?', qHi: 'D=32, U=16। औसत गति?', optsEn: ['18', '20', '21.33', '22'], optsHi: ['18', '20', '21.33', '22'], ans: 2, expEn: '2×32×16/(32+16)=21.33', expHi: '2×32×16/(32+16)=21.33' },
+                    { qEn: 'Boat=30, stream=6. Avg speed?', qHi: 'नाव=30, धारा=6। औसत गति?', optsEn: ['24', '26', '28.8', '30'], optsHi: ['24', '26', '28.8', '30'], ans: 2, expEn: 'D=36, U=24, avg=28.8', expHi: 'D=36, U=24, औसत=28.8' },
+                    { qEn: 'D=50, U=25. Avg speed?', qHi: 'D=50, U=25। औसत गति?', optsEn: ['30', '33.33', '35', '40'], optsHi: ['30', '33.33', '35', '40'], ans: 1, expEn: '2×50×25/(50+25)=33.33', expHi: '2×50×25/(50+25)=33.33' },
+                    { qEn: 'Boat=12, stream=2. Avg speed?', qHi: 'नाव=12, धारा=2। औसत गति?', optsEn: ['10', '11', '11.67', '12'], optsHi: ['10', '11', '11.67', '12'], ans: 2, expEn: 'D=14, U=10, avg = 2×14×10/(14+10) = 11.67', expHi: 'D=14, U=10, औसत = 11.67' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'D=30, U=20. Avg speed?', qHi: 'D=30, U=20। औसत गति?', optsEn: ['24', '25', '26', '28'], optsHi: ['24', '25', '26', '28'], ans: 0, expEn: '24', expHi: '24' },
+                    { year: 'CGL 2022', qEn: 'D=40, U=24. Avg speed?', qHi: 'D=40, U=24। औसत गति?', optsEn: ['28', '30', '32', '36'], optsHi: ['28', '30', '32', '36'], ans: 1, expEn: '30', expHi: '30' },
+                    { year: 'CGL 2021', qEn: 'Boat=25, stream=5. Avg speed?', qHi: 'नाव=25, धारा=5। औसत गति?', optsEn: ['20', '22', '24', '25'], optsHi: ['20', '22', '24', '25'], ans: 2, expEn: '24', expHi: '24' },
+                    { year: 'CGL 2020', qEn: 'D=60, U=30. Avg speed?', qHi: 'D=60, U=30। औसत गति?', optsEn: ['35', '38', '40', '45'], optsHi: ['35', '38', '40', '45'], ans: 2, expEn: '40', expHi: '40' },
+                    { year: 'CGL 2019', qEn: 'Boat=20, stream=4. Avg speed?', qHi: 'नाव=20, धारा=4। औसत गति?', optsEn: ['16', '18', '19.2', '20'], optsHi: ['16', '18', '19.2', '20'], ans: 2, expEn: '19.2', expHi: '19.2' }
+                ]
+            },
+            // Topic 5: Different Speeds for Different Segments
+            {
+                nameEn: 'Different Speeds for Different Segments',
+                nameHi: 'विभिन्न खंडों के लिए विभिन्न गति',
+                visualEn: '<i class="fas fa-route" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Total time = sum of (distance / speed) for each segment.',
+                visualHi: '<i class="fas fa-route" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> कुल समय = प्रत्येक खंड के लिए (दूरी / गति) का योग।',
+                basicFormulaEn: '<b>For segments:</b> Total time = sum of (distance / speed) for each segment.',
+                basicFormulaHi: '<b>खंडों के लिए:</b> कुल समय = प्रत्येक खंड के लिए (दूरी / गति) का योग।',
+                formulaExplanationEn: '<b>Why sum?</b> Total time is the sum of times for each segment.',
+                formulaExplanationHi: '<b>योग क्यों?</b> कुल समय प्रत्येक खंड के समय का योग है।',
+                advancedFormulaEn: '<b>Advanced:</b> If boat speed changes, use appropriate speed for each part.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि नाव की गति बदलती है, तो प्रत्येक भाग के लिए उचित गति का उपयोग करें।',
+                practice: [
+                    { qEn: '40 km downstream at 20, 60 km upstream at 15. Total time?', qHi: '40 km अनुप्रवाह 20, 60 km उर्ध्वप्रवाह 15। कुल समय?', optsEn: ['5', '6', '7', '8'], optsHi: ['5', '6', '7', '8'], ans: 1, expEn: '40/20=2, 60/15=4, total=6', expHi: '40/20=2, 60/15=4, कुल=6' },
+                    { qEn: '30 km downstream at 15, 30 km upstream at 10. Total time?', qHi: '30 km अनुप्रवाह 15, 30 km उर्ध्वप्रवाह 10। कुल समय?', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 1, expEn: '30/15=2, 30/10=3, total=5', expHi: '30/15=2, 30/10=3, कुल=5' },
+                    { qEn: 'Boat=12, stream=2, 50 km each way. Total time?', qHi: 'नाव=12, धारा=2, 50 km प्रत्येक दिशा। कुल समय?', optsEn: ['8', '9', '10', '11'], optsHi: ['8', '9', '10', '11'], ans: 2, expEn: 'D=14, U=10, t=50/14+50/10=3.57+5=8.57≈9', expHi: 'D=14, U=10, t=3.57+5=8.57≈9' },
+                    { qEn: '60 km downstream 30, 40 km upstream 20. Total time?', qHi: '60 km अनुप्रवाह 30, 40 km उर्ध्वप्रवाह 20। कुल समय?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 1, expEn: '60/30=2, 40/20=2, total=4', expHi: '60/30=2, 40/20=2, कुल=4' },
+                    { qEn: 'Boat=18, stream=3, 45 km each way. Total time?', qHi: 'नाव=18, धारा=3, 45 km प्रत्येक दिशा। कुल समय?', optsEn: ['5', '5.5', '6', '6.5'], optsHi: ['5', '5.5', '6', '6.5'], ans: 0, expEn: 'D=21, U=15, t=45/21+45/15=2.14+3=5.14≈5', expHi: 'D=21, U=15, t=2.14+3=5.14≈5' },
+                    { qEn: '80 km downstream 40, 80 km upstream 20. Total time?', qHi: '80 km अनुप्रवाह 40, 80 km उर्ध्वप्रवाह 20। कुल समय?', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 2, expEn: '80/40=2, 80/20=4, total=6', expHi: '80/40=2, 80/20=4, कुल=6' },
+                    { qEn: 'First 30 km downstream at 15, next 30 km at 20. Total time?', qHi: 'पहले 30 km अनुप्रवाह 15, अगले 30 km 20। कुल समय?', optsEn: ['3', '3.5', '4', '4.5'], optsHi: ['3', '3.5', '4', '4.5'], ans: 1, expEn: '30/15=2, 30/20=1.5, total=3.5', expHi: '30/15=2, 30/20=1.5, कुल=3.5' },
+                    { qEn: 'Upstream 50 km at 10, then upstream 50 km at 20. Total time?', qHi: 'उर्ध्वप्रवाह 50 km 10, फिर 50 km 20। कुल समय?', optsEn: ['5', '6', '7', '7.5'], optsHi: ['5', '6', '7', '7.5'], ans: 2, expEn: '50/10=5, 50/20=2.5, total=7.5', expHi: '50/10=5, 50/20=2.5, कुल=7.5' },
+                    { qEn: 'Boat=16, stream=4, 60 km each way. Total time?', qHi: 'नाव=16, धारा=4, 60 km प्रत्येक दिशा। कुल समय?', optsEn: ['8', '9', '10', '12'], optsHi: ['8', '9', '10', '12'], ans: 0, expEn: 'D=20, U=12, t=60/20+60/12=3+5=8', expHi: 'D=20, U=12, t=3+5=8' },
+                    { qEn: 'Downstream 72 km at 24, upstream 48 km at 16. Total time?', qHi: 'अनुप्रवाह 72 km 24, उर्ध्वप्रवाह 48 km 16। कुल समय?', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 2, expEn: '72/24=3, 48/16=3, total=6', expHi: '72/24=3, 48/16=3, कुल=6' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: '40 down 20, 60 up 15. Total time?', qHi: '40 अनुप्रवाह 20, 60 उर्ध्वप्रवाह 15। कुल समय?', optsEn: ['5', '6', '7', '8'], optsHi: ['5', '6', '7', '8'], ans: 1, expEn: '6', expHi: '6' },
+                    { year: 'CGL 2022', qEn: '30 down 15, 30 up 10. Total time?', qHi: '30 अनुप्रवाह 15, 30 उर्ध्वप्रवाह 10। कुल समय?', optsEn: ['4', '5', '6', '7'], optsHi: ['4', '5', '6', '7'], ans: 1, expEn: '5', expHi: '5' },
+                    { year: 'CGL 2021', qEn: 'Boat=12, stream=2, 50 each way. Total time?', qHi: 'नाव=12, धारा=2, 50 प्रत्येक। कुल समय?', optsEn: ['8', '9', '10', '11'], optsHi: ['8', '9', '10', '11'], ans: 2, expEn: '8.57≈9', expHi: '8.57≈9' },
+                    { year: 'CGL 2020', qEn: '60 down 30, 40 up 20. Total time?', qHi: '60 अनुप्रवाह 30, 40 उर्ध्वप्रवाह 20। कुल समय?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 1, expEn: '4', expHi: '4' },
+                    { year: 'CGL 2019', qEn: 'Boat=18, stream=3, 45 each way. Total time?', qHi: 'नाव=18, धारा=3, 45 प्रत्येक। कुल समय?', optsEn: ['5', '5.5', '6', '6.5'], optsHi: ['5', '5.5', '6', '6.5'], ans: 0, expEn: '5.14≈5', expHi: '5.14≈5' }
+                ]
+            },
+            // Topic 6: Stream Speed Changes
+            {
+                nameEn: 'Stream Speed Changes',
+                nameHi: 'धारा की गति बदलना',
+                visualEn: '<i class="fas fa-water" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> If stream speed changes, recalculate D and U for each part.',
+                visualHi: '<i class="fas fa-water" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> यदि धारा की गति बदलती है, तो प्रत्येक भाग के लिए D और U की पुनर्गणना करें।',
+                basicFormulaEn: '<b>If stream speed changes:</b> For each segment, D = B + S_i, U = B - S_i.',
+                basicFormulaHi: '<b>यदि धारा की गति बदलती है:</b> प्रत्येक खंड के लिए, D = B + S_i, U = B - S_i।',
+                formulaExplanationEn: '<b>Why recalculate?</b> Stream speed affects both downstream and upstream speeds.',
+                formulaExplanationHi: '<b>पुनर्गणना क्यों?</b> धारा की गति अनुप्रवाह और उर्ध्वप्रवाह दोनों गति को प्रभावित करती है।',
+                advancedFormulaEn: '<b>Advanced:</b> If boat speed also changes, combine both.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि नाव की गति भी बदलती है, तो दोनों को संयोजित करें।',
+                practice: [
+                    { qEn: 'Boat=20, stream 5 for 60 km, 3 for 40 km downstream. Total downstream time?', qHi: 'नाव=20, धारा 5 पर 60 km, 3 पर 40 km अनुप्रवाह। कुल समय?', optsEn: ['4', '4.5', '5', '5.5'], optsHi: ['4', '4.5', '5', '5.5'], ans: 0, expEn: 'D1=25, t1=60/25=2.4; D2=23, t2=40/23=1.74; total=4.14≈4', expHi: 'D1=25, t1=2.4; D2=23, t2=1.74; कुल=4.14≈4' },
+                    { qEn: 'Boat=18, upstream 50 km with stream 3, 30 km with 2. Total upstream time?', qHi: 'नाव=18, उर्ध्वप्रवाह 50 km धारा 3, 30 km धारा 2। कुल समय?', optsEn: ['4', '4.5', '5', '5.5'], optsHi: ['4', '4.5', '5', '5.5'], ans: 2, expEn: 'U1=15, t1=50/15=3.33; U2=16, t2=30/16=1.875; total=5.208≈5', expHi: 'U1=15, t1=3.33; U2=16, t2=1.875; कुल=5.208≈5' },
+                    { qEn: 'Boat=25, downstream 80 km stream 5, 60 km stream 10. Total time?', qHi: 'नाव=25, अनुप्रवाह 80 km धारा 5, 60 km धारा 10। कुल समय?', optsEn: ['4', '4.5', '5', '5.5'], optsHi: ['4', '4.5', '5', '5.5'], ans: 1, expEn: 'D1=30, t1=80/30=2.67; D2=35, t2=60/35=1.71; total=4.38≈4.5', expHi: 'D1=30, t1=2.67; D2=35, t2=1.71; कुल=4.38≈4.5' },
+                    { qEn: 'Boat=15, upstream 40 km stream 5, 50 km stream 3. Total upstream time?', qHi: 'नाव=15, उर्ध्वप्रवाह 40 km धारा 5, 50 km धारा 3। कुल समय?', optsEn: ['7', '7.5', '8', '8.5'], optsHi: ['7', '7.5', '8', '8.5'], ans: 2, expEn: 'U1=10, t1=40/10=4; U2=12, t2=50/12=4.17; total=8.17≈8', expHi: 'U1=10, t1=4; U2=12, t2=4.17; कुल=8.17≈8' },
+                    { qEn: 'Boat=30, downstream 100 km stream 6, 80 km stream 4. Total time?', qHi: 'नाव=30, अनुप्रवाह 100 km धारा 6, 80 km धारा 4। कुल समय?', optsEn: ['5', '5.5', '6', '6.5'], optsHi: ['5', '5.5', '6', '6.5'], ans: 0, expEn: 'D1=36, t1=100/36=2.78; D2=34, t2=80/34=2.35; total=5.13≈5', expHi: 'D1=36, t1=2.78; D2=34, t2=2.35; कुल=5.13≈5' },
+                    { qEn: 'Boat=12, upstream 30 km stream 4, 40 km stream 2. Total time?', qHi: 'नाव=12, उर्ध्वप्रवाह 30 km धारा 4, 40 km धारा 2। कुल समय?', optsEn: ['6', '6.5', '7', '7.5'], optsHi: ['6', '6.5', '7', '7.5'], ans: 2, expEn: 'U1=8, t1=30/8=3.75; U2=10, t2=40/10=4; total=7.75≈8', expHi: 'U1=8, t1=3.75; U2=10, t2=4; कुल=7.75≈8' },
+                    { qEn: 'Boat=22, downstream 50 km stream 6, 70 km stream 4. Total time?', qHi: 'नाव=22, अनुप्रवाह 50 km धारा 6, 70 km धारा 4। कुल समय?', optsEn: ['4.5', '5', '5.5', '6'], optsHi: ['4.5', '5', '5.5', '6'], ans: 0, expEn: 'D1=28, t1=50/28=1.79; D2=26, t2=70/26=2.69; total=4.48≈4.5', expHi: 'D1=28, t1=1.79; D2=26, t2=2.69; कुल=4.48≈4.5' },
+                    { qEn: 'Boat=16, upstream 60 km stream 4, 40 km stream 6. Total time?', qHi: 'नाव=16, उर्ध्वप्रवाह 60 km धारा 4, 40 km धारा 6। कुल समय?', optsEn: ['7', '7.5', '8', '9'], optsHi: ['7', '7.5', '8', '9'], ans: 2, expEn: 'U1=12, t1=60/12=5; U2=10, t2=40/10=4; total=9', expHi: 'U1=12, t1=5; U2=10, t2=4; कुल=9' },
+                    { qEn: 'Boat=28, downstream 90 km stream 7, 60 km stream 5. Total time?', qHi: 'नाव=28, अनुप्रवाह 90 km धारा 7, 60 km धारा 5। कुल समय?', optsEn: ['4.5', '5', '5.5', '6'], optsHi: ['4.5', '5', '5.5', '6'], ans: 0, expEn: 'D1=35, t1=90/35=2.57; D2=33, t2=60/33=1.82; total=4.39≈4.5', expHi: 'D1=35, t1=2.57; D2=33, t2=1.82; कुल=4.39≈4.5' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Boat=20, stream 5 for 60, 3 for 40 downstream. Total time?', qHi: 'नाव=20, धारा 5 पर 60, 3 पर 40 अनुप्रवाह। कुल समय?', optsEn: ['4', '4.5', '5', '5.5'], optsHi: ['4', '4.5', '5', '5.5'], ans: 0, expEn: '4.14≈4', expHi: '4.14≈4' },
+                    { year: 'CGL 2022', qEn: 'Boat=18, upstream 50 with 3, 30 with 2. Total time?', qHi: 'नाव=18, उर्ध्वप्रवाह 50 धारा 3, 30 धारा 2। कुल समय?', optsEn: ['4', '4.5', '5', '5.5'], optsHi: ['4', '4.5', '5', '5.5'], ans: 2, expEn: '5.21≈5', expHi: '5.21≈5' },
+                    { year: 'CGL 2021', qEn: 'Boat=25, downstream 80 with 5, 60 with 10. Total time?', qHi: 'नाव=25, अनुप्रवाह 80 धारा 5, 60 धारा 10। कुल समय?', optsEn: ['4', '4.5', '5', '5.5'], optsHi: ['4', '4.5', '5', '5.5'], ans: 1, expEn: '4.38≈4.5', expHi: '4.38≈4.5' },
+                    { year: 'CGL 2020', qEn: 'Boat=15, upstream 40 with 5, 50 with 3. Total time?', qHi: 'नाव=15, उर्ध्वप्रवाह 40 धारा 5, 50 धारा 3। कुल समय?', optsEn: ['7', '7.5', '8', '8.5'], optsHi: ['7', '7.5', '8', '8.5'], ans: 2, expEn: '8.17≈8', expHi: '8.17≈8' },
+                    { year: 'CGL 2019', qEn: 'Boat=30, downstream 100 with 6, 80 with 4. Total time?', qHi: 'नाव=30, अनुप्रवाह 100 धारा 6, 80 धारा 4। कुल समय?', optsEn: ['5', '5.5', '6', '6.5'], optsHi: ['5', '5.5', '6', '6.5'], ans: 0, expEn: '5.13≈5', expHi: '5.13≈5' }
+                ]
+            },
+            // Topic 7: Relative Speed between Two Boats
+            {
+                nameEn: 'Relative Speed between Two Boats',
+                nameHi: 'दो नावों के बीच सापेक्ष गति',
+                visualEn: '<i class="fas fa-arrows-left-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Opposite: sum; Same: difference.',
+                visualHi: '<i class="fas fa-arrows-left-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> विपरीत: योग; एक ही: अंतर।',
+                basicFormulaEn: '<b>Opposite:</b> Relative speed = v1 + v2<br><b>Same:</b> Relative speed = |v1 - v2|',
+                basicFormulaHi: '<b>विपरीत:</b> सापेक्ष गति = v1 + v2<br><b>एक ही:</b> सापेक्ष गति = |v1 - v2|',
+                formulaExplanationEn: '<b>Why add/subtract?</b> When moving towards each other, distance closes faster.',
+                formulaExplanationHi: '<b>जोड़/घटाव क्यों?</b> जब एक-दूसरे की ओर बढ़ते हैं, तो दूरी तेजी से घटती है।',
+                advancedFormulaEn: '<b>Advanced:</b> If both boats are in a stream, use effective speeds.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि दोनों नावें धारा में हैं, तो प्रभावी गति का उपयोग करें।',
+                practice: [
+                    { qEn: 'Two boats opposite at 10 and 15. After 2h, distance?', qHi: 'दो नावें विपरीत 10 और 15। 2h बाद दूरी?', optsEn: ['40', '45', '50', '55'], optsHi: ['40', '45', '50', '55'], ans: 2, expEn: '(10+15)×2=50', expHi: '(10+15)×2=50' },
+                    { qEn: 'Two boats same direction 20 and 12. After 3h, distance?', qHi: 'दो नावें एक ही दिशा 20 और 12। 3h बाद दूरी?', optsEn: ['20', '24', '30', '36'], optsHi: ['20', '24', '30', '36'], ans: 1, expEn: '(20-12)×3=24', expHi: '(20-12)×3=24' },
+                    { qEn: 'Boat A downstream 30, B upstream 20, start 100 km apart. Meet time?', qHi: 'A अनुप्रवाह 30, B उर्ध्वप्रवाह 20, 100 km दूर। मिलने का समय?', optsEn: ['2', '2.5', '3', '4'], optsHi: ['2', '2.5', '3', '4'], ans: 0, expEn: '30+20=50, 100/50=2', expHi: '30+20=50, 100/50=2' },
+                    { qEn: 'Two boats opposite 12 and 8. After 4h, distance?', qHi: 'दो नावें विपरीत 12 और 8। 4h बाद दूरी?', optsEn: ['60', '70', '80', '90'], optsHi: ['60', '70', '80', '90'], ans: 2, expEn: '(12+8)×4=80', expHi: '(12+8)×4=80' },
+                    { qEn: 'Two boats same direction 25 and 15. After 5h, distance?', qHi: 'दो नावें एक ही दिशा 25 और 15। 5h बाद दूरी?', optsEn: ['40', '45', '50', '55'], optsHi: ['40', '45', '50', '55'], ans: 2, expEn: '(25-15)×5=50', expHi: '(25-15)×5=50' },
+                    { qEn: 'Boat P downstream 18, Q upstream 12, start 120 km apart. Meet time?', qHi: 'P अनुप्रवाह 18, Q उर्ध्वप्रवाह 12, 120 km दूर। मिलने का समय?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 1, expEn: '18+12=30, 120/30=4', expHi: '18+12=30, 120/30=4' },
+                    { qEn: 'Two boats opposite 8 and 10. After 3h, distance?', qHi: 'दो नावें विपरीत 8 और 10। 3h बाद दूरी?', optsEn: ['48', '50', '54', '56'], optsHi: ['48', '50', '54', '56'], ans: 2, expEn: '(8+10)×3 = 54', expHi: '(8+10)×3 = 54' },
+                    { qEn: 'Two boats same direction 30 and 18. After 2h, distance?', qHi: 'दो नावें एक ही दिशा 30 और 18। 2h बाद दूरी?', optsEn: ['20', '22', '24', '26'], optsHi: ['20', '22', '24', '26'], ans: 2, expEn: '(30-18)×2=24', expHi: '(30-18)×2=24' },
+                    { qEn: 'Boat A downstream 40, B upstream 20, start 200 km apart. Meet time?', qHi: 'A अनुप्रवाह 40, B उर्ध्वप्रवाह 20, 200 km दूर। मिलने का समय?', optsEn: ['3', '3.33', '4', '5'], optsHi: ['3', '3.33', '4', '5'], ans: 1, expEn: '40+20=60, 200/60=3.33', expHi: '40+20=60, 200/60=3.33' },
+                    { qEn: 'Two boats opposite 14 and 6. After 5h, distance?', qHi: 'दो नावें विपरीत 14 और 6। 5h बाद दूरी?', optsEn: ['80', '90', '100', '110'], optsHi: ['80', '90', '100', '110'], ans: 2, expEn: '(14+6)×5=100', expHi: '(14+6)×5=100' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Two boats opposite 10 and 15. After 2h, distance?', qHi: 'दो नावें विपरीत 10 और 15। 2h बाद दूरी?', optsEn: ['40', '45', '50', '55'], optsHi: ['40', '45', '50', '55'], ans: 2, expEn: '50', expHi: '50' },
+                    { year: 'CGL 2022', qEn: 'Two boats same direction 20 and 12. After 3h, distance?', qHi: 'दो नावें एक ही दिशा 20 और 12। 3h बाद दूरी?', optsEn: ['20', '24', '30', '36'], optsHi: ['20', '24', '30', '36'], ans: 1, expEn: '24', expHi: '24' },
+                    { year: 'CGL 2021', qEn: 'A downstream 30, B upstream 20, 100 km apart. Meet time?', qHi: 'A अनुप्रवाह 30, B उर्ध्वप्रवाह 20, 100 km दूर। मिलने का समय?', optsEn: ['2', '2.5', '3', '4'], optsHi: ['2', '2.5', '3', '4'], ans: 0, expEn: '2', expHi: '2' },
+                    { year: 'CGL 2020', qEn: 'Two boats opposite 12 and 8. After 4h, distance?', qHi: 'दो नावें विपरीत 12 और 8। 4h बाद दूरी?', optsEn: ['60', '70', '80', '90'], optsHi: ['60', '70', '80', '90'], ans: 2, expEn: '80', expHi: '80' },
+                    { year: 'CGL 2019', qEn: 'Two boats same direction 25 and 15. After 5h, distance?', qHi: 'दो नावें एक ही दिशा 25 और 15। 5h बाद दूरी?', optsEn: ['40', '45', '50', '55'], optsHi: ['40', '45', '50', '55'], ans: 2, expEn: '50', expHi: '50' }
+                ]
+            },
+            // Topic 8: Data Sufficiency (Boats and Streams)
+            {
+                nameEn: 'Data Sufficiency (Boats & Streams)',
+                nameHi: 'आंकड़ा पर्याप्तता (नाव और धारा)',
+                visualEn: '<i class="fas fa-database" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Check if given data is sufficient to find boat speed, stream speed, distance, or time.',
+                visualHi: '<i class="fas fa-database" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> जाँच करें कि दिया गया डेटा पर्याप्त है या नहीं।',
+                basicFormulaEn: '<b>Check:</b> Does the information lead to a unique value?',
+                basicFormulaHi: '<b>जाँच:</b> क्या जानकारी अद्वितीय मान तक पहुँचती है?',
+                formulaExplanationEn: '<b>Why check?</b> Many CGL questions ask if data is sufficient.',
+                formulaExplanationHi: '<b>जाँच क्यों?</b> कई CGL प्रश्न पूछते हैं कि डेटा पर्याप्त है या नहीं।',
+                advancedFormulaEn: '<b>Advanced:</b> Two statements, check each alone, both together, or neither.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> दो कथन, प्रत्येक अकेले, दोनों एक साथ, या कोई नहीं।',
+                practice: [
+                    { qEn: 'Can boat speed be found if D and U given?', qHi: 'क्या नाव की गति ज्ञात की जा सकती है यदि D और U दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, B=(D+U)/2', expHi: 'हाँ, B=(D+U)/2' },
+                    { qEn: 'Can stream speed be found if D and U given?', qHi: 'क्या धारा की गति ज्ञात की जा सकती है यदि D और U दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, S=(D-U)/2', expHi: 'हाँ, S=(D-U)/2' },
+                    { qEn: 'Can distance be found if downstream and upstream times given?', qHi: 'क्या दूरी ज्ञात की जा सकती है यदि अनुप्रवाह और उर्ध्वप्रवाह समय दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'No, speeds also needed.', expHi: 'नहीं, गति की भी आवश्यकता है।' },
+                    { qEn: 'Can boat speed and stream speed be found if distance and downstream time given?', qHi: 'क्या नाव की गति और धारा की गति ज्ञात की जा सकती है यदि दूरी और अनुप्रवाह समय दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'No, only downstream speed known.', expHi: 'नहीं, केवल अनुप्रवाह गति ज्ञात है।' },
+                    { qEn: 'Can total round trip time be found if distance, B, S given?', qHi: 'क्या कुल समय ज्ञात किया जा सकता है यदि दूरी, B, S दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, t_total = D/(B+S) + D/(B-S).', expHi: 'हाँ, t_total = D/(B+S) + D/(B-S).' },
+                    { qEn: 'Can average speed for round trip be found if D and U given?', qHi: 'क्या दोनों ओर यात्रा की औसत गति ज्ञात की जा सकती है यदि D और U दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, Avg = 2×D×U/(D+U).', expHi: 'हाँ, Avg = 2×D×U/(D+U).' },
+                    { qEn: 'Can boat speed be found if downstream speed and stream speed given?', qHi: 'क्या नाव की गति ज्ञात की जा सकती है यदि अनुप्रवाह गति और धारा की गति दी गई हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, B = D - S.', expHi: 'हाँ, B = D - S.' },
+                    { qEn: 'Can stream speed be found if boat speed and upstream speed given?', qHi: 'क्या धारा की गति ज्ञात की जा सकती है यदि नाव की गति और उर्ध्वप्रवाह गति दी गई हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, S = B - U.', expHi: 'हाँ, S = B - U.' },
+                    { qEn: 'Can distance be found if downstream speed, upstream speed, and total time are given?', qHi: 'क्या दूरी ज्ञात की जा सकती है यदि अनुप्रवाह गति, उर्ध्वप्रवाह गति और कुल समय दिए गए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, solve using t_total = D/(B+S) + D/(B-S).', expHi: 'हाँ, t_total = D/(B+S) + D/(B-S) को हल करें।' },
+                    { qEn: 'Can boat speed be found if distance and downstream and upstream times are given?', qHi: 'क्या नाव की गति ज्ञात की जा सकती है यदि दूरी और अनुप्रवाह एवं उर्ध्वप्रवाह समय दिए गए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes, D = Distance/time, U = Distance/time, then B = (D+U)/2.', expHi: 'हाँ, D = दूरी/समय, U = दूरी/समय, फिर B = (D+U)/2।' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Can boat speed be found if D and U given?', qHi: 'क्या नाव की गति ज्ञात की जा सकती है यदि D और U दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                    { year: 'CGL 2022', qEn: 'Can stream speed be found if D and U given?', qHi: 'क्या धारा की गति ज्ञात की जा सकती है यदि D और U दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                    { year: 'CGL 2021', qEn: 'Can distance be found if downstream and upstream times given?', qHi: 'क्या दूरी ज्ञात की जा सकती है यदि अनुप्रवाह और उर्ध्वप्रवाह समय दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 2, expEn: 'Insufficient', expHi: 'अपर्याप्त' },
+                    { year: 'CGL 2020', qEn: 'Can total round trip time be found if distance, B, S given?', qHi: 'क्या कुल समय ज्ञात किया जा सकता है यदि दूरी, B, S दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' },
+                    { year: 'CGL 2019', qEn: 'Can average speed for round trip be found if D and U given?', qHi: 'क्या औसत गति ज्ञात की जा सकती है यदि D और U दिए हैं?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' }
+                ]
+            },
+            // Topic 9: Miscellaneous (Boats with Different Speeds)
+            {
+                nameEn: 'Miscellaneous (Boats with Different Speeds)',
+                nameHi: 'विविध (विभिन्न गति वाली नावें)',
+                visualEn: '<i class="fas fa-puzzle-piece" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Combine all concepts: changing boat speed, stream speed, distances, and times.',
+                visualHi: '<i class="fas fa-puzzle-piece" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> सभी अवधारणाओं को संयोजित करें।',
+                basicFormulaEn: '<b>Mixed problems:</b> Use all formulas together. Break the journey into parts.',
+                basicFormulaHi: '<b>मिश्रित समस्याएँ:</b> सभी सूत्रों को एक साथ उपयोग करें। यात्रा को भागों में तोड़ें।',
+                formulaExplanationEn: '<b>Why break?</b> Complex problems often combine multiple concepts.',
+                formulaExplanationHi: '<b>तोड़ क्यों?</b> जटिल समस्याएँ अक्सर कई अवधारणाओं को संयोजित करती हैं।',
+                advancedFormulaEn: '<b>Advanced:</b> If boat speed or stream speed changes at certain points, handle each segment separately.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि नाव की गति या धारा की गति निश्चित बिंदुओं पर बदलती है, तो प्रत्येक खंड को अलग-अलग संभालें।',
+                practice: [
+                    { qEn: 'Boat travels 30 km downstream at 15 and 20 km upstream at 10. Average speed?', qHi: 'नाव 30 km अनुप्रवाह 15 और 20 km उर्ध्वप्रवाह 10 जाती है। औसत गति?', optsEn: ['11', '12', '13', '14'], optsHi: ['11', '12', '13', '14'], ans: 1, expEn: 'Total=50, time=30/15+20/10=2+2=4, avg=12.5≈12', expHi: 'कुल=50, समय=4, औसत=12.5≈12' },
+                    { qEn: 'Boat=12, stream=4, 60 km down and back. Total time?', qHi: 'नाव=12, धारा=4, 60 km जाना और वापस। कुल समय?', optsEn: ['10', '11', '11.25', '12'], optsHi: ['10', '11', '11.25', '12'], ans: 2, expEn: 'D=16, U=8, t=60/16+60/8=3.75+7.5=11.25', expHi: 'D=16, U=8, t=3.75+7.5=11.25' },
+                    { qEn: 'Boat=15, stream 3 for 45 km, 5 for 30 km downstream. Total downstream time?', qHi: 'नाव=15, धारा 3 पर 45 km, 5 पर 30 km अनुप्रवाह। कुल समय?', optsEn: ['4', '4.5', '5', '5.5'], optsHi: ['4', '4.5', '5', '5.5'], ans: 0, expEn: 'D1=18, t1=45/18=2.5; D2=20, t2=30/20=1.5; total=4', expHi: 'D1=18, t1=2.5; D2=20, t2=1.5; कुल=4' },
+                    { qEn: '90 km downstream in 3h, 60 km upstream in 4h. Boat speed?', qHi: '90 km अनुप्रवाह 3h, 60 km उर्ध्वप्रवाह 4h। नाव की गति?', optsEn: ['20', '22.5', '25', '30'], optsHi: ['20', '22.5', '25', '30'], ans: 1, expEn: 'D=30, U=15, B=22.5', expHi: 'D=30, U=15, B=22.5' },
+                    { qEn: '48 km downstream in 4h, return in 6h. Boat speed?', qHi: '48 km अनुप्रवाह 4h, वापस 6h। नाव की गति?', optsEn: ['10', '12', '14', '16'], optsHi: ['10', '12', '14', '16'], ans: 0, expEn: 'D=12, U=8, B=10', expHi: 'D=12, U=8, B=10' },
+                    { qEn: 'Boat=18, stream=6, downstream in 2h. Distance?', qHi: 'नाव=18, धारा=6, अनुप्रवाह 2h। दूरी?', optsEn: ['36', '40', '44', '48'], optsHi: ['36', '40', '44', '48'], ans: 2, expEn: 'D=24, distance=24×2=48', expHi: 'D=24, दूरी=48' },
+                    { qEn: '120 km downstream in 4h and 120 km upstream in 6h. Boat speed?', qHi: '120 km अनुप्रवाह 4h, 120 km उर्ध्वप्रवाह 6h। नाव की गति?', optsEn: ['20', '25', '30', '35'], optsHi: ['20', '25', '30', '35'], ans: 1, expEn: 'D=30, U=20, B=25', expHi: 'D=30, U=20, B=25' },
+                    { qEn: '75 km downstream and 50 km upstream in 5h total. Downstream speed=25. Upstream speed?', qHi: '75 km अनुप्रवाह और 50 km उर्ध्वप्रवाह 5h में। अनुप्रवाह गति=25। उर्ध्वप्रवाह गति?', optsEn: ['10', '12', '15', '20'], optsHi: ['10', '12', '15', '20'], ans: 2, expEn: 't_down=75/25=3, t_up=2, U=50/2=25', expHi: 't_down=3, t_up=2, U=25' },
+                    { qEn: 'Boat=22, stream=4, downstream 72 km. Time?', qHi: 'नाव=22, धारा=4, अनुप्रवाह 72 km। समय?', optsEn: ['2.5', '2.77', '3', '3.5'], optsHi: ['2.5', '2.77', '3', '3.5'], ans: 1, expEn: 'D=26, t=72/26=2.77', expHi: 'D=26, t=72/26=2.77' },
+                    { qEn: 'Boat takes 4 hours upstream at 12 km/h. Distance?', qHi: 'नाव 4 घंटे उर्ध्वप्रवाह 12 km/h पर जाती है। दूरी?', optsEn: ['44', '46', '48', '50'], optsHi: ['44', '46', '48', '50'], ans: 2, expEn: '12×4=48', expHi: '12×4=48' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Boat=12, stream=4, 60 km down and back. Total time?', qHi: 'नाव=12, धारा=4, 60 km जाना और वापस। कुल समय?', optsEn: ['10', '11', '11.25', '12'], optsHi: ['10', '11', '11.25', '12'], ans: 2, expEn: '11.25', expHi: '11.25' },
+                    { year: 'CGL 2022', qEn: 'Boat=15, stream 3 for 45 km, 5 for 30 km downstream. Total time?', qHi: 'नाव=15, धारा 3 पर 45 km, 5 पर 30 km अनुप्रवाह। कुल समय?', optsEn: ['4', '4.5', '5', '5.5'], optsHi: ['4', '4.5', '5', '5.5'], ans: 0, expEn: '4', expHi: '4' },
+                    { year: 'CGL 2021', qEn: '90 km down in 3h, 60 km up in 4h. Boat speed?', qHi: '90 km अनुप्रवाह 3h, 60 km उर्ध्वप्रवाह 4h। नाव की गति?', optsEn: ['20', '22.5', '25', '30'], optsHi: ['20', '22.5', '25', '30'], ans: 1, expEn: '22.5', expHi: '22.5' },
+                    { year: 'CGL 2020', qEn: '48 km down in 4h, return in 6h. Boat speed?', qHi: '48 km अनुप्रवाह 4h, वापस 6h। नाव की गति?', optsEn: ['10', '12', '14', '16'], optsHi: ['10', '12', '14', '16'], ans: 0, expEn: '10', expHi: '10' },
+                    { year: 'CGL 2019', qEn: 'Boat=18, stream=6, downstream in 2h. Distance?', qHi: 'नाव=18, धारा=6, अनुप्रवाह 2h। दूरी?', optsEn: ['36', '40', '44', '48'], optsHi: ['36', '40', '44', '48'], ans: 2, expEn: '48', expHi: '48' }
+                ]
+            }
+        ];
+
+        // ================================================================
+        // 2. RENDER ENGINE (identical to previous modules)
+        // ================================================================
+
+        var currentLang = 'en';
+        var totalPages = 15;
+
+        function render(lang) {
+            var container = document.getElementById('content');
+            var indexGrid = document.getElementById('indexGrid');
+            var indexTitle = document.getElementById('indexTitle');
+            var headerSub = document.getElementById('headerSub');
+            var footerText = document.getElementById('footerText');
+
+            if (lang === 'en') {
+                headerSub.textContent = '9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual';
+                footerText.textContent = '⚡ Practice makes perfect. SSC CGL / Banking Level.';
+                indexTitle.textContent = '📑 All 9 Boats & Streams Topics Covered';
+            } else {
+                headerSub.textContent = '9 टॉपिक्स • 15 पेज • बेसिक→एडवांस्ड सूत्र • PYQs • द्विभाषी';
+                footerText.textContent = '⚡ अभ्यास से ही सिद्धि मिलती है। SSC CGL / बैंकिंग स्तर।';
+                indexTitle.textContent = '📑 सभी 9 नाव एवं धारा टॉपिक्स कवर किए गए';
+            }
+
+            indexGrid.innerHTML = '';
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var a = document.createElement('a');
+                a.href = '#topic-' + idx;
+                a.textContent = lang === 'en' ? topic.nameEn : topic.nameHi;
+                indexGrid.appendChild(a);
+            });
+
+            var html = '';
+            var pageCounter = 1;
+
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var name = lang === 'en' ? topic.nameEn : topic.nameHi;
+                var visual = lang === 'en' ? topic.visualEn : topic.visualHi;
+                var basicF = lang === 'en' ? topic.basicFormulaEn : topic.basicFormulaHi;
+                var advF = lang === 'en' ? topic.advancedFormulaEn : topic.advancedFormulaHi;
+                var expF = lang === 'en' ? topic.formulaExplanationEn : topic.formulaExplanationHi;
+                var badgeText = lang === 'en' ? 'Topic ' + (idx + 1) + ' of 9' : 'टॉपिक ' + (idx + 1) + ' / 9';
+
+                html += '<div class="page-divider"><hr /><span class="page-label">📄 Page ' + pageCounter +
+                    ' of ' + totalPages + '</span><hr /></div>';
+                pageCounter++;
+
+                html += '<div class="formula-card" id="topic-' + idx + '">';
+                html += '<div class="topic-name"><i class="fas fa-hashtag" style="color:#ff6f00;"></i> ' + name +
+                    '</div>';
+                html += '<div class="topic-badge">' + badgeText + '</div>';
+
+                html += '<div class="visual-box">' + visual + '</div>';
+
+                html += '<div class="formulas-box">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-book"></i> ' + (lang === 'en' ?
+                        '📐 Basic Formulas' : '📐 बेसिक सूत्र') + '</div>';
+                html += basicF;
+                html += '</div>';
+
+                html += '<div class="formula-explanation">';
+                html +=
+                    '<div class="ex-title"><i class="fas fa-lightbulb"></i> ' + (lang === 'en' ?
+                        '💡 Why does it work?' : '💡 यह क्यों काम करता है?') + '</div>';
+                html += expF;
+                html += '</div>';
+
+                html += '<div class="formulas-box" style="border-left-color:#1a237e;">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-star"></i> ' + (lang === 'en' ?
+                        '🚀 Advanced (CGL Level) Formulas' : '🚀 एडवांस्ड (CGL स्तर) सूत्र') + '</div>';
+                html += advF;
+                html += '</div>';
+
+                html +=
+                    '<div class="section-heading"><i class="fas fa-pencil-alt"></i> ' + (lang === 'en' ?
+                        '📝 Practice Questions (10)' : '📝 अभ्यास प्रश्न (10)') + '</div>';
+
+                topic.practice.forEach(function(q, qIdx) {
+                    var qid = 'p-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item">';
+                    html += '<div class="q-text">Q' + (qIdx + 1) + '. ' + qText + '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html +=
+                    '<div class="section-heading" style="margin-top:20px;"><i class="fas fa-history"></i> ' +
+                    (lang === 'en' ? '📌 Previous Year Questions (CGL)' : '📌 पिछले वर्ष के प्रश्न (CGL)') +
+                    '</div>';
+
+                topic.pyqs.forEach(function(q, qIdx) {
+                    var qid = 'pyq-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item" style="border-left:3px solid #ffd54f;">';
+                    html += '<div class="q-text"><span class="pyq-badge">' + q.year + '</span> ' + qText +
+                        '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html += '</div>';
+            });
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.answer-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var qid = this.dataset.qid;
+                    var box = document.getElementById(qid);
+                    if (box) {
+                        box.classList.toggle('show');
+                        var lang = currentLang;
+                        this.textContent = box.classList.contains('show') ?
+                            (lang === 'en' ? 'Hide Answer' : 'उत्तर छिपाएँ') :
+                            (lang === 'en' ? 'Show Answer' : 'उत्तर दिखाएँ');
+                    }
+                });
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var scrolled = window.scrollY;
+            var progress = scrollHeight > 0 ? (scrolled / scrollHeight) * 100 : 0;
+            document.getElementById('progressFill').style.width = Math.min(progress, 100) + '%';
+
+            var total = TOPICS_DATA.length;
+            var approx = Math.floor((scrolled / scrollHeight) * total) + 1;
+            var page = Math.min(approx + 1, 15);
+            document.getElementById('pageIndicator').textContent = 'Page ' + Math.min(page, 15) + ' of 15';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress);
+
+        document.querySelectorAll('#langToggle button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('#langToggle button').forEach(function(b) { b.classList.remove(
+                        'active'); });
+                this.classList.add('active');
+                currentLang = this.dataset.lang;
+                render(currentLang);
+                setTimeout(updateProgress, 100);
+            });
+        });
+
+        render('en');
+        setTimeout(updateProgress, 200);
+        console.log('✅ Boats & Streams – All 9 Topics, 15 Pages Module Loaded!');
+    </script>
+
+</body>
+</html>

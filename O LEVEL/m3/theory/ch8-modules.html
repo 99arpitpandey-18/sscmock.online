@@ -1,0 +1,3021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M3-R5 Chapter 8 | Modules in Python | NIELIT O Level Notes</title>
+
+<meta name="description"
+content="NIELIT O Level M3-R5 Chapter 8 Modules in Python complete bilingual notes with examples, outputs, built-in modules, user-defined modules, import, from import, alias, namespace, __name__ and exam questions.">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+    --accent:#00d9ff;
+    --accent2:#8b5cf6;
+    --accent3:#ff4ecd;
+    --green:#38e68a;
+    --yellow:#ffd166;
+
+    --bg:#070b18;
+    --card:#10182b;
+    --card2:#0d1425;
+
+    --text:#eef7ff;
+    --muted:#9aabc3;
+    --code:#07101d;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+
+    background:
+        radial-gradient(circle at 8% 10%,rgba(0,217,255,.14),transparent 28%),
+        radial-gradient(circle at 90% 15%,rgba(139,92,246,.15),transparent 30%),
+        radial-gradient(circle at 50% 90%,rgba(255,78,205,.08),transparent 30%),
+        linear-gradient(135deg,#060a16,#0b1020 50%,#060a15);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    background-image:
+        radial-gradient(circle,var(--accent) 1px,transparent 1px),
+        radial-gradient(circle,var(--accent2) 1px,transparent 1px);
+
+    background-size:120px 120px,180px 180px;
+
+    opacity:.12;
+
+    z-index:-1;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+
+    z-index:999;
+
+    backdrop-filter:blur(20px);
+
+    background:rgba(5,10,22,.82);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    padding:13px 5%;
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,217,255,.18),
+            rgba(139,92,246,.18)
+        );
+
+    border:1px solid rgba(0,217,255,.3);
+
+    color:var(--accent);
+
+    font-weight:900;
+
+    box-shadow:
+        0 0 25px rgba(0,217,255,.12);
+}
+
+.brand-title{
+    font-size:16px;
+    font-weight:800;
+}
+
+.brand-sub{
+    color:#8292ab;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.back-btn{
+    text-decoration:none;
+
+    color:#dcecff;
+
+    padding:9px 15px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    background:rgba(255,255,255,.04);
+
+    font-size:12px;
+
+    transition:.3s;
+}
+
+.back-btn:hover{
+    color:var(--accent);
+
+    border-color:var(--accent);
+
+    transform:translateY(-2px);
+}
+
+
+/* =========================================================
+   COLOR PANEL
+========================================================= */
+
+.color-panel{
+    position:fixed;
+
+    right:18px;
+    bottom:18px;
+
+    z-index:1000;
+
+    padding:12px;
+
+    border-radius:15px;
+
+    background:rgba(12,19,35,.92);
+
+    border:1px solid rgba(255,255,255,.1);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+
+    backdrop-filter:blur(15px);
+}
+
+.color-title{
+    color:#a7b7cd;
+    font-size:10px;
+    margin-bottom:8px;
+    text-align:center;
+}
+
+.colors{
+    display:flex;
+    gap:7px;
+}
+
+.color-btn{
+    width:22px;
+    height:22px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,255,255,.25);
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.color-btn:hover{
+    transform:scale(1.18);
+}
+
+.cyan{background:#00d9ff;}
+.purple{background:#8b5cf6;}
+.pink{background:#ff4ecd;}
+.green{background:#38e68a;}
+.orange{background:#ff9f43;}
+.yellow{background:#ffd166;}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+    max-width:1250px;
+
+    margin:auto;
+
+    padding:40px 5% 90px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:45px;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18,31,57,.94),
+            rgba(9,16,31,.82)
+        );
+
+    border:1px solid rgba(255,255,255,.1);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.4),
+        inset 0 1px rgba(255,255,255,.05);
+
+    margin-bottom:35px;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:170px;
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent2),
+            var(--accent3)
+        );
+
+    box-shadow:0 0 20px var(--accent);
+}
+
+.hero-glow{
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    right:-100px;
+    top:-120px;
+
+    border-radius:50%;
+
+    background:rgba(0,217,255,.09);
+
+    filter:blur(55px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 13px;
+
+    border-radius:30px;
+
+    color:var(--accent);
+
+    background:rgba(0,217,255,.08);
+
+    border:1px solid rgba(0,217,255,.2);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,52px);
+
+    line-height:1.1;
+
+    margin-bottom:13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            var(--accent),
+            #c8a9ff
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:850px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:13px;
+
+    margin-top:28px;
+}
+
+.stat{
+    padding:17px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat strong{
+    display:block;
+
+    color:var(--accent);
+
+    font-size:22px;
+
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:#7f91ab;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin:42px 0 20px;
+}
+
+.section-icon{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:rgba(0,217,255,.08);
+
+    border:1px solid rgba(0,217,255,.16);
+
+    font-size:18px;
+}
+
+.section-title h2{
+    font-size:22px;
+}
+
+.section-title p{
+    color:#73859f;
+
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+
+/* =========================================================
+   CONTENT CARDS
+========================================================= */
+
+.content-card{
+    padding:27px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,29,52,.88),
+            rgba(9,16,30,.8)
+        );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    margin-bottom:18px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.18);
+}
+
+.content-card h3{
+    font-size:19px;
+
+    color:var(--accent);
+
+    margin-bottom:12px;
+}
+
+.content-card h4{
+    color:#fff;
+
+    margin:18px 0 8px;
+
+    font-size:15px;
+}
+
+.content-card p{
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:13px;
+
+    margin:7px 0;
+}
+
+.hi{
+    color:#d8c8ff;
+}
+
+.en{
+    color:#b7eaff;
+}
+
+.highlight{
+    padding:13px 16px;
+
+    margin:14px 0;
+
+    border-left:3px solid var(--accent);
+
+    background:rgba(0,217,255,.055);
+
+    border-radius:8px;
+
+    color:#c8d8ec;
+
+    line-height:1.7;
+
+    font-size:12px;
+}
+
+.tip{
+    padding:14px;
+
+    border-radius:12px;
+
+    background:rgba(56,230,138,.06);
+
+    border:1px solid rgba(56,230,138,.16);
+
+    color:#b9f6d4;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+.warning{
+    padding:14px;
+
+    border-radius:12px;
+
+    background:rgba(255,159,67,.06);
+
+    border:1px solid rgba(255,159,67,.18);
+
+    color:#ffd5aa;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   DEFINITION BOX
+========================================================= */
+
+.definition{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-top:15px;
+}
+
+.def-box{
+    padding:20px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.def-box strong{
+    display:block;
+
+    color:var(--accent);
+
+    font-size:15px;
+
+    margin-bottom:8px;
+}
+
+.def-box span{
+    color:var(--muted);
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   CODE BOX
+========================================================= */
+
+.example{
+    margin:20px 0;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:var(--code);
+
+    box-shadow:0 12px 35px rgba(0,0,0,.25);
+}
+
+.example-head{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:10px 15px;
+
+    background:rgba(255,255,255,.04);
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.example-head span{
+    font-size:11px;
+
+    color:var(--accent);
+
+    font-weight:800;
+}
+
+.example-head b{
+    font-size:10px;
+
+    color:#71839d;
+}
+
+pre{
+    padding:19px;
+
+    overflow-x:auto;
+
+    color:#d7ecff;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    line-height:1.75;
+}
+
+code{
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+}
+
+.output{
+    padding:14px 18px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(56,230,138,.06),
+            rgba(0,217,255,.03)
+        );
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+    color:#9ff2c1;
+
+    font-family:Consolas,monospace;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+.output-title{
+    color:var(--green);
+
+    font-family:Arial,sans-serif;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    margin-bottom:6px;
+}
+
+
+/* =========================================================
+   TWO COLUMN
+========================================================= */
+
+.two-col{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+
+    border-radius:15px;
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:650px;
+}
+
+th{
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,217,255,.12),
+            rgba(139,92,246,.12)
+        );
+
+    color:var(--accent);
+
+    padding:13px;
+
+    text-align:left;
+
+    font-size:11px;
+}
+
+td{
+    padding:12px;
+
+    color:#aebed2;
+
+    font-size:11px;
+
+    border-top:1px solid rgba(255,255,255,.05);
+
+    line-height:1.6;
+}
+
+tr:hover td{
+    background:rgba(255,255,255,.025);
+}
+
+
+/* =========================================================
+   MINI CARDS
+========================================================= */
+
+.mini-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:14px;
+}
+
+.mini-card{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+
+    transition:.3s;
+}
+
+.mini-card:hover{
+    transform:translateY(-4px);
+
+    border-color:rgba(0,217,255,.3);
+}
+
+.mini-icon{
+    font-size:25px;
+
+    margin-bottom:10px;
+}
+
+.mini-card h4{
+    color:#fff;
+
+    margin-bottom:7px;
+}
+
+.mini-card p{
+    color:#8395ad;
+
+    font-size:11px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   MCQ
+========================================================= */
+
+.mcq{
+    padding:20px;
+
+    margin:14px 0;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.q{
+    color:#eaf5ff;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    line-height:1.7;
+
+    margin-bottom:12px;
+}
+
+.option{
+    padding:9px 12px;
+
+    margin:6px 0;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.025);
+
+    color:#9dafc5;
+
+    font-size:11px;
+}
+
+.answer{
+    margin-top:10px;
+
+    padding:9px;
+
+    border-radius:8px;
+
+    background:rgba(56,230,138,.06);
+
+    color:#8ff0b8;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   REVISION
+========================================================= */
+
+.revision{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:14px;
+}
+
+.revision-item{
+    padding:17px;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.revision-item strong{
+    display:block;
+
+    color:var(--accent);
+
+    margin-bottom:6px;
+
+    font-size:13px;
+}
+
+.revision-item span{
+    color:#94a6be;
+
+    font-size:11px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    text-align:center;
+
+    padding:30px;
+
+    margin-top:50px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+    color:#657891;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .two-col,
+    .definition{
+        grid-template-columns:1fr;
+    }
+
+    .mini-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        padding:28px 4% 70px;
+    }
+
+    .hero{
+        padding:28px 20px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .stats,
+    .mini-grid,
+    .revision{
+        grid-template-columns:1fr;
+    }
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .brand-title{
+        font-size:13px;
+    }
+
+    .color-panel{
+        right:10px;
+        bottom:10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            M3
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                M3-R5 Python Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Programming & Problem Solving Through Python
+            </div>
+
+        </div>
+
+    </div>
+
+    <a href="m3.html" class="back-btn">
+        ← Back to M3
+    </a>
+
+</div>
+
+</header>
+
+
+<!-- =========================================================
+     COLOR SELECTOR
+========================================================= -->
+
+<div class="color-panel">
+
+    <div class="color-title">
+        🎨 TEXT / ACCENT COLOR
+    </div>
+
+    <div class="colors">
+
+        <div class="color-btn cyan"
+             onclick="setColor('#00d9ff','#8b5cf6')"></div>
+
+        <div class="color-btn purple"
+             onclick="setColor('#8b5cf6','#ff4ecd')"></div>
+
+        <div class="color-btn pink"
+             onclick="setColor('#ff4ecd','#ff9f43')"></div>
+
+        <div class="color-btn green"
+             onclick="setColor('#38e68a','#00d9ff')"></div>
+
+        <div class="color-btn orange"
+             onclick="setColor('#ff9f43','#ffd166')"></div>
+
+        <div class="color-btn yellow"
+             onclick="setColor('#ffd166','#ff4ecd')"></div>
+
+    </div>
+
+</div>
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-glow"></div>
+
+<div class="hero-content">
+
+    <div class="badge">
+        ✦ NIELIT O LEVEL • M3-R5 • CHAPTER 08
+    </div>
+
+    <h1>
+        Modules in Python
+    </h1>
+
+    <p>
+        Python modules allow us to organize reusable code into
+        separate files. In this chapter you will learn
+        <b>import, from-import, aliases, built-in modules,
+        user-defined modules, namespaces, scope and __name__</b>
+        with practical examples.
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>25+</strong>
+            <span>Examples</span>
+        </div>
+
+        <div class="stat">
+            <strong>02</strong>
+            <span>Module Types</span>
+        </div>
+
+        <div class="stat">
+            <strong>100%</strong>
+            <span>Bilingual</span>
+        </div>
+
+        <div class="stat">
+            <strong>EXAM</strong>
+            <span>Focused</span>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CHAPTER MAP
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🗺️
+    </div>
+
+    <div>
+
+        <h2>Chapter Roadmap</h2>
+
+        <p>
+            Is chapter ko isi order mein study karo
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="mini-grid">
+
+    <div class="mini-card">
+        <div class="mini-icon">📦</div>
+        <h4>1. Module Basics</h4>
+        <p>Module kya hai aur kyun use hota hai.</p>
+    </div>
+
+    <div class="mini-card">
+        <div class="mini-icon">📥</div>
+        <h4>2. Import</h4>
+        <p>import statement ko samjho.</p>
+    </div>
+
+    <div class="mini-card">
+        <div class="mini-icon">🔧</div>
+        <h4>3. Built-in Modules</h4>
+        <p>math, random aur datetime.</p>
+    </div>
+
+    <div class="mini-card">
+        <div class="mini-icon">👨‍💻</div>
+        <h4>4. User Module</h4>
+        <p>Apna module banana.</p>
+    </div>
+
+    <div class="mini-card">
+        <div class="mini-icon">🌐</div>
+        <h4>5. Namespace</h4>
+        <p>Names aur objects ka organization.</p>
+    </div>
+
+    <div class="mini-card">
+        <div class="mini-icon">🎯</div>
+        <h4>6. Exam Practice</h4>
+        <p>MCQs, mistakes aur revision.</p>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     1 MODULE INTRODUCTION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">📦</div>
+
+    <div>
+        <h2>1. What is a Module?</h2>
+        <p>Module ki basic concept</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<h3>Module Definition</h3>
+
+<p class="en">
+    A <b>module</b> is a Python file containing definitions,
+    functions, variables or classes that can be reused in another
+    Python program.
+</p>
+
+<p class="hi">
+    <b>Module</b> ek Python file hoti hai jisme functions,
+    variables, classes ya other reusable code ho sakta hai.
+    Is code ko doosre Python programs mein reuse kiya ja sakta hai.
+</p>
+
+
+<div class="highlight">
+
+    💡 <b>Easy Trick:</b>
+    Module = Reusable Python Code stored in a file.
+
+</div>
+
+
+<div class="definition">
+
+    <div class="def-box">
+
+        <strong>Example</strong>
+
+        <span>
+            maths.py, calculator.py, student.py etc.
+            Python files modules ban sakti hain.
+        </span>
+
+    </div>
+
+    <div class="def-box">
+
+        <strong>Benefit</strong>
+
+        <span>
+            Large program ko small reusable files mein
+            divide karna easy ho jata hai.
+        </span>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     2 WHY MODULES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">💡</div>
+
+    <div>
+        <h2>2. Why Do We Use Modules?</h2>
+        <p>Modules ke important advantages</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="two-col">
+
+<div>
+
+<h4>English</h4>
+
+<p>
+Modules help us organize large programs into smaller
+and manageable files.
+</p>
+
+<p>
+They allow code reuse and make programs easier to
+maintain and debug.
+</p>
+
+</div>
+
+
+<div>
+
+<h4>हिंदी</h4>
+
+<p>
+Modules large program ko small parts mein divide karne
+mein help karte hain.
+</p>
+
+<p>
+Same code ko multiple programs mein reuse kiya ja sakta hai.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="mini-grid">
+
+    <div class="mini-card">
+        <div class="mini-icon">♻️</div>
+        <h4>Code Reuse</h4>
+        <p>Same code ko baar-baar use kar sakte hain.</p>
+    </div>
+
+    <div class="mini-card">
+        <div class="mini-icon">🧹</div>
+        <h4>Organization</h4>
+        <p>Program clean aur structured hota hai.</p>
+    </div>
+
+    <div class="mini-card">
+        <div class="mini-icon">🐞</div>
+        <h4>Debugging</h4>
+        <p>Errors ko identify karna easier hota hai.</p>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     3 TYPES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🗂️</div>
+
+    <div>
+        <h2>3. Types of Modules</h2>
+        <p>Important classification</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="definition">
+
+<div class="def-box">
+
+<strong>Built-in / Standard Modules</strong>
+
+<span>
+Python ke saath available modules.
+Examples: <b>math, random, datetime</b>
+</span>
+
+</div>
+
+
+<div class="def-box">
+
+<strong>User-Defined Modules</strong>
+
+<span>
+Programmer khud Python file create karke
+module bana sakta hai.
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     4 IMPORT
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">📥</div>
+
+    <div>
+        <h2>4. import Statement</h2>
+        <p>Module ko program mein include karna</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p class="en">
+The <b>import</b> statement is used to make a module available
+in the current Python program.
+</p>
+
+<p class="hi">
+<b>import</b> statement ka use kisi module ko current program
+mein use karne ke liye kiya jata hai.
+</p>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 01 — import math</span>
+    <b>Basic Import</b>
+</div>
+
+<pre><code>import math
+
+print(math.sqrt(25))
+print(math.pi)</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+5.0
+3.141592653589793
+
+</div>
+
+</div>
+
+
+<div class="highlight">
+
+    Notice:
+    <b>math.sqrt()</b> aur <b>math.pi</b> mein
+    <b>math.</b> module name hai.
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     5 FROM IMPORT
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🎯</div>
+
+    <div>
+        <h2>5. from ... import</h2>
+        <p>Specific function ko import karna</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p class="en">
+We can import a specific function or object from a module
+using <b>from ... import</b>.
+</p>
+
+<p class="hi">
+Agar hume poora module use nahi karna aur sirf specific
+function chahiye, to <b>from ... import</b> use kar sakte hain.
+</p>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 02</span>
+    <b>from math import sqrt</b>
+</div>
+
+<pre><code>from math import sqrt
+
+print(sqrt(49))</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+7.0
+
+</div>
+
+</div>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 03</span>
+    <b>Multiple Imports</b>
+</div>
+
+<pre><code>from math import sqrt, pow
+
+print(sqrt(64))
+print(pow(2,3))</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+8.0
+8.0
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     6 ALIAS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🏷️</div>
+
+    <div>
+        <h2>6. import with Alias</h2>
+        <p>Module ka short name banana</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p>
+Long module name ko short name dene ke liye
+<b>as</b> keyword use kiya ja sakta hai.
+</p>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 04</span>
+    <b>Alias</b>
+</div>
+
+<pre><code>import math as m
+
+print(m.sqrt(81))
+print(m.pi)</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+9.0
+3.141592653589793
+
+</div>
+
+</div>
+
+
+<div class="tip">
+
+    ⭐ Exam Point:
+    <b>as</b> keyword alias/alternate name dene ke liye use hota hai.
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     7 MATH
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🧮</div>
+
+    <div>
+        <h2>7. math Module</h2>
+        <p>Most important standard module examples</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Function / Constant</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>math.sqrt(x)</td>
+<td>Square root</td>
+<td>math.sqrt(16) → 4.0</td>
+</tr>
+
+<tr>
+<td>math.pow(x,y)</td>
+<td>x raised to y</td>
+<td>math.pow(2,3) → 8.0</td>
+</tr>
+
+<tr>
+<td>math.ceil(x)</td>
+<td>Next integer / upper rounding</td>
+<td>math.ceil(4.2) → 5</td>
+</tr>
+
+<tr>
+<td>math.floor(x)</td>
+<td>Lower integer</td>
+<td>math.floor(4.9) → 4</td>
+</tr>
+
+<tr>
+<td>math.pi</td>
+<td>Value of π</td>
+<td>3.14159...</td>
+</tr>
+
+<tr>
+<td>math.factorial(x)</td>
+<td>Factorial</td>
+<td>math.factorial(5) → 120</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 05 — math Functions</span>
+    <b>Practical</b>
+</div>
+
+<pre><code>import math
+
+print(math.sqrt(36))
+print(math.pow(2,4))
+print(math.ceil(5.2))
+print(math.floor(5.9))
+print(math.factorial(5))</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+6.0
+16.0
+6
+5
+120
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     8 RANDOM
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🎲</div>
+
+    <div>
+        <h2>8. random Module</h2>
+        <p>Random values generate karna</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p>
+The <b>random</b> module provides functions for generating
+pseudo-random values.
+</p>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 06</span>
+    <b>random.randint()</b>
+</div>
+
+<pre><code>import random
+
+number = random.randint(1,10)
+
+print(number)</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+7
+
+<small>
+Note: Output har execution mein change ho sakta hai.
+</small>
+
+</div>
+
+</div>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 07</span>
+    <b>random.choice()</b>
+</div>
+
+<pre><code>import random
+
+colors = ["Red","Blue","Green"]
+
+print(random.choice(colors))</code></pre>
+
+<div class="output">
+
+<div class="output-title">POSSIBLE OUTPUT</div>
+
+Blue
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     9 DATETIME
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">⏰</div>
+
+    <div>
+        <h2>9. datetime Module</h2>
+        <p>Date and time ke saath kaam karna</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 08</span>
+    <b>Current Date & Time</b>
+</div>
+
+<pre><code>import datetime
+
+now = datetime.datetime.now()
+
+print(now)</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+2026-08-31 10:30:15.123456
+
+</div>
+
+</div>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 09</span>
+    <b>Current Date</b>
+</div>
+
+<pre><code>import datetime
+
+today = datetime.date.today()
+
+print(today)</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+2026-08-31
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     10 USER DEFINED MODULE
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">👨‍💻</div>
+
+    <div>
+        <h2>10. User-Defined Module</h2>
+        <p>Apna module kaise banaye?</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<h3>Step 1 — Create Module File</h3>
+
+<p>
+Suppose hum <b>calculator.py</b> naam ki file banate hain.
+</p>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>calculator.py</span>
+    <b>MODULE FILE</b>
+</div>
+
+<pre><code>def add(a,b):
+    return a+b
+
+def subtract(a,b):
+    return a-b
+
+def multiply(a,b):
+    return a*b</code></pre>
+
+</div>
+
+
+<h3>Step 2 — Use the Module</h3>
+
+<p>
+Ab ek second file <b>main.py</b> banate hain.
+</p>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>main.py</span>
+    <b>IMPORT MODULE</b>
+</div>
+
+<pre><code>import calculator
+
+print(calculator.add(10,5))
+print(calculator.subtract(10,5))
+print(calculator.multiply(10,5))</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+15
+5
+50
+
+</div>
+
+</div>
+
+
+<div class="tip">
+
+    ⭐ Important:
+    <b>calculator.py</b> aur <b>main.py</b> ko same folder mein
+    rakhna beginner example mein easiest approach hai.
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11 FROM USER MODULE
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">📤</div>
+
+    <div>
+        <h2>11. from Module import Function</h2>
+        <p>User-defined module se specific function</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="example">
+
+<div class="example-head">
+    <span>main.py</span>
+    <b>Specific Function</b>
+</div>
+
+<pre><code>from calculator import add
+
+print(add(20,30))</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+50
+
+</div>
+
+</div>
+
+
+<div class="highlight">
+
+    Difference:
+    <br><br>
+    <b>import calculator</b>
+    → calculator.add()
+    <br>
+    <b>from calculator import add</b>
+    → directly add()
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     12 IMPORT AS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🏷️</div>
+
+    <div>
+        <h2>12. Module Alias</h2>
+        <p>Module ko short name dena</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 10</span>
+    <b>Alias</b>
+</div>
+
+<pre><code>import calculator as calc
+
+print(calc.add(5,7))
+print(calc.multiply(5,7))</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+12
+35
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     13 NAMESPACE
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🌐</div>
+
+    <div>
+        <h2>13. Namespace</h2>
+        <p>Very important conceptual topic</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p class="en">
+A namespace is a system that provides a unique name for
+objects such as variables, functions and classes.
+</p>
+
+<p class="hi">
+Namespace ek naming system hai jo different objects ke names
+ko organize aur identify karta hai.
+</p>
+
+
+<div class="mini-grid">
+
+<div class="mini-card">
+    <div class="mini-icon">🌍</div>
+    <h4>Global Namespace</h4>
+    <p>Program/module level names.</p>
+</div>
+
+<div class="mini-card">
+    <div class="mini-icon">🔧</div>
+    <h4>Local Namespace</h4>
+    <p>Function ke andar ke names.</p>
+</div>
+
+<div class="mini-card">
+    <div class="mini-icon">⚙️</div>
+    <h4>Built-in Namespace</h4>
+    <p>Python ke built-in names.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     14 SCOPE
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🔍</div>
+
+    <div>
+        <h2>14. Scope of Variables</h2>
+        <p>Variable kaha accessible hai?</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 11</span>
+    <b>Local Variable</b>
+</div>
+
+<pre><code>def test():
+    x = 10
+    print(x)
+
+test()</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+10
+
+</div>
+
+</div>
+
+
+<div class="warning">
+
+    ⚠️ Function ke andar banaya gaya local variable normally
+    function ke bahar directly accessible nahi hota.
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     15 LEGB
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🧠</div>
+
+    <div>
+        <h2>15. LEGB Rule</h2>
+        <p>Python name lookup ka basic idea</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Letter</th>
+<th>Meaning</th>
+<th>Explanation</th>
+</tr>
+
+<tr>
+<td>L</td>
+<td>Local</td>
+<td>Current function ke andar.</td>
+</tr>
+
+<tr>
+<td>E</td>
+<td>Enclosing</td>
+<td>Outer function ka scope.</td>
+</tr>
+
+<tr>
+<td>G</td>
+<td>Global</td>
+<td>Module/program level.</td>
+</tr>
+
+<tr>
+<td>B</td>
+<td>Built-in</td>
+<td>Python ke built-in names.</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="highlight">
+
+    🧠 Remember:
+    <b>L → E → G → B</b>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     16 __NAME__
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🚦</div>
+
+    <div>
+        <h2>16. __name__</h2>
+        <p>Module ka important special variable</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p>
+Python mein <b>__name__</b> ek special built-in variable hai.
+Jab file directly run hoti hai, generally uska value
+<b>"__main__"</b> hota hai.
+</p>
+
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 12</span>
+    <b>__name__</b>
+</div>
+
+<pre><code>print(__name__)</code></pre>
+
+<div class="output">
+
+<div class="output-title">DIRECT EXECUTION OUTPUT</div>
+
+__main__
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     17 MAIN GUARD
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🛡️</div>
+
+    <div>
+        <h2>17. if __name__ == "__main__"</h2>
+        <p>Important practical concept</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 13</span>
+    <b>MAIN GUARD</b>
+</div>
+
+<pre><code>def greet():
+    print("Hello Python")
+
+if __name__ == "__main__":
+    greet()</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+Hello Python
+
+</div>
+
+</div>
+
+
+<p class="hi">
+Is pattern ka use ye ensure karne ke liye kiya jata hai ki
+kuch code tab execute ho jab file directly run ki jaye.
+</p>
+
+</section>
+
+
+<!-- =========================================================
+     18 PRACTICAL MINI PROJECT
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🚀</div>
+
+    <div>
+        <h2>18. Mini Project — Student Module</h2>
+        <p>Real practical example</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<h4>student.py</h4>
+
+<div class="example">
+
+<pre><code>def percentage(m1,m2,m3):
+
+    total = m1 + m2 + m3
+
+    return total / 3
+
+
+def result(mark):
+
+    if mark >= 40:
+        return "Pass"
+
+    return "Fail"</code></pre>
+
+</div>
+
+
+<h4>main.py</h4>
+
+<div class="example">
+
+<pre><code>import student
+
+marks = student.percentage(70,80,90)
+
+print("Percentage:",marks)
+print("Result:",student.result(marks))</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+Percentage: 80.0
+Result: Pass
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     19 COMMON MODULES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">📚</div>
+
+    <div>
+        <h2>19. Important Standard Modules</h2>
+        <p>Exam + practical ke liye important</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Module</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>math</td>
+<td>Mathematical functions</td>
+<td>sqrt(), factorial(), pi</td>
+</tr>
+
+<tr>
+<td>random</td>
+<td>Random values</td>
+<td>randint(), choice()</td>
+</tr>
+
+<tr>
+<td>datetime</td>
+<td>Date & time</td>
+<td>date.today()</td>
+</tr>
+
+<tr>
+<td>os</td>
+<td>Operating system related tasks</td>
+<td>os.getcwd()</td>
+</tr>
+
+<tr>
+<td>statistics</td>
+<td>Statistical calculations</td>
+<td>mean(), median()</td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     20 OS EXAMPLE
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">💻</div>
+
+    <div>
+        <h2>20. os Module Example</h2>
+        <p>Operating system information</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 14</span>
+    <b>os.getcwd()</b>
+</div>
+
+<pre><code>import os
+
+print(os.getcwd())</code></pre>
+
+<div class="output">
+
+<div class="output-title">POSSIBLE OUTPUT</div>
+
+/home/student/python
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     21 STATISTICS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">📊</div>
+
+    <div>
+        <h2>21. statistics Module</h2>
+        <p>Mean, median etc.</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="example">
+
+<div class="example-head">
+    <span>EXAMPLE 15</span>
+    <b>Mean</b>
+</div>
+
+<pre><code>import statistics
+
+data = [10,20,30,40,50]
+
+print(statistics.mean(data))
+print(statistics.median(data))</code></pre>
+
+<div class="output">
+
+<div class="output-title">OUTPUT</div>
+
+30
+30
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     22 COMMON ERRORS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">⚠️</div>
+
+    <div>
+        <h2>22. Common Mistakes</h2>
+        <p>Students yahan mistakes karte hain</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Wrong</th>
+<th>Problem</th>
+<th>Correct</th>
+</tr>
+
+<tr>
+<td>import math.py</td>
+<td>Import mein .py nahi lagate</td>
+<td>import math</td>
+</tr>
+
+<tr>
+<td>math sqrt(25)</td>
+<td>Dot missing</td>
+<td>math.sqrt(25)</td>
+</tr>
+
+<tr>
+<td>from math sqrt</td>
+<td>import keyword missing</td>
+<td>from math import sqrt</td>
+</tr>
+
+<tr>
+<td>import math as</td>
+<td>Alias name missing</td>
+<td>import math as m</td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     23 EXAM TRICKS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🎯</div>
+
+    <div>
+        <h2>23. NIELIT Exam Tricks</h2>
+        <p>MCQ mein confuse na hona</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="revision">
+
+<div class="revision-item">
+<strong>01 — import</strong>
+<span>
+Module ko import karne ke liye <b>import</b> keyword.
+</span>
+</div>
+
+<div class="revision-item">
+<strong>02 — from import</strong>
+<span>
+Specific object/function import kar sakte hain.
+</span>
+</div>
+
+<div class="revision-item">
+<strong>03 — as</strong>
+<span>
+Alias ya alternate name create karta hai.
+</span>
+</div>
+
+<div class="revision-item">
+<strong>04 — math</strong>
+<span>
+sqrt, pow, ceil, floor, factorial, pi.
+</span>
+</div>
+
+<div class="revision-item">
+<strong>05 — random</strong>
+<span>
+randint aur choice jaise functions.
+</span>
+</div>
+
+<div class="revision-item">
+<strong>06 — __name__</strong>
+<span>
+Direct execution mein generally "__main__".
+</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     24 MCQ
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">🧠</div>
+
+    <div>
+        <h2>24. Exam Practice MCQs</h2>
+        <p>Chapter 8 practice</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+
+<div class="mcq">
+
+<div class="q">
+1. Python module is generally stored in which type of file?
+</div>
+
+<div class="option">A. .html</div>
+<div class="option">B. .py</div>
+<div class="option">C. .css</div>
+<div class="option">D. .exe</div>
+
+<div class="answer">
+✓ Answer: B. .py
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+2. Which keyword is used to import a module?
+</div>
+
+<div class="option">A. include</div>
+<div class="option">B. using</div>
+<div class="option">C. import</div>
+<div class="option">D. module</div>
+
+<div class="answer">
+✓ Answer: C. import
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+3. Which keyword is used to give an alias?
+</div>
+
+<div class="option">A. alias</div>
+<div class="option">B. as</div>
+<div class="option">C. name</div>
+<div class="option">D. short</div>
+
+<div class="answer">
+✓ Answer: B. as
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+4. Which module is commonly used for mathematical functions?
+</div>
+
+<div class="option">A. math</div>
+<div class="option">B. random</div>
+<div class="option">C. os</div>
+<div class="option">D. html</div>
+
+<div class="answer">
+✓ Answer: A. math
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+5. What does math.sqrt(49) return?
+</div>
+
+<div class="option">A. 7</div>
+<div class="option">B. 7.0</div>
+<div class="option">C. 49</div>
+<div class="option">D. Error</div>
+
+<div class="answer">
+✓ Answer: B. 7.0
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+6. Which module is used for random number generation?
+</div>
+
+<div class="option">A. math</div>
+<div class="option">B. random</div>
+<div class="option">C. date</div>
+<div class="option">D. system</div>
+
+<div class="answer">
+✓ Answer: B. random
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+7. What is the usual value of __name__ when a Python file is run directly?
+</div>
+
+<div class="option">A. main</div>
+<div class="option">B. Python</div>
+<div class="option">C. __main__</div>
+<div class="option">D. module</div>
+
+<div class="answer">
+✓ Answer: C. __main__
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+8. Which statement imports sqrt directly from math?
+</div>
+
+<div class="option">A. import sqrt.math</div>
+<div class="option">B. from math import sqrt</div>
+<div class="option">C. include math.sqrt</div>
+<div class="option">D. use math sqrt</div>
+
+<div class="answer">
+✓ Answer: B. from math import sqrt
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+9. Which function generates an integer between specified limits in random module?
+</div>
+
+<div class="option">A. random.integer()</div>
+<div class="option">B. random.number()</div>
+<div class="option">C. random.randint()</div>
+<div class="option">D. random.int()</div>
+
+<div class="answer">
+✓ Answer: C. random.randint()
+</div>
+
+</div>
+
+
+<div class="mcq">
+
+<div class="q">
+10. What is the purpose of a user-defined module?
+</div>
+
+<div class="option">A. Reuse programmer-created code</div>
+<div class="option">B. Delete Python</div>
+<div class="option">C. Create HTML only</div>
+<div class="option">D. Stop execution</div>
+
+<div class="answer">
+✓ Answer: A. Reuse programmer-created code
+</div>
+
+</div>
+
+
+</section>
+
+
+<!-- =========================================================
+     FINAL REVISION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">⚡</div>
+
+    <div>
+        <h2>25. One-Minute Revision</h2>
+        <p>Exam se pehle ye zaroor dekho</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="highlight">
+
+📦 <b>Module</b> = Reusable Python code file.
+
+</div>
+
+<div class="highlight">
+
+📥 <b>import math</b> = Complete module import.
+
+</div>
+
+<div class="highlight">
+
+🎯 <b>from math import sqrt</b> = Specific item import.
+
+</div>
+
+<div class="highlight">
+
+🏷️ <b>import math as m</b> = Alias.
+
+</div>
+
+<div class="highlight">
+
+🧮 <b>math</b> = Mathematical operations.
+
+</div>
+
+<div class="highlight">
+
+🎲 <b>random</b> = Random values.
+
+</div>
+
+<div class="highlight">
+
+⏰ <b>datetime</b> = Date and time.
+
+</div>
+
+<div class="highlight">
+
+🌐 <b>Namespace</b> = Names ko organize/identify karne ka system.
+
+</div>
+
+<div class="highlight">
+
+🧠 <b>LEGB</b> = Local → Enclosing → Global → Built-in.
+
+</div>
+
+<div class="highlight">
+
+🚦 <b>__name__ == "__main__"</b> = Direct execution check.
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+<p>
+    M3-R5 • Chapter 08 • Modules in Python
+</p>
+
+<p style="margin-top:7px;">
+    Bilingual • Practical Examples • Exam Focused
+</p>
+
+</footer>
+
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   COLOR CHANGER
+========================================================= */
+
+function setColor(primary,secondary){
+
+    document.documentElement.style.setProperty(
+        "--accent",
+        primary
+    );
+
+    document.documentElement.style.setProperty(
+        "--accent2",
+        secondary
+    );
+
+    localStorage.setItem(
+        "m3Chapter8Accent",
+        primary
+    );
+
+    localStorage.setItem(
+        "m3Chapter8Accent2",
+        secondary
+    );
+}
+
+
+/* =========================================================
+   LOAD SAVED COLOR
+========================================================= */
+
+const savedPrimary =
+    localStorage.getItem("m3Chapter8Accent");
+
+const savedSecondary =
+    localStorage.getItem("m3Chapter8Accent2");
+
+if(savedPrimary){
+
+    document.documentElement.style.setProperty(
+        "--accent",
+        savedPrimary
+    );
+
+}
+
+if(savedSecondary){
+
+    document.documentElement.style.setProperty(
+        "--accent2",
+        savedSecondary
+    );
+
+}
+
+</script>
+
+
+</body>
+</html>

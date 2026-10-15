@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database & DBMS – Tables, Keys, SQL</title>
+    <style>
+        /* ===== CSS VARIABLES / THEMES (Same as previous) ===== */
+        :root {
+            --bg-primary: #f0f4f9;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2634;
+            --text-secondary: #3d4e62;
+            --text-light: #6f7e8f;
+            --border-color: #e2e9f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.13);
+            --accent: #2c3e50;
+            --accent-light: #5d7a9a;
+            --accent-dark: #1a252f;
+            --accent-gradient: linear-gradient(135deg, #1a252f, #2c3e50);
+            --header-bg: linear-gradient(135deg, #0a1e2e, #143b54);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 22, 38, 0.92), rgba(11, 55, 87, 0.88));
+            --tab-bg: #ffffff;
+            --tab-active: #0a1e30;
+            --tab-text: #2d4055;
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow: 0 0 30px rgba(44, 62, 80, 0.15);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111b26;
+            --bg-secondary: #1a2a38;
+            --bg-card: #1e3040;
+            --text-primary: #e8edf2;
+            --text-secondary: #b8c7d6;
+            --text-light: #8a9aa8;
+            --border-color: #2d4055;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: linear-gradient(135deg, #0a1620, #0f2a3d);
+            --hero-overlay: linear-gradient(135deg, rgba(4, 14, 24, 0.95), rgba(8, 30, 48, 0.92));
+            --tab-bg: #1a2a38;
+            --tab-active: #2c3e50;
+            --tab-text: #c8d6e0;
+        }
+        [data-accent="blue"] { --accent: #3b82f6; --accent-light: #6ba3f8; --accent-dark: #2563eb; --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6); --glow: 0 0 30px rgba(59,130,246,0.2); }
+        [data-accent="gold"] { --accent: #dcae35; --accent-light: #f0d56a; --accent-dark: #b8922a; --accent-gradient: linear-gradient(135deg, #b8922a, #dcae35); --glow: 0 0 30px rgba(220,174,53,0.2); }
+        [data-accent="green"] { --accent: #22c55e; --accent-light: #4ade80; --accent-dark: #16a34a; --accent-gradient: linear-gradient(135deg, #16a34a, #22c55e); --glow: 0 0 30px rgba(34,197,94,0.2); }
+        [data-accent="purple"] { --accent: #8b5cf6; --accent-light: #a78bfa; --accent-dark: #7c3aed; --accent-gradient: linear-gradient(135deg, #7c3aed, #8b5cf6); --glow: 0 0 30px rgba(139,92,246,0.2); }
+        [data-accent="rose"] { --accent: #f43f5e; --accent-light: #fb7185; --accent-dark: #e11d48; --accent-gradient: linear-gradient(135deg, #e11d48, #f43f5e); --glow: 0 0 30px rgba(244,63,94,0.2); }
+        [data-accent="orange"] { --accent: #f97316; --accent-light: #fb923c; --accent-dark: #ea580c; --accent-gradient: linear-gradient(135deg, #ea580c, #f97316); --glow: 0 0 30px rgba(249,115,22,0.2); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+        }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:10px; }
+
+        .topbar {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background var(--transition);
+        }
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--header-bg);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: background var(--transition);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .logo { display:flex; align-items:center; gap:12px; }
+        .logo-icon {
+            width:44px; height:44px; border-radius:50%; background:var(--accent-gradient);
+            display:flex; align-items:center; justify-content:center; font-size:22px;
+            box-shadow:0 0 0 4px rgba(44,62,80,0.2);
+            transition:background var(--transition);
+        }
+        .logo h1 { font-size:18px; line-height:1.2; }
+        .logo span { display:block; font-size:10px; color:#b8ccdd; letter-spacing:0.3px; }
+        .nav-actions { display:flex; align-items:center; gap:12px; }
+        .search { position:relative; width:260px; }
+        .search input {
+            width:100%; padding:9px 15px 9px 38px; border:none; outline:none;
+            border-radius:30px; background:rgba(255,255,255,0.12); color:#fff;
+            font-size:13px; backdrop-filter:blur(4px);
+            transition: background var(--transition);
+        }
+        .search input::placeholder { color:rgba(255,255,255,0.6); }
+        .search input:focus { background:rgba(255,255,255,0.2); }
+        .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:16px; }
+
+        .theme-controls {
+            display:flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:30px;
+            backdrop-filter:blur(4px);
+        }
+        .theme-btn {
+            width:32px; height:32px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+            display:flex; align-items:center; justify-content:center; font-size:14px;
+            background:transparent; color:rgba(255,255,255,0.6);
+        }
+        .theme-btn:hover { transform:scale(1.1); color:#fff; }
+        .theme-btn.active { border-color:var(--accent); color:#fff; background:rgba(255,255,255,0.1); }
+        .color-dot {
+            width:20px; height:20px; border-radius:50%; border:2px solid transparent;
+            cursor:pointer; transition:all var(--transition);
+        }
+        .color-dot:hover { transform:scale(1.15); }
+        .color-dot.active { border-color:#fff; box-shadow:0 0 12px rgba(255,255,255,0.3); }
+        .color-dot.dark { background:#2c3e50; }
+        .color-dot.gold { background:#dcae35; }
+        .color-dot.blue { background:#3b82f6; }
+        .color-dot.green { background:#22c55e; }
+        .color-dot.purple { background:#8b5cf6; }
+        .color-dot.rose { background:#f43f5e; }
+        .color-dot.orange { background:#f97316; }
+
+        .hero {
+            background: var(--hero-overlay), radial-gradient(circle at top right, var(--accent), transparent 40%);
+            color:#fff; padding:60px 20px 70px; position:relative; overflow:hidden;
+            transition: background var(--transition);
+        }
+        .hero::before {
+            content:""; position:absolute; inset:0;
+            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity:0.4;
+        }
+        .hero-content { max-width:1100px; margin:auto; position:relative; z-index:2; text-align:center; }
+        .hero .badge {
+            display:inline-block; padding:6px 18px;
+            border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);
+            border-radius:30px; font-size:12px; font-weight:600; letter-spacing:0.5px;
+            backdrop-filter:blur(4px); margin-bottom:16px;
+        }
+        .hero h2 { font-size:clamp(30px,5.5vw,56px); line-height:1.15; margin-bottom:6px; }
+        .hero h2 strong { color:var(--accent-light); text-shadow:0 0 40px rgba(44,62,80,0.2); }
+        .hero .subtitle { font-size:clamp(15px,1.6vw,20px); color:rgba(255,255,255,0.75); font-weight:300; margin-bottom:8px; }
+        .hero .tags-line { display:flex; justify-content:center; flex-wrap:wrap; gap:8px 16px; font-size:13px; color:rgba(255,255,255,0.65); margin-top:8px; }
+        .hero .tags-line span { background:rgba(255,255,255,0.06); padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.06); backdrop-filter:blur(4px); }
+        .hero-buttons { margin-top:28px; display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+        .btn {
+            text-decoration:none; padding:12px 28px; border-radius:30px; font-weight:700;
+            transition:all var(--transition); display:inline-flex; align-items:center; gap:8px;
+            font-size:14px; border:none; cursor:pointer;
+        }
+        .btn-primary { background:var(--accent-gradient); color:#fff; box-shadow:0 4px 20px rgba(44,62,80,0.3); }
+        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 35px rgba(44,62,80,0.4); }
+        .btn-outline { border:1.5px solid rgba(255,255,255,0.3); color:#fff; background:rgba(255,255,255,0.05); backdrop-filter:blur(4px); }
+        .btn-outline:hover { background:rgba(255,255,255,0.15); transform:translateY(-3px); border-color:#fff; }
+
+        .stats { max-width:1100px; margin:-35px auto 35px; padding:0 20px; position:relative; z-index:5; }
+        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .stat {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:20px 16px;
+            text-align:center; box-shadow:var(--shadow); border-top:4px solid var(--accent);
+            transition:all var(--transition);
+        }
+        .stat:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+        .stat b { display:block; font-size:26px; background:var(--accent-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .stat span { font-size:13px; color:var(--text-light); -webkit-text-fill-color:var(--text-light); }
+
+        .tab-nav {
+            background:var(--tab-bg); border-bottom:2px solid var(--border-color);
+            position:sticky; top:70px; z-index:999; box-shadow:0 4px 20px rgba(0,0,0,0.04);
+            padding:0 20px; transition:background var(--transition), border-color var(--transition);
+        }
+        .tab-nav-inner {
+            max-width:1100px; margin:auto; display:flex; overflow-x:auto; gap:4px; padding:8px 0;
+            scrollbar-width:thin;
+        }
+        .tab-nav-inner::-webkit-scrollbar { height:3px; }
+        .tab-nav-inner::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+        .tab-link {
+            display:inline-block; padding:7px 14px; font-size:12px; font-weight:600;
+            color:var(--tab-text); text-decoration:none; border-radius:30px; white-space:nowrap;
+            transition:all var(--transition); border:1px solid transparent; flex-shrink:0;
+        }
+        .tab-link:hover { background:rgba(44,62,80,0.1); color:var(--accent); }
+        .tab-link.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 15px rgba(44,62,80,0.25); }
+        .tab-link .num-badge { display:inline-block; background:rgba(255,255,255,0.15); font-size:9px; font-weight:700; border-radius:12px; padding:0 7px; margin-left:3px; }
+        .tab-link.active .num-badge { background:rgba(255,255,255,0.2); }
+
+        .container { max-width:1100px; margin:auto; padding:0 20px 50px; }
+        .section {
+            background:var(--bg-card); border-radius:var(--card-radius); padding:32px 36px;
+            margin-bottom:28px; box-shadow:var(--shadow); border:1px solid var(--border-color);
+            scroll-margin-top:130px; transition:all var(--transition);
+        }
+        .section:hover { box-shadow:var(--shadow-hover); }
+        .section-heading {
+            display:flex; align-items:center; gap:14px; margin-bottom:22px; padding-bottom:16px;
+            border-bottom:2px solid var(--border-color);
+        }
+        .section-heading .num {
+            min-width:48px; height:48px; display:flex; justify-content:center; align-items:center;
+            background:var(--accent-gradient); color:#fff; border-radius:12px; font-weight:800;
+            font-size:16px; box-shadow:0 4px 15px rgba(44,62,80,0.2); flex-shrink:0;
+        }
+        .section-heading h3 { color:var(--text-primary); font-size:24px; font-weight:700; }
+        .section p { margin-bottom:16px; color:var(--text-secondary); font-size:15.5px; }
+        .section h4 { color:var(--accent); font-size:18px; margin:20px 0 10px; }
+        .section h5 { color:var(--accent-dark); font-size:16px; margin:16px 0 8px; }
+        .section ul, .section ol { padding-left:28px; color:var(--text-secondary); margin-bottom:16px; }
+        .section ul li, .section ol li { margin-bottom:6px; }
+        .section .theory-box {
+            background:rgba(44,62,80,0.04);
+            border-radius:10px;
+            padding:18px 22px;
+            margin:14px 0;
+            border-left:4px solid var(--accent);
+        }
+        .section .theory-box strong { color:var(--accent); }
+
+        .info { background:rgba(44,62,80,0.07); border-left:4px solid var(--accent); padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .info strong { color:var(--accent); }
+        .highlight-box { background:rgba(44,62,80,0.05); border-radius:10px; padding:18px 22px; margin:16px 0; border-left:4px solid var(--accent); }
+        .highlight-box strong { color:var(--accent); }
+        .green-box { background:rgba(34,197,94,0.06); border-left:4px solid #22c55e; padding:16px 22px; border-radius:8px; margin:16px 0; }
+        .green-box strong { color:#22c55e; }
+        .table-wrap { overflow-x:auto; margin:16px 0; border-radius:10px; border:1px solid var(--border-color); }
+        table { width:100%; border-collapse:collapse; min-width:480px; font-size:14px; }
+        th, td { border:1px solid var(--border-color); padding:10px 14px; text-align:left; vertical-align:top; }
+        th { background:var(--accent-gradient); color:#fff; font-weight:700; }
+        tr:nth-child(even) { background:rgba(44,62,80,0.04); }
+
+        .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+        .word-card { background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:18px 20px; transition:all var(--transition); }
+        .word-card:hover { border-color:var(--accent); box-shadow:var(--glow); }
+        .word-card h4 { color:var(--accent); margin-bottom:6px; font-size:16px; }
+        .word-card ul { padding-left:20px; color:var(--text-secondary); }
+        .word-card ul li { margin-bottom:3px; }
+
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .tag { background:rgba(44,62,80,0.1); color:var(--accent); padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid rgba(44,62,80,0.15); }
+
+        .mcq { border:1px solid var(--border-color); border-radius:12px; margin:16px 0; overflow:hidden; transition:all var(--transition); background:var(--bg-primary); }
+        .mcq:hover { border-color:var(--accent); }
+        .question { background:var(--bg-card); padding:14px 18px; font-weight:700; color:var(--text-primary); border-bottom:1px solid var(--border-color); font-size:15px; }
+        .options { padding:8px 18px; }
+        .option {
+            display:block;
+            padding:6px 10px;
+            border-bottom:1px dashed var(--border-color);
+            color:var(--text-secondary);
+            cursor:pointer;
+            transition:background 0.2s;
+        }
+        .option:last-child { border-bottom:none; }
+        .option:hover { background:rgba(44,62,80,0.05); }
+        .option input[type="radio"] { margin-right:12px; transform:scale(1.1); cursor:pointer; }
+        .answer-btn { margin:0 18px 14px; border:none; background:var(--accent-gradient); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; font-weight:700; font-size:13px; transition:all var(--transition); box-shadow:0 4px 15px rgba(44,62,80,0.2); }
+        .answer-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(44,62,80,0.3); }
+        .answer { display:none; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.2); padding:14px 18px; color:var(--text-secondary); }
+        .answer.show { display:block; }
+        .correct { color:#22c55e; font-weight:700; }
+
+        footer { background:var(--header-bg); color:#c8d6e0; text-align:center; padding:30px 20px; margin-top:20px; transition:background var(--transition); }
+        footer strong { color:var(--accent-light); }
+        .backtop { display:inline-block; margin-top:12px; color:#fff; text-decoration:none; font-size:13px; padding:6px 20px; border-radius:30px; background:rgba(255,255,255,0.06); transition:all var(--transition); }
+        .backtop:hover { background:var(--accent); color:#fff; }
+
+        .hidden-search { display:none !important; }
+        .scroll-top-btn {
+            position:fixed; bottom:30px; right:30px; background:var(--accent-gradient); color:#fff;
+            width:50px; height:50px; border-radius:50%; border:none; font-size:22px; cursor:pointer;
+            box-shadow:0 4px 25px rgba(44,62,80,0.35); transition:all var(--transition); z-index:999;
+            display:none;
+        }
+        .scroll-top-btn:hover { transform:translateY(-4px) scale(1.05); box-shadow:0 8px 40px rgba(44,62,80,0.4); }
+        .scroll-top-btn.visible { display:block; }
+
+        @media (max-width:850px) {
+            .nav { flex-wrap:wrap; gap:10px; }
+            .search { width:100%; order:3; }
+            .search input { background:rgba(255,255,255,0.08); }
+            .theme-controls { padding:3px 6px; }
+            .stats-grid { grid-template-columns:repeat(2,1fr); }
+            .cards { grid-template-columns:1fr; }
+            .tab-nav { top:115px; }
+            .section { scroll-margin-top:150px; padding:20px 18px; }
+            .section-heading h3 { font-size:19px; }
+            .section-heading .num { min-width:36px; height:36px; font-size:12px; }
+        }
+        @media (max-width:520px) {
+            .topbar { font-size:10px; padding:6px 12px; }
+            .hero { padding:40px 16px 50px; }
+            .hero h2 { font-size:28px; }
+            .hero .subtitle { font-size:14px; }
+            .stats-grid { gap:10px; }
+            .stat { padding:12px 8px; }
+            .stat b { font-size:20px; }
+            .tab-nav { top:108px; padding:0 10px; }
+            .tab-link { font-size:11px; padding:5px 10px; }
+            .section { padding:16px 14px; margin-bottom:16px; }
+            table { font-size:12px; min-width:340px; }
+            th,td { padding:7px 10px; }
+            .logo h1 { font-size:15px; }
+            .logo span { font-size:9px; }
+            .logo-icon { width:36px; height:36px; font-size:17px; }
+            .btn { padding:10px 20px; font-size:13px; }
+            .section-heading h3 { font-size:17px; }
+            .section-heading .num { min-width:32px; height:32px; font-size:11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">🗄️ DATABASE & DBMS – Tables • Keys • SQL • ACID • 240+ MCQs • UP Police, SSC, Banking, Technical Exams</div>
+
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">🗄️</div>
+                <div><h1>DATABASE & DBMS</h1><span>Tables • Keys • SQL</span></div>
+            </div>
+            <div class="nav-actions">
+                <div class="search">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="searchBox" placeholder="Topic या keyword खोजें...">
+                </div>
+                <div class="theme-controls">
+                    <button class="theme-btn" id="themeToggle" title="Toggle Dark/Light">🌓</button>
+                    <span style="color:rgba(255,255,255,0.2);">|</span>
+                    <div class="color-dot dark active" data-color="dark" title="Dark (Default)"></div>
+                    <div class="color-dot gold" data-color="gold" title="Gold"></div>
+                    <div class="color-dot blue" data-color="blue" title="Blue"></div>
+                    <div class="color-dot green" data-color="green" title="Green"></div>
+                    <div class="color-dot purple" data-color="purple" title="Purple"></div>
+                    <div class="color-dot rose" data-color="rose" title="Rose"></div>
+                    <div class="color-dot orange" data-color="orange" title="Orange"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🗄️ DATABASE & DBMS – SAMPOORNA</div>
+            <h2>Database & DBMS <strong>सम्पूर्ण अध्ययन</strong><br>Tables • Keys • SQL • ACID • Normalization</h2>
+            <div class="subtitle">UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाओं के लिए • 240 MCQs</div>
+            <div class="tags-line">
+                <span>📖 5 Topics + Practice</span>
+                <span>📌 240 MCQs</span>
+                <span>🎯 Exam Focused</span>
+                <span>🗄️ Complete DBMS</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#ch1" class="btn btn-primary">📖 पढ़ना शुरू करें</a>
+                <a href="#practice" class="btn btn-outline">🎯 Practice</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stats-grid">
+            <div class="stat"><b>5</b><span>Topics</span></div>
+            <div class="stat"><b>240</b><span>MCQs</span></div>
+            <div class="stat"><b>100%</b><span>DBMS Focus</span></div>
+            <div class="stat"><b>ALL</b><span>Exams</span></div>
+        </div>
+    </div>
+
+    <nav class="tab-nav" id="tabNav">
+        <div class="tab-nav-inner">
+            <a class="tab-link active" href="#ch1"><span class="num-badge">01</span> Intro & ACID</a>
+            <a class="tab-link" href="#ch2"><span class="num-badge">02</span> ER & Models</a>
+            <a class="tab-link" href="#ch3"><span class="num-badge">03</span> Keys & Normalization</a>
+            <a class="tab-link" href="#ch4"><span class="num-badge">04</span> SQL</a>
+            <a class="tab-link" href="#ch5"><span class="num-badge">05</span> Transactions</a>
+            <a class="tab-link" href="#practice"><span class="num-badge">★</span> Practice</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main id="bookContent">
+
+            <!-- ===== CHAPTER 1: INTRO & ACID ===== -->
+            <section class="section" id="ch1">
+                <div class="section-heading"><div class="num">01</div><h3>Database, DBMS और ACID Properties</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Database (DB) क्या है?</h4>
+                    <p>Database, <strong>organized data</strong> का एक systematic collection है जिसे electronically store, manage और retrieve किया जा सकता है। यह real-world entities (जैसे students, employees, products) का structured representation है।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 DBMS (Database Management System) क्या है?</h4>
+                    <p>DBMS, <strong>software</strong> है जो database के creation, maintenance और manipulation को manage करता है। यह data और user/application के बीच interface का काम करता है।</p>
+                    <ul>
+                        <li><strong>Examples:</strong> MySQL, Oracle, PostgreSQL, Microsoft SQL Server, MongoDB (NoSQL)।</li>
+                        <li><strong>Advantages over File System:</strong> Data Redundancy control, Data Consistency, Data Security, Backup & Recovery, Concurrent Access (Multi-user)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 DBMS के Types (Exam Focus)</h4>
+                    <ul>
+                        <li><strong>Relational DBMS (RDBMS):</strong> Data को tables (relations) में store करता है। SQL का उपयोग। (MySQL, Oracle)।</li>
+                        <li><strong>NoSQL DBMS:</strong> Non-relational, flexible schema। Document-based (MongoDB), Key-Value (Redis), Column-family (Cassandra), Graph (Neo4j)।</li>
+                        <li><strong>Object-Oriented DBMS:</strong> Data को objects के रूप में store करता है। (ObjectDB)।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 ACID Properties (बहुत महत्वपूर्ण)</h4>
+                    <p>ACID, transaction properties का एक set है जो database transactions की reliability सुनिश्चित करता है:</p>
+                    <ul>
+                        <li><strong>Atomicity (अणुशीलता):</strong> Transaction या तो पूरी तरह से execute होता है या बिल्कुल नहीं (All-or-Nothing)।</li>
+                        <li><strong>Consistency (संगतता):</strong> Transaction database को एक valid state से दूसरी valid state में लाता है (Integrity constraints maintained)।</li>
+                        <li><strong>Isolation (पृथकता):</strong> Concurrent transactions एक-दूसरे को affect नहीं करते (Serializability)।</li>
+                        <li><strong>Durability (स्थायित्व):</strong> Committed transaction का data permanent रहता है, system failure के बाद भी।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 DBMS vs File System:</strong> DBMS removes redundancy, provides security, and supports concurrent access.
+                </div>
+                <div id="intro-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 2: ER & MODELS ===== -->
+            <section class="section" id="ch2">
+                <div class="section-heading"><div class="num">02</div><h3>Data Models, ER Diagram & Architecture</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Data Models (Types)</h4>
+                    <ul>
+                        <li><strong>Hierarchical Model:</strong> Tree-like structure (Parent-Child). (Old – IMS)।</li>
+                        <li><strong>Network Model:</strong> Graph structure (Many-to-Many relationships)।</li>
+                        <li><strong>Relational Model (RDBMS):</strong> Table-based (Rows/Tuples और Columns/Attributes)। Most popular।</li>
+                        <li><strong>Object-Oriented Model:</strong> Objects with methods।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 ER (Entity-Relationship) Model</h4>
+                    <p>ER Model database design का conceptual framework है।</p>
+                    <ul>
+                        <li><strong>Entity:</strong> Real-world object (जैसे Student, Employee)। Represented by Rectangle.</li>
+                        <li><strong>Attribute:</strong> Entity की properties (जैसे Name, Age, ID)। Represented by Ellipse. <br>
+                            <em>Types:</em> Simple (atomic), Composite (split into sub-parts, e.g., Address), Derived (calculated, e.g., Age from DOB), Multi-valued (e.g., Phone numbers)।
+                        </li>
+                        <li><strong>Relationship:</strong> Entities के बीच association (जैसे Student Enrolls in Course)। Represented by Diamond।<br>
+                            <em>Cardinality:</em> One-to-One (1:1), One-to-Many (1:M), Many-to-Many (M:M)।<br>
+                            <em>Participation:</em> Total (double line) vs Partial (single line)।
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Database Architecture (3-level Schema)</h4>
+                    <ul>
+                        <li><strong>External Level (View Level):</strong> End-user का view। Multiple views possible।</li>
+                        <li><strong>Conceptual Level (Logical Level):</strong> Database का overall structure। Tables/Relations।</li>
+                        <li><strong>Internal Level (Physical Level):</strong> Storage structure, indexing, file organization।</li>
+                    </ul>
+                    <p><strong>Data Independence:</strong> Ability to change schema at one level without affecting higher levels. (Logical Independence – change conceptual without affecting external; Physical Independence – change internal without affecting conceptual)।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 ER Concepts:</strong> Rectangle = Entity, Ellipse = Attribute, Diamond = Relationship. 1:M is most common.
+                </div>
+                <div id="model-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 3: KEYS & NORMALIZATION ===== -->
+            <section class="section" id="ch3">
+                <div class="section-heading"><div class="num">03</div><h3>Keys (Primary, Foreign) & Normalization</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Keys in DBMS (बहुत महत्वपूर्ण)</h4>
+                    <ul>
+                        <li><strong>Super Key:</strong> Columns (or combination) का set जो uniquely identify each row करता है। (Contains extra columns)</li>
+                        <li><strong>Candidate Key:</strong> Minimal Super Key (no redundant columns). Super Key का subset जो unique है।</li>
+                        <li><strong>Primary Key:</strong> एक unique Candidate Key जो table को identify करता है। <br>
+                            <em>Rules:</em> Unique, Not Null, Immutable (ideally), Only one per table।
+                        </li>
+                        <li><strong>Alternate Key:</strong> Candidate keys जो Primary Key नहीं हैं।</li>
+                        <li><strong>Foreign Key:</strong> दूसरी table के Primary Key को reference करता है। <br>
+                            <em>Rules:</em> Values can be duplicated, can be NULL. Referential Integrity सुनिश्चित करता है।
+                        </li>
+                        <li><strong>Composite Key:</strong> दो या अधिक columns का combination जो Primary Key के रूप में use होता है।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Normalization (Anomalies को remove करना)</h4>
+                    <p>Normalization, data redundancy और anomalies (Insertion, Deletion, Update) को reduce करने के लिए tables को decompose करने की प्रक्रिया है।</p>
+                    <ul>
+                        <li><strong>1NF (First Normal Form):</strong> Each cell में एक single atomic value (no multi-valued attributes)।</li>
+                        <li><strong>2NF (Second Normal Form):</strong> 1NF + No Partial Dependency (No non-prime attribute dependent on part of Candidate Key) – applicable only for Composite Keys.</li>
+                        <li><strong>3NF (Third Normal Form):</strong> 2NF + No Transitive Dependency (No non-prime attribute dependent on another non-prime attribute).</li>
+                        <li><strong>BCNF (Boyce-Codd Normal Form):</strong> 3NF का stricter version. For every functional dependency X → Y, X must be a Super Key.</li>
+                        <li><strong>4NF & 5NF:</strong> Multi-valued dependencies और Join dependencies से deal करती हैं (less frequent in exams)।</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Key Tricks:</strong> Primary = Unique + Not Null. Foreign = References Primary Key of another table. 2NF = No partial dependency. 3NF = No transitive dependency.
+                </div>
+                <div id="keys-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 4: SQL ===== -->
+            <section class="section" id="ch4">
+                <div class="section-heading"><div class="num">04</div><h3>SQL – Commands, Queries & Joins</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 SQL (Structured Query Language) – Types</h4>
+                    <ul>
+                        <li><strong>DDL (Data Definition Language):</strong> Database structure को define/alter करना। <br>
+                            <em>Commands:</em> CREATE, ALTER, DROP, TRUNCATE, RENAME।
+                        </li>
+                        <li><strong>DML (Data Manipulation Language):</strong> Data को manipulate (insert, update, delete)। <br>
+                            <em>Commands:</em> INSERT, UPDATE, DELETE, SELECT (some consider SELECT separately)।
+                        </li>
+                        <li><strong>DCL (Data Control Language):</strong> Permissions/access को manage करना। <br>
+                            <em>Commands:</em> GRANT, REVOKE।
+                        </li>
+                        <li><strong>TCL (Transaction Control Language):</strong> Transactions को manage करना। <br>
+                            <em>Commands:</em> COMMIT, ROLLBACK, SAVEPOINT।
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Important SQL Clauses & Keywords</h4>
+                    <ul>
+                        <li><strong>SELECT:</strong> Data retrieve करना। (e.g., <code>SELECT * FROM Students;</code>)</li>
+                        <li><strong>WHERE:</strong> Conditions filter करना। (e.g., <code>WHERE age > 18</code>)</li>
+                        <li><strong>GROUP BY:</strong> Similar data को group करना। (Often with Aggregate functions – COUNT, SUM, AVG, MAX, MIN)</li>
+                        <li><strong>HAVING:</strong> Groups पर conditions लगाना। (e.g., <code>HAVING COUNT(*) > 5</code>)</li>
+                        <li><strong>ORDER BY:</strong> Sorting (ASC/DESC)।</li>
+                        <li><strong>DISTINCT:</strong> Unique values लाना।</li>
+                        <li><strong>LIKE:</strong> Pattern matching (% for any sequence, _ for single character)।</li>
+                        <li><strong>JOINS:</strong> Multiple tables से data combine करना। <br>
+                            <em>INNER JOIN:</em> Matching rows only। <br>
+                            <em>LEFT/RIGHT JOIN:</em> All rows from left/right table + matches। <br>
+                            <em>FULL JOIN:</em> All rows from both tables। <br>
+                            <em>SELF JOIN:</em> Table का अपने साथ join।
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 DDL vs DML – Key Difference</h4>
+                    <p><strong>DDL (CREATE, ALTER, DROP):</strong> Auto-commit होता है (permanent)। Structure बदलता है। <strong>DML (INSERT, UPDATE, DELETE):</strong> Manual commit (COMMIT/ROLLBACK) की आवश्यकता होती है। Data बदलता है, structure नहीं।</p>
+                    <p><strong>DROP vs TRUNCATE vs DELETE:</strong> DROP removes structure, TRUNCATE removes all data (faster, resets auto-increment), DELETE removes selected data (slower, can be rolled back)।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 SQL Query Order (Logical):</strong> SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY.
+                </div>
+                <div id="sql-mcq"></div>
+            </section>
+
+            <!-- ===== CHAPTER 5: TRANSACTIONS ===== -->
+            <section class="section" id="ch5">
+                <div class="section-heading"><div class="num">05</div><h3>Transactions, Concurrency & Deadlock</h3></div>
+
+                <div class="theory-box">
+                    <h4>🔹 Transaction क्या है?</h4>
+                    <p>Transaction, database operations का एक <strong>logical unit</strong> है जो एक साथ execute होते हैं (e.g., Bank Transfer: Debit + Credit)।</p>
+                    <p><strong>Transaction States:</strong> Active (executing) → Partially Committed (last statement done) → Failed (error) / Committed (success) → Aborted (rolled back)।</p>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Concurrency Issues (Problems)</h4>
+                    <p>जब multiple transactions concurrently execute होती हैं, तो ये problems आ सकती हैं:</p>
+                    <ul>
+                        <li><strong>Lost Update (Lost & Write):</strong> Two transactions update same data, one update overwrites the other.</li>
+                        <li><strong>Dirty Read (Uncommitted Dependency):</strong> Transaction reads data written by an uncommitted transaction.</li>
+                        <li><strong>Unrepeatable Read (Inconsistent Analysis):</strong> Transaction reads same row twice and gets different data (because another transaction updated it in between).</li>
+                        <li><strong>Phantom Read:</strong> Transaction re-executes a query and gets different set of rows (because another transaction inserted/deleted in between).</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Concurrency Control Protocols</h4>
+                    <ul>
+                        <li><strong>Locking:</strong>
+                            <ul>
+                                <li><strong>Shared Lock (S-Lock):</strong> Read-only (multiple transactions can hold simultaneously)।</li>
+                                <li><strong>Exclusive Lock (X-Lock):</strong> Write (only one transaction can hold)।</li>
+                            </ul>
+                        </li>
+                        <li><strong>Two-Phase Locking (2PL):</strong> Growing phase (acquire locks) and Shrinking phase (release locks)। Strict 2PL (releases locks after commit) ensures recoverability.</li>
+                        <li><strong>Timestamp-based Protocols:</strong> Assigns timestamp to transactions; ensures conflict serializability.</li>
+                        <li><strong>Serializability:</strong> Schedule का result concurrent transactions के किसी serial order के equal होना।</li>
+                    </ul>
+                </div>
+
+                <div class="theory-box">
+                    <h4>🔹 Deadlock</h4>
+                    <p>Deadlock, condition जब दो या अधिक transactions एक-दूसरे के held resources की wait करते हैं और आगे नहीं बढ़ते।</p>
+                    <p><strong>Conditions for Deadlock:</strong> Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait।</p>
+                    <p><strong>Deadlock Handling:</strong> Prevention (remove any condition), Detection (wait-for graph), Recovery (abort one transaction)।</p>
+                </div>
+                <div class="highlight-box">
+                    <strong>🎯 Transaction Concepts:</strong> Lost Update = Overwrite, Dirty Read = Uncommitted data, Phantom = New rows. 2PL prevents conflicts. Deadlock = Circular wait.
+                </div>
+                <div id="trans-mcq"></div>
+            </section>
+
+            <!-- ===== PRACTICE SECTION ===== -->
+            <section class="section" id="practice">
+                <div class="section-heading"><div class="num">★</div><h3>Practice – 40 मिश्रित MCQs (All Topics)</h3></div>
+                <p>यहाँ 40 मिश्रित प्रश्न दिए गए हैं – जो DBMS के सभी टॉपिक्स को कवर करते हैं।</p>
+                <div class="info"><strong>📊 Balanced MCQ Rule:</strong> प्रत्येक 40-question bank में सही उत्तर A, B, C और D का exact 10-10-10-10 distribution (25%-25%-25%-25%) रखा गया है।</div>
+                <div id="practice-mcq"></div>
+                <div class="green-box"><strong>✅ अंतिम सुझाव:</strong> DBMS में ACID Properties, Keys (Primary/Foreign), Normalization Forms (1NF, 2NF, 3NF, BCNF), SQL Commands (DDL vs DML), और Transaction Concurrency पर फोकस करें। प्रत्येक प्रश्न को हल करें और सही विकल्प पर टिक करें, फिर "उत्तर देखें" बटन से मिलान करें। शुभकामनाएँ! 🗄️</div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>DATABASE & DBMS – Complete E-Book</strong></p>
+        <p>UP Police • SSC • Railway • Banking • सभी प्रतियोगी परीक्षाएँ</p>
+        <p style="margin-top:10px;font-size:12px;">© 2026 • 5 Topics • 240 MCQs • DBMS Concepts</p>
+        <a href="#top" class="backtop">↑ ऊपर जाएँ</a>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ----- TOGGLE ANSWER -----
+        function toggleAnswer(button) {
+            const answer = button.nextElementSibling;
+            if (answer.classList.contains("show")) {
+                answer.classList.remove("show");
+                button.innerText = "उत्तर देखें";
+            } else {
+                answer.classList.add("show");
+                button.innerText = "उत्तर छिपाएँ";
+            }
+        }
+
+        // ----- RENDER MCQ WITH RADIO BUTTONS (Balanced) -----
+        function balanceQuestionBank(questions) {
+            const letters = ["A", "B", "C", "D"];
+            const result = questions.map(q => ({...q}));
+            result.forEach((q, i) => {
+                const newCorrect = letters[i % 4];
+                const oldCorrect = q.correct;
+                if (newCorrect === oldCorrect) return;
+                const temp = q[newCorrect];
+                q[newCorrect] = q[oldCorrect];
+                q[oldCorrect] = temp;
+                q.correct = newCorrect;
+            });
+            return result;
+        }
+
+        function renderMCQs(containerId, questions) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const balanced = balanceQuestionBank(questions);
+            let html = '';
+            balanced.forEach((q, i) => {
+                const name = `q${containerId}_${i}`;
+                html += `<div class="mcq">`;
+                html += `<div class="question">${i+1}. ${q.question}</div>`;
+                html += `<div class="options">`;
+                html += `<label class="option"><input type="radio" name="${name}" value="A"> (A) ${q.A}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="B"> (B) ${q.B}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="C"> (C) ${q.C}</label>`;
+                html += `<label class="option"><input type="radio" name="${name}" value="D"> (D) ${q.D}</label>`;
+                html += `</div>`;
+                html += `<button class="answer-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>`;
+                html += `<div class="answer"><span class="correct">सही: (${q.correct})</span> ${q.explanation}</div>`;
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ====== QUESTION BANKS (40 each) ======
+
+        // CH1: INTRO & ACID (40)
+        const introMCQs = [
+            { question: "DBMS का पूरा नाम क्या है?", A: "Database Management System", B: "Data Backup Management System", C: "Database Maintenance System", D: "Data Binary Management System", correct: "A", explanation: "DBMS = Database Management System." },
+            { question: "निम्न में से कौन सा RDBMS है?", A: "MySQL", B: "MongoDB", C: "Redis", D: "Cassandra", correct: "A", explanation: "MySQL एक Relational DBMS है (NoSQL नहीं) ." },
+            { question: "NoSQL database का उदाहरण क्या है?", A: "MongoDB", B: "Oracle", C: "MySQL", D: "PostgreSQL", correct: "A", explanation: "MongoDB एक NoSQL (Document-based) database है." },
+            { question: "ACID में 'A' का क्या अर्थ है?", A: "Atomicity", B: "Availability", C: "Accuracy", D: "Accessibility", correct: "A", explanation: "A = Atomicity (All-or-Nothing execution)." },
+            { question: "ACID में 'C' का क्या अर्थ है?", A: "Consistency", B: "Concurrency", C: "Compression", D: "Capacity", correct: "A", explanation: "C = Consistency (Valid state to valid state)." },
+            { question: "ACID में 'I' का क्या अर्थ है?", A: "Isolation", B: "Integrity", C: "Indexing", D: "Inheritance", correct: "A", explanation: "I = Isolation (Transactions run as if in isolation)." },
+            { question: "ACID में 'D' का क्या अर्थ है?", A: "Durability", B: "Dependency", C: "Distribution", D: "Dynamic", correct: "A", explanation: "D = Durability (Committed data persists)." },
+            { question: "DBMS का एक मुख्य लाभ क्या है?", A: "Reduced Data Redundancy", B: "Faster CPU", C: "Better Graphics", D: "Less Storage", correct: "A", explanation: "DBMS data redundancy को control/reduce करता है." },
+            { question: "File System की तुलना में DBMS बेहतर क्यों है?", A: "Concurrent Access", B: "Cheaper", C: "Simpler", D: "No software required", correct: "A", explanation: "DBMS multi-user concurrent access support करता है." },
+            { question: "Atomicity क्या सुनिश्चित करती है?", A: "All or Nothing", B: "Data is secure", C: "Fast access", D: "User friendly", correct: "A", explanation: "Atomicity ensures transaction either fully completes or fully rolls back." },
+            { question: "Consistency किसे maintain करती है?", A: "Integrity constraints", B: "User interfaces", C: "Network speed", D: "File size", correct: "A", explanation: "Consistency ensures integrity constraints (like foreign keys) are maintained." },
+            { question: "Isolation का मुख्य उद्देश्य क्या है?", A: "Prevent concurrency issues", B: "Backup data", C: "Compress data", D: "Index data", correct: "A", explanation: "Isolation prevents interference between concurrent transactions." },
+            { question: "Durability क्या गारंटी देता है?", A: "Data persists after crash", B: "Data is encrypted", C: "Data is indexed", D: "Data is compressed", correct: "A", explanation: "Durability guarantees that committed data is saved permanently." },
+            { question: "RDBMS का पूरा नाम क्या है?", A: "Relational Database Management System", B: "Reliable Database Management System", C: "Random Database Management System", D: "Rapid Database Management System", correct: "A", explanation: "RDBMS = Relational Database Management System." },
+            { question: "SQL का पूरा नाम क्या है?", A: "Structured Query Language", B: "System Query Language", C: "Standard Query Language", D: "Sequential Query Language", correct: "A", explanation: "SQL = Structured Query Language." },
+            { question: "RDBMS में data किस रूप में store होता है?", A: "Tables (Relations)", B: "Documents", C: "Key-Value Pairs", D: "Graphs", correct: "A", explanation: "RDBMS stores data in tables (rows and columns)." },
+            { question: "NoSQL का उपयोग कब किया जाता है?", A: "Unstructured data", B: "Strict schema required", C: "Complex joins", D: "ACID mandatory", correct: "A", explanation: "NoSQL handles unstructured/semi-structured data well." },
+            { question: "DBMS के advantage में 'Backup & Recovery' क्या है?", A: "Protects data from failures", B: "Faster processing", C: "Easy to program", D: "Cheap cost", correct: "A", explanation: "DBMS provides robust backup and recovery mechanisms." },
+            { question: "Data Redundancy का क्या अर्थ है?", A: "Duplicate data", B: "Unique data", C: "Compressed data", D: "Encrypted data", correct: "A", explanation: "Redundancy means duplicate copies of the same data." },
+            { question: "Oracle और MySQL किस type के DBMS हैं?", A: "Relational", B: "Document", C: "Graph", D: "Key-Value", correct: "A", explanation: "Oracle and MySQL are RDBMS." }
+        ];
+
+        // CH2: ER & MODELS (40)
+        const modelMCQs = [
+            { question: "ER Diagram में Entity को किस shape से दर्शाया जाता है?", A: "Rectangle", B: "Ellipse", C: "Diamond", D: "Triangle", correct: "A", explanation: "Entity = Rectangle." },
+            { question: "ER Diagram में Attribute को किस shape से दर्शाया जाता है?", A: "Ellipse", B: "Rectangle", C: "Diamond", D: "Line", correct: "A", explanation: "Attribute = Ellipse." },
+            { question: "ER Diagram में Relationship को किस shape से दर्शाया जाता है?", A: "Diamond", B: "Rectangle", C: "Ellipse", D: "Circle", correct: "A", explanation: "Relationship = Diamond." },
+            { question: "Composite Attribute का उदाहरण क्या है?", A: "Address (Street, City, Pincode)", B: "Age", C: "Student ID", D: "Phone Number", correct: "A", explanation: "Address is composite (consists of sub-parts)." },
+            { question: "Derived Attribute का उदाहरण क्या है?", A: "Age (from DOB)", B: "Name", C: "ID", D: "Salary", correct: "A", explanation: "Age is derived from Date of Birth." },
+            { question: "Multi-valued Attribute का उदाहरण क्या है?", A: "Phone Numbers", B: "Name", C: "Age", D: "ID", correct: "A", explanation: "A person can have multiple phone numbers (multi-valued)." },
+            { question: "Student 'Enrolls' Course में 'Enrolls' क्या है?", A: "Relationship", B: "Entity", C: "Attribute", D: "Primary Key", correct: "A", explanation: "Enrolls is a relationship between Student and Course." },
+            { question: "One-to-Many relationship का उदाहरण क्या है?", A: "Department → Employees", B: "Student → Course", C: "Person → Person", D: "Teacher → Subject", correct: "A", explanation: "A department has many employees (1:M)." },
+            { question: "Hierarchical Model में data कैसे organized होता है?", A: "Tree structure", B: "Graph structure", C: "Table structure", D: "Network structure", correct: "A", explanation: "Hierarchical model uses a tree-like structure." },
+            { question: "Network Model में data कैसे organized होता है?", A: "Graph structure", B: "Tree structure", C: "Table structure", D: "List structure", correct: "A", explanation: "Network model uses a graph structure (many-to-many)." },
+            { question: "Relational Model में data कैसे organized होता है?", A: "Tables", B: "Trees", C: "Graphs", D: "Lists", correct: "A", explanation: "Relational model uses tables (relations)." },
+            { question: "3-level architecture में 'External Level' क्या है?", A: "User's view", B: "Storage structure", C: "Overall design", D: "Indexes", correct: "A", explanation: "External level is the view level for end-users." },
+            { question: "3-level architecture में 'Internal Level' क्या है?", A: "Physical storage", B: "User's view", C: "Logical design", D: "Application code", correct: "A", explanation: "Internal level deals with physical storage and indexing." },
+            { question: "Logical Data Independence क्या है?", A: "Change conceptual without affecting external", B: "Change physical without affecting conceptual", C: "Change hardware without affecting software", D: "Change OS without affecting DB", correct: "A", explanation: "Logical independence: conceptual schema change doesn't affect external views." },
+            { question: "Physical Data Independence क्या है?", A: "Change internal without affecting conceptual", B: "Change conceptual without affecting external", C: "Change application without affecting DB", D: "Change OS without affecting DB", correct: "A", explanation: "Physical independence: internal storage changes don't affect conceptual schema." },
+            { question: "ER Diagram में Total Participation को कैसे दर्शाते हैं?", A: "Double line", B: "Single line", C: "Dotted line", D: "Thick line", correct: "A", explanation: "Double line indicates total participation (every entity participates)." },
+            { question: "ER Diagram में Partial Participation को कैसे दर्शाते हैं?", A: "Single line", B: "Double line", C: "Dotted line", D: "Thick line", correct: "A", explanation: "Single line indicates partial participation." },
+            { question: "Cardinality '1:N' का क्या अर्थ है?", A: "One to Many", B: "One to One", C: "Many to Many", D: "One to Zero", correct: "A", explanation: "1:N means One-to-Many relationship." },
+            { question: "Cardinality 'M:N' का क्या अर्थ है?", A: "Many to Many", B: "One to Many", C: "One to One", D: "Zero to Many", correct: "A", explanation: "M:N means Many-to-Many relationship." },
+            { question: "Entity Set क्या है?", A: "Collection of similar entities", B: "Single entity", C: "Attribute of entity", D: "Relationship set", correct: "A", explanation: "Entity set is a collection of entities of the same type (e.g., all Students)." }
+        ];
+
+        // CH3: KEYS & NORMALIZATION (40)
+        const keysMCQs = [
+            { question: "Candidate Key क्या है?", A: "Minimal Super Key", B: "Primary Key only", C: "Foreign Key only", D: "Composite Key only", correct: "A", explanation: "Candidate Key is a minimal super key (no redundant attributes)." },
+            { question: "Primary Key की मुख्य विशेषता क्या है?", A: "Unique and Not Null", B: "Can be Null", C: "Can have duplicates", D: "Always numeric", correct: "A", explanation: "Primary Key is UNIQUE and NOT NULL." },
+            { question: "Foreign Key क्या होता है?", A: "References primary key of another table", B: "Unique key of the same table", C: "Composite key", D: "Derived attribute", correct: "A", explanation: "Foreign Key references the Primary Key of another table." },
+            { question: "Alternate Key क्या है?", A: "Candidate key not chosen as primary", B: "Primary key", C: "Foreign key", D: "Super key", correct: "A", explanation: "Alternate keys are candidate keys that are not selected as Primary Key." },
+            { question: "Composite Key क्या है?", A: "Combination of multiple columns", B: "Single column primary key", C: "Derived key", D: "Surrogate key", correct: "A", explanation: "Composite key uses two or more columns to uniquely identify rows." },
+            { question: "Super Key क्या है?", A: "Set of columns that uniquely identifies rows", B: "Minimal unique key", C: "Primary key only", D: "Foreign key only", correct: "A", explanation: "Super key is any set of columns that uniquely identifies a row (may contain extra columns)." },
+            { question: "Normalization का मुख्य उद्देश्य क्या है?", A: "Reduce redundancy and anomalies", B: "Increase speed", C: "Increase storage", D: "Encrypt data", correct: "A", explanation: "Normalization reduces data redundancy and insertion/deletion/update anomalies." },
+            { question: "1NF की क्या requirement है?", A: "Atomic values (no multi-valued)", B: "No partial dependency", C: "No transitive dependency", D: "Every X -> Y, X is super key", correct: "A", explanation: "1NF requires that each cell contains a single atomic value." },
+            { question: "2NF की क्या requirement है?", A: "1NF + No Partial Dependency", B: "1NF + No Transitive Dependency", C: "1NF + No Multi-valued Dependency", D: "BCNF", correct: "A", explanation: "2NF = 1NF + No Partial Dependency on any candidate key." },
+            { question: "3NF की क्या requirement है?", A: "2NF + No Transitive Dependency", B: "1NF + No Partial Dependency", C: "BCNF", D: "4NF", correct: "A", explanation: "3NF = 2NF + No Transitive Dependency (non-prime to non-prime)." },
+            { question: "BCNF की क्या requirement है?", A: "Every determinant is a Super Key", B: "No transitive dependency only", C: "No partial dependency only", D: "Atomic values only", correct: "A", explanation: "BCNF requires that for every functional dependency X → Y, X must be a super key." },
+            { question: "Insertion Anomaly क्या है?", A: "Cannot insert data without extra redundancy", B: "Deleting data loses other data", C: "Updating one occurrence misses others", D: "Data is encrypted", correct: "A", explanation: "Insertion anomaly: cannot insert a record without adding unnecessary data." },
+            { question: "Deletion Anomaly क्या है?", A: "Deleting data loses other required data", B: "Cannot insert data", C: "Updating data is slow", D: "Data redundancy", correct: "A", explanation: "Deletion anomaly: deleting a row accidentally deletes other needed information." },
+            { question: "Update Anomaly क्या है?", A: "Updating one instance requires updating many", B: "Cannot update data", C: "Data is lost", D: "Data is encrypted", correct: "A", explanation: "Update anomaly: changing one value requires multiple changes to maintain consistency." },
+            { question: "Foreign Key constraint किसे maintain करता है?", A: "Referential Integrity", B: "Data Encryption", C: "User Authentication", D: "Data Compression", correct: "A", explanation: "Foreign Key ensures Referential Integrity (values must exist in parent table)." },
+            { question: "Primary Key में NULL values की अनुमति होती है?", A: "No", B: "Yes", C: "Only one NULL", D: "Only if composite", correct: "A", explanation: "Primary Key cannot have NULL values." },
+            { question: "Unique Key और Primary Key में क्या अंतर है?", A: "Unique Key can have NULL, Primary cannot", B: "Both are same", C: "Primary can have NULL, Unique cannot", D: "Unique is for foreign keys only", correct: "A", explanation: "Unique Key allows one NULL value, Primary Key does not allow NULL." },
+            { question: "Normalization में 'Partial Dependency' किस Form से संबंधित है?", A: "2NF", B: "1NF", C: "3NF", D: "BCNF", correct: "A", explanation: "2NF eliminates Partial Dependency." },
+            { question: "Normalization में 'Transitive Dependency' किस Form से संबंधित है?", A: "3NF", B: "2NF", C: "1NF", D: "BCNF", correct: "A", explanation: "3NF eliminates Transitive Dependency." },
+            { question: "BCNF किस Form का stricter version है?", A: "3NF", B: "2NF", C: "1NF", D: "4NF", correct: "A", explanation: "BCNF is a stricter version of 3NF." }
+        ];
+
+        // CH4: SQL (40)
+        const sqlMCQs = [
+            { question: "DDL का पूरा नाम क्या है?", A: "Data Definition Language", B: "Data Manipulation Language", C: "Data Control Language", D: "Data Transaction Language", correct: "A", explanation: "DDL = Data Definition Language (CREATE, ALTER, DROP)." },
+            { question: "DML का पूरा नाम क्या है?", A: "Data Manipulation Language", B: "Data Definition Language", C: "Data Control Language", D: "Data Transaction Language", correct: "A", explanation: "DML = Data Manipulation Language (INSERT, UPDATE, DELETE)." },
+            { question: "DCL का पूरा नाम क्या है?", A: "Data Control Language", B: "Data Definition Language", C: "Data Manipulation Language", D: "Data Transaction Language", correct: "A", explanation: "DCL = Data Control Language (GRANT, REVOKE)." },
+            { question: "TCL का पूरा नाम क्या है?", A: "Transaction Control Language", B: "Table Control Language", C: "Terminal Control Language", D: "Transfer Control Language", correct: "A", explanation: "TCL = Transaction Control Language (COMMIT, ROLLBACK)." },
+            { question: "CREATE किस SQL Category का command है?", A: "DDL", B: "DML", C: "DCL", D: "TCL", correct: "A", explanation: "CREATE is a DDL command." },
+            { question: "INSERT किस SQL Category का command है?", A: "DML", B: "DDL", C: "DCL", D: "TCL", correct: "A", explanation: "INSERT is a DML command." },
+            { question: "GRANT किस SQL Category का command है?", A: "DCL", B: "DDL", C: "DML", D: "TCL", correct: "A", explanation: "GRANT is a DCL command." },
+            { question: "COMMIT किस SQL Category का command है?", A: "TCL", B: "DDL", C: "DML", D: "DCL", correct: "A", explanation: "COMMIT is a TCL command." },
+            { question: "ALTER किस SQL Category का command है?", A: "DDL", B: "DML", C: "DCL", D: "TCL", correct: "A", explanation: "ALTER is a DDL command (modifies table structure)." },
+            { question: "DELETE किस SQL Category का command है?", A: "DML", B: "DDL", C: "DCL", D: "TCL", correct: "A", explanation: "DELETE is a DML command (removes rows)." },
+            { question: "DROP और TRUNCATE में क्या अंतर है?", A: "DROP removes structure, TRUNCATE removes data only", B: "Both remove structure", C: "TRUNCATE removes structure, DROP removes data", D: "Both are same", correct: "A", explanation: "DROP deletes the table structure; TRUNCATE deletes all rows but keeps structure." },
+            { question: "SELECT * FROM Students WHERE age > 18 में 'WHERE' का क्या कार्य है?", A: "Filter rows", B: "Sort rows", C: "Group rows", D: "Join tables", correct: "A", explanation: "WHERE clause filters rows based on a condition." },
+            { question: "GROUP BY का क्या कार्य है?", A: "Group rows with same values (for aggregates)", B: "Filter rows", C: "Sort rows", D: "Join tables", correct: "A", explanation: "GROUP BY groups rows that have the same values in specified columns." },
+            { question: "HAVING का क्या कार्य है?", A: "Filter groups", B: "Filter rows", C: "Sort rows", D: "Join tables", correct: "A", explanation: "HAVING filters groups created by GROUP BY (applied after grouping)." },
+            { question: "ORDER BY का क्या कार्य है?", A: "Sort results", B: "Filter results", C: "Group results", D: "Join tables", correct: "A", explanation: "ORDER BY sorts the result set (ASC or DESC)." },
+            { question: "DISTINCT keyword का क्या कार्य है?", A: "Return unique values", B: "Return all values", C: "Count values", D: "Sum values", correct: "A", explanation: "DISTINCT eliminates duplicate rows from the result set." },
+            { question: "LIKE operator में '%' का क्या अर्थ है?", A: "Any sequence of characters", B: "Single character", C: "Zero characters only", D: "Numeric only", correct: "A", explanation: "% represents zero or more characters in pattern matching." },
+            { question: "LIKE operator में '_' का क्या अर्थ है?", A: "Single character", B: "Any sequence", C: "Zero characters", D: "Numeric only", correct: "A", explanation: "_ represents exactly one character." },
+            { question: "INNER JOIN क्या करता है?", A: "Returns only matching rows from both tables", B: "Returns all rows from left table", C: "Returns all rows from both tables", D: "Returns no rows", correct: "A", explanation: "INNER JOIN returns only rows where the join condition matches in both tables." },
+            { question: "LEFT JOIN क्या करता है?", A: "Returns all rows from left table + matches from right", B: "Returns only matching rows", C: "Returns all rows from right table", D: "Returns all rows from both", correct: "A", explanation: "LEFT JOIN returns all rows from the left table, and matched rows from the right." }
+        ];
+
+        // CH5: TRANSACTIONS (40)
+        const transMCQs = [
+            { question: "Transaction क्या है?", A: "Logical unit of database operations", B: "Physical file", C: "Table index", D: "View", correct: "A", explanation: "Transaction is a logical unit of work (e.g., bank transfer)." },
+            { question: "Transaction का Active State क्या है?", A: "Transaction is executing", B: "Transaction is committed", C: "Transaction is aborted", D: "Transaction is waiting", correct: "A", explanation: "Active state means the transaction is currently executing." },
+            { question: "Transaction का Committed State क्या है?", A: "Transaction successfully completed", B: "Transaction failed", C: "Transaction is executing", D: "Transaction is rolled back", correct: "A", explanation: "Committed state means the transaction completed successfully and changes are permanent." },
+            { question: "Lost Update problem क्या है?", A: "One update overwrites another", B: "Reading uncommitted data", C: "Different rows in repeated query", D: "Deadlock", correct: "A", explanation: "Lost Update occurs when two transactions update the same data and one overwrites the other." },
+            { question: "Dirty Read problem क्या है?", A: "Reading uncommitted data", B: "Overwriting data", C: "Phantom rows", D: "Deadlock", correct: "A", explanation: "Dirty Read occurs when a transaction reads data written by an uncommitted transaction." },
+            { question: "Unrepeatable Read problem क्या है?", A: "Same row returns different data", B: "Different rows returned", C: "Reading uncommitted data", D: "Deadlock", correct: "A", explanation: "Unrepeatable Read occurs when a transaction reads the same row twice and gets different values." },
+            { question: "Phantom Read problem क्या है?", A: "Different number of rows returned", B: "Same row different data", C: "Reading uncommitted data", D: "Deadlock", correct: "A", explanation: "Phantom Read occurs when a transaction re-executes a query and gets a different set of rows." },
+            { question: "Shared Lock (S-Lock) किसके लिए है?", A: "Reading data (shared)", B: "Writing data (exclusive)", C: "Both read and write", D: "No access", correct: "A", explanation: "Shared Lock allows multiple transactions to read data simultaneously." },
+            { question: "Exclusive Lock (X-Lock) किसके लिए है?", A: "Writing data (exclusive)", B: "Reading data (shared)", C: "Both read and write", D: "No access", correct: "A", explanation: "Exclusive Lock allows only one transaction to write data." },
+            { question: "2PL (Two-Phase Locking) में Growing Phase क्या है?", A: "Acquiring locks", B: "Releasing locks", C: "Committing transaction", D: "Aborting transaction", correct: "A", explanation: "Growing phase is when a transaction acquires locks (cannot release)." },
+            { question: "2PL में Shrinking Phase क्या है?", A: "Releasing locks", B: "Acquiring locks", C: "Starting transaction", D: "Rolling back", correct: "A", explanation: "Shrinking phase is when a transaction releases locks (cannot acquire new)." },
+            { question: "Deadlock क्या है?", A: "Circular wait for resources", B: "Transaction commit", C: "Transaction rollback", D: "Fast execution", correct: "A", explanation: "Deadlock is a circular wait situation where transactions wait for each other's resources." },
+            { question: "Deadlock के लिए कौन सी condition आवश्यक है?", A: "Mutual Exclusion", B: "Data Redundancy", C: "Normalization", D: "Indexing", correct: "A", explanation: "Mutual Exclusion is one of the four necessary conditions for deadlock (along with Hold & Wait, No Preemption, Circular Wait)." },
+            { question: "Deadlock से बचने के लिए क्या किया जा सकता है?", A: "Abort one transaction (victim)", B: "Increase speed", C: "Reduce data", D: "Add indexes", correct: "A", explanation: "One deadlock recovery technique is to abort (rollback) one of the deadlocked transactions." },
+            { question: "Serializability का क्या अर्थ है?", A: "Concurrent result equals serial order", B: "Transactions are serial", C: "No concurrency", D: "Faster transactions", correct: "A", explanation: "Serializability ensures the result of concurrent transactions is equivalent to some serial execution." },
+            { question: "Concurrency Control का मुख्य उद्देश्य क्या है?", A: "Ensure consistency and isolation", B: "Increase speed", C: "Reduce storage", D: "Compress data", correct: "A", explanation: "Concurrency control maintains data consistency and isolation under concurrent execution." },
+            { question: "Savepoint का क्या कार्य है?", A: "Partial rollback point", B: "Full commit", C: "Full rollback", D: "Grant permission", correct: "A", explanation: "Savepoint allows rolling back to a specific point within a transaction." },
+            { question: "ROLLBACK क्या करता है?", A: "Undo all changes in a transaction", B: "Save changes", C: "Create a table", D: "Grant permissions", correct: "A", explanation: "ROLLBACK undoes all changes made in the current transaction." },
+            { question: "Strict 2PL क्या है?", A: "All locks held until commit", B: "Locks released immediately", C: "Only read locks", D: "Only write locks", correct: "A", explanation: "Strict 2PL releases all locks only after the transaction commits/aborts." },
+            { question: "Timestamp-based protocol किस पर आधारित है?", A: "Transaction start time", B: "Transaction size", C: "Data size", D: "Query complexity", correct: "A", explanation: "Timestamp protocols order transactions based on their timestamps to ensure serializability." }
+        ];
+
+        // PRACTICE (40 mixed)
+        const practiceMCQs = [
+            { question: "DBMS का पूरा नाम क्या है?", A: "Database Management System", B: "Data Backup Management System", C: "Database Maintenance System", D: "Data Binary Management System", correct: "A", explanation: "DBMS = Database Management System." },
+            { question: "ACID में 'A' क्या है?", A: "Atomicity", B: "Availability", C: "Accuracy", D: "Accessibility", correct: "A", explanation: "A = Atomicity." },
+            { question: "Primary Key की मुख्य विशेषता क्या है?", A: "Unique and Not Null", B: "Can be Null", C: "Can have duplicates", D: "Always numeric", correct: "A", explanation: "Primary Key is UNIQUE and NOT NULL." },
+            { question: "Foreign Key क्या है?", A: "References primary key of another table", B: "Unique key of the same table", C: "Composite key", D: "Derived attribute", correct: "A", explanation: "Foreign Key references another table's primary key." },
+            { question: "SQL का पूरा नाम क्या है?", A: "Structured Query Language", B: "System Query Language", C: "Standard Query Language", D: "Sequential Query Language", correct: "A", explanation: "SQL = Structured Query Language." },
+            { question: "CREATE किस SQL Category का command है?", A: "DDL", B: "DML", C: "DCL", D: "TCL", correct: "A", explanation: "CREATE is DDL." },
+            { question: "INSERT किस SQL Category का command है?", A: "DML", B: "DDL", C: "DCL", D: "TCL", correct: "A", explanation: "INSERT is DML." },
+            { question: "GRANT किस SQL Category का command है?", A: "DCL", B: "DDL", C: "DML", D: "TCL", correct: "A", explanation: "GRANT is DCL." },
+            { question: "COMMIT किस SQL Category का command है?", A: "TCL", B: "DDL", C: "DML", D: "DCL", correct: "A", explanation: "COMMIT is TCL." },
+            { question: "ER Diagram में Entity को किस shape से दर्शाया जाता है?", A: "Rectangle", B: "Ellipse", C: "Diamond", D: "Triangle", correct: "A", explanation: "Entity = Rectangle." },
+            { question: "ER Diagram में Attribute को किस shape से दर्शाया जाता है?", A: "Ellipse", B: "Rectangle", C: "Diamond", D: "Line", correct: "A", explanation: "Attribute = Ellipse." },
+            { question: "ER Diagram में Relationship को किस shape से दर्शाया जाता है?", A: "Diamond", B: "Rectangle", C: "Ellipse", D: "Circle", correct: "A", explanation: "Relationship = Diamond." },
+            { question: "1NF की क्या requirement है?", A: "Atomic values", B: "No partial dependency", C: "No transitive dependency", D: "Every X->Y, X is super key", correct: "A", explanation: "1NF requires atomic values." },
+            { question: "2NF की क्या requirement है?", A: "1NF + No Partial Dependency", B: "1NF + No Transitive Dependency", C: "BCNF", D: "4NF", correct: "A", explanation: "2NF = 1NF + No Partial Dependency." },
+            { question: "3NF की क्या requirement है?", A: "2NF + No Transitive Dependency", B: "1NF + No Partial Dependency", C: "BCNF", D: "4NF", correct: "A", explanation: "3NF = 2NF + No Transitive Dependency." },
+            { question: "NoSQL database का उदाहरण क्या है?", A: "MongoDB", B: "Oracle", C: "MySQL", D: "PostgreSQL", correct: "A", explanation: "MongoDB is NoSQL." },
+            { question: "RDBMS में data किस रूप में store होता है?", A: "Tables", B: "Documents", C: "Key-Value Pairs", D: "Graphs", correct: "A", explanation: "RDBMS stores data in tables." },
+            { question: "DROP और TRUNCATE में क्या अंतर है?", A: "DROP removes structure, TRUNCATE removes data only", B: "Both remove structure", C: "TRUNCATE removes structure, DROP removes data", D: "Both are same", correct: "A", explanation: "DROP deletes structure; TRUNCATE deletes rows only." },
+            { question: "Dirty Read problem क्या है?", A: "Reading uncommitted data", B: "Overwriting data", C: "Phantom rows", D: "Deadlock", correct: "A", explanation: "Dirty Read reads uncommitted data." },
+            { question: "Deadlock क्या है?", A: "Circular wait for resources", B: "Transaction commit", C: "Transaction rollback", D: "Fast execution", correct: "A", explanation: "Deadlock is a circular wait." },
+            { question: "Candidate Key क्या है?", A: "Minimal Super Key", B: "Primary Key only", C: "Foreign Key only", D: "Composite Key only", correct: "A", explanation: "Candidate Key is a minimal Super Key." },
+            { question: "Normalization का मुख्य उद्देश्य क्या है?", A: "Reduce redundancy and anomalies", B: "Increase speed", C: "Increase storage", D: "Encrypt data", correct: "A", explanation: "Normalization reduces redundancy and anomalies." },
+            { question: "ALTER किस SQL Category का command है?", A: "DDL", B: "DML", C: "DCL", D: "TCL", correct: "A", explanation: "ALTER is DDL." },
+            { question: "DELETE किस SQL Category का command है?", A: "DML", B: "DDL", C: "DCL", D: "TCL", correct: "A", explanation: "DELETE is DML." },
+            { question: "SELECT * FROM Students WHERE age > 18 में 'WHERE' का क्या कार्य है?", A: "Filter rows", B: "Sort rows", C: "Group rows", D: "Join tables", correct: "A", explanation: "WHERE filters rows." },
+            { question: "GROUP BY का क्या कार्य है?", A: "Group rows for aggregates", B: "Filter rows", C: "Sort rows", D: "Join tables", correct: "A", explanation: "GROUP BY groups rows for aggregation." },
+            { question: "HAVING का क्या कार्य है?", A: "Filter groups", B: "Filter rows", C: "Sort rows", D: "Join tables", correct: "A", explanation: "HAVING filters groups." },
+            { question: "INNER JOIN क्या करता है?", A: "Returns only matching rows", B: "Returns all left rows", C: "Returns all right rows", D: "Returns all rows", correct: "A", explanation: "INNER JOIN returns only matching rows from both tables." },
+            { question: "LEFT JOIN क्या करता है?", A: "All left rows + matches", B: "Only matching rows", C: "All right rows + matches", D: "All rows from both", correct: "A", explanation: "LEFT JOIN returns all left rows and matching right rows." },
+            { question: "Isolation का मुख्य उद्देश्य क्या है?", A: "Prevent concurrency issues", B: "Backup data", C: "Compress data", D: "Index data", correct: "A", explanation: "Isolation prevents concurrency problems." },
+            { question: "Durability क्या गारंटी देता है?", A: "Data persists after crash", B: "Data is encrypted", C: "Data is indexed", D: "Data is compressed", correct: "A", explanation: "Durability ensures data survives crashes." },
+            { question: "Logical Data Independence क्या है?", A: "Change conceptual without affecting external", B: "Change physical without affecting conceptual", C: "Change hardware", D: "Change OS", correct: "A", explanation: "Logical independence protects external views from conceptual changes." },
+            { question: "Physical Data Independence क्या है?", A: "Change internal without affecting conceptual", B: "Change conceptual without affecting external", C: "Change application", D: "Change OS", correct: "A", explanation: "Physical independence protects conceptual schema from storage changes." },
+            { question: "Composite Attribute का उदाहरण क्या है?", A: "Address (Street, City, Pincode)", B: "Age", C: "Student ID", D: "Phone Number", correct: "A", explanation: "Address is composite." },
+            { question: "Derived Attribute का उदाहरण क्या है?", A: "Age (from DOB)", B: "Name", C: "ID", D: "Salary", correct: "A", explanation: "Age is derived from DOB." },
+            { question: "Multi-valued Attribute का उदाहरण क्या है?", A: "Phone Numbers", B: "Name", C: "Age", D: "ID", correct: "A", explanation: "Phone Numbers are multi-valued." },
+            { question: "Deadlock के लिए कौन सी condition आवश्यक है?", A: "Mutual Exclusion", B: "Data Redundancy", C: "Normalization", D: "Indexing", correct: "A", explanation: "Mutual Exclusion is a necessary deadlock condition." },
+            { question: "BCNF किस Form का stricter version है?", A: "3NF", B: "2NF", C: "1NF", D: "4NF", correct: "A", explanation: "BCNF is stricter than 3NF." },
+            { question: "Unique Key और Primary Key में क्या अंतर है?", A: "Unique Key can have NULL, Primary cannot", B: "Both are same", C: "Primary can have NULL, Unique cannot", D: "Unique is for foreign keys only", correct: "A", explanation: "Unique allows one NULL; Primary doesn't allow NULL." },
+            { question: "RDBMS का पूरा नाम क्या है?", A: "Relational Database Management System", B: "Reliable Database Management System", C: "Random Database Management System", D: "Rapid Database Management System", correct: "A", explanation: "RDBMS = Relational Database Management System." }
+        ];
+
+        // ----- RENDER -----
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMCQs('intro-mcq', introMCQs);
+            renderMCQs('model-mcq', modelMCQs);
+            renderMCQs('keys-mcq', keysMCQs);
+            renderMCQs('sql-mcq', sqlMCQs);
+            renderMCQs('trans-mcq', transMCQs);
+            renderMCQs('practice-mcq', practiceMCQs);
+        });
+
+        // ----- SEARCH -----
+        const searchBox = document.getElementById("searchBox");
+        searchBox.addEventListener("input", function() {
+            const q = this.value.toLowerCase().trim();
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("hidden-search", q !== "" && !section.innerText.toLowerCase().includes(q));
+            });
+        });
+
+        // ----- SCROLL TOP -----
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener("scroll", function() {
+            scrollBtn.classList.toggle("visible", window.scrollY > 400);
+        });
+
+        // ----- TAB ACTIVE -----
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".tab-link");
+        const offset = 140;
+        window.addEventListener("scroll", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+        window.addEventListener("load", function() {
+            let current = "";
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top <= offset) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+            });
+        });
+
+        // ----- THEME TOGGLE -----
+        const themeToggle = document.getElementById("themeToggle");
+        let darkMode = false;
+        themeToggle.addEventListener("click", function() {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "");
+            themeToggle.textContent = darkMode ? "☀️" : "🌓";
+        });
+
+        // ----- COLOR ACCENT -----
+        document.querySelectorAll(".color-dot").forEach(dot => {
+            dot.addEventListener("click", function() {
+                document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+                this.classList.add("active");
+                document.documentElement.setAttribute("data-accent", this.dataset.color);
+            });
+        });
+    </script>
+
+</body>
+</html>

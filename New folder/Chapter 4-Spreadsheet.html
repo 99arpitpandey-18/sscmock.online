@@ -1,0 +1,3826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M1 Chapter 4 Notes | Spreadsheet | NIELIT O Level</title>
+
+<meta name="description"
+content="NIELIT O Level M1-R5.1 Chapter 4 Spreadsheet complete bilingual notes in Hindi and English covering spreadsheet basics, workbook, worksheet, cells, formulas, functions, charts, formatting and important shortcuts.">
+
+<meta name="keywords"
+content="NIELIT M1 Chapter 4, Spreadsheet Notes, M1 R5.1 Chapter 4, O Level Spreadsheet Notes, LibreOffice Calc Notes, Spreadsheet Hindi English, NIELIT Spreadsheet">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+
+    --primary:#36dfff;
+    --secondary:#7c5cff;
+    --accent:#00ffa3;
+
+    --bg1:#06101d;
+    --bg2:#0b1728;
+
+    --card:rgba(18,34,56,.78);
+    --card2:rgba(10,23,39,.82);
+
+    --text:#edf7ff;
+    --muted:#91a4bb;
+    --soft:#b9c7d8;
+
+    --border:rgba(255,255,255,.09);
+
+    --shadow:rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:var(--text);
+
+    min-height:100vh;
+
+    background:
+
+        radial-gradient(
+            circle at 8% 8%,
+            color-mix(in srgb,var(--primary) 14%,transparent),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 92% 15%,
+            color-mix(in srgb,var(--secondary) 16%,transparent),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 50% 90%,
+            color-mix(in srgb,var(--accent) 7%,transparent),
+            transparent 28%
+        ),
+
+        linear-gradient(
+            135deg,
+            var(--bg1),
+            var(--bg2) 50%,
+            var(--bg1)
+        );
+
+    background-attachment:fixed;
+
+    overflow-x:hidden;
+
+    transition:
+        background .4s ease,
+        color .3s ease;
+}
+
+
+/* =========================================================
+   STAR BACKGROUND
+========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            var(--primary) 1px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle,
+            var(--secondary) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        120px 120px,
+        180px 180px;
+
+    background-position:
+        20px 40px,
+        90px 100px;
+
+    opacity:.13;
+
+    z-index:-1;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    padding:12px 4%;
+
+    background:rgba(5,13,25,.78);
+
+    backdrop-filter:blur(20px);
+
+    -webkit-backdrop-filter:blur(20px);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.header-inner{
+
+    max-width:1250px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+.logo-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.logo{
+
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    font-weight:900;
+
+    color:var(--primary);
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb,var(--primary) 18%,transparent),
+            color-mix(in srgb,var(--secondary) 14%,transparent)
+        );
+
+    border:
+        1px solid
+        color-mix(in srgb,var(--primary) 30%,transparent);
+
+    box-shadow:
+        0 0 25px
+        color-mix(in srgb,var(--primary) 12%,transparent);
+}
+
+.brand-title{
+
+    font-size:16px;
+
+    font-weight:800;
+}
+
+.brand-sub{
+
+    margin-top:3px;
+
+    font-size:10px;
+
+    color:#7f92aa;
+}
+
+.header-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.back-btn,
+.theme-btn{
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:#dcecff;
+
+    padding:
+        9px 13px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.back-btn:hover,
+.theme-btn:hover{
+
+    transform:translateY(-2px);
+
+    border-color:
+        color-mix(in srgb,var(--primary) 50%,transparent);
+
+    color:var(--primary);
+}
+
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+.theme-panel{
+
+    position:fixed;
+
+    top:78px;
+
+    right:20px;
+
+    z-index:1500;
+
+    width:280px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:
+        rgba(8,18,32,.96);
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.5);
+
+    display:none;
+}
+
+.theme-panel.show{
+
+    display:block;
+
+    animation:
+        panelIn .25s ease;
+}
+
+@keyframes panelIn{
+
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.theme-panel h3{
+
+    font-size:14px;
+
+    margin-bottom:14px;
+}
+
+.theme-label{
+
+    color:#8193aa;
+
+    font-size:10px;
+
+    margin-bottom:9px;
+}
+
+.theme-options{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:8px;
+
+    margin-bottom:17px;
+}
+
+.color{
+
+    height:38px;
+
+    border-radius:10px;
+
+    border:2px solid transparent;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.color:hover{
+
+    transform:scale(1.07);
+}
+
+.color.active{
+
+    border-color:#fff;
+
+    box-shadow:
+        0 0 15px rgba(255,255,255,.3);
+}
+
+.cyan{
+    background:linear-gradient(135deg,#36dfff,#008cff);
+}
+
+.purple{
+    background:linear-gradient(135deg,#a875ff,#6c5ce7);
+}
+
+.green{
+    background:linear-gradient(135deg,#00ffa3,#00b894);
+}
+
+.orange{
+    background:linear-gradient(135deg,#ffb347,#ff7043);
+}
+
+.pink{
+    background:linear-gradient(135deg,#ff6ec7,#ff3d81);
+}
+
+.red{
+    background:linear-gradient(135deg,#ff7675,#d63031);
+}
+
+.blue{
+    background:linear-gradient(135deg,#74b9ff,#0984e3);
+}
+
+.gold{
+    background:linear-gradient(135deg,#ffe66d,#f5a623);
+}
+
+.mode-options{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+}
+
+.mode-btn{
+
+    padding:9px;
+
+    border-radius:9px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:#dcecff;
+
+    cursor:pointer;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:
+        40px 5% 80px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    padding:42px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    margin-bottom:35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--card),
+            var(--card2)
+        );
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 25px 70px var(--shadow);
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:150px;
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:
+        0 0 20px var(--primary);
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    right:-120px;
+    top:-120px;
+
+    border-radius:50%;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 10%,
+            transparent
+        );
+
+    filter:blur(55px);
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:
+        7px 12px;
+
+    border-radius:30px;
+
+    color:var(--primary);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 8%,
+            transparent
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--primary) 20%,
+            transparent
+        );
+
+    font-size:11px;
+
+    font-weight:700;
+
+    margin-bottom:17px;
+}
+
+.hero h1{
+
+    font-size:
+        clamp(28px,4vw,44px);
+
+    margin-bottom:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            var(--primary),
+            var(--secondary)
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-description{
+
+    max-width:850px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:13px;
+}
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+
+    margin-top:27px;
+}
+
+.stat{
+
+    padding:16px;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+}
+
+.stat strong{
+
+    display:block;
+
+    color:var(--primary);
+
+    font-size:21px;
+
+    margin-bottom:5px;
+}
+
+.stat span{
+
+    color:#7e91aa;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   QUICK NAV
+========================================================= */
+
+.quick-nav{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:30px;
+}
+
+.quick-nav a{
+
+    padding:8px 12px;
+
+    border-radius:9px;
+
+    color:#aebdd0;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+
+    transition:.25s;
+}
+
+.quick-nav a:hover{
+
+    color:var(--primary);
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--primary) 40%,
+            transparent
+        );
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin:
+        38px 0 18px;
+}
+
+.section-icon{
+
+    width:39px;
+    height:39px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 8%,
+            transparent
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--primary) 17%,
+            transparent
+        );
+
+    font-size:18px;
+}
+
+.section-title h2{
+
+    font-size:20px;
+}
+
+.section-title p{
+
+    margin-top:3px;
+
+    color:#71849c;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   NOTE CARD
+========================================================= */
+
+.note-card{
+
+    position:relative;
+
+    padding:25px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--card),
+            var(--card2)
+        );
+
+    border:
+        1px solid var(--border);
+
+    margin-bottom:17px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.15);
+}
+
+.note-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:65px;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:
+        0 0 15px var(--primary);
+}
+
+.note-card h3{
+
+    font-size:17px;
+
+    margin-bottom:13px;
+}
+
+.note-card h4{
+
+    color:var(--primary);
+
+    margin:
+        18px 0 8px;
+
+    font-size:13px;
+}
+
+.note-card p{
+
+    color:var(--soft);
+
+    font-size:12px;
+
+    line-height:1.8;
+
+    margin-bottom:8px;
+}
+
+
+/* =========================================================
+   BILINGUAL
+========================================================= */
+
+.bilingual{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:13px;
+
+    margin-top:14px;
+}
+
+.lang-box{
+
+    padding:17px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid var(--border);
+}
+
+.lang-title{
+
+    display:inline-block;
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    margin-bottom:10px;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    color:var(--primary);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 8%,
+            transparent
+        );
+}
+
+.lang-box p{
+
+    margin:0;
+
+    font-size:12px;
+
+    line-height:1.8;
+
+    color:#b8c7d8;
+}
+
+
+/* =========================================================
+   DEFINITION
+========================================================= */
+
+.definition{
+
+    margin-top:15px;
+
+    padding:17px;
+
+    border-left:
+        3px solid var(--primary);
+
+    border-radius:10px;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 6%,
+            transparent
+        );
+}
+
+.definition strong{
+
+    display:block;
+
+    color:var(--primary);
+
+    margin-bottom:6px;
+
+    font-size:12px;
+}
+
+.definition p{
+
+    margin:0;
+
+    font-size:12px;
+
+    line-height:1.7;
+
+    color:#b8c7d8;
+}
+
+
+/* =========================================================
+   TOPIC GRID
+========================================================= */
+
+.topic-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+}
+
+.topic-card{
+
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--card),
+            var(--card2)
+        );
+
+    border:
+        1px solid var(--border);
+
+    transition:.3s;
+}
+
+.topic-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--primary) 35%,
+            transparent
+        );
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.2);
+}
+
+.topic-icon{
+
+    font-size:25px;
+
+    margin-bottom:12px;
+}
+
+.topic-card h3{
+
+    font-size:14px;
+
+    margin-bottom:7px;
+}
+
+.topic-card p{
+
+    color:#8294aa;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.study-list{
+
+    list-style:none;
+
+    margin-top:10px;
+}
+
+.study-list li{
+
+    position:relative;
+
+    padding:
+        9px 10px 9px 25px;
+
+    color:#aebed0;
+
+    font-size:12px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.04);
+}
+
+.study-list li::before{
+
+    content:"✓";
+
+    position:absolute;
+
+    left:4px;
+
+    color:var(--accent);
+
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   IMPORTANT
+========================================================= */
+
+.important{
+
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(
+                in srgb,
+                var(--secondary) 10%,
+                transparent
+            ),
+            color-mix(
+                in srgb,
+                var(--primary) 6%,
+                transparent
+            )
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--secondary) 20%,
+            transparent
+        );
+
+    margin-top:17px;
+}
+
+.important h3{
+
+    color:#c3b3ff;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+}
+
+.important p{
+
+    color:#abb9ca;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+
+    overflow-x:auto;
+
+    border-radius:15px;
+
+    border:
+        1px solid var(--border);
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:600px;
+}
+
+th{
+
+    padding:13px;
+
+    text-align:left;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color:var(--primary);
+
+    font-size:11px;
+}
+
+td{
+
+    padding:12px 13px;
+
+    color:#aab9ca;
+
+    font-size:11px;
+
+    border-top:
+        1px solid rgba(255,255,255,.05);
+}
+
+
+/* =========================================================
+   FORMULA BOX
+========================================================= */
+
+.formula{
+
+    margin-top:15px;
+
+    padding:18px;
+
+    border-radius:13px;
+
+    background:
+        rgba(0,0,0,.18);
+
+    border:
+        1px solid var(--border);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    color:var(--primary);
+
+    font-size:12px;
+
+    line-height:2;
+}
+
+.formula span{
+
+    color:#aebdd0;
+
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+
+/* =========================================================
+   REVISION GRID
+========================================================= */
+
+.revision-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+}
+
+.revision-card{
+
+    padding:21px;
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+}
+
+.revision-card h3{
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+    color:var(--primary);
+}
+
+.revision-card p{
+
+    color:#94a6bb;
+
+    font-size:11px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    margin-top:55px;
+
+    padding:28px;
+
+    text-align:center;
+
+    color:#667a93;
+
+    font-size:10px;
+
+    border-top:
+        1px solid var(--border);
+}
+
+
+/* =========================================================
+   SIMPLE MODE
+========================================================= */
+
+body.simple-mode{
+
+    background:#f4f7fb;
+
+    color:#172033;
+}
+
+body.simple-mode::before{
+
+    display:none;
+}
+
+body.simple-mode .header{
+
+    background:
+        rgba(255,255,255,.92);
+
+    border-bottom:
+        1px solid #dfe5ee;
+}
+
+body.simple-mode .brand-title{
+
+    color:#182236;
+}
+
+body.simple-mode .hero,
+body.simple-mode .note-card,
+body.simple-mode .topic-card{
+
+    background:#fff;
+
+    border:
+        1px solid #e0e6ef;
+
+    box-shadow:
+        0 8px 25px rgba(20,40,70,.08);
+}
+
+body.simple-mode .hero-description,
+body.simple-mode .note-card p,
+body.simple-mode .topic-card p,
+body.simple-mode .revision-card p{
+
+    color:#59677c;
+}
+
+body.simple-mode .stat,
+body.simple-mode .lang-box,
+body.simple-mode .revision-card,
+body.simple-mode .quick-nav a{
+
+    background:#f7f9fc;
+
+    border-color:#e1e7ef;
+}
+
+body.simple-mode .lang-box p,
+body.simple-mode .study-list li,
+body.simple-mode td{
+
+    color:#536175;
+}
+
+body.simple-mode .section-title p,
+body.simple-mode .brand-sub{
+
+    color:#718096;
+}
+
+body.simple-mode .back-btn,
+body.simple-mode .theme-btn{
+
+    color:#35445b;
+
+    background:#fff;
+
+    border-color:#dfe5ed;
+}
+
+body.simple-mode .formula{
+
+    background:#f7f9fc;
+
+    color:#2563eb;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .topic-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .header-inner{
+
+        align-items:flex-start;
+    }
+
+    .brand-title{
+
+        font-size:13px;
+    }
+
+    .back-btn{
+
+        padding:
+            8px 9px;
+
+        font-size:10px;
+    }
+
+    .container{
+
+        padding:
+            28px 4% 60px;
+    }
+
+    .hero{
+
+        padding:
+            27px 20px;
+    }
+
+    .hero h1{
+
+        font-size:28px;
+    }
+
+    .bilingual,
+    .topic-grid,
+    .revision-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .theme-panel{
+
+        right:10px;
+
+        width:
+            calc(100% - 20px);
+    }
+}
+
+@media(max-width:430px){
+
+    .header-actions{
+
+        gap:4px;
+    }
+
+    .theme-btn{
+
+        font-size:0;
+
+        width:36px;
+        height:36px;
+
+        padding:0;
+    }
+
+    .theme-btn::after{
+
+        content:"🎨";
+
+        font-size:15px;
+    }
+
+    .stats{
+
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            M1
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                M1 Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Chapter 04 • Spreadsheet
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="theme-btn"
+            onclick="toggleThemePanel()">
+            🎨 Themes
+        </button>
+
+        <a
+            href="m1.html"
+            class="back-btn">
+            ← Back
+        </a>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================================================
+     THEME PANEL
+========================================================= -->
+
+<div
+    class="theme-panel"
+    id="themePanel">
+
+    <h3>
+        🎨 Choose Your Study Theme
+    </h3>
+
+    <div class="theme-label">
+        COLOR THEMES
+    </div>
+
+    <div class="theme-options">
+
+        <button class="color cyan active"
+            onclick="setTheme('cyan')"></button>
+
+        <button class="color purple"
+            onclick="setTheme('purple')"></button>
+
+        <button class="color green"
+            onclick="setTheme('green')"></button>
+
+        <button class="color orange"
+            onclick="setTheme('orange')"></button>
+
+        <button class="color pink"
+            onclick="setTheme('pink')"></button>
+
+        <button class="color red"
+            onclick="setTheme('red')"></button>
+
+        <button class="color blue"
+            onclick="setTheme('blue')"></button>
+
+        <button class="color gold"
+            onclick="setTheme('gold')"></button>
+
+    </div>
+
+    <div class="theme-label">
+        DISPLAY MODE
+    </div>
+
+    <div class="mode-options">
+
+        <button
+            class="mode-btn"
+            onclick="setMode('premium')">
+            ✨ Premium
+        </button>
+
+        <button
+            class="mode-btn"
+            onclick="setMode('simple')">
+            📄 Simple
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+    <div class="badge">
+        ✦ NIELIT O LEVEL • M1-R5.1 • CHAPTER 04
+    </div>
+
+    <h1>
+        Spreadsheet
+    </h1>
+
+    <p class="hero-description">
+
+        Complete bilingual study notes for Spreadsheet.
+        Learn workbook and worksheet concepts, rows,
+        columns, cells, data entry, formatting, formulas,
+        functions, charts, sorting, filtering and important
+        examination points in a simple English + Hindi format.
+
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <strong>04</strong>
+
+            <span>
+                Chapter Number
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>10+</strong>
+
+            <span>
+                Major Topics
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>EN + HI</strong>
+
+            <span>
+                Bilingual Notes
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>MCQ</strong>
+
+            <span>
+                Exam Focused
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     QUICK NAV
+========================================================= -->
+
+<nav class="quick-nav">
+
+    <a href="#intro">
+        Introduction
+    </a>
+
+    <a href="#workbook">
+        Workbook
+    </a>
+
+    <a href="#cells">
+        Rows & Cells
+    </a>
+
+    <a href="#data">
+        Data Entry
+    </a>
+
+    <a href="#formatting">
+        Formatting
+    </a>
+
+    <a href="#formulas">
+        Formulas
+    </a>
+
+    <a href="#functions">
+        Functions
+    </a>
+
+    <a href="#charts">
+        Charts
+    </a>
+
+    <a href="#data-tools">
+        Data Tools
+    </a>
+
+    <a href="#shortcuts">
+        Shortcuts
+    </a>
+
+    <a href="#revision">
+        Revision
+    </a>
+
+</nav>
+
+
+<!-- =========================================================
+     1 INTRODUCTION
+========================================================= -->
+
+<div
+    class="section-title"
+    id="intro">
+
+    <div class="section-icon">
+        📊
+    </div>
+
+    <div>
+
+        <h2>
+            1. Introduction to Spreadsheet
+        </h2>
+
+        <p>
+            Spreadsheet का basic concept
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        What is a Spreadsheet?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                A spreadsheet is an application software
+                used to organize, calculate, analyze and
+                present data in tabular form using rows
+                and columns.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Spreadsheet एक application software है
+                जिसका उपयोग data को rows और columns के
+                रूप में व्यवस्थित, calculate, analyze और
+                present करने के लिए किया जाता है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="definition">
+
+        <strong>
+            📌 Exam Definition
+        </strong>
+
+        <p>
+            Spreadsheet is a software application that
+            allows users to enter data into cells and
+            perform calculations using formulas and functions.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     2 WORKBOOK
+========================================================= -->
+
+<div
+    class="section-title"
+    id="workbook">
+
+    <div class="section-icon">
+        📚
+    </div>
+
+    <div>
+
+        <h2>
+            2. Workbook & Worksheet
+        </h2>
+
+        <p>
+            Spreadsheet file structure
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="topic-grid">
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📘
+        </div>
+
+        <h3>
+            Workbook
+        </h3>
+
+        <p>
+            A spreadsheet file that can contain one or
+            more worksheets.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📄
+        </div>
+
+        <h3>
+            Worksheet
+        </h3>
+
+        <p>
+            A worksheet is a grid of rows and columns
+            where data is entered and processed.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📦
+        </div>
+
+        <h3>
+            Cell
+        </h3>
+
+        <p>
+            The intersection of a row and a column
+            is called a cell.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            ➡️
+        </div>
+
+        <h3>
+            Row
+        </h3>
+
+        <p>
+            Rows run horizontally and are generally
+            identified by numbers.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            ⬇️
+        </div>
+
+        <h3>
+            Column
+        </h3>
+
+        <p>
+            Columns run vertically and are generally
+            identified by letters.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🎯
+        </div>
+
+        <h3>
+            Active Cell
+        </h3>
+
+        <p>
+            The currently selected cell in which data
+            can be entered or edited.
+        </p>
+
+    </div>
+
+
+</section>
+
+
+<section class="note-card">
+
+    <h3>
+        Workbook vs Worksheet
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                A workbook is the complete spreadsheet
+                file, while a worksheet is an individual
+                sheet inside that workbook.
+            </p>
+
+        </div>
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Workbook पूरी spreadsheet file होती है,
+                जबकि worksheet उस workbook के अंदर
+                मौजूद individual sheet होती है।
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     3 CELLS
+========================================================= -->
+
+<div
+    class="section-title"
+    id="cells">
+
+    <div class="section-icon">
+        🔲
+    </div>
+
+    <div>
+
+        <h2>
+            3. Rows, Columns & Cells
+        </h2>
+
+        <p>
+            Spreadsheet grid structure
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        Cell Address / Cell Reference
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                A cell reference identifies a cell by
+                combining its column letter and row number.
+                For example, A1, B5 and C10.
+            </p>
+
+        </div>
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Cell reference किसी cell की पहचान करता है।
+                इसमें column letter और row number शामिल होते हैं,
+                जैसे A1, B5 और C10।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="important">
+
+        <h3>
+            ⭐ IMPORTANT
+        </h3>
+
+        <p>
+            A1 का अर्थ है Column A और Row 1 का intersection.
+            इसी प्रकार C7 का अर्थ Column C और Row 7 है।
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     4 DATA ENTRY
+========================================================= -->
+
+<div
+    class="section-title"
+    id="data">
+
+    <div class="section-icon">
+        ⌨️
+    </div>
+
+    <div>
+
+        <h2>
+            4. Data Entry
+        </h2>
+
+        <p>
+            Types of data used in spreadsheets
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="topic-grid">
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🔤
+        </div>
+
+        <h3>
+            Text / Label
+        </h3>
+
+        <p>
+            Text data such as names, subjects,
+            addresses and descriptions.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🔢
+        </div>
+
+        <h3>
+            Number
+        </h3>
+
+        <p>
+            Numeric values used for calculations,
+            such as 100, 250 or 75.5.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📅
+        </div>
+
+        <h3>
+            Date
+        </h3>
+
+        <p>
+            Date values can be entered and formatted
+            according to requirements.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            ⏰
+        </div>
+
+        <h3>
+            Time
+        </h3>
+
+        <p>
+            Time values can be entered and used
+            in suitable calculations.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
++-
+        </div>
+
+        <h3>
+            Formula
+        </h3>
+
+        <p>
+            A formula performs calculations using
+            operators, values and cell references.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            ƒx
+        </div>
+
+        <h3>
+            Function
+        </h3>
+
+        <p>
+            A predefined formula designed to perform
+            a specific calculation.
+        </p>
+
+    </div>
+
+
+</section>
+
+
+<!-- =========================================================
+     5 FORMATTING
+========================================================= -->
+
+<div
+    class="section-title"
+    id="formatting">
+
+    <div class="section-icon">
+        🎨
+    </div>
+
+    <div>
+
+        <h2>
+            5. Cell Formatting
+        </h2>
+
+        <p>
+            Making spreadsheet data clear and readable
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        Common Formatting Options
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <ul class="study-list">
+
+                <li>Font Type</li>
+
+                <li>Font Size</li>
+
+                <li>Bold</li>
+
+                <li>Italic</li>
+
+                <li>Underline</li>
+
+                <li>Text Color</li>
+
+                <li>Background / Cell Color</li>
+
+                <li>Alignment</li>
+
+                <li>Number Format</li>
+
+                <li>Border</li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <ul class="study-list">
+
+                <li>Font Type — फॉन्ट प्रकार</li>
+
+                <li>Font Size — फॉन्ट आकार</li>
+
+                <li>Bold — मोटा अक्षर</li>
+
+                <li>Italic — तिरछा अक्षर</li>
+
+                <li>Underline — रेखांकित</li>
+
+                <li>Text Color — टेक्स्ट रंग</li>
+
+                <li>Cell Color — सेल का रंग</li>
+
+                <li>Alignment — संरेखण</li>
+
+                <li>Number Format — संख्या प्रारूप</li>
+
+                <li>Border — बॉर्डर</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     6 FORMULAS
+========================================================= -->
+
+<div
+    class="section-title"
+    id="formulas">
+
+    <div class="section-icon">
+        ➗
+    </div>
+
+    <div>
+
+        <h2>
+            6. Formulas
+        </h2>
+
+        <p>
+            Spreadsheet calculations
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        What is a Formula?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                A formula is an expression used to perform
+                calculations in a spreadsheet. A formula
+                normally begins with an equal sign (=).
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Formula spreadsheet में calculation करने
+                के लिए उपयोग किया जाने वाला expression है।
+                Formula सामान्यतः equal sign (=) से शुरू होता है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="formula">
+
+        =A1+B1
+        <br>
+
+        =A2*B2
+        <br>
+
+        =C5-D5
+        <br>
+
+        =D10/E10
+
+        <br><br>
+
+        <span>
+            + Addition • - Subtraction • * Multiplication • /
+            Division
+        </span>
+
+    </div>
+
+
+    <div class="important">
+
+        <h3>
+            🎯 EXAM POINT
+        </h3>
+
+        <p>
+            Spreadsheet formula की पहचान के लिए सबसे
+            महत्वपूर्ण बात है कि formula सामान्यतः "="
+            sign से शुरू होता है।
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     7 FUNCTIONS
+========================================================= -->
+
+<div
+    class="section-title"
+    id="functions">
+
+    <div class="section-icon">
+        ƒx
+    </div>
+
+    <div>
+
+        <h2>
+            7. Important Functions
+        </h2>
+
+        <p>
+            Frequently used spreadsheet functions
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>
+        Function
+    </th>
+
+    <th>
+        Purpose
+    </th>
+
+    <th>
+        हिंदी अर्थ
+    </th>
+
+    <th>
+        Example
+    </th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+    <td>
+        SUM()
+    </td>
+
+    <td>
+        Adds values
+    </td>
+
+    <td>
+        जोड़ना
+    </td>
+
+    <td>
+        =SUM(A1:A5)
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        AVERAGE()
+    </td>
+
+    <td>
+        Calculates average
+    </td>
+
+    <td>
+        औसत निकालना
+    </td>
+
+    <td>
+        =AVERAGE(A1:A5)
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        MAX()
+    </td>
+
+    <td>
+        Finds largest value
+    </td>
+
+    <td>
+        सबसे बड़ी value
+    </td>
+
+    <td>
+        =MAX(A1:A5)
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        MIN()
+    </td>
+
+    <td>
+        Finds smallest value
+    </td>
+
+    <td>
+        सबसे छोटी value
+    </td>
+
+    <td>
+        =MIN(A1:A5)
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        COUNT()
+    </td>
+
+    <td>
+        Counts numeric cells
+    </td>
+
+    <td>
+        संख्या वाले cells गिनना
+    </td>
+
+    <td>
+        =COUNT(A1:A5)
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        IF()
+    </td>
+
+    <td>
+        Performs logical test
+    </td>
+
+    <td>
+        शर्त की जाँच
+    </td>
+
+    <td>
+        =IF(A1>=40,"Pass","Fail")
+    </td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="formula">
+
+    =SUM(A1:A10)
+    <br>
+    =AVERAGE(B1:B10)
+    <br>
+    =MAX(C1:C10)
+    <br>
+    =MIN(D1:D10)
+    <br>
+    =COUNT(E1:E10)
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     8 CHARTS
+========================================================= -->
+
+<div
+    class="section-title"
+    id="charts">
+
+    <div class="section-icon">
+        📈
+    </div>
+
+    <div>
+
+        <h2>
+            8. Charts
+        </h2>
+
+        <p>
+            Graphical representation of data
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="topic-grid">
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📊
+        </div>
+
+        <h3>
+            Column Chart
+        </h3>
+
+        <p>
+            Uses vertical columns to compare different
+            categories or values.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📉
+        </div>
+
+        <h3>
+            Bar Chart
+        </h3>
+
+        <p>
+            Uses horizontal bars to compare categories
+            or values.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🥧
+        </div>
+
+        <h3>
+            Pie Chart
+        </h3>
+
+        <p>
+            Represents parts of a whole using
+            circular sectors.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📈
+        </div>
+
+        <h3>
+            Line Chart
+        </h3>
+
+        <p>
+            Useful for showing trends and changes
+            over a sequence.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🎯
+        </div>
+
+        <h3>
+            Chart Title
+        </h3>
+
+        <p>
+            Describes the subject or information
+            represented by the chart.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🏷️
+        </div>
+
+        <h3>
+            Data Labels
+        </h3>
+
+        <p>
+            Display values or information directly
+            on chart elements.
+        </p>
+
+    </div>
+
+
+</section>
+
+
+<section class="note-card">
+
+    <h3>
+        Why are Charts Used?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                Charts make numerical data easier to
+                understand, compare and analyze visually.
+            </p>
+
+        </div>
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Charts numerical data को visually समझने,
+                compare करने और analyze करने को आसान बनाते हैं।
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     9 DATA TOOLS
+========================================================= -->
+
+<div
+    class="section-title"
+    id="data-tools">
+
+    <div class="section-icon">
+        🔎
+    </div>
+
+    <div>
+
+        <h2>
+            9. Data Tools
+        </h2>
+
+        <p>
+            Sorting, filtering and organizing data
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        Sorting
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                Sorting arranges data in a particular order,
+                such as ascending or descending order.
+            </p>
+
+        </div>
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Sorting data को किसी विशेष क्रम में arrange
+                करता है, जैसे ascending या descending order।
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="note-card">
+
+    <h3>
+        Filtering
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                Filtering displays only the records that
+                satisfy a specified condition.
+            </p>
+
+        </div>
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Filtering केवल उन records को दिखाता है जो
+                दी गई condition को satisfy करते हैं।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="important">
+
+        <h3>
+            ⭐ REMEMBER
+        </h3>
+
+        <p>
+            Sorting = Data का order बदलना।
+            <br>
+            Filtering = केवल required data दिखाना।
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     10 COMMON OPERATIONS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🛠️
+    </div>
+
+    <div>
+
+        <h2>
+            10. Common Spreadsheet Operations
+        </h2>
+
+        <p>
+            Basic practical operations
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<ul class="study-list">
+
+    <li>
+        Create a new workbook
+    </li>
+
+    <li>
+        Enter data into cells
+    </li>
+
+    <li>
+        Edit cell contents
+    </li>
+
+    <li>
+        Copy and move data
+    </li>
+
+    <li>
+        Insert and delete rows
+    </li>
+
+    <li>
+        Insert and delete columns
+    </li>
+
+    <li>
+        Change column width
+    </li>
+
+    <li>
+        Change row height
+    </li>
+
+    <li>
+        Merge cells
+    </li>
+
+    <li>
+        Apply cell formatting
+    </li>
+
+    <li>
+        Use formulas and functions
+    </li>
+
+    <li>
+        Create charts
+    </li>
+
+    <li>
+        Sort and filter data
+    </li>
+
+    <li>
+        Save and print spreadsheet
+    </li>
+
+</ul>
+
+</section>
+
+
+<!-- =========================================================
+     11 SHORTCUTS
+========================================================= -->
+
+<div
+    class="section-title"
+    id="shortcuts">
+
+    <div class="section-icon">
+        ⌨️
+    </div>
+
+    <div>
+
+        <h2>
+            11. Important Keyboard Shortcuts
+        </h2>
+
+        <p>
+            Must remember for examination
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>
+        Shortcut
+    </th>
+
+    <th>
+        English
+    </th>
+
+    <th>
+        हिंदी
+    </th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+    <td>
+        Ctrl + N
+    </td>
+
+    <td>
+        New
+    </td>
+
+    <td>
+        नई spreadsheet/file
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + O
+    </td>
+
+    <td>
+        Open
+    </td>
+
+    <td>
+        File खोलना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + S
+    </td>
+
+    <td>
+        Save
+    </td>
+
+    <td>
+        Save करना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + P
+    </td>
+
+    <td>
+        Print
+    </td>
+
+    <td>
+        Print करना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + C
+    </td>
+
+    <td>
+        Copy
+    </td>
+
+    <td>
+        कॉपी करना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + X
+    </td>
+
+    <td>
+        Cut
+    </td>
+
+    <td>
+        कट करना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + V
+    </td>
+
+    <td>
+        Paste
+    </td>
+
+    <td>
+        पेस्ट करना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + Z
+    </td>
+
+    <td>
+        Undo
+    </td>
+
+    <td>
+        पिछली action वापस करना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + Y
+    </td>
+
+    <td>
+        Redo
+    </td>
+
+    <td>
+        Action दोबारा करना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + A
+    </td>
+
+    <td>
+        Select All
+    </td>
+
+    <td>
+        सभी data select करना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        Ctrl + F
+    </td>
+
+    <td>
+        Find
+    </td>
+
+    <td>
+        Data खोजना
+    </td>
+
+</tr>
+
+<tr>
+
+    <td>
+        F2
+    </td>
+
+    <td>
+        Edit active cell
+    </td>
+
+    <td>
+        Active cell edit करना
+    </td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     IMPORTANT EXAM POINTS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🎯
+    </div>
+
+    <div>
+
+        <h2>
+            Important Exam Points
+        </h2>
+
+        <p>
+            Quick MCQ revision
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<ul class="study-list">
+
+    <li>
+        Spreadsheet data is organized using rows and columns.
+    </li>
+
+    <li>
+        The intersection of a row and column is called a cell.
+    </li>
+
+    <li>
+        Columns are generally identified by letters.
+    </li>
+
+    <li>
+        Rows are generally identified by numbers.
+    </li>
+
+    <li>
+        A1 is an example of a cell reference.
+    </li>
+
+    <li>
+        A workbook can contain multiple worksheets.
+    </li>
+
+    <li>
+        A formula generally starts with = sign.
+    </li>
+
+    <li>
+        SUM() is used to add values.
+    </li>
+
+    <li>
+        AVERAGE() calculates the average.
+    </li>
+
+    <li>
+        MAX() returns the largest value.
+    </li>
+
+    <li>
+        MIN() returns the smallest value.
+    </li>
+
+    <li>
+        COUNT() counts numeric values.
+    </li>
+
+    <li>
+        Charts provide graphical representation of data.
+    </li>
+
+    <li>
+        Sorting arranges data in a specified order.
+    </li>
+
+    <li>
+        Filtering displays records according to a condition.
+    </li>
+
+</ul>
+
+</section>
+
+
+<!-- =========================================================
+     ONE PAGE REVISION
+========================================================= -->
+
+<div
+    class="section-title"
+    id="revision">
+
+    <div class="section-icon">
+        🚀
+    </div>
+
+    <div>
+
+        <h2>
+            One Page Revision
+        </h2>
+
+        <p>
+            Chapter 4 in quick format
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="revision-grid">
+
+
+<div class="revision-card">
+
+    <h3>
+        Spreadsheet
+    </h3>
+
+    <p>
+        Application software used to organize,
+        calculate, analyze and present data using
+        rows and columns.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Workbook
+    </h3>
+
+    <p>
+        Complete spreadsheet file containing one
+        or more worksheets.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Cell
+    </h3>
+
+    <p>
+        Intersection of a row and column.
+        Example: A1, B5, C10.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Formula
+    </h3>
+
+    <p>
+        Used for calculations and generally starts
+        with an equal sign (=).
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Functions
+    </h3>
+
+    <p>
+        SUM, AVERAGE, MAX, MIN, COUNT and IF are
+        important spreadsheet functions.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Charts
+    </h3>
+
+    <p>
+        Column, Bar, Pie and Line charts are common
+        methods of graphical data presentation.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Sorting
+    </h3>
+
+    <p>
+        Arranges data according to a specified
+        order such as ascending or descending.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Filtering
+    </h3>
+
+    <p>
+        Displays only those records that satisfy
+        a specified condition.
+    </p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL TIP
+========================================================= -->
+
+<section class="important">
+
+    <h3>
+        🧠 STUDY TIP
+    </h3>
+
+    <p>
+
+        सबसे पहले Spreadsheet के basic terms —
+        Workbook, Worksheet, Row, Column और Cell को
+        अच्छी तरह याद करें।
+
+        <br><br>
+
+        इसके बाद Formula और Functions जैसे
+        SUM(), AVERAGE(), MAX(), MIN(), COUNT()
+        को examples के साथ practice करें।
+
+        <br><br>
+
+        अंत में Charts, Sorting, Filtering और
+        Keyboard Shortcuts revise करें। Objective
+        questions के लिए ये concepts बहुत important हैं।
+
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <p>
+        M1-R5.1 • Chapter 04 • Spreadsheet
+    </p>
+
+    <p style="margin-top:6px;">
+        Bilingual Study Notes • English + Hindi
+    </p>
+
+    <p style="margin-top:6px;">
+        Designed for NIELIT O Level Students
+    </p>
+
+</footer>
+
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   THEME COLORS
+========================================================= */
+
+const themes = {
+
+    cyan:{
+        primary:"#36dfff",
+        secondary:"#7c5cff",
+        accent:"#00ffa3"
+    },
+
+    purple:{
+        primary:"#b388ff",
+        secondary:"#7c4dff",
+        accent:"#e0b3ff"
+    },
+
+    green:{
+        primary:"#00e6a8",
+        secondary:"#00b894",
+        accent:"#8affc1"
+    },
+
+    orange:{
+        primary:"#ffb347",
+        secondary:"#ff7043",
+        accent:"#ffd166"
+    },
+
+    pink:{
+        primary:"#ff6ec7",
+        secondary:"#ff3d81",
+        accent:"#ffa8df"
+    },
+
+    red:{
+        primary:"#ff7675",
+        secondary:"#d63031",
+        accent:"#ffb3b3"
+    },
+
+    blue:{
+        primary:"#74b9ff",
+        secondary:"#0984e3",
+        accent:"#81ecec"
+    },
+
+    gold:{
+        primary:"#ffe66d",
+        secondary:"#f5a623",
+        accent:"#fff1a8"
+    }
+
+};
+
+
+/* =========================================================
+   SET THEME
+========================================================= */
+
+function setTheme(name){
+
+    const theme = themes[name];
+
+    if(!theme) return;
+
+    document.documentElement.style
+        .setProperty(
+            "--primary",
+            theme.primary
+        );
+
+    document.documentElement.style
+        .setProperty(
+            "--secondary",
+            theme.secondary
+        );
+
+    document.documentElement.style
+        .setProperty(
+            "--accent",
+            theme.accent
+        );
+
+    localStorage.setItem(
+        "m1_ch4_theme",
+        name
+    );
+
+    document
+        .querySelectorAll(".color")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+    const selected =
+        document.querySelector("." + name);
+
+    if(selected){
+        selected.classList.add("active");
+    }
+}
+
+
+/* =========================================================
+   DISPLAY MODE
+========================================================= */
+
+function setMode(mode){
+
+    if(mode === "simple"){
+
+        document.body
+            .classList
+            .add("simple-mode");
+
+    }else{
+
+        document.body
+            .classList
+            .remove("simple-mode");
+    }
+
+    localStorage.setItem(
+        "m1_ch4_mode",
+        mode
+    );
+}
+
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+function toggleThemePanel(){
+
+    document
+        .getElementById("themePanel")
+        .classList
+        .toggle("show");
+}
+
+
+/* =========================================================
+   LOAD SAVED SETTINGS
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    ()=>{
+
+        const savedTheme =
+            localStorage.getItem(
+                "m1_ch4_theme"
+            );
+
+        const savedMode =
+            localStorage.getItem(
+                "m1_ch4_mode"
+            );
+
+        if(savedTheme){
+
+            setTheme(savedTheme);
+
+        }else{
+
+            setTheme("cyan");
+        }
+
+        if(savedMode){
+
+            setMode(savedMode);
+
+        }else{
+
+            setMode("premium");
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE PANEL OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(e){
+
+        const panel =
+            document.getElementById(
+                "themePanel"
+            );
+
+        const button =
+            document.querySelector(
+                ".theme-btn"
+            );
+
+        if(
+            panel.classList.contains("show") &&
+            !panel.contains(e.target) &&
+            !button.contains(e.target)
+        ){
+
+            panel.classList.remove("show");
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>

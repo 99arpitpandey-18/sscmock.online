@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Finora — Smart Finance Tools & Money Education</title>
+
+<meta name="description" content="Finora is a modern personal finance platform with free EMI, SIP, FD, interest and salary calculators, finance guides and money education.">
+<meta name="keywords" content="finance calculator, EMI calculator, SIP calculator, FD calculator, salary calculator, compound interest, personal finance India">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --text:#101828;
+    --muted:#667085;
+    --line:#e6eaf0;
+    --primary:#1456ff;
+    --primary2:#4c7dff;
+    --green:#12a36a;
+    --dark:#07111f;
+    --dark2:#0c1a2c;
+    --shadow:0 18px 50px rgba(16,24,40,.08);
+    --radius:22px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    height:76px;
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(230,234,240,.85);
+}
+
+.nav-inner{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:"Manrope",sans-serif;
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:-.7px;
+}
+
+.logo-mark{
+    width:39px;
+    height:39px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    color:#fff;
+    background:linear-gradient(135deg,#1456ff,#6a8fff);
+    box-shadow:0 8px 22px rgba(20,86,255,.3);
+    font-weight:800;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.nav-links a{
+    color:#475467;
+    font-size:14px;
+    font-weight:600;
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:var(--primary);
+}
+
+.nav-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.icon-btn{
+    width:40px;
+    height:40px;
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.primary-btn{
+    border:0;
+    color:#fff;
+    background:var(--primary);
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(20,86,255,.25);
+}
+
+.menu-btn{
+    display:none;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:85px 0 70px;
+    background:
+      radial-gradient(circle at 85% 20%,rgba(20,86,255,.13),transparent 30%),
+      radial-gradient(circle at 10% 70%,rgba(18,163,106,.08),transparent 28%),
+      var(--bg);
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    align-items:center;
+    gap:65px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#edf3ff;
+    color:#1456ff;
+    border:1px solid #dce7ff;
+    padding:8px 13px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:22px;
+}
+
+.badge-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#19b979;
+    box-shadow:0 0 0 5px rgba(25,185,121,.12);
+}
+
+.hero h1{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(42px,5.3vw,70px);
+    line-height:1.03;
+    letter-spacing:-3.5px;
+    max-width:700px;
+}
+
+.gradient-text{
+    background:linear-gradient(90deg,#1456ff,#6c8cff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    margin:24px 0 30px;
+    color:var(--muted);
+    font-size:17px;
+    line-height:1.75;
+    max-width:590px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.secondary-btn{
+    border:1px solid var(--line);
+    background:#fff;
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* HERO VISUAL */
+
+.finance-card{
+    position:relative;
+    background:linear-gradient(145deg,#081423,#10253d);
+    border-radius:30px;
+    padding:27px;
+    min-height:430px;
+    box-shadow:0 30px 80px rgba(7,17,31,.22);
+    overflow:hidden;
+    color:white;
+}
+
+.finance-card:before{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    background:rgba(65,112,255,.18);
+    filter:blur(5px);
+    right:-80px;
+    top:-90px;
+}
+
+.card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:relative;
+}
+
+.card-title{
+    color:#b6c2d2;
+    font-size:13px;
+}
+
+.card-value{
+    margin-top:8px;
+    font-size:36px;
+    font-family:"Manrope",sans-serif;
+    font-weight:800;
+}
+
+.growth{
+    display:inline-flex;
+    margin-top:7px;
+    padding:5px 9px;
+    border-radius:8px;
+    background:rgba(18,163,106,.13);
+    color:#54d89f;
+    font-size:12px;
+    font-weight:700;
+}
+
+.chart{
+    height:150px;
+    margin-top:35px;
+    position:relative;
+}
+
+.chart svg{
+    width:100%;
+    height:100%;
+}
+
+.chart-line{
+    fill:none;
+    stroke:#5e87ff;
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.chart-fill{
+    fill:url(#gradient);
+    opacity:.18;
+}
+
+.stats-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.mini-stat{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:15px;
+    padding:15px;
+}
+
+.mini-stat span{
+    display:block;
+    color:#8d9aac;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.mini-stat strong{
+    font-size:17px;
+}
+
+/* ================= TRUST BAR ================= */
+
+.trust{
+    background:#fff;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+
+.trust-inner{
+    min-height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.trust-item{
+    color:#667085;
+    font-size:13px;
+    font-weight:600;
+}
+
+/* ================= SECTION ================= */
+
+section{
+    padding:88px 0;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:35px;
+    gap:20px;
+}
+
+.eyebrow{
+    color:var(--primary);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:9px;
+}
+
+.section-title{
+    font-family:"Manrope",sans-serif;
+    font-size:clamp(28px,3.5vw,42px);
+    letter-spacing:-1.7px;
+}
+
+.section-sub{
+    color:var(--muted);
+    line-height:1.7;
+    max-width:580px;
+    margin-top:10px;
+}
+
+/* ================= TOOLS ================= */
+
+.tools-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:17px;
+}
+
+.tool-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:22px;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.tool-card:hover{
+    transform:translateY(-7px);
+    border-color:#cddaff;
+    box-shadow:var(--shadow);
+}
+
+.tool-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    background:#edf3ff;
+    color:var(--primary);
+    font-size:21px;
+    margin-bottom:18px;
+}
+
+.tool-card h3{
+    font-family:"Manrope",sans-serif;
+    font-size:16px;
+    margin-bottom:7px;
+}
+
+.tool-card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.55;
+}
+
+.tool-link{
+    display:inline-block;
+    margin-top:15px;
+    color:var(--primary);
+    font-size:12px;
+    font-weight:800;
+}
+
+/* ================= CALCULATOR FEATURE ================= */
+
+.calc-section{
+    background:#07111f;
+    color:#fff;
+}
+
+.calc-layout{
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:40px;
+    align-items:start;
+}
+
+.calc-intro p{
+    color:#9caabe;
+    line-height:1.75;
+    margin-top:18px;
+}
+
+.calc-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:25px;
+}
+
+.calc-tab{
+    border:1px solid rgba(255,255,255,.1);
+    color:#aebbd0;
+    background:rgba(255,255,255,.04);
+    padding:9px 13px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.calc-tab.active{
+    background:#1456ff;
+    color:white;
+    border-color:#1456ff;
+}
+
+.calculator{
+    background:#fff;
+    color:var(--text);
+    border-radius:24px;
+    padding:26px;
+    box-shadow:0 30px 80px rgba(0,0,0,.2);
+}
+
+.calc-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.calc-head h3{
+    font-family:"Manrope",sans-serif;
+    font-size:21px;
+}
+
+.calc-label{
+    display:block;
+    font-size:12px;
+    color:#667085;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.input-wrap{
+    position:relative;
+    margin-bottom:18px;
+}
+
+.input-wrap input{
+    width:100%;
+    padding:13px 45px 13px 14px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    outline:none;
+    background:#fbfcfe;
+}
+
+.input-wrap input:focus{
+    border-color:#7e9eff;
+    box-shadow:0 0 0 4px rgba(20,86,255,.08);
+}
+
+.input-suffix{
+    position:absolute;
+    right:14px;
+    top:12px;
+    color:#98a2b3;
+    font-size:13px;
+}
+
+.calc-result{
+    margin-top:10px;
+    padding:20px;
+    border-radius:17px;
+    background:#f3f6ff;
+    border:1px solid #dfe7ff;
+}
+
+.result-label{
+    color:#667085;
+    font-size:12px;
+}
+
+.result-value{
+    font-family:"Manrope",sans-serif;
+    font-size:32px;
+    font-weight:800;
+    color:var(--primary);
+    margin-top:4px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:14px;
+}
+
+.result-box{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+}
+
+.result-box span{
+    color:#98a2b3;
+    display:block;
+    font-size:11px;
+}
+
+.result-box strong{
+    display:block;
+    margin-top:4px;
+    font-size:14px;
+}
+
+/* ================= CATEGORIES ================= */
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.category-card{
+    min-height:210px;
+    border-radius:23px;
+    padding:28px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+.category-card:nth-child(1){
+    background:linear-gradient(135deg,#1456ff,#496fff);
+}
+
+.category-card:nth-child(2){
+    background:linear-gradient(135deg,#0c7552,#19a875);
+}
+
+.category-card:nth-child(3){
+    background:linear-gradient(135deg,#6b42c8,#9b6cf5);
+}
+
+.category-card:after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    border:35px solid rgba(255,255,255,.07);
+    right:-60px;
+    bottom:-80px;
+}
+
+.category-card .cat-icon{
+    font-size:27px;
+    margin-bottom:25px;
+}
+
+.category-card h3{
+    font-family:"Manrope",sans-serif;
+    font-size:22px;
+}
+
+.category-card p{
+    color:rgba(255,255,255,.75);
+    margin-top:8px;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* ================= ARTICLES ================= */
+
+.article-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.article{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.article:hover{
+    transform:translateY(-5px);
+    box-shadow:var(--shadow);
+}
+
+.article-image{
+    height:155px;
+    background:
+      linear-gradient(135deg,#dce6ff,#f5f8ff);
+    display:grid;
+    place-items:center;
+    font-size:45px;
+}
+
+.article-body{
+    padding:21px;
+}
+
+.article-tag{
+    font-size:10px;
+    color:var(--primary);
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.article h3{
+    margin-top:9px;
+    font-family:"Manrope",sans-serif;
+    font-size:17px;
+    line-height:1.35;
+}
+
+.article p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+    margin-top:9px;
+}
+
+.read{
+    display:inline-block;
+    margin-top:15px;
+    color:var(--primary);
+    font-size:12px;
+    font-weight:800;
+}
+
+/* ================= CTA ================= */
+
+.cta{
+    padding:0 0 90px;
+}
+
+.cta-box{
+    background:
+      radial-gradient(circle at 90% 20%,rgba(98,137,255,.25),transparent 30%),
+      linear-gradient(135deg,#07111f,#102746);
+    color:white;
+    border-radius:28px;
+    padding:55px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    overflow:hidden;
+}
+
+.cta-box h2{
+    font-family:"Manrope",sans-serif;
+    font-size:34px;
+    letter-spacing:-1.5px;
+}
+
+.cta-box p{
+    color:#aab8ca;
+    margin-top:10px;
+    max-width:620px;
+    line-height:1.6;
+}
+
+.cta .primary-btn{
+    white-space:nowrap;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#07111f;
+    color:white;
+    padding:65px 0 25px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr repeat(3,1fr);
+    gap:50px;
+    padding-bottom:50px;
+}
+
+.footer-brand p{
+    color:#8290a4;
+    margin-top:14px;
+    max-width:330px;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.footer-col h4{
+    font-size:13px;
+    margin-bottom:17px;
+}
+
+.footer-col a{
+    display:block;
+    color:#8290a4;
+    font-size:13px;
+    margin:11px 0;
+}
+
+.footer-col a:hover{
+    color:white;
+}
+
+.footer-bottom{
+    border-top:1px solid rgba(255,255,255,.08);
+    padding-top:20px;
+    color:#69778b;
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(2,8,18,.65);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+    padding:20px;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    background:#fff;
+    width:min(520px,100%);
+    border-radius:25px;
+    padding:28px;
+    animation:modalIn .25s ease;
+}
+
+@keyframes modalIn{
+    from{transform:translateY(20px);opacity:0}
+    to{transform:translateY(0);opacity:1}
+}
+
+.modal-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.close{
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:10px;
+    background:#f2f4f7;
+    cursor:pointer;
+}
+
+.modal-box p{
+    color:var(--muted);
+    line-height:1.7;
+    font-size:14px;
+    margin-top:15px;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark{
+    --bg:#070d16;
+    --card:#0d1725;
+    --text:#f5f7fa;
+    --muted:#9ba8b9;
+    --line:#1d2938;
+}
+
+body.dark .navbar{
+    background:rgba(7,13,22,.9);
+}
+
+body.dark .icon-btn,
+body.dark .secondary-btn{
+    background:#0d1725;
+    color:#fff;
+}
+
+body.dark .tool-card,
+body.dark .article,
+body.dark .trust,
+body.dark .modal-box{
+    background:#0d1725;
+}
+
+body.dark .tool-icon{
+    background:#152546;
+}
+
+body.dark .article-image{
+    background:#142238;
+}
+
+body.dark .calculator{
+    background:#0d1725;
+    color:#fff;
+}
+
+body.dark .input-wrap input{
+    background:#111d2d;
+    color:#fff;
+    border-color:#263548;
+}
+
+body.dark .calc-result{
+    background:#111f35;
+}
+
+body.dark .result-box{
+    background:#0d1725;
+}
+
+body.dark .trust-item{
+    color:#8d9bad;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+    .hero-grid,
+    .calc-layout{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding-top:60px;
+    }
+
+    .tools-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .category-grid,
+    .article-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .finance-card{
+        max-width:650px;
+    }
+}
+
+@media(max-width:760px){
+    .nav-links{
+        position:absolute;
+        top:76px;
+        left:0;
+        right:0;
+        background:#fff;
+        border-bottom:1px solid var(--line);
+        padding:20px;
+        display:none;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    body.dark .nav-links{
+        background:#0d1725;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .nav-actions .primary-btn{
+        display:none;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .trust-inner{
+        overflow:auto;
+        justify-content:flex-start;
+        padding:18px 0;
+    }
+
+    .trust-item{
+        white-space:nowrap;
+    }
+
+    .hero h1{
+        letter-spacing:-2.3px;
+    }
+
+    section{
+        padding:65px 0;
+    }
+
+    .tools-grid,
+    .category-grid,
+    .article-grid{
+        grid-template-columns:1fr;
+    }
+
+    .section-head{
+        display:block;
+    }
+
+    .cta-box{
+        padding:35px 25px;
+        display:block;
+    }
+
+    .cta-box h2{
+        font-size:28px;
+    }
+
+    .cta .primary-btn{
+        margin-top:22px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+        gap:30px;
+    }
+
+    .footer-bottom{
+        display:block;
+    }
+
+    .footer-bottom span{
+        display:block;
+        margin-top:8px;
+    }
+}
+
+@media(max-width:480px){
+    .container{
+        width:90%;
+    }
+
+    .hero{
+        padding-bottom:45px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .finance-card{
+        padding:20px;
+        border-radius:22px;
+    }
+
+    .card-value{
+        font-size:29px;
+    }
+
+    .stats-row{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+<div class="container nav-inner">
+
+    <a href="#" class="logo">
+        <span class="logo-mark">F</span>
+        Finora
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+        <a href="#tools">Tools</a>
+        <a href="#calculators">Calculators</a>
+        <a href="#learn">Learn</a>
+        <a href="#guides">Guides</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" title="Toggle theme">☼</button>
+        <button class="primary-btn" onclick="scrollToCalc()">Try Calculator</button>
+        <button class="icon-btn menu-btn" id="menuBtn">☰</button>
+    </div>
+
+</div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<main>
+
+<section class="hero">
+<div class="container hero-grid">
+
+    <div>
+        <div class="badge">
+            <span class="badge-dot"></span>
+            Smart money tools for everyday decisions
+        </div>
+
+        <h1>
+            Make smarter
+            <span class="gradient-text">money decisions.</span>
+        </h1>
+
+        <p>
+            Simple finance calculators, practical money guides and
+            easy-to-understand financial education — built for modern India.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="primary-btn" onclick="scrollToCalc()">
+                Calculate now →
+            </button>
+
+            <a href="#learn" class="secondary-btn">
+                Explore guides
+            </a>
+        </div>
+    </div>
+
+
+    <div class="finance-card">
+
+        <div class="card-top">
+            <div>
+                <div class="card-title">Financial Overview</div>
+                <div class="card-value">₹8,42,500</div>
+                <span class="growth">↑ 12.8% this year</span>
+            </div>
+
+            <div style="font-size:25px;">◈</div>
+        </div>
+
+        <div class="chart">
+            <svg viewBox="0 0 600 180" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stop-color="#5e87ff"/>
+                        <stop offset="100%" stop-color="#5e87ff" stop-opacity="0"/>
+                    </linearGradient>
+                </defs>
+
+                <path class="chart-fill"
+                d="M0 150 L55 135 L110 142 L165 108 L220 120 L275 85 L330 96 L385 65 L440 77 L495 43 L550 55 L600 22 L600 180 L0 180 Z"/>
+
+                <path class="chart-line"
+                d="M0 150 L55 135 L110 142 L165 108 L220 120 L275 85 L330 96 L385 65 L440 77 L495 43 L550 55 L600 22"/>
+            </svg>
+        </div>
+
+        <div class="stats-row">
+            <div class="mini-stat">
+                <span>Invested</span>
+                <strong>₹5.2L</strong>
+            </div>
+
+            <div class="mini-stat">
+                <span>Returns</span>
+                <strong>₹1.18L</strong>
+            </div>
+
+            <div class="mini-stat">
+                <span>Goal</span>
+                <strong>72%</strong>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- ================= TRUST ================= -->
+
+<div class="trust">
+<div class="container trust-inner">
+    <div class="trust-item">✓ Free calculators</div>
+    <div class="trust-item">✓ Simple explanations</div>
+    <div class="trust-item">✓ Mobile friendly</div>
+    <div class="trust-item">✓ No complicated jargon</div>
+    <div class="trust-item">✓ Built for India</div>
+</div>
+</div>
+
+
+<!-- ================= TOOLS ================= -->
+
+<section id="tools">
+<div class="container">
+
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">Popular tools</div>
+            <h2 class="section-title">Everything you need to plan better.</h2>
+            <p class="section-sub">
+                Calculate, compare and understand your money in seconds.
+            </p>
+        </div>
+    </div>
+
+    <div class="tools-grid">
+
+        <div class="tool-card" onclick="openCalculator('EMI')">
+            <div class="tool-icon">₹</div>
+            <h3>EMI Calculator</h3>
+            <p>Calculate monthly loan payments and total interest.</p>
+            <span class="tool-link">Open calculator →</span>
+        </div>
+
+        <div class="tool-card" onclick="openCalculator('SIP')">
+            <div class="tool-icon">◫</div>
+            <h3>SIP Calculator</h3>
+            <p>Estimate potential future value of regular investments.</p>
+            <span class="tool-link">Open calculator →</span>
+        </div>
+
+        <div class="tool-card" onclick="openCalculator('FD')">
+            <div class="tool-icon">▣</div>
+            <h3>FD Calculator</h3>
+            <p>Estimate maturity value based on deposit and rate.</p>
+            <span class="tool-link">Open calculator →</span>
+        </div>
+
+        <div class="tool-card" onclick="openCalculator('Interest')">
+            <div class="tool-icon">%</div>
+            <h3>Interest Calculator</h3>
+            <p>Understand simple and compound interest easily.</p>
+            <span class="tool-link">Open calculator →</span>
+        </div>
+
+        <div class="tool-card" onclick="openCalculator('Salary')">
+            <div class="tool-icon">⌁</div>
+            <h3>Salary Calculator</h3>
+            <p>Understand salary components and estimated take-home.</p>
+            <span class="tool-link">Open calculator →</span>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">▤</div>
+            <h3>GST Calculator</h3>
+            <p>Quickly calculate GST-inclusive and exclusive prices.</p>
+            <span class="tool-link">Coming soon →</span>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">◒</div>
+            <h3>Inflation Calculator</h3>
+            <p>Understand how purchasing power changes over time.</p>
+            <span class="tool-link">Coming soon →</span>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">◎</div>
+            <h3>Budget Planner</h3>
+            <p>Create a simple monthly income and expense plan.</p>
+            <span class="tool-link">Coming soon →</span>
+        </div>
+
+    </div>
+</div>
+</section>
+
+
+<!-- ================= CALCULATORS ================= -->
+
+<section class="calc-section" id="calculators">
+<div class="container calc-layout">
+
+    <div class="calc-intro">
+
+        <div class="eyebrow" style="color:#78a0ff;">Smart calculators</div>
+
+        <h2 class="section-title">
+            Numbers become easier
+            when you can see them.
+        </h2>
+
+        <p>
+            Use our calculators to estimate payments, returns and
+            interest. Change the numbers and instantly understand
+            how your decision may look.
+        </p>
+
+        <div class="calc-tabs">
+            <button class="calc-tab active" onclick="switchCalc('EMI',this)">EMI</button>
+            <button class="calc-tab" onclick="switchCalc('SIP',this)">SIP</button>
+            <button class="calc-tab" onclick="switchCalc('FD',this)">FD</button>
+            <button class="calc-tab" onclick="switchCalc('Interest',this)">Interest</button>
+        </div>
+
+    </div>
+
+
+    <div class="calculator">
+
+        <div class="calc-head">
+            <h3 id="calcTitle">EMI Calculator</h3>
+            <span style="font-size:22px;">⌁</span>
+        </div>
+
+        <div id="emiFields">
+
+            <label class="calc-label">Loan amount</label>
+            <div class="input-wrap">
+                <input type="number" id="loan" value="500000">
+                <span class="input-suffix">₹</span>
+            </div>
+
+            <label class="calc-label">Interest rate</label>
+            <div class="input-wrap">
+                <input type="number" id="rate" value="8.5" step=".1">
+                <span class="input-suffix">%</span>
+            </div>
+
+            <label class="calc-label">Loan tenure</label>
+            <div class="input-wrap">
+                <input type="number" id="years" value="5">
+                <span class="input-suffix">yrs</span>
+            </div>
+
+        </div>
+
+
+        <div id="sipFields" style="display:none">
+
+            <label class="calc-label">Monthly investment</label>
+            <div class="input-wrap">
+                <input type="number" id="sipAmount" value="5000">
+                <span class="input-suffix">₹</span>
+            </div>
+
+            <label class="calc-label">Expected annual return</label>
+            <div class="input-wrap">
+                <input type="number" id="sipRate" value="12">
+                <span class="input-suffix">%</span>
+            </div>
+
+            <label class="calc-label">Investment period</label>
+            <div class="input-wrap">
+                <input type="number" id="sipYears" value="10">
+                <span class="input-suffix">yrs</span>
+            </div>
+
+        </div>
+
+
+        <div id="fdFields" style="display:none">
+
+            <label class="calc-label">Deposit amount</label>
+            <div class="input-wrap">
+                <input type="number" id="fdAmount" value="100000">
+                <span class="input-suffix">₹</span>
+            </div>
+
+            <label class="calc-label">Interest rate</label>
+            <div class="input-wrap">
+                <input type="number" id="fdRate" value="7" step=".1">
+                <span class="input-suffix">%</span>
+            </div>
+
+            <label class="calc-label">Period</label>
+            <div class="input-wrap">
+                <input type="number" id="fdYears" value="3">
+                <span class="input-suffix">yrs</span>
+            </div>
+
+        </div>
+
+
+        <div id="interestFields" style="display:none">
+
+            <label class="calc-label">Principal</label>
+            <div class="input-wrap">
+                <input type="number" id="intPrincipal" value="100000">
+                <span class="input-suffix">₹</span>
+            </div>
+
+            <label class="calc-label">Annual interest</label>
+            <div class="input-wrap">
+                <input type="number" id="intRate" value="8">
+                <span class="input-suffix">%</span>
+            </div>
+
+            <label class="calc-label">Time</label>
+            <div class="input-wrap">
+                <input type="number" id="intYears" value="5">
+                <span class="input-suffix">yrs</span>
+            </div>
+
+        </div>
+
+
+        <button class="primary-btn" style="width:100%;" onclick="calculate()">
+            Calculate result
+        </button>
+
+        <div class="calc-result">
+
+            <div class="result-label" id="resultLabel">
+                Estimated monthly EMI
+            </div>
+
+            <div class="result-value" id="resultValue">
+                ₹10,258
+            </div>
+
+            <div class="result-grid">
+
+                <div class="result-box">
+                    <span>Total amount</span>
+                    <strong id="resultTotal">₹6,15,480</strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Total interest</span>
+                    <strong id="resultInterest">₹1,15,480</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</section>
+
+
+<!-- ================= LEARN ================= -->
+
+<section id="learn">
+<div class="container">
+
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">Learn finance</div>
+            <h2 class="section-title">Understand money without the jargon.</h2>
+            <p class="section-sub">
+                Start with the basics and gradually build your financial knowledge.
+            </p>
+        </div>
+    </div>
+
+    <div class="category-grid">
+
+        <div class="category-card">
+            <div class="cat-icon">◈</div>
+            <h3>Money Basics</h3>
+            <p>
+                Saving, budgeting, emergency funds, interest and everyday money concepts.
+            </p>
+        </div>
+
+        <div class="category-card">
+            <div class="cat-icon">↗</div>
+            <h3>Investing Basics</h3>
+            <p>
+                Learn the concepts behind SIPs, mutual funds, diversification and risk.
+            </p>
+        </div>
+
+        <div class="category-card">
+            <div class="cat-icon">▣</div>
+            <h3>Loans & Credit</h3>
+            <p>
+                Understand EMI, interest, credit scores and responsible borrowing.
+            </p>
+        </div>
+
+    </div>
+</div>
+</section>
+
+
+<!-- ================= GUIDES ================= -->
+
+<section id="guides">
+<div class="container">
+
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">Finance guides</div>
+            <h2 class="section-title">Useful knowledge for real life.</h2>
+        </div>
+
+        <a href="#" class="tool-link">View all guides →</a>
+    </div>
+
+    <div class="article-grid">
+
+        <article class="article">
+            <div class="article-image">💰</div>
+            <div class="article-body">
+                <span class="article-tag">Money basics</span>
+                <h3>How to build a simple monthly budget</h3>
+                <p>
+                    A beginner-friendly framework for understanding income,
+                    expenses and savings.
+                </p>
+                <a href="#" class="read">Read guide →</a>
+            </div>
+        </article>
+
+        <article class="article">
+            <div class="article-image">📈</div>
+            <div class="article-body">
+                <span class="article-tag">Investing</span>
+                <h3>What is SIP and how does it work?</h3>
+                <p>
+                    Understand the basic idea behind systematic investing
+                    with a simple example.
+                </p>
+                <a href="#" class="read">Read guide →</a>
+            </div>
+        </article>
+
+        <article class="article">
+            <div class="article-image">🏦</div>
+            <div class="article-body">
+                <span class="article-tag">Loans</span>
+                <h3>Understanding EMI, principal and interest</h3>
+                <p>
+                    Learn what actually makes up your monthly loan payment.
+                </p>
+                <a href="#" class="read">Read guide →</a>
+            </div>
+        </article>
+
+    </div>
+</div>
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<div class="cta" id="about">
+<div class="container">
+
+    <div class="cta-box">
+
+        <div>
+            <h2>Start understanding your money today.</h2>
+            <p>
+                Explore calculators and educational guides designed
+                to make financial concepts easier to understand.
+            </p>
+        </div>
+
+        <button class="primary-btn" onclick="scrollToCalc()">
+            Explore calculators →
+        </button>
+
+    </div>
+
+</div>
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+<div class="container">
+
+    <div class="footer-grid">
+
+        <div class="footer-brand">
+            <div class="logo">
+                <span class="logo-mark">F</span>
+                Finora
+            </div>
+
+            <p>
+                Smart finance calculators and simple money education
+                for everyday decisions.
+            </p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Tools</h4>
+            <a href="#calculators">EMI Calculator</a>
+            <a href="#calculators">SIP Calculator</a>
+            <a href="#calculators">FD Calculator</a>
+            <a href="#calculators">Interest Calculator</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Learn</h4>
+            <a href="#learn">Money Basics</a>
+            <a href="#learn">Investing Basics</a>
+            <a href="#learn">Loans & Credit</a>
+            <a href="#guides">Finance Guides</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy</a>
+            <a href="#">Disclaimer</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2026 Finora. All rights reserved.</span>
+        <span>Educational content only. Not financial advice.</span>
+    </div>
+
+</div>
+</footer>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="modal">
+<div class="modal-box">
+
+    <div class="modal-top">
+        <h3 id="modalTitle">Calculator</h3>
+        <button class="close" onclick="closeModal()">✕</button>
+    </div>
+
+    <p id="modalText">
+        Calculator opened.
+    </p>
+
+    <button class="primary-btn" style="width:100%;margin-top:20px;" onclick="closeModal();scrollToCalc();">
+        Use calculator
+    </button>
+
+</div>
+</div>
+
+
+<script>
+
+/* ================= MOBILE MENU ================= */
+
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+menuBtn.addEventListener("click",()=>{
+    navLinks.classList.toggle("active");
+});
+
+
+/* ================= THEME ================= */
+
+const themeBtn = document.getElementById("themeBtn");
+
+themeBtn.addEventListener("click",()=>{
+    document.body.classList.toggle("dark");
+
+    themeBtn.textContent =
+        document.body.classList.contains("dark") ? "☾" : "☼";
+});
+
+
+/* ================= SCROLL ================= */
+
+function scrollToCalc(){
+    document.getElementById("calculators").scrollIntoView({
+        behavior:"smooth"
+    });
+}
+
+
+/* ================= CALCULATOR SWITCH ================= */
+
+let currentCalc = "EMI";
+
+function switchCalc(type,btn){
+
+    currentCalc = type;
+
+    document.querySelectorAll(".calc-tab").forEach(x=>{
+        x.classList.remove("active");
+    });
+
+    btn.classList.add("active");
+
+    document.getElementById("emiFields").style.display =
+        type==="EMI" ? "block" : "none";
+
+    document.getElementById("sipFields").style.display =
+        type==="SIP" ? "block" : "none";
+
+    document.getElementById("fdFields").style.display =
+        type==="FD" ? "block" : "none";
+
+    document.getElementById("interestFields").style.display =
+        type==="Interest" ? "block" : "none";
+
+    document.getElementById("calcTitle").textContent =
+        type + " Calculator";
+
+    calculate();
+}
+
+
+/* ================= CALCULATE ================= */
+
+function money(value){
+    return "₹" + Math.round(value).toLocaleString("en-IN");
+}
+
+
+function calculate(){
+
+    let value = 0;
+    let total = 0;
+    let interest = 0;
+
+    if(currentCalc==="EMI"){
+
+        let P = Number(document.getElementById("loan").value);
+        let annual = Number(document.getElementById("rate").value);
+        let years = Number(document.getElementById("years").value);
+
+        let r = annual / 12 / 100;
+        let n = years * 12;
+
+        if(r===0){
+            value = P/n;
+        }else{
+            value =
+                P*r*Math.pow(1+r,n) /
+                (Math.pow(1+r,n)-1);
+        }
+
+        total = value*n;
+        interest = total-P;
+
+        document.getElementById("resultLabel").textContent =
+            "Estimated monthly EMI";
+
+    }
+
+    else if(currentCalc==="SIP"){
+
+        let monthly = Number(document.getElementById("sipAmount").value);
+        let annual = Number(document.getElementById("sipRate").value);
+        let years = Number(document.getElementById("sipYears").value);
+
+        let r = annual/12/100;
+        let n = years*12;
+
+        value =
+            monthly *
+            ((Math.pow(1+r,n)-1)/r) *
+            (1+r);
+
+        let invested = monthly*n;
+
+        total = value;
+        interest = value-invested;
+
+        document.getElementById("resultLabel").textContent =
+            "Estimated future value";
+
+    }
+
+    else if(currentCalc==="FD"){
+
+        let P = Number(document.getElementById("fdAmount").value);
+        let annual = Number(document.getElementById("fdRate").value);
+        let years = Number(document.getElementById("fdYears").value);
+
+        value = P*Math.pow(1+annual/100,years);
+
+        total = value;
+        interest = value-P;
+
+        document.getElementById("resultLabel").textContent =
+            "Estimated maturity value";
+
+    }
+
+    else{
+
+        let P = Number(document.getElementById("intPrincipal").value);
+        let annual = Number(document.getElementById("intRate").value);
+        let years = Number(document.getElementById("intYears").value);
+
+        interest = P*(Math.pow(1+annual/100,years)-1);
+        value = P+interest;
+        total = value;
+
+        document.getElementById("resultLabel").textContent =
+            "Compound interest";
+
+    }
+
+    document.getElementById("resultValue").textContent =
+        money(value);
+
+    document.getElementById("resultTotal").textContent =
+        money(total);
+
+    document.getElementById("resultInterest").textContent =
+        money(interest);
+}
+
+
+/* ================= OPEN CALCULATOR ================= */
+
+function openCalculator(type){
+
+    document.getElementById("modalTitle").textContent =
+        type + " Calculator";
+
+    document.getElementById("modalText").textContent =
+        "Use our " + type +
+        " calculator to estimate your numbers quickly. " +
+        "Click below to open the calculator.";
+
+    document.getElementById("modal").classList.add("active");
+}
+
+
+function closeModal(){
+    document.getElementById("modal").classList.remove("active");
+}
+
+
+document.getElementById("modal").addEventListener("click",(e)=>{
+    if(e.target.id==="modal"){
+        closeModal();
+    }
+});
+
+ 
+/* ================= INITIAL CALCULATION ================= */
+
+calculate();
+
+</script>
+
+</body>
+</html>

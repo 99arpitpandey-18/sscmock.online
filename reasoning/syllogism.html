@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syllogism – Deep Explanation (तर्कशास्त्र)</title>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --blue:#2563eb; --dark:#0b1f4b; --navy:#102a68; --bg:#f5f7fb; --white:#ffffff; --text:#172033; --muted:#667085; --border:#e1e6ef; --green:#16a34a; --red:#dc2626; --lightblue:#eef5ff; }
+body{ font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); }
+/* ===== HEADER ===== */
+.header{ background:linear-gradient(135deg,#07183d,#2445a0); color:white; padding:28px 6%; }
+.header-inner{ max-width:1250px; margin:auto; }
+.back-btn{ color:white; text-decoration:none; font-size:15px; font-weight:bold; display:inline-block; margin-bottom:20px; background:rgba(255,255,255,0.1); padding:6px 18px; border-radius:30px; }
+.back-btn:hover{ background:rgba(255,255,255,0.25); }
+.header-content{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.header-icon{ width:76px; height:76px; border-radius:18px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:40px; flex-shrink:0; }
+.header h1{ font-size:34px; margin-bottom:7px; }
+.header p{ font-size:15px; opacity:.85; }
+.lang-toggle{ display:flex; gap:8px; background:rgba(255,255,255,0.15); padding:4px; border-radius:30px; margin-left:auto; }
+.lang-btn{ background:transparent; border:2px solid transparent; color:white; padding:6px 16px; border-radius:30px; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.lang-btn.active{ background:white; color:#0b1f4b; border-color:white; }
+.lang-btn:hover{ background:rgba(255,255,255,0.3); }
+/* ===== CONTAINER ===== */
+.container{ width:92%; max-width:1200px; margin:30px auto; }
+/* ===== HERO ===== */
+.hero{ background:white; border:1px solid var(--border); border-radius:18px; padding:25px; box-shadow:0 8px 25px rgba(15,35,80,.06); }
+.hero h2{ color:var(--dark); margin-bottom:9px; }
+.hero p{ color:var(--muted); line-height:1.6; }
+.hero .description-box{ background:#f4f7ff; border-left:5px solid var(--blue); padding:16px 20px; border-radius:10px; margin-top:12px; color:#1f3a5f; line-height:1.8; }
+.stats{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.stat{ background:var(--lightblue); color:#21438f; border:1px solid #d9e5ff; padding:10px 15px; border-radius:10px; font-weight:bold; font-size:14px; }
+/* ===== CONTROLS ===== */
+.controls{ margin:22px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.search-box{ flex:1; min-width:200px; padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; font-size:14px; outline:none; }
+.search-box:focus{ border-color:var(--blue); }
+select{ padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+.btn{ padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.btn-blue{ background:var(--blue); color:white; }
+.btn-blue:hover{ background:#1d4ed8; }
+.btn-white{ background:white; border:1px solid #ccd3df; color:#26344d; }
+.btn-white:hover{ background:#f0f2f5; }
+.btn-green{ background:var(--green); color:white; }
+.btn-green:hover{ background:#15803d; }
+/* ===== PROGRESS ===== */
+.progress-info{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:var(--muted); font-weight:bold; }
+.progress{ width:100%; height:9px; background:#e5e9f0; border-radius:20px; overflow:hidden; margin-bottom:25px; }
+.progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); transition:.3s; }
+/* ===== QUESTION CARD ===== */
+.question-card{ background:white; border:1px solid var(--border); border-radius:17px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 18px rgba(15,35,80,.05); }
+.question-top{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px 8px; }
+.question-number{ color:var(--blue); font-weight:800; }
+.question-type{ background:#eef2f7; color:#526071; padding:6px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.question-body{ padding:8px 20px 20px; }
+.question-text{ font-size:17px; line-height:1.65; font-weight:650; margin-bottom:16px; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.option{ background:#f8fafc; border:1px solid #dce2eb; border-radius:10px; padding:13px; text-align:left; cursor:pointer; font-size:15px; transition:.2s; }
+.option:hover{ background:#eff6ff; border-color:#2563eb; }
+.option.correct{ background:#ecfdf3; border-color:#22c55e; color:#166534; }
+.option.wrong{ background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+.answer-result{ margin-top:12px; font-weight:bold; }
+.explanation{ display:none; margin-top:15px; padding:18px 20px; background:#f4f7ff; border-left:5px solid #2563eb; border-radius:8px; line-height:1.8; }
+.explanation.show{ display:block; }
+.explanation-title{ color:#17449c; font-weight:bold; margin-bottom:8px; font-size:16px; }
+.footer{ text-align:center; padding:35px 10px; color:#667085; }
+@media(max-width:700px){ .header h1{ font-size:25px; } .header-content{ align-items:flex-start; } .header-icon{ width:60px; height:60px; font-size:30px; } .options{ grid-template-columns:1fr; } .question-text{ font-size:16px; } .container{ width:94%; } .controls{ flex-direction:column; } .controls .btn{ width:100%; text-align:center; } .lang-toggle{ margin-left:0; width:100%; justify-content:center; } }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="header-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="back-btn">← Topics पर वापस जाएँ</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+                <button class="lang-btn" id="langHi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">📊</div>
+            <div>
+                <h1 id="mainTitle">Syllogism (Deep Explanation)</h1>
+                <p id="mainSub">SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="container">
+    <section class="hero">
+        <h2 id="heroTitle">Syllogism – Complete SSC Practice</h2>
+        <div id="descriptionBox" class="description-box">
+            <!-- Dynamically filled by JS -->
+        </div>
+        <div class="stats" id="statsRow">
+            <div class="stat" data-lang-en="510+ Questions" data-lang-hi="510+ प्रश्न">510+ Questions</div>
+            <div class="stat" data-lang-en="Definite Conclusions" data-lang-hi="निश्चित निष्कर्ष">Definite Conclusions</div>
+            <div class="stat" data-lang-en="Possibility Cases" data-lang-hi="संभावना वाले केस">Possibility Cases</div>
+            <div class="stat" data-lang-en="Venn Logic" data-lang-hi="वेन लॉजिक">Venn Logic</div>
+            <div class="stat" data-lang-en="Detailed Explanation" data-lang-hi="विस्तृत व्याख्या">Detailed Explanation</div>
+        </div>
+    </section>
+
+    <!-- ===== CONTROLS ===== -->
+    <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="Search question...">
+        <select id="filter">
+            <option value="all" data-lang-en="All Questions" data-lang-hi="सभी प्रश्न">All Questions</option>
+            <option value="Definite Conclusion" data-lang-en="Definite Conclusion" data-lang-hi="निश्चित निष्कर्ष">Definite Conclusion</option>
+            <option value="Possibility Case" data-lang-en="Possibility Case" data-lang-hi="संभावना केस">Possibility Case</option>
+            <option value="Mixed" data-lang-en="Mixed" data-lang-hi="मिश्रित">Mixed</option>
+        </select>
+        <button class="btn btn-blue" onclick="showAllExplanations()" data-lang-en="Show Explanations" data-lang-hi="सभी व्याख्याएँ दिखाएँ">Show Explanations</button>
+        <button class="btn btn-green" onclick="resetQuiz()" data-lang-en="Reset" data-lang-hi="रीसेट करें">Reset</button>
+    </div>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-info">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <!-- ===== QUESTIONS ===== -->
+    <div id="questionsContainer"></div>
+</main>
+<footer class="footer" data-lang-en="Syllogism · SSC Reasoning" data-lang-hi="तर्कशास्त्र · SSC रीजनिंग">Syllogism · SSC Reasoning</footer>
+
+<script>
+// ================================================================
+//  LANGUAGE TOGGLE & UI TEXTS
+// ================================================================
+let currentLang = 'en';
+
+const descriptions = {
+    en: `<b>What is Syllogism?</b><br> 
+    Syllogism is a logical reasoning concept where two or more statements are given, and you have to determine which conclusions logically follow. <br><br>
+    <b>📌 Key Rules to Remember:</b><br>
+    • <b>All A are B</b> → A is a subset of B.<br>
+    • <b>Some A are B</b> → At least one A is B (overlap exists).<br>
+    • <b>No A are B</b> → A and B are completely separate.<br>
+    • <b>Possibility:</b> If a conclusion is not definite but can be true in one scenario, it is a "possibility".<br>
+    • <b>Middle Term:</b> The term common to both statements is the key to linking them.`,
+    
+    hi: `<b>तर्कशास्त्र (Syllogism) क्या है?</b><br> 
+    तर्कशास्त्र एक तार्किक अवधारणा है जिसमें दो या अधिक कथन (statements) दिए जाते हैं, और आपको यह निर्धारित करना होता है कि कौन-से निष्कर्ष (conclusions) तार्किक रूप से अनुसरण करते हैं। <br><br>
+    <b>📌 याद रखने योग्य महत्वपूर्ण नियम:</b><br>
+    • <b>सभी A, B हैं</b> → A, B का उपसमुच्चय (subset) है।<br>
+    • <b>कुछ A, B हैं</b> → कम से कम एक A, B है (अतिव्यापन मौजूद है)।<br>
+    • <b>कोई A, B नहीं है</b> → A और B पूरी तरह अलग हैं।<br>
+    • <b>संभावना (Possibility):</b> यदि कोई निष्कर्ष निश्चित नहीं है, लेकिन एक संभावित स्थिति में सत्य हो सकता है, तो वह "संभावना" है।<br>
+    • <b>मध्य पद (Middle Term):</b> दोनों कथनों में सामान्य पद ही दोनों को जोड़ने की कुंजी है।`
+};
+
+function updateUI() {
+    document.querySelectorAll('[data-lang-en]').forEach(el => {
+        const key = el.dataset.langEn;
+        const hi = el.dataset.langHi;
+        if (currentLang === 'en') {
+            if (el.tagName === 'OPTION') el.textContent = key;
+            else el.textContent = key;
+        } else {
+            if (el.tagName === 'OPTION') el.textContent = hi;
+            else el.textContent = hi;
+        }
+    });
+    document.getElementById('mainTitle').textContent = currentLang === 'en' ? 'Syllogism (Deep Explanation)' : 'तर्कशास्त्र (गहन व्याख्या)';
+    document.getElementById('mainSub').textContent = currentLang === 'en' ? 'SSC CGL • CHSL • CPO • MTS | 510+ Bilingual Questions' : 'SSC CGL • CHSL • CPO • MTS | 510+ द्विभाषी प्रश्न';
+    document.getElementById('heroTitle').textContent = currentLang === 'en' ? 'Syllogism – Complete SSC Practice' : 'तर्कशास्त्र – पूर्ण SSC अभ्यास';
+    document.getElementById('descriptionBox').innerHTML = descriptions[currentLang];
+    document.getElementById('search').placeholder = currentLang === 'en' ? 'Search question...' : 'प्रश्न खोजें...';
+    document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
+    document.getElementById('langHi').classList.toggle('active', currentLang === 'hi');
+    renderQuestions();
+    updateProgress();
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    updateUI();
+}
+
+// ================================================================
+//  SYLLOGISM GENERATOR (DEEP EXPLANATION)
+// ================================================================
+const questions = [];
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// ---- Categories (Bilingual) ----
+const catsEn = ['Cats', 'Dogs', 'Rats', 'Birds', 'Animals', 'Mammals', 'Reptiles', 'Fish', 'Trees', 'Flowers', 'Fruits', 'Vegetables', 'Insects', 'Predators', 'Herbivores', 'Carnivores', 'Omnivores', 'Amphibians'];
+const catsHi = ['बिल्लियाँ', 'कुत्ते', 'चूहे', 'पक्षी', 'जानवर', 'स्तनधारी', 'सरीसृप', 'मछली', 'पेड़', 'फूल', 'फल', 'सब्जियाँ', 'कीड़े', 'शिकारी', 'शाकाहारी', 'मांसाहारी', 'सर्वाहारी', 'उभयचर'];
+
+// ---- Syllogism Templates ----
+const templates = [
+    // Type 0: Both follow (Definite)
+    { 
+        st: ['All {A} are {B}.', 'All {B} are {C}.'], 
+        c1: 'All {A} are {C}.', 
+        c2: 'Some {C} are {A}.', 
+        ans: 2, 
+        type: 'Definite Conclusion',
+        exp_en: "Step 1: 'All A are B' means A is a subset of B.<br>Step 2: 'All B are C' means B is a subset of C.<br>Step 3: Since A is inside B, and B is inside C, A is definitely inside C. So 'All A are C' follows.<br>Step 4: Also, since A exists inside C, definitely 'Some C are A' follows.<br>✅ Thus both conclusions follow.",
+        exp_hi: "चरण 1: 'सभी A, B हैं' का अर्थ है A, B का उपसमुच्चय है।<br>चरण 2: 'सभी B, C हैं' का अर्थ है B, C का उपसमुच्चय है।<br>चरण 3: चूँकि A, B के अंदर है, और B, C के अंदर है, A निश्चित रूप से C के अंदर है। अतः 'सभी A, C हैं' अनुसरण करता है।<br>चरण 4: साथ ही, चूँकि A, C के अंदर मौजूद है, 'कुछ C, A हैं' निश्चित रूप से अनुसरण करता है।<br>✅ अतः दोनों निष्कर्ष अनुसरण करते हैं।"
+    },
+    // Type 1: Only I follows (Definite)
+    { 
+        st: ['All {A} are {B}.', 'No {B} are {C}.'], 
+        c1: 'No {A} are {C}.', 
+        c2: 'Some {C} are not {A}.', 
+        ans: 0, 
+        type: 'Definite Conclusion',
+        exp_en: "Step 1: 'All A are B' → A subset of B.<br>Step 2: 'No B are C' → B and C are completely disjoint.<br>Step 3: Since A is entirely inside B, and B is completely separate from C, A and C cannot overlap. So 'No A are C' follows.<br>Step 4: 'Some C are not A' is also true because C is entirely outside B, and A is inside B, so C is definitely not A.<br>✅ Thus only conclusion I and II both follow? Wait, both actually follow. Let's adjust. Actually, 'No A are C' is definite. 'Some C are not A' is also definite. So both follow. I need to fix the template logic.",
+        exp_hi: "चरण 1: 'सभी A, B हैं' → A, B का उपसमुच्चय।<br>चरण 2: 'कोई B, C नहीं हैं' → B और C पूरी तरह अलग।<br>चरण 3: चूँकि A पूरी तरह B के अंदर है, और B पूरी तरह C से अलग है, A और C कभी भी अतिव्यापन नहीं कर सकते। अतः 'कोई A, C नहीं हैं' अनुसरण करता है।<br>चरण 4: 'कुछ C, A नहीं हैं' भी सत्य है क्योंकि C पूरी तरह B के बाहर है, और A, B के अंदर है।<br>✅ अतः दोनों निष्कर्ष अनुसरण करते हैं।"
+    }
+];
+
+// Let me write correct, verified templates.
+const logicTemplates = [
+    // 1. All A are B. All B are C. -> Both follow (All A C, Some C A)
+    { st: ['All {A} are {B}.', 'All {B} are {C}.'], c1: 'All {A} are {C}.', c2: 'Some {C} are {A}.', ans: 2, type: 'Definite Conclusion' },
+    // 2. All A are B. No B are C. -> Both follow (No A C, Some C not A)
+    { st: ['All {A} are {B}.', 'No {B} are {C}.'], c1: 'No {A} are {C}.', c2: 'Some {C} are not {A}.', ans: 2, type: 'Definite Conclusion' },
+    // 3. Some A are B. All B are C. -> Both follow (Some A C, Some C A)
+    { st: ['Some {A} are {B}.', 'All {B} are {C}.'], c1: 'Some {A} are {C}.', c2: 'Some {C} are {A}.', ans: 2, type: 'Definite Conclusion' },
+    // 4. Some A are B. Some B are C. -> Only II follows (Some C are B)
+    { st: ['Some {A} are {B}.', 'Some {B} are {C}.'], c1: 'Some {A} are {C}.', c2: 'Some {C} are {B}.', ans: 1, type: 'Definite Conclusion' },
+    // 5. All A are B. Some B are C. -> Only II follows (Some B are A)
+    { st: ['All {A} are {B}.', 'Some {B} are {C}.'], c1: 'Some {A} are {C}.', c2: 'Some {B} are {A}.', ans: 1, type: 'Definite Conclusion' },
+    // 6. No A are B. All B are C. -> Only I follows (Some C are not A)
+    { st: ['No {A} are {B}.', 'All {B} are {C}.'], c1: 'Some {C} are not {A}.', c2: 'No {A} are {C}.', ans: 0, type: 'Definite Conclusion' },
+    // 7. Some A are not B. All B are C. -> Only I follows (All A being C is a possibility) - Possibility case
+    { st: ['Some {A} are not {B}.', 'All {B} are {C}.'], c1: 'All {A} being {C} is a possibility.', c2: 'Some {A} are {C}.', ans: 0, type: 'Possibility Case' },
+    // 8. All A are B. Some C are not B. -> Only I follows (All A being C is a possibility)
+    { st: ['All {A} are {B}.', 'Some {C} are not {B}.'], c1: 'All {A} being {C} is a possibility.', c2: 'No {A} are {C}.', ans: 0, type: 'Possibility Case' },
+    // 9. Some A are B. No B are C. -> Only I follows (Some A are not C)
+    { st: ['Some {A} are {B}.', 'No {B} are {C}.'], c1: 'Some {A} are not {C}.', c2: 'No {A} are {C}.', ans: 0, type: 'Definite Conclusion' },
+    // 10. All A are B. Some A are C. -> Only II follows (Some B are C)
+    { st: ['All {A} are {B}.', 'Some {A} are {C}.'], c1: 'All {B} are {C}.', c2: 'Some {B} are {C}.', ans: 1, type: 'Definite Conclusion' },
+    // 11. No A are B. Some C are A. -> Only I follows (Some C are not B)
+    { st: ['No {A} are {B}.', 'Some {C} are {A}.'], c1: 'Some {C} are not {B}.', c2: 'No {C} are {B}.', ans: 0, type: 'Definite Conclusion' },
+    // 12. Some A are B. No B are C. -> Only I follows (Some A are not C)
+    { st: ['Some {A} are {B}.', 'No {B} are {C}.'], c1: 'Some {A} are not {C}.', c2: 'All {A} being {C} is a possibility.', ans: 0, type: 'Mixed' },
+];
+
+// Generate 510 questions
+while (questions.length < 510) {
+    const t = logicTemplates[Math.floor(Math.random() * logicTemplates.length)];
+    // Pick 3 unique categories
+    let shuffledCats = shuffle([...catsEn]);
+    let a = shuffledCats[0];
+    let b = shuffledCats[1];
+    let c = shuffledCats[2];
+    // Ensure they are distinct
+    if (a === b || b === c || a === c) continue;
+    
+    // Find Hindi equivalents
+    let aHi = catsHi[catsEn.indexOf(a)];
+    let bHi = catsHi[catsEn.indexOf(b)];
+    let cHi = catsHi[catsEn.indexOf(c)];
+    
+    // Build statements and conclusions
+    let s1_en = t.st[0].replace(/\{A\}/g, a).replace(/\{B\}/g, b).replace(/\{C\}/g, c);
+    let s2_en = t.st[1].replace(/\{A\}/g, a).replace(/\{B\}/g, b).replace(/\{C\}/g, c);
+    let c1_en = t.c1.replace(/\{A\}/g, a).replace(/\{B\}/g, b).replace(/\{C\}/g, c);
+    let c2_en = t.c2.replace(/\{A\}/g, a).replace(/\{B\}/g, b).replace(/\{C\}/g, c);
+    
+    let s1_hi = t.st[0].replace(/\{A\}/g, aHi).replace(/\{B\}/g, bHi).replace(/\{C\}/g, cHi);
+    let s2_hi = t.st[1].replace(/\{A\}/g, aHi).replace(/\{B\}/g, bHi).replace(/\{C\}/g, cHi);
+    let c1_hi = t.c1.replace(/\{A\}/g, aHi).replace(/\{B\}/g, bHi).replace(/\{C\}/g, cHi);
+    let c2_hi = t.c2.replace(/\{A\}/g, aHi).replace(/\{B\}/g, bHi).replace(/\{C\}/g, cHi);
+    
+    // Determine option text and answer index
+    const optionLabels_en = [
+        `Only conclusion I follows: ${c1_en}`,
+        `Only conclusion II follows: ${c2_en}`,
+        `Both conclusions I and II follow`,
+        `Neither conclusion follows`
+    ];
+    const optionLabels_hi = [
+        `केवल निष्कर्ष I अनुसरण करता है: ${c1_hi}`,
+        `केवल निष्कर्ष II अनुसरण करता है: ${c2_hi}`,
+        `दोनों निष्कर्ष I और II अनुसरण करते हैं`,
+        `कोई भी निष्कर्ष अनुसरण नहीं करता`
+    ];
+    
+    let answerIdx = t.ans; // 0, 1, 2, or 3
+    
+    // Build deep explanation
+    let exp_en = `📊 <b>Venn Diagram Logic:</b><br>
+    <b>Statement 1:</b> ${s1_en}<br>
+    <b>Statement 2:</b> ${s2_en}<br><br>
+    `;
+    let exp_hi = `📊 <b>वेन आरेख तर्क:</b><br>
+    <b>कथन 1:</b> ${s1_hi}<br>
+    <b>कथन 2:</b> ${s2_hi}<br><br>
+    `;
+    
+    // Add specific reasoning based on template type
+    if (t.ans === 2) {
+        exp_en += `✅ <b>Why both follow:</b> The statements establish a definite chain linking ${a}, ${b}, and ${c}. Since the overlap is guaranteed, both conclusions are definite.`;
+        exp_hi += `✅ <b>दोनों क्यों अनुसरण करते हैं:</b> कथन ${a}, ${b}, और ${c} के बीच एक निश्चित श्रृंखला स्थापित करते हैं। चूँकि अतिव्यापन (overlap) निश्चित है, दोनों निष्कर्ष निश्चित हैं।`;
+    } else if (t.ans === 0) {
+        exp_en += `✅ <b>Why only I follows:</b> The combination of statements creates a scenario where the second conclusion cannot be guaranteed. However, the first conclusion is logically inescapable based on the given statements.`;
+        exp_hi += `✅ <b>केवल I ही क्यों अनुसरण करता है:</b> कथनों का संयोजन एक ऐसी स्थिति बनाता है जहाँ दूसरा निष्कर्ष निश्चित नहीं है। हालाँकि, पहला निष्कर्ष दिए गए कथनों के आधार पर तार्किक रूप से अटल है।`;
+    } else if (t.ans === 1) {
+        exp_en += `✅ <b>Why only II follows:</b> The first conclusion assumes a link that isn't definitively proven by the statements. However, the second conclusion directly reflects a part of the given statements.`;
+        exp_hi += `✅ <b>केवल II ही क्यों अनुसरण करता है:</b> पहला निष्कर्ष एक ऐसे संबंध को मानता है जो कथनों द्वारा निश्चित रूप से सिद्ध नहीं है। हालाँकि, दूसरा निष्कर्ष सीधे दिए गए कथनों के एक भाग को दर्शाता है।`;
+    } else {
+        exp_en += `✅ <b>Why neither follows:</b> The statements do not provide enough definite information to establish either conclusion conclusively. They might be possible, but they are not definite.`;
+        exp_hi += `✅ <b>कोई भी क्यों नहीं अनुसरण करता:</b> कथनों में या तो निष्कर्ष को निश्चित रूप से स्थापित करने के लिए पर्याप्त जानकारी नहीं है। वे संभव हो सकते हैं, लेकिन निश्चित नहीं हैं।`;
+    }
+    
+    // Add specific Venn diagram explanation
+    exp_en += `<br>🔍 <b>Step-by-Step:</b> Check the middle term (${b}). If the relation between ${a} and ${b}, and ${b} and ${c} is clear, then the conclusion is definite. Otherwise, it's a possibility or invalid.`;
+    exp_hi += `<br>🔍 <b>चरण-दर-चरण:</b> मध्य पद (${bHi}) की जाँच करें। यदि ${aHi} और ${bHi}, तथा ${bHi} और ${cHi} के बीच संबंध स्पष्ट है, तो निष्कर्ष निश्चित है। अन्यथा, यह संभावना या अमान्य है।`;
+    
+    // Build question object
+    let q = {
+        q_en: `Statements: ${s1_en} ${s2_en}`,
+        q_hi: `कथन: ${s1_hi} ${s2_hi}`,
+        opts_en: shuffle([...optionLabels_en]),
+        opts_hi: shuffle([...optionLabels_hi]),
+        answer: null, // will set after shuffling
+        type: t.type,
+        exp_en: exp_en,
+        exp_hi: exp_hi
+    };
+    
+    // Map the correct answer index based on shuffled options
+    let correctLabel_en = optionLabels_en[answerIdx];
+    let correctLabel_hi = optionLabels_hi[answerIdx];
+    let ansIdx_en = q.opts_en.indexOf(correctLabel_en);
+    let ansIdx_hi = q.opts_hi.indexOf(correctLabel_hi);
+    // Ensure both match (they should, as shuffle order might differ if we shuffle separately)
+    // But we shuffle both independently, so the index might differ. We need to store the correct answer index per language.
+    // To simplify, I will shuffle the options in the same order for both languages by shuffling an index array.
+    let indices = [0, 1, 2, 3];
+    shuffle(indices);
+    let shuffledOpts_en = indices.map(i => optionLabels_en[i]);
+    let shuffledOpts_hi = indices.map(i => optionLabels_hi[i]);
+    q.opts_en = shuffledOpts_en;
+    q.opts_hi = shuffledOpts_hi;
+    q.answer = indices.indexOf(answerIdx); // where is the correct label in the shuffled order?
+    
+    // Check uniqueness
+    const exists = questions.some(ex => ex.q_en === q.q_en && ex.type === q.type);
+    if (!exists) {
+        questions.push(q);
+    }
+}
+
+// Final shuffle
+shuffle(questions);
+
+// ================================================================
+//  RENDER ENGINE (EXACT SAME AS PREVIOUS FILES)
+// ================================================================
+const container = document.getElementById('questionsContainer');
+const search = document.getElementById('search');
+const filter = document.getElementById('filter');
+const attemptText = document.getElementById('attemptText');
+const scoreText = document.getElementById('scoreText');
+const progressBar = document.getElementById('progressBar');
+let attempted = new Set();
+let score = 0;
+
+function renderQuestions() {
+    container.innerHTML = '';
+    const keyword = search.value.toLowerCase().trim();
+    const selectedType = filter.value;
+    questions.forEach((q, idx) => {
+        if (selectedType !== 'all' && q.type !== selectedType) return;
+        const qText = currentLang === 'en' ? q.q_en : q.q_hi;
+        const opts = currentLang === 'en' ? q.opts_en : q.opts_hi;
+        const exp = currentLang === 'en' ? q.exp_en : q.exp_hi;
+        let full = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && !full.includes(keyword)) return;
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = 'question-' + idx;
+        let optHTML = '';
+        opts.forEach((opt, oi) => {
+            optHTML += `<button class="option" onclick="checkAnswer(${idx},${oi},this)">(${String.fromCharCode(65+oi)}) ${opt}</button>`;
+        });
+        card.innerHTML = `
+            <div class="question-top">
+                <span class="question-number">Q${idx+1}</span>
+                <span class="question-type">${q.type}</span>
+            </div>
+            <div class="question-body">
+                <div class="question-text">${qText}</div>
+                <div class="options">${optHTML}</div>
+                <div class="answer-result" id="result-${idx}"></div>
+                <div class="explanation" id="explanation-${idx}">
+                    <div class="explanation-title">${currentLang === 'en' ? '💡 Detailed Explanation (Venn Diagram Logic)' : '💡 विस्तृत व्याख्या (वेन आरेख तर्क)'}</div>
+                    ${exp}
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attempted.has(qIdx)) return;
+    attempted.add(qIdx);
+    const q = questions[qIdx];
+    const card = document.getElementById('question-' + qIdx);
+    const btns = card.querySelectorAll('.option');
+    btns.forEach((b, i) => { if (i === q.answer) b.classList.add('correct'); });
+    const res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) { score++; res.innerHTML = currentLang === 'en' ? '✅ Correct Answer!' : '✅ सही उत्तर!'; res.style.color = '#16a34a'; }
+    else { btn.classList.add('wrong'); res.innerHTML = currentLang === 'en' ? '❌ Incorrect. See explanation below.' : '❌ गलत। नीचे व्याख्या देखें।'; res.style.color = '#dc2626'; }
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    attemptText.textContent = `${currentLang === 'en' ? 'Attempted' : 'हल किए'}: ${attempted.size} / ${questions.length}`;
+    scoreText.textContent = `${currentLang === 'en' ? 'Score' : 'स्कोर'}: ${score}`;
+    progressBar.style.width = (attempted.size / questions.length * 100) + '%';
+}
+
+function showAllExplanations() {
+    document.querySelectorAll('.explanation').forEach(e => e.classList.add('show'));
+}
+function resetQuiz() { attempted.clear(); score = 0; renderQuestions(); updateProgress(); window.scrollTo({top:0, behavior:'smooth'}); }
+search.addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+
+// Init
+updateUI();
+</script>
+</body>
+</html>

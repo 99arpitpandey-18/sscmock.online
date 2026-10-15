@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M4-R5 Arduino Programming & IDE | NIELIT O Level | Bilingual Notes</title>
+
+<meta name="description" content="NIELIT O Level M4-R5 Arduino Programming and IDE complete bilingual notes with Arduino IDE, sketch, setup, loop, digital and analog programming, Serial Monitor, examples, practicals, exam points and MCQs.">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(0,229,255,.13),transparent 28%),
+        radial-gradient(circle at 90% 20%,rgba(168,85,247,.14),transparent 30%),
+        linear-gradient(135deg,#07111f,#0d1528,#08101d);
+    color:#eef6ff;
+    min-height:100vh;
+    overflow-x:hidden;
+    transition:.4s;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        radial-gradient(circle,#36e0ff 1px,transparent 1px),
+        radial-gradient(circle,#a978ff 1px,transparent 1px);
+    background-size:120px 120px,180px 180px;
+    opacity:.12;
+    z-index:-1;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:999;
+    padding:14px 5%;
+    background:rgba(5,13,25,.78);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,rgba(0,220,255,.2),rgba(130,80,255,.18));
+    border:1px solid rgba(0,220,255,.3);
+    color:#45e5ff;
+    font-weight:900;
+}
+
+.brand{
+    font-weight:800;
+    font-size:17px;
+}
+
+.sub{
+    color:#8292aa;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.controls{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+select,button{
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.05);
+    color:#eaf6ff;
+    padding:9px 11px;
+    border-radius:9px;
+    cursor:pointer;
+}
+
+option{
+    background:#101a2c;
+}
+
+.back{
+    text-decoration:none;
+    color:#d9ecff;
+    border:1px solid rgba(255,255,255,.1);
+    padding:9px 13px;
+    border-radius:9px;
+    font-size:12px;
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:40px 5% 80px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    position:relative;
+    padding:42px;
+    border-radius:26px;
+    background:linear-gradient(135deg,rgba(19,39,64,.92),rgba(10,20,38,.76));
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
+    overflow:hidden;
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    right:-120px;
+    top:-130px;
+    background:rgba(0,220,255,.1);
+    filter:blur(60px);
+    border-radius:50%;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 13px;
+    border-radius:30px;
+    color:#42e5ff;
+    background:rgba(42,220,255,.08);
+    border:1px solid rgba(42,220,255,.2);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:17px;
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,50px);
+    line-height:1.1;
+    margin-bottom:14px;
+    background:linear-gradient(90deg,#fff,#50e7ff,#a978ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:850px;
+    color:#9caec4;
+    line-height:1.8;
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:28px;
+}
+
+.stat{
+    padding:17px;
+    border-radius:14px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat b{
+    display:block;
+    color:#4ae4ff;
+    font-size:21px;
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:#8294ad;
+    font-size:11px;
+}
+
+/* ================= SECTIONS ================= */
+
+.section-title{
+    margin:40px 0 18px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.icon{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(50,220,255,.08);
+    border:1px solid rgba(50,220,255,.16);
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:#788ba4;
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* ================= CONTENT CARDS ================= */
+
+.card{
+    background:linear-gradient(145deg,rgba(20,38,61,.84),rgba(9,20,35,.76));
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:18px;
+    box-shadow:0 15px 35px rgba(0,0,0,.16);
+}
+
+.card h3{
+    color:#54e6ff;
+    margin-bottom:12px;
+    font-size:19px;
+}
+
+.card h4{
+    color:#c9d8ea;
+    margin:18px 0 8px;
+}
+
+.card p,.card li{
+    color:#a5b4c7;
+    line-height:1.75;
+    font-size:13px;
+}
+
+.card ul{
+    padding-left:20px;
+}
+
+.highlight{
+    margin:15px 0;
+    padding:15px;
+    border-left:4px solid #43defd;
+    background:rgba(38,210,255,.06);
+    border-radius:8px;
+}
+
+.warning{
+    border-left-color:#ffca58;
+    background:rgba(255,202,88,.06);
+}
+
+.success{
+    border-left-color:#64e6a5;
+    background:rgba(100,230,165,.06);
+}
+
+/* ================= BILINGUAL ================= */
+
+.en{
+    color:#e9f4ff;
+}
+
+.hi{
+    color:#62e8ff;
+    margin-top:4px;
+}
+
+.term{
+    color:#c38cff;
+    font-weight:800;
+}
+
+/* ================= CODE ================= */
+
+.code{
+    background:#050a13;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;
+    padding:18px;
+    margin:14px 0;
+    overflow:auto;
+    color:#c9f7ff;
+    font-family:Consolas,monospace;
+    font-size:12px;
+    line-height:1.65;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+}
+
+th,td{
+    padding:11px;
+    border:1px solid rgba(255,255,255,.08);
+    text-align:left;
+    font-size:12px;
+}
+
+th{
+    background:rgba(50,220,255,.09);
+    color:#5fe6ff;
+}
+
+td{
+    color:#a9b9cb;
+}
+
+/* ================= GRID ================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:17px;
+}
+
+.mini{
+    padding:20px;
+    border-radius:16px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.mini h3{
+    color:#ca9aff;
+    margin-bottom:9px;
+}
+
+/* ================= MCQ ================= */
+
+.mcq{
+    padding:18px;
+    margin:12px 0;
+    border-radius:13px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.q{
+    color:#fff;
+    font-weight:700;
+    line-height:1.6;
+}
+
+.answer{
+    color:#65e8a8;
+    margin-top:8px;
+    font-size:12px;
+}
+
+/* ================= TOPIC NAV ================= */
+
+.nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:22px 0;
+}
+
+.nav a{
+    text-decoration:none;
+    color:#b9c9db;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.07);
+    padding:8px 11px;
+    border-radius:8px;
+    font-size:11px;
+}
+
+.nav a:hover{
+    border-color:#42ddff;
+    color:#42ddff;
+}
+
+/* ================= THEME ================= */
+
+.theme-blue{}
+.theme-purple{
+    --accent:#b879ff;
+}
+.theme-green{
+    --accent:#56e6a1;
+}
+.theme-orange{
+    --accent:#ffb45d;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    margin-top:50px;
+    border-top:1px solid rgba(255,255,255,.07);
+    color:#667991;
+    font-size:11px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:650px){
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .back{
+        display:none;
+    }
+
+    .container{
+        padding:28px 4% 60px;
+    }
+
+    .hero{
+        padding:27px 20px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<div class="header-inner">
+
+<div class="logo-area">
+<div class="logo">M4</div>
+<div>
+<div class="brand">M4 Study Zone</div>
+<div class="sub">Arduino Programming & IDE</div>
+</div>
+</div>
+
+<div class="controls">
+
+<select id="theme">
+<option value="blue">🔵 Ocean Blue</option>
+<option value="purple">🟣 Royal Purple</option>
+<option value="green">🟢 Emerald Green</option>
+<option value="orange">🟠 Sunset Orange</option>
+</select>
+
+<select id="fontColor">
+<option value="normal">Text: Normal</option>
+<option value="cyan">Text: Cyan</option>
+<option value="gold">Text: Gold</option>
+<option value="greenText">Text: Green</option>
+</select>
+
+<a href="index.html" class="back">← Back</a>
+
+</div>
+</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<div class="badge">✦ NIELIT O LEVEL • M4-R5 • BILINGUAL</div>
+
+<h1>Arduino Programming & IDE</h1>
+
+<p>
+<strong>English:</strong>
+Learn Arduino programming from absolute basics to practical level:
+Arduino board, IDE, sketch, setup(), loop(), variables, data types,
+operators, digital and analog pins, Serial Monitor, sensors, LEDs,
+and practical programs.
+<br><br>
+<strong>हिन्दी:</strong>
+Arduino programming को बिल्कुल basic से practical level तक सीखें।
+Arduino board, IDE, sketch, setup(), loop(), variables, data types,
+digital/analog pins, Serial Monitor, sensors, LED और practical programs
+को आसान bilingual तरीके से समझें।
+</p>
+
+<div class="stats">
+<div class="stat"><b>01</b><span>Core Topic</span></div>
+<div class="stat"><b>20+</b><span>Examples</span></div>
+<div class="stat"><b>15+</b><span>Exam Points</span></div>
+<div class="stat"><b>10+</b><span>Programs</span></div>
+</div>
+
+</section>
+
+<div class="nav">
+<a href="#arduino">Arduino</a>
+<a href="#ide">Arduino IDE</a>
+<a href="#sketch">Sketch</a>
+<a href="#programming">Programming</a>
+<a href="#digital">Digital I/O</a>
+<a href="#analog">Analog I/O</a>
+<a href="#serial">Serial Monitor</a>
+<a href="#examples">Examples</a>
+<a href="#exam">Exam Revision</a>
+<a href="#mcq">MCQs</a>
+</div>
+
+<!-- ================= 1 ================= -->
+
+<div class="section-title" id="arduino">
+<div class="icon">🔌</div>
+<div>
+<h2>1. What is Arduino?</h2>
+<p>Arduino का basic concept</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>Arduino – Introduction</h3>
+
+<p class="en">
+<strong>English:</strong>
+Arduino is an open-source electronics platform based on easy-to-use
+hardware and software. It is widely used for learning electronics,
+automation, embedded systems, robotics and IoT applications.
+</p>
+
+<p class="hi">
+<strong>हिन्दी:</strong>
+Arduino एक open-source electronics platform है जिसमें hardware और
+software दोनों का उपयोग करके electronic projects बनाए जाते हैं।
+यह electronics, automation, robotics, embedded systems और IoT में
+बहुत उपयोगी है।
+</p>
+
+<div class="highlight">
+<strong>Exam Point:</strong><br>
+Arduino = Hardware Board + Programming Environment (IDE)
+</div>
+
+<h4>Arduino Board के मुख्य भाग</h4>
+
+<ul>
+<li>Microcontroller – program को execute करता है।</li>
+<li>Digital Pins – digital input/output के लिए।</li>
+<li>Analog Input Pins – analog values पढ़ने के लिए।</li>
+<li>USB Port – computer से connection और programming के लिए।</li>
+<li>Power Jack – external power supply के लिए।</li>
+<li>Reset Button – program को restart करने के लिए।</li>
+<li>Power LED – board को power मिलने का indication।</li>
+<li>TX/RX LEDs – serial communication indication।</li>
+</ul>
+
+</div>
+
+<!-- ================= 2 ================= -->
+
+<div class="section-title" id="ide">
+<div class="icon">💻</div>
+<div>
+<h2>2. Arduino IDE</h2>
+<p>Programming environment को समझें</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>Arduino IDE क्या है?</h3>
+
+<p class="en">
+<strong>English:</strong>
+Arduino IDE stands for <span class="term">Arduino Integrated Development Environment</span>.
+It is software used to write, compile/verify and upload Arduino programs
+to the Arduino board.
+</p>
+
+<p class="hi">
+<strong>हिन्दी:</strong>
+Arduino IDE का पूरा नाम Arduino Integrated Development Environment है।
+इसका उपयोग program लिखने, verify/compile करने और Arduino board में
+program upload करने के लिए किया जाता है।
+</p>
+
+<h4>Basic IDE Workflow</h4>
+
+<div class="highlight success">
+Write Code → Verify/Compile → Select Board & Port → Upload → Run
+</div>
+
+<h4>Important IDE Components</h4>
+
+<ul>
+<li>Editor – code लिखने के लिए।</li>
+<li>Verify – code में compilation errors check करता है।</li>
+<li>Upload – compiled program board में भेजता है।</li>
+<li>Serial Monitor – serial data देखने/भेजने के लिए।</li>
+<li>Board Selection – target Arduino board select करने के लिए।</li>
+<li>Port Selection – connected board का communication port select करने के लिए।</li>
+</ul>
+
+</div>
+
+<!-- ================= 3 ================= -->
+
+<div class="section-title" id="sketch">
+<div class="icon">📝</div>
+<div>
+<h2>3. Arduino Sketch</h2>
+<p>Arduino program की structure</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>Basic Sketch Structure</h3>
+
+<p class="en">
+<strong>English:</strong>
+An Arduino program is commonly called a <strong>Sketch</strong>.
+Every basic Arduino sketch contains two important functions:
+<strong>setup()</strong> and <strong>loop()</strong>.
+</p>
+
+<p class="hi">
+<strong>हिन्दी:</strong>
+Arduino program को सामान्यतः <strong>Sketch</strong> कहा जाता है।
+एक basic Arduino sketch में दो सबसे महत्वपूर्ण functions होते हैं:
+<strong>setup()</strong> और <strong>loop()</strong>।
+</p>
+
+<div class="code">
+void setup() {
+  // Runs once
+}
+
+void loop() {
+// Runs repeatedly
+}
+
+</div>
+
+<div class="grid">
+
+<div class="mini">
+<h3>setup()</h3>
+<p>
+<strong>English:</strong> Runs once when the board starts or resets.
+</p>
+<p class="hi">
+<strong>हिन्दी:</strong> Board start या reset होने पर सामान्यतः एक बार चलता है।
+</p>
+</div>
+
+<div class="mini">
+<h3>loop()</h3>
+<p>
+<strong>English:</strong> Runs repeatedly after setup().
+</p>
+<p class="hi">
+<strong>हिन्दी:</strong> setup() के बाद बार-बार execute होता रहता है।
+</p>
+</div>
+
+</div>
+
+<div class="highlight">
+<strong>Remember:</strong>
+setup() = One-time initialization<br>
+loop() = Repeated execution
+</div>
+
+</div>
+
+<!-- ================= 4 ================= -->
+
+<div class="section-title" id="programming">
+<div class="icon">🧠</div>
+<div>
+<h2>4. Arduino Programming Basics</h2>
+<p>Variables, data types और operators</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>Variables</h3>
+
+<p>
+<strong>English:</strong> A variable stores a value that can be used by a program.
+<br>
+<strong class="hi">हिन्दी:</strong> Variable memory में किसी value को store करने के लिए उपयोग होता है।
+</p>
+
+<div class="code">
+int age = 20;
+float temperature = 25.5;
+char grade = 'A';
+bool status = true;
+</div>
+
+<h4>Common Data Types</h4>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Data Type</th>
+<th>Use / उपयोग</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>int</td>
+<td>Integer numbers / पूर्णांक</td>
+<td>int x = 10;</td>
+</tr>
+<tr>
+<td>float</td>
+<td>Decimal values / दशमलव</td>
+<td>float t = 25.5;</td>
+</tr>
+<tr>
+<td>char</td>
+<td>Single character / एक character</td>
+<td>char c = 'A';</td>
+</tr>
+<tr>
+<td>boolean / bool</td>
+<td>True or false</td>
+<td>bool x = true;</td>
+</tr>
+<tr>
+<td>String</td>
+<td>Text / text data</td>
+<td>String name="Arduino";</td>
+</tr>
+</table>
+</div>
+
+<h4>Operators</h4>
+
+<ul>
+<li>Arithmetic: +, -, *, /, %</li>
+<li>Comparison: ==, !=, &gt;, &lt;, &gt;=, &lt;=</li>
+<li>Logical: &&, ||, !</li>
+<li>Assignment: =, +=, -=, *=, /=</li>
+</ul>
+
+</div>
+
+<!-- ================= 5 ================= -->
+
+<div class="section-title" id="digital">
+<div class="icon">💡</div>
+<div>
+<h2>5. Digital Input & Output</h2>
+<p>LED, switch और digital pins</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>pinMode()</h3>
+
+<p>
+<strong>English:</strong> Sets a pin as INPUT, OUTPUT or another supported mode.
+<br>
+<strong class="hi">हिन्दी:</strong> यह निर्धारित करता है कि pin input के रूप में काम करेगी या output के रूप में।
+</p>
+
+<div class="code">
+pinMode(13, OUTPUT);
+pinMode(2, INPUT);
+</div>
+
+<h3>digitalWrite()</h3>
+
+<p>
+Digital output pin को HIGH या LOW state देने के लिए।
+</p>
+
+<div class="code">
+digitalWrite(13, HIGH);
+digitalWrite(13, LOW);
+</div>
+
+<h3>digitalRead()</h3>
+
+<p>
+Digital input pin की state पढ़ने के लिए।
+</p>
+
+<div class="code">
+int state = digitalRead(2);
+</div>
+
+<div class="highlight">
+<strong>Exam Trick:</strong><br>
+pinMode() → Pin का mode set<br>
+digitalWrite() → Digital output देना<br>
+digitalRead() → Digital input पढ़ना
+</div>
+
+</div>
+
+<!-- ================= 6 ================= -->
+
+<div class="section-title" id="analog">
+<div class="icon">📊</div>
+<div>
+<h2>6. Analog Input & PWM Output</h2>
+<p>Analog values और PWM concept</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>analogRead()</h3>
+
+<p>
+<strong>English:</strong>
+Used to read an analog value from an analog input pin.
+</p>
+
+<p class="hi">
+<strong>हिन्दी:</strong>
+Analog sensor/input से value पढ़ने के लिए analogRead() का उपयोग किया जाता है।
+</p>
+
+<div class="code">
+int sensorValue = analogRead(A0);
+</div>
+
+<h3>analogWrite()</h3>
+
+<p>
+Arduino boards that support PWM can use analogWrite() to generate
+a PWM output on suitable pins.
+</p>
+
+<div class="code">
+analogWrite(9, 128);
+</div>
+
+<div class="highlight warning">
+<strong>Important:</strong>
+analogWrite() का value range commonly 0–255 होता है on classic Arduino
+PWM APIs, जहाँ 0 लगभग 0% duty cycle और 255 लगभग 100% duty cycle को represent करता है।
+</div>
+
+</div>
+
+<!-- ================= 7 ================= -->
+
+<div class="section-title">
+<div class="icon">⏱️</div>
+<div>
+<h2>7. Delay Function</h2>
+<p>Timing control</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>delay()</h3>
+
+<p>
+<strong>English:</strong>
+delay() pauses the program for a specified number of milliseconds.
+<br>
+<strong class="hi">हिन्दी:</strong>
+delay() program execution को दिए गए milliseconds तक रोकता है।
+</p>
+
+<div class="code">
+delay(1000);
+</div>
+
+<p>
+1000 milliseconds = approximately 1 second.
+</p>
+
+<div class="highlight">
+<strong>Example:</strong>
+LED ON → 1 second wait → LED OFF → 1 second wait
+</div>
+
+</div>
+
+<!-- ================= 8 ================= -->
+
+<div class="section-title" id="serial">
+<div class="icon">📡</div>
+<div>
+<h2>8. Serial Communication</h2>
+<p>Serial Monitor को समझें</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>Serial.begin()</h3>
+
+<p>
+Serial communication शुरू करने के लिए।
+</p>
+
+<div class="code">
+void setup() {
+  Serial.begin(9600);
+}
+</div>
+
+<h3>Serial.print() और Serial.println()</h3>
+
+<div class="code">
+Serial.print("Temperature: ");
+Serial.println(25);
+</div>
+
+<p>
+<strong>print()</strong> उसी line में output रखता है,
+जबकि <strong>println()</strong> output के बाद new line देता है।
+</p>
+
+<div class="highlight">
+<strong>Exam Point:</strong><br>
+Serial.begin(9600) → Communication speed / baud rate set करता है।
+</div>
+
+</div>
+
+<!-- ================= 9 ================= -->
+
+<div class="section-title" id="examples">
+<div class="icon">🚀</div>
+<div>
+<h2>9. Practical Programs</h2>
+<p>Exam और practical के लिए important examples</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>Program 1 – Blink LED</h3>
+
+<p class="en">
+<strong>English:</strong> Turn an LED ON and OFF repeatedly.
+</p>
+
+<p class="hi">
+<strong>हिन्दी:</strong> LED को बार-बार ON और OFF करना।
+</p>
+
+<div class="code">
+int led = 13;
+
+void setup() {
+pinMode(led, OUTPUT);
+}
+
+void loop() {
+digitalWrite(led, HIGH);
+delay(1000);
+
+digitalWrite(led, LOW);
+delay(1000);
+}
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Program 2 – Push Button & LED</h3>
+
+<div class="code">
+int button = 2;
+int led = 13;
+
+void setup() {
+pinMode(button, INPUT);
+pinMode(led, OUTPUT);
+}
+
+void loop() {
+
+int state = digitalRead(button);
+
+if(state == HIGH) {
+digitalWrite(led, HIGH);
+}
+else {
+digitalWrite(led, LOW);
+}
+}
+
+</div>
+
+<p>
+<strong>Concept:</strong>
+Input → Read button → Condition → Control LED
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Program 3 – Analog Sensor Reading</h3>
+
+<div class="code">
+int sensor = A0;
+
+void setup() {
+Serial.begin(9600);
+}
+
+void loop() {
+
+int value = analogRead(sensor);
+
+Serial.println(value);
+
+delay(500);
+}
+
+</div>
+
+<p class="hi">
+Sensor की reading Serial Monitor पर दिखाई जाएगी।
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Program 4 – LED Brightness using PWM</h3>
+
+<div class="code">
+int led = 9;
+
+void setup() {
+pinMode(led, OUTPUT);
+}
+
+void loop() {
+
+analogWrite(led, 50);
+delay(1000);
+
+analogWrite(led, 200);
+delay(1000);
+}
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Program 5 – Serial Counter</h3>
+
+<div class="code">
+int count = 0;
+
+void setup() {
+Serial.begin(9600);
+}
+
+void loop() {
+
+Serial.println(count);
+
+count++;
+
+delay(1000);
+}
+
+</div>
+
+</div>
+
+<!-- ================= 10 ================= -->
+
+<div class="section-title">
+<div class="icon">🔍</div>
+<div>
+<h2>10. Common Arduino Functions</h2>
+<p>One-shot revision table</p>
+</div>
+</div>
+
+<div class="card">
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>हिन्दी अर्थ</th>
+</tr>
+
+<tr>
+<td>pinMode()</td>
+<td>Set pin mode</td>
+<td>Pin का mode निर्धारित करना</td>
+</tr>
+
+<tr>
+<td>digitalWrite()</td>
+<td>Digital output</td>
+<td>HIGH/LOW देना</td>
+</tr>
+
+<tr>
+<td>digitalRead()</td>
+<td>Digital input</td>
+<td>Digital state पढ़ना</td>
+</tr>
+
+<tr>
+<td>analogRead()</td>
+<td>Read analog input</td>
+<td>Analog value पढ़ना</td>
+</tr>
+
+<tr>
+<td>analogWrite()</td>
+<td>PWM output</td>
+<td>PWM output देना</td>
+</tr>
+
+<tr>
+<td>delay()</td>
+<td>Pause execution</td>
+<td>Execution रोकना</td>
+</tr>
+
+<tr>
+<td>Serial.begin()</td>
+<td>Start serial communication</td>
+<td>Serial communication शुरू करना</td>
+</tr>
+
+<tr>
+<td>Serial.print()</td>
+<td>Print data</td>
+<td>Data display करना</td>
+</tr>
+
+<tr>
+<td>Serial.println()</td>
+<td>Print + new line</td>
+<td>Data + नई line</td>
+</tr>
+
+</table>
+</div>
+
+</div>
+
+<!-- ================= EXAM ================= -->
+
+<div class="section-title" id="exam">
+<div class="icon">🎯</div>
+<div>
+<h2>11. Exam-Oriented Revision</h2>
+<p>Last-minute important points</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>🔥 Must Remember</h3>
+
+<ul>
+<li>Arduino is an open-source electronics platform.</li>
+<li>Arduino program is commonly called a Sketch.</li>
+<li>setup() normally executes once after startup/reset.</li>
+<li>loop() executes repeatedly.</li>
+<li>pinMode() configures a pin mode.</li>
+<li>digitalWrite() controls digital output.</li>
+<li>digitalRead() reads digital input.</li>
+<li>analogRead() reads analog input.</li>
+<li>analogWrite() provides PWM output on supported pins.</li>
+<li>delay() uses milliseconds as its argument.</li>
+<li>Serial.begin() initializes serial communication.</li>
+<li>Serial Monitor is used to view serial data.</li>
+<li>USB is commonly used for programming and communication with the board.</li>
+<li>Reset button restarts the board program.</li>
+<li>Verify checks/compiles the sketch; Upload transfers it to the board.</li>
+</ul>
+
+<div class="highlight">
+<strong>Super Revision Formula:</strong><br><br>
+INPUT → digitalRead() / analogRead()<br>
+PROCESS → if / else / loops / functions<br>
+OUTPUT → digitalWrite() / analogWrite()<br>
+DEBUGGING → Serial.print() / Serial.println()
+</div>
+
+</div>
+
+<!-- ================= MCQ ================= -->
+
+<div class="section-title" id="mcq">
+<div class="icon">🧠</div>
+<div>
+<h2>12. Exam MCQs</h2>
+<p>Practice before moving to the next chapter</p>
+</div>
+</div>
+
+<div class="card">
+
+<div class="mcq">
+<div class="q">
+1. Arduino program is commonly known as:
+<br>
+Arduino program को सामान्यतः क्या कहा जाता है?
+</div>
+<div class="answer">
+✅ Answer: Sketch
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+2. Which function runs once at startup?
+<br>
+Startup पर कौन-सा function सामान्यतः एक बार चलता है?
+</div>
+<div class="answer">
+✅ Answer: setup()
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+3. Which function runs repeatedly?
+<br>
+कौन-सा function बार-बार execute होता है?
+</div>
+<div class="answer">
+✅ Answer: loop()
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+4. Which function sets a pin as INPUT or OUTPUT?
+</div>
+<div class="answer">
+✅ Answer: pinMode()
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+5. Which function reads a digital pin?
+</div>
+<div class="answer">
+✅ Answer: digitalRead()
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+6. Which function writes HIGH or LOW to a digital output?
+</div>
+<div class="answer">
+✅ Answer: digitalWrite()
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+7. Which function reads an analog input?
+</div>
+<div class="answer">
+✅ Answer: analogRead()
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+8. Which function is commonly used for PWM output?
+</div>
+<div class="answer">
+✅ Answer: analogWrite()
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+9. delay(1000) approximately pauses execution for:
+</div>
+<div class="answer">
+✅ Answer: 1 second
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+10. Which command initializes serial communication?
+</div>
+<div class="answer">
+✅ Answer: Serial.begin()
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+11. Which tool displays serial data?
+</div>
+<div class="answer">
+✅ Answer: Serial Monitor
+</div>
+</div>
+
+<div class="mcq">
+<div class="q">
+12. Which button restarts an Arduino board?
+</div>
+<div class="answer">
+✅ Answer: Reset button
+</div>
+</div>
+
+</div>
+
+<!-- ================= QUICK SHEET ================= -->
+
+<div class="section-title">
+<div class="icon">⚡</div>
+<div>
+<h2>13. 30-Second Quick Sheet</h2>
+<p>Exam hall से पहले यह जरूर देखें</p>
+</div>
+</div>
+
+<div class="card">
+
+<div class="highlight">
+Arduino → Electronics Platform<br>
+IDE → Write + Verify + Upload<br>
+Sketch → Arduino Program<br>
+setup() → Once<br>
+loop() → Repeatedly<br>
+pinMode() → Configure pin<br>
+digitalRead() → Read digital input<br>
+digitalWrite() → Digital output<br>
+analogRead() → Analog input<br>
+analogWrite() → PWM output<br>
+delay() → Time delay<br>
+Serial.begin() → Start serial communication<br>
+Serial.print() → Print data<br>
+Serial.println() → Print + new line
+</div>
+
+<p class="hi">
+<strong>Study Tip:</strong>
+इन functions को केवल याद मत करो—हर function का एक छोटा program
+खुद type करके run करो। इससे theory और practical दोनों मजबूत होंगे।
+</p>
+
+</div>
+
+<footer>
+M4-R5 • Arduino Programming & IDE • Bilingual Exam-Oriented Notes
+<br><br>
+Designed for focused NIELIT O Level preparation
+</footer>
+
+</main>
+
+<script>
+
+/* ================= THEME SELECTOR ================= */
+
+const theme = document.getElementById("theme");
+
+theme.addEventListener("change",function(){
+
+    document.body.classList.remove(
+        "theme-blue",
+        "theme-purple",
+        "theme-green",
+        "theme-orange"
+    );
+
+    document.body.classList.add(
+        "theme-" + this.value
+    );
+
+});
+
+
+/* ================= TEXT COLOR ================= */
+
+const fontColor = document.getElementById("fontColor");
+
+fontColor.addEventListener("change",function(){
+
+    document.body.classList.remove(
+        "text-cyan",
+        "text-gold",
+        "text-green"
+    );
+
+    if(this.value !== "normal"){
+        document.body.classList.add(
+            "text-" + this.value.replace("Text","")
+        );
+    }
+
+    const allText = document.querySelectorAll(
+        ".card p,.card li,.mini p"
+    );
+
+    allText.forEach(el=>{
+
+        if(this.value === "cyan"){
+            el.style.color = "#66e8ff";
+        }
+
+        else if(this.value === "gold"){
+            el.style.color = "#ffd36b";
+        }
+
+        else if(this.value === "greenText"){
+            el.style.color = "#68e6aa";
+        }
+
+        else{
+            el.style.color = "";
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

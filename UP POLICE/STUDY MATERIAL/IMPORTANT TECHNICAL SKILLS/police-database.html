@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Database | Computer Awareness Notes</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+ --navy:#102a43;
+ --blue:#1677c8;
+ --sky:#eaf6ff;
+ --orange:#f47b20;
+ --green:#168a52;
+ --red:#d64545;
+ --purple:#6941c6;
+ --text:#243b53;
+ --muted:#627d98;
+ --bg:#f4f8fc;
+ --white:#ffffff;
+ --border:#d9e5ef;
+ --shadow:0 10px 30px rgba(16,42,67,.08);
+}
+
+body{
+ font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ line-height:1.65;
+}
+
+.hero{
+ background:
+ radial-gradient(circle at 90% 10%,rgba(255,255,255,.16),transparent 25%),
+ linear-gradient(135deg,#0d2947,#1769a5);
+ color:white;
+ padding:48px 20px 42px;
+ position:relative;
+ overflow:hidden;
+}
+
+.hero:before,.hero:after{
+ content:"";
+ position:absolute;
+ border-radius:50%;
+ border:1px solid rgba(255,255,255,.12);
+}
+
+.hero:before{
+ width:280px;
+ height:280px;
+ right:-100px;
+ top:-130px;
+}
+
+.hero:after{
+ width:180px;
+ height:180px;
+ left:-80px;
+ bottom:-100px;
+}
+
+.hero-inner{
+ max-width:1150px;
+ margin:auto;
+ position:relative;
+ z-index:2;
+}
+
+.chapter-tag{
+ display:inline-flex;
+ align-items:center;
+ gap:7px;
+ padding:7px 13px;
+ background:rgba(255,255,255,.12);
+ border:1px solid rgba(255,255,255,.2);
+ border-radius:30px;
+ font-size:12px;
+ font-weight:700;
+ letter-spacing:1px;
+ margin-bottom:15px;
+}
+
+.hero h1{
+ font-size:clamp(30px,5vw,48px);
+ line-height:1.15;
+ margin-bottom:10px;
+}
+
+.hero h1 span{
+ color:#ffd166;
+}
+
+.hero p{
+ max-width:800px;
+ color:#dceeff;
+ font-size:15px;
+}
+
+.hero-meta{
+ display:flex;
+ flex-wrap:wrap;
+ gap:10px;
+ margin-top:22px;
+}
+
+.meta{
+ padding:8px 13px;
+ border-radius:8px;
+ background:rgba(255,255,255,.1);
+ font-size:12px;
+}
+
+.topbar{
+ position:sticky;
+ top:0;
+ z-index:100;
+ background:white;
+ border-bottom:1px solid var(--border);
+ box-shadow:0 3px 18px rgba(16,42,67,.06);
+}
+
+.topbar-inner{
+ max-width:1150px;
+ margin:auto;
+ padding:11px 16px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+}
+
+.brand{
+ font-weight:800;
+ color:var(--navy);
+ font-size:14px;
+}
+
+.search{
+ width:320px;
+}
+
+.search input{
+ width:100%;
+ padding:10px 14px;
+ border:1px solid var(--border);
+ border-radius:9px;
+ outline:none;
+ font-size:13px;
+}
+
+.search input:focus{
+ border-color:var(--blue);
+ box-shadow:0 0 0 3px rgba(22,119,200,.1);
+}
+
+.container{
+ max-width:1150px;
+ margin:auto;
+ padding:30px 16px 70px;
+}
+
+.intro{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:18px;
+ padding:25px;
+ box-shadow:var(--shadow);
+ margin-bottom:22px;
+}
+
+.intro-label{
+ color:var(--blue);
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:1.5px;
+ text-transform:uppercase;
+}
+
+.intro h2{
+ font-size:24px;
+ margin:3px 0 7px;
+ color:var(--navy);
+}
+
+.intro p{
+ color:var(--muted);
+ font-size:14px;
+}
+
+.quick-grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px;
+ margin-bottom:25px;
+}
+
+.quick{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:14px;
+ padding:17px;
+ transition:.25s;
+}
+
+.quick:hover{
+ transform:translateY(-3px);
+ box-shadow:var(--shadow);
+}
+
+.quick-icon{
+ font-size:24px;
+ margin-bottom:7px;
+}
+
+.quick strong{
+ display:block;
+ color:var(--navy);
+ font-size:14px;
+}
+
+.quick span{
+ color:var(--muted);
+ font-size:11px;
+}
+
+.section{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:17px;
+ padding:25px;
+ margin-bottom:20px;
+ box-shadow:0 5px 20px rgba(16,42,67,.045);
+}
+
+.section-title{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ margin-bottom:16px;
+}
+
+.section-number{
+ width:35px;
+ height:35px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:10px;
+ background:var(--sky);
+ color:var(--blue);
+ font-weight:800;
+ font-size:13px;
+}
+
+.section-title h2{
+ color:var(--navy);
+ font-size:21px;
+}
+
+.section p{
+ color:#40566d;
+ font-size:14px;
+ margin-bottom:10px;
+}
+
+.section h3{
+ color:#214e78;
+ font-size:17px;
+ margin:20px 0 10px;
+}
+
+.section h4{
+ color:#315f87;
+ font-size:14px;
+ margin:16px 0 7px;
+}
+
+.highlight{
+ background:linear-gradient(135deg,#eef8ff,#f7fbff);
+ border-left:4px solid var(--blue);
+ border-radius:9px;
+ padding:14px 16px;
+ margin:15px 0;
+ font-size:13px;
+}
+
+.exam{
+ background:#fff8ed;
+ border-left:4px solid var(--orange);
+ border-radius:9px;
+ padding:14px 16px;
+ margin:15px 0;
+ font-size:13px;
+}
+
+.success{
+ background:#eefaf4;
+ border-left:4px solid var(--green);
+ border-radius:9px;
+ padding:14px 16px;
+ margin:15px 0;
+ font-size:13px;
+}
+
+.danger{
+ background:#fff1f1;
+ border-left:4px solid var(--red);
+ border-radius:9px;
+ padding:14px 16px;
+ margin:15px 0;
+ font-size:13px;
+}
+
+.purple{
+ background:#f5f1ff;
+ border-left:4px solid var(--purple);
+ border-radius:9px;
+ padding:14px 16px;
+ margin:15px 0;
+ font-size:13px;
+}
+
+.section ul{
+ padding-left:22px;
+}
+
+.section li{
+ color:#40566d;
+ font-size:13px;
+ margin:6px 0;
+}
+
+.table-wrap{
+ width:100%;
+ overflow-x:auto;
+ border:1px solid var(--border);
+ border-radius:12px;
+ margin:12px 0 18px;
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+ min-width:650px;
+}
+
+th{
+ background:#edf6fd;
+ color:var(--navy);
+ text-align:left;
+ padding:12px;
+ font-size:12px;
+}
+
+td{
+ padding:11px 12px;
+ border-top:1px solid #e6edf3;
+ color:#42586d;
+ font-size:12px;
+}
+
+tr:hover td{
+ background:#fafcff;
+}
+
+kbd{
+ background:#172b44;
+ color:white;
+ padding:4px 8px;
+ border-radius:5px;
+ font-family:monospace;
+ font-size:11px;
+ box-shadow:0 2px 0 #091b2d;
+}
+
+.formula{
+ background:#172b44;
+ color:#eaf6ff;
+ padding:13px 16px;
+ border-radius:9px;
+ margin:10px 0;
+ font-family:Consolas,monospace;
+ font-size:13px;
+ overflow-x:auto;
+}
+
+.formula strong{
+ color:#ffd166;
+}
+
+.two-col{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:18px;
+}
+
+.mini-card{
+ background:#f8fbfe;
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:16px;
+}
+
+.mini-card h3{
+ margin-top:0;
+}
+
+.mcq-header{
+ background:linear-gradient(135deg,#122f50,#205f91);
+ color:white;
+ border-radius:15px 15px 0 0;
+ padding:19px;
+}
+
+.mcq-header h2{
+ font-size:20px;
+}
+
+.mcq-header p{
+ color:#d7ebfa;
+ font-size:12px;
+ margin-top:3px;
+}
+
+.question{
+ background:white;
+ border:1px solid var(--border);
+ border-top:none;
+ padding:19px;
+}
+
+.question:last-child{
+ border-radius:0 0 15px 15px;
+}
+
+.question-text{
+ font-size:14px;
+ font-weight:700;
+ color:var(--navy);
+ margin-bottom:13px;
+}
+
+.options{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:9px;
+}
+
+.option{
+ border:1px solid #dce6ef;
+ background:#fafcfe;
+ border-radius:8px;
+ padding:10px 12px;
+ font-size:12px;
+ color:#41576c;
+}
+
+.option:hover{
+ border-color:#a8c8df;
+ background:#f3f9fe;
+}
+
+.answer-btn{
+ margin-top:12px;
+ border:none;
+ background:var(--orange);
+ color:white;
+ padding:8px 13px;
+ border-radius:7px;
+ font-size:11px;
+ font-weight:700;
+ cursor:pointer;
+}
+
+.answer{
+ display:none;
+ margin-top:10px;
+ padding:12px;
+ background:#edf9f2;
+ border-left:4px solid var(--green);
+ border-radius:7px;
+ font-size:12px;
+ color:#315b47;
+}
+
+.answer.show{
+ display:block;
+}
+
+.revision{
+ background:linear-gradient(135deg,#fffaf2,#fff);
+ border:1px solid #f0dfc7;
+ border-radius:15px;
+ padding:20px;
+}
+
+.revision h2{
+ color:#8b4c12;
+ font-size:20px;
+ margin-bottom:13px;
+}
+
+.revision-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:8px;
+}
+
+.revision-item{
+ background:white;
+ border:1px solid #eadfce;
+ border-radius:8px;
+ padding:10px;
+ font-size:12px;
+}
+
+.revision-item strong{
+ color:#8b4c12;
+}
+
+footer{
+ background:#102a43;
+ color:#c9dbea;
+ text-align:center;
+ padding:28px 15px;
+ font-size:12px;
+}
+
+@media(max-width:850px){
+ .quick-grid{
+  grid-template-columns:1fr 1fr;
+ }
+
+ .two-col{
+  grid-template-columns:1fr;
+ }
+}
+
+@media(max-width:600px){
+
+ .hero{
+  padding:35px 16px;
+ }
+
+ .hero h1{
+  font-size:30px;
+ }
+
+ .topbar-inner{
+  flex-direction:column;
+  align-items:stretch;
+ }
+
+ .brand{
+  text-align:center;
+ }
+
+ .search{
+  width:100%;
+ }
+
+ .container{
+  padding:20px 11px 50px;
+ }
+
+ .intro,
+ .section{
+  padding:17px;
+  border-radius:13px;
+ }
+
+ .quick-grid{
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+ }
+
+ .quick{
+  padding:13px;
+ }
+
+ .quick-icon{
+  font-size:20px;
+ }
+
+ .quick strong{
+  font-size:12px;
+ }
+
+ .options{
+  grid-template-columns:1fr;
+ }
+
+ .revision-grid{
+  grid-template-columns:1fr;
+ }
+}
+
+@media(max-width:380px){
+ .quick-grid{
+  grid-template-columns:1fr;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<header class="hero">
+<div class="hero-inner">
+
+<div class="chapter-tag">
+🗄️ COMPUTER AWARENESS • CHAPTER
+</div>
+
+<h1>Database <span>Master Notes</span></h1>
+
+<p>
+Database, DBMS, tables, fields, records, keys, relationships,
+SQL commands, constraints, normalization और database के महत्वपूर्ण
+computer awareness concepts को exam-oriented तरीके से समझें।
+</p>
+
+<div class="hero-meta">
+<div class="meta">🗄️ Database Basics</div>
+<div class="meta">⚙️ DBMS</div>
+<div class="meta">📊 Tables & Records</div>
+<div class="meta">🔑 Keys</div>
+<div class="meta">💻 Basic SQL</div>
+<div class="meta">🎯 Exam Oriented</div>
+</div>
+
+</div>
+</header>
+
+
+<!-- TOPBAR -->
+<nav class="topbar">
+<div class="topbar-inner">
+
+<div class="brand">
+🗄️ Database | Computer Awareness
+</div>
+
+<div class="search">
+<input
+ type="text"
+ id="searchBox"
+ placeholder="Search Database topic..."
+ onkeyup="searchContent()">
+</div>
+
+</div>
+</nav>
+
+
+<main class="container">
+
+
+<!-- INTRO -->
+<section class="intro searchable">
+
+<div class="intro-label">
+HIGH VALUE TOPIC
+</div>
+
+<h2>Database क्या है? | What is Database?</h2>
+
+<p>
+Database related data का एक organized collection है, जिसे इस प्रकार
+store और manage किया जाता है कि information को आसानी से access,
+search, update और manage किया जा सके।
+</p>
+
+<div class="highlight">
+<strong>Exam Point:</strong>
+Database का मुख्य उद्देश्य data को व्यवस्थित तरीके से store करना
+और आवश्यकता के अनुसार information को efficiently retrieve करना है।
+</div>
+
+</section>
+
+
+<!-- QUICK CARDS -->
+<div class="quick-grid">
+
+<div class="quick">
+<div class="quick-icon">🗄️</div>
+<strong>Database</strong>
+<span>Organized collection of data</span>
+</div>
+
+<div class="quick">
+<div class="quick-icon">⚙️</div>
+<strong>DBMS</strong>
+<span>Database Management System</span>
+</div>
+
+<div class="quick">
+<div class="quick-icon">📊</div>
+<strong>Table</strong>
+<span>Rows और Columns का structure</span>
+</div>
+
+<div class="quick">
+<div class="quick-icon">💻</div>
+<strong>SQL</strong>
+<span>Database query language</span>
+</div>
+
+</div>
+
+
+<!-- SECTION 1 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">01</div>
+<h2>Database की मूल अवधारणा | Database Basics</h2>
+</div>
+
+<p>
+Database में related information को structured तरीके से store किया जाता है।
+उदाहरण के लिए किसी school database में students के नाम, roll numbers,
+classes और marks store किए जा सकते हैं।
+</p>
+
+<h3>Database की आवश्यकता क्यों होती है?</h3>
+
+<ul>
+<li>Large amount of data को व्यवस्थित रखने के लिए।</li>
+<li>Data को जल्दी search करने के लिए।</li>
+<li>Data को update करने के लिए।</li>
+<li>Data को delete करने के लिए।</li>
+<li>Multiple users/applications को data access देने के लिए।</li>
+<li>Data consistency और integrity बनाए रखने में मदद के लिए।</li>
+<li>Data security और controlled access के लिए।</li>
+</ul>
+
+<div class="exam">
+<strong>Exam Booster:</strong>
+Database = Organized collection of related data.
+</div>
+
+</section>
+
+
+<!-- SECTION 2 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">02</div>
+<h2>DBMS | Database Management System</h2>
+</div>
+
+<p>
+DBMS एक software system है जो database को create, store, organize,
+retrieve, update और manage करने की सुविधा देता है।
+</p>
+
+<h3>DBMS के मुख्य कार्य</h3>
+
+<div class="two-col">
+
+<div class="mini-card">
+<h3>🗃️ Data Storage</h3>
+<p>
+Data को structured form में store और organize करने में मदद करता है।
+</p>
+</div>
+
+<div class="mini-card">
+<h3>🔎 Data Retrieval</h3>
+<p>
+Required data को search और retrieve करने की सुविधा देता है।
+</p>
+</div>
+
+<div class="mini-card">
+<h3>✏️ Data Update</h3>
+<p>
+Existing data को modify या update किया जा सकता है।
+</p>
+</div>
+
+<div class="mini-card">
+<h3>🔐 Security</h3>
+<p>
+Users और permissions के माध्यम से controlled access प्रदान किया जा सकता है।
+</p>
+</div>
+
+</div>
+
+<div class="exam">
+<strong>DBMS Full Form:</strong>
+Database Management System
+</div>
+
+</section>
+
+
+<!-- SECTION 3 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">03</div>
+<h2>Examples of DBMS | DBMS के उदाहरण</h2>
+</div>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>DBMS</th>
+<th>Type/Use</th>
+</tr>
+
+<tr>
+<td>MySQL</td>
+<td>Relational Database Management System</td>
+</tr>
+
+<tr>
+<td>PostgreSQL</td>
+<td>Relational/Object-relational database system</td>
+</tr>
+
+<tr>
+<td>Oracle Database</td>
+<td>Enterprise relational database system</td>
+</tr>
+
+<tr>
+<td>Microsoft SQL Server</td>
+<td>Relational database management system</td>
+</tr>
+
+<tr>
+<td>SQLite</td>
+<td>Lightweight embedded relational database</td>
+</tr>
+
+<tr>
+<td>Microsoft Access</td>
+<td>Desktop database management software</td>
+</tr>
+
+</table>
+</div>
+
+<div class="highlight">
+<strong>Important:</strong>
+MySQL, Oracle Database और SQL Server जैसे systems database management
+के लिए उपयोग किए जाते हैं।
+</div>
+
+</section>
+
+
+<!-- SECTION 4 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">04</div>
+<h2>Table, Row, Column और Record</h2>
+</div>
+
+<p>
+Relational database में data को सामान्यतः tables के रूप में organize किया जाता है।
+</p>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>Table</td>
+<td>Related data का structured collection</td>
+<td>Students</td>
+</tr>
+
+<tr>
+<td>Column / Field</td>
+<td>एक specific attribute/category</td>
+<td>Name, Age, Marks</td>
+</tr>
+
+<tr>
+<td>Row</td>
+<td>एक complete entry</td>
+<td>एक student की information</td>
+</tr>
+
+<tr>
+<td>Record</td>
+<td>Related fields का complete set</td>
+<td>एक student का पूरा data</td>
+</tr>
+
+<tr>
+<td>Cell</td>
+<td>Row और Column का intersection</td>
+<td>एक specific value</td>
+</tr>
+
+</table>
+</div>
+
+<h3>Example Table</h3>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Roll_No</th>
+<th>Name</th>
+<th>Class</th>
+<th>Marks</th>
+</tr>
+
+<tr>
+<td>101</td>
+<td>Rahul</td>
+<td>10</td>
+<td>85</td>
+</tr>
+
+<tr>
+<td>102</td>
+<td>Aman</td>
+<td>10</td>
+<td>91</td>
+</tr>
+
+<tr>
+<td>103</td>
+<td>Neha</td>
+<td>10</td>
+<td>88</td>
+</tr>
+
+</table>
+</div>
+
+<div class="success">
+<strong>Remember:</strong>
+Column = Attribute/Field<br>
+Row = Record/Tuple
+</div>
+
+</section>
+
+
+<!-- SECTION 5 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">05</div>
+<h2>Database Keys | Keys क्या होती हैं?</h2>
+</div>
+
+<p>
+Keys database में records को uniquely identify करने तथा tables के बीच
+relationships बनाने में महत्वपूर्ण भूमिका निभाती हैं।
+</p>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Key</th>
+<th>Meaning</th>
+<th>Main Purpose</th>
+</tr>
+
+<tr>
+<td>Primary Key</td>
+<td>Record की unique identification</td>
+<td>Duplicate और NULL values को सामान्यतः allow नहीं करता</td>
+</tr>
+
+<tr>
+<td>Foreign Key</td>
+<td>दूसरी table की key को reference करता है</td>
+<td>Tables के बीच relationship</td>
+</tr>
+
+<tr>
+<td>Candidate Key</td>
+<td>Possible unique key</td>
+<td>Primary key के candidate</td>
+</tr>
+
+<tr>
+<td>Alternate Key</td>
+<td>Candidate keys में से जो primary नहीं चुनी गई</td>
+<td>Alternative unique identification</td>
+</tr>
+
+<tr>
+<td>Composite Key</td>
+<td>Multiple columns से बनी key</td>
+<td>Combined uniqueness</td>
+</tr>
+
+</table>
+</div>
+
+<div class="exam">
+<strong>High Value:</strong>
+Primary Key → Uniquely identifies a record.<br>
+Foreign Key → Tables के बीच relationship बनाने में मदद करती है।
+</div>
+
+</section>
+
+
+<!-- SECTION 6 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">06</div>
+<h2>Primary Key | Primary Key की विशेषताएँ</h2>
+</div>
+
+<p>
+Primary Key table के प्रत्येक record को uniquely identify करने के लिए
+use की जाती है।
+</p>
+
+<ul>
+<li>हर record की unique identification करती है।</li>
+<li>एक table में सामान्यतः एक primary key constraint होती है।</li>
+<li>Primary key value duplicate नहीं होनी चाहिए।</li>
+<li>Primary key में NULL value स्वीकार नहीं होती।</li>
+<li>Primary key single column या multiple columns से बन सकती है।</li>
+</ul>
+
+<div class="formula">
+<strong>Example:</strong>
+Student_ID = Primary Key
+</div>
+
+<div class="danger">
+<strong>Confusion Alert:</strong>
+Primary Key और Foreign Key एक जैसी नहीं हैं।
+Primary Key अपनी table में records को uniquely identify करती है,
+जबकि Foreign Key दूसरी table की key को reference कर सकती है।
+</div>
+
+</section>
+
+
+<!-- SECTION 7 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">07</div>
+<h2>Relationships | Tables के बीच संबंध</h2>
+</div>
+
+<p>
+Relational databases में tables के बीच logical relationships बनाई जा सकती हैं।
+</p>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Relationship</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>One-to-One</td>
+<td>एक record दूसरे table के एक record से जुड़ता है</td>
+<td>Person ↔ Passport</td>
+</tr>
+
+<tr>
+<td>One-to-Many</td>
+<td>एक record कई records से जुड़ सकता है</td>
+<td>Department → Employees</td>
+</tr>
+
+<tr>
+<td>Many-to-Many</td>
+<td>कई records कई records से related</td>
+<td>Students ↔ Courses</td>
+</tr>
+
+</table>
+</div>
+
+<div class="highlight">
+<strong>Exam Point:</strong>
+Relational database में tables के बीच relationships बनाने में
+keys महत्वपूर्ण भूमिका निभाती हैं।
+</div>
+
+</section>
+
+
+<!-- SECTION 8 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">08</div>
+<h2>SQL | Structured Query Language</h2>
+</div>
+
+<p>
+SQL एक standard language है जिसका उपयोग relational databases में
+data को query और manage करने के लिए किया जाता है।
+</p>
+
+<div class="formula">
+<strong>SQL Example:</strong><br>
+SELECT * FROM Students;
+</div>
+
+<p>
+ऊपर की query Students table के सभी columns और records को retrieve करने
+के लिए उपयोग की जाती है।
+</p>
+
+<div class="exam">
+<strong>SQL Full Form:</strong>
+Structured Query Language
+</div>
+
+</section>
+
+
+<!-- SECTION 9 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">09</div>
+<h2>SQL Commands | Important Commands</h2>
+</div>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Command</th>
+<th>Category</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>SELECT</td>
+<td>DQL</td>
+<td>Data retrieve करना</td>
+</tr>
+
+<tr>
+<td>INSERT</td>
+<td>DML</td>
+<td>New records insert करना</td>
+</tr>
+
+<tr>
+<td>UPDATE</td>
+<td>DML</td>
+<td>Existing data modify करना</td>
+</tr>
+
+<tr>
+<td>DELETE</td>
+<td>DML</td>
+<td>Records delete करना</td>
+</tr>
+
+<tr>
+<td>CREATE</td>
+<td>DDL</td>
+<td>Database objects create करना</td>
+</tr>
+
+<tr>
+<td>ALTER</td>
+<td>DDL</td>
+<td>Database object structure modify करना</td>
+</tr>
+
+<tr>
+<td>DROP</td>
+<td>DDL</td>
+<td>Database object remove करना</td>
+</tr>
+
+<tr>
+<td>TRUNCATE</td>
+<td>DDL</td>
+<td>Table के सभी rows remove करना</td>
+</tr>
+
+</table>
+</div>
+
+</section>
+
+
+<!-- SECTION 10 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">10</div>
+<h2>SELECT Command | Data Retrieve करना</h2>
+</div>
+
+<p>
+SELECT SQL का सबसे important command है, जिसका उपयोग database से
+data retrieve करने के लिए किया जाता है।
+</p>
+
+<div class="formula">
+<strong>SELECT * FROM Students;</strong>
+</div>
+
+<p>
+यह Students table के सभी columns और rows retrieve करेगा।
+</p>
+
+<h3>Specific Columns</h3>
+
+<div class="formula">
+<strong>SELECT Name, Marks FROM Students;</strong>
+</div>
+
+<p>
+यह केवल Name और Marks columns को retrieve करेगा।
+</p>
+
+<h3>WHERE Clause</h3>
+
+<div class="formula">
+<strong>SELECT * FROM Students WHERE Marks &gt; 80;</strong>
+</div>
+
+<p>
+WHERE condition के आधार पर required records को filter करने में मदद करता है।
+</p>
+
+</section>
+
+
+<!-- SECTION 11 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">11</div>
+<h2>INSERT, UPDATE और DELETE</h2>
+</div>
+
+<h3>INSERT</h3>
+
+<div class="formula">
+<strong>
+INSERT INTO Students (ID, Name, Marks)
+VALUES (104, 'Ravi', 90);
+</strong>
+</div>
+
+<p>
+INSERT का उपयोग नया record add करने के लिए होता है।
+</p>
+
+<h3>UPDATE</h3>
+
+<div class="formula">
+<strong>
+UPDATE Students
+SET Marks = 95
+WHERE ID = 104;
+</strong>
+</div>
+
+<p>
+UPDATE existing data को modify करता है।
+</p>
+
+<h3>DELETE</h3>
+
+<div class="formula">
+<strong>
+DELETE FROM Students
+WHERE ID = 104;
+</strong>
+</div>
+
+<p>
+DELETE condition के अनुसार records को remove करता है।
+</p>
+
+<div class="danger">
+<strong>Important:</strong>
+UPDATE और DELETE के साथ WHERE clause का उपयोग न करने पर बहुत सारे
+या सभी matching records प्रभावित हो सकते हैं।
+</div>
+
+</section>
+
+
+<!-- SECTION 12 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">12</div>
+<h2>DDL, DML, DQL और TCL</h2>
+</div>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Category</th>
+<th>Full Form</th>
+<th>Common Commands</th>
+</tr>
+
+<tr>
+<td>DDL</td>
+<td>Data Definition Language</td>
+<td>CREATE, ALTER, DROP, TRUNCATE</td>
+</tr>
+
+<tr>
+<td>DML</td>
+<td>Data Manipulation Language</td>
+<td>INSERT, UPDATE, DELETE</td>
+</tr>
+
+<tr>
+<td>DQL</td>
+<td>Data Query Language</td>
+<td>SELECT</td>
+</tr>
+
+<tr>
+<td>TCL</td>
+<td>Transaction Control Language</td>
+<td>COMMIT, ROLLBACK, SAVEPOINT</td>
+</tr>
+
+<tr>
+<td>DCL</td>
+<td>Data Control Language</td>
+<td>GRANT, REVOKE</td>
+</tr>
+
+</table>
+</div>
+
+<div class="purple">
+<strong>Memory Trick:</strong><br>
+DDL → Definition<br>
+DML → Manipulation<br>
+DQL → Query<br>
+DCL → Control/Permissions<br>
+TCL → Transaction
+</div>
+
+</section>
+
+
+<!-- SECTION 13 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">13</div>
+<h2>SQL Constraints | Data Rules</h2>
+</div>
+
+<p>
+Constraints database में data पर certain rules लागू करती हैं ताकि
+data की integrity और validity maintain की जा सके।
+</p>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Constraint</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>PRIMARY KEY</td>
+<td>Unique identification</td>
+</tr>
+
+<tr>
+<td>FOREIGN KEY</td>
+<td>Related table की key को reference करना</td>
+</tr>
+
+<tr>
+<td>NOT NULL</td>
+<td>NULL value को रोकना</td>
+</tr>
+
+<tr>
+<td>UNIQUE</td>
+<td>Duplicate values को रोकना</td>
+</tr>
+
+<tr>
+<td>CHECK</td>
+<td>Condition/rule लागू करना</td>
+</tr>
+
+<tr>
+<td>DEFAULT</td>
+<td>Value न देने पर default value देना</td>
+</tr>
+
+</table>
+</div>
+
+</section>
+
+
+<!-- SECTION 14 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">14</div>
+<h2>NULL Value क्या है?</h2>
+</div>
+
+<p>
+Database में NULL का अर्थ सामान्यतः missing, unknown या unavailable value
+को represent करना है।
+</p>
+
+<div class="highlight">
+<strong>Important:</strong>
+NULL का अर्थ zero या empty string के समान नहीं होता।
+</div>
+
+<h3>Example</h3>
+
+<div class="formula">
+<strong>
+SELECT * FROM Students WHERE Phone IS NULL;
+</strong>
+</div>
+
+<p>
+NULL values को check करने के लिए SQL में IS NULL या IS NOT NULL का उपयोग
+किया जाता है।
+</p>
+
+</section>
+
+
+<!-- SECTION 15 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">15</div>
+<h2>Normalization | Database Organization</h2>
+</div>
+
+<p>
+Normalization database design की एक technique है जिसका उद्देश्य
+data redundancy को कम करना और data consistency improve करना है।
+</p>
+
+<h3>मुख्य उद्देश्य</h3>
+
+<ul>
+<li>Duplicate/repeated data को कम करना।</li>
+<li>Data inconsistency को कम करना।</li>
+<li>Database structure को बेहतर बनाना।</li>
+<li>Update, insert और delete anomalies को कम करना।</li>
+</ul>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Normal Form</th>
+<th>Basic Idea</th>
+</tr>
+
+<tr>
+<td>1NF</td>
+<td>Atomic values और repeating groups से बचाव</td>
+</tr>
+
+<tr>
+<td>2NF</td>
+<td>1NF + partial dependency को हटाना</td>
+</tr>
+
+<tr>
+<td>3NF</td>
+<td>2NF + transitive dependency को हटाना</td>
+</tr>
+
+</table>
+</div>
+
+<div class="exam">
+<strong>Exam Point:</strong>
+Normalization → Redundancy कम करने और data organization improve करने
+की महत्वपूर्ण technique.
+</div>
+
+</section>
+
+
+<!-- SECTION 16 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">16</div>
+<h2>Data Integrity | Data की शुद्धता</h2>
+</div>
+
+<p>
+Data integrity का अर्थ है कि database में data accurate, consistent
+और reliable बना रहे।
+</p>
+
+<div class="two-col">
+
+<div class="mini-card">
+<h3>🔑 Entity Integrity</h3>
+<p>
+Primary key के माध्यम से records की unique identification सुनिश्चित
+करने से संबंधित।
+</p>
+</div>
+
+<div class="mini-card">
+<h3>🔗 Referential Integrity</h3>
+<p>
+Foreign key और related tables के बीच valid relationship maintain
+करने से संबंधित।
+</p>
+</div>
+
+</div>
+
+<div class="success">
+<strong>Simple Trick:</strong>
+Entity Integrity → Primary Key<br>
+Referential Integrity → Foreign Key
+</div>
+
+</section>
+
+
+<!-- SECTION 17 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">17</div>
+<h2>Database और Spreadsheet में अंतर</h2>
+</div>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Point</th>
+<th>Database</th>
+<th>Spreadsheet</th>
+</tr>
+
+<tr>
+<td>Purpose</td>
+<td>Structured data management</td>
+<td>Calculations और tabular analysis</td>
+</tr>
+
+<tr>
+<td>Large Data</td>
+<td>Large/structured data के लिए suitable</td>
+<td>Small/medium analysis में convenient</td>
+</tr>
+
+<tr>
+<td>Relationships</td>
+<td>Tables के बीच relationships support</td>
+<td>Limited compared with relational databases</td>
+</tr>
+
+<tr>
+<td>Query</td>
+<td>SQL जैसी query languages</td>
+<td>Formula/functions आधारित</td>
+</tr>
+
+<tr>
+<td>Multi-user Access</td>
+<td>DBMS में strong support</td>
+<td>Application-dependent</td>
+</tr>
+
+</table>
+</div>
+
+</section>
+
+
+<!-- SECTION 18 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">18</div>
+<h2>RDBMS | Relational Database</h2>
+</div>
+
+<p>
+RDBMS का अर्थ Relational Database Management System है।
+इसमें data को tables में organize किया जाता है और tables के बीच
+relationships establish की जा सकती हैं।
+</p>
+
+<div class="formula">
+<strong>RDBMS = Tables + Relationships + SQL</strong>
+</div>
+
+<h3>RDBMS की विशेषताएँ</h3>
+
+<ul>
+<li>Data tables में store होता है।</li>
+<li>Rows और columns का उपयोग होता है।</li>
+<li>Primary और foreign keys का उपयोग किया जा सकता है।</li>
+<li>SQL द्वारा data query किया जा सकता है।</li>
+<li>Relationships maintain की जा सकती हैं।</li>
+</ul>
+
+</section>
+
+
+<!-- SECTION 19 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">19</div>
+<h2>Database में CRUD Operations</h2>
+</div>
+
+<p>
+CRUD database applications में होने वाले चार basic operations को
+represent करता है।
+</p>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Letter</th>
+<th>Operation</th>
+<th>Meaning</th>
+</tr>
+
+<tr>
+<td>C</td>
+<td>Create</td>
+<td>New data/record create करना</td>
+</tr>
+
+<tr>
+<td>R</td>
+<td>Read</td>
+<td>Data retrieve/read करना</td>
+</tr>
+
+<tr>
+<td>U</td>
+<td>Update</td>
+<td>Existing data modify करना</td>
+</tr>
+
+<tr>
+<td>D</td>
+<td>Delete</td>
+<td>Data remove करना</td>
+</tr>
+
+</table>
+</div>
+
+<div class="exam">
+<strong>Memory Trick:</strong>
+CRUD = Create → Read → Update → Delete
+</div>
+
+</section>
+
+
+<!-- SECTION 20 -->
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">20</div>
+<h2>Important Database Terms</h2>
+</div>
+
+<div class="table-wrap">
+<table>
+
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+
+<tr>
+<td>Database</td>
+<td>Organized collection of data</td>
+</tr>
+
+<tr>
+<td>DBMS</td>
+<td>Database Management System</td>
+</tr>
+
+<tr>
+<td>RDBMS</td>
+<td>Relational Database Management System</td>
+</tr>
+
+<tr>
+<td>Table</td>
+<td>Rows और columns का collection</td>
+</tr>
+
+<tr>
+<td>Row</td>
+<td>Record/Tuple</td>
+</tr>
+
+<tr>
+<td>Column</td>
+<td>Field/Attribute</td>
+</tr>
+
+<tr>
+<td>Primary Key</td>
+<td>Unique record identification</td>
+</tr>
+
+<tr>
+<td>Foreign Key</td>
+<td>Related table की key को reference करना</td>
+</tr>
+
+<tr>
+<td>SQL</td>
+<td>Structured Query Language</td>
+</tr>
+
+<tr>
+<td>Query</td>
+<td>Database से information/data पर operation के लिए instruction</td>
+</tr>
+
+<tr>
+<td>Constraint</td>
+<td>Data पर लागू rule</td>
+</tr>
+
+<tr>
+<td>Normalization</td>
+<td>Redundancy कम करने की technique</td>
+</tr>
+
+</table>
+</div>
+
+</section>
+
+
+<!-- MCQ SECTION -->
+
+<section class="searchable">
+
+<div class="mcq-header">
+<h2>🎯 Database — Exam Oriented MCQs</h2>
+<p>20 Important Questions • Answers & Explanations • A/B/C/D Balanced</p>
+</div>
+
+
+<!-- Q1 -->
+<div class="question">
+
+<div class="question-text">
+Q1. DBMS का full form क्या है?
+</div>
+
+<div class="options">
+<div class="option">(A) Database Management System</div>
+<div class="option">(B) Data Backup Management System</div>
+<div class="option">(C) Database Machine Software</div>
+<div class="option">(D) Digital Base Management System</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (A) Database Management System</strong><br>
+DBMS का full form Database Management System है।
+</div>
+
+</div>
+
+
+<!-- Q2 -->
+<div class="question">
+
+<div class="question-text">
+Q2. Database में एक complete entry को सामान्यतः क्या कहा जाता है?
+</div>
+
+<div class="options">
+<div class="option">(A) Column</div>
+<div class="option">(B) Record</div>
+<div class="option">(C) Field</div>
+<div class="option">(D) Attribute</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (B) Record</strong><br>
+Table की एक complete row को record कहा जाता है।
+</div>
+
+</div>
+
+
+<!-- Q3 -->
+<div class="question">
+
+<div class="question-text">
+Q3. SQL का full form क्या है?
+</div>
+
+<div class="options">
+<div class="option">(A) Simple Query Language</div>
+<div class="option">(B) System Query Language</div>
+<div class="option">(C) Structured Query Language</div>
+<div class="option">(D) Standard Question Language</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (C) Structured Query Language</strong><br>
+SQL का full form Structured Query Language है।
+</div>
+
+</div>
+
+
+<!-- Q4 -->
+<div class="question">
+
+<div class="question-text">
+Q4. निम्न में से कौन-सी key record को uniquely identify करती है?
+</div>
+
+<div class="options">
+<div class="option">(A) Foreign Key</div>
+<div class="option">(B) Candidate Key</div>
+<div class="option">(C) Alternate Key</div>
+<div class="option">(D) Primary Key</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (D) Primary Key</strong><br>
+Primary Key table के records को uniquely identify करती है।
+</div>
+
+</div>
+
+
+<!-- Q5 -->
+<div class="question">
+
+<div class="question-text">
+Q5. SQL में data retrieve करने के लिए कौन-सा command प्रयोग किया जाता है?
+</div>
+
+<div class="options">
+<div class="option">(A) SELECT</div>
+<div class="option">(B) DELETE</div>
+<div class="option">(C) UPDATE</div>
+<div class="option">(D) DROP</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (A) SELECT</strong><br>
+SELECT database से data retrieve करने के लिए उपयोग होता है।
+</div>
+
+</div>
+
+
+<!-- Q6 -->
+<div class="question">
+
+<div class="question-text">
+Q6. Foreign Key का मुख्य उद्देश्य क्या है?
+</div>
+
+<div class="options">
+<div class="option">(A) Table delete करना</div>
+<div class="option">(B) Tables के बीच relationship establish करना</div>
+<div class="option">(C) Database बंद करना</div>
+<div class="option">(D) Data print करना</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (B) Tables के बीच relationship establish करना</strong><br>
+Foreign Key दूसरी table की key को reference करके relationships बनाने में मदद करती है।
+</div>
+
+</div>
+
+
+<!-- Q7 -->
+<div class="question">
+
+<div class="question-text">
+Q7. Table की एक row को relational database में क्या कहा जाता है?
+</div>
+
+<div class="options">
+<div class="option">(A) Attribute</div>
+<div class="option">(B) Domain</div>
+<div class="option">(C) Tuple</div>
+<div class="option">(D) Schema</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (C) Tuple</strong><br>
+Relational database terminology में row को tuple कहा जाता है।
+</div>
+
+</div>
+
+
+<!-- Q8 -->
+<div class="question">
+
+<div class="question-text">
+Q8. SQL में नया record add करने के लिए कौन-सा command प्रयोग किया जाता है?
+</div>
+
+<div class="options">
+<div class="option">(A) UPDATE</div>
+<div class="option">(B) SELECT</div>
+<div class="option">(C) ALTER</div>
+<div class="option">(D) INSERT</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (D) INSERT</strong><br>
+INSERT command table में नया record add करता है।
+</div>
+
+</div>
+
+
+<!-- Q9 -->
+<div class="question">
+
+<div class="question-text">
+Q9. निम्न में से कौन-सा relational DBMS का उदाहरण है?
+</div>
+
+<div class="options">
+<div class="option">(A) MySQL</div>
+<div class="option">(B) Paint</div>
+<div class="option">(C) Notepad</div>
+<div class="option">(D) Calculator</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (A) MySQL</strong><br>
+MySQL एक relational database management system है।
+</div>
+
+</div>
+
+
+<!-- Q10 -->
+<div class="question">
+
+<div class="question-text">
+Q10. SQL में existing records को modify करने के लिए कौन-सा command प्रयोग होता है?
+</div>
+
+<div class="options">
+<div class="option">(A) INSERT</div>
+<div class="option">(B) UPDATE</div>
+<div class="option">(C) CREATE</div>
+<div class="option">(D) SELECT</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (B) UPDATE</strong><br>
+UPDATE command existing data को modify करने के लिए प्रयोग होता है।
+</div>
+
+</div>
+
+
+<!-- Q11 -->
+<div class="question">
+
+<div class="question-text">
+Q11. Database में column को किस नाम से भी जाना जाता है?
+</div>
+
+<div class="options">
+<div class="option">(A) Record</div>
+<div class="option">(B) Tuple</div>
+<div class="option">(C) Field</div>
+<div class="option">(D) Row</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (C) Field</strong><br>
+Database table में column को field या attribute कहा जा सकता है।
+</div>
+
+</div>
+
+
+<!-- Q12 -->
+<div class="question">
+
+<div class="question-text">
+Q12. SQL में table की पूरी structure/object को remove करने के लिए कौन-सा command प्रयोग किया जाता है?
+</div>
+
+<div class="options">
+<div class="option">(A) SELECT</div>
+<div class="option">(B) DELETE</div>
+<div class="option">(C) UPDATE</div>
+<div class="option">(D) DROP</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (D) DROP</strong><br>
+DROP database object को remove करने के लिए प्रयोग होता है।
+</div>
+
+</div>
+
+
+<!-- Q13 -->
+<div class="question">
+
+<div class="question-text">
+Q13. Normalization का मुख्य उद्देश्य क्या है?
+</div>
+
+<div class="options">
+<div class="option">(A) Data redundancy कम करना</div>
+<div class="option">(B) Monitor size बढ़ाना</div>
+<div class="option">(C) Internet speed बढ़ाना</div>
+<div class="option">(D) File printing करना</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (A) Data redundancy कम करना</strong><br>
+Normalization data redundancy कम करने और database organization improve करने में मदद करती है।
+</div>
+
+</div>
+
+
+<!-- Q14 -->
+<div class="question">
+
+<div class="question-text">
+Q14. SQL में records हटाने के लिए कौन-सा command प्रयोग होता है?
+</div>
+
+<div class="options">
+<div class="option">(A) SELECT</div>
+<div class="option">(B) DELETE</div>
+<div class="option">(C) INSERT</div>
+<div class="option">(D) CREATE</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (B) DELETE</strong><br>
+DELETE command records को remove करने के लिए उपयोग किया जाता है।
+</div>
+
+</div>
+
+
+<!-- Q15 -->
+<div class="question">
+
+<div class="question-text">
+Q15. कौन-सी constraint column में NULL values को रोकती है?
+</div>
+
+<div class="options">
+<div class="option">(A) UNIQUE</div>
+<div class="option">(B) CHECK</div>
+<div class="option">(C) NOT NULL</div>
+<div class="option">(D) DEFAULT</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (C) NOT NULL</strong><br>
+NOT NULL constraint column में NULL value को स्वीकार नहीं करती।
+</div>
+
+</div>
+
+
+<!-- Q16 -->
+<div class="question">
+
+<div class="question-text">
+Q16. SQL में table बनाने के लिए कौन-सा command प्रयोग किया जाता है?
+</div>
+
+<div class="options">
+<div class="option">(A) CREATE</div>
+<div class="option">(B) UPDATE</div>
+<div class="option">(C) INSERT</div>
+<div class="option">(D) SELECT</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (A) CREATE</strong><br>
+CREATE command database objects जैसे table बनाने के लिए उपयोग होता है।
+</div>
+
+</div>
+
+
+<!-- Q17 -->
+<div class="question">
+
+<div class="question-text">
+Q17. RDBMS का full form क्या है?
+</div>
+
+<div class="options">
+<div class="option">(A) Random Database Management System</div>
+<div class="option">(B) Relational Database Management System</div>
+<div class="option">(C) Remote Data Management Service</div>
+<div class="option">(D) Rapid Database Machine System</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (B) Relational Database Management System</strong><br>
+RDBMS का full form Relational Database Management System है।
+</div>
+
+</div>
+
+
+<!-- Q18 -->
+<div class="question">
+
+<div class="question-text">
+Q18. SQL में permissions देने या हटाने से संबंधित commands कौन-सी category में आती हैं?
+</div>
+
+<div class="options">
+<div class="option">(A) DDL</div>
+<div class="option">(B) DML</div>
+<div class="option">(C) DQL</div>
+<div class="option">(D) DCL</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (D) DCL</strong><br>
+DCL यानी Data Control Language में GRANT और REVOKE जैसे commands आते हैं।
+</div>
+
+</div>
+
+
+<!-- Q19 -->
+<div class="question">
+
+<div class="question-text">
+Q19. CRUD में "U" किसे represent करता है?
+</div>
+
+<div class="options">
+<div class="option">(A) Update</div>
+<div class="option">(B) Upload</div>
+<div class="option">(C) Utility</div>
+<div class="option">(D) User</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (A) Update</strong><br>
+CRUD = Create, Read, Update, Delete.
+</div>
+
+</div>
+
+
+<!-- Q20 -->
+<div class="question">
+
+<div class="question-text">
+Q20. निम्न में से कौन-सा DDL command है?
+</div>
+
+<div class="options">
+<div class="option">(A) SELECT</div>
+<div class="option">(B) INSERT</div>
+<div class="option">(C) ALTER</div>
+<div class="option">(D) UPDATE</div>
+</div>
+
+<button class="answer-btn" onclick="toggleAnswer(this)">
+Show Answer
+</button>
+
+<div class="answer">
+<strong>Answer: (C) ALTER</strong><br>
+ALTER DDL (Data Definition Language) का command है और database object की structure modify करने के लिए उपयोग होता है।
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REVISION -->
+
+<section class="revision searchable">
+
+<h2>⚡ One-Minute Database Revision</h2>
+
+<div class="revision-grid">
+
+<div class="revision-item">
+<strong>Database:</strong> Organized collection of data
+</div>
+
+<div class="revision-item">
+<strong>DBMS:</strong> Database Management System
+</div>
+
+<div class="revision-item">
+<strong>RDBMS:</strong> Relational Database Management System
+</div>
+
+<div class="revision-item">
+<strong>Table:</strong> Rows + Columns
+</div>
+
+<div class="revision-item">
+<strong>Row:</strong> Record / Tuple
+</div>
+
+<div class="revision-item">
+<strong>Column:</strong> Field / Attribute
+</div>
+
+<div class="revision-item">
+<strong>Primary Key:</strong> Unique identification
+</div>
+
+<div class="revision-item">
+<strong>Foreign Key:</strong> Table relationship/reference
+</div>
+
+<div class="revision-item">
+<strong>SQL:</strong> Structured Query Language
+</div>
+
+<div class="revision-item">
+<strong>SELECT:</strong> Retrieve data
+</div>
+
+<div class="revision-item">
+<strong>INSERT:</strong> Add records
+</div>
+
+<div class="revision-item">
+<strong>UPDATE:</strong> Modify records
+</div>
+
+<div class="revision-item">
+<strong>DELETE:</strong> Remove records
+</div>
+
+<div class="revision-item">
+<strong>CREATE:</strong> Create object
+</div>
+
+<div class="revision-item">
+<strong>ALTER:</strong> Modify structure
+</div>
+
+<div class="revision-item">
+<strong>DROP:</strong> Remove object
+</div>
+
+<div class="revision-item">
+<strong>DDL:</strong> Definition
+</div>
+
+<div class="revision-item">
+<strong>DML:</strong> Manipulation
+</div>
+
+<div class="revision-item">
+<strong>DQL:</strong> Query
+</div>
+
+<div class="revision-item">
+<strong>CRUD:</strong> Create, Read, Update, Delete
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FINAL BOOSTER -->
+
+<section class="section searchable">
+
+<div class="section-title">
+<div class="section-number">🚀</div>
+<h2>Final Exam Booster</h2>
+</div>
+
+<div class="success">
+
+<strong>🔥 सबसे ज्यादा पूछे जाने वाले Database Points:</strong>
+
+<ul>
+<li>DBMS = Database Management System</li>
+<li>RDBMS = Relational Database Management System</li>
+<li>SQL = Structured Query Language</li>
+<li>Table = Rows + Columns</li>
+<li>Row = Record / Tuple</li>
+<li>Column = Field / Attribute</li>
+<li>Primary Key = Unique identification</li>
+<li>Foreign Key = Table relationship/reference</li>
+<li>SELECT = Data retrieve</li>
+<li>INSERT = New record</li>
+<li>UPDATE = Existing data modify</li>
+<li>DELETE = Records remove</li>
+<li>CREATE = Object create</li>
+<li>ALTER = Object structure modify</li>
+<li>DROP = Object remove</li>
+<li>DDL = Data Definition Language</li>
+<li>DML = Data Manipulation Language</li>
+<li>DQL = Data Query Language</li>
+<li>DCL = Data Control Language</li>
+<li>TCL = Transaction Control Language</li>
+<li>Normalization = Redundancy कम करना</li>
+<li>CRUD = Create, Read, Update, Delete</li>
+</ul>
+
+</div>
+
+<div class="exam">
+
+<strong>🎯 SSC / Police / Computer Awareness Strategy:</strong><br>
+
+Database chapter में DBMS/RDBMS, Table-Row-Column, Primary Key,
+Foreign Key, SQL Full Form, SQL commands, DDL/DML/DQL/DCL,
+constraints, normalization और CRUD से direct questions बनने की
+बहुत संभावना रहती है। इन definitions और command-purpose pairs को
+बार-बार revise करें।
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+🗄️ Database | Computer Awareness Notes
+<br>
+DBMS • Tables • Records • Keys • SQL
+<br><br>
+Made for Exam-Oriented Computer Awareness Preparation
+
+</footer>
+
+
+<script>
+
+function toggleAnswer(button){
+
+ const answer = button.nextElementSibling;
+
+ if(answer.classList.contains("show")){
+
+  answer.classList.remove("show");
+  button.innerText = "Show Answer";
+
+ }else{
+
+  answer.classList.add("show");
+  button.innerText = "Hide Answer";
+
+ }
+
+}
+
+
+function searchContent(){
+
+ const query =
+ document.getElementById("searchBox")
+ .value
+ .toLowerCase()
+ .trim();
+
+ const sections =
+ document.querySelectorAll(".searchable");
+
+ sections.forEach(function(section){
+
+  const text =
+  section.innerText.toLowerCase();
+
+  if(text.includes(query)){
+
+   section.style.display = "";
+
+  }else{
+
+   section.style.display = "none";
+
+  }
+
+ });
+
+}
+
+</script>
+
+</body>
+</html>

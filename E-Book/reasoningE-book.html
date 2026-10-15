@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complete Reasoning E-Book – 4590+ Questions</title>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ font-family:'Segoe UI', Roboto, sans-serif; background:#f0f4f8; padding:15px; }
+.ebook{ max-width:1100px; margin:auto; background:white; border-radius:18px; padding:25px; box-shadow:0 8px 35px rgba(0,0,0,0.08); }
+h1{ color:#0b1a33; border-bottom:4px solid #2563eb; padding-bottom:12px; margin-bottom:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+h1 small{ font-size:16px; font-weight:400; color:#4b5563; }
+.topic-nav{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+.topic-nav button{ padding:8px 16px; border:2px solid #d1d5db; border-radius:30px; background:white; cursor:pointer; font-weight:600; font-size:13px; transition:0.2s; }
+.topic-nav button.active{ background:#2563eb; color:white; border-color:#2563eb; }
+.topic-nav button:hover{ background:#eef2ff; }
+.controls{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px; }
+.controls input, .controls select{ padding:10px 14px; border:1px solid #d1d5db; border-radius:10px; font-size:14px; flex:1; min-width:150px; }
+.controls button{ padding:10px 18px; border:none; border-radius:10px; font-weight:bold; cursor:pointer; font-size:14px; background:#2563eb; color:white; }
+.controls button.green{ background:#16a34a; }
+.controls button.gray{ background:#e5e7eb; color:#1f2937; }
+.progress{ display:flex; justify-content:space-between; font-weight:bold; color:#374151; margin-bottom:6px; }
+.bar{ width:100%; height:8px; background:#e5e7eb; border-radius:20px; overflow:hidden; margin-bottom:20px; }
+.bar-fill{ height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); width:0%; transition:0.3s; }
+.q-card{ border:1px solid #e5e7eb; border-radius:12px; padding:16px 18px; margin-bottom:14px; background:#fafcff; }
+.q-top{ display:flex; justify-content:space-between; font-size:13px; color:#6b7280; margin-bottom:4px; }
+.q-top span:first-child{ font-weight:bold; color:#2563eb; }
+.q-text{ font-size:16px; font-weight:600; color:#1f2937; margin-bottom:12px; line-height:1.6; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.options button{ background:#f9fafb; border:1px solid #d1d5db; border-radius:8px; padding:8px 12px; text-align:left; cursor:pointer; font-size:14px; transition:0.15s; }
+.options button:hover{ background:#eef2ff; border-color:#2563eb; }
+.options button.correct{ background:#d1fae5; border-color:#16a34a; color:#065f46; }
+.options button.wrong{ background:#fecaca; border-color:#dc2626; color:#991b1b; }
+.result{ margin-top:10px; font-weight:bold; }
+.explanation{ display:none; margin-top:12px; background:#f3f4f6; padding:14px 16px; border-radius:8px; border-left:4px solid #2563eb; line-height:1.7; font-size:14px; }
+.explanation.show{ display:block; }
+.footer{ text-align:center; color:#6b7280; font-size:13px; margin-top:25px; padding-top:15px; border-top:1px solid #e5e7eb; }
+.lang-btn{ background:#e5e7eb; border:none; padding:6px 16px; border-radius:20px; font-weight:bold; cursor:pointer; font-size:14px; }
+.stats-badge{ background:#e5e7eb; padding:4px 14px; border-radius:30px; font-size:13px; color:#1f2937; }
+@media(max-width:600px){ .options{ grid-template-columns:1fr; } .ebook{ padding:15px; } h1{ font-size:22px; } .topic-nav button{ font-size:12px; padding:6px 12px; } }
+</style>
+</head>
+<body>
+<div class="ebook">
+    <h1>📚 Complete Reasoning E-Book <small>4590+ Questions · All Topics</small>
+        <button class="lang-btn" onclick="toggleLang()">🇮🇳 हिंदी</button>
+    </h1>
+
+    <div class="topic-nav" id="topicNav"></div>
+
+    <div class="controls">
+        <input type="text" id="searchBox" placeholder="Search question...">
+        <select id="filterBox"><option value="all">All Types</option></select>
+        <button onclick="showAllExplanations()">📖 Show All</button>
+        <button class="green" onclick="resetQuiz()">🔄 Reset</button>
+    </div>
+
+    <div class="progress">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+        <span class="stats-badge" id="topicCount">Topic: All</span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="progressFill"></div></div>
+
+    <div id="questionContainer"></div>
+    <div class="footer">Complete Reasoning E-Book · 4590+ Questions · SSC & Competitive Exams</div>
+</div>
+
+<script>
+// ================================================================
+//  SIMPLE & ERROR-FREE COMPLETE REASONING E-BOOK
+//  All 9 topics combined into one file
+//  No const/let, no arrow functions, no template literals
+//  Uses only var, function, for loops, and string concatenation
+// ================================================================
+
+// ---- GLOBAL VARIABLES ----
+var currentLang = 'en';
+var currentTopic = 'all';
+var allQuestions = [];
+var attemptedSet = new Set();
+var score = 0;
+
+// ---- SHUFFLE FUNCTION ----
+function shuffleArray(arr) {
+    var a = arr.slice(0);
+    for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+    return a;
+}
+
+// ================================================================
+//  TOPIC DEFINITIONS
+// ================================================================
+var topicList = [
+    { id: 'blood', label: '🩸 Blood Relations' },
+    { id: 'direction', label: '🧭 Direction' },
+    { id: 'syllogism', label: '📊 Syllogism' },
+    { id: 'venn', label: '🔵 Venn Diagram' },
+    { id: 'ranking', label: '🏅 Ranking' },
+    { id: 'calendar', label: '📅 Calendar' },
+    { id: 'nonverbal', label: '🔷 Non-Verbal' },
+    { id: 'puzzle', label: '🧩 Puzzle' },
+    { id: 'mixed', label: '🌀 Mixed' }
+];
+
+// ================================================================
+//  TOPIC-WISE GENERATORS (ALL VERY SIMPLE)
+// ================================================================
+
+// ---- COMMON POOLS ----
+var maleNames = ['A','B','C','D'];
+var femaleNames = ['P','Q','R','S'];
+var allNames = maleNames.concat(femaleNames);
+var shapeSymbols = ['▲','■','●','★','◆','⬟','♦','♥'];
+var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var daysHi = ['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
+var dirs = ['North','South','East','West'];
+var dirsHi = ['उत्तर','दक्षिण','पूर्व','पश्चिम'];
+
+// ---- 1. BLOOD RELATIONS ----
+function generateBlood() {
+    var p1 = allNames[Math.floor(Math.random() * allNames.length)];
+    var p2 = allNames[Math.floor(Math.random() * allNames.length)];
+    while (p2 === p1) p2 = allNames[Math.floor(Math.random() * allNames.length)];
+    var rels = ['father','mother','brother','sister','uncle','aunt','grandfather','grandmother','son','daughter','nephew','niece','cousin'];
+    var rel = rels[Math.floor(Math.random() * rels.length)];
+    var relMap = {
+        'father':'father of','mother':'mother of','brother':'brother of','sister':'sister of',
+        'uncle':'uncle of','aunt':'aunt of','grandfather':'grandfather of','grandmother':'grandmother of',
+        'son':'son of','daughter':'daughter of','nephew':'nephew of','niece':'niece of','cousin':'cousin of'
+    };
+    var relHiMap = {
+        'father':'पिता','mother':'माता','brother':'भाई','sister':'बहन',
+        'uncle':'चाचा/मामा','aunt':'चाची/मामी','grandfather':'दादा/नाना','grandmother':'दादी/नानी',
+        'son':'बेटा','daughter':'बेटी','nephew':'भतीजा/भांजा','niece':'भतीजी/भांजी','cousin':'चचेरा/ममेरा'
+    };
+    var inverseMap = {
+        'father':'son/daughter','mother':'son/daughter','brother':'brother/sister','sister':'brother/sister',
+        'uncle':'nephew/niece','aunt':'nephew/niece','grandfather':'grandson/granddaughter','grandmother':'grandson/granddaughter',
+        'son':'father/mother','daughter':'father/mother','nephew':'uncle/aunt','niece':'uncle/aunt','cousin':'cousin'
+    };
+    var correct = inverseMap[rel] || 'related';
+    var isMale1 = (maleNames.indexOf(p1) !== -1);
+    if (correct === 'son/daughter') correct = isMale1 ? 'son' : 'daughter';
+    else if (correct === 'brother/sister') correct = isMale1 ? 'brother' : 'sister';
+    else if (correct === 'grandson/granddaughter') correct = isMale1 ? 'grandson' : 'granddaughter';
+    else if (correct === 'father/mother') correct = isMale1 ? 'father' : 'mother';
+    else if (correct === 'uncle/aunt') correct = isMale1 ? 'uncle' : 'aunt';
+    else if (correct === 'nephew/niece') correct = isMale1 ? 'nephew' : 'niece';
+
+    var qEn = p1 + ' is the ' + relMap[rel] + ' ' + p2 + '. How is ' + p2 + ' related to ' + p1 + '?';
+    var qHi = p1 + ', ' + p2 + ' के ' + relHiMap[rel] + ' हैं। ' + p2 + ', ' + p1 + ' का क्या लगता है?';
+    var opts = [correct];
+    var pool = ['father','mother','brother','sister','uncle','aunt','grandfather','grandmother','son','daughter','nephew','niece','cousin'];
+    var shuffled = shuffleArray(pool);
+    for (var i = 0; i < shuffled.length && opts.length < 4; i++) {
+        if (shuffled[i] !== correct && opts.indexOf(shuffled[i]) === -1) opts.push(shuffled[i]);
+    }
+    opts = shuffleArray(opts);
+    var ansIdx = opts.indexOf(correct);
+    var expEn = '🔍 ' + p1 + ' is ' + relMap[rel] + ' ' + p2 + '. So ' + p2 + ' is the ' + correct + ' of ' + p1 + '. ✅ Answer: ' + correct;
+    var expHi = '🔍 ' + p1 + ', ' + p2 + ' के ' + relHiMap[rel] + ' हैं। तो ' + p2 + ', ' + p1 + ' का ' + correct + ' है। ✅ उत्तर: ' + correct;
+    return { qEn:qEn, qHi:qHi, opts:opts, answer:ansIdx, type:'Blood Relations', expEn:expEn, expHi:expHi };
+}
+
+// ---- 2. DIRECTION ----
+function generateDirection() {
+    var start = Math.floor(Math.random() * 4);
+    var steps = Math.floor(Math.random() * 3) + 2;
+    var cur = start;
+    var desc = [];
+    for (var i = 0; i < steps; i++) {
+        var turn = Math.random() < 0.5 ? 'left' : 'right';
+        var newD;
+        if (cur === 0) newD = (turn === 'left') ? 3 : 2;
+        else if (cur === 1) newD = (turn === 'left') ? 2 : 3;
+        else if (cur === 2) newD = (turn === 'left') ? 0 : 1;
+        else if (cur === 3) newD = (turn === 'left') ? 1 : 0;
+        desc.push(dirs[cur]);
+        if (i < steps - 1) desc.push(turn === 'left' ? 'left' : 'right');
+        cur = newD;
+    }
+    var final = dirs[cur];
+    var finalHi = dirsHi[cur];
+    var qEn = 'A person walks: ' + desc.join(', ') + '. Which direction is he facing finally?';
+    var qHi = 'एक व्यक्ति चलता है: ' + desc.join(', ') + '. अंत में उसका मुँह किस दिशा में है?';
+    var opts = [final];
+    var pool = ['North','South','East','West'];
+    for (var i = 0; i < pool.length && opts.length < 4; i++) {
+        if (pool[i] !== final && opts.indexOf(pool[i]) === -1) opts.push(pool[i]);
+    }
+    opts = shuffleArray(opts);
+    var ansIdx = opts.indexOf(final);
+    var expEn = '🔍 Tracking turns: ' + desc.join(' → ') + ' → Final: ' + final + '. ✅ Answer: ' + final;
+    var expHi = '🔍 मोड़ों का ट्रैक: ' + desc.join(' → ') + ' → अंतिम: ' + finalHi + '. ✅ उत्तर: ' + finalHi;
+    return { qEn:qEn, qHi:qHi, opts:opts, answer:ansIdx, type:'Direction', expEn:expEn, expHi:expHi };
+}
+
+// ---- 3. SYLLOGISM ----
+function generateSyllogism() {
+    var cats = ['Cats','Dogs','Rats','Birds','Animals','Mammals','Reptiles'];
+    var shuffled = shuffleArray(cats);
+    var a = shuffled[0], b = shuffled[1], c = shuffled[2];
+    var templates = [
+        { st:['All '+a+' are '+b+'.','All '+b+' are '+c+'.'], c1:'All '+a+' are '+c+'.', c2:'Some '+c+' are '+a+'.', ans:2 },
+        { st:['All '+a+' are '+b+'.','No '+b+' are '+c+'.'], c1:'No '+a+' are '+c+'.', c2:'Some '+c+' are not '+a+'.', ans:2 },
+        { st:['Some '+a+' are '+b+'.','All '+b+' are '+c+'.'], c1:'Some '+a+' are '+c+'.', c2:'Some '+c+' are '+a+'.', ans:2 }
+    ];
+    var t = templates[Math.floor(Math.random() * templates.length)];
+    var opts = [
+        'Only I follows: '+t.c1,
+        'Only II follows: '+t.c2,
+        'Both follow',
+        'Neither follows'
+    ];
+    var correctLabel = (t.ans === 2) ? 'Both follow' : (t.ans === 0) ? 'Only I follows: '+t.c1 : 'Only II follows: '+t.c2;
+    opts = shuffleArray(opts);
+    var ansIdx = opts.indexOf(correctLabel);
+    if (ansIdx === -1) ansIdx = 2;
+    var qEn = 'Statements: '+t.st[0]+' '+t.st[1]+' Which conclusion(s) follow?';
+    var qHi = 'कथन: '+t.st[0]+' '+t.st[1]+' कौन-सा/से निष्कर्ष अनुसरण करता/करते हैं?';
+    var expEn = '🔍 Syllogism: '+t.st[0]+' and '+t.st[1]+' → '+correctLabel+'. ✅ Answer: '+correctLabel;
+    var expHi = '🔍 तर्कशास्त्र: '+t.st[0]+' और '+t.st[1]+' → '+correctLabel+'. ✅ उत्तर: '+correctLabel;
+    return { qEn:qEn, qHi:qHi, opts:opts, answer:ansIdx, type:'Syllogism', expEn:expEn, expHi:expHi };
+}
+
+// ---- 4. VENN DIAGRAM ----
+function generateVenn() {
+    var total = Math.floor(Math.random() * 100) + 80;
+    var A = Math.floor(Math.random() * (total - 20)) + 30;
+    var B = Math.floor(Math.random() * (total - 20)) + 30;
+    var both = Math.floor(Math.random() * Math.min(A, B, 40)) + 1;
+    var neither = total - (A + B - both);
+    if (neither < 0) return generateVenn();
+    var correct = neither;
+    var opts = [String(correct), String(correct + 10), String(correct - 5), String(correct + 15)];
+    opts = shuffleArray(opts);
+    var ansIdx = opts.indexOf(String(correct));
+    var qEn = 'Survey of '+total+': '+A+' like X, '+B+' like Y, '+both+' both. How many like neither?';
+    var qHi = total+' के सर्वेक्षण: '+A+' X पसंद, '+B+' Y पसंद, '+both+' दोनों। कितने कोई नहीं?';
+    var expEn = '🔍 Neither = Total - (A+B-Both) = '+total+' - ('+A+'+'+B+'-'+both+') = '+correct+'. ✅ Answer: '+correct;
+    var expHi = '🔍 कोई नहीं = कुल - (A+B-दोनों) = '+total+' - ('+A+'+'+B+'-'+both+') = '+correct+'. ✅ उत्तर: '+correct;
+    return { qEn:qEn, qHi:qHi, opts:opts, answer:ansIdx, type:'Venn Diagram', expEn:expEn, expHi:expHi };
+}
+
+// ---- 5. RANKING ----
+function generateRanking() {
+    var total = Math.floor(Math.random() * 40) + 30;
+    var L = Math.floor(Math.random() * (total - 5)) + 5;
+    var R = total - L + 1;
+    var person = String.fromCharCode(65 + Math.floor(Math.random() * 5));
+    var correct = R;
+    var opts = [String(correct), String(correct + 2), String(correct - 1), String(correct + 5)];
+    opts = shuffleArray(opts);
+    var ansIdx = opts.indexOf(String(correct));
+    var qEn = 'Row of '+total+', '+person+' is '+L+'th from left. Rank from right?';
+    var qHi = total+' की पंक्ति, '+person+' बाएँ से '+L+'वाँ। दाएँ से रैंक?';
+    var expEn = '🔍 R = Total - L + 1 = '+total+' - '+L+' + 1 = '+R+'. ✅ Answer: '+R;
+    var expHi = '🔍 R = कुल - L + 1 = '+total+' - '+L+' + 1 = '+R+'. ✅ उत्तर: '+R;
+    return { qEn:qEn, qHi:qHi, opts:opts, answer:ansIdx, type:'Ranking', expEn:expEn, expHi:expHi };
+}
+
+// ---- 6. CALENDAR ----
+function generateCalendar() {
+    var year = Math.floor(Math.random() * 50) + 2000;
+    var month = Math.floor(Math.random() * 12) + 1;
+    var day = Math.floor(Math.random() * 28) + 1;
+    var d = new Date(year, month - 1, day);
+    var correct = days[d.getDay()];
+    var opts = [correct];
+    var pool = days.slice(0);
+    for (var i = 0; i < pool.length && opts.length < 4; i++) {
+        if (pool[i] !== correct && opts.indexOf(pool[i]) === -1) opts.push(pool[i]);
+    }
+    opts = shuffleArray(opts);
+    var ansIdx = opts.indexOf(correct);
+    var qEn = 'Day on '+day+'/'+month+'/'+year+'?';
+    var qHi = day+'/'+month+'/'+year+' को कौन-सा दिन?';
+    var expEn = '🔍 Calendar: '+day+'/'+month+'/'+year+' was '+correct+'. ✅ Answer: '+correct;
+    var expHi = '🔍 कैलेंडर: '+day+'/'+month+'/'+year+' को '+correct+' था। ✅ उत्तर: '+correct;
+    return { qEn:qEn, qHi:qHi, opts:opts, answer:ansIdx, type:'Calendar', expEn:expEn, expHi:expHi };
+}
+
+// ---- 7. NON-VERBAL ----
+function generateNonVerbal() {
+    var count = Math.floor(Math.random() * 4) + 3;
+    var seq = [];
+    for (var i = 0; i < count; i++) seq.push(shapeSymbols[Math.floor(Math.random() * shapeSymbols.length)]);
+    var original = seq.join(' ');
+    var rev = [];
+    for (var i = seq.length - 1; i >= 0; i--) rev.push(seq[i]);
+    var mirror = rev.join(' ');
+    var qEn = 'Mirror image of: '+original;
+    var qHi = 'दर्पण प्रतिबिम्ब: '+original;
+    var opts = [mirror];
+    for (var a = 0; a < 20 && opts.length < 4; a++) {
+        var sh = shuffleArray(seq);
+        var cand = sh.join(' ');
+        if (cand !== mirror && opts.indexOf(cand) === -1) opts.push(cand);
+    }
+    while (opts.length < 4) {
+        var f = seq.slice(0, count-1).join(' ') + ' ' + seq[0];
+        if (opts.indexOf(f) === -1) opts.push(f);
+        else opts.push(seq.join(' ') + ' ★');
+    }
+    opts = shuffleArray(opts);
+    var ansIdx = opts.indexOf(mirror);
+    var expEn = '🔍 Mirror: Reverse order. Original: '+original+' → Mirror: '+mirror+'. ✅ Answer: '+mirror;
+    var expHi = '🔍 दर्पण: क्रम उलटें। मूल: '+original+' → दर्पण: '+mirror+'. ✅ उत्तर: '+mirror;
+    return { qEn:qEn, qHi:qHi, opts:opts, answer:ansIdx, type:'Non-Verbal', expEn:expEn, expHi:expHi };
+}
+
+// ---- 8. PUZZLE ----
+function generatePuzzle() {
+    var people = shuffleArray(maleNames.concat(femaleNames)).slice(0, Math.floor(Math.random() * 3) + 4);
+    var arr = shuffleArray(people);
+    var correct = arr[0];
+    var opts = shuffleArray(people);
+    var ansIdx = opts.indexOf(correct);
+    var qEn = 'Row: '+arr.join(', ')+'. Who is at left end?';
+    var qHi = 'पंक्ति: '+arr.join(', ')+'. बाएँ छोर पर कौन?';
+    var expEn = '🔍 Leftmost is '+correct+'. ✅ Answer: '+correct;
+    var expHi = '🔍 सबसे बाएँ '+correct+' है। ✅ उत्तर: '+correct;
+    return { qEn:qEn, qHi:qHi, opts:opts, answer:ansIdx, type:'Puzzle', expEn:expEn, expHi:expHi };
+}
+
+// ---- 9. MIXED ----
+function generateMixed() {
+    var gens = [generateBlood, generateDirection, generateSyllogism, generateVenn, generateRanking, generateCalendar, generateNonVerbal, generatePuzzle];
+    var g = gens[Math.floor(Math.random() * gens.length)];
+    var q = g();
+    q.type = 'Mixed (' + q.type + ')';
+    return q;
+}
+
+// ---- TOPIC MAP ----
+var topicGenerators = {
+    'blood': generateBlood,
+    'direction': generateDirection,
+    'syllogism': generateSyllogism,
+    'venn': generateVenn,
+    'ranking': generateRanking,
+    'calendar': generateCalendar,
+    'nonverbal': generateNonVerbal,
+    'puzzle': generatePuzzle,
+    'mixed': generateMixed
+};
+
+// ================================================================
+//  GENERATE ALL QUESTIONS (510 per topic)
+// ================================================================
+function generateAllQuestions() {
+    allQuestions = [];
+    for (var t in topicGenerators) {
+        var gen = topicGenerators[t];
+        var count = 0;
+        var attempts = 0;
+        while (count < 510 && attempts < 10000) {
+            attempts++;
+            var q = gen();
+            // check duplicate (simple: same question text and type)
+            var dup = false;
+            for (var k = 0; k < allQuestions.length; k++) {
+                if (allQuestions[k].qEn === q.qEn && allQuestions[k].type === q.type) {
+                    dup = true;
+                    break;
+                }
+            }
+            if (!dup) {
+                allQuestions.push(q);
+                count++;
+            }
+        }
+    }
+    allQuestions = shuffleArray(allQuestions);
+}
+
+generateAllQuestions();
+
+// ================================================================
+//  RENDER ENGINE
+// ================================================================
+var container = document.getElementById('questionContainer');
+var searchBox = document.getElementById('searchBox');
+var filterBox = document.getElementById('filterBox');
+var attemptText = document.getElementById('attemptText');
+var scoreText = document.getElementById('scoreText');
+var progressFill = document.getElementById('progressFill');
+var topicNav = document.getElementById('topicNav');
+var topicCount = document.getElementById('topicCount');
+
+// Build topic navigation
+var navHtml = '<button class="active" data-topic="all" onclick="switchTopic(\'all\')">📚 All Topics</button>';
+for (var i = 0; i < topicList.length; i++) {
+    navHtml += '<button data-topic="'+topicList[i].id+'" onclick="switchTopic(\''+topicList[i].id+'\')">'+topicList[i].label+'</button>';
+}
+topicNav.innerHTML = navHtml;
+
+// Build filter options (based on types present)
+var typeSet = {};
+for (var i = 0; i < allQuestions.length; i++) {
+    var t = allQuestions[i].type;
+    if (t.indexOf('Mixed') !== -1) t = 'Mixed';
+    typeSet[t] = true;
+}
+var filterHtml = '<option value="all">All Types</option>';
+for (var key in typeSet) {
+    filterHtml += '<option value="'+key+'">'+key+'</option>';
+}
+filterBox.innerHTML = filterHtml;
+
+var currentTopicFilter = 'all';
+
+function switchTopic(topic) {
+    currentTopicFilter = topic;
+    var btns = topicNav.querySelectorAll('button');
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].className = (btns[i].getAttribute('data-topic') === topic) ? 'active' : '';
+    }
+    var label = 'All';
+    for (var i = 0; i < topicList.length; i++) {
+        if (topicList[i].id === topic) label = topicList[i].label;
+    }
+    topicCount.textContent = 'Topic: ' + label;
+    renderQuestions();
+}
+
+function renderQuestions() {
+    var keyword = searchBox.value.toLowerCase().trim();
+    var selectedType = filterBox.value;
+    var html = '';
+    var filtered = [];
+
+    for (var idx = 0; idx < allQuestions.length; idx++) {
+        var q = allQuestions[idx];
+        var qType = q.type;
+        if (qType.indexOf('Mixed') !== -1) qType = 'Mixed';
+
+        // Topic filter
+        if (currentTopicFilter !== 'all') {
+            var topicMap = {
+                'blood':'Blood Relations','direction':'Direction','syllogism':'Syllogism',
+                'venn':'Venn Diagram','ranking':'Ranking','calendar':'Calendar',
+                'nonverbal':'Non-Verbal','puzzle':'Puzzle','mixed':'Mixed'
+            };
+            var expected = topicMap[currentTopicFilter] || '';
+            if (q.type.indexOf(expected) === -1 && q.type.indexOf('Mixed') === -1) continue;
+        }
+        // Type filter
+        if (selectedType !== 'all' && qType !== selectedType) continue;
+
+        var qText = (currentLang === 'en') ? q.qEn : q.qHi;
+        var opts = q.opts;
+        var exp = (currentLang === 'en') ? q.expEn : q.expHi;
+        var fullText = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && fullText.indexOf(keyword) === -1) continue;
+
+        filtered.push({q:q, idx:idx, qText:qText, opts:opts, exp:exp});
+    }
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<p style="text-align:center;color:#6b7280;padding:30px;">No questions match your filters.</p>';
+        updateProgress();
+        return;
+    }
+
+    for (var f = 0; f < filtered.length; f++) {
+        var item = filtered[f];
+        var q = item.q;
+        var idx = item.idx;
+        var qText = item.qText;
+        var opts = item.opts;
+        var exp = item.exp;
+
+        var optHtml = '';
+        for (var oi = 0; oi < opts.length; oi++) {
+            var label = String.fromCharCode(65 + oi);
+            optHtml += '<button class="option" onclick="checkAnswer('+idx+','+oi+',this)">('+label+') '+opts[oi]+'</button>';
+        }
+        var expTitle = (currentLang === 'en') ? '💡 Detailed Explanation' : '💡 विस्तृत व्याख्या';
+        html += '<div class="q-card" id="qcard-'+idx+'">';
+        html += '<div class="q-top"><span>Q'+(idx+1)+'</span><span>'+q.type+'</span></div>';
+        html += '<div class="q-text">'+qText+'</div>';
+        html += '<div class="options">'+optHtml+'</div>';
+        html += '<div class="result" id="result-'+idx+'"></div>';
+        html += '<div class="explanation" id="explanation-'+idx+'"><strong>'+expTitle+'</strong><br>'+exp+'</div>';
+        html += '</div>';
+    }
+
+    container.innerHTML = html;
+    updateProgress();
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attemptedSet.has(qIdx)) return;
+    attemptedSet.add(qIdx);
+    var q = allQuestions[qIdx];
+    var card = document.getElementById('qcard-'+qIdx);
+    if (!card) return;
+    var btns = card.querySelectorAll('.option');
+    for (var i = 0; i < btns.length; i++) {
+        if (i === q.answer) btns[i].classList.add('correct');
+    }
+    var res = document.getElementById('result-'+qIdx);
+    if (selIdx === q.answer) {
+        score++;
+        res.innerHTML = (currentLang === 'en') ? '✅ Correct!' : '✅ सही!';
+        res.style.color = '#16a34a';
+    } else {
+        btn.classList.add('wrong');
+        res.innerHTML = (currentLang === 'en') ? '❌ Incorrect. See explanation.' : '❌ गलत। व्याख्या देखें।';
+        res.style.color = '#dc2626';
+    }
+    var exp = document.getElementById('explanation-'+qIdx);
+    if (exp) exp.classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    var total = allQuestions.length;
+    var done = attemptedSet.size;
+    attemptText.textContent = 'Attempted: '+done+' / '+total;
+    scoreText.textContent = 'Score: '+score;
+    var pct = (done / total) * 100;
+    progressFill.style.width = pct + '%';
+}
+
+function showAllExplanations() {
+    var exps = document.querySelectorAll('.explanation');
+    for (var i = 0; i < exps.length; i++) exps[i].classList.add('show');
+}
+
+function resetQuiz() {
+    attemptedSet.clear();
+    score = 0;
+    renderQuestions();
+    updateProgress();
+    window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleLang() {
+    currentLang = (currentLang === 'en') ? 'hi' : 'en';
+    var btn = document.querySelector('.lang-btn');
+    btn.textContent = (currentLang === 'en') ? '🇮🇳 हिंदी' : '🇬🇧 English';
+    renderQuestions();
+}
+
+searchBox.addEventListener('input', renderQuestions);
+filterBox.addEventListener('change', renderQuestions);
+
+// ---- INIT ----
+renderQuestions();
+</script>
+</body>
+</html>

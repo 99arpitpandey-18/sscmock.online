@@ -1,0 +1,1718 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M2-R5 Chapter 6 | Responsive Web Design | NIELIT O Level Notes</title>
+
+<meta name="description"
+content="NIELIT O Level M2-R5 Chapter 6 Responsive Web Design complete bilingual Hindi English notes with CSS media queries, responsive layouts, Flexbox, Grid, viewport and practical examples.">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:#edf6ff;
+    min-height:100vh;
+    overflow-x:hidden;
+    transition:.4s;
+}
+
+/* ================= THEMES ================= */
+
+body.theme-cyan{
+    --primary:#36dcff;
+    --secondary:#6675ff;
+    --accent:#00f5a0;
+    --bg1:#06111f;
+    --bg2:#0c1829;
+    --card:rgba(15,34,56,.82);
+}
+
+body.theme-purple{
+    --primary:#b06cff;
+    --secondary:#ff5fcf;
+    --accent:#6ee7ff;
+    --bg1:#10091d;
+    --bg2:#1b102d;
+    --card:rgba(35,20,55,.84);
+}
+
+body.theme-green{
+    --primary:#39e58c;
+    --secondary:#00b8d9;
+    --accent:#d6ff62;
+    --bg1:#061713;
+    --bg2:#0c2520;
+    --card:rgba(13,43,35,.84);
+}
+
+body.theme-orange{
+    --primary:#ffad42;
+    --secondary:#ff5c77;
+    --accent:#ffe66d;
+    --bg1:#1a0d08;
+    --bg2:#29150d;
+    --card:rgba(52,29,18,.84);
+}
+
+body{
+    background:
+        radial-gradient(circle at 10% 10%,color-mix(in srgb,var(--primary) 12%,transparent),transparent 30%),
+        radial-gradient(circle at 90% 20%,color-mix(in srgb,var(--secondary) 15%,transparent),transparent 30%),
+        linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg1));
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        radial-gradient(circle,var(--primary) 1px,transparent 1px),
+        radial-gradient(circle,var(--secondary) 1px,transparent 1px);
+    background-size:130px 130px,190px 190px;
+    opacity:.13;
+    z-index:-1;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    padding:13px 5%;
+    background:rgba(5,12,23,.82);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,
+        color-mix(in srgb,var(--primary) 22%,transparent),
+        color-mix(in srgb,var(--secondary) 18%,transparent));
+    border:1px solid color-mix(in srgb,var(--primary) 40%,transparent);
+    color:var(--primary);
+    font-weight:900;
+    box-shadow:0 0 25px color-mix(in srgb,var(--primary) 15%,transparent);
+}
+
+.brand-title{
+    font-weight:800;
+    font-size:17px;
+}
+
+.brand-sub{
+    color:#8293aa;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.back-btn,
+.theme-btn{
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(255,255,255,.04);
+    color:#dcecff;
+    padding:9px 13px;
+    border-radius:9px;
+    text-decoration:none;
+    cursor:pointer;
+    font-size:12px;
+    transition:.3s;
+}
+
+.back-btn:hover,
+.theme-btn:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+    transform:translateY(-2px);
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:42px 5% 80px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    position:relative;
+    padding:42px;
+    border-radius:25px;
+    background:
+        linear-gradient(135deg,
+        rgba(18,38,63,.92),
+        rgba(8,21,37,.78));
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
+    overflow:hidden;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:170px;
+    height:3px;
+    background:var(--primary);
+    box-shadow:0 0 25px var(--primary);
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:280px;
+    height:280px;
+    right:-120px;
+    top:-120px;
+    background:color-mix(in srgb,var(--primary) 10%,transparent);
+    filter:blur(55px);
+    border-radius:50%;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+    padding:7px 13px;
+    border-radius:30px;
+    color:var(--primary);
+    background:color-mix(in srgb,var(--primary) 8%,transparent);
+    border:1px solid color-mix(in srgb,var(--primary) 20%,transparent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,48px);
+    margin-bottom:12px;
+    background:linear-gradient(90deg,#fff,var(--primary),var(--secondary));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero h2{
+    color:#9dafc4;
+    font-size:18px;
+    font-weight:500;
+    margin-bottom:15px;
+}
+
+.hero p{
+    max-width:850px;
+    color:#8ea0b7;
+    font-size:14px;
+    line-height:1.8;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+    margin-top:27px;
+}
+
+.stat{
+    padding:17px;
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat strong{
+    display:block;
+    color:var(--primary);
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:#788ba4;
+    font-size:11px;
+}
+
+/* ================= SECTION ================= */
+
+.section-title{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin:40px 0 18px;
+}
+
+.section-icon{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:color-mix(in srgb,var(--primary) 9%,transparent);
+    border:1px solid color-mix(in srgb,var(--primary) 18%,transparent);
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:#71839c;
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* ================= CONTENT CARD ================= */
+
+.content-card{
+    padding:27px;
+    border-radius:20px;
+    background:var(--card);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 15px 45px rgba(0,0,0,.16);
+}
+
+.content-card h3{
+    color:var(--primary);
+    font-size:18px;
+    margin-bottom:13px;
+}
+
+.content-card p{
+    color:#a7b5c7;
+    line-height:1.85;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.hindi{
+    color:#d5deea !important;
+}
+
+/* ================= TWO COLUMN ================= */
+
+.two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+/* ================= INFO CARDS ================= */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.info-card{
+    padding:22px;
+    border-radius:17px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+    transition:.3s;
+}
+
+.info-card:hover{
+    transform:translateY(-5px);
+    border-color:color-mix(in srgb,var(--primary) 35%,transparent);
+}
+
+.info-icon{
+    font-size:28px;
+    margin-bottom:12px;
+}
+
+.info-card h3{
+    font-size:16px;
+    margin-bottom:8px;
+}
+
+.info-card p{
+    color:#8294aa;
+    font-size:12px;
+    line-height:1.7;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th,td{
+    padding:13px;
+    text-align:left;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    font-size:12px;
+}
+
+th{
+    color:var(--primary);
+    background:rgba(255,255,255,.035);
+}
+
+td{
+    color:#aab8ca;
+}
+
+/* ================= CODE ================= */
+
+.code-box{
+    margin-top:15px;
+    background:#050a11;
+    border:1px solid rgba(255,255,255,.08);
+    border-left:3px solid var(--primary);
+    border-radius:12px;
+    padding:18px;
+    overflow:auto;
+}
+
+pre{
+    color:#ccecff;
+    font-family:Consolas,monospace;
+    font-size:12px;
+    line-height:1.7;
+}
+
+/* ================= TIP ================= */
+
+.tip{
+    margin-top:16px;
+    padding:16px;
+    border-radius:12px;
+    background:color-mix(in srgb,var(--primary) 7%,transparent);
+    border:1px solid color-mix(in srgb,var(--primary) 16%,transparent);
+}
+
+.tip strong{
+    color:var(--primary);
+}
+
+.tip p{
+    margin:7px 0 0;
+}
+
+/* ================= LIST ================= */
+
+.custom-list{
+    list-style:none;
+    margin-top:10px;
+}
+
+.custom-list li{
+    padding:9px 0;
+    color:#a7b6c8;
+    font-size:13px;
+    border-bottom:1px solid rgba(255,255,255,.045);
+}
+
+.custom-list li::before{
+    content:"✓";
+    color:var(--primary);
+    font-weight:bold;
+    margin-right:9px;
+}
+
+/* ================= BOX MODEL ================= */
+
+.model{
+    display:grid;
+    place-items:center;
+    margin:20px auto;
+    max-width:620px;
+}
+
+.margin-box{
+    width:100%;
+    padding:25px;
+    background:rgba(255,170,0,.08);
+    border:2px dashed rgba(255,180,50,.5);
+    text-align:center;
+}
+
+.border-box{
+    padding:22px;
+    background:rgba(70,150,255,.08);
+    border:3px solid rgba(70,180,255,.55);
+}
+
+.padding-box{
+    padding:20px;
+    background:rgba(80,230,150,.08);
+    border:2px dashed rgba(80,230,150,.5);
+}
+
+.content-box{
+    padding:20px;
+    background:rgba(190,100,255,.10);
+    border:1px solid rgba(190,100,255,.45);
+    color:#fff;
+}
+
+/* ================= QUICK REVISION ================= */
+
+.revision-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.revision{
+    padding:18px;
+    border-radius:15px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.revision-number{
+    display:inline-flex;
+    width:30px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:color-mix(in srgb,var(--primary) 10%,transparent);
+    color:var(--primary);
+    font-weight:800;
+    margin-bottom:10px;
+}
+
+.revision h4{
+    margin-bottom:6px;
+    font-size:14px;
+}
+
+.revision p{
+    color:#8294aa;
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    margin-top:55px;
+    padding:25px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.07);
+    color:#63758e;
+    font-size:11px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:950px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .info-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .header-inner{
+        flex-wrap:wrap;
+    }
+
+    .container{
+        padding:30px 4% 60px;
+    }
+
+    .hero{
+        padding:27px 20px;
+    }
+
+    .two-col,
+    .info-grid,
+    .revision-grid,
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .back-btn,
+    .theme-btn{
+        padding:8px 10px;
+        font-size:10px;
+    }
+}
+</style>
+</head>
+
+<body class="theme-cyan">
+
+<header class="header">
+
+<div class="header-inner">
+
+<div class="logo-area">
+<div class="logo">M2</div>
+
+<div>
+<div class="brand-title">M2 Study Zone</div>
+<div class="brand-sub">Web Designing & Publishing • Chapter 06</div>
+</div>
+</div>
+
+<div class="header-actions">
+
+<button class="theme-btn" onclick="changeTheme()">
+🎨 Theme
+</button>
+
+<a href="m2.html" class="back-btn">
+← M2 Home
+</a>
+
+</div>
+
+</div>
+</header>
+
+
+<main class="container">
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="badge">
+✦ NIELIT O LEVEL • M2-R5 • CHAPTER 06
+</div>
+
+<h1>
+Responsive Web Design
+</h1>
+
+<h2>
+Responsive Web Design — उत्तरदायी वेब डिजाइन
+</h2>
+
+<p>
+Learn how to design websites that automatically adjust their
+layout, size, images and content according to different screen
+sizes such as mobile phones, tablets, laptops and desktops.
+</p>
+
+<p class="hindi">
+Responsive Web Design का उद्देश्य ऐसी website बनाना है जो
+Mobile, Tablet, Laptop और Desktop सभी devices पर सही तरीके
+से दिखाई दे और आसानी से उपयोग की जा सके।
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<strong>01</strong>
+<span>Responsive Layout</span>
+</div>
+
+<div class="stat">
+<strong>02</strong>
+<span>Media Queries</span>
+</div>
+
+<div class="stat">
+<strong>03</strong>
+<span>Flexbox & Grid</span>
+</div>
+
+<div class="stat">
+<strong>04</strong>
+<span>Mobile First</span>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- 1 -->
+
+<div class="section-title">
+
+<div class="section-icon">📖</div>
+
+<div>
+<h2>1. What is Responsive Web Design?</h2>
+<p>Responsive design का basic concept</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<h3>English</h3>
+
+<p>
+Responsive Web Design (RWD) is an approach to web development
+in which a website automatically adapts its layout and content
+according to the screen size, resolution and orientation of the
+device being used.
+</p>
+
+<h3>हिन्दी</h3>
+
+<p class="hindi">
+Responsive Web Design एक ऐसी तकनीक है जिसमें website का
+layout और content user के device की screen के अनुसार
+automatically adjust होता है।
+</p>
+
+<div class="tip">
+
+<strong>💡 Exam Point</strong>
+
+<p>
+Responsive website का main objective है —
+<strong>different screen sizes पर बेहतर user experience देना।</strong>
+</p>
+
+</div>
+
+</section>
+
+
+<!-- 2 -->
+
+<div class="section-title">
+
+<div class="section-icon">📱</div>
+
+<div>
+<h2>2. Why Responsive Design?</h2>
+<p>Responsive websites की आवश्यकता क्यों है?</p>
+</div>
+
+</div>
+
+<section class="info-grid">
+
+<div class="info-card">
+<div class="info-icon">📱</div>
+<h3>Mobile Support</h3>
+<p>
+Website mobile screen के अनुसार अपना layout adjust कर सकती है।
+</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">💻</div>
+<h3>Desktop Support</h3>
+<p>
+Large screens पर content का बेहतर उपयोग किया जा सकता है।
+</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">⚡</div>
+<h3>Better UX</h3>
+<p>
+User को zoom और unnecessary horizontal scrolling कम करनी पड़ती है।
+</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">🔧</div>
+<h3>Easy Maintenance</h3>
+<p>
+अलग-अलग devices के लिए अलग website बनाने की जरूरत कम होती है।
+</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">🌐</div>
+<h3>Modern Websites</h3>
+<p>
+आज की अधिकांश websites responsive approach का उपयोग करती हैं।
+</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">🎯</div>
+<h3>Accessibility</h3>
+<p>
+Content को विभिन्न screen sizes पर आसानी से access किया जा सकता है।
+</p>
+</div>
+
+</section>
+
+
+<!-- 3 -->
+
+<div class="section-title">
+
+<div class="section-icon">👀</div>
+
+<div>
+<h2>3. Responsive vs Non-Responsive</h2>
+<p>Difference समझें</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Responsive Website</th>
+<th>Non-Responsive Website</th>
+</tr>
+
+<tr>
+<td>Screen size के अनुसार layout बदलता है।</td>
+<td>Layout generally fixed हो सकता है।</td>
+</tr>
+
+<tr>
+<td>Mobile पर आसानी से usable होती है।</td>
+<td>Mobile पर horizontal scrolling हो सकती है।</td>
+</tr>
+
+<tr>
+<td>Flexible images और layouts इस्तेमाल होते हैं।</td>
+<td>Fixed dimensions ज्यादा common होते हैं।</td>
+</tr>
+
+<tr>
+<td>CSS media queries का उपयोग हो सकता है।</td>
+<td>Media queries जरूरी नहीं होतीं।</td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- 4 -->
+
+<div class="section-title">
+
+<div class="section-icon">🔭</div>
+
+<div>
+<h2>4. Viewport</h2>
+<p>Responsive design का important concept</p>
+</div>
+
+</div>
+
+<section class="two-col">
+
+<div class="content-card">
+
+<h3>English</h3>
+
+<p>
+The viewport is the visible area of a web page on the user's
+device screen.
+</p>
+
+<p>
+For responsive websites, the viewport meta tag is commonly
+placed inside the HTML head section.
+</p>
+
+</div>
+
+<div class="content-card">
+
+<h3>हिन्दी</h3>
+
+<p class="hindi">
+Viewport browser window का वह visible area है जिसमें webpage
+दिखाई देता है।
+</p>
+
+<p class="hindi">
+Responsive websites में viewport meta tag बहुत important है।
+</p>
+
+</div>
+
+</section>
+
+<div class="code-box">
+
+<pre>&lt;meta name="viewport"
+content="width=device-width, initial-scale=1.0"&gt;</pre>
+
+</div>
+
+<div class="tip">
+
+<strong>🎯 याद रखें</strong>
+
+<p>
+<strong>width=device-width</strong> → viewport की width को device की width के बराबर करता है।
+<br>
+<strong>initial-scale=1.0</strong> → initial zoom level निर्धारित करता है।
+</p>
+
+</div>
+
+
+<!-- 5 -->
+
+<div class="section-title">
+
+<div class="section-icon">📐</div>
+
+<div>
+<h2>5. Flexible Layout</h2>
+<p>Fixed और flexible dimensions</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<h3>English</h3>
+
+<p>
+Responsive layouts generally use flexible units such as
+percentage, em, rem, vw and vh instead of relying only on
+fixed pixel dimensions.
+</p>
+
+<h3>हिन्दी</h3>
+
+<p class="hindi">
+Responsive layout में केवल fixed px values पर निर्भर रहने के
+बजाय %, em, rem, vw और vh जैसी flexible units का उपयोग किया
+जा सकता है।
+</p>
+
+<div class="code-box">
+
+<pre>
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+img{
+    max-width:100%;
+    height:auto;
+}
+</pre>
+
+</div>
+
+</section>
+
+
+<!-- 6 -->
+
+<div class="section-title">
+
+<div class="section-icon">📱</div>
+
+<div>
+<h2>6. Media Queries</h2>
+<p>Responsive CSS का सबसे important topic</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<h3>English</h3>
+
+<p>
+CSS media queries allow developers to apply different CSS rules
+depending on conditions such as viewport width, height,
+orientation and other device characteristics.
+</p>
+
+<h3>हिन्दी</h3>
+
+<p class="hindi">
+Media Query CSS की ऐसी technique है जिससे हम अलग-अलग screen
+sizes के लिए अलग CSS rules apply कर सकते हैं।
+</p>
+
+<div class="code-box">
+
+<pre>
+@media (max-width: 768px){
+
+    .container{
+        width:95%;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+}
+</pre>
+
+</div>
+
+<div class="tip">
+
+<strong>🔥 Exam Trick</strong>
+
+<p>
+<strong>max-width</strong> → दी गई width से छोटी या बराबर screen पर rules लागू।
+<br>
+<strong>min-width</strong> → दी गई width से बड़ी या बराबर screen पर rules लागू।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- 7 -->
+
+<div class="section-title">
+
+<div class="section-icon">🧱</div>
+
+<div>
+<h2>7. Flexbox in Responsive Design</h2>
+<p>Flexible one-dimensional layout</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<h3>English</h3>
+
+<p>
+CSS Flexbox is a layout model designed for arranging elements
+in a row or column and distributing available space efficiently.
+</p>
+
+<h3>हिन्दी</h3>
+
+<p class="hindi">
+Flexbox एक CSS layout system है जिसका उपयोग elements को row या
+column में flexible तरीके से arrange करने के लिए किया जाता है।
+</p>
+
+<div class="code-box">
+
+<pre>
+.container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.card{
+    flex:1 1 250px;
+}
+</pre>
+
+</div>
+
+<ul class="custom-list">
+
+<li>display:flex</li>
+<li>flex-direction</li>
+<li>justify-content</li>
+<li>align-items</li>
+<li>flex-wrap</li>
+<li>gap</li>
+
+</ul>
+
+</section>
+
+
+<!-- 8 -->
+
+<div class="section-title">
+
+<div class="section-icon">▦</div>
+
+<div>
+<h2>8. CSS Grid</h2>
+<p>Two-dimensional responsive layout</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<h3>English</h3>
+
+<p>
+CSS Grid is a two-dimensional layout system that allows
+developers to create rows and columns.
+</p>
+
+<h3>हिन्दी</h3>
+
+<p class="hindi">
+CSS Grid एक two-dimensional layout system है जिसमें rows और
+columns दोनों को आसानी से control किया जा सकता है।
+</p>
+
+<div class="code-box">
+
+<pre>
+.cards{
+    display:grid;
+    grid-template-columns:
+    repeat(3,1fr);
+    gap:20px;
+}
+
+@media(max-width:768px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+}
+</pre>
+
+</div>
+
+</section>
+
+
+<!-- 9 -->
+
+<div class="section-title">
+
+<div class="section-icon">🖼️</div>
+
+<div>
+<h2>9. Responsive Images</h2>
+<p>Images को responsive कैसे बनाएं?</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<h3>Important CSS</h3>
+
+<div class="code-box">
+
+<pre>
+img{
+    max-width:100%;
+    height:auto;
+}
+</pre>
+
+</div>
+
+<p class="hindi">
+<strong>max-width:100%</strong> image को उसके parent container से
+बड़ा होने से रोकता है।
+</p>
+
+<p class="hindi">
+<strong>height:auto</strong> image का aspect ratio maintain करने
+में मदद करता है।
+</p>
+
+</section>
+
+
+<!-- 10 -->
+
+<div class="section-title">
+
+<div class="section-icon">📦</div>
+
+<div>
+<h2>10. Box Model & Responsive Layout</h2>
+<p>Margin, Border, Padding और Content</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<div class="model">
+
+<div class="margin-box">
+
+<strong>Margin</strong>
+
+<div class="border-box">
+
+<strong>Border</strong>
+
+<div class="padding-box">
+
+<strong>Padding</strong>
+
+<div class="content-box">
+
+Content
+
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+<p class="hindi">
+CSS Box Model में प्रत्येक element को Content, Padding, Border
+और Margin के रूप में समझा जाता है।
+</p>
+
+</section>
+
+
+<!-- 11 -->
+
+<div class="section-title">
+
+<div class="section-icon">📲</div>
+
+<div>
+<h2>11. Mobile First Design</h2>
+<p>Mobile-first approach</p>
+</div>
+
+</div>
+
+<section class="two-col">
+
+<div class="content-card">
+
+<h3>English</h3>
+
+<p>
+Mobile-first design means designing the basic experience for
+small screens first and then enhancing the layout for larger
+screens using media queries.
+</p>
+
+</div>
+
+<div class="content-card">
+
+<h3>हिन्दी</h3>
+
+<p class="hindi">
+Mobile-first approach में सबसे पहले छोटे screen size यानी
+mobile के लिए design बनाया जाता है। इसके बाद बड़ी screens के
+लिए media queries द्वारा layout enhance किया जाता है।
+</p>
+
+</div>
+
+</section>
+
+<div class="code-box">
+
+<pre>
+.card{
+    width:100%;
+}
+
+/* Larger screens */
+
+@media(min-width:768px){
+
+    .card{
+        width:48%;
+    }
+
+}
+</pre>
+
+</div>
+
+
+<!-- 12 -->
+
+<div class="section-title">
+
+<div class="section-icon">🧭</div>
+
+<div>
+<h2>12. Responsive Breakpoints</h2>
+<p>Different screen sizes के लिए CSS rules</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Device</th>
+<th>Example Breakpoint</th>
+<th>Typical Layout</th>
+</tr>
+
+<tr>
+<td>Mobile</td>
+<td>Up to 767px</td>
+<td>1 column</td>
+</tr>
+
+<tr>
+<td>Tablet</td>
+<td>768px – 1023px</td>
+<td>2 columns</td>
+</tr>
+
+<tr>
+<td>Desktop</td>
+<td>1024px+</td>
+<td>Multiple columns</td>
+</tr>
+
+</table>
+
+</div>
+
+<p class="hindi" style="margin-top:15px;">
+Note: ये example breakpoints हैं। Real projects में breakpoints
+content और design की जरूरत के अनुसार चुने जाते हैं।
+</p>
+
+</section>
+
+
+<!-- 13 -->
+
+<div class="section-title">
+
+<div class="section-icon">🛠️</div>
+
+<div>
+<h2>13. Complete Responsive Example</h2>
+<p>HTML + CSS practical</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<div class="code-box">
+
+<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta name="viewport"
+content="width=device-width, initial-scale=1.0"&gt;
+
+&lt;style&gt;
+
+body{
+    font-family:Arial;
+    margin:0;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:auto;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:
+    repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    padding:20px;
+    border:1px solid #ddd;
+}
+
+img{
+    max-width:100%;
+    height:auto;
+}
+
+@media(max-width:768px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+}
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;div class="container"&gt;
+
+    &lt;h1&gt;Responsive Website&lt;/h1&gt;
+
+    &lt;div class="cards"&gt;
+
+        &lt;div class="card"&gt;Card 1&lt;/div&gt;
+        &lt;div class="card"&gt;Card 2&lt;/div&gt;
+        &lt;div class="card"&gt;Card 3&lt;/div&gt;
+
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+</div>
+
+</section>
+
+
+<!-- 14 -->
+
+<div class="section-title">
+
+<div class="section-icon">⚠️</div>
+
+<div>
+<h2>14. Common Responsive Design Problems</h2>
+<p>Important mistakes</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<ul class="custom-list">
+
+<li>Viewport meta tag भूल जाना</li>
+
+<li>बहुत ज्यादा fixed width का उपयोग करना</li>
+
+<li>Images को responsive न बनाना</li>
+
+<li>Mobile screen पर horizontal scrolling आने देना</li>
+
+<li>Text का बहुत छोटा होना</li>
+
+<li>Buttons को बहुत छोटा रखना</li>
+
+<li>केवल desktop पर website test करना</li>
+
+</ul>
+
+</section>
+
+
+<!-- 15 -->
+
+<div class="section-title">
+
+<div class="section-icon">💻</div>
+
+<div>
+<h2>15. Practical Tasks</h2>
+<p>Chapter 6 practical preparation</p>
+</div>
+
+</div>
+
+<section class="info-grid">
+
+<div class="info-card">
+<div class="info-icon">1️⃣</div>
+<h3>Responsive Page</h3>
+<p>एक basic responsive webpage बनाइए।</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">2️⃣</div>
+<h3>Media Query</h3>
+<p>Mobile और desktop के लिए अलग layout बनाइए।</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">3️⃣</div>
+<h3>Flexbox</h3>
+<p>Responsive navigation या card layout बनाइए।</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">4️⃣</div>
+<h3>Grid</h3>
+<p>3-column desktop और 1-column mobile layout बनाइए।</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">5️⃣</div>
+<h3>Image</h3>
+<p>Responsive image का प्रयोग कीजिए।</p>
+</div>
+
+<div class="info-card">
+<div class="info-icon">6️⃣</div>
+<h3>Testing</h3>
+<p>Website को अलग-अलग screen sizes पर test करें।</p>
+</div>
+
+</section>
+
+
+<!-- 16 -->
+
+<div class="section-title">
+
+<div class="section-icon">🧠</div>
+
+<div>
+<h2>16. Quick Revision</h2>
+<p>Exam से पहले तेजी से revise करें</p>
+</div>
+
+</div>
+
+<section class="revision-grid">
+
+<div class="revision">
+<div class="revision-number">01</div>
+<h4>RWD</h4>
+<p>Website को different screen sizes के अनुसार adapt करता है।</p>
+</div>
+
+<div class="revision">
+<div class="revision-number">02</div>
+<h4>Viewport</h4>
+<p>Browser में webpage का visible area।</p>
+</div>
+
+<div class="revision">
+<div class="revision-number">03</div>
+<h4>Media Query</h4>
+<p>Different conditions के अनुसार CSS rules apply करती है।</p>
+</div>
+
+<div class="revision">
+<div class="revision-number">04</div>
+<h4>Flexbox</h4>
+<p>Flexible one-dimensional layout system।</p>
+</div>
+
+<div class="revision">
+<div class="revision-number">05</div>
+<h4>Grid</h4>
+<p>Rows और columns वाला two-dimensional layout system।</p>
+</div>
+
+<div class="revision">
+<div class="revision-number">06</div>
+<h4>Mobile First</h4>
+<p>पहले small screen design, फिर larger screens enhancement।</p>
+</div>
+
+<div class="revision">
+<div class="revision-number">07</div>
+<h4>max-width</h4>
+<p>एक maximum width condition निर्धारित करता है।</p>
+</div>
+
+<div class="revision">
+<div class="revision-number">08</div>
+<h4>Responsive Image</h4>
+<p>max-width:100% और height:auto commonly used हैं।</p>
+</div>
+
+</section>
+
+
+<!-- 17 -->
+
+<div class="section-title">
+
+<div class="section-icon">🎯</div>
+
+<div>
+<h2>17. Exam Focus</h2>
+<p>NIELIT preparation के लिए important points</p>
+</div>
+
+</div>
+
+<section class="content-card">
+
+<ul class="custom-list">
+
+<li>Responsive Web Design की definition</li>
+
+<li>Responsive और non-responsive website में difference</li>
+
+<li>Viewport meta tag</li>
+
+<li>Media Query syntax</li>
+
+<li>min-width और max-width</li>
+
+<li>Flexible units</li>
+
+<li>Flexbox का basic concept</li>
+
+<li>CSS Grid का basic concept</li>
+
+<li>Responsive images</li>
+
+<li>Mobile-first approach</li>
+
+<li>Responsive breakpoints</li>
+
+<li>Practical responsive webpage creation</li>
+
+</ul>
+
+<div class="tip">
+
+<strong>🏆 Smart Revision Strategy</strong>
+
+<p>
+सबसे पहले <strong>Viewport → Media Query → Flexbox → Grid →
+Responsive Images → Mobile First</strong> इस order में revise करें।
+</p>
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<p>
+M2-R5 • Chapter 06 • Responsive Web Design
+</p>
+
+<p style="margin-top:7px;">
+Bilingual Hindi + English Study Notes • NIELIT O Level
+</p>
+
+</footer>
+
+</main>
+
+
+<script>
+
+const themes=[
+    "theme-cyan",
+    "theme-purple",
+    "theme-green",
+    "theme-orange"
+];
+
+let current=0;
+
+function changeTheme(){
+
+    document.body.classList.remove(themes[current]);
+
+    current=(current+1)%themes.length;
+
+    document.body.classList.add(themes[current]);
+
+    localStorage.setItem("m2Theme",themes[current]);
+}
+
+const savedTheme=localStorage.getItem("m2Theme");
+
+if(savedTheme && themes.includes(savedTheme)){
+
+    document.body.classList.remove("theme-cyan");
+    document.body.classList.add(savedTheme);
+
+    current=themes.indexOf(savedTheme);
+}
+
+</script>
+
+</body>
+</html>
+ 

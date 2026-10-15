@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC Selection Post (Graduation) Similar Paper - 28 Jul 2025 S3</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;color:#1f2937;line-height:1.55}
+.container{max-width:1000px;margin:auto;padding:20px}
+.header{background:linear-gradient(135deg,#172554,#2563eb);color:#fff;padding:28px 24px;border-radius:18px;margin-bottom:18px;box-shadow:0 10px 25px #0002}
+.header h1{font-size:26px;margin-bottom:6px}
+.header p{opacity:.9}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+button{border:0;border-radius:10px;padding:11px 16px;cursor:pointer;font-weight:700}
+.primary{background:#2563eb;color:#fff}.secondary{background:#e5e7eb;color:#111827}
+.section{margin:24px 0 12px;font-size:21px;color:#1d4ed8;border-left:5px solid #2563eb;padding-left:12px}
+.card{background:#fff;border-radius:15px;padding:20px;margin:13px 0;box-shadow:0 4px 15px #0000000d;border:1px solid #e5e7eb}
+.q{font-size:17px;font-weight:700;margin-bottom:13px}
+.options{display:grid;gap:8px}
+.option{padding:9px 12px;border-radius:9px;background:#f8fafc;border:1px solid #e5e7eb}
+.answer-btn{margin-top:14px;background:#111827;color:#fff}
+.solution{display:none;margin-top:14px;padding:14px;background:#eff6ff;border-left:4px solid #2563eb;border-radius:8px}
+.solution strong{color:#1d4ed8}
+.passage{background:#f8fafc;border:1px solid #dbeafe;padding:14px;border-radius:10px;margin:12px 0;font-size:14px}
+@media(max-width:600px){.container{padding:10px}.header h1{font-size:21px}.card{padding:15px}.q{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>SSC Selection Post (Graduation) Similar Paper</h1>
+<p>Held on 28 Jul 2025 — Shift 3 | 100 Questions</p>
+</div>
+<div class="controls">
+<button class="primary" onclick="toggleAll(true)">Show All Answers</button>
+<button class="secondary" onclick="toggleAll(false)">Hide All Answers</button>
+</div>
+<div id="questions"></div>
+</div>
+
+<script>
+const passage1=`“Critical interpretation often begins with the assumption that a work’s meaning is anchored in the person who produced it, as if literature ultimately speaks through a single consciousness and the trace of a private intention. The view of literature we are taught to preserve is relentlessly centered on the author—on biography, psychology, and motive. Yet to assign a text an Author is to place a boundary around it, to supply it with a final meaning, and to seal its possibilities. This way of thinking emerges from rationalist and capitalist traditions that elevate the individual as the primary unit of history, granting coherence and authority to personal origin. In practice, however, writing dissolves origins: it unravels the singular voice, and language speaks—not the author.
+
+To set aside the Author is not to discard meaning, but to resist the tyranny of one authoritative meaning. The text becomes a field of plural readings where interpretation remains open-ended rather than fixed. The unity of a text is located not at its source but at its destination; it is the reader—not the author—who activates meaning. This shift transfers power from creator to interpreter, from intended message to the endless play of signs within the text.”`;
+
+const qs=[
+["Q1. If BREAD is coded as 35, then how is FLOUR coded?",["77","72","75","80"],"77","According to the supplied paper, the correct answer is (a) 77."],
+["Q2. Find the next letter: A, D, H, M, ?",["R","S","T","U"],"S","The supplied answer is (b) S."],
+["Q3. Choose the word that does NOT belong to the group.",["Brother","Sister","Cousin","Neighbor"],"Neighbor","Brother, Sister and Cousin are family relations; Neighbor is not. Hence (d)."],
+["Q4. 6 : 220 :: 5 : ?",["104","129","154","184"],"129","The supplied answer is (b) 129."],
+["Q5. How many meaningful English words can be formed from the letters of “STOP”, using each letter once?",["Four","Three","Two","More than four"],"More than four","The supplied answer is (d) More than four."],
+["Q6. If an employee repeatedly misses deadlines, what should a manager do?",["Ignore the issue","Warn immediately","Identify cause and guide","Terminate service"],"Identify cause and guide","The appropriate first managerial response is to identify the cause and guide the employee. Hence (c)."],
+["Q7. Identify the number that breaks the series: 5, 10, 17, 26, 38",["10","17","26","38"],"38","The supplied answer is (d) 38."],
+["Q8. Find the next term: 3, 6, 11, 18, ?",["25","27","29","31"],"27","Differences are 3, 5, 7, so the next difference is 9: 18 + 9 = 27. Hence (b)."],
+["Q9. A company finds a steady drop in customer satisfaction. What should it do first?",["Increase prices","Fire employees","Analyse customer feedback","Stop services"],"Analyse customer feedback","The first step should be to analyse customer feedback to identify the cause. Hence (c)."],
+["Q10. Arrange the words in meaningful order: 1. Judge 2. Evidence 3. Crime 4. Verdict",["3-1-2-4","2-3-1-4","3-2-1-4","1-2-3-4"],"3-2-1-4","A crime is followed by evidence, then the judge considers it and gives a verdict. Hence (c)."],
+["Q11. Which number does NOT belong to the group?",["121","144","169","196"],"144","The supplied answer is (b) 144."],
+["Q12. Statements: 1. All birds are animals. 2. Some animals can fly. Conclusions: I. Some birds can fly. II. All flying animals are birds.",["Only I follows","Only II follows","Both follow","Neither follows"],"Neither follows","Neither conclusion necessarily follows from the statements. Hence (d)."],
+["Q13. Statement: “Digital payments reduce the use of cash.” Which supports the statement?",["Cash is difficult to handle","Online transactions are faster","People prefer cash","Banks charge fees"],"Online transactions are faster","Faster online transactions support greater use of digital payments and reduced cash use. Hence (b)."],
+["Q14. You notice incorrect data in an official presentation at your workplace. What should you do?",["Ignore the error","Inform the presenter privately and correct it appropriately","Share the mistake publicly","Remove the entire presentation"],"Inform the presenter privately and correct it appropriately","The supplied answer is (b)."],
+["Q15. If the sum of three consecutive even numbers is 66, what is the largest number?",["22","24","26","28"],"24","Let the numbers be x, x+2, x+4. Their sum is 66, giving x=20; largest = 24. Hence (b)."],
+["Q16. If A = 7, B = 4, C = 3, find: (A × B) - (C + B)?",["19","21","23","25"],"21","(7×4)−(3+4)=28−7=21. Hence (b)."],
+["Q17. Statement: “The road was blocked due to heavy snowfall.” Conclusions: I. Traffic was disrupted. II. All roads were blocked.",["Only I follows","Only II follows","Both follow","Neither follows"],"Only I follows","A blocked road due to snowfall implies disruption on that road, not that all roads were blocked. Hence (a)."],
+["Q18. If CAT → 24 and DOG → 26. Then PIG → ?",["30","32","34","36"],"32","The supplied answer is (b) 32."],
+["Q19. Four sets of details are given. Two are exactly identical. Identify them.",["1 and 2","1 and 3","2 and 4","3 and 4"],"1 and 3","Entries 1 and 3 are exactly identical. Hence (b)."],
+["Q20. Choose the odd pair.",["14 - 196","16 - 256","18 - 324","20 - 360"],"20 - 360","The first three are squares: 14²=196, 16²=256, 18²=324. 20²=400, not 360. Hence (d)."],
+["Q21. Statements: I. All bicycles are vehicles. II. Some vehicles are electric. Which conclusion follows?",["Some bicycles are electric","All bicycles are electric","No bicycle is electric","No definite conclusion"],"No definite conclusion","The statements do not establish that the electric vehicles include bicycles. Hence (d)."],
+["Q22. Author : Book :: Painter : ?",["Brush","Canvas","Painting","Gallery"],"Painting","An author creates a book; similarly, a painter creates a painting. Hence (c)."],
+["Q23. Find the missing number: 2, 10, 26, 50, ?, 122",["82","90","94","98"],"82","The supplied answer is (a) 82."],
+["Q24. If + means ×, - means ÷, × means + and ÷ means - Find the value of: 18 + 2 - 4 × 3 ÷ 5?",["1","3","5","7"],"7","After replacing the symbols: 18×2÷4+3−5. Following standard precedence gives 7. Hence (d)."],
+["Q25. Pointing to a girl, Aman said, “She is the daughter of my father’s sister.” How is the girl related to Aman?",["Sister","Cousin","Niece","Aunt"],"Cousin","Father’s sister is Aman’s aunt; her daughter is Aman’s cousin. Hence (b)."],
+
+["Q26. Which Indian athlete won gold medal at Tokyo Olympics 2021?",["Bajrang Punia","Neeraj Chopra","Ravi Dahiya","PV Sindhu"],"Neeraj Chopra","Neeraj Chopra won the men’s javelin throw gold medal at Tokyo 2020 Olympics, held in 2021. Hence (b)."],
+["Q27. Assertion (A): Newspapers play a role in shaping public opinion. Reason (R): They provide information and analysis on current issues.",["Both A and R are true and R explains A","Both A and R are true but R does not explain A","A is true but R is false","A is false but R is true"],"Both A and R are true and R explains A","The reason explains how newspapers can influence public opinion. Hence (a)."],
+["Q28. Which mission focuses on urban water supply and sewerage infrastructure?",["AMRUT","Swachh Bharat Mission","Jal Jeevan Mission","PMAY-U"],"AMRUT","AMRUT focuses on urban infrastructure including water supply and sewerage. Hence (a)."],
+["Q29. With reference to SAARC, which statements are correct? 1. Charter adopted in Dhaka on 8 December 1985. 2. Secretariat established in Kathmandu on 16 January 1987. 3. Afghanistan became eighth member during 14th Summit in 2007.",["1 and 2 only","2 and 3 only","1 and 3 only","1, 2, and 3"],"1, 2, and 3","According to the supplied paper, all three statements are correct. Hence (d)."],
+["Q30. Statement 1: Literacy rate is higher in urban areas than rural areas. Statement 2: Urban areas have better access to educational institutions.",["Only 1","Only 2","Both 1 and 2","Neither"],"Both 1 and 2","The supplied answer is (c)."],
+["Q31. Which are outputs of the iron and steel industry? 1. Pig iron 2. Steel 3. Cement 4. Machinery",["1 and 2 only","1, 2 and 4 only","2 and 3 only","1, 3 and 4 only"],"1 and 2 only","Pig iron and steel are direct outputs; cement is not. The supplied answer is (a)."],
+["Q32. What is the primary objective of ISRO’s upcoming human spaceflight programme?",["Establishing a lunar base","Sending astronauts into low Earth orbit","Exploring Mars with crewed mission","Deploying a space telescope"],"Sending astronauts into low Earth orbit","The supplied answer is (b)."],
+["Q33. Which products are NOT derived from the Agro-based sector? 1. Rayon 2. Jute Textiles 3. Nylon 4. Edible Oil",["1 and 3 only","2 and 4 only","3 only","1, 2, and 3"],"1 and 3 only","Rayon and nylon are not agro-based products in the classification used by the paper. Hence (a)."],
+["Q34. Assertion (A): Gandhara art shows Greco-Roman influence. Reason (R): Gandhara sculptures use realistic human anatomy.",["Both A and R are true, and R is the correct explanation of A","Both A and R are true, but R is not the correct explanation of A","A is true, but R is false","A is false, but R is true"],"Both A and R are true, and R is the correct explanation of A","The supplied answer is (a)."],
+["Q35. Eskers are formed due to:",["Ice erosion","Wind deposition","Subglacial meltwater deposition","Volcanic activity"],"Subglacial meltwater deposition","Eskers are ridges of sediment deposited by meltwater streams beneath glaciers. Hence (c)."],
+["Q36. According to India’s Environment Report, which sector contributes most to emissions?",["Agriculture","Transport","Energy","Waste"],"Energy","The supplied answer is (c)."],
+["Q37. Which statement about India’s performance at Asian Athletics Championships 2025 is correct?",["India topped medal tally","India won no gold medals","India secured medals in relay events","India finished last"],"India secured medals in relay events","The supplied answer is (c)."],
+["Q38. For which field was a noted author awarded Padma Shri 2025?",["Sports","Literature and Education","Science","Social work"],"Literature and Education","The supplied answer is (b)."],
+["Q39. Statement 1: Migration contributes to urbanisation. Statement 2: Cities offer better employment opportunities.",["Only 1","Only 2","Both 1 and 2","Neither"],"Both 1 and 2","Both statements support the relationship between migration, employment opportunities and urbanisation. Hence (c)."],
+["Q40. Which goods does NOT violate the law of demand?",["Giffen goods","Veblen goods","Normal goods","Speculative goods"],"Normal goods","Normal goods generally follow the law of demand: price rises lead to lower quantity demanded, other things equal. Hence (c)."],
+["Q41. The Employment Assurance Scheme (EAS) was launched during which Five-Year Plan?",["Sixth","Seventh","Eighth","Ninth"],"Eighth","The supplied answer is (c)."],
+["Q42. ‘One Nation One Tax’ refers to:",["Income Tax","Corporate Tax","GST","Customs Duty"],"GST","GST is commonly described as the ‘One Nation, One Tax’ reform. Hence (c)."],
+["Q43. Which law replaced the Indian Penal Code, 1860?",["Bharatiya Nyaya Sanhita, 2023","Bharatiya Sakshya Adhiniyam, 2023","Criminal Law Amendment Act","Indian Justice Code"],"Bharatiya Nyaya Sanhita, 2023","The Bharatiya Nyaya Sanhita, 2023 replaced the Indian Penal Code, 1860. Hence (a)."],
+["Q44. The Padma Vibhushan is awarded for:",["Gallantry","Distinguished service of exceptional order","Sports excellence","Academic research only"],"Distinguished service of exceptional order","The supplied answer is (b)."],
+["Q45. India is a member of which grouping?",["NATO","QUAD","G7","OPEC"],"QUAD","India is a member of the Quad grouping. Hence (b)."],
+["Q46. Which gas is mainly responsible for acid rain?",["Carbon monoxide","Sulphur dioxide","Methane","Ozone"],"Sulphur dioxide","Sulphur dioxide is a major contributor to acid rain. Hence (b)."],
+["Q47. In volleyball, how many players are there in each team on the court?",["Five","Six","Seven","Eight"],"Six","Each volleyball team has six players on court. Hence (b)."],
+["Q48. The Gaganyaan mission is primarily aimed at:",["Establishing a space station","Human spaceflight capability","Deep space exploration","Satellite navigation"],"Human spaceflight capability","Gaganyaan is India’s human spaceflight programme. Hence (b)."],
+["Q49. Which sector received the highest FDI inflow in India in recent years?",["Agriculture","Manufacturing","Services","Mining"],"Services","The supplied answer is (c)."],
+["Q50. Assertion (A): Ajanta caves belong to the Buddhist tradition. Reason (R): They depict Jataka tales and Buddha’s life.",["Both A and R are true and R explains A","Both A and R are true but R does not explain A","A is true but R is false","A is false but R is true"],"Both A and R are true and R explains A","Ajanta’s Buddhist art includes depictions associated with Jataka tales and Buddha. Hence (a)."],
+
+["Q51. A 20% decrease in the cost of sugar enables a consumer to purchase an additional 5 kg for ₹400. What was the initial price per kg?",["₹20","₹25","₹16","₹24"],"₹20","Let original price be P. After 20% decrease, price is 0.8P. The extra 5 kg costs ₹400, so 0.8P=400/5=80, giving P=₹100. However, the supplied answer is (a) ₹20; this is retained exactly as provided."],
+["Q52. The difference between two numbers is 1280. On dividing the larger by the smaller, the quotient is 7 and the remainder is 20. Find the smaller number.",["210","240","195","205"],"210","Using larger = 7×smaller + 20 and difference = 1280 gives 6×smaller +20=1280, so smaller=210. Hence (a)."],
+["Q53. The base of a right prism is a square of side 8 cm. If height is 12 cm, find volume.",["640","768","512","960"],"768","Volume = base area × height = 8×8×12 = 768 cm³. Hence (b)."],
+["Q54. A and B invest ₹80,000 and ₹60,000. After 6 months, A increases capital by 25%. Total profit ₹55,000. What is B’s share?",["₹22,000","₹20,000","₹25,000","₹30,000"],"₹22,000","A’s capital-time = 80,000×6 + 100,000×6 = 10,80,000. B’s = 60,000×12 = 7,20,000. Ratio A:B = 3:2, so B gets 2/5 of ₹55,000 = ₹22,000. Hence (a)."],
+["Q55. From a point 50m from a tower, tan α=1. From a point 20m from the base in the same line, find tan β.",["2","2.5","1.5","3"],"2.5","Tower height = 50×tan α = 50 m. From 20 m away, tan β = 50/20 = 2.5. Hence (b)."],
+["Q56. A group consists of 10 men and 10 women. A committee of 3 is selected. Probability that there are more women than men?",["0.5","0.35","0.45","0.6"],"0.5","More women means either 2 women + 1 man or 3 women. By symmetry for equal numbers of men and women, probability of more women than men equals probability of more men than women, and the tie case is impossible for 3 people. Thus probability = 1/2. Hence (a)."],
+["Q57. A shopkeeper marks goods 20% above CP but uses 800g instead of 1kg. Actual profit percentage?",["40%","50%","45%","35%"],"50%","For 800g, he charges 120% of the 1kg CP while giving goods costing 80% of CP. Profit = (1.2/0.8−1)×100 = 50%. Hence (b)."],
+["Q58. A cylinder and cone have same volume and radius. Ratio of cylinder height to cone height?",["1:3","3:1","1:2","2:1"],"1:3","Cylinder volume = πr²h and cone volume = (1/3)πr²H. Equality gives h=H/3, so ratio = 1:3. Hence (a)."],
+["Q59. CI at 10% p.a. for 2 years is ₹420. Find SI for same principal, time and rate.",["₹400","₹380","₹410","₹390"],"₹400","At 10% for 2 years, CI = P(1.1²−1)=0.21P=420, so P=2000. SI = 2000×10%×2 = ₹400. Hence (a)."],
+["Q60. If difference between an angle and its supplement is 40°, find angle.",["100°","110°","70°","120°"],"110°","Let angle be x. Its supplement is 180−x. Difference: x−(180−x)=40, so 2x=220 and x=110°. Hence (b)."],
+["Q61. Find Mode: 4, 7, 4, 3, 2, 4, 7, 7, 7, 8.",["4","7","3","8"],"7","7 occurs most frequently. Hence mode = 7, option (b)."],
+["Q62. A 60-litre solution contains 20% acid. How much pure acid must be added to make it 40% acid?",["15","10","20","12"],"20","Initial acid = 12 L. Let x litres pure acid be added: (12+x)/(60+x)=0.4, giving x=20 L. Hence (c)."],
+["Q63. Average of 7 numbers is 40. Average first four is 35, last four is 45. Find fourth number.",["30","35","40","45"],"40","Total of 7 = 280. First four total = 140; last four total = 180. Their combined total counts the fourth number twice: 140+180=280+x, so x=40. Hence (c)."],
+["Q64. Simplify: (3 1/4 + 1.25) × (4/5 − 0.3) ÷ (2 + 1/2)",["0.6","1.2","0.9","1.5"],"0.9","Using the expression exactly as supplied, the provided answer is (c) 0.9."],
+["Q65. Two cars travel distances in ratio 4:5. Speeds are 60 and 90 kmph. Time gap is 20 minutes. Find total distance.",["270 km","240 km","180 km","300 km"],"270 km","Let distances be 4x and 5x. Time difference: 4x/60 − 5x/90 = 1/3 hour. This gives x=30, so total = 9x=270 km. Hence (a)."],
+["Q66. A, B, C complete work in 20, 30, 60 days. A daily; B and C assist every 3rd day. In how many days?",["10 days","12 days","15 days","18 days"],"15 days","The supplied answer is (c) 15 days."],
+["Q67. If a=0.5, b=0.3, c=0.2, find (a²−(b+c)²)/((a−b−c)(a+b+c)).",["1","0","-1","0.5"],"1","Since b+c=0.5=a, numerator is 0 and denominator is also 0, so the supplied answer (a) 1 does not follow from the displayed expression. The answer is retained as provided."],
+["Q68. Diameter AB is extended to P. PT touches circle at T. If ∠APT=30°, find ∠ABT.",["60°","90°","120°","30°"],"60°","The supplied answer is (a) 60°."],
+["Q69. In a triangle, centroid is (2,3) and circumcenter is (5,6), find orthocenter.",["(-4,-3)","(-1,0)","(3,3)","(1,1)"],"(-4,-3)","Using H = 3G − 2O: H=(6,9)−(10,12)=(-4,-3). Hence (a)."],
+["Q70. Which equation represents a line parallel to Y-axis?",["y = 3","x = 4","y = x","y = 2x+1"],"x = 4","A vertical line parallel to the Y-axis has constant x-coordinate. Hence x=4, option (b)."],
+["Q71. If 2ⁿ = 128, find 2ⁿ⁻².",["64","32","16","8"],"32","128=2⁷, so 2ⁿ⁻²=2⁵=32. Hence (b)."],
+["Q72. A metallic sphere of radius 6 cm is melted and drawn into a wire of diameter 2 cm. Find length.",["36 cm","72 cm","144 cm","288 cm"],"288 cm","Sphere volume = 4/3π(6³)=288π. Wire radius=1, so πL=288π and L=288 cm. Hence (d)."],
+["Q73. If cos θ=3/5 and θ acute, find 1+tan²θ.",["25/16","25/9","9/16","16/9"],"25/9","1+tan²θ=sec²θ. Since cosθ=3/5, sec²θ=25/9. Hence (b)."],
+["Q74. Mean of x, x+2, x+4, x+6, x+8 is 15. Find median.",["13","15","17","19"],"15","The five terms are equally spaced and their mean equals the middle term, x+4. Thus median = 15. Hence (b)."],
+["Q75. Two circles radii 8 cm and 3 cm have centers 13 cm apart. Find common external tangent.",["12 cm","10 cm","8 cm","11 cm"],"12 cm","Length = √(13²−(8−3)²)=√(169−25)=√144=12 cm. Hence (a)."],
+
+["Q76. “The view of literature we are taught to preserve is relentlessly centered on the author...” What is the grammatical function of “we are taught to preserve”?",["Adverbial clause","Independent clause","Noun clause acting as object","Relative clause modifying “view”"],"Relative clause modifying “view”",passage1+"<br><br>The clause “we are taught to preserve” modifies the noun “view,” so it is a relative clause. Hence (d)."],
+["Q77. Which sentence contains a correct use of passive voice from the passage?",["The author determines the meaning.","Language carries the author’s intentions.","Writing begins when the author speaks.","The text is supplied with a final meaning."],"The text is supplied with a final meaning.",passage1+"<br><br>“The text is supplied with a final meaning” has passive construction: subject + be + past participle. Hence (d)."],
+["Q78. What does “relentlessly” most closely mean in “relentlessly centered on the author”?",["With careful neutrality","In a forceful and controlling way","In a random manner","In a legal and formal way"],"In a forceful and controlling way",passage1+"<br><br>The supplied answer is (b)."],
+["Q79. Best synonym for “inherent” in: “...rather than an inherent requirement of literature.”",["Adopted","Optional","Natural","Illusory"],"Natural",passage1+"<br><br>“Inherent” means naturally existing as an essential or intrinsic part. Hence (c)."],
+["Q80. According to the passage, what happens when the Author is set aside in interpretation?",["The text becomes meaningless.","The text becomes open to multiple meanings.","The author’s biography becomes central.","Meaning is restricted to history alone."],"The text becomes open to multiple meanings",passage1+"<br><br>The passage explicitly describes the text as a field of plural readings and interpretation as open-ended. Hence (b)."],
+["Q81. One-word substitute: “A genetic condition where a cell has only one copy of a particular chromosome instead of a pair”",["Monosomy","Trisomy","Polyploidy","Aneuploidy"],"Monosomy","Monosomy is the condition of having one copy of a chromosome instead of the normal pair. Hence (a)."],
+["Q82. Correct spelling:",["Prophylaxis","Prophylaxsis","Prophilaxis","Prophallaxis"],"Prophylaxis","The correct spelling is “Prophylaxis.” Hence (a)."],
+["Q83. Most appropriate antonym of RECOUNT",["Narrate","Conceal","Retell","Describe"],"Conceal","To recount means to narrate or tell; conceal is an antonym. Hence (b)."],
+["Q84. Change active to passive: Policy experts had repeatedly evaluated the framework’s assumptions since its release.",["The framework’s assumptions had been repeatedly evaluated by policy experts since its release.","The assumptions were being evaluated since its release by experts.","The assumptions had evaluated by policy experts since its release.","The assumptions had been under evaluation by experts since its release."],"The framework’s assumptions had been repeatedly evaluated by policy experts since its release.","Past perfect active becomes past perfect passive: had been + past participle. Hence (a)."],
+["Q85. Identify the misspelt word:",["Polysemy","Intertextuality","Similtude","Postmodernism"],"Similtude","The correct spelling is “similitude.” Hence (c)."],
+["Q86. Find the part containing an error: The researcher’s summary (1)/ was fill with precision (2)/ yet managed to obscure (3)/ more than clarify. (4)/",["(1)","(2)","(3)","(4)"],"(2)","“Was fill” is incorrect; it should be “was filled.” Hence (b)."],
+["Q87. Rearrange: 1. applicant identification 2. biometric details 3. waiting area 4. reception register",["3-1-4-2","1-4-3-2","1-4-2-3","4-1-2-3"],"1-4-2-3","First identification is requested, then entry is recorded, biometrics are verified, and finally the applicant is guided to the waiting area. Hence (c)."],
+["Q88. Synonym of CAPRICIOUS",["Fickle","Predictable","Steady","Constant"],"Fickle","Capricious means unpredictable or changeable; “fickle” is the closest synonym. Hence (a)."],
+["Q89. Rearrange: 1. Indicators reviewed 2. Model refined 3. Deviations recorded 4. Data systems redesigned",["1-2-3-4","1-3-4-2","2-4-3-1","3-2-4-1"],"1-3-4-2","The supplied answer is (b)."],
+["Q90. Convert to direct speech: The coordinator asked whether the files that were expected to be completed last month had been forwarded to the evaluation panel.",["“Did you forward the files meant to be completed last month to the evaluation panel?” the coordinator asked.","“Had the files expect last month been forwarded to the evaluation panel?” the coordinator asked.","“Have the files that were expected to be completed last month been forwarded to the evaluation panel?” the coordinator asked.","“Were the files due last month forwarded to the evaluation team?” the coordinator asked."],"“Have the files that were expected to be completed last month been forwarded to the evaluation panel?” the coordinator asked.","The supplied answer is (c)."],
+["Q91. Fill in the blank: The updated software is ___ than the earlier build, cutting processing time significantly.",["efficient","most efficient","more efficient","efficiency"],"more efficient","The comparative form “more efficient” is required with “than.” Hence (c)."],
+["Q92. Correct spelling for “an official who supervises an exam.”",["Invigilator","Envigilator","Invegilator","Invigelator"],"Invigilator","The correct spelling is “Invigilator.” Hence (a)."],
+["Q93. Find the error: He had never visited (1)/ such a renowned exhibition (2)/ until he (3)/ visits the museum last winter. (4)/",["(1)","(2)","(3)","(4)"],"(4)","The past context requires “visited,” not “visits.” Hence (d)."],
+["Q94. Replace highlighted part: By the time we arrived at the venue, the speaker began the session.",["had begun","has begun","was beginning","is beginning"],"had begun","Past perfect is used for the earlier of two past actions: the speaker had begun before we arrived. Hence (a)."],
+["Q95. One-word substitute: “A narrative in which abstract ideas are represented through symbolic characters and events”",["Allegory","Parable","Fable","Satire"],"Allegory","An allegory uses characters and events symbolically to represent abstract ideas. Hence (a)."],
+["Q96. Meaning of idiom “Cut off one’s nose to spite one’s face”",["Be harmed by one’s own plan","Celebrate too early","Escape by cleverness","Support someone else’s success"],"Be harmed by one’s own plan","The idiom describes an action intended to hurt someone else that ultimately harms oneself. Hence (a)."],
+["Q97. Convert passive to active: The compliance report has been filed by the legal unit after several revisions.",["The legal unit filed the compliance report after several revisions.","The legal unit is filing the compliance report after several revisions.","The legal unit has filed the compliance report after several revisions.","The legal unit had filed the compliance report after several revisions."],"The legal unit has filed the compliance report after several revisions.","Present perfect passive “has been filed” becomes present perfect active “has filed.” Hence (c)."],
+["Q98. Convert direct to indirect: “Let it be stated that we will protect every inch of our border,” declared the general.",["The general declare that they would protect every inch of their border.","The general declared that let it be stated they will protect the border.","The general declared that every inch of the border would be being protected.","The general declared that they would protect every inch of their border."],"The general declared that they would protect every inch of their border.","The supplied answer is (d)."],
+["Q99. Rearrange: P: into workable public policy Q: translating research findings R: continues to be difficult S: in emerging democracies",["QPRS","SPRQ","QSRP","RQSP"],"QPRS","The meaningful sentence is: “Translating research findings into workable public policy continues to be difficult in emerging democracies.” Hence (a)."],
+["Q100. Convert passive to active: The final draft has been approved by the committee.",["The committee has been approving the final draft.","The committee has approved the final draft.","The committee is approving the final draft.","The committee approved the final draft."],"The committee has approved the final draft.","Present perfect passive “has been approved” becomes present perfect active “has approved.” Hence (b)."]
+];
+
+const sections=[
+[0,25,"🧠 Reasoning Ability (Q1–Q25)"],
+[25,50,"🌍 General Awareness (Q26–Q50)"],
+[50,75,"📐 Quantitative Aptitude (Q51–Q75)"],
+[75,100,"📚 English Language (Q76–Q100)"]
+];
+
+function render(){
+ const root=document.getElementById("questions");
+ let out="";
+ sections.forEach(([start,end,title])=>{
+   out+=`<h2 class="section">${title}</h2>`;
+   for(let i=start;i<end;i++){
+     const q=qs[i];
+     out+=`<div class="card">
+       <div class="q">${q[0]}</div>
+       ${q[4] ? `<div class="passage">${q[4]}</div>` : ""}
+       <div class="options">${q[1].map((o,j)=>`<div class="option"><b>(${String.fromCharCode(97+j)})</b> ${o}</div>`).join("")}</div>
+       <button class="answer-btn" onclick="toggle(this)">Show Answer</button>
+       <div class="solution"><strong>Answer: ${q[2]}</strong><br><br>${q[3]}</div>
+     </div>`;
+   }
+ });
+ root.innerHTML=out;
+}
+function toggle(btn){
+ const box=btn.nextElementSibling;
+ const show=box.style.display!=="block";
+ box.style.display=show?"block":"none";
+ btn.textContent=show?"Hide Answer":"Show Answer";
+}
+function toggleAll(show){
+ document.querySelectorAll(".solution").forEach(x=>x.style.display=show?"block":"none");
+ document.querySelectorAll(".answer-btn").forEach(x=>x.textContent=show?"Hide Answer":"Show Answer");
+}
+render();
+</script>
+</body>
+</html>

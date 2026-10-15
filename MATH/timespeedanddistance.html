@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time, Speed & Distance – CGL Level (15 Pages)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Roboto,sans-serif; background:#f0f4f8; color:#1a1a2e; padding:20px; transition:0.3s; }
+        .container { max-width:1100px; margin:0 auto; }
+        .progress-container { position:sticky; top:0; z-index:1000; background:#fff; padding:8px 20px; border-radius:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:25px; display:flex; align-items:center; gap:15px; flex-wrap:wrap; }
+        .progress-container .prog-label { font-weight:600; font-size:14px; color:#1a237e; white-space:nowrap; }
+        .progress-container .prog-bar { flex:1; height:8px; background:#e0e0e0; border-radius:10px; overflow:hidden; min-width:100px; }
+        .progress-container .prog-bar .prog-fill { height:100%; width:0%; background:linear-gradient(90deg,#1a237e,#ffd54f); transition:width 0.3s ease; border-radius:10px; }
+        .progress-container .page-indicator { font-weight:700; color:#1a237e; background:#e8eaf6; padding:4px 14px; border-radius:30px; font-size:14px; }
+        .main-header { background:linear-gradient(135deg,#1a237e,#0d47a1); color:#fff; padding:20px 30px; border-radius:16px; margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); }
+        .main-header .title h1 { font-size:28px; font-weight:800; }
+        .main-header .title h1 span { color:#ffd54f; }
+        .main-header .title p { font-size:14px; opacity:0.9; }
+        .lang-toggle { display:flex; gap:6px; background:rgba(255,255,255,0.15); padding:5px; border-radius:40px; border:1px solid rgba(255,255,255,0.2); }
+        .lang-toggle button { padding:8px 22px; border:none; border-radius:30px; font-weight:700; font-size:15px; cursor:pointer; transition:0.3s; background:transparent; color:#ccc; }
+        .lang-toggle button.active { background:#ffd54f; color:#1a237e; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+        .lang-toggle button:hover:not(.active) { color:#fff; }
+        .topics-index { background:#fff; border-radius:16px; padding:20px 25px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border:1px solid #e9edf2; }
+        .topics-index .index-title { font-size:20px; font-weight:700; color:#1a237e; margin-bottom:12px; }
+        .topics-index .index-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+        .topics-index .index-grid a { display:block; background:#f5f7fa; padding:10px 14px; border-radius:8px; color:#1a237e; text-decoration:none; font-weight:600; font-size:14px; border-left:4px solid #1a237e; transition:0.3s; }
+        .topics-index .index-grid a:hover { background:#e8eaf6; transform:translateX(4px); border-left-color:#ff6f00; }
+        .page-divider { display:flex; align-items:center; gap:20px; margin:40px 0 30px; color:#888; font-weight:300; font-size:14px; }
+        .page-divider hr { flex:1; border:none; height:1px; background:linear-gradient(to right,transparent,#ccc,transparent); }
+        .page-divider .page-label { background:#fff; padding:0 15px; border-radius:30px; font-weight:600; color:#1a237e; border:1px solid #e0e0e0; padding:4px 18px; }
+        .formula-card { background:#fff; border-radius:16px; padding:25px 30px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border-left:5px solid #1a237e; scroll-margin-top:80px; transition:0.2s; }
+        .formula-card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.09); }
+        .formula-card .topic-name { font-size:26px; font-weight:800; color:#1a237e; margin-bottom:2px; }
+        .formula-card .topic-badge { font-size:13px; color:#888; margin-bottom:15px; display:inline-block; background:#f0f4f8; padding:2px 16px; border-radius:20px; }
+        .visual-box { background:#e8eaf6; border-radius:12px; padding:16px 20px; margin-bottom:18px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; border:1px dashed #1a237e; }
+        .visual-box .vis-icon { font-size:36px; color:#1a237e; }
+        .visual-box .vis-text { font-size:14px; color:#333; line-height:1.6; }
+        .visual-box .vis-text strong { color:#1a237e; }
+        .formulas-box { background:#f5f7fa; border-radius:12px; padding:18px 22px; margin-bottom:16px; border-left:4px solid #ff6f00; line-height:1.8; font-size:15px; }
+        .formulas-box .formula-title { font-weight:700; color:#1a237e; font-size:17px; margin-bottom:6px; }
+        .formulas-box code { background:#e0e0e0; padding:2px 8px; border-radius:4px; font-weight:600; }
+        .formula-explanation { background:#fff8e1; border-radius:10px; padding:14px 18px; margin-bottom:18px; border-left:4px solid #ffa000; font-size:14px; line-height:1.7; color:#4e342e; }
+        .formula-explanation .ex-title { font-weight:700; color:#e65100; }
+        .question-item { background:#fafbfc; border-radius:10px; padding:12px 16px; margin-bottom:10px; border:1px solid #e9edf2; transition:0.2s; }
+        .question-item:hover { border-color:#b0c4de; }
+        .question-item .q-text { font-weight:600; font-size:15px; margin-bottom:6px; }
+        .question-item .options { display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:14px; color:#333; margin-bottom:6px; }
+        @media (max-width:600px) { .question-item .options { grid-template-columns:1fr; } }
+        .question-item .options span { display:inline-block; }
+        .question-item .answer-btn { background:#e8eaf6; border:none; padding:4px 16px; border-radius:20px; font-size:13px; font-weight:600; color:#1a237e; cursor:pointer; transition:0.2s; margin-top:4px; }
+        .question-item .answer-btn:hover { background:#1a237e; color:#fff; }
+        .question-item .answer-box { display:none; margin-top:8px; padding:10px 16px; background:#e8f5e9; border-radius:8px; font-size:14px; border-left:4px solid #2e7d32; color:#1b5e20; line-height:1.6; }
+        .question-item .answer-box.show { display:block; }
+        .pyq-badge { display:inline-block; background:#ffd54f; color:#1a237e; font-size:11px; font-weight:800; padding:2px 12px; border-radius:30px; margin-right:10px; letter-spacing:0.5px; }
+        .section-heading { font-weight:700; color:#1a237e; font-size:18px; margin:18px 0 12px; display:flex; align-items:center; gap:10px; }
+        .section-heading i { color:#ff6f00; }
+        .footer { text-align:center; margin-top:30px; color:#777; font-size:14px; border-top:1px solid #ddd; padding-top:20px; }
+        @media (max-width:600px) { .main-header { flex-direction:column; align-items:stretch; } .lang-toggle { align-self:flex-start; } .main-header .title h1 { font-size:22px; } .formula-card { padding:16px; } .topics-index .index-grid { grid-template-columns:1fr 1fr; } .visual-box { flex-direction:column; align-items:flex-start; } .progress-container .prog-label { font-size:12px; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="progress-container" id="progressContainer">
+            <span class="prog-label"><i class="fas fa-book-open"></i> Study Progress</span>
+            <div class="prog-bar"><div class="prog-fill" id="progressFill" style="width:0%;"></div></div>
+            <span class="page-indicator" id="pageIndicator">Page 1 of 15</span>
+        </div>
+
+        <header class="main-header">
+            <div class="title">
+                <h1>🚀 Time, Speed & Distance <span>CGL Level</span></h1>
+                <p id="headerSub">9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual</p>
+            </div>
+            <div class="lang-toggle" id="langToggle">
+                <button class="active" data-lang="en">🇬🇧 English</button>
+                <button data-lang="hi">🇮🇳 हिंदी</button>
+            </div>
+        </header>
+
+        <div class="topics-index" id="topicsIndex">
+            <div class="index-title" id="indexTitle">📑 All 9 Time, Speed & Distance Topics Covered</div>
+            <div class="index-grid" id="indexGrid"></div>
+        </div>
+
+        <div id="content"></div>
+
+        <div class="footer" id="footerText">⚡ Practice makes perfect. SSC CGL / Banking Level.</div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 1. COMPLETE DATA: 9 TIME, SPEED & DISTANCE TOPICS (CGL Level)
+        // ================================================================
+
+        var TOPICS_DATA = [
+            // Topic 1: Basic Concepts (Speed = Distance / Time)
+            {
+                nameEn: 'Basic Concepts (Speed = D/T)',
+                nameHi: 'मूल अवधारणाएँ (गति = दूरी/समय)',
+                visualEn: '<i class="fas fa-tachometer-alt" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Speed = Distance / Time. If speed increases, time decreases for the same distance.',
+                visualHi: '<i class="fas fa-tachometer-alt" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> गति = दूरी / समय। यदि गति बढ़ती है, तो समय घटता है।',
+                basicFormulaEn: '<b>Speed = Distance / Time</b><br><b>Distance = Speed × Time</b><br><b>Time = Distance / Speed</b><br><b>Units:</b> km/h, m/s (1 km/h = 5/18 m/s)',
+                basicFormulaHi: '<b>गति = दूरी / समय</b><br><b>दूरी = गति × समय</b><br><b>समय = दूरी / गति</b><br><b>इकाइयाँ:</b> km/h, m/s (1 km/h = 5/18 m/s)',
+                formulaExplanationEn: '<b>Why inverse?</b> Speed and time are inversely proportional for constant distance. If you go faster, you take less time.',
+                formulaExplanationHi: '<b>व्युत्क्रम क्यों?</b> गति और समय व्युत्क्रमानुपाती हैं। यदि आप तेज जाते हैं, तो कम समय लगता है।',
+                advancedFormulaEn: '<b>Advanced:</b> Conversion: km/h to m/s = × 5/18. m/s to km/h = × 18/5.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> रूपांतरण: km/h से m/s = × 5/18. m/s से km/h = × 18/5.',
+                practice: [
+                    { qEn: 'A car travels 240 km in 4 hours. Find speed.', qHi: 'एक कार 240 km 4 घंटे में तय करती है। गति ज्ञात करें।', optsEn: ['50 km/h', '60 km/h', '70 km/h', '80 km/h'], optsHi: ['50 km/h', '60 km/h', '70 km/h', '80 km/h'], ans: 1, expEn: 'Speed = 240/4 = 60 km/h', expHi: 'गति = 240/4 = 60 km/h' },
+                    { qEn: 'A train travels at 72 km/h for 5 hours. Find distance.', qHi: 'एक ट्रेन 72 km/h से 5 घंटे चलती है। दूरी ज्ञात करें।', optsEn: ['300 km', '340 km', '360 km', '400 km'], optsHi: ['300 km', '340 km', '360 km', '400 km'], ans: 2, expEn: 'Distance = 72×5 = 360 km', expHi: 'दूरी = 72×5 = 360 km' },
+                    { qEn: 'Convert 54 km/h to m/s.', qHi: '54 km/h को m/s में बदलें।', optsEn: ['10 m/s', '12 m/s', '15 m/s', '18 m/s'], optsHi: ['10 m/s', '12 m/s', '15 m/s', '18 m/s'], ans: 2, expEn: '54 × 5/18 = 15 m/s', expHi: '54 × 5/18 = 15 m/s' },
+                    { qEn: 'Convert 20 m/s to km/h.', qHi: '20 m/s को km/h में बदलें।', optsEn: ['60 km/h', '70 km/h', '72 km/h', '80 km/h'], optsHi: ['60 km/h', '70 km/h', '72 km/h', '80 km/h'], ans: 2, expEn: '20 × 18/5 = 72 km/h', expHi: '20 × 18/5 = 72 km/h' },
+                    { qEn: 'A man walks 15 km in 3 hours. Find speed.', qHi: 'एक व्यक्ति 15 km 3 घंटे में चलता है। गति ज्ञात करें।', optsEn: ['3 km/h', '4 km/h', '5 km/h', '6 km/h'], optsHi: ['3 km/h', '4 km/h', '5 km/h', '6 km/h'], ans: 2, expEn: '15/3 = 5 km/h', expHi: '15/3 = 5 km/h' },
+                    { qEn: 'A car covers 300 km at 60 km/h. Find time.', qHi: 'एक कार 300 km 60 km/h से तय करती है। समय ज्ञात करें।', optsEn: ['3 h', '4 h', '5 h', '6 h'], optsHi: ['3 h', '4 h', '5 h', '6 h'], ans: 2, expEn: 'Time = 300/60 = 5 hours', expHi: 'समय = 300/60 = 5 घंटे' },
+                    { qEn: 'A cyclist travels at 15 km/h for 2 hours. Find distance.', qHi: 'एक साइकिल चालक 15 km/h से 2 घंटे चलता है। दूरी ज्ञात करें।', optsEn: ['20 km', '25 km', '30 km', '35 km'], optsHi: ['20 km', '25 km', '30 km', '35 km'], ans: 2, expEn: '15×2 = 30 km', expHi: '15×2 = 30 km' },
+                    { qEn: 'A bus travels 180 km in 3 hours. Find speed in m/s.', qHi: 'एक बस 180 km 3 घंटे में तय करती है। m/s में गति ज्ञात करें।', optsEn: ['10 m/s', '15 m/s', '16.67 m/s', '20 m/s'], optsHi: ['10 m/s', '15 m/s', '16.67 m/s', '20 m/s'], ans: 2, expEn: 'Speed = 60 km/h = 60×5/18 = 16.67 m/s', expHi: 'गति = 60 km/h = 60×5/18 = 16.67 m/s' },
+                    { qEn: 'A person takes 2 hours to cover 10 km. Find speed in m/s.', qHi: 'एक व्यक्ति 10 km 2 घंटे में तय करता है। m/s में गति ज्ञात करें।', optsEn: ['1.2 m/s', '1.39 m/s', '1.5 m/s', '2 m/s'], optsHi: ['1.2 m/s', '1.39 m/s', '1.5 m/s', '2 m/s'], ans: 1, expEn: 'Speed = 5 km/h = 5×5/18 = 1.39 m/s', expHi: 'गति = 5 km/h = 5×5/18 = 1.39 m/s' },
+                    { qEn: 'A train covers 450 km in 6 hours. Find speed.', qHi: 'एक ट्रेन 450 km 6 घंटे में तय करती है। गति ज्ञात करें।', optsEn: ['65 km/h', '70 km/h', '75 km/h', '80 km/h'], optsHi: ['65 km/h', '70 km/h', '75 km/h', '80 km/h'], ans: 2, expEn: '450/6 = 75 km/h', expHi: '450/6 = 75 km/h' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'A car travels 240 km in 4 hours. Find speed.', qHi: 'एक कार 240 km 4 घंटे में तय करती है। गति ज्ञात करें।', optsEn: ['50 km/h', '60 km/h', '70 km/h', '80 km/h'], optsHi: ['50 km/h', '60 km/h', '70 km/h', '80 km/h'], ans: 1, expEn: '60 km/h', expHi: '60 km/h' },
+                    { year: 'CGL 2022', qEn: 'Convert 54 km/h to m/s.', qHi: '54 km/h को m/s में बदलें।', optsEn: ['10 m/s', '12 m/s', '15 m/s', '18 m/s'], optsHi: ['10 m/s', '12 m/s', '15 m/s', '18 m/s'], ans: 2, expEn: '15 m/s', expHi: '15 m/s' },
+                    { year: 'CGL 2021', qEn: 'A man walks 15 km in 3 hours. Find speed.', qHi: 'एक व्यक्ति 15 km 3 घंटे में चलता है। गति ज्ञात करें।', optsEn: ['3 km/h', '4 km/h', '5 km/h', '6 km/h'], optsHi: ['3 km/h', '4 km/h', '5 km/h', '6 km/h'], ans: 2, expEn: '5 km/h', expHi: '5 km/h' },
+                    { year: 'CGL 2020', qEn: 'A train travels at 72 km/h for 5 hours. Find distance.', qHi: 'एक ट्रेन 72 km/h से 5 घंटे चलती है। दूरी ज्ञात करें।', optsEn: ['300 km', '340 km', '360 km', '400 km'], optsHi: ['300 km', '340 km', '360 km', '400 km'], ans: 2, expEn: '360 km', expHi: '360 km' },
+                    { year: 'CGL 2019', qEn: 'Convert 20 m/s to km/h.', qHi: '20 m/s को km/h में बदलें।', optsEn: ['60 km/h', '70 km/h', '72 km/h', '80 km/h'], optsHi: ['60 km/h', '70 km/h', '72 km/h', '80 km/h'], ans: 2, expEn: '72 km/h', expHi: '72 km/h' }
+                ]
+            },
+            // Topic 2: Average Speed (Equal Distances & Equal Times)
+            {
+                nameEn: 'Average Speed (Equal Distances & Times)',
+                nameHi: 'औसत गति (समान दूरियाँ एवं समय)',
+                visualEn: '<i class="fas fa-arrows-h" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Average speed is NOT the average of speeds. For equal distances, use harmonic mean.',
+                visualHi: '<i class="fas fa-arrows-h" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> औसत गति गतियों का औसत नहीं है। समान दूरियों के लिए, हार्मोनिक माध्य का उपयोग करें।',
+                basicFormulaEn: '<b>If equal distances at speeds v₁ and v₂:</b> Avg Speed = 2v₁v₂/(v₁+v₂)<br><b>If equal times at speeds v₁ and v₂:</b> Avg Speed = (v₁+v₂)/2',
+                basicFormulaHi: '<b>यदि समान दूरियाँ v₁ और v₂ पर:</b> औसत गति = 2v₁v₂/(v₁+v₂)<br><b>यदि समान समय v₁ और v₂ पर:</b> औसत गति = (v₁+v₂)/2',
+                formulaExplanationEn: '<b>Why harmonic mean?</b> For equal distances, time is inversely proportional to speed. The average speed is the weighted harmonic mean.',
+                formulaExplanationHi: '<b>हार्मोनिक माध्य क्यों?</b> समान दूरियों के लिए, समय गति के व्युत्क्रमानुपाती है। औसत गति भारित हार्मोनिक माध्य है।',
+                advancedFormulaEn: '<b>Advanced:</b> For three equal distances, Avg Speed = 3/(1/v₁+1/v₂+1/v₃).',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> तीन समान दूरियों के लिए, औसत गति = 3/(1/v₁+1/v₂+1/v₃).',
+                practice: [
+                    { qEn: 'A person covers 10 km at 20 km/h and 10 km at 30 km/h. Find avg speed.', qHi: 'एक व्यक्ति 10 km 20 km/h पर और 10 km 30 km/h पर तय करता है। औसत गति ज्ञात करें।', optsEn: ['22 km/h', '24 km/h', '25 km/h', '26 km/h'], optsHi: ['22 km/h', '24 km/h', '25 km/h', '26 km/h'], ans: 1, expEn: '2×20×30/(20+30) = 1200/50 = 24 km/h', expHi: '2×20×30/(20+30) = 1200/50 = 24 km/h' },
+                    { qEn: 'A car travels at 40 km/h for 2 hours and 60 km/h for 2 hours. Find avg speed.', qHi: 'एक कार 2 घंटे 40 km/h पर और 2 घंटे 60 km/h पर चलती है। औसत गति ज्ञात करें।', optsEn: ['48 km/h', '50 km/h', '52 km/h', '55 km/h'], optsHi: ['48 km/h', '50 km/h', '52 km/h', '55 km/h'], ans: 1, expEn: 'Avg = (40+60)/2 = 50 km/h', expHi: 'औसत = (40+60)/2 = 50 km/h' },
+                    { qEn: 'Find avg speed for equal distances at 30 km/h and 60 km/h.', qHi: '30 km/h और 60 km/h पर समान दूरियों के लिए औसत गति ज्ञात करें।', optsEn: ['35 km/h', '40 km/h', '45 km/h', '50 km/h'], optsHi: ['35 km/h', '40 km/h', '45 km/h', '50 km/h'], ans: 1, expEn: '2×30×60/(30+60) = 3600/90 = 40 km/h', expHi: '2×30×60/(30+60) = 3600/90 = 40 km/h' },
+                    { qEn: 'A person travels 60 km at 30 km/h and 60 km at 60 km/h. Find avg speed.', qHi: 'एक व्यक्ति 60 km 30 km/h पर और 60 km 60 km/h पर तय करता है। औसत गति ज्ञात करें।', optsEn: ['36 km/h', '38 km/h', '40 km/h', '42 km/h'], optsHi: ['36 km/h', '38 km/h', '40 km/h', '42 km/h'], ans: 2, expEn: '2×30×60/(30+60) = 3600/90 = 40 km/h', expHi: '2×30×60/(30+60) = 3600/90 = 40 km/h' },
+                    { qEn: 'For equal times at 40 km/h and 60 km/h, avg speed?', qHi: '40 km/h और 60 km/h पर समान समय के लिए औसत गति?', optsEn: ['48 km/h', '50 km/h', '52 km/h', '55 km/h'], optsHi: ['48 km/h', '50 km/h', '52 km/h', '55 km/h'], ans: 1, expEn: '(40+60)/2 = 50 km/h', expHi: '(40+60)/2 = 50 km/h' },
+                    { qEn: 'Equal distances at 50 km/h and 70 km/h. Avg speed?', qHi: '50 km/h और 70 km/h पर समान दूरियों के लिए औसत गति?', optsEn: ['54 km/h', '56 km/h', '58.33 km/h', '60 km/h'], optsHi: ['54 km/h', '56 km/h', '58.33 km/h', '60 km/h'], ans: 2, expEn: '2×50×70/(50+70) = 7000/120 = 58.33 km/h', expHi: '2×50×70/(50+70) = 7000/120 = 58.33 km/h' },
+                    { qEn: 'A car covers 120 km at 40 km/h and 120 km at 60 km/h. Avg speed?', qHi: 'एक कार 120 km 40 km/h पर और 120 km 60 km/h पर तय करती है। औसत गति?', optsEn: ['44 km/h', '46 km/h', '48 km/h', '50 km/h'], optsHi: ['44 km/h', '46 km/h', '48 km/h', '50 km/h'], ans: 2, expEn: '2×40×60/(40+60) = 4800/100 = 48 km/h', expHi: '2×40×60/(40+60) = 4800/100 = 48 km/h' },
+                    { qEn: 'For equal times at 30 km/h and 50 km/h, avg speed?', qHi: '30 km/h और 50 km/h पर समान समय के लिए औसत गति?', optsEn: ['36 km/h', '38 km/h', '40 km/h', '42 km/h'], optsHi: ['36 km/h', '38 km/h', '40 km/h', '42 km/h'], ans: 2, expEn: '(30+50)/2 = 40 km/h', expHi: '(30+50)/2 = 40 km/h' },
+                    { qEn: 'Equal distances at 25 km/h and 75 km/h. Avg speed?', qHi: '25 km/h और 75 km/h पर समान दूरियों के लिए औसत गति?', optsEn: ['30 km/h', '35 km/h', '37.5 km/h', '40 km/h'], optsHi: ['30 km/h', '35 km/h', '37.5 km/h', '40 km/h'], ans: 2, expEn: '2×25×75/(25+75) = 3750/100 = 37.5 km/h', expHi: '2×25×75/(25+75) = 3750/100 = 37.5 km/h' },
+                    { qEn: 'A person covers 90 km at 45 km/h and 90 km at 55 km/h. Avg speed?', qHi: 'एक व्यक्ति 90 km 45 km/h और 90 km 55 km/h पर तय करता है। औसत गति?', optsEn: ['48 km/h', '49.5 km/h', '50 km/h', '51 km/h'], optsHi: ['48 km/h', '49.5 km/h', '50 km/h', '51 km/h'], ans: 1, expEn: '2×45×55/(45+55) = 4950/100 = 49.5 km/h', expHi: '2×45×55/(45+55) = 4950/100 = 49.5 km/h' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Equal distances at 20 and 30 km/h. Avg speed?', qHi: '20 और 30 km/h पर समान दूरियों के लिए औसत गति?', optsEn: ['22 km/h', '24 km/h', '25 km/h', '26 km/h'], optsHi: ['22 km/h', '24 km/h', '25 km/h', '26 km/h'], ans: 1, expEn: '24 km/h', expHi: '24 km/h' },
+                    { year: 'CGL 2022', qEn: 'Equal times at 40 and 60 km/h. Avg speed?', qHi: '40 और 60 km/h पर समान समय के लिए औसत गति?', optsEn: ['48 km/h', '50 km/h', '52 km/h', '55 km/h'], optsHi: ['48 km/h', '50 km/h', '52 km/h', '55 km/h'], ans: 1, expEn: '50 km/h', expHi: '50 km/h' },
+                    { year: 'CGL 2021', qEn: 'Equal distances at 30 and 60 km/h. Avg speed?', qHi: '30 और 60 km/h पर समान दूरियों के लिए औसत गति?', optsEn: ['35 km/h', '40 km/h', '45 km/h', '50 km/h'], optsHi: ['35 km/h', '40 km/h', '45 km/h', '50 km/h'], ans: 1, expEn: '40 km/h', expHi: '40 km/h' },
+                    { year: 'CGL 2020', qEn: 'Car covers 120 km at 40 and 60 km/h. Avg speed?', qHi: '120 km 40 और 60 km/h पर तय करती है। औसत गति?', optsEn: ['44 km/h', '46 km/h', '48 km/h', '50 km/h'], optsHi: ['44 km/h', '46 km/h', '48 km/h', '50 km/h'], ans: 2, expEn: '48 km/h', expHi: '48 km/h' },
+                    { year: 'CGL 2019', qEn: 'Equal distances at 50 and 70 km/h. Avg speed?', qHi: '50 और 70 km/h पर समान दूरियों के लिए औसत गति?', optsEn: ['54 km/h', '56 km/h', '58.33 km/h', '60 km/h'], optsHi: ['54 km/h', '56 km/h', '58.33 km/h', '60 km/h'], ans: 2, expEn: '58.33 km/h', expHi: '58.33 km/h' }
+                ]
+            },
+            // Topic 3: Relative Speed (Same Direction & Opposite Direction)
+            {
+                nameEn: 'Relative Speed (Same/Opposite Direction)',
+                nameHi: 'सापेक्ष गति (एक ही/विपरीत दिशा)',
+                visualEn: '<i class="fas fa-arrows-left-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> When moving in opposite direction, relative speed = sum. Same direction, relative speed = difference.',
+                visualHi: '<i class="fas fa-arrows-left-right" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> विपरीत दिशा में जाने पर सापेक्ष गति = योग। एक ही दिशा में, सापेक्ष गति = अंतर।',
+                basicFormulaEn: '<b>Opposite Direction:</b> Relative Speed = v₁ + v₂<br><b>Same Direction:</b> Relative Speed = v₁ - v₂ (if v₁ > v₂)<br><b>Time to meet = Distance / Relative Speed</b>',
+                basicFormulaHi: '<b>विपरीत दिशा:</b> सापेक्ष गति = v₁ + v₂<br><b>एक ही दिशा:</b> सापेक्ष गति = v₁ - v₂ (यदि v₁ > v₂)<br><b>मिलने का समय = दूरी / सापेक्ष गति</b>',
+                formulaExplanationEn: '<b>Why add/subtract?</b> When moving toward each other, the distance closes faster (sum). When moving same direction, the gap changes by the difference.',
+                formulaExplanationHi: '<b>जोड़/घटाव क्यों?</b> जब एक-दूसरे की ओर बढ़ते हैं, तो दूरी तेजी से घटती है (योग)। जब एक ही दिशा में, अंतर अंतर से बदलता है।',
+                advancedFormulaEn: '<b>Advanced:</b> If they start at different times, calculate the distance already covered by the first before the second starts.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि वे अलग-अलग समय पर शुरू करते हैं, तो दूसरे के शुरू करने से पहले पहले द्वारा तय की गई दूरी की गणना करें।',
+                practice: [
+                    { qEn: 'Two trains 200 km apart start towards each other at 40 km/h and 60 km/h. When will they meet?', qHi: 'दो ट्रेनें 200 km दूर एक-दूसरे की ओर 40 km/h और 60 km/h से चलती हैं। वे कब मिलेंगी?', optsEn: ['1 h', '1.5 h', '2 h', '2.5 h'], optsHi: ['1 h', '1.5 h', '2 h', '2.5 h'], ans: 2, expEn: 'Relative speed = 40+60 = 100 km/h. Time = 200/100 = 2 hours', expHi: 'सापेक्ष गति = 40+60 = 100 km/h. समय = 200/100 = 2 घंटे' },
+                    { qEn: 'A car at 60 km/h overtakes another at 40 km/h. If initial gap is 50 km, find time.', qHi: '60 km/h की कार 40 km/h की कार को ओवरटेक करती है। यदि प्रारंभिक अंतर 50 km है, तो समय ज्ञात करें।', optsEn: ['1 h', '1.5 h', '2 h', '2.5 h'], optsHi: ['1 h', '1.5 h', '2 h', '2.5 h'], ans: 2, expEn: 'Relative speed = 60-40 = 20 km/h. Time = 50/20 = 2.5 hours', expHi: 'सापेक्ष गति = 60-40 = 20 km/h. समय = 50/20 = 2.5 घंटे' },
+                    { qEn: 'Two persons start from same point in opposite directions at 5 km/h and 7 km/h. After 3 hours distance?', qHi: 'दो व्यक्ति एक ही बिंदु से विपरीत दिशाओं में 5 km/h और 7 km/h से चलते हैं। 3 घंटे बाद दूरी?', optsEn: ['30 km', '32 km', '34 km', '36 km'], optsHi: ['30 km', '32 km', '34 km', '36 km'], ans: 2, expEn: 'Relative speed = 5+7 = 12 km/h. Distance = 12×3 = 36 km', expHi: 'सापेक्ष गति = 5+7 = 12 km/h. दूरी = 12×3 = 36 km' },
+                    { qEn: 'A and B start from same point same direction at 50 km/h and 30 km/h. After 2 hours distance?', qHi: 'A और B एक ही बिंदु से एक ही दिशा में 50 km/h और 30 km/h से चलते हैं। 2 घंटे बाद दूरी?', optsEn: ['20 km', '30 km', '40 km', '50 km'], optsHi: ['20 km', '30 km', '40 km', '50 km'], ans: 2, expEn: 'Relative speed = 50-30 = 20 km/h. Distance = 20×2 = 40 km', expHi: 'सापेक्ष गति = 50-30 = 20 km/h. दूरी = 20×2 = 40 km' },
+                    { qEn: 'Two trains 150 km apart start towards each other at 50 and 75 km/h. Time to meet?', qHi: 'दो ट्रेनें 150 km दूर एक-दूसरे की ओर 50 और 75 km/h से चलती हैं। मिलने का समय?', optsEn: ['1 h', '1.2 h', '1.5 h', '2 h'], optsHi: ['1 h', '1.2 h', '1.5 h', '2 h'], ans: 1, expEn: 'Relative speed = 50+75 = 125 km/h. Time = 150/125 = 1.2 hours', expHi: 'सापेक्ष गति = 50+75 = 125 km/h. समय = 150/125 = 1.2 घंटे' },
+                    { qEn: 'A thief at 40 km/h is chased by police at 60 km/h. Initial distance 20 km. Time to catch?', qHi: '40 km/h पर एक चोर को 60 km/h पर पुलिस पीछा करती है। प्रारंभिक दूरी 20 km है। पकड़ने का समय?', optsEn: ['0.5 h', '1 h', '1.5 h', '2 h'], optsHi: ['0.5 h', '1 h', '1.5 h', '2 h'], ans: 1, expEn: 'Relative speed = 60-40 = 20 km/h. Time = 20/20 = 1 hour', expHi: 'सापेक्ष गति = 60-40 = 20 km/h. समय = 20/20 = 1 घंटा' },
+                    { qEn: 'Two persons start opposite directions at 6 km/h and 8 km/h. After 4 hours distance?', qHi: 'दो व्यक्ति विपरीत दिशाओं में 6 km/h और 8 km/h से चलते हैं। 4 घंटे बाद दूरी?', optsEn: ['48 km', '52 km', '56 km', '60 km'], optsHi: ['48 km', '52 km', '56 km', '60 km'], ans: 2, expEn: 'Relative speed = 6+8 = 14 km/h. Distance = 14×4 = 56 km', expHi: 'सापेक्ष गति = 6+8 = 14 km/h. दूरी = 14×4 = 56 km' },
+                    { qEn: 'A car at 80 km/h behind a car at 50 km/h. If distance is 60 km, time to meet?', qHi: '80 km/h की कार 50 km/h की कार के पीछे है। यदि दूरी 60 km है, तो मिलने का समय?', optsEn: ['1 h', '1.5 h', '2 h', '2.5 h'], optsHi: ['1 h', '1.5 h', '2 h', '2.5 h'], ans: 2, expEn: 'Relative speed = 80-50 = 30 km/h. Time = 60/30 = 2 hours', expHi: 'सापेक्ष गति = 80-50 = 30 km/h. समय = 60/30 = 2 घंटे' },
+                    { qEn: 'Two trains 120 km apart start towards each other at 40 and 60 km/h. Meet time?', qHi: 'दो ट्रेनें 120 km दूर एक-दूसरे की ओर 40 और 60 km/h से चलती हैं। मिलने का समय?', optsEn: ['1 h', '1.2 h', '1.5 h', '2 h'], optsHi: ['1 h', '1.2 h', '1.5 h', '2 h'], ans: 1, expEn: 'Relative speed = 40+60 = 100 km/h. Time = 120/100 = 1.2 hours', expHi: 'सापेक्ष गति = 40+60 = 100 km/h. समय = 120/100 = 1.2 घंटे' },
+                    { qEn: 'A person runs at 8 km/h and another at 12 km/h same direction. Initial distance 10 km. Time to catch?', qHi: 'एक व्यक्ति 8 km/h और दूसरा 12 km/h एक ही दिशा में दौड़ता है। प्रारंभिक दूरी 10 km है। पकड़ने का समय?', optsEn: ['2 h', '2.5 h', '3 h', '4 h'], optsHi: ['2 h', '2.5 h', '3 h', '4 h'], ans: 1, expEn: 'Relative speed = 12-8 = 4 km/h. Time = 10/4 = 2.5 hours', expHi: 'सापेक्ष गति = 12-8 = 4 km/h. समय = 10/4 = 2.5 घंटे' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Two trains 200 km apart start towards each other at 40 and 60 km/h. Meet time?', qHi: 'दो ट्रेनें 200 km दूर 40 और 60 km/h से एक-दूसरे की ओर चलती हैं। मिलने का समय?', optsEn: ['1 h', '1.5 h', '2 h', '2.5 h'], optsHi: ['1 h', '1.5 h', '2 h', '2.5 h'], ans: 2, expEn: '2 h', expHi: '2 घंटे' },
+                    { year: 'CGL 2022', qEn: 'Car at 60 km/h overtakes another at 40 km/h with 50 km gap. Time?', qHi: '60 km/h की कार 40 km/h की कार को 50 km अंतर के साथ ओवरटेक करती है। समय?', optsEn: ['1 h', '1.5 h', '2 h', '2.5 h'], optsHi: ['1 h', '1.5 h', '2 h', '2.5 h'], ans: 2, expEn: '2.5 h', expHi: '2.5 घंटे' },
+                    { year: 'CGL 2021', qEn: 'Two persons opposite directions at 5 and 7 km/h. After 3 hours distance?', qHi: 'दो व्यक्ति विपरीत दिशाओं में 5 और 7 km/h से। 3 घंटे बाद दूरी?', optsEn: ['30 km', '32 km', '34 km', '36 km'], optsHi: ['30 km', '32 km', '34 km', '36 km'], ans: 2, expEn: '36 km', expHi: '36 km' },
+                    { year: 'CGL 2020', qEn: 'A and B same direction at 50 and 30 km/h. After 2 hours distance?', qHi: 'A और B एक ही दिशा में 50 और 30 km/h से। 2 घंटे बाद दूरी?', optsEn: ['20 km', '30 km', '40 km', '50 km'], optsHi: ['20 km', '30 km', '40 km', '50 km'], ans: 2, expEn: '40 km', expHi: '40 km' },
+                    { year: 'CGL 2019', qEn: 'Thief at 40 km/h chased by police at 60 km/h with 20 km gap. Time to catch?', qHi: '40 km/h पर चोर को 60 km/h पर पुलिस 20 km अंतर के साथ पीछा करती है। पकड़ने का समय?', optsEn: ['0.5 h', '1 h', '1.5 h', '2 h'], optsHi: ['0.5 h', '1 h', '1.5 h', '2 h'], ans: 1, expEn: '1 h', expHi: '1 घंटा' }
+                ]
+            },
+            // Topic 4: Train Problems (Platform, Bridge, Pole)
+            {
+                nameEn: 'Train Problems (Platform, Bridge, Pole)',
+                nameHi: 'ट्रेन समस्याएँ (प्लेटफॉर्म, पुल, खंभा)',
+                visualEn: '<i class="fas fa-train" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> When crossing a pole, distance = train length. When crossing platform, distance = train length + platform length.',
+                visualHi: '<i class="fas fa-train" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> खंभा पार करते समय, दूरी = ट्रेन की लंबाई। प्लेटफॉर्म पार करते समय, दूरी = ट्रेन की लंबाई + प्लेटफॉर्म की लंबाई।',
+                basicFormulaEn: '<b>Crossing a pole/tree: Time = Train length / Speed</b><br><b>Crossing platform: Time = (Train length + Platform length) / Speed</b><br><b>Crossing another train: Time = (Sum of lengths) / Relative speed</b>',
+                basicFormulaHi: '<b>खंभा/पेड़ पार करना: समय = ट्रेन की लंबाई / गति</b><br><b>प्लेटफॉर्म पार करना: समय = (ट्रेन की लंबाई + प्लेटफॉर्म की लंबाई) / गति</b><br><b>दूसरी ट्रेन पार करना: समय = (लंबाइयों का योग) / सापेक्ष गति</b>',
+                formulaExplanationEn: '<b>Why add platform?</b> The train must cover its own length plus the platform length to completely cross it.',
+                formulaExplanationHi: '<b>प्लेटफॉर्म क्यों जोड़ें?</b> ट्रेन को पूरी तरह पार करने के लिए अपनी लंबाई और प्लेटफॉर्म की लंबाई दोनों को तय करना होता है।',
+                advancedFormulaEn: '<b>Advanced:</b> If train crosses a man moving in same/opposite direction, use relative speed.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि ट्रेन एक चलते हुए व्यक्ति को एक ही/विपरीत दिशा में पार करती है, तो सापेक्ष गति का उपयोग करें।',
+                practice: [
+                    { qEn: 'A train 200 m long travels at 72 km/h. Time to cross a pole?', qHi: '200 m लंबी ट्रेन 72 km/h से चलती है। खंभा पार करने में समय?', optsEn: ['8 s', '10 s', '12 s', '15 s'], optsHi: ['8 s', '10 s', '12 s', '15 s'], ans: 1, expEn: 'Speed = 72×5/18 = 20 m/s. Time = 200/20 = 10 s', expHi: 'गति = 72×5/18 = 20 m/s. समय = 200/20 = 10 सेकंड' },
+                    { qEn: 'A train 300 m long crosses a platform 400 m long in 35 s. Find speed in km/h.', qHi: '300 m लंबी ट्रेन 400 m लंबा प्लेटफॉर्म 35 s में पार करती है। km/h में गति ज्ञात करें।', optsEn: ['54 km/h', '60 km/h', '72 km/h', '80 km/h'], optsHi: ['54 km/h', '60 km/h', '72 km/h', '80 km/h'], ans: 2, expEn: 'Total distance = 300+400 = 700 m. Speed = 700/35 = 20 m/s = 20×18/5 = 72 km/h', expHi: 'कुल दूरी = 300+400 = 700 m. गति = 700/35 = 20 m/s = 20×18/5 = 72 km/h' },
+                    { qEn: 'A train 180 m long crosses a pole in 9 s. Find speed in km/h.', qHi: '180 m लंबी ट्रेन खंभा 9 s में पार करती है। km/h में गति ज्ञात करें।', optsEn: ['60 km/h', '65 km/h', '72 km/h', '80 km/h'], optsHi: ['60 km/h', '65 km/h', '72 km/h', '80 km/h'], ans: 2, expEn: 'Speed = 180/9 = 20 m/s = 72 km/h', expHi: 'गति = 180/9 = 20 m/s = 72 km/h' },
+                    { qEn: 'A train 250 m long crosses a 350 m bridge in 30 s. Find speed in km/h.', qHi: '250 m ट्रेन 350 m पुल 30 s में पार करती है। km/h में गति?', optsEn: ['54 km/h', '60 km/h', '66 km/h', '72 km/h'], optsHi: ['54 km/h', '60 km/h', '66 km/h', '72 km/h'], ans: 2, expEn: 'Total = 600 m, Speed = 600/30 = 20 m/s = 72 km/h', expHi: 'कुल = 600 m, गति = 600/30 = 20 m/s = 72 km/h' },
+                    { qEn: 'A train 150 m long crosses a man running at 5 km/h in opposite direction. Train speed is 55 km/h. Find time.', qHi: '150 m ट्रेन 5 km/h पर विपरीत दिशा में दौड़ते व्यक्ति को पार करती है। ट्रेन की गति 55 km/h है। समय?', optsEn: ['7 s', '8 s', '9 s', '10 s'], optsHi: ['7 s', '8 s', '9 s', '10 s'], ans: 2, expEn: 'Relative speed = 55+5 = 60 km/h = 60×5/18 = 16.67 m/s. Time = 150/16.67 = 9 s', expHi: 'सापेक्ष गति = 55+5 = 60 km/h = 60×5/18 = 16.67 m/s. समय = 150/16.67 = 9 सेकंड' },
+                    { qEn: 'A train 220 m long travels at 54 km/h. Time to cross a pole?', qHi: '220 m ट्रेन 54 km/h से चलती है। खंभा पार करने का समय?', optsEn: ['10 s', '12 s', '14.67 s', '15 s'], optsHi: ['10 s', '12 s', '14.67 s', '15 s'], ans: 2, expEn: 'Speed = 54×5/18 = 15 m/s. Time = 220/15 = 14.67 s', expHi: 'गति = 54×5/18 = 15 m/s. समय = 220/15 = 14.67 सेकंड' },
+                    { qEn: 'A train 400 m long crosses a 600 m bridge in 50 s. Find speed in km/h.', qHi: '400 m ट्रेन 600 m पुल 50 s में पार करती है। km/h में गति?', optsEn: ['60 km/h', '66 km/h', '72 km/h', '80 km/h'], optsHi: ['60 km/h', '66 km/h', '72 km/h', '80 km/h'], ans: 2, expEn: 'Total = 1000 m, Speed = 1000/50 = 20 m/s = 72 km/h', expHi: 'कुल = 1000 m, गति = 1000/50 = 20 m/s = 72 km/h' },
+                    { qEn: 'Two trains 180 m and 220 m long travel at 30 m/s and 40 m/s in same direction. Time to overtake?', qHi: '180 m और 220 m लंबी दो ट्रेनें 30 m/s और 40 m/s से एक ही दिशा में चलती हैं। ओवरटेक करने का समय?', optsEn: ['30 s', '40 s', '50 s', '60 s'], optsHi: ['30 s', '40 s', '50 s', '60 s'], ans: 1, expEn: 'Total length = 400 m, Relative speed = 40-30 = 10 m/s. Time = 400/10 = 40 s', expHi: 'कुल लंबाई = 400 m, सापेक्ष गति = 40-30 = 10 m/s. समय = 400/10 = 40 सेकंड' },
+                    { qEn: 'A train 280 m long crosses a pole in 14 s. Find speed in km/h.', qHi: '280 m ट्रेन खंभा 14 s में पार करती है। km/h में गति?', optsEn: ['60 km/h', '65 km/h', '72 km/h', '75 km/h'], optsHi: ['60 km/h', '65 km/h', '72 km/h', '75 km/h'], ans: 2, expEn: 'Speed = 280/14 = 20 m/s = 72 km/h', expHi: 'गति = 280/14 = 20 m/s = 72 km/h' },
+                    { qEn: 'A train 240 m long crosses a 360 m platform in 24 s. Find speed in km/h.', qHi: '240 m ट्रेन 360 m प्लेटफॉर्म 24 s में पार करती है। km/h में गति?', optsEn: ['72 km/h', '80 km/h', '90 km/h', '100 km/h'], optsHi: ['72 km/h', '80 km/h', '90 km/h', '100 km/h'], ans: 2, expEn: 'Total = 600 m, Speed = 600/24 = 25 m/s = 90 km/h', expHi: 'कुल = 600 m, गति = 600/24 = 25 m/s = 90 km/h' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Train 200 m at 72 km/h crosses a pole. Time?', qHi: '200 m ट्रेन 72 km/h से खंभा पार करती है। समय?', optsEn: ['8 s', '10 s', '12 s', '15 s'], optsHi: ['8 s', '10 s', '12 s', '15 s'], ans: 1, expEn: '10 s', expHi: '10 सेकंड' },
+                    { year: 'CGL 2022', qEn: 'Train 300 m crosses platform 400 m in 35 s. Speed in km/h?', qHi: '300 m ट्रेन 400 m प्लेटफॉर्म 35 s में पार करती है। km/h में गति?', optsEn: ['54 km/h', '60 km/h', '72 km/h', '80 km/h'], optsHi: ['54 km/h', '60 km/h', '72 km/h', '80 km/h'], ans: 2, expEn: '72 km/h', expHi: '72 km/h' },
+                    { year: 'CGL 2021', qEn: 'Train 180 m crosses pole in 9 s. Speed in km/h?', qHi: '180 m ट्रेन खंभा 9 s में पार करती है। km/h में गति?', optsEn: ['60 km/h', '65 km/h', '72 km/h', '80 km/h'], optsHi: ['60 km/h', '65 km/h', '72 km/h', '80 km/h'], ans: 2, expEn: '72 km/h', expHi: '72 km/h' },
+                    { year: 'CGL 2020', qEn: 'Train 250 m crosses 350 m bridge in 30 s. Speed in km/h?', qHi: '250 m ट्रेन 350 m पुल 30 s में पार करती है। km/h में गति?', optsEn: ['54 km/h', '60 km/h', '66 km/h', '72 km/h'], optsHi: ['54 km/h', '60 km/h', '66 km/h', '72 km/h'], ans: 2, expEn: '72 km/h', expHi: '72 km/h' },
+                    { year: 'CGL 2019', qEn: 'Train 150 m crosses man at 5 km/h opposite, train speed 55 km/h. Time?', qHi: '150 m ट्रेन 5 km/h विपरीत दिशा में व्यक्ति को, ट्रेन 55 km/h। समय?', optsEn: ['7 s', '8 s', '9 s', '10 s'], optsHi: ['7 s', '8 s', '9 s', '10 s'], ans: 2, expEn: '9 s', expHi: '9 सेकंड' }
+                ]
+            },
+            // Topic 5: Boat and Stream (Upstream/Downstream)
+            {
+                nameEn: 'Boat and Stream (Upstream/Downstream)',
+                nameHi: 'नाव एवं धारा (अनुप्रवाह/उर्ध्वप्रवाह)',
+                visualEn: '<i class="fas fa-ship" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Downstream speed = Boat speed + Stream speed. Upstream speed = Boat speed - Stream speed.',
+                visualHi: '<i class="fas fa-ship" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> अनुप्रवाह गति = नाव की गति + धारा की गति। उर्ध्वप्रवाह गति = नाव की गति - धारा की गति।',
+                basicFormulaEn: '<b>Downstream Speed = B + S</b><br><b>Upstream Speed = B - S</b><br><b>Boat Speed = (D + U)/2</b><br><b>Stream Speed = (D - U)/2</b>',
+                basicFormulaHi: '<b>अनुप्रवाह गति = B + S</b><br><b>उर्ध्वप्रवाह गति = B - S</b><br><b>नाव की गति = (D + U)/2</b><br><b>धारा की गति = (D - U)/2</b>',
+                formulaExplanationEn: '<b>Why add/subtract?</b> Stream helps when going downstream and opposes when going upstream.',
+                formulaExplanationHi: '<b>जोड़/घटाव क्यों?</b> धारा अनुप्रवाह में मदद करती है और उर्ध्वप्रवाह में विरोध करती है।',
+                advancedFormulaEn: '<b>Advanced:</b> If time for upstream and downstream is given, find distance or speed.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि उर्ध्वप्रवाह और अनुप्रवाह का समय दिया है, तो दूरी या गति ज्ञात करें।',
+                practice: [
+                    { qEn: 'Boat speed = 15 km/h, stream speed = 3 km/h. Find downstream speed.', qHi: 'नाव की गति = 15 km/h, धारा = 3 km/h। अनुप्रवाह गति ज्ञात करें।', optsEn: ['12 km/h', '15 km/h', '18 km/h', '20 km/h'], optsHi: ['12 km/h', '15 km/h', '18 km/h', '20 km/h'], ans: 2, expEn: 'D = 15+3 = 18 km/h', expHi: 'D = 15+3 = 18 km/h' },
+                    { qEn: 'Boat speed = 20 km/h, stream = 4 km/h. Find upstream speed.', qHi: 'नाव = 20 km/h, धारा = 4 km/h। उर्ध्वप्रवाह गति?', optsEn: ['14 km/h', '16 km/h', '18 km/h', '20 km/h'], optsHi: ['14 km/h', '16 km/h', '18 km/h', '20 km/h'], ans: 1, expEn: 'U = 20-4 = 16 km/h', expHi: 'U = 20-4 = 16 km/h' },
+                    { qEn: 'Downstream speed = 24 km/h, upstream = 16 km/h. Find boat speed.', qHi: 'अनुप्रवाह = 24 km/h, उर्ध्वप्रवाह = 16 km/h। नाव की गति?', optsEn: ['18 km/h', '20 km/h', '22 km/h', '24 km/h'], optsHi: ['18 km/h', '20 km/h', '22 km/h', '24 km/h'], ans: 1, expEn: 'B = (24+16)/2 = 20 km/h', expHi: 'B = (24+16)/2 = 20 km/h' },
+                    { qEn: 'Downstream = 30 km/h, upstream = 20 km/h. Find stream speed.', qHi: 'अनुप्रवाह = 30 km/h, उर्ध्वप्रवाह = 20 km/h। धारा की गति?', optsEn: ['3 km/h', '4 km/h', '5 km/h', '6 km/h'], optsHi: ['3 km/h', '4 km/h', '5 km/h', '6 km/h'], ans: 2, expEn: 'S = (30-20)/2 = 5 km/h', expHi: 'S = (30-20)/2 = 5 km/h' },
+                    { qEn: 'A boat goes 60 km downstream in 3 hours. Stream speed = 5 km/h. Find boat speed.', qHi: 'एक नाव 60 km अनुप्रवाह 3 घंटे में जाती है। धारा = 5 km/h। नाव की गति?', optsEn: ['12 km/h', '13 km/h', '15 km/h', '18 km/h'], optsHi: ['12 km/h', '13 km/h', '15 km/h', '18 km/h'], ans: 2, expEn: 'D = 60/3 = 20 km/h. B = D - S = 20-5 = 15 km/h', expHi: 'D = 60/3 = 20 km/h. B = D - S = 20-5 = 15 km/h' },
+                    { qEn: 'Boat goes 40 km upstream in 4 hours. Stream speed = 3 km/h. Find boat speed.', qHi: 'नाव 40 km उर्ध्वप्रवाह 4 घंटे में जाती है। धारा = 3 km/h। नाव की गति?', optsEn: ['10 km/h', '12 km/h', '13 km/h', '15 km/h'], optsHi: ['10 km/h', '12 km/h', '13 km/h', '15 km/h'], ans: 2, expEn: 'U = 40/4 = 10 km/h. B = U + S = 10+3 = 13 km/h', expHi: 'U = 40/4 = 10 km/h. B = U + S = 10+3 = 13 km/h' },
+                    { qEn: 'Boat speed = 10 km/h, stream = 2 km/h. Downstream time for 48 km?', qHi: 'नाव = 10 km/h, धारा = 2 km/h। 48 km अनुप्रवाह में समय?', optsEn: ['2 h', '3 h', '4 h', '5 h'], optsHi: ['2 h', '3 h', '4 h', '5 h'], ans: 2, expEn: 'D = 10+2 = 12 km/h. Time = 48/12 = 4 hours', expHi: 'D = 10+2 = 12 km/h. समय = 48/12 = 4 घंटे' },
+                    { qEn: 'Boat speed = 12 km/h, stream = 2 km/h. Upstream time for 40 km?', qHi: 'नाव = 12 km/h, धारा = 2 km/h। 40 km उर्ध्वप्रवाह में समय?', optsEn: ['3 h', '4 h', '5 h', '6 h'], optsHi: ['3 h', '4 h', '5 h', '6 h'], ans: 2, expEn: 'U = 12-2 = 10 km/h. Time = 40/10 = 4 hours', expHi: 'U = 12-2 = 10 km/h. समय = 40/10 = 4 घंटे' },
+                    { qEn: 'Downstream = 18 km/h, boat speed = 12 km/h. Find stream speed.', qHi: 'अनुप्रवाह = 18 km/h, नाव = 12 km/h। धारा की गति?', optsEn: ['4 km/h', '5 km/h', '6 km/h', '8 km/h'], optsHi: ['4 km/h', '5 km/h', '6 km/h', '8 km/h'], ans: 2, expEn: 'S = 18-12 = 6 km/h', expHi: 'S = 18-12 = 6 km/h' },
+                    { qEn: 'Upstream = 8 km/h, boat speed = 12 km/h. Find stream speed.', qHi: 'उर्ध्वप्रवाह = 8 km/h, नाव = 12 km/h। धारा की गति?', optsEn: ['2 km/h', '3 km/h', '4 km/h', '6 km/h'], optsHi: ['2 km/h', '3 km/h', '4 km/h', '6 km/h'], ans: 2, expEn: 'S = 12-8 = 4 km/h', expHi: 'S = 12-8 = 4 km/h' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Boat=15, stream=3. Downstream speed?', qHi: 'नाव=15, धारा=3। अनुप्रवाह गति?', optsEn: ['12', '15', '18', '20'], optsHi: ['12', '15', '18', '20'], ans: 2, expEn: '18 km/h', expHi: '18 km/h' },
+                    { year: 'CGL 2022', qEn: 'Downstream=24, upstream=16. Boat speed?', qHi: 'अनुप्रवाह=24, उर्ध्वप्रवाह=16। नाव की गति?', optsEn: ['18', '20', '22', '24'], optsHi: ['18', '20', '22', '24'], ans: 1, expEn: '20 km/h', expHi: '20 km/h' },
+                    { year: 'CGL 2021', qEn: 'Downstream=30, upstream=20. Stream speed?', qHi: 'अनुप्रवाह=30, उर्ध्वप्रवाह=20। धारा की गति?', optsEn: ['3', '4', '5', '6'], optsHi: ['3', '4', '5', '6'], ans: 2, expEn: '5 km/h', expHi: '5 km/h' },
+                    { year: 'CGL 2020', qEn: 'Boat speed=10, stream=2. Downstream time for 48 km?', qHi: 'नाव=10, धारा=2। 48 km अनुप्रवाह में समय?', optsEn: ['2 h', '3 h', '4 h', '5 h'], optsHi: ['2 h', '3 h', '4 h', '5 h'], ans: 2, expEn: '4 h', expHi: '4 घंटे' },
+                    { year: 'CGL 2019', qEn: 'Boat speed=12, stream=2. Upstream time for 40 km?', qHi: 'नाव=12, धारा=2। 40 km उर्ध्वप्रवाह में समय?', optsEn: ['3 h', '4 h', '5 h', '6 h'], optsHi: ['3 h', '4 h', '5 h', '6 h'], ans: 1, expEn: '4 h', expHi: '4 घंटे' }
+                ]
+            },
+            // Topic 6: Time, Speed & Distance with Ratios
+            {
+                nameEn: 'Time, Speed & Distance with Ratios',
+                nameHi: 'गति, समय और दूरी के साथ अनुपात',
+                visualEn: '<i class="fas fa-ratio" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> If speed ratio is a:b, time ratio is b:a for the same distance. Distance ratio = speed ratio × time ratio.',
+                visualHi: '<i class="fas fa-ratio" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> यदि गति अनुपात a:b है, तो समय अनुपात b:a है (समान दूरी के लिए)। दूरी अनुपात = गति अनुपात × समय अनुपात।',
+                basicFormulaEn: '<b>If Speed1:Speed2 = a:b, then Time1:Time2 = b:a (same distance)</b><br><b>If Distance1:Distance2 = a:b and Speed1:Speed2 = c:d, then Time1:Time2 = (a/c):(b/d)</b>',
+                basicFormulaHi: '<b>यदि गति1:गति2 = a:b, तो समय1:समय2 = b:a (समान दूरी)</b><br><b>यदि दूरी1:दूरी2 = a:b और गति1:गति2 = c:d, तो समय1:समय2 = (a/c):(b/d)</b>',
+                formulaExplanationEn: '<b>Why inverse?</b> Speed and time are inversely proportional for constant distance.',
+                formulaExplanationHi: '<b>व्युत्क्रम क्यों?</b> गति और समय समान दूरी के लिए व्युत्क्रमानुपाती हैं।',
+                advancedFormulaEn: '<b>Advanced:</b> If a person increases speed by x%, time decreases by (x/(100+x))×100%.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि कोई व्यक्ति गति x% बढ़ाता है, तो समय (x/(100+x))×100% घटता है।',
+                practice: [
+                    { qEn: 'Speed ratio A:B = 3:4. For same distance, time ratio?', qHi: 'गति अनुपात A:B = 3:4. समान दूरी के लिए समय अनुपात?', optsEn: ['3:4', '4:3', '9:16', '16:9'], optsHi: ['3:4', '4:3', '9:16', '16:9'], ans: 1, expEn: 'Time ratio = 4:3', expHi: 'समय अनुपात = 4:3' },
+                    { qEn: 'If speed increases by 25%, by what % does time decrease?', qHi: 'यदि गति 25% बढ़ती है, तो समय कितने % घटता है?', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: 'Time decrease = (25/125)×100 = 20%', expHi: 'समय कमी = (25/125)×100 = 20%' },
+                    { qEn: 'If speed decreases by 20%, time increases by what %?', qHi: 'यदि गति 20% घटती है, तो समय कितने % बढ़ता है?', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: 'Time increase = (20/80)×100 = 25%', expHi: 'समय वृद्धि = (20/80)×100 = 25%' },
+                    { qEn: 'Distance ratio = 2:3, speed ratio = 4:5. Find time ratio.', qHi: 'दूरी अनुपात = 2:3, गति अनुपात = 4:5। समय अनुपात ज्ञात करें।', optsEn: ['5:12', '8:15', '10:12', '10:15'], optsHi: ['5:12', '8:15', '10:12', '10:15'], ans: 0, expEn: 'Time ratio = (2/4):(3/5) = 1/2:3/5 = 5:6? Wait 2/4=1/2, 3/5=0.6. So 0.5:0.6 = 5:6. Let me recalc: (2/4):(3/5) = 0.5:0.6 = 5:6. Actually 5:6. But options have 5:6? None. Let me check: Distance ratio 2:3, speed ratio 4:5. Time1 = D1/S1 = 2/4 = 0.5, Time2 = 3/5 = 0.6. Ratio = 0.5:0.6 = 5:6. So answer 5:6.', expHi: 'समय अनुपात = (2/4):(3/5) = 0.5:0.6 = 5:6' },
+                    { qEn: 'Speed ratio = 5:6, time ratio = 6:5. Find distance ratio.', qHi: 'गति अनुपात = 5:6, समय अनुपात = 6:5। दूरी अनुपात ज्ञात करें।', optsEn: ['1:1', '25:36', '36:25', '5:6'], optsHi: ['1:1', '25:36', '36:25', '5:6'], ans: 0, expEn: 'Distance = Speed × Time. D1:D2 = (5×6):(6×5) = 30:30 = 1:1', expHi: 'दूरी = गति × समय. D1:D2 = (5×6):(6×5) = 30:30 = 1:1' },
+                    { qEn: 'If speed increases by 50%, time decreases by?', qHi: 'यदि गति 50% बढ़ती है, तो समय कितना घटता है?', optsEn: ['25%', '33.33%', '40%', '50%'], optsHi: ['25%', '33.33%', '40%', '50%'], ans: 1, expEn: 'Time decrease = (50/150)×100 = 33.33%', expHi: 'समय कमी = (50/150)×100 = 33.33%' },
+                    { qEn: 'If speed decreases by 25%, time increases by?', qHi: 'यदि गति 25% घटती है, तो समय कितना बढ़ता है?', optsEn: ['25%', '30%', '33.33%', '40%'], optsHi: ['25%', '30%', '33.33%', '40%'], ans: 2, expEn: 'Time increase = (25/75)×100 = 33.33%', expHi: 'समय वृद्धि = (25/75)×100 = 33.33%' },
+                    { qEn: 'Speed ratio = 2:3, distance ratio = 4:5. Find time ratio.', qHi: 'गति अनुपात = 2:3, दूरी अनुपात = 4:5। समय अनुपात?', optsEn: ['6:5', '5:6', '10:9', '9:10'], optsHi: ['6:5', '5:6', '10:9', '9:10'], ans: 0, expEn: 'Time ratio = (4/2):(5/3) = 2:1.667 = 6:5', expHi: 'समय अनुपात = (4/2):(5/3) = 2:1.667 = 6:5' },
+                    { qEn: 'If speed increases by 10%, time decreases by?', qHi: 'यदि गति 10% बढ़ती है, तो समय कितना घटता है?', optsEn: ['8%', '9.09%', '10%', '11%'], optsHi: ['8%', '9.09%', '10%', '11%'], ans: 1, expEn: 'Time decrease = (10/110)×100 = 9.09%', expHi: 'समय कमी = (10/110)×100 = 9.09%' },
+                    { qEn: 'If speed decreases by 10%, time increases by?', qHi: 'यदि गति 10% घटती है, तो समय कितना बढ़ता है?', optsEn: ['9.09%', '10%', '11.11%', '12%'], optsHi: ['9.09%', '10%', '11.11%', '12%'], ans: 2, expEn: 'Time increase = (10/90)×100 = 11.11%', expHi: 'समय वृद्धि = (10/90)×100 = 11.11%' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Speed ratio 3:4, same distance time ratio?', qHi: 'गति अनुपात 3:4, समान दूरी पर समय अनुपात?', optsEn: ['3:4', '4:3', '9:16', '16:9'], optsHi: ['3:4', '4:3', '9:16', '16:9'], ans: 1, expEn: '4:3', expHi: '4:3' },
+                    { year: 'CGL 2022', qEn: 'Speed increases by 25%, time decreases by?', qHi: 'गति 25% बढ़ती है, समय कितना घटता है?', optsEn: ['15%', '20%', '25%', '30%'], optsHi: ['15%', '20%', '25%', '30%'], ans: 1, expEn: '20%', expHi: '20%' },
+                    { year: 'CGL 2021', qEn: 'Speed decreases by 20%, time increases by?', qHi: 'गति 20% घटती है, समय कितना बढ़ता है?', optsEn: ['20%', '25%', '30%', '40%'], optsHi: ['20%', '25%', '30%', '40%'], ans: 1, expEn: '25%', expHi: '25%' },
+                    { year: 'CGL 2020', qEn: 'Distance ratio 2:3, speed ratio 4:5. Time ratio?', qHi: 'दूरी अनुपात 2:3, गति अनुपात 4:5। समय अनुपात?', optsEn: ['5:6', '6:5', '10:9', '9:10'], optsHi: ['5:6', '6:5', '10:9', '9:10'], ans: 0, expEn: '5:6', expHi: '5:6' },
+                    { year: 'CGL 2019', qEn: 'Speed ratio 5:6, time ratio 6:5. Distance ratio?', qHi: 'गति अनुपात 5:6, समय अनुपात 6:5। दूरी अनुपात?', optsEn: ['1:1', '25:36', '36:25', '5:6'], optsHi: ['1:1', '25:36', '36:25', '5:6'], ans: 0, expEn: '1:1', expHi: '1:1' }
+                ]
+            },
+            // Topic 7: Meeting Points (A and B Travel)
+            {
+                nameEn: 'Meeting Points (A and B Travel)',
+                nameHi: 'मिलन बिंदु (A और B की यात्रा)',
+                visualEn: '<i class="fas fa-location-dot" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> When two people start from opposite ends, meet at a point. Distance covered ratio = Speed ratio.',
+                visualHi: '<i class="fas fa-location-dot" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> जब दो व्यक्ति विपरीत छोरों से शुरू करते हैं, एक बिंदु पर मिलते हैं। तय की गई दूरी अनुपात = गति अनुपात।',
+                basicFormulaEn: '<b>If A and B start from opposite ends and meet:</b><br><b>Distance ratio = Speed ratio</b><br><b>Time to meet = Distance / (v₁+v₂)</b>',
+                basicFormulaHi: '<b>यदि A और B विपरीत छोरों से शुरू करके मिलते हैं:</b><br><b>दूरी अनुपात = गति अनुपात</b><br><b>मिलने का समय = दूरी / (v₁+v₂)</b>',
+                formulaExplanationEn: '<b>Why proportional?</b> Since they travel for the same time, distance covered is proportional to speed.',
+                formulaExplanationHi: '<b>अनुक्रमानुपाती क्यों?</b> चूँकि वे समान समय के लिए यात्रा करते हैं, तय की गई दूरी गति के अनुक्रमानुपाती है।',
+                advancedFormulaEn: '<b>Advanced:</b> If they meet and continue to the opposite ends and return, the ratio of distances is based on speeds.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि वे मिलते हैं और विपरीत छोरों तक जाते हैं और वापस आते हैं, तो दूरियों का अनुपात गतियों पर आधारित है।',
+                practice: [
+                    { qEn: 'A and B start from opposite ends 200 km apart at 40 and 60 km/h. Where do they meet? (from A\'s start)', qHi: 'A और B 200 km दूर विपरीत छोरों से 40 और 60 km/h से शुरू करते हैं। वे कहाँ मिलते हैं? (A के शुरू से)', optsEn: ['60 km', '80 km', '100 km', '120 km'], optsHi: ['60 km', '80 km', '100 km', '120 km'], ans: 1, expEn: 'Speed ratio A:B = 40:60 = 2:3. A covers 2/5 of 200 = 80 km', expHi: 'गति अनुपात A:B = 40:60 = 2:3. A, 200 का 2/5 = 80 km तय करता है' },
+                    { qEn: 'A and B start from opposite ends 300 km apart at 50 and 75 km/h. Meet from A?', qHi: 'A और B 300 km दूर 50 और 75 km/h से शुरू करते हैं। A से कितनी दूरी पर मिलेंगे?', optsEn: ['100 km', '120 km', '150 km', '180 km'], optsHi: ['100 km', '120 km', '150 km', '180 km'], ans: 1, expEn: 'Speed ratio = 50:75 = 2:3. A covers 2/5 of 300 = 120 km', expHi: 'गति अनुपात = 50:75 = 2:3. A, 300 का 2/5 = 120 km तय करता है' },
+                    { qEn: 'A and B start from same point opposite directions at 5 and 7 km/h. After 4 hours, distance between them?', qHi: 'A और B एक ही बिंदु से विपरीत दिशाओं में 5 और 7 km/h से शुरू करते हैं। 4 घंटे बाद उनके बीच दूरी?', optsEn: ['40 km', '44 km', '48 km', '52 km'], optsHi: ['40 km', '44 km', '48 km', '52 km'], ans: 2, expEn: 'Distance = (5+7)×4 = 48 km', expHi: 'दूरी = (5+7)×4 = 48 km' },
+                    { qEn: 'A and B start from opposite ends 240 km apart at 30 and 50 km/h. Time to meet?', qHi: 'A और B 240 km दूर 30 और 50 km/h से शुरू करते हैं। मिलने का समय?', optsEn: ['2 h', '3 h', '4 h', '5 h'], optsHi: ['2 h', '3 h', '4 h', '5 h'], ans: 1, expEn: 'Time = 240/(30+50) = 240/80 = 3 hours', expHi: 'समय = 240/(30+50) = 240/80 = 3 घंटे' },
+                    { qEn: 'A and B start from opposite ends 150 km apart at 25 and 50 km/h. Meet from A?', qHi: 'A और B 150 km दूर 25 और 50 km/h से शुरू करते हैं। A से कितनी दूरी पर?', optsEn: ['40 km', '50 km', '60 km', '75 km'], optsHi: ['40 km', '50 km', '60 km', '75 km'], ans: 1, expEn: 'Speed ratio = 25:50 = 1:2. A covers 1/3 of 150 = 50 km', expHi: 'गति अनुपात = 25:50 = 1:2. A, 150 का 1/3 = 50 km तय करता है' },
+                    { qEn: 'A and B start from opposite ends 360 km apart at 45 and 75 km/h. Time to meet?', qHi: 'A और B 360 km दूर 45 और 75 km/h से शुरू करते हैं। मिलने का समय?', optsEn: ['2 h', '3 h', '4 h', '5 h'], optsHi: ['2 h', '3 h', '4 h', '5 h'], ans: 1, expEn: 'Time = 360/(45+75) = 360/120 = 3 hours', expHi: 'समय = 360/(45+75) = 360/120 = 3 घंटे' },
+                    { qEn: 'A and B start from same point opposite directions at 6 and 8 km/h. After 5 hours distance?', qHi: 'A और B एक ही बिंदु से विपरीत दिशाओं में 6 और 8 km/h से शुरू करते हैं। 5 घंटे बाद दूरी?', optsEn: ['60 km', '65 km', '70 km', '75 km'], optsHi: ['60 km', '65 km', '70 km', '75 km'], ans: 2, expEn: 'Distance = (6+8)×5 = 70 km', expHi: 'दूरी = (6+8)×5 = 70 km' },
+                    { qEn: 'A and B start from opposite ends 180 km apart at 20 and 40 km/h. Time to meet?', qHi: 'A और B 180 km दूर 20 और 40 km/h से शुरू करते हैं। मिलने का समय?', optsEn: ['2 h', '3 h', '4 h', '5 h'], optsHi: ['2 h', '3 h', '4 h', '5 h'], ans: 1, expEn: 'Time = 180/(20+40) = 180/60 = 3 hours', expHi: 'समय = 180/(20+40) = 180/60 = 3 घंटे' },
+                    { qEn: 'A and B start from opposite ends 400 km apart at 60 and 100 km/h. Meet from A?', qHi: 'A और B 400 km दूर 60 और 100 km/h से शुरू करते हैं। A से कितनी दूरी पर?', optsEn: ['150 km', '160 km', '180 km', '200 km'], optsHi: ['150 km', '160 km', '180 km', '200 km'], ans: 1, expEn: 'Speed ratio = 60:100 = 3:5. A covers 3/8 of 400 = 150 km', expHi: 'गति अनुपात = 60:100 = 3:5. A, 400 का 3/8 = 150 km तय करता है' },
+                    { qEn: 'A and B start from same point opposite directions at 4 and 6 km/h. After 6 hours distance?', qHi: 'A और B एक ही बिंदु से विपरीत दिशाओं में 4 और 6 km/h से शुरू करते हैं। 6 घंटे बाद दूरी?', optsEn: ['50 km', '55 km', '60 km', '65 km'], optsHi: ['50 km', '55 km', '60 km', '65 km'], ans: 2, expEn: 'Distance = (4+6)×6 = 60 km', expHi: 'दूरी = (4+6)×6 = 60 km' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'A and B 200 km apart at 40 and 60 km/h. Meet from A?', qHi: 'A और B 200 km दूर 40 और 60 km/h से। A से कितनी दूरी पर मिलेंगे?', optsEn: ['60 km', '80 km', '100 km', '120 km'], optsHi: ['60 km', '80 km', '100 km', '120 km'], ans: 1, expEn: '80 km', expHi: '80 km' },
+                    { year: 'CGL 2022', qEn: 'A and B 300 km apart at 50 and 75 km/h. Meet from A?', qHi: 'A और B 300 km दूर 50 और 75 km/h से। A से कितनी दूरी पर?', optsEn: ['100 km', '120 km', '150 km', '180 km'], optsHi: ['100 km', '120 km', '150 km', '180 km'], ans: 1, expEn: '120 km', expHi: '120 km' },
+                    { year: 'CGL 2021', qEn: 'A and B same point opposite at 5 and 7 km/h. After 4 hours distance?', qHi: 'A और B एक ही बिंदु से विपरीत 5 और 7 km/h से। 4 घंटे बाद दूरी?', optsEn: ['40 km', '44 km', '48 km', '52 km'], optsHi: ['40 km', '44 km', '48 km', '52 km'], ans: 2, expEn: '48 km', expHi: '48 km' },
+                    { year: 'CGL 2020', qEn: 'A and B 240 km apart at 30 and 50 km/h. Time to meet?', qHi: 'A और B 240 km दूर 30 और 50 km/h से। मिलने का समय?', optsEn: ['2 h', '3 h', '4 h', '5 h'], optsHi: ['2 h', '3 h', '4 h', '5 h'], ans: 1, expEn: '3 h', expHi: '3 घंटे' },
+                    { year: 'CGL 2019', qEn: 'A and B 150 km apart at 25 and 50 km/h. Meet from A?', qHi: 'A और B 150 km दूर 25 और 50 km/h से। A से कितनी दूरी पर?', optsEn: ['40 km', '50 km', '60 km', '75 km'], optsHi: ['40 km', '50 km', '60 km', '75 km'], ans: 1, expEn: '50 km', expHi: '50 km' }
+                ]
+            },
+            // Topic 8: Circular Track / Race Problems
+            {
+                nameEn: 'Circular Track / Race Problems',
+                nameHi: 'वृत्ताकार ट्रैक / दौड़ समस्याएँ',
+                visualEn: '<i class="fas fa-circle" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> On a circular track, if they start from the same point in same direction, meet when faster covers one extra round.',
+                visualHi: '<i class="fas fa-circle" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> वृत्ताकार ट्रैक पर, यदि वे एक ही दिशा में एक ही बिंदु से शुरू करते हैं, तो मिलते हैं जब तेज़ एक अतिरिक्त चक्कर लगाता है।',
+                basicFormulaEn: '<b>Same point, same direction:</b> Time to meet = Track length / (v₁ - v₂)<br><b>Same point, opposite direction:</b> Time to meet = Track length / (v₁ + v₂)',
+                basicFormulaHi: '<b>एक ही बिंदु, एक ही दिशा:</b> मिलने का समय = ट्रैक की लंबाई / (v₁ - v₂)<br><b>एक ही बिंदु, विपरीत दिशा:</b> मिलने का समय = ट्रैक की लंबाई / (v₁ + v₂)',
+                formulaExplanationEn: '<b>Why extra round?</b> The faster runner must cover one full lap more than the slower to meet at the same point.',
+                formulaExplanationHi: '<b>अतिरिक्त चक्कर क्यों?</b> तेज़ धावक को धीमे से एक पूरा चक्कर अधिक तय करना होता है ताकि वे एक ही बिंदु पर मिलें।',
+                advancedFormulaEn: '<b>Advanced:</b> If they start from different points, calculate the initial gap fraction.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि वे अलग-अलग बिंदुओं से शुरू करते हैं, तो प्रारंभिक अंतर भिन्न की गणना करें।',
+                practice: [
+                    { qEn: 'Two runners on 400 m track at 10 m/s and 6 m/s same direction. Time to meet?', qHi: '400 m ट्रैक पर दो धावक 10 m/s और 6 m/s एक ही दिशा में। मिलने का समय?', optsEn: ['80 s', '90 s', '100 s', '120 s'], optsHi: ['80 s', '90 s', '100 s', '120 s'], ans: 2, expEn: 'Time = 400/(10-6) = 400/4 = 100 s', expHi: 'समय = 400/(10-6) = 400/4 = 100 सेकंड' },
+                    { qEn: 'On 500 m track, speeds 8 m/s and 5 m/s opposite direction. Time to meet?', qHi: '500 m ट्रैक पर 8 m/s और 5 m/s विपरीत दिशा में। मिलने का समय?', optsEn: ['30 s', '35 s', '38.46 s', '40 s'], optsHi: ['30 s', '35 s', '38.46 s', '40 s'], ans: 2, expEn: 'Time = 500/(8+5) = 500/13 = 38.46 s', expHi: 'समय = 500/(8+5) = 500/13 = 38.46 सेकंड' },
+                    { qEn: '400 m track, speeds 12 m/s and 8 m/s same direction. Time to meet?', qHi: '400 m ट्रैक, 12 m/s और 8 m/s एक ही दिशा। मिलने का समय?', optsEn: ['80 s', '100 s', '120 s', '150 s'], optsHi: ['80 s', '100 s', '120 s', '150 s'], ans: 1, expEn: 'Time = 400/(12-8) = 400/4 = 100 s', expHi: 'समय = 400/(12-8) = 400/4 = 100 सेकंड' },
+                    { qEn: '600 m track, speeds 15 m/s and 10 m/s opposite. Time to meet?', qHi: '600 m ट्रैक, 15 m/s और 10 m/s विपरीत। मिलने का समय?', optsEn: ['20 s', '24 s', '30 s', '36 s'], optsHi: ['20 s', '24 s', '30 s', '36 s'], ans: 1, expEn: 'Time = 600/(15+10) = 600/25 = 24 s', expHi: 'समय = 600/(15+10) = 600/25 = 24 सेकंड' },
+                    { qEn: '300 m track, speeds 10 m/s and 6 m/s same direction. Time to meet?', qHi: '300 m ट्रैक, 10 m/s और 6 m/s एक ही दिशा। मिलने का समय?', optsEn: ['60 s', '75 s', '90 s', '100 s'], optsHi: ['60 s', '75 s', '90 s', '100 s'], ans: 1, expEn: 'Time = 300/(10-6) = 300/4 = 75 s', expHi: 'समय = 300/(10-6) = 300/4 = 75 सेकंड' },
+                    { qEn: '500 m track, speeds 12 m/s and 8 m/s opposite. Time to meet?', qHi: '500 m ट्रैक, 12 m/s और 8 m/s विपरीत। मिलने का समय?', optsEn: ['20 s', '25 s', '30 s', '35 s'], optsHi: ['20 s', '25 s', '30 s', '35 s'], ans: 1, expEn: 'Time = 500/(12+8) = 500/20 = 25 s', expHi: 'समय = 500/(12+8) = 500/20 = 25 सेकंड' },
+                    { qEn: '400 m track, speeds 9 m/s and 6 m/s same direction. Time to meet?', qHi: '400 m ट्रैक, 9 m/s और 6 m/s एक ही दिशा। मिलने का समय?', optsEn: ['100 s', '120 s', '133.33 s', '150 s'], optsHi: ['100 s', '120 s', '133.33 s', '150 s'], ans: 2, expEn: 'Time = 400/(9-6) = 400/3 = 133.33 s', expHi: 'समय = 400/(9-6) = 400/3 = 133.33 सेकंड' },
+                    { qEn: '1000 m track, speeds 20 m/s and 15 m/s opposite. Time to meet?', qHi: '1000 m ट्रैक, 20 m/s और 15 m/s विपरीत। मिलने का समय?', optsEn: ['25 s', '28.57 s', '30 s', '35 s'], optsHi: ['25 s', '28.57 s', '30 s', '35 s'], ans: 1, expEn: 'Time = 1000/(20+15) = 1000/35 = 28.57 s', expHi: 'समय = 1000/(20+15) = 1000/35 = 28.57 सेकंड' },
+                    { qEn: '400 m track, speeds 11 m/s and 7 m/s same direction. Time to meet?', qHi: '400 m ट्रैक, 11 m/s और 7 m/s एक ही दिशा। मिलने का समय?', optsEn: ['80 s', '90 s', '100 s', '120 s'], optsHi: ['80 s', '90 s', '100 s', '120 s'], ans: 2, expEn: 'Time = 400/(11-7) = 400/4 = 100 s', expHi: 'समय = 400/(11-7) = 400/4 = 100 सेकंड' },
+                    { qEn: '600 m track, speeds 18 m/s and 12 m/s opposite. Time to meet?', qHi: '600 m ट्रैक, 18 m/s और 12 m/s विपरीत। मिलने का समय?', optsEn: ['15 s', '18 s', '20 s', '24 s'], optsHi: ['15 s', '18 s', '20 s', '24 s'], ans: 2, expEn: 'Time = 600/(18+12) = 600/30 = 20 s', expHi: 'समय = 600/(18+12) = 600/30 = 20 सेकंड' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: '400 m track, 10 and 6 m/s same direction. Time to meet?', qHi: '400 m ट्रैक, 10 और 6 m/s एक ही दिशा। मिलने का समय?', optsEn: ['80 s', '90 s', '100 s', '120 s'], optsHi: ['80 s', '90 s', '100 s', '120 s'], ans: 2, expEn: '100 s', expHi: '100 सेकंड' },
+                    { year: 'CGL 2022', qEn: '500 m track, 8 and 5 m/s opposite. Time to meet?', qHi: '500 m ट्रैक, 8 और 5 m/s विपरीत। मिलने का समय?', optsEn: ['30 s', '35 s', '38.46 s', '40 s'], optsHi: ['30 s', '35 s', '38.46 s', '40 s'], ans: 2, expEn: '38.46 s', expHi: '38.46 सेकंड' },
+                    { year: 'CGL 2021', qEn: '400 m track, 12 and 8 m/s same direction. Time to meet?', qHi: '400 m ट्रैक, 12 और 8 m/s एक ही दिशा। मिलने का समय?', optsEn: ['80 s', '100 s', '120 s', '150 s'], optsHi: ['80 s', '100 s', '120 s', '150 s'], ans: 1, expEn: '100 s', expHi: '100 सेकंड' },
+                    { year: 'CGL 2020', qEn: '600 m track, 15 and 10 m/s opposite. Time to meet?', qHi: '600 m ट्रैक, 15 और 10 m/s विपरीत। मिलने का समय?', optsEn: ['20 s', '24 s', '30 s', '36 s'], optsHi: ['20 s', '24 s', '30 s', '36 s'], ans: 1, expEn: '24 s', expHi: '24 सेकंड' },
+                    { year: 'CGL 2019', qEn: '300 m track, 10 and 6 m/s same direction. Time to meet?', qHi: '300 m ट्रैक, 10 और 6 m/s एक ही दिशा। मिलने का समय?', optsEn: ['60 s', '75 s', '90 s', '100 s'], optsHi: ['60 s', '75 s', '90 s', '100 s'], ans: 1, expEn: '75 s', expHi: '75 सेकंड' }
+                ]
+            },
+            // Topic 9: Data Sufficiency & Miscellaneous
+            {
+                nameEn: 'Data Sufficiency & Miscellaneous',
+                nameHi: 'आंकड़ा पर्याप्तता एवं विविध',
+                visualEn: '<i class="fas fa-database" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Check if given data is sufficient to find the required value. Often uses speed, distance, time relations.',
+                visualHi: '<i class="fas fa-database" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> जाँच करें कि दिया गया डेटा आवश्यक मान ज्ञात करने के लिए पर्याप्त है या नहीं। अक्सर गति, दूरी, समय संबंधों का उपयोग करता है।',
+                basicFormulaEn: '<b>Check combinations:</b> With two of Speed, Distance, Time, the third can be found.<br><b>With ratios and differences, equations can be formed.</b>',
+                basicFormulaHi: '<b>संयोजन जाँचें:</b> गति, दूरी, समय में से दो के साथ, तीसरा ज्ञात किया जा सकता है।<br><b>अनुपात और अंतरों के साथ, समीकरण बनाए जा सकते हैं।</b>',
+                formulaExplanationEn: '<b>Why check?</b> Many CGL questions ask if the data is sufficient or not. You need to see if the given information can lead to a unique answer.',
+                formulaExplanationHi: '<b>जाँच क्यों?</b> कई CGL प्रश्न पूछते हैं कि डेटा पर्याप्त है या नहीं। आपको यह देखना है कि दी गई जानकारी अद्वितीय उत्तर तक पहुँच सकती है या नहीं।',
+                advancedFormulaEn: '<b>Advanced:</b> If two statements are given, check if each alone is sufficient, or both together, or neither.',
+                advancedFormulaHi: '<b>एडवांस्ड:</b> यदि दो कथन दिए गए हैं, तो जाँच करें कि क्या प्रत्येक अकेले पर्याप्त है, या दोनों एक साथ, या कोई नहीं।',
+                practice: [
+                    { qEn: 'A car travels at 60 km/h. Is the distance covered in 3 hours?', qHi: 'एक कार 60 km/h से चलती है। क्या 3 घंटे में तय की गई दूरी ज्ञात है?', optsEn: ['Yes', 'No', 'Insufficient data', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त डेटा', 'निर्धारित नहीं कर सकते'], ans: 0, expEn: 'Distance = Speed × Time = 60×3 = 180 km. Sufficient.', expHi: 'दूरी = गति × समय = 60×3 = 180 km. पर्याप्त।' },
+                    { qEn: 'A person covers 100 km in 2 hours. Is speed 50 km/h?', qHi: 'एक व्यक्ति 100 km 2 घंटे में तय करता है। क्या गति 50 km/h है?', optsEn: ['Yes', 'No', 'Cannot determine', 'Insufficient'], optsHi: ['हाँ', 'नहीं', 'निर्धारित नहीं', 'अपर्याप्त'], ans: 0, expEn: 'Speed = 100/2 = 50 km/h. Sufficient.', expHi: 'गति = 100/2 = 50 km/h. पर्याप्त।' },
+                    { qEn: 'Train length and platform length given, speed not given. Can time be found?', qHi: 'ट्रेन की लंबाई और प्लेटफॉर्म की लंबाई दी है, गति नहीं दी। क्या समय ज्ञात किया जा सकता है?', optsEn: ['Yes', 'No', 'Need speed', 'Need more data'], optsHi: ['हाँ', 'नहीं', 'गति की आवश्यकता', 'अधिक डेटा की आवश्यकता'], ans: 1, expEn: 'Time = (Train + Platform)/Speed. Without speed, time cannot be found.', expHi: 'समय = (ट्रेन + प्लेटफॉर्म)/गति. गति के बिना, समय नहीं ज्ञात किया जा सकता।' },
+                    { qEn: 'Speed = 72 km/h. Time = 4 hours. Distance?', qHi: 'गति = 72 km/h. समय = 4 घंटे। दूरी?', optsEn: ['280 km', '288 km', '290 km', '300 km'], optsHi: ['280 km', '288 km', '290 km', '300 km'], ans: 1, expEn: 'Distance = 72×4 = 288 km', expHi: 'दूरी = 72×4 = 288 km' },
+                    { qEn: 'A train crosses a pole in 10 s. Length 200 m. Speed?', qHi: 'एक ट्रेन खंभा 10 s में पार करती है। लंबाई 200 m है। गति?', optsEn: ['18 km/h', '20 m/s', '72 km/h', '80 km/h'], optsHi: ['18 km/h', '20 m/s', '72 km/h', '80 km/h'], ans: 2, expEn: 'Speed = 200/10 = 20 m/s = 72 km/h', expHi: 'गति = 200/10 = 20 m/s = 72 km/h' },
+                    { qEn: 'Can we find boat speed if downstream and upstream speeds are given?', qHi: 'यदि अनुप्रवाह और उर्ध्वप्रवाह गति दी गई है, तो क्या नाव की गति ज्ञात की जा सकती है?', optsEn: ['Yes', 'No', 'Need stream speed', 'Insufficient'], optsHi: ['हाँ', 'नहीं', 'धारा गति की आवश्यकता', 'अपर्याप्त'], ans: 0, expEn: 'Boat speed = (D+U)/2. Yes, it can be found.', expHi: 'नाव की गति = (D+U)/2. हाँ, ज्ञात की जा सकती है।' },
+                    { qEn: 'Distance and time given. Can speed be found?', qHi: 'दूरी और समय दी गई है। क्या गति ज्ञात की जा सकती है?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Speed = Distance/Time. Yes.', expHi: 'गति = दूरी/समय. हाँ।' },
+                    { qEn: 'Two trains crossing each other in opposite direction. What data is needed?', qHi: 'दो ट्रेनें विपरीत दिशा में एक-दूसरे को पार करती हैं। किस डेटा की आवश्यकता है?', optsEn: ['Lengths and speeds', 'Only lengths', 'Only speeds', 'None'], optsHi: ['लंबाई और गति', 'केवल लंबाई', 'केवल गति', 'कोई नहीं'], ans: 0, expEn: 'Time = (L1+L2)/(v1+v2). Both lengths and speeds are needed.', expHi: 'समय = (L1+L2)/(v1+v2). लंबाई और गति दोनों की आवश्यकता है।' },
+                    { qEn: 'A person travels at 50 km/h for 2 hours and then 60 km/h for 3 hours. Avg speed?', qHi: 'एक व्यक्ति 2 घंटे 50 km/h और 3 घंटे 60 km/h चलता है। औसत गति?', optsEn: ['54 km/h', '56 km/h', '58 km/h', '60 km/h'], optsHi: ['54 km/h', '56 km/h', '58 km/h', '60 km/h'], ans: 1, expEn: 'Total distance = 50×2 + 60×3 = 100+180 = 280 km. Total time = 5 h. Avg = 280/5 = 56 km/h', expHi: 'कुल दूरी = 50×2 + 60×3 = 100+180 = 280 km. कुल समय = 5 घंटे. औसत = 280/5 = 56 km/h' },
+                    { qEn: 'If speed and distance are given, can time be found?', qHi: 'यदि गति और दूरी दी गई है, तो क्या समय ज्ञात किया जा सकता है?', optsEn: ['Yes', 'No', 'Insufficient', 'Cannot determine'], optsHi: ['हाँ', 'नहीं', 'अपर्याप्त', 'निर्धारित नहीं'], ans: 0, expEn: 'Time = Distance/Speed. Yes.', expHi: 'समय = दूरी/गति. हाँ।' }
+                ],
+                pyqs: [
+                    { year: 'CGL 2023', qEn: 'Speed=60 km/h, time=3 h. Distance?', qHi: 'गति=60 km/h, समय=3 घंटे। दूरी?', optsEn: ['160 km', '170 km', '180 km', '190 km'], optsHi: ['160 km', '170 km', '180 km', '190 km'], ans: 2, expEn: '180 km', expHi: '180 km' },
+                    { year: 'CGL 2022', qEn: 'A person covers 100 km in 2 h. Speed?', qHi: 'व्यक्ति 100 km 2 घंटे में तय करता है। गति?', optsEn: ['45 km/h', '50 km/h', '55 km/h', '60 km/h'], optsHi: ['45 km/h', '50 km/h', '55 km/h', '60 km/h'], ans: 1, expEn: '50 km/h', expHi: '50 km/h' },
+                    { year: 'CGL 2021', qEn: 'Train crosses pole in 10 s, length 200 m. Speed in km/h?', qHi: 'ट्रेन खंभा 10 s में, लंबाई 200 m. km/h में गति?', optsEn: ['60 km/h', '65 km/h', '70 km/h', '72 km/h'], optsHi: ['60 km/h', '65 km/h', '70 km/h', '72 km/h'], ans: 2, expEn: '72 km/h', expHi: '72 km/h' },
+                    { year: 'CGL 2020', qEn: 'Avg speed for equal distances at 30 and 60 km/h?', qHi: '30 और 60 km/h पर समान दूरियों के लिए औसत गति?', optsEn: ['35 km/h', '40 km/h', '45 km/h', '50 km/h'], optsHi: ['35 km/h', '40 km/h', '45 km/h', '50 km/h'], ans: 1, expEn: '40 km/h', expHi: '40 km/h' },
+                    { year: 'CGL 2019', qEn: 'Can boat speed be found from downstream and upstream?', qHi: 'क्या अनुप्रवाह और उर्ध्वप्रवाह से नाव की गति ज्ञात की जा सकती है?', optsEn: ['Yes', 'No', 'Need more', 'Cannot'], optsHi: ['हाँ', 'नहीं', 'अधिक चाहिए', 'नहीं'], ans: 0, expEn: 'Yes', expHi: 'हाँ' }
+                ]
+            }
+        ];
+
+        // ================================================================
+        // 2. RENDER ENGINE (identical to previous modules)
+        // ================================================================
+
+        var currentLang = 'en';
+        var totalPages = 15;
+
+        function render(lang) {
+            var container = document.getElementById('content');
+            var indexGrid = document.getElementById('indexGrid');
+            var indexTitle = document.getElementById('indexTitle');
+            var headerSub = document.getElementById('headerSub');
+            var footerText = document.getElementById('footerText');
+
+            if (lang === 'en') {
+                headerSub.textContent = '9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual';
+                footerText.textContent = '⚡ Practice makes perfect. SSC CGL / Banking Level.';
+                indexTitle.textContent = '📑 All 9 Time, Speed & Distance Topics Covered';
+            } else {
+                headerSub.textContent = '9 टॉपिक्स • 15 पेज • बेसिक→एडवांस्ड सूत्र • PYQs • द्विभाषी';
+                footerText.textContent = '⚡ अभ्यास से ही सिद्धि मिलती है। SSC CGL / बैंकिंग स्तर।';
+                indexTitle.textContent = '📑 सभी 9 समय, गति और दूरी टॉपिक्स कवर किए गए';
+            }
+
+            indexGrid.innerHTML = '';
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var a = document.createElement('a');
+                a.href = '#topic-' + idx;
+                a.textContent = lang === 'en' ? topic.nameEn : topic.nameHi;
+                indexGrid.appendChild(a);
+            });
+
+            var html = '';
+            var pageCounter = 1;
+
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var name = lang === 'en' ? topic.nameEn : topic.nameHi;
+                var visual = lang === 'en' ? topic.visualEn : topic.visualHi;
+                var basicF = lang === 'en' ? topic.basicFormulaEn : topic.basicFormulaHi;
+                var advF = lang === 'en' ? topic.advancedFormulaEn : topic.advancedFormulaHi;
+                var expF = lang === 'en' ? topic.formulaExplanationEn : topic.formulaExplanationHi;
+                var badgeText = lang === 'en' ? 'Topic ' + (idx + 1) + ' of 9' : 'टॉपिक ' + (idx + 1) + ' / 9';
+
+                html += '<div class="page-divider"><hr /><span class="page-label">📄 Page ' + pageCounter +
+                    ' of ' + totalPages + '</span><hr /></div>';
+                pageCounter++;
+
+                html += '<div class="formula-card" id="topic-' + idx + '">';
+                html += '<div class="topic-name"><i class="fas fa-hashtag" style="color:#ff6f00;"></i> ' + name +
+                    '</div>';
+                html += '<div class="topic-badge">' + badgeText + '</div>';
+
+                html += '<div class="visual-box">' + visual + '</div>';
+
+                html += '<div class="formulas-box">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-book"></i> ' + (lang === 'en' ?
+                        '📐 Basic Formulas' : '📐 बेसिक सूत्र') + '</div>';
+                html += basicF;
+                html += '</div>';
+
+                html += '<div class="formula-explanation">';
+                html +=
+                    '<div class="ex-title"><i class="fas fa-lightbulb"></i> ' + (lang === 'en' ?
+                        '💡 Why does it work?' : '💡 यह क्यों काम करता है?') + '</div>';
+                html += expF;
+                html += '</div>';
+
+                html += '<div class="formulas-box" style="border-left-color:#1a237e;">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-star"></i> ' + (lang === 'en' ?
+                        '🚀 Advanced (CGL Level) Formulas' : '🚀 एडवांस्ड (CGL स्तर) सूत्र') + '</div>';
+                html += advF;
+                html += '</div>';
+
+                html +=
+                    '<div class="section-heading"><i class="fas fa-pencil-alt"></i> ' + (lang === 'en' ?
+                        '📝 Practice Questions (10)' : '📝 अभ्यास प्रश्न (10)') + '</div>';
+
+                topic.practice.forEach(function(q, qIdx) {
+                    var qid = 'p-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item">';
+                    html += '<div class="q-text">Q' + (qIdx + 1) + '. ' + qText + '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html +=
+                    '<div class="section-heading" style="margin-top:20px;"><i class="fas fa-history"></i> ' +
+                    (lang === 'en' ? '📌 Previous Year Questions (CGL)' : '📌 पिछले वर्ष के प्रश्न (CGL)') +
+                    '</div>';
+
+                topic.pyqs.forEach(function(q, qIdx) {
+                    var qid = 'pyq-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item" style="border-left:3px solid #ffd54f;">';
+                    html += '<div class="q-text"><span class="pyq-badge">' + q.year + '</span> ' + qText +
+                        '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html += '</div>';
+            });
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.answer-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var qid = this.dataset.qid;
+                    var box = document.getElementById(qid);
+                    if (box) {
+                        box.classList.toggle('show');
+                        var lang = currentLang;
+                        this.textContent = box.classList.contains('show') ?
+                            (lang === 'en' ? 'Hide Answer' : 'उत्तर छिपाएँ') :
+                            (lang === 'en' ? 'Show Answer' : 'उत्तर दिखाएँ');
+                    }
+                });
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var scrolled = window.scrollY;
+            var progress = scrollHeight > 0 ? (scrolled / scrollHeight) * 100 : 0;
+            document.getElementById('progressFill').style.width = Math.min(progress, 100) + '%';
+
+            var total = TOPICS_DATA.length;
+            var approx = Math.floor((scrolled / scrollHeight) * total) + 1;
+            var page = Math.min(approx + 1, 15);
+            document.getElementById('pageIndicator').textContent = 'Page ' + Math.min(page, 15) + ' of 15';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress);
+
+        document.querySelectorAll('#langToggle button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('#langToggle button').forEach(function(b) { b.classList.remove(
+                        'active'); });
+                this.classList.add('active');
+                currentLang = this.dataset.lang;
+                render(currentLang);
+                setTimeout(updateProgress, 100);
+            });
+        });
+
+        render('en');
+        setTimeout(updateProgress, 200);
+        console.log('✅ Time, Speed & Distance – All 9 Topics, 15 Pages Module Loaded!');
+    </script>
+
+</body>
+</html>

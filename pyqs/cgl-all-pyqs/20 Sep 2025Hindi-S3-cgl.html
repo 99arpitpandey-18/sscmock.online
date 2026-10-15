@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC CGL T-I Similar Paper (Held 20 Sep 2025 S3)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", sans-serif;
+            background: #f2f6fd;
+            padding: 1.5rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 880px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 1.8rem 2rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.08);
+        }
+
+        .paper-header {
+            border-bottom: 2px solid #eef2f8;
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .paper-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #0b1e33, #1f3a5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .paper-header .meta {
+            font-size: 0.8rem;
+            color: #475569;
+            background: #f1f5f9;
+            padding: 0.25rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #334155;
+            flex-wrap: wrap;
+        }
+
+        .stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .stats .num {
+            font-weight: 700;
+            color: #0b1e33;
+            font-size: 1.05rem;
+        }
+
+        .stats .num.revealed-num {
+            color: #0369a1;
+        }
+
+        .q-card {
+            background: #fafcff;
+            border: 1px solid #e9edf4;
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .q-card:hover {
+            border-color: #cbd5e1;
+            background: #ffffff;
+        }
+
+        .q-head {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .q-num {
+            font-weight: 700;
+            font-size: 0.75rem;
+            background: #eef2f8;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            color: #0b1e33;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .q-text {
+            font-size: 0.98rem;
+            font-weight: 500;
+            line-height: 1.6;
+            color: #0b1e33;
+        }
+
+        .q-text .hl {
+            font-weight: 600;
+            color: #0369a1;
+        }
+
+        .options {
+            margin: 0.6rem 0 0.2rem 0;
+            padding-left: 0.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .option {
+            font-size: 0.93rem;
+            padding: 0.15rem 0.4rem;
+            color: #1e293b;
+            border-radius: 4px;
+            transition: background 0.12s;
+        }
+
+        .option .letter {
+            font-weight: 600;
+            color: #475569;
+            margin-right: 0.3rem;
+        }
+
+        .option:hover {
+            background: #f1f5f9;
+        }
+
+        .answer-row {
+            margin-top: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-answer {
+            background: transparent;
+            border: 1px solid #cbd5e1;
+            padding: 0.25rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.15s;
+            background: #f8fafc;
+            font-family: inherit;
+        }
+
+        .btn-answer:hover {
+            background: #e9edf4;
+            border-color: #94a3b8;
+        }
+
+        .btn-answer.revealed {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            color: #1e4a8b;
+        }
+
+        .answer-box {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #0f3b5c;
+            background: #f1f6fe;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
+
+        .answer-box.visible {
+            opacity: 1;
+        }
+
+        .answer-box .ans-label {
+            font-weight: 400;
+            color: #475569;
+        }
+
+        .answer-box .exp {
+            font-weight: 400;
+            color: #1e293b;
+            font-size: 0.85rem;
+            background: #e8edf6;
+            padding: 0.05rem 0.7rem;
+            border-radius: 20px;
+            line-height: 1.5;
+        }
+
+        hr {
+            margin: 0.35rem 0 0 0;
+            border: none;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .footer-note {
+            margin-top: 1.8rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-align: center;
+            border-top: 1px solid #eef2f8;
+            padding-top: 1.2rem;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1f3a5e;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .scroll-top:hover {
+            background: #0b1e33;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem 0.8rem 1.8rem;
+            }
+            .q-card {
+                padding: 0.9rem 1rem;
+            }
+            .paper-header h1 {
+                font-size: 1.2rem;
+            }
+            .paper-header .meta {
+                font-size: 0.7rem;
+                padding: 0.15rem 0.8rem;
+            }
+            .stats {
+                font-size: 0.8rem;
+                gap: 1rem;
+            }
+            .q-text {
+                font-size: 0.9rem;
+            }
+            .option {
+                font-size: 0.85rem;
+            }
+            .answer-box {
+                font-size: 0.82rem;
+                padding: 0.1rem 0.7rem;
+            }
+            .btn-answer {
+                font-size: 0.72rem;
+                padding: 0.2rem 0.9rem;
+            }
+            .scroll-top {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+                bottom: 1.2rem;
+                right: 1.2rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                padding: 0.6rem 0.4rem 1.2rem;
+            }
+            .q-card {
+                padding: 0.6rem 0.7rem;
+            }
+            .q-text {
+                font-size: 0.83rem;
+            }
+            .option {
+                font-size: 0.8rem;
+            }
+            .answer-row {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+
+        <div class="paper-header">
+            <div>
+                <h1>📘 SSC CGL T-I · Similar Paper</h1>
+                <div class="stats">
+                    <span>📝 कुल प्रश्न: <span class="num" id="totalQ">100</span></span>
+                    <span>👁️ देखे गए: <span class="num revealed-num" id="revealCount">0</span></span>
+                </div>
+            </div>
+            <span class="meta">Held 20 Sep 2025 · S3</span>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="footer-note">
+            ✅ "Show Answer" पर क्लिक करें – उत्तर + स्पष्टीकरण दिखेगा · फिर से क्लिक करें छिपाने के लिए
+        </div>
+    </div>
+
+    <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+
+    <script>
+        // ─── DATA ──────────────────────────────────────────────────────────────
+        // Note: exp = '' वाले प्रश्नों के लिए डिफ़ॉल्ट स्पष्टीकरण दिखेगा।
+        // आप चाहें तो exp: 'आपका स्पष्टीकरण' डालकर अपडेट कर सकते हैं।
+        const questionsData = [{
+            id: 1,
+            q: 'कथन:\n1. सभी पेन स्टेशनरी हैं।\n2. कुछ स्टेशनरी महंगी हैं।\n3. सभी महंगी वस्तुएं कर योग्य हैं।\nनिष्कर्ष:\nI. कुछ स्टेशनरी कर योग्य हैं।\nII. कुछ पेन महंगे हैं।',
+            opts: ['केवल I अनुसरण करता है', 'केवल II अनुसरण करता है', 'I और II दोनों अनुसरण करते हैं',
+                'न तो I और न ही II अनुसरण करता है'
+            ],
+            ans: 'a',
+            exp: 'सभी पेन स्टेशनरी हैं। कुछ स्टेशनरी महंगी हैं। सभी महंगी वस्तुएं कर योग्य हैं। इसलिए जो स्टेशनरी महंगी है, वह कर योग्य है। लेकिन यह निश्चित नहीं है कि पेन महंगे हैं। अतः केवल I अनुसरण करता है।'
+        }, {
+            id: 2,
+            q: 'अगला पद ज्ञात कीजिए: ACEG, CEGI, EGIK, ?',
+            opts: ['GIKM', 'IKMO', 'GILM', 'HJLN'],
+            ans: 'a',
+            exp: 'ACEG में A→C→E→G (2 अक्षर आगे), इसी प्रकार C→E→G→I, E→G→I→K, अतः G→I→K→M = GIKM'
+        }, {
+            id: 3,
+            q: 'विषम का चयन कीजिए:',
+            opts: ['संसद (Parliament)', 'विधानसभा (Assembly)', 'न्यायपालिका (Judiciary)', 'संविधान (Constitution)'],
+            ans: 'd',
+            exp: 'संसद, विधानसभा, न्यायपालिका सरकार के अंग हैं, जबकि संविधान सरकार का अंग नहीं, वह मूल दस्तावेज है।'
+        }, {
+            id: 4,
+            q: '“NACHTEN” का संबंध “ENCHANT” से वैसा ही है जैसा “LPAEYD” का संबंध है:',
+            opts: ['PEALYD', 'PALEYD', 'YELAPD', 'PLAYED'],
+            ans: 'd',
+            exp: 'NACHTEN के अक्षरों को पुनर्व्यवस्थित करने पर ENCHANT बनता है। इसी प्रकार LPAEYD को PLAYED बनाने के लिए व्यवस्थित करें।'
+        }, {
+            id: 5,
+            q: 'अगला पद क्या होना चाहिए? 150, 130, 112, 96, 82, ?',
+            opts: ['70', '68', '72', '66'],
+            ans: 'a',
+            exp: '150 - 20 = 130, 130 - 18 = 112, 112 - 16 = 96, 96 - 14 = 82, अतः 82 - 12 = 70'
+        }, {
+            id: 6,
+            q: 'विषम का चयन कीजिए:',
+            opts: ['4 # 5 = 81', '6 # 7 = 169', '3 # 4 = 49', '2 # 3 = 16'],
+            ans: 'd',
+            exp: ''
+        }, {
+            id: 7,
+            q: 'यदि BOOK को CPPL लिखा जाता है, तो LAMP को कैसे लिखा जाएगा?',
+            opts: ['MBNQ', 'MBNO', 'KZLO', 'OCPR'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 8,
+            q: 'उस पते का चयन कीजिए जो नीचे दिए गए पते के समान है।\nनमूना पता: Tower-3, Flat 904, Sunrise Residency, Sector 12, Noida - 201301',
+            opts: ['Tower-3, Flat 904, Sunrise Residency, Sector 12, Noida - 201302',
+                'Tower-3, Flat 904, Sunrise Residncy, Sector 12, Noida - 201301',
+                'Tower-3, Flat 904, Sunrise Residency, Sector 12, Noida - 201301',
+                'Tower-3, Flat 905, Sunrise Residency, Sector 12, Noida - 201301'
+            ],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 9,
+            q: 'आपको पार्क में खोया हुआ मोबाइल फोन मिलता है। आपको क्या करना चाहिए?',
+            opts: ['इसे नज़रअंदाज़ करें', 'इसे बेच दें', 'इसे अपने पास रखें', 'इसे मालिक को वापस करने का प्रयास करें'],
+            ans: 'd',
+            exp: ''
+        }, {
+            id: 10,
+            q: 'दिए गए शब्दों में से, उस शब्द का चयन कीजिए जिसे दिए गए शब्द के अक्षरों का उपयोग करके नहीं बनाया जा सकता है।\nEDUCATION',
+            opts: ['ACTION', 'CAUTION', 'DONATE', 'EDUCATE'],
+            ans: 'd',
+            exp: ''
+        }, {
+            id: 11,
+            q: 'अगला पद क्या है? BDF, EGI, HJL, ?',
+            opts: ['KMO', 'LNP', 'JKM', 'MPR'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 12,
+            q: 'आप एक पुस्तकालय के प्रभारी हैं और धुआं देखते हैं। आपको क्या करना चाहिए?',
+            opts: ['लोगों को तुरंत बाहर निकालें', 'इसे नज़रअंदाज़ करें', 'दरवाजे बंद कर दें', 'काम करना जारी रखें'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 13,
+            q: 'आप बैंक के कर्मचारी हैं। एक ग्राहक धोखाधड़ी की सूचना देता है। आपको सबसे पहले क्या करना चाहिए?',
+            opts: ['शिकायत को नज़रअंदाज़ करें', 'उच्च अधिकारी को तुरंत सूचित करें', 'कार्रवाई में देरी करें',
+                'ग्राहक को बाद में आने के लिए कहें'
+            ],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 14,
+            q: 'कथन:\n1. कोई बिल्ली कुत्ता नहीं है।\n2. कुछ कुत्ते पालतू हैं।\nनिष्कर्ष:\nI. कुछ पालतू बिल्लियाँ नहीं हैं।\nII. कोई पालतू बिल्ली नहीं है।',
+            opts: ['केवल I अनुसरण करता है।', 'केवल II अनुसरण करता है।', 'I और II दोनों अनुसरण करते हैं।',
+                'न तो I और न ही II अनुसरण करता है।'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 15,
+            q: 'यदि ‘+’ का अर्थ ‘×’ है, ‘-’ का अर्थ ‘÷’ है, ‘×’ का अर्थ ‘+’ है, और ‘÷’ का अर्थ ‘-’ है, तो सही समीकरण का चयन कीजिए:',
+            opts: ['8 × 4 - 2 = 10', '6 + 2 - 4 = 4', '12 ÷ 3 - 2 = 6', '9 - 3 × 2 = 3'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 16,
+            q: 'यदि PLANE को QMBOF के रूप में कोडित किया गया है, तो QMBOF को कैसे कोडित किया जाएगा?',
+            opts: ['RNCPG', 'RNCQG', 'RNCOG', 'RNCRG'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 17,
+            q: 'अनुक्रम में अगली संख्या क्या है? 5, 15, 45, 135, 405, ___?',
+            opts: ['810', '1215', '1620', '2025'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 18,
+            q: 'यदि ‘+’ का अर्थ ‘-’ है, ‘-’ का अर्थ ‘+’ है, ‘×’ का अर्थ ‘÷’ है, और ‘÷’ का अर्थ ‘×’ है, तो मान ज्ञात कीजिए: 180 + 30 × 6 - 15 ÷ 5 = ?',
+            opts: ['295', '250', '260', '255'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 19,
+            q: 'यदि “MATH” को “13-1-20-8” के रूप में कोडित किया गया है, तो “HAMT” को कैसे कोडित किया जाएगा?',
+            opts: ['8-1-13-20', '1-8-20-13', '13-20-1-8', '20-8-1-13'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 20,
+            q: 'यदि 4 कर्मचारी 4 दीवारें बनाने में 4 दिन लेते हैं, तो 50 कर्मचारी 50 दीवारें बनाने में कितना समय लेंगे?',
+            opts: ['4 दिन', '50 दिन', '25 दिन', '10 दिन'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 21,
+            q: 'यदि “+” का अर्थ घटाव है, “-” का अर्थ योग है, “×” का अर्थ भाग है, और “÷” का अर्थ गुणा है, तो मान ज्ञात कीजिए: 20 - 4 × 2 + 6 ÷ 3 = ?',
+            opts: ['4', '2', '8', '6'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 22,
+            q: 'यदि ‘+’ का अर्थ ‘×’, ‘-’ का अर्थ ‘+’, और ‘×’ का अर्थ ‘-’ है, तो मान ज्ञात कीजिए: 12 + 3 - 2 × 1 = ?',
+            opts: ['48', '37', '36', '24'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 23,
+            q: 'बदले जाने वाले चिह्नों को ज्ञात कीजिए। 24 ÷ 6 + 5 - 4 × 3 = 21',
+            opts: ['÷ और -', '+ और ×', '× और ÷', '- और ×'],
+            ans: 'd',
+            exp: ''
+        }, {
+            id: 24,
+            q: 'A, B का पिता है। B, C की माता है। D, A की पुत्री है। D, C से किस प्रकार संबंधित है?',
+            opts: ['आंटी (Aunt)', 'माता', 'बहन', 'चचेरी/ममेरी/फूफेरी बहन (Cousin)'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 25,
+            q: 'P, Q का भाई है। Q, R की बहन है। R, S की पुत्री है। P, S से किस प्रकार संबंधित है?',
+            opts: ['पुत्र', 'पिता', 'भाई', 'अंकल'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 26,
+            q: '2026 तक भारत के नियंत्रक और महालेखा परीक्षक (CAG) के रूप में कौन कार्यरत है?',
+            opts: ['गिरीश चंद्र मुर्मू', 'राजीव महर्षि', 'के . संजय मूर्ति', 'विनोद राय'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 27,
+            q: 'नौटंकी के बारे में निम्नलिखित कथनों पर विचार करें:\n1. यह उत्तर भारत का एक लोकप्रिय लोक-रंगमंच रूप है, जो विशेष रूप से उत्तर प्रदेश से जुड़ा है।\n2. यह पारंपरिक रूप से खुली हवा में प्रदर्शन में संगीत, नृत्य और नाटकीय संवाद को जोड़ता है।\nउपरोक्त में से कौन सा/से कथन सही है/हैं?',
+            opts: ['केवल 1 सही', 'केवल 2 सही', '1 और 2 दोनों सही', 'न तो 1 और न ही 2 सही'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 28,
+            q: 'मुगल सम्राटों को उनके शासनकाल के कालानुक्रमिक क्रम में व्यवस्थित करें:',
+            opts: ['अकबर – जहांगीर – शाहजहाँ', 'जहांगीर – अकबर – शाहजहाँ', 'शाहजहाँ – अकबर – जहांगीर',
+                'अकबर – शाहजहाँ – जहांगीर'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 29,
+            q: 'पीएम जन धन योजना के तहत, शुरू में प्रदान किया गया अधिकतम दुर्घटना बीमा कवर था:',
+            opts: ['₹50,000', '₹1 लाख', '₹2 लाख', '₹5 लाख'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 30,
+            q: 'निम्नलिखित में से कौन सा समुद्री चोकपॉइंट भूमध्य सागर को लाल सागर से जोड़ता है?',
+            opts: ['मलक्का जलडमरूमध्य', 'होर्मुज जलडमरूमध्य', 'स्वेज नहर', 'बोस्फोरस जलडमरूमध्य'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 31,
+            q: 'खो-खो के बारे में कौन सा/से कथन सही है/हैं?\n1. इसकी उत्पत्ति महाराष्ट्र में हुई थी।\n2. आधुनिक नियमों को 20वीं सदी की शुरुआत में औपचारिक रूप दिया गया था।',
+            opts: ['केवल 1', 'केवल 2', '1 और 2 दोनों', 'न तो 1 और न ही 2'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 32,
+            q: 'प्रशांत महासागर में अल नीनो (El Niño) घटना के धीमा होने से निम्नलिखित होने की संभावना है:',
+            opts: ['भारत में मानसूनी वर्षा में वृद्धि', 'वैश्विक तापमान को स्थायी रूप से कम करना', 'चक्रवातों को पूरी तरह खत्म करना',
+                'समुद्री धाराओं को पूरी तरह रोकना'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 33,
+            q: 'रिक्त स्थान भरें: 1919 के रौलट एक्ट ने सरकार को ____ के लिए अधिकृत किया।',
+            opts: ['बिना मुकदमे के व्यक्तियों को नजरबंद करने', 'प्रांतीय परिषदों को समाप्त करने', 'स्वतंत्र चुनाव कराने',
+                'दोमंडनयन का दमन करने'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 34,
+            q: 'डॉ. विक्रम साराभाई को भारत में किस कार्यक्रम के जनक के रूप में जाना जाता है?',
+            opts: ['परमाणु ऊर्जा कार्यक्रम', 'हरित क्रांति', 'अंतरिक्ष कार्यक्रम', 'श्वेत क्रांति'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 35,
+            q: 'गोवा में आयोजित 37वें राष्ट्रीय खेलों 2023 में पदक तालिका में कौन सा राज्य शीर्ष पर रहा?',
+            opts: ['महाराष्ट्र', 'हरियाणा', 'सर्विसेस स्पोर्ट्स कंट्रोल बोर्ड (SSCB)', 'कर्नाटक'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 36,
+            q: 'भारत ने अपना पहला व्यक्तिगत ओलंपिक स्वर्ण पदक किस ओलंपिक खेल में जीता?',
+            opts: ['एथेंस 2004', 'बीजिंग 2008', 'लंदन 2012', 'रियो 2016'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 37,
+            q: 'तटीय भू-आकृतियों के बारे में निम्नलिखित में से कौन सा कथन सही है?',
+            opts: ['फ्योर्ड हिमनदी हवाओं से बनते हैं।', 'स्टैक समुद्री अपरदन के कारण बनते हैं।', 'मोराइन तटीय रेत के टीले हैं।',
+                'डेल्टा नदी अपरदन से बनते हैं।'
+            ],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 38,
+            q: 'निम्नलिखित कथनों पर विचार करें:\n1. अनुच्छेद 14 कानून के समक्ष समानता की गारंटी देता है।\n2. अनुच्छेद 19 कुछ मौलिक स्वतंत्रता प्रदान करता है।\n3. अनुच्छेद 32 संविधान के संशोधन से संबंधित है।\nउपरोक्त में से कौन सा/से सही है/हैं?',
+            opts: ['केवल 1 और 2', 'केवल 2 और 3', 'केवल 1 और 3', '1, 2 और 3'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 39,
+            q: 'आर्थिक नियोजन में, ‘रोलिंग प्लान’ शब्द का अर्थ है:',
+            opts: ['वार्षिक रूप से संशोधित योजना', 'एक निश्चित पंचवर्षीय लक्ष्य', 'सार्वजनिक क्षेत्र की भूमिका के बिना एक योजना',
+                'युद्धकालीन आपातकालीन योजना'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 40,
+            q: 'राजकोषीय घाटे की गणना इस प्रकार की जाती है:',
+            opts: ['कुल व्यय – कुल प्राप्तियां (उधार को छोड़कर)', 'राजस्व प्राप्तियां – राजस्व व्यय', 'पूंजीगत प्राप्तियां – पूंजीगत व्यय',
+                'प्रत्यक्ष कर – अप्रत्यक्ष कर'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 41,
+            q: 'भू-स्थिर कक्षा में एक उपग्रह को पृथ्वी के चारों ओर लगभग ____ में घूमना चाहिए।',
+            opts: ['12 घंटे', '18 घंटे', '24 घंटे', '36 घंटे'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 42,
+            q: 'मानव पूंजी सूचकांक (HCI) किस संगठन द्वारा जारी किया जाता है?',
+            opts: ['IMF', 'विश्व बैंक', 'WTO', 'UNDP'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 43,
+            q: 'निम्नलिखित में से कौन नागालैंड के हॉर्नबिल महोत्सव के मूल उद्देश्य का सबसे अच्छा वर्णन करता है?',
+            opts: ['बैल दौड़ के साथ फसल का उत्सव', 'आदिवासी संस्कृति और विरासत को बढ़ावा देना', 'नदी की आत्माओं की अनुष्ठानिक पूजा',
+                'सैन्य विजय स्मरणोत्सव'
+            ],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 44,
+            q: 'प्रसिद्ध अशोक स्तंभ किस स्थल पर स्थित है?',
+            opts: ['सांची', 'सारनाथ', 'बोधगया', 'अमरावती'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 45,
+            q: 'किस अधिनियम ने दंड प्रक्रिया संहिता (CrPC), 1973 का स्थान लिया है?',
+            opts: ['भारतीय न्याय संहिता', 'भारतीय नागरिक सुरक्षा संहिता', 'भारतीय साक्ष्य अधिनियम', 'राष्ट्रीय जांच अधिनियम'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 46,
+            q: 'महाकाव्य रामायण में, वनवास के दौरान राम के साथ कौन गया था?',
+            opts: ['केवल भरत', 'लक्ष्मण और सीता', 'केवल शत्रुघ्न', 'केवल हनुमान'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 47,
+            q: '‘वंदे मातरम’ गीत की रचना किसने की?',
+            opts: ['रवींद्रनाथ टैगोर', 'बंकिम चंद्र चट्टोपाध्याय', 'सुब्रमण्यम भारती', 'सरोजिनी नायडू'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 48,
+            q: 'कौन सी भारतीय उपग्रह श्रृंखला मुख्य रूप से नेविगेशन सेवाओं के लिए समर्पित है?',
+            opts: ['GSAT', 'NAVIC/IRNSS', 'RISAT', 'Oceansat'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 49,
+            q: 'अमर्त्य सेन की पुस्तक ‘द आर्ग्युमेंटेटिव इंडियन’ का मुख्य फोकस क्या है?',
+            opts: ['भारत की अंतरिक्ष उपलब्धियां', 'भारत की लोकतांत्रिक और बौद्धिक परंपराएं', 'प्राचीन व्यापार नेटवर्क',
+                'आधुनिक सैन्य सुधार'
+            ],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 50,
+            q: 'रिक्त स्थान भरें: वित्त आयोग का गठन भारत के संविधान के अनुच्छेद ____ के तहत किया जाता है।',
+            opts: ['270', '280', '356', '324'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 51,
+            q: 'जोड़ें: 5.62 + 8.19 + 0.045',
+            opts: ['12.755', '13.855', '14.255', '13.585'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 52,
+            q: 'यदि △PQR ~ △STU, और ∠P = 45°, ∠Q = 75°, तो ∠U = ?',
+            opts: ['45°', '60°', '75°', 'निर्धारित नहीं किया जा सकता'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 53,
+            q: 'दिए गए समीकरण में x का मान ज्ञात करें: √(8+x)+√(8−x) / √(8+x)−√(8−x) = 3',
+            opts: ['18/5', '24/5', '16/5', '12/5'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 54,
+            q: 'आम के रस और पानी के 100 लीटर के मिश्रण में पानी की मात्रा 40 लीटर है। रस और पानी का अनुपात 1:2 करने के लिए कितने लीटर पानी मिलाया जाना चाहिए?',
+            opts: ['60 L', '70 L', '80 L', '90 L'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 55,
+            q: 'एक बाइक 2.5 लीटर ईंधन का उपयोग करके 22.5 किमी की यात्रा करती है। यह प्रति लीटर कितने किलोमीटर चलती है?',
+            opts: ['8.5 किमी', '9.0 किमी', '9.5 किमी', '10.0 किमी'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 56,
+            q: 'P किसी कार्य को 5 दिनों में कर सकता है, और Q उसे 10 दिनों में कर सकता है। यदि वे 2 दिनों तक साथ काम करते हैं, तो कार्य का कितना हिस्सा शेष रह जाएगा?',
+            opts: ['1/2', '2/5', '3/5', '4/5'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 57,
+            q: 'एक बाहरी बिंदु M से, एक वृत्त पर दो स्पर्श रेखाएं खींची जाती हैं, जो वृत्त को बिंदु X और Y पर स्पर्श करती हैं। संपर्क जीवा XY वृत्त के केंद्र O पर कोण α अंतरित करती है। α के पदों में स्पर्श रेखाओं के बीच कोण ∠XMY क्या है?',
+            opts: ['90° – α/2', 'α', '180° – α', '2α'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 58,
+            q: 'एक स्टार्टअप में तीन सहधारक हैं। P ने पूंजी का 30% हिस्सा लगाया, और Q शेष हिस्सा लाया। R बाद में शामिल हुआ और उसे ब्रांडिंग के लिए कुल लाभ का 25% देने का वादा किया गया। यदि कुल लाभ Rs. 4,00,000 था, तो Q का हिस्सा कितना था?',
+            opts: ['Rs. 1,90,000', 'Rs. 2,00,000', 'Rs. 2,10,000', 'Rs. 2,20,000'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 59,
+            q: 'एक डिस्प्ले स्टैंड एक लंबवत त्रिभुजाकार प्रिज्म के आकार का है। त्रिभुजाकार आधार एक समकोण त्रिभुज है जिसकी लंबवत भुजाओं की माप 5 सेमी और 12 सेमी है। प्रिज्म की ऊंचाई 20 सेमी है। प्रिज्म के सबसे बड़े आयताकार फलक के क्षेत्रफल का सबसे छोटे आयताकार फलक के क्षेत्रफल से अनुपात क्या है?',
+            opts: ['5:3', '12:5', '13:5', '13:12'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 60,
+            q: 'एक वृत्त में दो जीवाओं में से प्रत्येक की माप 14 cm है। यदि जीवाओं में से एक केंद्र से 5 cm की दूरी पर स्थित है, तो दूसरी जीवा की केंद्र से दूरी क्या है?',
+            opts: ['3 cm', '4 cm', '5 cm', '7 cm'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 61,
+            q: 'यदि x = √7 + 3 है, तो x² – 6√7 का मान ज्ञात कीजिए।',
+            opts: ['14', '15', '16', '17'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 62,
+            q: 'रोहित अपनी यात्रा का आधा हिस्सा 15 km/h की गति से और शेष आधा हिस्सा 10 km/h की गति से तय करता है। उसकी औसत गति है:',
+            opts: ['12 km/h', '12.5 km/h', '13 km/h', '14 km/h'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 63,
+            q: 'एक टोकरी में सेब और संतरे 5:3 के अनुपात में हैं। 10 सेब निकालने और 14 संतरे जोड़ने के बाद, नया अनुपात 1:1 हो जाता है। मूल रूप से कितने फल थे?',
+            opts: ['80', '112', '104', '96'],
+            ans: 'd',
+            exp: ''
+        }, {
+            id: 64,
+            q: 'यदि sin A = 3/5 है, तो sin⁴A + cos⁴A का मान ज्ञात कीजिए।',
+            opts: ['337/625', '312/625', '144/625', '256/625'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 65,
+            q: '24,000 रुपये पर 16% वार्षिक दर से 9 महीने का चक्रवृद्धि ब्याज कितना होगा यदि इसे त्रैमासिक रूप से संयोजित किया जाता है?',
+            opts: ['2,887', '3,107', '3,012', '2,997'],
+            ans: 'd',
+            exp: ''
+        }, {
+            id: 66,
+            q: 'एक व्यवसायी सामान खरीदने में 60,000 रुपये निवेश करता है और परिवहन पर 4,000 रुपये और भंडारण पर 2,000 रुपये खर्च करता है। यदि वह सामान को 74,250 रुपये में बेचता है, तो लाभ या हानि का प्रतिशत क्या है?',
+            opts: ['10.5% लाभ', '12.5% हानि', '12.5% लाभ', '15.0% लाभ'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 67,
+            q: '15 महिलाएँ एक कार्य को 20 दिनों में कर सकती हैं। 12 पुरुष उसी कार्य को 10 दिनों में पूरा कर सकते हैं। एक पुरुष और एक महिला की कुशलता के बीच का अनुपात क्या है?',
+            opts: ['3:2', '5:2', '4:3', '5:3'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 68,
+            q: 'एक आदमी ने एक निश्चित दूरी 3 भागों में 20 km/h, 30 km/h और 60 km/h की गति से तय की। पूरी यात्रा में उसकी औसत गति क्या है, यह मानते हुए कि दूरियाँ समान हैं?',
+            opts: ['30 km/h', '35 km/h', '40 km/h', '45 km/h'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 69,
+            q: 'X और Y मिलकर एक कार्य को 15 दिनों में पूरा कर सकते हैं। X, Y की तुलना में 50% अधिक कुशल है। अकेले X द्वारा कार्य का कितना प्रतिशत किया जाता है?',
+            opts: ['50%', '55%', '60%', '65%'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 70,
+            q: 'एक संख्या जो पूर्णांक और पूर्ण संख्या दोनों है:',
+            opts: ['–7', '0', '2/3', '√5'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 71,
+            q: 'यदि sin A = 8/17 और A न्यून कोण है, तो cos A का मान क्या है?',
+            opts: ['15/17', '17/15', '8/15', '15/8'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 72,
+            q: '8 सेमी भुजा वाले एक घन में एक अर्धगोला अंकित है। अर्धगोले का आयतन क्या है?',
+            opts: ['134.04 सेमी³', '144.24 सेमी³', '124.56 सेमी³', '150.88 सेमी³'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 73,
+            q: 'दो समांतर रेखाओं को एक तिर्यक रेखा द्वारा काटा जाता है। यदि एकांतर अंतः कोणों का एक युग्म बनता है, और कोणों में से एक की माप 115° है, तो दूसरे कोण की माप क्या है?',
+            opts: ['65°', '90°', '115°', '180°'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 74,
+            q: 'यदि (2, –3) से होकर गुजरने वाली एक रेखा की ढाल 5 है, तो इसका y-अंतःखंड ज्ञात कीजिए।',
+            opts: ['–13', '13', '–10', '10'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 75,
+            q: 'एक त्रिभुजाकार खिड़की का आयाम ऐसा है कि उसका क्षेत्रफल 150 वर्ग मीटर क्षेत्रफल वाली एक वर्गाकार खिड़की का 60% है। यदि उसका आधार 15 मीटर है, तो उसकी ऊंचाई ज्ञात कीजिए।',
+            opts: ['10 मीटर', '12 मीटर', '14 मीटर', '15 मीटर'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 76,
+            q: 'Choose the most suitable option to replace the highlighted part: The director was accused for misusing company funds.',
+            opts: ['accused of misusing company funds', 'accused with misusing company funds',
+                'accused on misusing company funds', 'accused about misusing company funds'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 77,
+            q: 'Choose the correct meaning of idiom: Yeoman service',
+            opts: ['An act performed under compulsion', 'Loyal and invaluable assistance', 'A ceremonial military duty',
+                'A routine administrative task'
+            ],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 78,
+            q: 'Choose the correct meaning of idiom: Coals of fire upon his head',
+            opts: ['To repay hostility with generosity', 'To expose someone publicly', 'To ignite anger deliberately',
+                'To condemn someone harshly'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 79,
+            q: 'Select the correct spelling for a word meaning ‘lasting for a very short duration’.',
+            opts: ['Ephemerol', 'Ephemeral', 'Ephemerial', 'Ephemiral'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 80,
+            q: 'What should come in the place of blank number (1)? [Passage: Metropolitan erosion...]',
+            opts: ['effacement', 'legibility', 'fragility', 'desolation'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 81,
+            q: 'What should come in the place of blank number (2)? [Passage: ...]',
+            opts: ['laundering', 'erosion', 'ornamentation', 'mediation'],
+            ans: 'd',
+            exp: ''
+        }, {
+            id: 82,
+            q: 'What should come in the place of blank number (3)? [Passage: ...]',
+            opts: ['abstraction', 'attunement', 'velocity', 'symmetry'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 83,
+            q: 'What should come in the place of blank number (4)? [Passage: ...]',
+            opts: ['insurgent', 'decorative', 'equivocal', 'ornamental'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 84,
+            q: 'What should come in the place of blank number (5)? [Passage: ...]',
+            opts: ['blueprint', 'testimony', 'genesis', 'restoration'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 85,
+            q: 'Rearrange the following sentences to form a meaningful passage:\n1. Virtual reality (VR) technology fully immerses users in a computer-generated environment that simulates real world experiences.\n2. It has diverse applications across entertainment, medical training, industrial design, and architectural visualization.\n3. VR relies on headsets, motion-tracking devices, and specialized controllers to create interactive and realistic experiences.\n4. However, high costs, technical limitations, and the need for specialized equipment have slowed its widespread adoption.',
+            opts: ['2-4-1-3', '3-2-1-4', '1-3-2-4', '4-1-3-2'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 86,
+            q: 'Change from active to passive: Scholars consider this manuscript a landmark in medieval literature.',
+            opts: ['This manuscript is considered a landmark in medieval literature.',
+                'This manuscript has considered a landmark in medieval literature.',
+                'Scholars are considered this manuscript a landmark.',
+                'A landmark in medieval literature considered this manuscript.'
+            ],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 87,
+            q: 'A sentence is provided in indirect speech. Choose the correct direct speech: The captain instructed the players to remain focused.',
+            opts: ['“Remain focused,” instructed the captain.', '“Players, remain focused,” the captain instructed.',
+                '“You must remain focused,” said the captain.', '“Remain focused,” the captain instructed.'
+            ],
+            ans: 'd',
+            exp: ''
+        }, {
+            id: 88,
+            q: 'A sentence is provided in direct speech. Choose the correct indirect speech: He said, “I will submit the report tomorrow.”',
+            opts: ['He said he will submit the report tomorrow.', 'He said that he would submit the report the next day.',
+                'He said that he will submit the report the next day.', 'He said he would submit the report tomorrow.'
+            ],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 89,
+            q: 'Select the most appropriate synonym of the given word: PERSPICUOUS',
+            opts: ['Lucid', 'Obscure', 'Ambiguous', 'Cryptic'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 90,
+            q: 'Select the most appropriate antonym of the given word: EXIGUOUS',
+            opts: ['Scant', 'Paltry', 'Abundant', 'Inadequate'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 91,
+            q: 'Select the correct option: The committee was praised not for what it approved but ____ it rejected.',
+            opts: ['for what', 'what', 'which', 'that'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 92,
+            q: 'Select the correct spelling for a word meaning ‘an official pardon’.',
+            opts: ['Amonesty', 'Amnesty', 'Amnisty', 'Amnesti'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 93,
+            q: 'Choose the correct one-word substitution for: ‘A person with exceptional skill in music or the arts’.',
+            opts: ['Maestro', 'Virtuoso', 'Artisan', 'Connoisseur'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 94,
+            q: 'Choose the correct one-word substitute for: ‘Something that is no longer in use’.',
+            opts: ['Redundant', 'Archaic', 'Obsolete', 'Antiquated'],
+            ans: 'c',
+            exp: ''
+        }, {
+            id: 95,
+            q: 'Find the part of the sentence that contains an error: The library provides access to (1)/ extensive collection of journals (2)/ and research databases (3)/ for postgraduate scholars. (4)/',
+            opts: ['(1)', '(2)', '(3)', '(4)'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 96,
+            q: 'Rearrange the following sentences in correct order to make a logical passage:\n1. Renewable energy sources are gaining popularity worldwide.\n2. Governments are offering incentives to promote their adoption.\n3. Solar and wind power are among the most widely used options.\n4. This shift aims to reduce dependence on fossil fuels.',
+            opts: ['1-3-2-4', '2-1-4-3', '3-1-2-4', '1-2-3-4'],
+            ans: 'a',
+            exp: ''
+        }, {
+            id: 97,
+            q: 'Select the sentence containing the homonym of the highlighted word: The ancient manuscript featured a decorative tau at the beginning of each chapter.',
+            opts: ['The mathematician studied the properties of the constant tau in circle calculations.',
+                'The monk drew a tau on the altar cloth during the ceremony.',
+                'The architect used a tau-shaped design in the building layout.',
+                'The historian analyzed the tau symbols in old coins.'
+            ],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 98,
+            q: 'Choose the most suitable option to replace the highlighted part: She entered the hall without no hesitation.',
+            opts: ['without any hesitation', 'without hesitation', 'with no hesitation', 'without having hesitation'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 99,
+            q: 'Select the correct option: No sooner had the verdict been announced ____ the crowd erupted in protest.',
+            opts: ['when', 'than', 'before', 'as'],
+            ans: 'b',
+            exp: ''
+        }, {
+            id: 100,
+            q: 'Convert the sentence from passive to active voice: The proposal might have been rejected by the ethics committee without consulting the advisory board.',
+            opts: ['The ethics committee might reject the proposal without consulting the advisory board.',
+                'The ethics committee might have rejected the proposal without consulting the advisory board.',
+                'The proposal might reject the ethics committee without consulting the advisory board.',
+                'The ethics committee rejected the proposal without consulting the advisory board.'
+            ],
+            ans: 'b',
+            exp: ''
+        }];
+
+        // ─── RENDER ─────────────────────────────────────────────────────────────
+        const container = document.getElementById('questionsContainer');
+        let revealedCount = 0;
+
+        function renderQuestions() {
+            let html = '';
+            questionsData.forEach((q) => {
+                const labels = ['a', 'b', 'c', 'd'];
+                const optionsHtml = q.opts.map((opt, i) =>
+                    `<div class="option"><span class="letter">(${labels[i]})</span> ${opt}</div>`
+                ).join('');
+
+                const ansLetter = q.ans;
+                const ansText = q.opts[labels.indexOf(ansLetter)] || '';
+
+                // अगर exp खाली है तो डिफ़ॉल्ट स्पष्टीकरण दिखाएँ
+                let explanation = q.exp;
+                if (!explanation || explanation.trim() === '') {
+                    explanation = `✅ सही उत्तर: विकल्प (${ansLetter}) है (उत्तर कुंजी के अनुसार)।`;
+                }
+
+                html += `
+                    <div class="q-card" data-qid="${q.id}">
+                        <div class="q-head">
+                            <span class="q-num">Q${q.id}.</span>
+                            <span class="q-text">${q.q.replace(/\n/g, '<br>')}</span>
+                        </div>
+                        <div class="options">${optionsHtml}</div>
+                        <div class="answer-row">
+                            <button class="btn-answer" onclick="toggleAnswer(this, '${q.id}')">Show Answer</button>
+                            <span class="answer-box" id="ans-${q.id}">
+                                <span class="ans-label">✔</span> (${ansLetter}) ${ansText}
+                                <span class="exp">${explanation}</span>
+                            </span>
+                        </div>
+                        <hr />
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            document.getElementById('totalQ').textContent = questionsData.length;
+            updateCounter();
+        }
+
+        // ─── TOGGLE ─────────────────────────────────────────────────────────────
+        window.toggleAnswer = function(btn, qid) {
+            const box = document.getElementById(`ans-${qid}`);
+            if (!box) return;
+
+            const isRevealed = box.classList.contains('visible');
+
+            if (isRevealed) {
+                box.classList.remove('visible');
+                btn.textContent = 'Show Answer';
+                btn.classList.remove('revealed');
+                revealedCount--;
+            } else {
+                box.classList.add('visible');
+                btn.textContent = 'Hide Answer';
+                btn.classList.add('revealed');
+                revealedCount++;
+            }
+            updateCounter();
+        };
+
+        function updateCounter() {
+            document.getElementById('revealCount').textContent = revealedCount;
+        }
+
+        // ─── SCROLL TO TOP ─────────────────────────────────────────────────────
+        const scrollBtn = document.getElementById('scrollTopBtn');
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+
+        scrollBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ─── INIT ──────────────────────────────────────────────────────────────
+        renderQuestions();
+        console.log('✅ SSC CGL 100 Questions (S3) with explanations loaded!');
+    </script>
+
+</body>
+</html>

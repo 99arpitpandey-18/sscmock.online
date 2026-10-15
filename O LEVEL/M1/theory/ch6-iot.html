@@ -1,0 +1,3762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M1 Chapter 6 Notes | Introduction to Internet and WWW | NIELIT O Level</title>
+
+<meta name="description"
+content="NIELIT O Level M1-R5.1 Chapter 6 Introduction to Internet and WWW complete bilingual notes in Hindi and English covering computer networks, LAN, WAN, topology, Internet, WWW, URL, IP address, ISP, protocols, browsers, search engines and Internet connectivity.">
+
+<meta name="keywords"
+content="NIELIT M1 Chapter 6, M1 R5.1 Unit 6, Introduction to Internet and WWW, Internet Notes Hindi English, LAN WAN Notes, URL IP Address Notes, ISP Notes, NIELIT O Level Internet Notes">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+    --primary:#36dfff;
+    --secondary:#7c5cff;
+    --accent:#00ffa3;
+
+    --bg1:#06101d;
+    --bg2:#0b1728;
+
+    --card:rgba(18,34,56,.78);
+    --card2:rgba(10,23,39,.82);
+
+    --text:#edf7ff;
+    --muted:#91a4bb;
+    --soft:#b9c7d8;
+
+    --border:rgba(255,255,255,.09);
+    --shadow:rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:var(--text);
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at 8% 8%,
+            color-mix(in srgb,var(--primary) 14%,transparent),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 92% 15%,
+            color-mix(in srgb,var(--secondary) 16%,transparent),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            color-mix(in srgb,var(--accent) 7%,transparent),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            var(--bg1),
+            var(--bg2) 50%,
+            var(--bg1)
+        );
+
+    background-attachment:fixed;
+    overflow-x:hidden;
+
+    transition:
+        background .4s ease,
+        color .3s ease;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background-image:
+        radial-gradient(
+            circle,
+            var(--primary) 1px,
+            transparent 1px
+        ),
+        radial-gradient(
+            circle,
+            var(--secondary) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        120px 120px,
+        180px 180px;
+
+    background-position:
+        20px 40px,
+        90px 100px;
+
+    opacity:.13;
+    z-index:-1;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    padding:12px 4%;
+
+    background:rgba(5,13,25,.78);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-weight:900;
+    color:var(--primary);
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb,var(--primary) 18%,transparent),
+            color-mix(in srgb,var(--secondary) 14%,transparent)
+        );
+
+    border:
+        1px solid
+        color-mix(in srgb,var(--primary) 30%,transparent);
+
+    box-shadow:
+        0 0 25px
+        color-mix(in srgb,var(--primary) 12%,transparent);
+}
+
+.brand-title{
+    font-size:16px;
+    font-weight:800;
+}
+
+.brand-sub{
+    margin-top:3px;
+    font-size:10px;
+    color:#7f92aa;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.back-btn,
+.theme-btn{
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.035);
+
+    color:#dcecff;
+
+    padding:9px 13px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.back-btn:hover,
+.theme-btn:hover{
+    transform:translateY(-2px);
+
+    border-color:
+        color-mix(in srgb,var(--primary) 50%,transparent);
+
+    color:var(--primary);
+}
+
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+.theme-panel{
+    position:fixed;
+    top:78px;
+    right:20px;
+    z-index:1500;
+
+    width:280px;
+    padding:18px;
+
+    border-radius:18px;
+
+    background:rgba(8,18,32,.96);
+
+    border:1px solid var(--border);
+
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+
+    display:none;
+}
+
+.theme-panel.show{
+    display:block;
+    animation:panelIn .25s ease;
+}
+
+@keyframes panelIn{
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.theme-panel h3{
+    font-size:14px;
+    margin-bottom:14px;
+}
+
+.theme-label{
+    color:#8193aa;
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.theme-options{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-bottom:17px;
+}
+
+.color{
+    height:38px;
+    border-radius:10px;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.color:hover{
+    transform:scale(1.07);
+}
+
+.color.active{
+    border-color:#fff;
+    box-shadow:0 0 15px rgba(255,255,255,.3);
+}
+
+.cyan{
+    background:linear-gradient(135deg,#36dfff,#008cff);
+}
+
+.purple{
+    background:linear-gradient(135deg,#a875ff,#6c5ce7);
+}
+
+.green{
+    background:linear-gradient(135deg,#00ffa3,#00b894);
+}
+
+.orange{
+    background:linear-gradient(135deg,#ffb347,#ff7043);
+}
+
+.pink{
+    background:linear-gradient(135deg,#ff6ec7,#ff3d81);
+}
+
+.red{
+    background:linear-gradient(135deg,#ff7675,#d63031);
+}
+
+.blue{
+    background:linear-gradient(135deg,#74b9ff,#0984e3);
+}
+
+.gold{
+    background:linear-gradient(135deg,#ffe66d,#f5a623);
+}
+
+.mode-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.mode-btn{
+    padding:9px;
+    border-radius:9px;
+
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.04);
+
+    color:#dcecff;
+
+    cursor:pointer;
+    font-size:10px;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 5% 80px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:42px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    margin-bottom:35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--card),
+            var(--card2)
+        );
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 25px 70px var(--shadow);
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+    left:0;
+    top:0;
+
+    width:170px;
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:0 0 20px var(--primary);
+}
+
+.hero::after{
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    right:-120px;
+    top:-120px;
+
+    border-radius:50%;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 10%,
+            transparent
+        );
+
+    filter:blur(55px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+
+    padding:7px 12px;
+
+    border-radius:30px;
+
+    color:var(--primary);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 8%,
+            transparent
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--primary) 20%,
+            transparent
+        );
+
+    font-size:11px;
+    font-weight:700;
+
+    margin-bottom:17px;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,44px);
+
+    margin-bottom:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            var(--primary),
+            var(--secondary)
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-description{
+    max-width:850px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:13px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:12px;
+    margin-top:27px;
+}
+
+.stat{
+    padding:16px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.stat strong{
+    display:block;
+
+    color:var(--primary);
+
+    font-size:21px;
+
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:#7e91aa;
+    font-size:10px;
+}
+
+
+/* =========================================================
+   QUICK NAV
+========================================================= */
+
+.quick-nav{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+.quick-nav a{
+    padding:8px 12px;
+
+    border-radius:9px;
+
+    color:#aebdd0;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+
+    transition:.25s;
+}
+
+.quick-nav a:hover{
+    color:var(--primary);
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--primary) 40%,
+            transparent
+        );
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin:38px 0 18px;
+}
+
+.section-icon{
+    width:39px;
+    height:39px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 8%,
+            transparent
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--primary) 17%,
+            transparent
+        );
+
+    font-size:18px;
+}
+
+.section-title h2{
+    font-size:20px;
+}
+
+.section-title p{
+    margin-top:3px;
+    color:#71849c;
+    font-size:10px;
+}
+
+
+/* =========================================================
+   NOTE CARD
+========================================================= */
+
+.note-card{
+    position:relative;
+
+    padding:25px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--card),
+            var(--card2)
+        );
+
+    border:1px solid var(--border);
+
+    margin-bottom:17px;
+
+    overflow:hidden;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.15);
+}
+
+.note-card::before{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:65px;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:0 0 15px var(--primary);
+}
+
+.note-card h3{
+    font-size:17px;
+    margin-bottom:13px;
+}
+
+.note-card h4{
+    color:var(--primary);
+    margin:18px 0 8px;
+    font-size:13px;
+}
+
+.note-card p{
+    color:var(--soft);
+    font-size:12px;
+    line-height:1.8;
+    margin-bottom:8px;
+}
+
+
+/* =========================================================
+   BILINGUAL
+========================================================= */
+
+.bilingual{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+    margin-top:14px;
+}
+
+.lang-box{
+    padding:17px;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.025);
+
+    border:1px solid var(--border);
+}
+
+.lang-title{
+    display:inline-block;
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    margin-bottom:10px;
+
+    font-size:9px;
+    font-weight:800;
+
+    color:var(--primary);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 8%,
+            transparent
+        );
+}
+
+.lang-box p{
+    margin:0;
+
+    font-size:12px;
+
+    line-height:1.8;
+
+    color:#b8c7d8;
+}
+
+
+/* =========================================================
+   DEFINITION
+========================================================= */
+
+.definition{
+    margin-top:15px;
+
+    padding:17px;
+
+    border-left:3px solid var(--primary);
+
+    border-radius:10px;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 6%,
+            transparent
+        );
+}
+
+.definition strong{
+    display:block;
+
+    color:var(--primary);
+
+    margin-bottom:6px;
+
+    font-size:12px;
+}
+
+.definition p{
+    margin:0;
+
+    font-size:12px;
+
+    line-height:1.7;
+
+    color:#b8c7d8;
+}
+
+
+/* =========================================================
+   TOPIC GRID
+========================================================= */
+
+.topic-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.topic-card{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--card),
+            var(--card2)
+        );
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+}
+
+.topic-card:hover{
+    transform:translateY(-5px);
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--primary) 35%,
+            transparent
+        );
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.2);
+}
+
+.topic-icon{
+    font-size:25px;
+    margin-bottom:12px;
+}
+
+.topic-card h3{
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.topic-card p{
+    color:#8294aa;
+    font-size:11px;
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.study-list{
+    list-style:none;
+    margin-top:10px;
+}
+
+.study-list li{
+    position:relative;
+
+    padding:9px 10px 9px 25px;
+
+    color:#aebed0;
+
+    font-size:12px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.04);
+}
+
+.study-list li::before{
+    content:"✓";
+
+    position:absolute;
+    left:4px;
+
+    color:var(--accent);
+
+    font-weight:bold;
+}
+
+
+/* =========================================================
+   IMPORTANT
+========================================================= */
+
+.important{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(
+                in srgb,
+                var(--secondary) 10%,
+                transparent
+            ),
+            color-mix(
+                in srgb,
+                var(--primary) 6%,
+                transparent
+            )
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--secondary) 20%,
+            transparent
+        );
+
+    margin-top:17px;
+}
+
+.important h3{
+    color:#c3b3ff;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.important p{
+    color:#abb9ca;
+    font-size:11px;
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+
+    border-radius:15px;
+
+    border:1px solid var(--border);
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:620px;
+}
+
+th{
+    padding:13px;
+
+    text-align:left;
+
+    background:rgba(255,255,255,.06);
+
+    color:var(--primary);
+
+    font-size:11px;
+}
+
+td{
+    padding:12px 13px;
+
+    color:#aab9ca;
+
+    font-size:11px;
+
+    border-top:
+        1px solid rgba(255,255,255,.05);
+}
+
+
+/* =========================================================
+   REVISION
+========================================================= */
+
+.revision-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.revision-card{
+    padding:21px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.revision-card h3{
+    font-size:14px;
+    margin-bottom:10px;
+    color:var(--primary);
+}
+
+.revision-card p{
+    color:#94a6bb;
+    font-size:11px;
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:55px;
+
+    padding:28px;
+
+    text-align:center;
+
+    color:#667a93;
+
+    font-size:10px;
+
+    border-top:1px solid var(--border);
+}
+
+
+/* =========================================================
+   SIMPLE MODE
+========================================================= */
+
+body.simple-mode{
+    background:#f4f7fb;
+    color:#172033;
+}
+
+body.simple-mode::before{
+    display:none;
+}
+
+body.simple-mode .header{
+    background:rgba(255,255,255,.92);
+    border-bottom:1px solid #dfe5ee;
+}
+
+body.simple-mode .brand-title{
+    color:#182236;
+}
+
+body.simple-mode .hero,
+body.simple-mode .note-card,
+body.simple-mode .topic-card{
+    background:#fff;
+
+    border:1px solid #e0e6ef;
+
+    box-shadow:
+        0 8px 25px rgba(20,40,70,.08);
+}
+
+body.simple-mode .hero-description,
+body.simple-mode .note-card p,
+body.simple-mode .topic-card p,
+body.simple-mode .revision-card p{
+    color:#59677c;
+}
+
+body.simple-mode .stat,
+body.simple-mode .lang-box,
+body.simple-mode .revision-card,
+body.simple-mode .quick-nav a{
+    background:#f7f9fc;
+    border-color:#e1e7ef;
+}
+
+body.simple-mode .lang-box p,
+body.simple-mode .study-list li,
+body.simple-mode td{
+    color:#536175;
+}
+
+body.simple-mode .section-title p,
+body.simple-mode .brand-sub{
+    color:#718096;
+}
+
+body.simple-mode .back-btn,
+body.simple-mode .theme-btn{
+    color:#35445b;
+    background:#fff;
+    border-color:#dfe5ed;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .topic-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .brand-title{
+        font-size:13px;
+    }
+
+    .back-btn{
+        padding:8px 9px;
+        font-size:10px;
+    }
+
+    .container{
+        padding:28px 4% 60px;
+    }
+
+    .hero{
+        padding:27px 20px;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .bilingual,
+    .topic-grid,
+    .revision-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .theme-panel{
+        right:10px;
+        width:calc(100% - 20px);
+    }
+}
+
+@media(max-width:430px){
+
+    .header-actions{
+        gap:4px;
+    }
+
+    .theme-btn{
+        font-size:0;
+
+        width:36px;
+        height:36px;
+
+        padding:0;
+    }
+
+    .theme-btn::after{
+        content:"🎨";
+        font-size:15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            M1
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                M1 Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Chapter 06 • Internet & WWW
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="theme-btn"
+            onclick="toggleThemePanel()">
+            🎨 Themes
+        </button>
+
+        <a
+            href="m1.html"
+            class="back-btn">
+            ← Back
+        </a>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<!-- =========================================================
+     THEME PANEL
+========================================================= -->
+
+<div
+    class="theme-panel"
+    id="themePanel">
+
+    <h3>
+        🎨 Choose Your Study Theme
+    </h3>
+
+    <div class="theme-label">
+        COLOR THEMES
+    </div>
+
+    <div class="theme-options">
+
+        <button class="color cyan active"
+                onclick="setTheme('cyan')"></button>
+
+        <button class="color purple"
+                onclick="setTheme('purple')"></button>
+
+        <button class="color green"
+                onclick="setTheme('green')"></button>
+
+        <button class="color orange"
+                onclick="setTheme('orange')"></button>
+
+        <button class="color pink"
+                onclick="setTheme('pink')"></button>
+
+        <button class="color red"
+                onclick="setTheme('red')"></button>
+
+        <button class="color blue"
+                onclick="setTheme('blue')"></button>
+
+        <button class="color gold"
+                onclick="setTheme('gold')"></button>
+
+    </div>
+
+    <div class="theme-label">
+        DISPLAY MODE
+    </div>
+
+    <div class="mode-options">
+
+        <button
+            class="mode-btn"
+            onclick="setMode('premium')">
+            ✨ Premium
+        </button>
+
+        <button
+            class="mode-btn"
+            onclick="setMode('simple')">
+            📄 Simple
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+    <div class="badge">
+        ✦ NIELIT O LEVEL • M1-R5.1 • CHAPTER 06
+    </div>
+
+    <h1>
+        Introduction to Internet & World Wide Web
+    </h1>
+
+    <p class="hero-description">
+
+        Complete bilingual study notes for Chapter 6.
+        Learn computer networks, LAN, WAN, network topology,
+        Internet, WWW, URL, IP Address, ISP, Internet protocols,
+        connection methods, browsers, search engines,
+        web surfing, downloading and printing webpages.
+
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <strong>06</strong>
+
+            <span>
+                Chapter Number
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>15+</strong>
+
+            <span>
+                Major Concepts
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>EN + HI</strong>
+
+            <span>
+                Bilingual Notes
+            </span>
+
+        </div>
+
+        <div class="stat">
+
+            <strong>MCQ</strong>
+
+            <span>
+                Exam Focused
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     QUICK NAV
+========================================================= -->
+
+<nav class="quick-nav">
+
+    <a href="#network">
+        Networks
+    </a>
+
+    <a href="#lanwan">
+        LAN / WAN
+    </a>
+
+    <a href="#topology">
+        Topology
+    </a>
+
+    <a href="#internet">
+        Internet
+    </a>
+
+    <a href="#www">
+        WWW
+    </a>
+
+    <a href="#url">
+        URL
+    </a>
+
+    <a href="#ip">
+        IP Address
+    </a>
+
+    <a href="#isp">
+        ISP
+    </a>
+
+    <a href="#connect">
+        Connectivity
+    </a>
+
+    <a href="#devices">
+        IP / MAC / IMEI
+    </a>
+
+    <a href="#browser">
+        Browsers
+    </a>
+
+    <a href="#search">
+        Search Engines
+    </a>
+
+    <a href="#revision">
+        Revision
+    </a>
+
+</nav>
+
+
+<!-- =========================================================
+     1 NETWORK
+========================================================= -->
+
+<div class="section-title" id="network">
+
+    <div class="section-icon">
+        🌐
+    </div>
+
+    <div>
+
+        <h2>
+            1. Computer Network
+        </h2>
+
+        <p>
+            Basic concept of computer networking
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        What is a Computer Network?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                A computer network is a group of two or
+                more computers or devices connected together
+                to communicate and share resources such as
+                files, printers and Internet connections.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Computer network दो या दो से अधिक computers
+                या devices का ऐसा समूह है जो communication
+                और resources जैसे files, printers तथा Internet
+                connection को share करने के लिए connected होते हैं।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="definition">
+
+        <strong>
+            📌 EXAM DEFINITION
+        </strong>
+
+        <p>
+            Network = Connected devices + Communication +
+            Resource Sharing.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     2 LAN WAN
+========================================================= -->
+
+<div class="section-title" id="lanwan">
+
+    <div class="section-icon">
+        🔗
+    </div>
+
+    <div>
+
+        <h2>
+            2. LAN, WAN & Network Types
+        </h2>
+
+        <p>
+            Important network classifications
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="topic-grid">
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🏢
+        </div>
+
+        <h3>
+            LAN
+        </h3>
+
+        <p>
+            Local Area Network covers a relatively
+            small geographical area such as a room,
+            office, school or building.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🌍
+        </div>
+
+        <h3>
+            WAN
+        </h3>
+
+        <p>
+            Wide Area Network covers a large
+            geographical area and can connect
+            networks across cities or countries.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🏙️
+        </div>
+
+        <h3>
+            MAN
+        </h3>
+
+        <p>
+            Metropolitan Area Network generally
+            covers an area larger than LAN but
+            smaller than a WAN.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="note-card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+    <th>Network</th>
+    <th>Full Form</th>
+    <th>Area</th>
+    <th>Example</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+    <td>LAN</td>
+    <td>Local Area Network</td>
+    <td>Small Area</td>
+    <td>School / Office</td>
+</tr>
+
+<tr>
+    <td>MAN</td>
+    <td>Metropolitan Area Network</td>
+    <td>City / Metro Area</td>
+    <td>City Network</td>
+</tr>
+
+<tr>
+    <td>WAN</td>
+    <td>Wide Area Network</td>
+    <td>Large Area</td>
+    <td>Internet</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     3 TOPOLOGY
+========================================================= -->
+
+<div class="section-title" id="topology">
+
+    <div class="section-icon">
+        🔵
+    </div>
+
+    <div>
+
+        <h2>
+            3. Network Topology
+        </h2>
+
+        <p>
+            Arrangement of devices in a network
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        What is Network Topology?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                Network topology refers to the physical or
+                logical arrangement of computers, devices
+                and communication links in a network.
+            </p>
+
+        </div>
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Network topology network में computers,
+                devices और communication links की physical
+                या logical arrangement को कहते हैं।
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="topic-grid">
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            ⭐
+        </div>
+
+        <h3>
+            Star Topology
+        </h3>
+
+        <p>
+            All devices are connected to a central
+            device such as a switch or hub.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            ➖
+        </div>
+
+        <h3>
+            Bus Topology
+        </h3>
+
+        <p>
+            Devices share a common communication
+            backbone or cable.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🔄
+        </div>
+
+        <h3>
+            Ring Topology
+        </h3>
+
+        <p>
+            Devices are connected in a circular
+            arrangement.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🌳
+        </div>
+
+        <h3>
+            Tree Topology
+        </h3>
+
+        <p>
+            A hierarchical structure that combines
+            characteristics of multiple topologies.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🕸️
+        </div>
+
+        <h3>
+            Mesh Topology
+        </h3>
+
+        <p>
+            Devices have multiple interconnections,
+            providing alternative communication paths.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🔗
+        </div>
+
+        <h3>
+            Hybrid Topology
+        </h3>
+
+        <p>
+            Combination of two or more different
+            network topologies.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     4 INTERNET
+========================================================= -->
+
+<div class="section-title" id="internet">
+
+    <div class="section-icon">
+        🌍
+    </div>
+
+    <div>
+
+        <h2>
+            4. Internet
+        </h2>
+
+        <p>
+            Global network of interconnected networks
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        What is Internet?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                The Internet is a worldwide system of
+                interconnected computer networks that
+                communicate using standard protocols.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Internet interconnected computer networks
+                का एक worldwide system है जो standard
+                communication protocols का उपयोग करके
+                information exchange करता है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h4>
+        Applications of Internet
+    </h4>
+
+    <ul class="study-list">
+
+        <li>
+            Information and research
+        </li>
+
+        <li>
+            Online education
+        </li>
+
+        <li>
+            E-mail communication
+        </li>
+
+        <li>
+            Online shopping
+        </li>
+
+        <li>
+            Online banking
+        </li>
+
+        <li>
+            Video and audio communication
+        </li>
+
+        <li>
+            Government services
+        </li>
+
+        <li>
+            Social networking
+        </li>
+
+    </ul>
+
+</section>
+
+
+<!-- =========================================================
+     5 WWW
+========================================================= -->
+
+<div class="section-title" id="www">
+
+    <div class="section-icon">
+        🕸️
+    </div>
+
+    <div>
+
+        <h2>
+            5. World Wide Web (WWW)
+        </h2>
+
+        <p>
+            Web and Internet relationship
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        What is WWW?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                World Wide Web (WWW) is a system of
+                interconnected web pages and resources
+                accessed through the Internet using web
+                browsers.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                World Wide Web (WWW) interconnected web
+                pages और resources का system है जिसे
+                Internet के माध्यम से web browser द्वारा
+                access किया जाता है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="important">
+
+        <h3>
+            ⭐ INTERNET vs WWW
+        </h3>
+
+        <p>
+            Internet एक global network infrastructure है,
+            जबकि WWW Internet पर उपलब्ध interconnected
+            web pages और web resources की service है।
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     6 URL
+========================================================= -->
+
+<div class="section-title" id="url">
+
+    <div class="section-icon">
+        🔗
+    </div>
+
+    <div>
+
+        <h2>
+            6. Website Address & URL
+        </h2>
+
+        <p>
+            Uniform Resource Locator
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        URL — Uniform Resource Locator
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                URL is the address used to locate a
+                resource on the Internet or World Wide Web.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                URL Internet या World Wide Web पर किसी
+                resource को locate करने के लिए उपयोग किया
+                जाने वाला address है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="definition">
+
+        <strong>
+            📌 Example
+        </strong>
+
+        <p>
+            https://www.example.com/index.html
+        </p>
+
+    </div>
+
+
+    <h4>
+        Common URL Components
+    </h4>
+
+    <ul class="study-list">
+
+        <li>
+            Protocol — https
+        </li>
+
+        <li>
+            Domain / Host — www.example.com
+        </li>
+
+        <li>
+            Path — /index.html
+        </li>
+
+    </ul>
+
+</section>
+
+
+<!-- =========================================================
+     7 IP
+========================================================= -->
+
+<div class="section-title" id="ip">
+
+    <div class="section-icon">
+        🆔
+    </div>
+
+    <div>
+
+        <h2>
+            7. IP Address
+        </h2>
+
+        <p>
+            Internet Protocol Address
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        What is an IP Address?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                An IP Address is a numerical address
+                used to identify and communicate with a
+                device on an IP network.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                IP Address एक numerical address है जिसका
+                उपयोग IP network पर किसी device को identify
+                और communicate करने के लिए किया जाता है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>Version</th>
+            <th>Full Form</th>
+            <th>Example</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr>
+            <td>IPv4</td>
+            <td>Internet Protocol Version 4</td>
+            <td>192.168.1.10</td>
+        </tr>
+
+        <tr>
+            <td>IPv6</td>
+            <td>Internet Protocol Version 6</td>
+            <td>2001:db8::1</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     8 ISP
+========================================================= -->
+
+<div class="section-title" id="isp">
+
+    <div class="section-icon">
+        📡
+    </div>
+
+    <div>
+
+        <h2>
+            8. ISP & Internet Protocol
+        </h2>
+
+        <p>
+            Internet Service Provider and protocols
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        ISP — Internet Service Provider
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                An ISP is an organization or company that
+                provides users with access to the Internet
+                and related services.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                ISP ऐसी organization या company है जो users
+                को Internet access और related services
+                प्रदान करती है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="important">
+
+        <h3>
+            📌 EXAM POINT
+        </h3>
+
+        <p>
+            ISP = Internet Service Provider.
+            इसका मुख्य role users को Internet connectivity
+            प्रदान करना है।
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="note-card">
+
+    <h3>
+        Common Internet Protocols
+    </h3>
+
+    <div class="table-wrap">
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>Protocol</th>
+            <th>Meaning / Use</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr>
+            <td>HTTP</td>
+            <td>Hypertext Transfer Protocol</td>
+        </tr>
+
+        <tr>
+            <td>HTTPS</td>
+            <td>HTTP with secure encrypted communication</td>
+        </tr>
+
+        <tr>
+            <td>FTP</td>
+            <td>File Transfer Protocol</td>
+        </tr>
+
+        <tr>
+            <td>TCP/IP</td>
+            <td>Core protocol suite used for Internet communication</td>
+        </tr>
+
+        <tr>
+            <td>DNS</td>
+            <td>Domain Name System</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     9 CONNECTIVITY
+========================================================= -->
+
+<div class="section-title" id="connect">
+
+    <div class="section-icon">
+        📶
+    </div>
+
+    <div>
+
+        <h2>
+            9. Modes of Connecting to Internet
+        </h2>
+
+        <p>
+            Common Internet connectivity methods
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="topic-grid">
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📱
+        </div>
+
+        <h3>
+            Mobile Hotspot
+        </h3>
+
+        <p>
+            A mobile device can share its Internet
+            connection with other devices through
+            hotspot functionality.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📶
+        </div>
+
+        <h3>
+            Wi-Fi
+        </h3>
+
+        <p>
+            Wireless networking technology used to
+            connect devices to a network or Internet.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🔌
+        </div>
+
+        <h3>
+            LAN Cable
+        </h3>
+
+        <p>
+            Wired Ethernet connection can provide
+            network and Internet access.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🌐
+        </div>
+
+        <h3>
+            Broadband
+        </h3>
+
+        <p>
+            High-speed Internet access delivered
+            through suitable wired or wireless technologies.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🔗
+        </div>
+
+        <h3>
+            USB Tethering
+        </h3>
+
+        <p>
+            A phone can share its mobile Internet
+            connection with another device through USB.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            📡
+        </div>
+
+        <h3>
+            Wireless Connection
+        </h3>
+
+        <p>
+            Data communication without a physical
+            network cable.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     10 IP MAC IMEI
+========================================================= -->
+
+<div class="section-title" id="devices">
+
+    <div class="section-icon">
+        🆔
+    </div>
+
+    <div>
+
+        <h2>
+            10. IP, MAC & IMEI
+        </h2>
+
+        <p>
+            Device identification concepts
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+    <th>Term</th>
+    <th>Full Form</th>
+    <th>Basic Use</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+    <td>IP</td>
+    <td>Internet Protocol Address</td>
+    <td>Identifies/address a device on an IP network</td>
+</tr>
+
+<tr>
+    <td>MAC</td>
+    <td>Media Access Control</td>
+    <td>Network interface hardware address</td>
+</tr>
+
+<tr>
+    <td>IMEI</td>
+    <td>International Mobile Equipment Identity</td>
+    <td>Identifies a mobile equipment/device</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<div class="important">
+
+    <h3>
+        🧠 EASY TRICK
+    </h3>
+
+    <p>
+        IP → Network Address<br>
+        MAC → Network Interface Address<br>
+        IMEI → Mobile Equipment Identity
+    </p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     11 BROWSERS
+========================================================= -->
+
+<div class="section-title" id="browser">
+
+    <div class="section-icon">
+        🌐
+    </div>
+
+    <div>
+
+        <h2>
+            11. Web Browsers
+        </h2>
+
+        <p>
+            Software used to access websites
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="topic-grid">
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🌈
+        </div>
+
+        <h3>
+            Google Chrome
+        </h3>
+
+        <p>
+            Popular web browser used for accessing
+            websites and web applications.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🦊
+        </div>
+
+        <h3>
+            Mozilla Firefox
+        </h3>
+
+        <p>
+            A popular web browser used for browsing
+            websites and Internet resources.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🔵
+        </div>
+
+        <h3>
+            Microsoft Edge
+        </h3>
+
+        <p>
+            Microsoft's modern web browser for
+            browsing the Internet.
+        </p>
+
+    </div>
+
+
+    <div class="topic-card">
+
+        <div class="topic-icon">
+            🔴
+        </div>
+
+        <h3>
+            Opera
+        </h3>
+
+        <p>
+            Web browser offering browsing and
+            various built-in features.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="note-card">
+
+    <div class="definition">
+
+        <strong>
+            📌 Browser vs Search Engine
+        </strong>
+
+        <p>
+            Browser = Website access करने वाला software.<br><br>
+            Search Engine = Internet पर information/websites
+            खोजने वाली online service.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     12 SEARCH ENGINE
+========================================================= -->
+
+<div class="section-title" id="search">
+
+    <div class="section-icon">
+        🔍
+    </div>
+
+    <div>
+
+        <h2>
+            12. Search Engines
+        </h2>
+
+        <p>
+            Searching information on the Internet
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        What is a Search Engine?
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                A search engine is an online service that
+                helps users find information and web pages
+                on the Internet using search queries.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Search engine एक online service है जो search
+                query के आधार पर Internet पर information
+                और web pages खोजने में मदद करती है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h4>
+        Searching Tips
+    </h4>
+
+    <ul class="study-list">
+
+        <li>
+            Use specific keywords.
+        </li>
+
+        <li>
+            Avoid unnecessarily long queries.
+        </li>
+
+        <li>
+            Use quotation marks for exact phrases when supported.
+        </li>
+
+        <li>
+            Check reliable sources before trusting information.
+        </li>
+
+        <li>
+            Compare information from multiple sources.
+        </li>
+
+    </ul>
+
+</section>
+
+
+<!-- =========================================================
+     13 WEB SURFING
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🏄
+    </div>
+
+    <div>
+
+        <h2>
+            13. Exploring & Surfing the Web
+        </h2>
+
+        <p>
+            Basic web browsing process
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        Web Surfing
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                Web surfing means navigating from one
+                webpage or website to another using links,
+                search results and browser controls.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Web surfing का अर्थ links, search results
+                और browser controls की सहायता से एक webpage
+                या website से दूसरे webpage तक जाना है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h4>
+        Basic Browser Actions
+    </h4>
+
+    <ul class="study-list">
+
+        <li>
+            Open a website
+        </li>
+
+        <li>
+            Enter a URL
+        </li>
+
+        <li>
+            Search information
+        </li>
+
+        <li>
+            Open hyperlinks
+        </li>
+
+        <li>
+            Go Back / Forward
+        </li>
+
+        <li>
+            Refresh webpage
+        </li>
+
+        <li>
+            Download available files
+        </li>
+
+        <li>
+            Print webpage
+        </li>
+
+    </ul>
+
+</section>
+
+
+<!-- =========================================================
+     14 DOWNLOAD PRINT
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📥
+    </div>
+
+    <div>
+
+        <h2>
+            14. Downloading & Printing Web Pages
+        </h2>
+
+        <p>
+            Useful Internet operations
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+    <h3>
+        Downloading
+    </h3>
+
+    <div class="bilingual">
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇬🇧 ENGLISH
+            </span>
+
+            <p>
+                Downloading means transferring a file or
+                resource from a remote server to your local
+                device.
+            </p>
+
+        </div>
+
+
+        <div class="lang-box">
+
+            <span class="lang-title">
+                🇮🇳 हिंदी
+            </span>
+
+            <p>
+                Downloading का अर्थ किसी remote server से
+                file या resource को अपने local device में
+                transfer करना है।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h4>
+        Printing
+    </h4>
+
+    <p>
+        A webpage can generally be printed using the
+        browser's Print option or the keyboard shortcut
+        <strong>Ctrl + P</strong>.
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     15 INTERNET TERMS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📚
+    </div>
+
+    <div>
+
+        <h2>
+            15. Important Internet Terms
+        </h2>
+
+        <p>
+            Quick terminology for MCQs
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+    <th>Term</th>
+    <th>Meaning</th>
+    <th>Hindi Explanation</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+    <td>Internet</td>
+    <td>Global interconnected network</td>
+    <td>विश्वव्यापी interconnected network</td>
+</tr>
+
+<tr>
+    <td>WWW</td>
+    <td>World Wide Web</td>
+    <td>Web pages/resources का system</td>
+</tr>
+
+<tr>
+    <td>URL</td>
+    <td>Uniform Resource Locator</td>
+    <td>Web resource का address</td>
+</tr>
+
+<tr>
+    <td>ISP</td>
+    <td>Internet Service Provider</td>
+    <td>Internet access देने वाला provider</td>
+</tr>
+
+<tr>
+    <td>IP</td>
+    <td>Internet Protocol</td>
+    <td>Network addressing/communication से संबंधित</td>
+</tr>
+
+<tr>
+    <td>DNS</td>
+    <td>Domain Name System</td>
+    <td>Domain names को IP addresses से resolve करने में मदद करता है</td>
+</tr>
+
+<tr>
+    <td>Browser</td>
+    <td>Web browsing software</td>
+    <td>Website खोलने वाला software</td>
+</tr>
+
+<tr>
+    <td>Search Engine</td>
+    <td>Online search service</td>
+    <td>Internet पर information खोजने की service</td>
+</tr>
+
+<tr>
+    <td>Hyperlink</td>
+    <td>Clickable link to another resource</td>
+    <td>दूसरे resource/page तक ले जाने वाला link</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     16 EXAM POINTS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🎯
+    </div>
+
+    <div>
+
+        <h2>
+            Important Exam Points
+        </h2>
+
+        <p>
+            Quick MCQ revision
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<ul class="study-list">
+
+    <li>
+        LAN stands for Local Area Network.
+    </li>
+
+    <li>
+        WAN stands for Wide Area Network.
+    </li>
+
+    <li>
+        Internet is a global network of interconnected networks.
+    </li>
+
+    <li>
+        WWW stands for World Wide Web.
+    </li>
+
+    <li>
+        URL stands for Uniform Resource Locator.
+    </li>
+
+    <li>
+        IP stands for Internet Protocol.
+    </li>
+
+    <li>
+        ISP stands for Internet Service Provider.
+    </li>
+
+    <li>
+        MAC stands for Media Access Control.
+    </li>
+
+    <li>
+        IMEI stands for International Mobile Equipment Identity.
+    </li>
+
+    <li>
+        HTTP stands for Hypertext Transfer Protocol.
+    </li>
+
+    <li>
+        HTTPS provides secure HTTP communication.
+    </li>
+
+    <li>
+        FTP stands for File Transfer Protocol.
+    </li>
+
+    <li>
+        DNS stands for Domain Name System.
+    </li>
+
+    <li>
+        A browser is used to access websites.
+    </li>
+
+    <li>
+        A search engine helps users find information on the Internet.
+    </li>
+
+    <li>
+        Wi-Fi is a wireless networking technology.
+    </li>
+
+    <li>
+        Ctrl + P is commonly used to open the Print dialog.
+    </li>
+
+</ul>
+
+</section>
+
+
+<!-- =========================================================
+     17 COMPARISON
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        ⚡
+    </div>
+
+    <div>
+
+        <h2>
+            Important Comparisons
+        </h2>
+
+        <p>
+            Frequently confused concepts
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+    <th>Concept 1</th>
+    <th>Concept 2</th>
+    <th>Difference</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+    <td>Internet</td>
+    <td>WWW</td>
+    <td>
+        Internet is the network infrastructure;
+        WWW is a web service running over the Internet.
+    </td>
+</tr>
+
+<tr>
+    <td>Browser</td>
+    <td>Search Engine</td>
+    <td>
+        Browser accesses websites; search engine helps
+        find web information.
+    </td>
+</tr>
+
+<tr>
+    <td>LAN</td>
+    <td>WAN</td>
+    <td>
+        LAN covers a smaller area; WAN covers a much
+        larger geographical area.
+    </td>
+</tr>
+
+<tr>
+    <td>IP</td>
+    <td>MAC</td>
+    <td>
+        IP is used for IP network addressing;
+        MAC identifies a network interface.
+    </td>
+</tr>
+
+<tr>
+    <td>Download</td>
+    <td>Upload</td>
+    <td>
+        Download transfers data to your device;
+        upload transfers data from your device to a remote system.
+    </td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     18 ONE PAGE REVISION
+========================================================= -->
+
+<div
+    class="section-title"
+    id="revision">
+
+    <div class="section-icon">
+        🚀
+    </div>
+
+    <div>
+
+        <h2>
+            One Page Revision
+        </h2>
+
+        <p>
+            Chapter 6 in quick format
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="revision-grid">
+
+
+<div class="revision-card">
+
+    <h3>
+        Computer Network
+    </h3>
+
+    <p>
+        Connected computers/devices that communicate
+        and share resources.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        LAN / WAN
+    </h3>
+
+    <p>
+        LAN = small geographical area.
+        WAN = large geographical area.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Topology
+    </h3>
+
+    <p>
+        Star, Bus, Ring, Tree, Mesh and Hybrid are
+        important network topology concepts.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Internet
+    </h3>
+
+    <p>
+        Worldwide interconnected network used for
+        communication and information sharing.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        WWW
+    </h3>
+
+    <p>
+        Collection/system of interconnected web pages
+        and resources accessed through the Internet.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        URL
+    </h3>
+
+    <p>
+        Uniform Resource Locator — address used to
+        locate a web resource.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        IP / MAC / IMEI
+    </h3>
+
+    <p>
+        IP → network addressing,
+        MAC → network interface address,
+        IMEI → mobile equipment identity.
+    </p>
+
+</div>
+
+
+<div class="revision-card">
+
+    <h3>
+        Browser / Search Engine
+    </h3>
+
+    <p>
+        Browser accesses websites.
+        Search engine helps locate information online.
+    </p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL MEMORY TRICKS
+========================================================= -->
+
+<section class="important">
+
+    <h3>
+        🧠 SUPER QUICK MEMORY TRICKS
+    </h3>
+
+    <p>
+
+        LAN → Local → छोटा Area<br>
+        WAN → Wide → बड़ा Area<br>
+        URL → Resource का Address<br>
+        ISP → Internet देने वाला Provider<br>
+        IP → Network Address<br>
+        MAC → Network Interface Address<br>
+        IMEI → Mobile Equipment Identity<br>
+        WWW → Web Pages का World<br>
+        Browser → Website खोलता है<br>
+        Search Engine → Information खोजता है<br>
+        Ctrl + P → Print
+
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     STUDY TIP
+========================================================= -->
+
+<section class="important">
+
+    <h3>
+        📖 STUDY TIP
+    </h3>
+
+    <p>
+
+        Chapter 6 में सबसे पहले LAN, WAN और Network
+        Topology को समझें। इसके बाद Internet, WWW,
+        URL, IP Address और ISP को अच्छी तरह revise करें।
+        फिर IP, MAC और IMEI का difference याद करें।
+        आखिर में browsers, search engines, connectivity
+        methods, downloading और printing को revise करें।
+
+        <br><br>
+
+        Objective exam के लिए full forms और differences
+        विशेष रूप से याद रखना बहुत useful रहेगा।
+
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <p>
+        M1-R5.1 • Chapter 06 • Introduction to Internet & WWW
+    </p>
+
+    <p style="margin-top:6px;">
+        Bilingual Study Notes • English + Hindi
+    </p>
+
+    <p style="margin-top:6px;">
+        Designed for NIELIT O Level Students
+    </p>
+
+</footer>
+
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   THEME COLORS
+========================================================= */
+
+const themes = {
+
+    cyan:{
+        primary:"#36dfff",
+        secondary:"#7c5cff",
+        accent:"#00ffa3"
+    },
+
+    purple:{
+        primary:"#b388ff",
+        secondary:"#7c4dff",
+        accent:"#e0b3ff"
+    },
+
+    green:{
+        primary:"#00e6a8",
+        secondary:"#00b894",
+        accent:"#8affc1"
+    },
+
+    orange:{
+        primary:"#ffb347",
+        secondary:"#ff7043",
+        accent:"#ffd166"
+    },
+
+    pink:{
+        primary:"#ff6ec7",
+        secondary:"#ff3d81",
+        accent:"#ffa8df"
+    },
+
+    red:{
+        primary:"#ff7675",
+        secondary:"#d63031",
+        accent:"#ffb3b3"
+    },
+
+    blue:{
+        primary:"#74b9ff",
+        secondary:"#0984e3",
+        accent:"#81ecec"
+    },
+
+    gold:{
+        primary:"#ffe66d",
+        secondary:"#f5a623",
+        accent:"#fff1a8"
+    }
+
+};
+
+
+/* =========================================================
+   SET THEME
+========================================================= */
+
+function setTheme(name){
+
+    const theme = themes[name];
+
+    if(!theme) return;
+
+    document.documentElement.style
+        .setProperty(
+            "--primary",
+            theme.primary
+        );
+
+    document.documentElement.style
+        .setProperty(
+            "--secondary",
+            theme.secondary
+        );
+
+    document.documentElement.style
+        .setProperty(
+            "--accent",
+            theme.accent
+        );
+
+    localStorage.setItem(
+        "m1_ch6_theme",
+        name
+    );
+
+    document
+        .querySelectorAll(".color")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+    const selected =
+        document.querySelector("." + name);
+
+    if(selected){
+        selected.classList.add("active");
+    }
+}
+
+
+/* =========================================================
+   DISPLAY MODE
+========================================================= */
+
+function setMode(mode){
+
+    if(mode === "simple"){
+
+        document.body
+            .classList
+            .add("simple-mode");
+
+    }else{
+
+        document.body
+            .classList
+            .remove("simple-mode");
+    }
+
+    localStorage.setItem(
+        "m1_ch6_mode",
+        mode
+    );
+}
+
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+function toggleThemePanel(){
+
+    document
+        .getElementById("themePanel")
+        .classList
+        .toggle("show");
+}
+
+
+/* =========================================================
+   LOAD SAVED SETTINGS
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    ()=>{
+
+        const savedTheme =
+            localStorage.getItem(
+                "m1_ch6_theme"
+            );
+
+        const savedMode =
+            localStorage.getItem(
+                "m1_ch6_mode"
+            );
+
+        if(savedTheme){
+
+            setTheme(savedTheme);
+
+        }else{
+
+            setTheme("cyan");
+        }
+
+        if(savedMode){
+
+            setMode(savedMode);
+
+        }else{
+
+            setMode("premium");
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE PANEL WHEN CLICK OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(e){
+
+        const panel =
+            document.getElementById(
+                "themePanel"
+            );
+
+        const button =
+            document.querySelector(
+                ".theme-btn"
+            );
+
+        if(
+            panel.classList.contains("show") &&
+            !panel.contains(e.target) &&
+            !button.contains(e.target)
+        ){
+
+            panel.classList.remove("show");
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>

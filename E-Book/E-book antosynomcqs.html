@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC MOCK – Synonyms & Antonyms Practice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+        body { background: #e9edf2; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 30px 15px; }
+        .app-container { max-width: 1100px; width: 100%; background: #ffffff; border-radius: 40px; box-shadow: 0 25px 60px rgba(0,0,0,0.15); overflow: hidden; }
+
+        /* ===== HEADER ===== */
+        .header { background: #0b1a33; padding: 16px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #f59e0b; flex-wrap: wrap; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { background: #f59e0b; color: #0b1a33; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1.6rem; font-weight: 800; }
+        .logo-text { color: white; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo-text span { color: #f59e0b; font-weight: 400; }
+        .header-badge { background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 6px 18px; border-radius: 40px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(245,158,11,0.3); }
+
+        /* ===== PAGES ===== */
+        .page { display: none; padding: 30px 35px; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        /* ===== COVER / DASHBOARD ===== */
+        .cover-top { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 25px; margin-bottom: 25px; }
+        .cover-badge { display: inline-block; background: #f59e0b; color: #0b1a33; font-weight: 800; font-size: 0.9rem; padding: 6px 24px; border-radius: 40px; letter-spacing: 1px; margin-bottom: 15px; }
+        .cover-title { font-size: 2.8rem; font-weight: 800; color: #0b1a33; line-height: 1.1; }
+        .cover-title .highlight { color: #f59e0b; background: #fffbeb; padding: 0 12px; border-radius: 12px; }
+        .cover-subtitle { font-size: 1.3rem; color: #334155; font-weight: 600; margin-top: 12px; background: #f1f5f9; display: inline-block; padding: 6px 30px; border-radius: 60px; }
+        .cover-desc { font-size: 1.05rem; color: #475569; margin-top: 18px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .overall-progress { background: #f8fafc; border-radius: 16px; padding: 14px 22px; margin-bottom: 22px; border: 1px solid #e9eef3; display: flex; flex-wrap: wrap; gap: 18px 30px; align-items: center; }
+        .overall-progress .bar-wrap { flex: 1; min-width: 120px; height: 8px; background: #e9eef3; border-radius: 20px; overflow: hidden; }
+        .overall-progress .bar-wrap .bar { height: 100%; width: 0%; background: linear-gradient(90deg, #f59e0b, #fcd34d); border-radius: 20px; transition: width 0.5s; }
+
+        /* ===== SETS GRID ===== */
+        .sets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin: 25px 0; }
+        .set-card { background: #f8fafc; border-radius: 20px; padding: 18px 14px; text-align: center; border: 2px solid #e9eef3; cursor: pointer; transition: 0.25s ease; position: relative; }
+        .set-card:hover { border-color: #f59e0b; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(245,158,11,0.12); }
+        .set-card .set-num { font-size: 1.8rem; font-weight: 800; color: #0b1a33; }
+        .set-card .set-label { font-size: 0.75rem; color: #64748b; font-weight: 600; margin-top: 2px; }
+        .set-card .set-progress { font-size: 0.7rem; color: #f59e0b; font-weight: 600; margin-top: 6px; background: #fffbeb; padding: 2px 12px; border-radius: 20px; display: inline-block; }
+        .set-card .set-status { position: absolute; top: 8px; right: 10px; font-size: 0.6rem; padding: 2px 10px; border-radius: 20px; font-weight: 600; }
+        .set-card .set-status.completed { background: #eafaf1; color: #27ae60; }
+        .set-card .set-status.inprogress { background: #fef9e7; color: #f39c12; }
+        .set-card .set-status.notstarted { background: #f1f5f9; color: #94a3b8; }
+
+        .text-center { text-align: center; margin-top: 10px; }
+
+        /* ===== PRACTICE HEADER ===== */
+        .practice-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-bottom: 3px solid #f59e0b; padding-bottom: 15px; margin-bottom: 20px; gap: 12px; }
+        .practice-header .left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .practice-header .left h2 { font-size: 1.5rem; font-weight: 800; color: #0b1a33; }
+        .practice-header .left h2 i { color: #f59e0b; margin-right: 8px; }
+        .practice-header .set-tag { background: #0b1a33; color: white; padding: 5px 18px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; }
+
+        /* ===== SCORE BAR ===== */
+        .score-bar { display: flex; flex-wrap: wrap; gap: 18px 30px; background: #f8fafc; border-radius: 16px; padding: 12px 22px; margin-bottom: 22px; border: 1px solid #e9eef3; }
+        .score-item { display: flex; align-items: center; gap: 8px; font-weight: 500; color: #334155; font-size: 0.9rem; }
+        .score-item i { font-size: 1rem; }
+        .score-item .num { font-weight: 700; font-size: 1.1rem; color: #0b1a33; }
+        .score-item.correct i { color: #27ae60; }
+        .score-item.wrong i { color: #e74c3c; }
+        .score-item.attempted i { color: #2980b9; }
+        .score-item.percent i { color: #f59e0b; }
+        .score-item.percent .num { color: #f59e0b; }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card { background: #ffffff; border-radius: 20px; padding: 22px 26px; margin-bottom: 20px; border: 1px solid #e9eef3; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: 0.2s; border-left: 6px solid #f59e0b; }
+        .question-card:hover { border-color: #fcd34d; box-shadow: 0 6px 20px rgba(0,0,0,0.04); }
+        .q-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+        .q-number { font-weight: 800; font-size: 0.95rem; color: #f59e0b; background: #fffbeb; padding: 2px 14px; border-radius: 40px; flex-shrink: 0; }
+        .q-text { font-size: 1.05rem; font-weight: 500; color: #0b1a33; line-height: 1.6; }
+        .q-text .word-highlight { color: #f59e0b; font-weight: 700; border-bottom: 2px solid #f59e0b; padding-bottom: 2px; }
+        .q-text .q-type { font-size: 0.8rem; background: #e2e8f0; color: #475569; padding: 2px 14px; border-radius: 40px; font-weight: 700; margin-left: 8px; }
+
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 14px; }
+        .options label { display: flex; align-items: center; gap: 10px; font-weight: 500; color: #1e293b; cursor: pointer; font-size: 0.98rem; padding: 10px 16px; border-radius: 12px; transition: 0.2s; background: #f8fafc; border: 1px solid #e9eef3; }
+        .options label:hover { background: #fffbeb; border-color: #fcd34d; }
+        .options input[type="radio"] { width: 17px; height: 17px; accent-color: #f59e0b; cursor: pointer; flex-shrink: 0; }
+        .options label.correct-ans { background: #eafaf1; border-color: #27ae60; color: #1e8449; }
+        .options label.wrong-ans { background: #fdedec; border-color: #e74c3c; color: #922b21; }
+        .options input[type="radio"]:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        .btn-answer { background: #0b1a33; color: white; border: none; padding: 8px 28px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-answer:hover:not(:disabled) { background: #f59e0b; color: #0b1a33; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(245,158,11,0.3); }
+        .btn-answer:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+        .answer-box { margin-top: 14px; padding: 14px 20px; border-radius: 14px; background: #fffbeb; border-left: 6px solid #f59e0b; display: none; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { 0% { opacity: 0; transform: translateY(-8px); } 100% { opacity: 1; transform: translateY(0); } }
+        .answer-box .correct-word { font-weight: 700; font-size: 1.05rem; color: #27ae60; }
+        .answer-box .explanation { margin-top: 6px; color: #2c3e50; font-size: 0.92rem; line-height: 1.6; }
+        .answer-box .explanation strong { color: #0b1a33; }
+        .answer-box .original-sentence { margin-top: 6px; font-size: 0.85rem; color: #64748b; border-top: 1px solid #fcd34d; padding-top: 8px; }
+
+        /* ===== NAV ===== */
+        .nav-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 18px; border-top: 1px solid #e9eef3; flex-wrap: wrap; gap: 12px; }
+        .btn-nav { background: transparent; color: #0b1a33; border: 2px solid #cbd5e1; padding: 8px 22px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-nav:hover { border-color: #f59e0b; background: #fffbeb; }
+        .btn-nav.primary { background: #0b1a33; color: white; border-color: #0b1a33; }
+        .btn-nav.primary:hover { background: #f59e0b; color: #0b1a33; border-color: #f59e0b; }
+        .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-indicator { font-weight: 600; color: #64748b; background: #f1f5f9; padding: 4px 18px; border-radius: 40px; font-size: 0.85rem; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .page { padding: 20px 16px; }
+            .cover-title { font-size: 2rem; }
+            .sets-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+            .set-card { padding: 14px 10px; }
+            .set-card .set-num { font-size: 1.4rem; }
+            .practice-header .left h2 { font-size: 1.2rem; }
+            .question-card { padding: 16px 16px; }
+            .q-text { font-size: 0.95rem; }
+            .options { grid-template-columns: 1fr; gap: 8px; }
+            .options label { font-size: 0.9rem; padding: 8px 12px; }
+            .score-bar { gap: 10px 16px; padding: 10px 14px; }
+            .score-item { font-size: 0.8rem; }
+            .score-item .num { font-size: 0.95rem; }
+            .nav-footer { flex-direction: column; align-items: stretch; }
+            .btn-nav { justify-content: center; }
+            .header { padding: 12px 16px; }
+            .logo-text { font-size: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .sets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .set-card .set-num { font-size: 1.2rem; }
+            .cover-title { font-size: 1.6rem; }
+            .options { grid-template-columns: 1fr; }
+            .btn-answer { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <a href="#" class="logo" onclick="goToDashboard(); return false;">
+            <div class="logo-icon"><i class="fas fa-exchange-alt"></i></div>
+            <div class="logo-text">SSC <span>MOCK</span></div>
+        </a>
+        <div class="header-badge"><i class="fas fa-pencil-alt"></i> Synonyms & Antonyms</div>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="page active" id="page-dashboard">
+        <div class="cover-top">
+            <div class="cover-badge"><i class="fas fa-star"></i> SSC CGL / CHSL / CPO / MTS</div>
+            <h1 class="cover-title"><span class="highlight">500+</span> Synonyms<br>& Antonyms Practice</h1>
+            <div class="cover-subtitle">Master Vocabulary</div>
+            <p class="cover-desc">Based on SSC Previous Year Questions – 20 Sets × 25 MCQs = 500+ Questions</p>
+        </div>
+
+        <div class="overall-progress">
+            <div><strong>Overall Progress:</strong> <span id="overallProgressText">0 / 500</span></div>
+            <div class="bar-wrap"><div class="bar" id="overallProgressBar"></div></div>
+            <div><strong>Score:</strong> <span id="overallScoreText">0%</span></div>
+        </div>
+
+        <div class="sets-grid" id="setsGrid"></div>
+
+        <div class="text-center">
+            <button class="btn-nav primary" onclick="resetAllProgress()"><i class="fas fa-redo-alt"></i> Reset All Progress</button>
+        </div>
+    </div>
+
+    <!-- ===== PRACTICE PAGE ===== -->
+    <div class="page" id="page-practice">
+        <div class="practice-header">
+            <div class="left">
+                <button class="btn-nav" onclick="goToDashboard()" style="padding:6px 14px;font-size:0.8rem;"><i class="fas fa-arrow-left"></i> Sets</button>
+                <h2><i class="fas fa-pen-fancy"></i> <span id="setTitle">Set 1</span></h2>
+            </div>
+            <span class="set-tag" id="setTag"><i class="fas fa-layer-group"></i> Set 1 / 20</span>
+        </div>
+
+        <div class="score-bar">
+            <div class="score-item correct"><i class="fas fa-check-circle"></i> Correct: <span class="num" id="correctCount">0</span></div>
+            <div class="score-item wrong"><i class="fas fa-times-circle"></i> Wrong: <span class="num" id="wrongCount">0</span></div>
+            <div class="score-item attempted"><i class="fas fa-flag"></i> Attempted: <span class="num" id="attemptedCount">0</span></div>
+            <div class="score-item percent"><i class="fas fa-star"></i> Score: <span class="num" id="scorePercent">0</span>%</div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="nav-footer">
+            <button class="btn-nav" id="prevSetBtn" onclick="changeSet(-1)"><i class="fas fa-chevron-left"></i> Previous</button>
+            <span class="page-indicator" id="setIndicator">Set 1 of 20</span>
+            <button class="btn-nav primary" id="nextSetBtn" onclick="changeSet(1)">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ================================================================
+// 📦 VOCABULARY DATA – 576 WORDS WITH SYNONYMS & ANTONYMS (A-Z)
+// ================================================================
+const vocabData = [
+    { word: "ABDICATE", meaning: "त्याग देना", synonyms: ["Renounce", "Resign", "Relinquish"], antonyms: ["Retain", "Assume", "Claim"] },
+    { word: "ABERRATION", meaning: "विचलन / असामान्यता", synonyms: ["Deviation", "Anomaly", "Digression"], antonyms: ["Normality", "Regularity", "Conformity"] },
+    { word: "ABHOR", meaning: "घृणा करना", synonyms: ["Detest", "Loathe", "Despise"], antonyms: ["Adore", "Love", "Cherish"] },
+    { word: "ABNORMAL", meaning: "असामान्य", synonyms: ["Unnatural", "Aberrant", "Deviant"], antonyms: ["Normal", "Regular", "Natural"] },
+    { word: "ABOLISH", meaning: "उन्मूलन करना", synonyms: ["Annul", "Cancel", "Eradicate"], antonyms: ["Establish", "Enact", "Institute"] },
+    { word: "ABRIDGE", meaning: "संक्षिप्त करना", synonyms: ["Shorten", "Condense", "Reduce"], antonyms: ["Expand", "Elongate", "Prolong"] },
+    { word: "ABSOLVE", meaning: "दोषमुक्त करना", synonyms: ["Acquit", "Exonerate", "Clear"], antonyms: ["Blame", "Accuse", "Condemn"] },
+    { word: "ABSTAIN", meaning: "दूर रहना", synonyms: ["Refrain", "Desist", "Forbear"], antonyms: ["Indulge", "Participate", "Engage"] },
+    { word: "ABYSMAL", meaning: "अथाह / बहुत बुरा", synonyms: ["Dreadful", "Awful", "Terrible"], antonyms: ["Excellent", "Wonderful", "Superb"] },
+    { word: "ACCEDE", meaning: "सहमत होना", synonyms: ["Consent", "Agree", "Comply"], antonyms: ["Refuse", "Deny", "Withhold"] },
+    { word: "ACCELERATE", meaning: "गति बढ़ाना", synonyms: ["Hasten", "Expedite", "Speed up"], antonyms: ["Decelerate", "Slow down", "Delay"] },
+    { word: "ACCOLADE", meaning: "सम्मान / पुरस्कार", synonyms: ["Honor", "Award", "Commendation"], antonyms: ["Criticism", "Disgrace", "Blame"] },
+    { word: "ACQUIESCE", meaning: "स्वीकार करना", synonyms: ["Accept", "Comply", "Concede"], antonyms: ["Protest", "Resist", "Defy"] },
+    { word: "ACUMEN", meaning: "कुशाग्र बुद्धि", synonyms: ["Insight", "Perception", "Shrewdness"], antonyms: ["Stupidity", "Ignorance", "Obtuseness"] },
+    { word: "ADAMANT", meaning: "अटल", synonyms: ["Stubborn", "Unyielding", "Inflexible"], antonyms: ["Flexible", "Yielding", "Compliant"] },
+    { word: "ADMONISH", meaning: "चेतावनी देना", synonyms: ["Warn", "Reprimand", "Rebuke"], antonyms: ["Praise", "Encourage", "Approve"] },
+    { word: "ADULTERATE", meaning: "मिलावट करना", synonyms: ["Contaminate", "Corrupt", "Pollute"], antonyms: ["Purify", "Refine", "Cleanse"] },
+    { word: "ADVERSE", meaning: "प्रतिकूल", synonyms: ["Unfavorable", "Hostile", "Detrimental"], antonyms: ["Favorable", "Beneficial", "Auspicious"] },
+    { word: "ADVOCATE", meaning: "समर्थन करना", synonyms: ["Support", "Endorse", "Promote"], antonyms: ["Oppose", "Condemn", "Criticize"] },
+    { word: "AFFABLE", meaning: "मिलनसार", synonyms: ["Friendly", "Amiable", "Cordial"], antonyms: ["Unfriendly", "Rude", "Hostile"] },
+    { word: "AFFLUENT", meaning: "संपन्न", synonyms: ["Wealthy", "Prosperous", "Rich"], antonyms: ["Poor", "Impoverished", "Destitute"] },
+    { word: "AGGRESSIVE", meaning: "आक्रामक", synonyms: ["Assertive", "Belligerent", "Hostile"], antonyms: ["Passive", "Submissive", "Peaceful"] },
+    { word: "ALACRITY", meaning: "तत्परता", synonyms: ["Readiness", "Eagerness", "Promptness"], antonyms: ["Reluctance", "Sluggishness", "Apathy"] },
+    { word: "ALLEVIATE", meaning: "कम करना", synonyms: ["Relieve", "Mitigate", "Reduce"], antonyms: ["Aggravate", "Worsen", "Intensify"] },
+    { word: "ALOOF", meaning: "अलग-थलग / उदासीन", synonyms: ["Distant", "Detached", "Unconcerned"], antonyms: ["Friendly", "Sociable", "Approachable"] },
+    { word: "ALTRUISTIC", meaning: "परोपकारी", synonyms: ["Selfless", "Generous", "Charitable"], antonyms: ["Selfish", "Egoistic", "Mean"] },
+    { word: "AMASS", meaning: "एकत्र करना", synonyms: ["Collect", "Accumulate", "Gather"], antonyms: ["Distribute", "Scatter", "Disperse"] },
+    { word: "AMBIGUOUS", meaning: "अस्पष्ट", synonyms: ["Vague", "Equivocal", "Obscure"], antonyms: ["Clear", "Definite", "Unambiguous"] },
+    { word: "AMBIVALENT", meaning: "दुविधा में", synonyms: ["Confused", "Vacillating", "Undecided"], antonyms: ["Decisive", "Clear", "Resolute"] },
+    { word: "AMELIORATE", meaning: "सुधारना", synonyms: ["Improve", "Enhance", "Better"], antonyms: ["Deteriorate", "Worsen", "Degrade"] },
+    { word: "ANACHRONISM", meaning: "समय-विरोधाभास", synonyms: ["Archaism", "Mistiming", "Prochronism"], antonyms: ["Modern", "Contemporary", "Current"] },
+    { word: "ANECDOTE", meaning: "उपाख्यान", synonyms: ["Tale", "Story", "Narrative"], antonyms: ["History", "Fact", "Reality"] },
+    { word: "ANIMOSITY", meaning: "शत्रुता", synonyms: ["Hostility", "Enmity", "Hatred"], antonyms: ["Friendship", "Amity", "Cordiality"] },
+    { word: "ANTITHESIS", meaning: "विलोम / विरोधाभास", synonyms: ["Opposite", "Contrast", "Reversal"], antonyms: ["Similar", "Counterpart", "Identical"] },
+    { word: "APATHY", meaning: "उदासीनता", synonyms: ["Indifference", "Disinterest", "Inertia"], antonyms: ["Enthusiasm", "Interest", "Concern"] },
+    { word: "APOCRYPHAL", meaning: "संदिग्ध / अप्रामाणिक", synonyms: ["Fictitious", "Mythical", "Unsubstantiated"], antonyms: ["Authentic", "Genuine", "True"] },
+    { word: "APPREHEND", meaning: "गिरफ्तार / समझना", synonyms: ["Arrest", "Capture", "Comprehend"], antonyms: ["Release", "Misunderstand"] },
+    { word: "AQUATIC", meaning: "जलीय", synonyms: ["Water", "Marine", "Oceanic"], antonyms: ["Terrestrial", "Land", "Arid"] },
+    { word: "ARBITRARY", meaning: "मनमाना", synonyms: ["Capricious", "Random", "Whimsical"], antonyms: ["Logical", "Rational", "Systematic"] },
+    { word: "ARDUOUS", meaning: "कठिन", synonyms: ["Difficult", "Laborious", "Strenuous"], antonyms: ["Easy", "Simple", "Effortless"] },
+    { word: "ARRAIGN", meaning: "आरोप लगाना / अभियोग", synonyms: ["Prosecute", "Indict", "Accuse"], antonyms: ["Acquit", "Exonerate", "Pardon"] },
+    { word: "ARROGANT", meaning: "अहंकारी", synonyms: ["Haughty", "Pompous", "Conceited"], antonyms: ["Humble", "Modest", "Meek"] },
+    { word: "ARTICULATE", meaning: "स्पष्ट बोलना", synonyms: ["Express", "Enunciate", "Fluently"], antonyms: ["Mumble", "Garble", "Stammer"] },
+    { word: "ASCERTAIN", meaning: "पता लगाना", synonyms: ["Discover", "Determine", "Uncover"], antonyms: ["Conceal", "Hide", "Miss"] },
+    { word: "ASCETIC", meaning: "तपस्वी", synonyms: ["Self-denying", "Spartan", "Abstemious"], antonyms: ["Hedonistic", "Sensual", "Indulgent"] },
+    { word: "ASTUTE", meaning: "चतुर", synonyms: ["Shrewd", "Clever", "Sharp"], antonyms: ["Foolish", "Dull", "Unobservant"] },
+    { word: "AUDACIOUS", meaning: "साहसी", synonyms: ["Bold", "Daring", "Fearless"], antonyms: ["Cowardly", "Timid", "Afraid"] },
+    { word: "AUSTERE", meaning: "कठोर", synonyms: ["Strict", "Harsh", "Sober"], antonyms: ["Luxurious", "Lenient", "Mild"] },
+    { word: "BALEFUL", meaning: "अशुभ / घातक", synonyms: ["Sinister", "Malignant", "Menacing"], antonyms: ["Benign", "Beneficent", "Favorable"] },
+    { word: "BANAL", meaning: "घिसा-पिटा", synonyms: ["Trite", "Commonplace", "Hackneyed"], antonyms: ["Original", "Novel", "Fresh"] },
+    { word: "BARBARIC", meaning: "बर्बर", synonyms: ["Brutal", "Savage", "Cruel"], antonyms: ["Civilized", "Cultured", "Gentle"] },
+    { word: "BELIE", meaning: "झुठलाना", synonyms: ["Contradict", "Misrepresent", "Confute"], antonyms: ["Reveal", "Confirm", "Represent"] },
+    { word: "BENEVOLENT", meaning: "उदार / दयालु", synonyms: ["Kind", "Charitable", "Generous"], antonyms: ["Malevolent", "Cruel", "Miserly"] },
+    { word: "BENIGN", meaning: "सौम्य / हानिकारक नहीं", synonyms: ["Gentle", "Mild", "Harmless"], antonyms: ["Malignant", "Harmful", "Malicious"] },
+    { word: "BERATE", meaning: "डाँटना", synonyms: ["Scold", "Chide", "Reprimand"], antonyms: ["Praise", "Commend", "Applaud"] },
+    { word: "BIZARRE", meaning: "विचित्र", synonyms: ["Strange", "Weird", "Odd"], antonyms: ["Ordinary", "Normal", "Conventional"] },
+    { word: "BLASPHEMY", meaning: "ईश-निंदा", synonyms: ["Sacrilege", "Profanity", "Irreverence"], antonyms: ["Reverence", "Piety", "Respect"] },
+    { word: "BOLSTER", meaning: "सहारा देना / मजबूत करना", synonyms: ["Strengthen", "Reinforce", "Support"], antonyms: ["Undermine", "Weaken", "Sabotage"] },
+    { word: "BREVITY", meaning: "संक्षिप्तता", synonyms: ["Conciseness", "Shortness", "Terseness"], antonyms: ["Verbosity", "Lengthiness", "Prolixity"] },
+    { word: "BRUSQUE", meaning: "रूखा", synonyms: ["Abrupt", "Blunt", "Curt"], antonyms: ["Polite", "Gracious", "Tactful"] },
+    { word: "BURGEON", meaning: "फूटना / तेज़ी से बढ़ना", synonyms: ["Flourish", "Mushroom", "Expand"], antonyms: ["Decline", "Shrink", "Wither"] },
+    { word: "CACOPHONY", meaning: "कर्कश ध्वनि", synonyms: ["Discord", "Dissonance", "Noise"], antonyms: ["Harmony", "Melody", "Euphony"] },
+    { word: "CAJOLE", meaning: "चापलूसी से मनाना", synonyms: ["Wheedle", "Coax", "Persuade"], antonyms: ["Bully", "Force", "Coerce"] },
+    { word: "CALAMITY", meaning: "आपदा", synonyms: ["Disaster", "Catastrophe", "Tragedy"], antonyms: ["Fortune", "Blessing", "Boon"] },
+    { word: "CALLOUS", meaning: "बेदर्द / कठोर", synonyms: ["Insensitive", "Unfeeling", "Heartless"], antonyms: ["Sympathetic", "Caring", "Tender"] },
+    { word: "CANDID", meaning: "स्पष्टवादी", synonyms: ["Frank", "Open", "Honest"], antonyms: ["Deceitful", "Evasive", "Dishonest"] },
+    { word: "CAPRICIOUS", meaning: "मनमौजी", synonyms: ["Fickle", "Whimsical", "Erratic"], antonyms: ["Consistent", "Steady", "Predictable"] },
+    { word: "CAPTIVATE", meaning: "मोहित करना", synonyms: ["Charm", "Enchant", "Fascinate"], antonyms: ["Repel", "Bore", "Disgust"] },
+    { word: "CASTIGATE", meaning: "कड़ी सजा देना / फटकारना", synonyms: ["Punish", "Chastise", "Reprimand"], antonyms: ["Praise", "Commend", "Reward"] },
+    { word: "CATHARSIS", meaning: "भावनाओं की शुद्धि", synonyms: ["Purging", "Cleansing", "Release"], antonyms: ["Suppression", "Repression", "Bottling"] },
+    { word: "CAUSTIC", meaning: "कटु / तीखा", synonyms: ["Sarcastic", "Scathing", "Biting"], antonyms: ["Gentle", "Kind", "Mild"] },
+    { word: "CHASTE", meaning: "पवित्र", synonyms: ["Pure", "Virtuous", "Decent"], antonyms: ["Impure", "Immoral", "Lewd"] },
+    { word: "CHERISH", meaning: "संजोना / प्यार करना", synonyms: ["Adore", "Treasure", "Value"], antonyms: ["Despise", "Neglect", "Abandon"] },
+    { word: "CHICANERY", meaning: "चालाकी / धोखाधड़ी", synonyms: ["Trickery", "Deception", "Duplicity"], antonyms: ["Honesty", "Candor", "Frankness"] },
+    { word: "CHRONIC", meaning: "पुराना (बीमारी)", synonyms: ["Persistent", "Habitual", "Inveterate"], antonyms: ["Acute", "Temporary", "Short-term"] },
+    { word: "CIRCUMSPECT", meaning: "सतर्क / विवेकी", synonyms: ["Cautious", "Prudent", "Discreet"], antonyms: ["Careless", "Rash", "Impulsive"] },
+    { word: "CLAMOR", meaning: "कोलाहल / शोर", synonyms: ["Noise", "Uproar", "Turmoil"], antonyms: ["Silence", "Calm", "Peace"] },
+    { word: "CLANDESTINE", meaning: "गुप्त", synonyms: ["Covert", "Surreptitious", "Secret"], antonyms: ["Open", "Public", "Aboveboard"] },
+    { word: "COALESCE", meaning: "मिल जाना / एक हो जाना", synonyms: ["Merge", "Combine", "Fuse"], antonyms: ["Split", "Divide", "Separate"] },
+    { word: "COERCE", meaning: "बलपूर्वक करना", synonyms: ["Force", "Compel", "Pressure"], antonyms: ["Persuade", "Convince", "Coax"] },
+    { word: "COGENT", meaning: "प्रभावोत्पादक", synonyms: ["Compelling", "Persuasive", "Forceful"], antonyms: ["Weak", "Ineffective", "Flimsy"] },
+    { word: "COMMEMORATE", meaning: "स्मरण करना", synonyms: ["Memorialize", "Celebrate", "Honor"], antonyms: ["Forget", "Neglect", "Disregard"] },
+    { word: "COMMENSURATE", meaning: "समानुपातिक / तुल्य", synonyms: ["Proportionate", "Equal", "Equivalent"], antonyms: ["Disproportionate", "Unequal", "Incommensurate"] },
+    { word: "COMMODIOUS", meaning: "विशाल", synonyms: ["Spacious", "Roomy", "Ample"], antonyms: ["Cramped", "Tight", "Narrow"] },
+    { word: "COMPASSION", meaning: "करुणा", synonyms: ["Empathy", "Pity", "Sympathy"], antonyms: ["Callousness", "Indifference", "Cruelty"] },
+    { word: "COMPENDIUM", meaning: "संग्रह", synonyms: ["Collection", "Compilation", "Digest"], antonyms: ["Expansion", "Extension", "Supplement"] },
+    { word: "COMPLACENT", meaning: "आत्म-संतुष्ट", synonyms: ["Self-satisfied", "Smug", "Contented"], antonyms: ["Unsatisfied", "Humble", "Discontent"] },
+    { word: "COMPLIANT", meaning: "आज्ञाकारी", synonyms: ["Docile", "Submissive", "Obedient"], antonyms: ["Disobedient", "Defiant", "Rebellious"] },
+    { word: "CONCEDE", meaning: "स्वीकार करना", synonyms: ["Acknowledge", "Accept", "Grant"], antonyms: ["Deny", "Dispute", "Refuse"] },
+    { word: "CONCILIATE", meaning: "सुलह करना", synonyms: ["Pacify", "Appease", "Reconcile"], antonyms: ["Provoke", "Aggravate", "Worsen"] },
+    { word: "CONCISE", meaning: "संक्षिप्त", synonyms: ["Brief", "Terse", "Succinct"], antonyms: ["Verbose", "Lengthy", "Prolix"] },
+    { word: "CONDEMN", meaning: "निंदा करना", synonyms: ["Denounce", "Criticize", "Censure"], antonyms: ["Praise", "Commend", "Applaud"] },
+    { word: "CONFISCATE", meaning: "ज़ब्त करना", synonyms: ["Seize", "Impound", "Appropriate"], antonyms: ["Return", "Release", "Give back"] },
+    { word: "CONFLAGRATION", meaning: "दावानल / बड़ी आग", synonyms: ["Fire", "Blaze", "Inferno"], antonyms: ["Extinction", "Quenching", "Dousing"] },
+    { word: "CONGENIAL", meaning: "अनुकूल", synonyms: ["Pleasant", "Friendly", "Compatible"], antonyms: ["Hostile", "Unfriendly", "Incompatible"] },
+    { word: "CONJECTURE", meaning: "अनुमान / कल्पना", synonyms: ["Guess", "Speculation", "Surmise"], antonyms: ["Fact", "Reality", "Knowledge"] },
+    { word: "CONNOISSEUR", meaning: "पारखी", synonyms: ["Expert", "Enthusiast", "Aficionado"], antonyms: ["Novice", "Ignoramus"] },
+    { word: "CONSENSUS", meaning: "आम सहमति", synonyms: ["Agreement", "Harmony", "Concord"], antonyms: ["Disagreement", "Discord", "Dissent"] },
+    { word: "CONSORT", meaning: "संगत करना / साथी", synonyms: ["Associate", "Fraternize", "Mix"], antonyms: ["Avoid", "Shun", "Isolate"] },
+    { word: "CONSUMMATE", meaning: "परिपूर्ण / निपुण", synonyms: ["Perfect", "Flawless", "Accomplished"], antonyms: ["Imperfect", "Incompetent", "Amateur"] },
+    { word: "CONTEMPORARY", meaning: "समकालीन", synonyms: ["Modern", "Current", "Present-day"], antonyms: ["Ancient", "Old-fashioned", "Outdated"] },
+    { word: "CONTENTIOUS", meaning: "विवादास्पद / झगड़ालू", synonyms: ["Controversial", "Quarrelsome", "Combative"], antonyms: ["Peaceful", "Agreeable", "Harmonious"] },
+    { word: "CONTINGENT", meaning: "आकस्मिक", synonyms: ["Dependent", "Conditional", "Accidental"], antonyms: ["Certain", "Absolute", "Unconditional"] },
+    { word: "CONTRADICT", meaning: "खंडन करना", synonyms: ["Dispute", "Deny", "Oppose"], antonyms: ["Confirm", "Corroborate", "Agree"] },
+    { word: "CONTRITE", meaning: "पश्चातापी", synonyms: ["Regretful", "Remorseful", "Repentant"], antonyms: ["Impenitent", "Defiant", "Unrepentant"] },
+    { word: "CONTROVERSIAL", meaning: "विवादास्पद", synonyms: ["Contentious", "Debatable", "Contested"], antonyms: ["Uncontroversial", "Undisputed", "Settled"] },
+    { word: "CONVINCE", meaning: "विश्वास दिलाना", synonyms: ["Persuade", "Assure", "Satisfy"], antonyms: ["Dissuade", "Discourage"] },
+    { word: "CONVOLUTED", meaning: "जटिल", synonyms: ["Complex", "Intricate", "Tangled"], antonyms: ["Simple", "Straightforward", "Clear"] },
+    { word: "CORPULENT", meaning: "मोटा", synonyms: ["Obese", "Overweight", "Stout"], antonyms: ["Slim", "Slender", "Thin"] },
+    { word: "CORROBORATE", meaning: "पुष्टि करना", synonyms: ["Confirm", "Substantiate", "Validate"], antonyms: ["Contradict", "Refute", "Deny"] },
+    { word: "COVET", meaning: "लालच करना", synonyms: ["Desire", "Crave", "Hanker"], antonyms: ["Despise", "Abhor", "Renounce"] },
+    { word: "CREDENCE", meaning: "विश्वास", synonyms: ["Trust", "Confidence", "Belief"], antonyms: ["Distrust", "Skepticism", "Disbelief"] },
+    { word: "CREDIBLE", meaning: "विश्वसनीय", synonyms: ["Believable", "Plausible", "Trustworthy"], antonyms: ["Incredible", "Unbelievable", "Dubious"] },
+    { word: "CRYPTIC", meaning: "गूढ़", synonyms: ["Mysterious", "Enigmatic", "Puzzling"], antonyms: ["Clear", "Straightforward", "Explicit"] },
+    { word: "CULPABLE", meaning: "दोषी", synonyms: ["Guilty", "Blameworthy", "Responsible"], antonyms: ["Innocent", "Blameless", "Irreproachable"] },
+    { word: "CUMBERSOME", meaning: "भारी / बोझिल", synonyms: ["Bulky", "Heavy", "Unwieldy"], antonyms: ["Light", "Handy", "Manageable"] },
+    { word: "CYNICAL", meaning: "मानव-द्वेषी / नकारात्मक", synonyms: ["Skeptical", "Pessimistic", "Scornful"], antonyms: ["Optimistic", "Trusting", "Idealistic"] },
+    { word: "DABBLE", meaning: "हाथ आजमाना", synonyms: ["Tinker", "Amuse", "Trifle"], antonyms: ["Specialize", "Master"] },
+    { word: "DAUNT", meaning: "धमकाना / हतोत्साहित करना", synonyms: ["Intimidate", "Discourage", "Deter"], antonyms: ["Encourage", "Inspire", "Hearten"] },
+    { word: "DAUNTLESS", meaning: "निडर", synonyms: ["Fearless", "Intrepid", "Valiant"], antonyms: ["Timid", "Cowardly", "Afraid"] },
+    { word: "DEARTH", meaning: "कमी", synonyms: ["Shortage", "Scarcity", "Lack"], antonyms: ["Abundance", "Plenty", "Surplus"] },
+    { word: "DEBACLE", meaning: "विफलता", synonyms: ["Fiasco", "Disaster", "Catastrophe"], antonyms: ["Success", "Triumph", "Victory"] },
+    { word: "DEBILITATE", meaning: "कमजोर करना", synonyms: ["Weaken", "Enfeeble", "Enervate"], antonyms: ["Strengthen", "Fortify", "Invigorate"] },
+    { word: "DEBUNK", meaning: "भंडाफोड़ करना", synonyms: ["Expose", "Discredit", "Disprove"], antonyms: ["Validate", "Prove", "Support"] },
+    { word: "DECADENT", meaning: "पतनशील", synonyms: ["Degenerate", "Corrupt", "Deteriorating"], antonyms: ["Moral", "Wholesome", "Virtuous"] },
+    { word: "DECIPHER", meaning: "समझना / पढ़ना", synonyms: ["Decode", "Interpret", "Unravel"], antonyms: ["Encode", "Encrypt"] },
+    { word: "DECORUM", meaning: "शिष्टाचार", synonyms: ["Etiquette", "Propriety", "Manners"], antonyms: ["Impropriety", "Rudeness", "Indecorum"] },
+    { word: "DECRY", meaning: "निंदा करना", synonyms: ["Condemn", "Denounce", "Censure"], antonyms: ["Praise", "Extol", "Commend"] },
+    { word: "DEFER", meaning: "स्थगित करना", synonyms: ["Postpone", "Delay", "Adjourn"], antonyms: ["Advance", "Hasten", "Expedite"] },
+    { word: "DEFERENCE", meaning: "आदर", synonyms: ["Respect", "Homage", "Obedience"], antonyms: ["Disrespect", "Disobedience", "Defiance"] },
+    { word: "DEFIANT", meaning: "अवज्ञाकारी", synonyms: ["Disobedient", "Rebellious", "Insubordinate"], antonyms: ["Obedient", "Submissive", "Compliant"] },
+    { word: "DEFT", meaning: "कुशल / चतुर", synonyms: ["Adroit", "Skillful", "Dexterous"], antonyms: ["Clumsy", "Inept", "Awkward"] },
+    { word: "DEFUNCT", meaning: "मृत / समाप्त", synonyms: ["Extinct", "Dead", "Obsolete"], antonyms: ["Alive", "Active", "Current"] },
+    { word: "DELICATE", meaning: "नाजुक", synonyms: ["Fragile", "Dainty", "Exquisite"], antonyms: ["Rugged", "Sturdy", "Tough"] },
+    { word: "DELINEATE", meaning: "रूपरेखा बनाना", synonyms: ["Describe", "Portray", "Sketch"], antonyms: ["Confuse", "Distort", "Mislead"] },
+    { word: "DEMAGOGUE", meaning: "भड़काऊ नेता", synonyms: ["Agitator", "Rabble-rouser", "Fomenter"], antonyms: ["Peacemaker", "Reformer", "Statesman"] },
+    { word: "DEMOLISH", meaning: "ध्वस्त करना", synonyms: ["Destroy", "Raze", "Wreck"], antonyms: ["Construct", "Build", "Erect"] },
+    { word: "DENIGRATE", meaning: "बदनाम करना", synonyms: ["Defame", "Slander", "Discredit"], antonyms: ["Praise", "Commend", "Glorify"] },
+    { word: "DENOUNCE", meaning: "प्रबल विरोध करना", synonyms: ["Condemn", "Criticize", "Decry"], antonyms: ["Praise", "Commend", "Applaud"] },
+    { word: "DEPLOY", meaning: "तैनात करना", synonyms: ["Position", "Station", "Utilize"], antonyms: ["Withdraw", "Remove"] },
+    { word: "DERIDE", meaning: "उपहास करना", synonyms: ["Mock", "Taunt", "Scoff"], antonyms: ["Respect", "Admire", "Praise"] },
+    { word: "DEROGATORY", meaning: "अपमानजनक", synonyms: ["Insulting", "Disparaging", "Belittling"], antonyms: ["Complimentary", "Praising", "Favorable"] },
+    { word: "DESECRATE", meaning: "अपवित्र करना", synonyms: ["Profane", "Defile", "Violate"], antonyms: ["Consecrate", "Sanctify", "Revere"] },
+    { word: "DESPISE", meaning: "तिरस्कार करना", synonyms: ["Scorn", "Disdain", "Loathe"], antonyms: ["Admire", "Respect", "Love"] },
+    { word: "DESPONDENT", meaning: "निराश", synonyms: ["Hopeless", "Dejected", "Gloomy"], antonyms: ["Hopeful", "Optimistic", "Cheerful"] },
+    { word: "DESULTORY", meaning: "अव्यवस्थित / रुक-रुक कर", synonyms: ["Irregular", "Sporadic", "Haphazard"], antonyms: ["Systematic", "Methodical", "Orderly"] },
+    { word: "DETER", meaning: "रोकना / हतोत्साहित करना", synonyms: ["Discourage", "Prevent", "Dissuade"], antonyms: ["Encourage", "Persuade", "Urge"] },
+    { word: "DETRIMENTAL", meaning: "हानिकारक", synonyms: ["Harmful", "Damaging", "Injurious"], antonyms: ["Beneficial", "Helpful", "Advantageous"] },
+    { word: "DEVASTATE", meaning: "तबाह करना", synonyms: ["Destroy", "Ravage", "Ruin"], antonyms: ["Build", "Create", "Restore"] },
+    { word: "DEVOUT", meaning: "धार्मिक / निष्ठावान", synonyms: ["Pious", "Religious", "Sincere"], antonyms: ["Irreligious", "Unfaithful", "Insincere"] },
+    { word: "DIATRIBE", meaning: "कटु भाषण", synonyms: ["Tirade", "Harangue", "Invective"], antonyms: ["Praise", "Eulogy", "Tribute"] },
+    { word: "DICHOTOMY", meaning: "द्विभाजन", synonyms: ["Division", "Contrast", "Duality"], antonyms: ["Unity", "Agreement", "Sameness"] },
+    { word: "DIGNITY", meaning: "गरिमा", synonyms: ["Honor", "Nobility", "Respect"], antonyms: ["Indignity", "Dishonor", "Humiliation"] },
+    { word: "DILATORY", meaning: "देरी करने वाला / टालमटोल", synonyms: ["Slow", "Tardy", "Procrastinating"], antonyms: ["Prompt", "Punctual", "Speedy"] },
+    { word: "DILIGENT", meaning: "मेहनती", synonyms: ["Industrious", "Assiduous", "Persevering"], antonyms: ["Lazy", "Negligent", "Indolent"] },
+    { word: "DIMINISH", meaning: "कम होना", synonyms: ["Decrease", "Reduce", "Lessen"], antonyms: ["Increase", "Magnify", "Expand"] },
+    { word: "DISCLOSE", meaning: "प्रकट करना", synonyms: ["Reveal", "Divulge", "Expose"], antonyms: ["Conceal", "Hide", "Suppress"] },
+    { word: "DISCREDIT", meaning: "बदनाम करना", synonyms: ["Defame", "Disgrace", "Devalue"], antonyms: ["Credit", "Honor", "Validate"] },
+    { word: "DISCREET", meaning: "विवेकपूर्ण", synonyms: ["Prudent", "Cautious", "Tactful"], antonyms: ["Indiscreet", "Careless", "Rash"] },
+    { word: "DISDAIN", meaning: "तिरस्कार", synonyms: ["Contempt", "Scorn", "Arrogance"], antonyms: ["Admiration", "Respect", "Esteem"] },
+    { word: "DISPEL", meaning: "दूर करना", synonyms: ["Dismiss", "Dissipate", "Scatter"], antonyms: ["Gather", "Collect", "Accumulate"] },
+    { word: "DISPARAGE", meaning: "अपमान करना", synonyms: ["Belittle", "Deprecate", "Decry"], antonyms: ["Praise", "Extol", "Commend"] },
+    { word: "DISPARATE", meaning: "भिन्न", synonyms: ["Different", "Dissimilar", "Diverse"], antonyms: ["Similar", "Alike", "Comparable"] },
+    { word: "DISPARITY", meaning: "अंतर / विषमता", synonyms: ["Inequality", "Gap", "Discrepancy"], antonyms: ["Parity", "Equality", "Sameness"] },
+    { word: "DISSEMINATE", meaning: "प्रचार करना", synonyms: ["Spread", "Circulate", "Disperse"], antonyms: ["Suppress", "Conceal", "Gather"] },
+    { word: "DISSENT", meaning: "असहमति", synonyms: ["Disagreement", "Opposition", "Protest"], antonyms: ["Consent", "Agreement", "Approval"] },
+    { word: "DISTINGUISH", meaning: "अंतर करना", synonyms: ["Differentiate", "Discern", "Recognize"], antonyms: ["Confuse", "Mistake", "Overlook"] },
+    { word: "DIVERGENT", meaning: "अलग-अलग", synonyms: ["Deviation", "Differing", "Varying"], antonyms: ["Convergent", "Agreeing", "Similar"] },
+    { word: "DIVERSE", meaning: "विविध", synonyms: ["Varied", "Assorted", "Multifarious"], antonyms: ["Uniform", "Identical", "Homogeneous"] },
+    { word: "DIVULGE", meaning: "प्रकट करना", synonyms: ["Reveal", "Disclose", "Leak"], antonyms: ["Conceal", "Hide", "Suppress"] },
+    { word: "DOCILE", meaning: "विनम्र", synonyms: ["Submissive", "Obedient", "Gentle"], antonyms: ["Disobedient", "Stubborn", "Defiant"] },
+    { word: "DOGMATIC", meaning: "हठधर्मी", synonyms: ["Authoritarian", "Dictatorial", "Doctrinal"], antonyms: ["Liberal", "Open-minded", "Flexible"] },
+    { word: "DOMINANT", meaning: "प्रभावी", synonyms: ["Prevalent", "Predominant", "Supreme"], antonyms: ["Subordinate", "Weak", "Minor"] },
+    { word: "DOUBTFUL", meaning: "संदिग्ध", synonyms: ["Skeptical", "Questionable", "Uncertain"], antonyms: ["Certain", "Confident", "Definite"] },
+    { word: "DUBIOUS", meaning: "संदिग्ध", synonyms: ["Skeptical", "Questionable", "Uncertain"], antonyms: ["Certain", "Convinced", "Undoubted"] },
+    { word: "DURABLE", meaning: "टिकाऊ", synonyms: ["Sturdy", "Robust", "Long-lasting"], antonyms: ["Fragile", "Flawed", "Weak"] },
+    { word: "EBULLIENT", meaning: "उत्साही / जोशीला", synonyms: ["Enthusiastic", "Exuberant", "Lively"], antonyms: ["Lethargic", "Apathetic", "Dull"] },
+    { word: "ECCENTRIC", meaning: "विचित्र", synonyms: ["Unconventional", "Quirky", "Odd"], antonyms: ["Conventional", "Normal", "Ordinary"] },
+    { word: "ECLECTIC", meaning: "सर्वग्राही", synonyms: ["Diverse", "Versatile", "Wide-ranging"], antonyms: ["Narrow", "Limited", "Uniform"] },
+    { word: "ECSTASY", meaning: "परमानंद", synonyms: ["Bliss", "Joy", "Rapture"], antonyms: ["Agony", "Sorrow", "Misery"] },
+    { word: "EDIFICE", meaning: "भवन", synonyms: ["Building", "Structure", "Monument"], antonyms: ["Hovel", "Shack", "Ruins"] },
+    { word: "EFFICIENT", meaning: "कुशल", synonyms: ["Productive", "Capable", "Able"], antonyms: ["Inefficient", "Incompetent", "Wasteful"] },
+    { word: "EGOCENTRIC", meaning: "स्व-केंद्रित", synonyms: ["Selfish", "Egoistic", "Narcissistic"], antonyms: ["Altruistic", "Selfless", "Considerate"] },
+    { word: "EGREGIOUS", meaning: "प्रबल / जघन्य", synonyms: ["Flagrant", "Shocking", "Outstanding"], antonyms: ["Mild", "Common", "Unnoticeable"] },
+    { word: "ELABORATE", meaning: "विस्तृत", synonyms: ["Detailed", "Complex", "Complicated"], antonyms: ["Simple", "Plain", "Concise"] },
+    { word: "ELOQUENT", meaning: "वाक्पटु", synonyms: ["Articulate", "Fluent", "Expressive"], antonyms: ["Inarticulate", "Rambling", "Vague"] },
+    { word: "ELUSIVE", meaning: "मायावी", synonyms: ["Evasive", "Slippery", "Evanescent"], antonyms: ["Tangible", "Clear", "Straightforward"] },
+    { word: "EMANCIPATE", meaning: "मुक्त करना", synonyms: ["Free", "Liberate", "Set free"], antonyms: ["Enslave", "Oppress", "Subjugate"] },
+    { word: "EMBELLISH", meaning: "सजाना / बढ़ा-चढ़ाकर कहना", synonyms: ["Adorn", "Decorate", "Garnish"], antonyms: ["Simplify", "Understate", "Uglify"] },
+    { word: "EMINENT", meaning: "प्रतिष्ठित", synonyms: ["Distinguished", "Notable", "Illustrious"], antonyms: ["Unknown", "Insignificant", "Obscure"] },
+    { word: "EMPATHY", meaning: "सहानुभूति", synonyms: ["Compassion", "Understanding", "Sensitivity"], antonyms: ["Apathy", "Indifference", "Callousness"] },
+    { word: "EMULATE", meaning: "अनुसरण / बराबरी करना", synonyms: ["Imitate", "Copy", "Ape"], antonyms: ["Neglect", "Ignore", "Disregard"] },
+    { word: "ENDEMIC", meaning: "स्थानिक", synonyms: ["Native", "Local", "Indigenous"], antonyms: ["Foreign", "Imported", "Epidemic"] },
+    { word: "ENDURE", meaning: "सहन करना", synonyms: ["Bear", "Tolerate", "Withstand"], antonyms: ["Succumb", "Yield", "Surrender"] },
+    { word: "ENERVATE", meaning: "कमजोर कर देना", synonyms: ["Weaken", "Debilitate", "Exhaust"], antonyms: ["Strengthen", "Invigorate", "Energize"] },
+    { word: "ENGENDER", meaning: "उत्पन्न करना", synonyms: ["Produce", "Generate", "Beget"], antonyms: ["Suppress", "Destroy", "End"] },
+    { word: "ENIGMA", meaning: "पहेली", synonyms: ["Mystery", "Riddle", "Puzzle"], antonyms: ["Clarity", "Solution", "Explanation"] },
+    { word: "ENNUI", meaning: "ऊब / अरुचि", synonyms: ["Boredom", "Lassitude", "Tedium"], antonyms: ["Excitement", "Enthusiasm", "Passion"] },
+    { word: "ENORMOUS", meaning: "विशाल", synonyms: ["Huge", "Immense", "Colossal"], antonyms: ["Tiny", "Minuscule", "Small"] },
+    { word: "ENSUE", meaning: "अनुसरण करना", synonyms: ["Follow", "Result", "Develop"], antonyms: ["Precede", "Prevent"] },
+    { word: "ENUMERATE", meaning: "गिनना", synonyms: ["Count", "List", "Itemize"], antonyms: ["Estimate", "Guess", "Misplace"] },
+    { word: "EPHEMERAL", meaning: "क्षणिक", synonyms: ["Temporary", "Fleeting", "Transient"], antonyms: ["Permanent", "Eternal", "Enduring"] },
+    { word: "EPITOME", meaning: "प्रतीक / मूर्त रूप", synonyms: ["Embodiment", "Personification", "Quintessence"], antonyms: ["Antithesis", "Opposite", "Contradiction"] },
+    { word: "EQUANIMITY", meaning: "समभाव", synonyms: ["Calmness", "Composure", "Poise"], antonyms: ["Agitation", "Anxiety", "Nervousness"] },
+    { word: "EQUIVOCAL", meaning: "अस्पष्ट", synonyms: ["Ambiguous", "Vague", "Dubious"], antonyms: ["Clear", "Unambiguous", "Definite"] },
+    { word: "ERADICATE", meaning: "उन्मूलन करना", synonyms: ["Eliminate", "Exterminate", "Annihilate"], antonyms: ["Preserve", "Protect", "Plant"] },
+    { word: "ERUDITE", meaning: "विद्वान", synonyms: ["Learned", "Scholarly", "Well-read"], antonyms: ["Ignorant", "Illiterate", "Uneducated"] },
+    { word: "ESCALATE", meaning: "बढ़ना", synonyms: ["Intensify", "Amplify", "Magnify"], antonyms: ["Decrease", "Diminish", "Subside"] },
+    { word: "ESSENTIAL", meaning: "आवश्यक", synonyms: ["Necessary", "Vital", "Indispensable"], antonyms: ["Unnecessary", "Optional", "Dispensable"] },
+    { word: "ESTEEM", meaning: "आदर", synonyms: ["Respect", "Reverence", "Admiration"], antonyms: ["Disrespect", "Contempt", "Disdain"] },
+    { word: "EULOGY", meaning: "प्रशंसात्मक भाषण", synonyms: ["Tribute", "Praise", "Panegyric"], antonyms: ["Criticism", "Denunciation", "Censure"] },
+    { word: "EVALUATE", meaning: "मूल्यांकन करना", synonyms: ["Assess", "Judge", "Appraise"], antonyms: ["Ignore", "Neglect"] },
+    { word: "EXACERBATE", meaning: "बढ़ाना (समस्या)", synonyms: ["Aggravate", "Intensify", "Worsen"], antonyms: ["Alleviate", "Mitigate", "Sooth"] },
+    { word: "EXAGGERATE", meaning: "बढ़ा-चढ़ा कर बोलना", synonyms: ["Overstate", "Magnify", "Embellish"], antonyms: ["Understate", "Minimize", "Downplay"] },
+    { word: "EXASPERATE", meaning: "खिजाना", synonyms: ["Irritate", "Provoke", "Annoy"], antonyms: ["Calm", "Appease", "Sooth"] },
+    { word: "EXCAVATE", meaning: "खुदाई करना", synonyms: ["Dig", "Unearth", "Exhume"], antonyms: ["Bury", "Cover", "Fill"] },
+    { word: "EXCEPTIONAL", meaning: "असाधारण", synonyms: ["Extraordinary", "Remarkable", "Outstanding"], antonyms: ["Ordinary", "Average", "Common"] },
+    { word: "EXCULPATE", meaning: "दोषमुक्त करना", synonyms: ["Acquit", "Vindicate", "Absolve"], antonyms: ["Blame", "Accuse", "Inculpate"] },
+    { word: "EXECRABLE", meaning: "घृणित", synonyms: ["Abominable", "Detestable", "Odious"], antonyms: ["Admirable", "Excellent", "Praiseworthy"] },
+    { word: "EXEMPLARY", meaning: "अनुकरणीय", synonyms: ["Ideal", "Commendable", "Praiseworthy"], antonyms: ["Deplorable", "Pitiful", "Lamentable"] },
+    { word: "EXHAUSTIVE", meaning: "संपूर्ण", synonyms: ["Comprehensive", "Thorough", "Complete"], antonyms: ["Incomplete", "Partial", "Superficial"] },
+    { word: "EXHILARATE", meaning: "उल्लसित करना", synonyms: ["Thrill", "Elate", "Invigorate"], antonyms: ["Depress", "Discourage", "Weary"] },
+    { word: "EXIGENT", meaning: "अत्यावश्यक", synonyms: ["Urgent", "Pressing", "Critical"], antonyms: ["Trivial", "Unimportant", "Non-urgent"] },
+    { word: "EXONERATE", meaning: "दोषमुक्त करना", synonyms: ["Acquit", "Exculpate", "Clear"], antonyms: ["Blame", "Convince", "Condemn"] },
+    { word: "EXORBITANT", meaning: "अत्यधिक (कीमत)", synonyms: ["Excessive", "Outrageous", "Extortionate"], antonyms: ["Reasonable", "Moderate", "Affordable"] },
+    { word: "EXPEDITE", meaning: "शीघ्र करना", synonyms: ["Hasten", "Accelerate", "Facilitate"], antonyms: ["Delay", "Hinder", "Hamper"] },
+    { word: "EXPLICIT", meaning: "स्पष्ट", synonyms: ["Clear", "Precise", "Straightforward"], antonyms: ["Implicit", "Vague", "Ambiguous"] },
+    { word: "EXPLOIT", meaning: "शोषण करना", synonyms: ["Take advantage", "Milk", "Use"], antonyms: ["Protect", "Preserve", "Nurture"] },
+    { word: "EXTENUATE", meaning: "कम करना / बहाना बनाना", synonyms: ["Lessen", "Palliate", "Justify"], antonyms: ["Aggravate", "Intensify"] },
+    { word: "EXTOL", meaning: "प्रशंसा करना", synonyms: ["Praise", "Commend", "Glorify"], antonyms: ["Criticize", "Condemn", "Denounce"] },
+    { word: "EXTRANEOUS", meaning: "बाहरी / अप्रासंगिक", synonyms: ["External", "Irrelevant", "Immaterial"], antonyms: ["Relevant", "Pertinent", "Essential"] },
+    { word: "EXTRICATE", meaning: "बाहर निकालना", synonyms: ["Release", "Disentangle", "Liberate"], antonyms: ["Entangle", "Trap", "Confuse"] },
+    { word: "EXUBERANT", meaning: "उत्साही", synonyms: ["Enthusiastic", "Energetic", "Vibrant"], antonyms: ["Lethargic", "Dull", "Apathetic"] },
+    { word: "FABRICATE", meaning: "गढ़ना", synonyms: ["Invent", "Forge", "Counterfeit"], antonyms: ["Demolish", "Destroy", "Ruin"] },
+    { word: "FACADE", meaning: "सामने का भाग / दिखावा", synonyms: ["Front", "Cover", "Manner"], antonyms: ["Back", "Interior", "Reality"] },
+    { word: "FACILITATE", meaning: "सुगम बनाना", synonyms: ["Simplify", "Ease", "Expedite"], antonyms: ["Complicate", "Hamper", "Obstruct"] },
+    { word: "FALLACIOUS", meaning: "भ्रामक", synonyms: ["Misleading", "Erroneous", "Faulty"], antonyms: ["True", "Sound", "Valid"] },
+    { word: "FALLACY", meaning: "भ्रम", synonyms: ["Misconception", "Mistake", "Error"], antonyms: ["Truth", "Fact", "Reality"] },
+    { word: "FANATIC", meaning: "कट्टर", synonyms: ["Zealot", "Extremist", "Enthusiast"], antonyms: ["Moderate", "Tolerant", "Liberal"] },
+    { word: "FATHOM", meaning: "समझना", synonyms: ["Comprehend", "Grasp", "Understand"], antonyms: ["Misunderstand", "Overlook", "Ignore"] },
+    { word: "FATUOUS", meaning: "मूर्खतापूर्ण", synonyms: ["Foolish", "Inane", "Silly"], antonyms: ["Sensible", "Prudent", "Wise"] },
+    { word: "FEASIBLE", meaning: "व्यवहार्य", synonyms: ["Possible", "Practical", "Realizable"], antonyms: ["Impossible", "Impractical", "Unworkable"] },
+    { word: "FERVENT", meaning: "प्रबल / उत्कट", synonyms: ["Passionate", "Ardent", "Intense"], antonyms: ["Apathetic", "Indifferent", "Halfhearted"] },
+    { word: "FICKLE", meaning: "चंचल", synonyms: ["Capricious", "Changeable", "Volatile"], antonyms: ["Constant", "Steadfast", "Loyal"] },
+    { word: "FIDELITY", meaning: "निष्ठा", synonyms: ["Loyalty", "Devotion", "Allegiance"], antonyms: ["Infidelity", "Disloyalty", "Treachery"] },
+    { word: "FLABBERGAST", meaning: "स्तब्ध कर देना", synonyms: ["Astonish", "Amaze", "Stupefy"], antonyms: ["Bore", "Underwhelm"] },
+    { word: "FLAGRANT", meaning: "ज्वलंत / घोर", synonyms: ["Glaring", "Blatant", "Outrageous"], antonyms: ["Secret", "Hidden", "Inconspicuous"] },
+    { word: "FLAMBOYANT", meaning: "भड़कीला", synonyms: ["Flashy", "Showy", "Gaudy"], antonyms: ["Subdued", "Sober", "Modest"] },
+    { word: "FLEDGLING", meaning: "नौसिखिया", synonyms: ["Novice", "Beginner", "Tyro"], antonyms: ["Expert", "Veteran", "Professional"] },
+    { word: "FLOURISH", meaning: "फलना-फूलना", synonyms: ["Thrive", "Prosper", "Blossom"], antonyms: ["Wither", "Decline", "Deteriorate"] },
+    { word: "FLOUT", meaning: "अवहेलना करना", synonyms: ["Defy", "Disobey", "Disregard"], antonyms: ["Obey", "Respect", "Heed"] },
+    { word: "FOMENT", meaning: "भड़काना", synonyms: ["Instigate", "Incite", "Provoke"], antonyms: ["Quell", "Pacify", "Appease"] },
+    { word: "FORESEE", meaning: "पूर्वानुमान लगाना", synonyms: ["Predict", "Anticipate", "Project"], antonyms: ["Overlook", "Disregard"] },
+    { word: "FORFEIT", meaning: "ज़ब्त करना / खोना", synonyms: ["Surrender", "Relinquish", "Lose"], antonyms: ["Keep", "Retain", "Secure"] },
+    { word: "FORTIFY", meaning: "मजबूत करना", synonyms: ["Strengthen", "Reinforce", "Bolster"], antonyms: ["Weaken", "Undermine", "Debilitate"] },
+    { word: "FRIVOLOUS", meaning: "तुच्छ / निरर्थक", synonyms: ["Flippant", "Petty", "Trivial"], antonyms: ["Serious", "Sensible", "Important"] },
+    { word: "FRUGAL", meaning: "मितव्ययी", synonyms: ["Economical", "Thrifty", "Sparing"], antonyms: ["Extravagant", "Wasteful", "Spendthrift"] },
+    { word: "FURTIVE", meaning: "गुप्त / चोरी-छिपे", synonyms: ["Stealthy", "Sly", "Clandestine"], antonyms: ["Open", "Honest", "Straightforward"] },
+    { word: "FUTILE", meaning: "निष्फल", synonyms: ["Vain", "Useless", "Fruitless"], antonyms: ["Fruitful", "Productive", "Successful"] },
+    { word: "GARNISH", meaning: "सजाना", synonyms: ["Adorn", "Decorate", "Embellish"], antonyms: ["Strip", "Disfigure", "Uglify"] },
+    { word: "GARRULOUS", meaning: "बातूनी", synonyms: ["Talkative", "Loquacious", "Voluble"], antonyms: ["Taciturn", "Reticent", "Quiet"] },
+    { word: "GENERIC", meaning: "सामान्य", synonyms: ["General", "Common", "Universal"], antonyms: ["Specific", "Unique", "Distinctive"] },
+    { word: "GLIB", meaning: "चालाक / चिकनी-चुपड़ी बात", synonyms: ["Smooth-tongued", "Facile", "Insincere"], antonyms: ["Halting", "Sincere", "Awkward"] },
+    { word: "GRANDILOQUENT", meaning: "भव्य भाषी / आडंबरपूर्ण", synonyms: ["High-flown", "Pompous", "Magniloquent"], antonyms: ["Simple", "Humble", "Plain"] },
+    { word: "GREGARIOUS", meaning: "मिलनसार", synonyms: ["Sociable", "Outgoing", "Companionable"], antonyms: ["Antisocial", "Unfriendly", "Reserved"] },
+    { word: "GUILE", meaning: "चालाकी / धोखा", synonyms: ["Cunning", "Deceit", "Trickery"], antonyms: ["Honesty", "Sincerity", "Candor"] },
+    { word: "HACKNEYED", meaning: "घिसा-पिटा", synonyms: ["Trite", "Clichéd", "Banal"], antonyms: ["Original", "Fresh", "Novel"] },
+    { word: "HAPHAZARD", meaning: "अव्यवस्थित", synonyms: ["Random", "Disorganized", "Slapdash"], antonyms: ["Systematic", "Orderly", "Methodical"] },
+    { word: "HARBINGER", meaning: "संकेत (अग्रदूत)", synonyms: ["Forerunner", "Herald", "Pioneer"], antonyms: ["Follower", "Successor", "Aftermath"] },
+    { word: "HASTEN", meaning: "जल्दी करना", synonyms: ["Hurry", "Rush", "Expedite"], antonyms: ["Delay", "Slow", "Procrastinate"] },
+    { word: "HEDONISTIC", meaning: "सुखवादी", synonyms: ["Pleasure-seeking", "Self-indulgent", "Sensual"], antonyms: ["Ascetic", "Abstemious", "Self-denying"] },
+    { word: "HEINOUS", meaning: "जघन्य", synonyms: ["Atrocious", "Vicious", "Abominable"], antonyms: ["Praiseworthy", "Mild", "Virtuous"] },
+    { word: "HERETIC", meaning: "धर्म-विरोधी", synonyms: ["Dissenter", "Nonconformist", "Sceptic"], antonyms: ["Believer", "Orthodox", "Follower"] },
+    { word: "HINDER", meaning: "बाधा डालना", synonyms: ["Hamper", "Obstruct", "Impede"], antonyms: ["Facilitate", "Help", "Advance"] },
+    { word: "HINDRANCE", meaning: "बाधा", synonyms: ["Obstacle", "Barrier", "Impediment"], antonyms: ["Help", "Assistance", "Advantage"] },
+    { word: "HOMOGENEOUS", meaning: "सजातीय", synonyms: ["Uniform", "Consistent", "Unvarying"], antonyms: ["Diverse", "Heterogeneous", "Mixed"] },
+    { word: "HOSTILE", meaning: "शत्रुतापूर्ण", synonyms: ["Antagonistic", "Aggressive", "Belligerent"], antonyms: ["Friendly", "Cordial", "Amicable"] },
+    { word: "HYPOCRITICAL", meaning: "पाखंडी", synonyms: ["Insincere", "Deceitful", "Two-faced"], antonyms: ["Genuine", "Sincere", "Honest"] },
+    { word: "HYPOCRISY", meaning: "पाखंड", synonyms: ["Insincerity", "Deceit", "Duplicity"], antonyms: ["Sincerity", "Honesty", "Genuineness"] },
+    { word: "ICONOCLAST", meaning: "मूर्तिभंजक / परंपरा विरोधी", synonyms: ["Rebel", "Nonconformist", "Revolutionary"], antonyms: ["Traditionalist", "Conformist", "Conservative"] },
+    { word: "IDIOSYNCRASY", meaning: "व्यक्तिगत विशेषता", synonyms: ["Peculiarity", "Quirk", "Eccentricity"], antonyms: ["Commonality", "Normality", "Standard"] },
+    { word: "IGNITE", meaning: "प्रज्वलित करना", synonyms: ["Kindle", "Light", "Spark"], antonyms: ["Extinguish", "Quench", "Douse"] },
+    { word: "IGNOMINIOUS", meaning: "अपमानजनक", synonyms: ["Humiliating", "Disgraceful", "Shameful"], antonyms: ["Honorable", "Glorious", "Respected"] },
+    { word: "ILLICIT", meaning: "अवैध", synonyms: ["Illegal", "Unlawful", "Prohibited"], antonyms: ["Legal", "Lawful", "Permitted"] },
+    { word: "IMBUE", meaning: "भर देना (गुण डालना)", synonyms: ["Infuse", "Instill", "Saturate"], antonyms: ["Drain", "Deprive", "Strip"] },
+    { word: "IMMINENT", meaning: "आसन्न", synonyms: ["Impending", "Approaching", "Forthcoming"], antonyms: ["Remote", "Distant", "Unlikely"] },
+    { word: "IMMUNE", meaning: "प्रतिरक्षित", synonyms: ["Resistant", "Protected", "Exempt"], antonyms: ["Susceptible", "Vulnerable", "Sensitive"] },
+    { word: "IMMUTABLE", meaning: "अपरिवर्तनीय", synonyms: ["Unchangeable", "Fixed", "Permanent"], antonyms: ["Changeable", "Malleable", "Flexible"] },
+    { word: "IMPASSIVE", meaning: "भावहीन", synonyms: ["Stolid", "Unemotional", "Expressionless"], antonyms: ["Emotional", "Expressive", "Passionate"] },
+    { word: "IMPECCABLE", meaning: "त्रुटिहीन", synonyms: ["Flawless", "Perfect", "Spotless"], antonyms: ["Flawed", "Imperfect", "Defective"] },
+    { word: "IMPECUNIOUS", meaning: "अल्प-धन / गरीब", synonyms: ["Penniless", "Destitute", "Insolvent"], antonyms: ["Affluent", "Wealthy", "Rich"] },
+    { word: "IMPEDE", meaning: "बाधा डालना", synonyms: ["Hinder", "Hamper", "Obstruct"], antonyms: ["Facilitate", "Expedite", "Help"] },
+    { word: "IMPERATIVE", meaning: "अत्यावश्यक", synonyms: ["Essential", "Vital", "Crucial"], antonyms: ["Unnecessary", "Optional", "Trivial"] },
+    { word: "IMPERIOUS", meaning: "दबंग", synonyms: ["Arrogant", "Domineering", "Haughty"], antonyms: ["Humble", "Submissive", "Docile"] },
+    { word: "IMPETUOUS", meaning: "आवेगी", synonyms: ["Impulsive", "Rash", "Hasty"], antonyms: ["Cautious", "Deliberate", "Prudent"] },
+    { word: "IMPLACABLE", meaning: "असंतोषणीय / कठोर", synonyms: ["Unrelenting", "Unyielding", "Intransigent"], antonyms: ["Forgiving", "Lenient", "Merciful"] },
+    { word: "IMPLICIT", meaning: "निहित / अंतर्निहित", synonyms: ["Inherent", "Implied", "Unspoken"], antonyms: ["Explicit", "Clear", "Direct"] },
+    { word: "IMPROMPTU", meaning: "बिना तैयारी के", synonyms: ["Spontaneous", "Unrehearsed", "Offhand"], antonyms: ["Rehearsed", "Prepared", "Planned"] },
+    { word: "IMPROPRIETY", meaning: "अनौचित्य", synonyms: ["Indecorum", "Unseemliness", "Misconduct"], antonyms: ["Propriety", "Decorum", "Decency"] },
+    { word: "IMPROVISE", meaning: "तात्कालिक व्यवस्था करना", synonyms: ["Ad-lib", "Extemporize", "Invent"], antonyms: ["Plan", "Rehearse", "Prepare"] },
+    { word: "IMPUGN", meaning: "हमला करना / विवाद करना", synonyms: ["Challenge", "Dispute", "Contest"], antonyms: ["Defend", "Support", "Uphold"] },
+    { word: "INADVERTENT", meaning: "अनजाने में", synonyms: ["Unintentional", "Accidental", "Involuntary"], antonyms: ["Deliberate", "Intentional", "Planned"] },
+    { word: "INCENDIARY", meaning: "भड़काने वाला", synonyms: ["Inflammatory", "Provocative", "Seditious"], antonyms: ["Peaceful", "Pacifying", "Appeasing"] },
+    { word: "INCESSANT", meaning: "निरंतर", synonyms: ["Ceaseless", "Constant", "Perpetual"], antonyms: ["Intermittent", "Occasional", "Spasmodic"] },
+    { word: "INCHOATE", meaning: "अपरिपक्व / नवीन", synonyms: ["Embryonic", "Incipient", "Unformed"], antonyms: ["Mature", "Complete", "Developed"] },
+    { word: "INCOGNITO", meaning: "गुप्त रूप से", synonyms: ["Disguised", "Hidden", "Anonymous"], antonyms: ["Open", "Revealed", "Public"] },
+    { word: "INCONSEQUENTIAL", meaning: "तुच्छ / नगण्य", synonyms: ["Trivial", "Insignificant", "Minor"], antonyms: ["Significant", "Consequential", "Important"] },
+    { word: "INCORRIGIBLE", meaning: "असुधार्य", synonyms: ["Irredeemable", "Inveterate", "Hardened"], antonyms: ["Reformable", "Correctable", "Changeable"] },
+    { word: "INCULCATE", meaning: "मन में बिठाना", synonyms: ["Instill", "Implant", "Infuse"], antonyms: ["Eradicate", "Uproot", "Remove"] },
+    { word: "INCUMBENT", meaning: "पदधारी / कर्तव्य", synonyms: ["Obligatory", "Current", "Present"], antonyms: ["Optional", "Past", "Former"] },
+    { word: "INDEFATIGABLE", meaning: "अथक", synonyms: ["Tireless", "Untiring", "Persevering"], antonyms: ["Lazy", "Weary", "Exhausted"] },
+    { word: "INDICT", meaning: "अभियोग लगाना", synonyms: ["Charge", "Prosecute", "Accuse"], antonyms: ["Acquit", "Clear", "Exonerate"] },
+    { word: "INDIGENOUS", meaning: "देशी", synonyms: ["Native", "Local", "Endemic"], antonyms: ["Foreign", "Imported", "Exotic"] },
+    { word: "INDISPENSABLE", meaning: "अपरिहार्य", synonyms: ["Essential", "Vital", "Irreplaceable"], antonyms: ["Dispensable", "Unnecessary", "Expendable"] },
+    { word: "INDOLENT", meaning: "आलसी", synonyms: ["Lazy", "Idle", "Slothful"], antonyms: ["Diligent", "Industrious", "Active"] },
+    { word: "INDULGENT", meaning: "उदार / दयालु", synonyms: ["Lenient", "Tolerant", "Liberal"], antonyms: ["Strict", "Harsh", "Severe"] },
+    { word: "INERTIA", meaning: "निष्क्रियता", synonyms: ["Inactivity", "Passivity", "Stagnation"], antonyms: ["Activity", "Energy", "Movement"] },
+    { word: "INEVITABLE", meaning: "अपरिहार्य", synonyms: ["Unavoidable", "Inescapable", "Certain"], antonyms: ["Avoidable", "Uncertain", "Preventable"] },
+    { word: "INEXORABLE", meaning: "अडिग / निर्दय", synonyms: ["Relentless", "Unyielding", "Implacable"], antonyms: ["Yielding", "Flexible", "Merciful"] },
+    { word: "INFALLIBLE", meaning: "अचूक", synonyms: ["Unfailing", "Certain", "Perfect"], antonyms: ["Faulty", "Imperfect", "Fallible"] },
+    { word: "INFAMOUS", meaning: "कुख्यात", synonyms: ["Notorious", "Disreputable", "Ignominious"], antonyms: ["Famous", "Reputable", "Honorable"] },
+    { word: "INFINITESIMAL", meaning: "अति सूक्ष्म", synonyms: ["Minute", "Microscopic", "Negligible"], antonyms: ["Huge", "Colossal", "Significant"] },
+    { word: "INGENIOUS", meaning: "आविष्कारशील", synonyms: ["Inventive", "Creative", "Clever"], antonyms: ["Unimaginative", "Dull", "Ordinary"] },
+    { word: "INGENUOUS", meaning: "भोला", synonyms: ["Naive", "Innocent", "Simple"], antonyms: ["Worldly", "Cunning", "Sly"] },
+    { word: "INGRATE", meaning: "कृतघ्न", synonyms: ["Ungrateful", "Thankless", "Unappreciative"], antonyms: ["Grateful", "Thankful", "Appreciative"] },
+    { word: "INHERENT", meaning: "अंतर्निहित", synonyms: ["Intrinsic", "Innate", "Inborn"], antonyms: ["Acquired", "External", "Extrinsic"] },
+    { word: "INHIBIT", meaning: "रोकना", synonyms: ["Restrain", "Prevent", "Suppress"], antonyms: ["Allow", "Permit", "Encourage"] },
+    { word: "INNOCUOUS", meaning: "निरापद", synonyms: ["Harmless", "Safe", "Inoffensive"], antonyms: ["Harmful", "Dangerous", "Toxic"] },
+    { word: "INSIDIOUS", meaning: "घातक (धीरे-धीरे)", synonyms: ["Treacherous", "Subtle", "Sneaky"], antonyms: ["Straightforward", "Open", "Forthright"] },
+    { word: "INSOLVENT", meaning: "दिवालिया", synonyms: ["Bankrupt", "Broke", "Defaulting"], antonyms: ["Solvent", "Affluent", "Prosperous"] },
+    { word: "INSULAR", meaning: "संकीर्ण विचार का", synonyms: ["Parochial", "Narrow-minded", "Provincial"], antonyms: ["Broad-minded", "Cosmopolitan", "Liberal"] },
+    { word: "INSURGENT", meaning: "विद्रोही", synonyms: ["Rebel", "Mutineer", "Revolutionary"], antonyms: ["Loyalist", "Supporter", "Patriot"] },
+    { word: "INTANGIBLE", meaning: "अमूर्त", synonyms: ["Incorporeal", "Abstract", "Impalpable"], antonyms: ["Tangible", "Concrete", "Palpable"] },
+    { word: "INTERIM", meaning: "अंतरिम", synonyms: ["Temporary", "Transitional", "Provisional"], antonyms: ["Permanent", "Final", "Lasting"] },
+    { word: "INTERSPERSE", meaning: "बीच-बीच में रखना", synonyms: ["Scatter", "Distribute", "Pepper"], antonyms: ["Gather", "Collect", "Concentrate"] },
+    { word: "INTIMATE (Verb)", meaning: "संकेत करना / बताना", synonyms: ["Suggest", "Imply", "Indicate"], antonyms: ["Conceal", "Hide", "Withhold"] },
+    { word: "INTRANSIGENT", meaning: "हठी", synonyms: ["Stubborn", "Obdurate", "Unyielding"], antonyms: ["Compliant", "Flexible", "Yielding"] },
+    { word: "INTREPID", meaning: "निडर", synonyms: ["Fearless", "Brave", "Valiant"], antonyms: ["Timid", "Cowardly", "Frightened"] },
+    { word: "INUNDATE", meaning: "बाढ़ / भरमार करना", synonyms: ["Flood", "Overwhelm", "Submerge"], antonyms: ["Drain", "Dehydrate", "Empty"] },
+    { word: "INVALUABLE", meaning: "अमूल्य", synonyms: ["Priceless", "Irreplaceable", "Inestimable"], antonyms: ["Valueless", "Worthless", "Cheap"] },
+    { word: "INVECTIVE", meaning: "गाली / कठोर भाषा", synonyms: ["Abuse", "Tirade", "Censure"], antonyms: ["Praise", "Compliment", "Acclaim"] },
+    { word: "INVEIGLE", meaning: "बहका कर मनाना", synonyms: ["Cajole", "Wheedle", "Entice"], antonyms: ["Deter", "Dissuade", "Repel"] },
+    { word: "INVETERATE", meaning: "पक्का / कट्टर", synonyms: ["Confirmed", "Habitual", "Incorrigible"], antonyms: ["Occasional", "Temporary", "Reformed"] },
+    { word: "INVINCIBLE", meaning: "अजेय", synonyms: ["Unbeatable", "Indomitable", "Unconquerable"], antonyms: ["Vulnerable", "Defeatable", "Submissive"] },
+    { word: "IRASCIBLE", meaning: "चिड़चिड़ा", synonyms: ["Irritable", "Quick-tempered", "Testy"], antonyms: ["Calm", "Placid", "Equable"] },
+    { word: "IRK", meaning: "खिजाना", synonyms: ["Annoy", "Exasperate", "Provoke"], antonyms: ["Please", "Sooth", "Appease"] },
+    { word: "IRREPARABLE", meaning: "अपूरणीय", synonyms: ["Irreversible", "Irremediable", "Fatal"], antonyms: ["Repairable", "Reversible", "Fixable"] },
+    { word: "IRREVERENT", meaning: "अपर्याप्त / निरादर", synonyms: ["Disrespectful", "Profane", "Sarcastic"], antonyms: ["Reverent", "Respectful", "Devout"] },
+    { word: "JADED", meaning: "थका-माँदा", synonyms: ["Exhausted", "Weary", "Bored"], antonyms: ["Fresh", "Energetic", "Enthusiastic"] },
+    { word: "JARGON", meaning: "कठिन भाषा / शब्दजाल", synonyms: ["Cant", "Lingo", "Argot"], antonyms: ["Plain language", "Common", "Simple"] },
+    { word: "JOVIAL", meaning: "खुशमिजाज", synonyms: ["Cheerful", "Merry", "Genial"], antonyms: ["Morose", "Gloomy", "Sullen"] },
+    { word: "JUDICIOUS", meaning: "विवेकपूर्ण", synonyms: ["Prudent", "Sensible", "Discerning"], antonyms: ["Foolish", "Indiscreet", "Reckless"] },
+    { word: "JUXTAPOSE", meaning: "तुलना करना (साथ-साथ रखना)", synonyms: ["Compare", "Collocate", "Contrast"], antonyms: ["Separate", "Divide", "Distinguish"] },
+    { word: "LABYRINTHINE", meaning: "जटिल (भूलभुलैया सा)", synonyms: ["Complex", "Intricate", "Mazing"], antonyms: ["Simple", "Straight", "Uncomplicated"] },
+    { word: "LACONIC", meaning: "अल्पभाषी", synonyms: ["Brief", "Terse", "Succinct"], antonyms: ["Verbose", "Loquacious", "Wordy"] },
+    { word: "LAMENT", meaning: "विलाप करना", synonyms: ["Mourn", "Bewail", "Deplore"], antonyms: ["Rejoice", "Celebrate", "Praise"] },
+    { word: "LANGUID", meaning: "सुस्त", synonyms: ["Lethargic", "Sluggish", "Listless"], antonyms: ["Energetic", "Vigorous", "Active"] },
+    { word: "LARCENY", meaning: "चोरी", synonyms: ["Theft", "Robbery", "Burglary"], antonyms: ["Restitution", "Return", "Repayment"] },
+    { word: "LATENT", meaning: "गुप्त / अप्रकट", synonyms: ["Dormant", "Hidden", "Dormant"], antonyms: ["Active", "Visible", "Manifest"] },
+    { word: "LAUDABLE", meaning: "प्रशंसनीय", synonyms: ["Commendable", "Praiseworthy", "Admirable"], antonyms: ["Deplorable", "Despicable", "Contemptible"] },
+    { word: "LAVISH", meaning: "बहुतायात / फिजूलखर्च", synonyms: ["Luxurious", "Opulent", "Profuse"], antonyms: ["Sparse", "Meager", "Frugal"] },
+    { word: "LETHARGIC", meaning: "अलसायुक्त", synonyms: ["Sluggish", "Inactive", "Drowsy"], antonyms: ["Energetic", "Animated", "Lively"] },
+    { word: "LITHE", meaning: "सुडौल / लचीला", synonyms: ["Supple", "Flexible", "Graceful"], antonyms: ["Stiff", "Clumsy", "Rigid"] },
+    { word: "LITIGATION", meaning: "मुकदमा", synonyms: ["Lawsuit", "Legal action", "Prosecution"], antonyms: ["Settlement", "Compromise", "Agreement"] },
+    { word: "LONGEVITY", meaning: "दीर्घायु", synonyms: ["Long life", "Durability", "Continuance"], antonyms: ["Short life", "Transience", "Mortality"] },
+    { word: "LOQUACIOUS", meaning: "बातूनी", synonyms: ["Talkative", "Garrulous", "Verbose"], antonyms: ["Taciturn", "Reticent", "Reserved"] },
+    { word: "LUCID", meaning: "स्पष्ट", synonyms: ["Clear", "Intelligible", "Comprehensible"], antonyms: ["Obscure", "Vague", "Confusing"] },
+    { word: "LUGUBRIOUS", meaning: "उदास", synonyms: ["Mournful", "Sorrowful", "Gloomy"], antonyms: ["Cheerful", "Happy", "Joyful"] },
+    { word: "MAGNANIMOUS", meaning: "उदारचेता", synonyms: ["Generous", "Charitable", "Altruistic"], antonyms: ["Petty", "Selfish", "Stingy"] },
+    { word: "MALFEASANCE", meaning: "कदाचार", synonyms: ["Misconduct", "Wrongdoing", "Impropriety"], antonyms: ["Propriety", "Rectitude", "Honesty"] },
+    { word: "MALICIOUS", meaning: "दुर्भावनापूर्ण", synonyms: ["Spiteful", "Malevolent", "Vindictive"], antonyms: ["Benevolent", "Kind", "Warmhearted"] },
+    { word: "MAUDLIN", meaning: "भावुक (अत्यधिक)", synonyms: ["Sentimental", "Mawkish", "Mushy"], antonyms: ["Unsentimental", "Tough", "Callous"] },
+    { word: "MAWKISH", meaning: "अतिभावुक / बेस्वाद", synonyms: ["Sickly", "Sentimental", "Cloying"], antonyms: ["Dry", "Unsweetened", "Plain"] },
+    { word: "MENDACIOUS", meaning: "झूठा", synonyms: ["Lying", "Untruthful", "Fictitious"], antonyms: ["Truthful", "Honest", "Veracious"] },
+    { word: "MERCENARY", meaning: "स्वार्थी", synonyms: ["Greedy", "Money-minded", "Selfish"], antonyms: ["Altruistic", "Unselfish", "Idealistic"] },
+    { word: "MESMERIZE", meaning: "सम्मोहित करना", synonyms: ["Hypnotize", "Fascinate", "Enthrall"], antonyms: ["Repel", "Bore", "Disgust"] },
+    { word: "METAMORPHOSIS", meaning: "रूप-परिवर्तन", synonyms: ["Transformation", "Mutation", "Conversion"], antonyms: ["Stagnation", "Fixed", "Unchanged"] },
+    { word: "METICULOUS", meaning: "अति सूक्ष्म / बारीक", synonyms: ["Thorough", "Precise", "Scrupulous"], antonyms: ["Careless", "Slovenly", "Negligent"] },
+    { word: "MIRTH", meaning: "हँसी / मस्ती", synonyms: ["Merry", "Joy", "Cheer"], antonyms: ["Sadness", "Sorrow", "Gloom"] },
+    { word: "MISANTHROPE", meaning: "मानव-द्वेषी", synonyms: ["Cynic", "Hater", "Sceptic"], antonyms: ["Humanitarian", "Philanthropist", "Altruist"] },
+    { word: "MISERLY", meaning: "कंजूस", synonyms: ["Stingy", "Penurious", "Avaricious"], antonyms: ["Generous", "Charitable", "Liberally"] },
+    { word: "MOLLIFY", meaning: "शांत करना", synonyms: ["Appease", "Pacify", "Sooth"], antonyms: ["Provoke", "Aggravate", "Worsen"] },
+    { word: "MONOTONOUS", meaning: "एकरस", synonyms: ["Humdrum", "Dull", "Tiresome"], antonyms: ["Interesting", "Versatile", "Enjoyable"] },
+    { word: "MORBID", meaning: "रोगग्रस्त / अशुभ", synonyms: ["Gloomy", "Macabre", "Morbid"], antonyms: ["Cheerful", "Healthy", "Optimistic"] },
+    { word: "MOROSE", meaning: "चिड़चिड़ा / उदास", synonyms: ["Sullen", "Gloomy", "Irritable"], antonyms: ["Cheerful", "Amiable", "Sociable"] },
+    { word: "MUNDANE", meaning: "सांसारिक / सामान्य", synonyms: ["Ordinary", "Worldly", "Commonplace"], antonyms: ["Extraordinary", "Spiritual", "Unusual"] },
+    { word: "NADIR", meaning: "निम्नतम बिंदु", synonyms: ["Lowest point", "Bottom", "Trough"], antonyms: ["Zenith", "Summit", "Apex"] },
+    { word: "NASCENT", meaning: "नवजात", synonyms: ["Emerging", "Developing", "Starting"], antonyms: ["Mature", "Established", "Declining"] },
+    { word: "NEBULOUS", meaning: "अस्पष्ट", synonyms: ["Vague", "Ambiguous", "Obscure"], antonyms: ["Clear", "Definite", "Explicit"] },
+    { word: "NEGLIGENT", meaning: "लापरवाह", synonyms: ["Careless", "Heedless", "Remiss"], antonyms: ["Careful", "Attentive", "Diligent"] },
+    { word: "NEPOTISM", meaning: "भाई-भतीजावाद", synonyms: ["Favoritism", "Cronyism", "Patronage"], antonyms: ["Merit", "Fairness", "Impartiality"] },
+    { word: "NOMADIC", meaning: "खानाबदोश", synonyms: ["Roaming", "Wandering", "Itinerant"], antonyms: ["Sedentary", "Settled", "Stationary"] },
+    { word: "NOSTALGIA", meaning: "पुरानी यादें (तड़प)", synonyms: ["Reminiscence", "Homesickness", "Recollection"], antonyms: ["Anticipation", "Forward-looking", "Present"] },
+    { word: "NOTORIOUS", meaning: "कुख्यात", synonyms: ["Infamous", "Disreputable", "Famed"], antonyms: ["Reputable", "Honorable", "Noble"] },
+    { word: "NOVICE", meaning: "नौसिखिया", synonyms: ["Beginner", "Tyro", "Greenhorn"], antonyms: ["Expert", "Veteran", "Pro"] },
+    { word: "OBDURATE", meaning: "हठी", synonyms: ["Stubborn", "Unyielding", "Adamant"], antonyms: ["Compliant", "Docile", "Amenable"] },
+    { word: "OBLIVIOUS", meaning: "बेखबर", synonyms: ["Unaware", "Unmindful", "Ignorant"], antonyms: ["Aware", "Mindful", "Conscious"] },
+    { word: "OBNOXIOUS", meaning: "अप्रिय / घृणित", synonyms: ["Offensive", "Repulsive", "Loathsome"], antonyms: ["Pleasant", "Agreeable", "Charming"] },
+    { word: "OBSEQUIOUS", meaning: "चापलूस / खुशामदी", synonyms: ["Servile", "Sycophantic", "Fawning"], antonyms: ["Dominant", "Arrogant", "Proud"] },
+    { word: "OBSESSIVE", meaning: "जुनूनी", synonyms: ["Compulsive", "Fanatical", "Bent"], antonyms: ["Indifferent", "Apathetic", "Unconcerned"] },
+    { word: "OBSOLETE", meaning: "अप्रचलित", synonyms: ["Outdated", "Antiquated", "Extinct"], antonyms: ["Modern", "Current", "Contemporary"] },
+    { word: "OBSTINATE", meaning: "ज़िद्दी", synonyms: ["Stubborn", "Headstrong", "Intractable"], antonyms: ["Docile", "Compliant", "Flexible"] },
+    { word: "OBTUSE", meaning: "मूर्ख / कुंद (बुद्धि)", synonyms: ["Dull", "Stupid", "Unperceptive"], antonyms: ["Sharp", "Astute", "Perceptive"] },
+    { word: "OCCULT", meaning: "गुप्त / रहस्यमय", synonyms: ["Mystical", "Supernatural", "Secret"], antonyms: ["Normal", "Ordinary", "Natural"] },
+    { word: "ODIOUS", meaning: "घृणित", synonyms: ["Hateful", "Repulsive", "Detestable"], antonyms: ["Lovely", "Admirable", "Pleasing"] },
+    { word: "OFFICIOUS", meaning: "दखल देने वाला", synonyms: ["Meddlesome", "Interfering", "Pushy"], antonyms: ["Helpful", "Considerate", "Reserved"] },
+    { word: "OMINOUS", meaning: "अशुभ", synonyms: ["Sinister", "Threatening", "Menacing"], antonyms: ["Auspicious", "Favorable", "Promising"] },
+    { word: "OPAQUE", meaning: "अपारदर्शी", synonyms: ["Dark", "Murky", "Obscure"], antonyms: ["Transparent", "Clear", "Translucent"] },
+    { word: "OPPORTUNE", meaning: "समयोचित", synonyms: ["Timely", "Favorable", "Propitious"], antonyms: ["Inopportune", "Untimely", "Inconvenient"] },
+    { word: "OPULENT", meaning: "भव्य", synonyms: ["Luxurious", "Rich", "Splendid"], antonyms: ["Sparse", "Meager", "Humble"] },
+    { word: "ORACULAR", meaning: "रहस्यमय", synonyms: ["Mysterious", "Prophetic", "Ambiguous"], antonyms: ["Clear", "Straightforward", "Explicit"] },
+    { word: "ORATOR", meaning: "वक्ता", synonyms: ["Speaker", "Lecturer", "Rhetorician"], antonyms: ["Listener", "Audience", "Mute"] },
+    { word: "ORNATE", meaning: "अलंकृत", synonyms: ["Decorated", "Elaborate", "Florid"], antonyms: ["Plain", "Sparse", "Unadorned"] },
+    { word: "ORTHODOX", meaning: "रूढ़िवादी", synonyms: ["Conventional", "Traditional", "Conservative"], antonyms: ["Unorthodox", "Liberal", "Progressive"] },
+    { word: "OSTENSIBLE", meaning: "तथाकथित / प्रत्यक्ष", synonyms: ["Apparent", "Superficial", "Alleged"], antonyms: ["Actual", "Real", "Genuine"] },
+    { word: "OSTENTATIOUS", meaning: "दिखावटी", synonyms: ["Showy", "Pretentious", "Flashy"], antonyms: ["Modest", "Subtle", "Understated"] },
+    { word: "PALPABLE", meaning: "स्पर्शनीय / स्पष्ट", synonyms: ["Tangible", "Perceptible", "Clear"], antonyms: ["Intangible", "Imperceptible", "Vague"] },
+    { word: "PANACEA", meaning: "सर्व-रोग-हारी (इलाज)", synonyms: ["Cure-all", "Remedy", "Elixir"], antonyms: ["Useless", "Worsener", "Palliative"] },
+    { word: "PARADOX", meaning: "विरोधाभास", synonyms: ["Contradiction", "Irony", "Oddity"], antonyms: ["Truth", "Reality", "Consistency"] },
+    { word: "PARAMOUNT", meaning: "सर्वोच्च", synonyms: ["Supreme", "Dominant", "Preeminent"], antonyms: ["Inferior", "Subordinate", "Lesser"] },
+    { word: "PARIAH", meaning: "बहिष्कृत व्यक्ति", synonyms: ["Outcast", "Untouchable", "Exile"], antonyms: ["Favorite", "Insider", "Socialite"] },
+    { word: "PARSIMONIOUS", meaning: "कंजूस", synonyms: ["Miserly", "Stingy", "Frugal"], antonyms: ["Generous", "Charitable", "Lavish"] },
+    { word: "PARTISAN", meaning: "पक्षपाती", synonyms: ["Biased", "Prejudiced", "Sectarian"], antonyms: ["Impartial", "Neutral", "Fair"] },
+    { word: "PAUCITY", meaning: "अल्पता", synonyms: ["Scarcity", "Shortage", "Lack"], antonyms: ["Abundance", "Plenty", "Excess"] },
+    { word: "PECUNIARY", meaning: "वित्तीय", synonyms: ["Monetary", "Fiscal", "Financial"], antonyms: ["Non-monetary", "Barren", "Stark"] },
+    { word: "PEDANTIC", meaning: "पंडिताऊ (दिखावा)", synonyms: ["Bookish", "Scholastic", "Stylized"], antonyms: ["Simple", "Informal", "Uneducated"] },
+    { word: "PEJORATIVE", meaning: "अपमानजनक (शब्द)", synonyms: ["Insulting", "Derogatory", "Disparaging"], antonyms: ["Complimentary", "Praising", "Laudatory"] },
+    { word: "PENITENT", meaning: "पश्चातापी", synonyms: ["Repentant", "Contrite", "Remorseful"], antonyms: ["Impenitent", "Defiant", "Unrepentant"] },
+    { word: "PENSIVE", meaning: "विचारमग्न", synonyms: ["Thoughtful", "Reflective", "Meditative"], antonyms: ["Carefree", "Cheerful", "Unconcerned"] },
+    { word: "PERENNIAL", meaning: "बारहमासी", synonyms: ["Permanent", "Eternal", "Everlasting"], antonyms: ["Temporary", "Seasonal", "Transient"] },
+    { word: "PERFUNCTORY", meaning: "बिना रुचि के", synonyms: ["Superficial", "Mechanical", "Cursory"], antonyms: ["Thorough", "Meticulous", "Diligent"] },
+    { word: "PERILOUS", meaning: "खतरनाक", synonyms: ["Dangerous", "Hazardous", "Risky"], antonyms: ["Safe", "Secure", "Harmless"] },
+    { word: "PERJURY", meaning: "झूठी गवाही", synonyms: ["False testimony", "Lying under oath", "Deceit"], antonyms: ["Truthfulness", "Veracity", "Honesty"] },
+    { word: "PERMEATE", meaning: "फैल जाना", synonyms: ["Pervade", "Penetrate", "Saturate"], antonyms: ["Dehydrate", "Withdraw", "Leave"] },
+    { word: "PERSEVERE", meaning: "दृढ़ रहना", synonyms: ["Persist", "Endure", "Continue"], antonyms: ["Quit", "Surrender", "Abandon"] },
+    { word: "PERSEVERANCE", meaning: "दृढ़ता", synonyms: ["Persistence", "Tenacity", "Determination"], antonyms: ["Apathy", "Surrender", "Inconstancy"] },
+    { word: "PERSPICACIOUS", meaning: "सूक्ष्मदर्शी", synonyms: ["Astute", "Perceptive", "Discernible"], antonyms: ["Dull", "Obtuse", "Unobservant"] },
+    { word: "PERVADE", meaning: "व्याप्त होना", synonyms: ["Spread", "Suffuse", "Penetrate"], antonyms: ["Withdraw", "Leave", "Abstain"] },
+    { word: "PHILANTHROPY", meaning: "परोपकार", synonyms: ["Charity", "Humanitarianism", "Generosity"], antonyms: ["Misanthropy", "Selfishness", "Greed"] },
+    { word: "PIOUS", meaning: "धार्मिक / ईमानदार", synonyms: ["Devout", "Religious", "Reverent"], antonyms: ["Impious", "Irreligious", "Profane"] },
+    { word: "PLACATE", meaning: "शांत करना / मनाना", synonyms: ["Appease", "Pacify", "Mollify"], antonyms: ["Provoke", "Aggravate", "Enrage"] },
+    { word: "PLAGIARISM", meaning: "साहित्यिक चोरी", synonyms: ["Copying", "Piracy", "Infringement"], antonyms: ["Originality", "Innovation", "Creativity"] },
+    { word: "PLATITUDE", meaning: "घिसी-पिटी बात", synonyms: ["Cliché", "Truism", "Commonplace"], antonyms: ["Epigram", "Witticism", "Punchline"] },
+    { word: "PLAUSIBLE", meaning: "प्रतीयमान", synonyms: ["Believable", "Credible", "Reasonable"], antonyms: ["Implausible", "Incredible", "Unbelievable"] },
+    { word: "PLIGHT", meaning: "दुर्दशा", synonyms: ["Predicament", "Dilemma", "Quandary"], antonyms: ["Fortune", "Prosperity", "Well-being"] },
+    { word: "POISED", meaning: "संतुलित", synonyms: ["Balanced", "Composed", "Self-assured"], antonyms: ["Nervous", "Unstable", "Clumsy"] },
+    { word: "POLEMIC", meaning: "विवादात्मक लेख/भाषण", synonyms: ["Argument", "Diatribe", "Tirade"], antonyms: ["Praise", "Eulogy", "Panegyric"] },
+    { word: "PRAGMATIC", meaning: "व्यावहारिक", synonyms: ["Practical", "Realistic", "Sensible"], antonyms: ["Impractical", "Idealistic", "Unrealistic"] },
+    { word: "PRECEDE", meaning: "पहले होना", synonyms: ["Antecede", "Antedate", "Forego"], antonyms: ["Follow", "Succeed", "Postdate"] },
+    { word: "PRECIPITATE", meaning: "शीघ्रता करना", synonyms: ["Hasten", "Accelerate", "Expedite"], antonyms: ["Delay", "Slow", "Procrastinate"] },
+    { word: "PREDICAMENT", meaning: "दुविधा", synonyms: ["Dilemma", "Plight", "Jam"], antonyms: ["Solution", "Resolution", "Advantage"] },
+    { word: "PREDILECTION", meaning: "विशेष झुकाव", synonyms: ["Preference", "Fondness", "Proclivity"], antonyms: ["Aversion", "Dislike", "Hatred"] },
+    { word: "PREPOSTEROUS", meaning: "बेतुका", synonyms: ["Absurd", "Nonsensical", "Ridiculous"], antonyms: ["Sensible", "Logical", "Reasonable"] },
+    { word: "PRESTIGIOUS", meaning: "प्रतिष्ठित", synonyms: ["Reputable", "Distinguished", "Eminent"], antonyms: ["Disreputable", "Obscure", "Unknown"] },
+    { word: "PREVALENT", meaning: "प्रचलित", synonyms: ["Common", "Widespread", "Rampant"], antonyms: ["Rare", "Uncommon", "Limited"] },
+    { word: "PREVARICATE", meaning: "टाल-मटोल करना (सच छिपाना)", synonyms: ["Evade", "Equivocate", "Hedge"], antonyms: ["Frank", "Straightforward", "Reveal"] },
+    { word: "PROCLIVITY", meaning: "प्रवृत्ति", synonyms: ["Tendency", "Leaning", "Inclination"], antonyms: ["Aversion", "Disinclination", "Hatred"] },
+    { word: "PRODIGAL", meaning: "अपव्ययी", synonyms: ["Wasteful", "Extravagant", "Spendthrift"], antonyms: ["Frugal", "Thrifty", "Economical"] },
+    { word: "PROFICIENT", meaning: "निपुण", synonyms: ["Skilled", "Expert", "Adept"], antonyms: ["Inept", "Incompetent", "Clumsy"] },
+    { word: "PROFOUND", meaning: "गहन", synonyms: ["Deep", "Intense", "Thoughtful"], antonyms: ["Shallow", "Superficial", "Trivial"] },
+    { word: "PROHIBIT", meaning: "निषेध करना", synonyms: ["Forbid", "Ban", "Outlaw"], antonyms: ["Permit", "Allow", "Sanction"] },
+    { word: "PROLIFIC", meaning: "बहु-प्रजनक / अत्यधिक", synonyms: ["Fruitful", "Productive", "Fertile"], antonyms: ["Infertile", "Unproductive", "Barren"] },
+    { word: "PROMINENT", meaning: "प्रमुख", synonyms: ["Eminent", "Notable", "Distinguished"], antonyms: ["Insignificant", "Obscure", "Unknown"] },
+    { word: "PROPENSITY", meaning: "प्रवृत्ति", synonyms: ["Inclination", "Tendency", "Predisposition"], antonyms: ["Aversion", "Disinclination", "Hatred"] },
+    { word: "PROPITIOUS", meaning: "अनुकूल (जैसे समय)", synonyms: ["Favorable", "Auspicious", "Opportune"], antonyms: ["Inauspicious", "Unfavorable", "Hostile"] },
+    { word: "PROSPERITY", meaning: "समृद्धि", synonyms: ["Wealth", "Affluence", "Success"], antonyms: ["Poverty", "Adversity", "Failure"] },
+    { word: "PROTAGONIST", meaning: "मुख्य पात्र", synonyms: ["Hero", "Lead", "Champion"], antonyms: ["Antagonist", "Opponent", "Villain"] },
+    { word: "PROVOCATIVE", meaning: "उत्तेजक", synonyms: ["Stimulating", "Inciting", "Provoking"], antonyms: ["Boring", "Dull", "Tame"] },
+    { word: "PUGNACIOUS", meaning: "झगड़ालू / आक्रामक", synonyms: ["Combative", "Aggressive", "Bellicose"], antonyms: ["Peaceful", "Agreeable", "Pacifist"] },
+    { word: "PUNCTILIOUS", meaning: "अति सावधान", synonyms: ["Meticulous", "Scrupulous", "Precise"], antonyms: ["Careless", "Slipshod", "Negligent"] },
+    { word: "QUELL", meaning: "दबाना", synonyms: ["Subdue", "Suppress", "Quash"], antonyms: ["Instigate", "Incite", "Provoke"] },
+    { word: "QUENCH", meaning: "बुझाना", synonyms: ["Satisfy", "Extinguish", "Slake"], antonyms: ["Ignite", "Arise", "Stimulate"] },
+    { word: "QUINTESSENTIAL", meaning: "प्रतिनिधिक", synonyms: ["Typical", "Archetypal", "Classic"], antonyms: ["Unusual", "Atypical", "Uncommon"] },
+    { word: "RAMPANT", meaning: "अनियंत्रित", synonyms: ["Unrestrained", "Rampant", "Widespread"], antonyms: ["Controlled", "Contained", "Limited"] },
+    { word: "RAZE", meaning: "ध्वस्त करना", synonyms: ["Demolish", "Destroy", "Level"], antonyms: ["Build", "Construct", "Erect"] },
+    { word: "REBUKE", meaning: "डाँटना / फटकारना", synonyms: ["Reprimand", "Scold", "Censure"], antonyms: ["Praise", "Commend", "Applaud"] },
+    { word: "RECIPROCATE", meaning: "प्रत्युत्तर देना", synonyms: ["Return", "Exchange", "Requite"], antonyms: ["Refuse", "Withhold", "Ignore"] },
+    { word: "RECLUSIVE", meaning: "एकांतप्रिय", synonyms: ["Solitary", "Isolated", "Hermitic"], antonyms: ["Sociable", "Gregarious", "Outgoing"] },
+    { word: "REFUTE", meaning: "खंडन करना", synonyms: ["Disprove", "Rebut", "Negate"], antonyms: ["Prove", "Validate", "Confirm"] },
+    { word: "REITERATE", meaning: "दोहराना", synonyms: ["Repeat", "Restate", "Reemphasize"], antonyms: ["Cancel", "Withdraw", "Retract"] },
+    { word: "REJUVENATE", meaning: "पुनर्जीवित करना", synonyms: ["Revive", "Refresh", "Regenerate"], antonyms: ["Exhaust", "Deplete", "Weary"] },
+    { word: "REMORSE", meaning: "पश्चाताप", synonyms: ["Regret", "Contrition", "Guilt"], antonyms: ["Satisfaction", "Contentment", "Pride"] },
+    { word: "RENAISSANCE", meaning: "पुनर्जागरण", synonyms: ["Revival", "Rebirth", "Resurgence"], antonyms: ["Decline", "Decay", "Deterioration"] },
+    { word: "RENOUNCE", meaning: "त्यागना", synonyms: ["Abandon", "Forsake", "Repudiate"], antonyms: ["Embracing", "Accept", "Avow"] },
+    { word: "REPREHENSIBLE", meaning: "निंदनीय", synonyms: ["Deplorable", "Despicable", "Culpable"], antonyms: ["Praiseworthy", "Commendable", "Laudable"] },
+    { word: "REPRIEVE", meaning: "दंड-मुक्ति", synonyms: ["Respite", "Relief", "Remission"], antonyms: ["Punishment", "Penalty", "Sentence"] },
+    { word: "RESILIENT", meaning: "लचीला", synonyms: ["Elastic", "Springy", "Tough"], antonyms: ["Brittle", "Fragile", "Inflexible"] },
+    { word: "RESOLUTE", meaning: "दृढ़", synonyms: ["Determined", "Tenacious", "Firm"], antonyms: ["Irresolute", "Waivering", "Indecisive"] },
+    { word: "RESTRAIN", meaning: "रोकना", synonyms: ["Hold", "Curb", "Check"], antonyms: ["Release", "Free", "Encourage"] },
+    { word: "REVERE", meaning: "पूजा / आदर करना", synonyms: ["Venerate", "Admire", "Respect"], antonyms: ["Despise", "Scorn", "Disrespect"] },
+    { word: "RIGOROUS", meaning: "कठोर", synonyms: ["Strict", "Stern", "Harsh"], antonyms: ["Lenient", "Mild", "Permissive"] },
+    { word: "SABOTAGE", meaning: "तोड़-फोड़ करना", synonyms: ["Damage", "Vandalize", "Undermine"], antonyms: ["Protect", "Secure", "Strengthen"] },
+    { word: "SACROSANCT", meaning: "अतिपवित्र", synonyms: ["Holy", "Blessed", "Inviolable"], antonyms: ["Profane", "Blasphemous", "Irreverent"] },
+    { word: "SAGACIOUS", meaning: "बुद्धिमान", synonyms: ["Wise", "Astute", "Intelligent"], antonyms: ["Foolish", "Stupid", "Obstinate"] },
+    { word: "SALIENT", meaning: "प्रमुख / स्पष्ट", synonyms: ["Prominent", "Conspicuous", "Striking"], antonyms: ["Inconspicuous", "Hidden", "Obscure"] },
+    { word: "SCANTY", meaning: "अल्प / कम", synonyms: ["Meager", "Sparse", "Insufficient"], antonyms: ["Ample", "Abundant", "Plentiful"] },
+    { word: "SCEPTRED", meaning: "राजदंड धारी", synonyms: ["Royal", "Sovereign", "Monarchical"], antonyms: ["Common", "Subordinate", "Peasant"] },
+    { word: "SCRUPULOUS", meaning: "ईमानदार / सावधान", synonyms: ["Honest", "Meticulous", "Conscientious"], antonyms: ["Careless", "Unscrupulous", "Dishonest"] },
+    { word: "SEDITIOUS", meaning: "राजद्रोही", synonyms: ["Rebellious", "Mutinous", "Insubordinate"], antonyms: ["Loyal", "Patriotic", "Obedient"] },
+    { word: "SENTIENT", meaning: "चेतन", synonyms: ["Conscious", "Aware", "Perceptive"], antonyms: ["Insentient", "Unconscious", "Inanimate"] },
+    { word: "SERENDIPITY", meaning: "अचानक खुशी का मिलना", synonyms: ["Chance", "Luck", "Fortuity"], antonyms: ["Misfortune", "Bad luck", "Design"] },
+    { word: "SERVILE", meaning: "दासभाव / चापलूस", synonyms: ["Subservient", "Slavish", "Obsequious"], antonyms: ["Dominant", "Proud", "Assertive"] },
+    { word: "SHREWD", meaning: "चालाक", synonyms: ["Astute", "Clever", "Canny"], antonyms: ["Foolish", "Stupid", "Gullible"] },
+    { word: "SINCERE", meaning: "ईमानदार", synonyms: ["Honest", "Genuine", "Heartfelt"], antonyms: ["Insincere", "False", "Hypocritical"] },
+    { word: "SKEPTICAL", meaning: "संशयात्मक", synonyms: ["Cynical", "Doubtful", "Distrustful"], antonyms: ["Believing", "Trusting", "Convinced"] },
+    { word: "SORDID", meaning: "घृणित / गंदा", synonyms: ["Filthy", "Base", "Mean"], antonyms: ["Glorious", "Noble", "Pristine"] },
+    { word: "SPECIOUS", meaning: "दिखावटी / भ्रामक", synonyms: ["Misleading", "Deceptive", "Plausible"], antonyms: ["Genuine", "Valid", "Sound"] },
+    { word: "SPORADIC", meaning: "छिटपुट", synonyms: ["Occasional", "Scattered", "Irregular"], antonyms: ["Continuous", "Frequent", "Regular"] },
+    { word: "SQUALID", meaning: "गंदा / घटिया", synonyms: ["Dirty", "Foul", "Wretched"], antonyms: ["Clean", "Pristine", "Decent"] },
+    { word: "STAGNANT", meaning: "स्थिर / बासी", synonyms: ["Still", "Motionless", "Putrid"], antonyms: ["Flowing", "Running", "Fresh"] },
+    { word: "STEALTH", meaning: "चोरी / गुप्त", synonyms: ["Cunning", "Secrecy", "Slyness"], antonyms: ["Openness", "Honesty", "Forthrightness"] },
+    { word: "STIGMA", meaning: "कलंक", synonyms: ["Disgrace", "Shame", "Mark"], antonyms: ["Honor", "Pride", "Credit"] },
+    { word: "STOLID", meaning: "भावशून्य", synonyms: ["Impassive", "Phlegmatic", "Unemotional"], antonyms: ["Excitable", "Passionate", "Lively"] },
+    { word: "STRENUOUS", meaning: "कठोर / ज़ोरदार", synonyms: ["Arduous", "Vigorous", "Taxing"], antonyms: ["Easy", "Mild", "Effortless"] },
+    { word: "SUBDUED", meaning: "दबा / शांत", synonyms: ["Muted", "Restrained", "Quiet"], antonyms: ["Intense", "Loud", "Boisterous"] },
+    { word: "SUBJECTIVE", meaning: "व्यक्तिपरक", synonyms: ["Personal", "Biased", "Emotional"], antonyms: ["Objective", "Impartial", "Unbiased"] },
+    { word: "SUBSTANTIAL", meaning: "पर्याप्त / बड़ा", synonyms: ["Considerable", "Significant", "Solid"], antonyms: ["Negligible", "Trivial", "Unsubstantial"] },
+    { word: "SUBTERFUGE", meaning: "बहाना / धोखा", synonyms: ["Trickery", "Deceit", "Pretense"], antonyms: ["Honesty", "Sincerity", "Candor"] },
+    { word: "SUBTLETY", meaning: "सूक्ष्मता", synonyms: ["Nuance", "Finesse", "Delicacy"], antonyms: ["Coarseness", "Clumsiness", "Bluntness"] },
+    { word: "SUCCINCT", meaning: "संक्षिप्त", synonyms: ["Concise", "Brief", "Terse"], antonyms: ["Verbose", "Long-winded", "Prolix"] },
+    { word: "SUPERFLUOUS", meaning: "अनावश्यक", synonyms: ["Excess", "Surplus", "Unnecessary"], antonyms: ["Essential", "Necessary", "Vital"] },
+    { word: "SURPASS", meaning: "श्रेष्ठ होना", synonyms: ["Exceed", "Outperform", "Outshine"], antonyms: ["Fall behind", "Lack", "Underperform"] },
+    { word: "SURREPTITIOUS", meaning: "गुप्त / चोरी-छिपे", synonyms: ["Secret", "Stealthy", "Covert"], antonyms: ["Open", "Transparent", "Aboveboard"] },
+    { word: "SUSCEPTIBLE", meaning: "संवेदनशील", synonyms: ["Sensitive", "Vulnerable", "Responsive"], antonyms: ["Immune", "Resistant", "Insusceptible"] },
+    { word: "SYCOPHANT", meaning: "खुशामदी", synonyms: ["Flatterer", "Toady", "Bootlicker"], antonyms: ["Critic", "Detractor", "Nonconformist"] },
+    { word: "TACIT", meaning: "मौन (निहित)", synonyms: ["Implicit", "Implied", "Unspoken"], antonyms: ["Explicit", "Overt", "Spoken"] },
+    { word: "TACITURN", meaning: "मितभाषी", synonyms: ["Reticent", "Quiet", "Reserved"], antonyms: ["Loquacious", "Talkative", "Garrulous"] },
+    { word: "TANGIBLE", meaning: "ठोस / मूर्त", synonyms: ["Concrete", "Real", "Palpable"], antonyms: ["Abstract", "Intangible", "Immaterial"] },
+    { word: "TANTAMOUNT", meaning: "समान / बराबर", synonyms: ["Equivalent", "Equal", "Identical"], antonyms: ["Different", "Contrary", "Opposite"] },
+    { word: "TAWDRY", meaning: "फीका / भड़कीला", synonyms: ["Gaudy", "Flashy", "Cheap"], antonyms: ["Elegant", "Refined", "Classy"] },
+    { word: "TEMPERATE", meaning: "संयमी", synonyms: ["Moderate", "Restrained", "Mild"], antonyms: ["Extreme", "Intemperate", "Excessive"] },
+    { word: "TENACIOUS", meaning: "दृढ़ / अदम्य", synonyms: ["Persistent", "Determined", "Resolute"], antonyms: ["Weak", "Irresolute", "Yielding"] },
+    { word: "TENTATIVE", meaning: "अनिश्चित", synonyms: ["Provisional", "Preliminary", "Experimental"], antonyms: ["Final", "Decisive", "Concrete"] },
+    { word: "TEPID", meaning: "गुनगुना", synonyms: ["Lukewarm", "Unenthusiastic", "Half-hearted"], antonyms: ["Hot", "Enthusiastic", "Passionate"] },
+    { word: "TIMID", meaning: "डरपोक", synonyms: ["Cowardly", "Shy", "Fearful"], antonyms: ["Bold", "Brave", "Confident"] },
+    { word: "TIRADE", meaning: "आक्रोशपूर्ण भाषण", synonyms: ["Diatribe", "Harangue", "Invective"], antonyms: ["Praise", "Compliment", "Eulogy"] },
+    { word: "TORTUOUS", meaning: "टेढ़ा", synonyms: ["Winding", "Twisting", "Convoluted"], antonyms: ["Straight", "Direct", "Simple"] },
+    { word: "TRACTABLE", meaning: "वश्य", synonyms: ["Docile", "Amenable", "Manageable"], antonyms: ["Obstinate", "Stubborn", "Intractable"] },
+    { word: "TRANQUIL", meaning: "शांत", synonyms: ["Peaceful", "Calm", "Serene"], antonyms: ["Agitated", "Turbulent", "Restless"] },
+    { word: "TRANSIENT", meaning: "क्षणिक", synonyms: ["Temporary", "Momentary", "Fleeting"], antonyms: ["Permanent", "Eternal", "Everlasting"] },
+    { word: "TREACHEROUS", meaning: "विश्वासघाती", synonyms: ["Perfidious", "Disloyal", "Deceitful"], antonyms: ["Loyal", "Faithful", "True"] },
+    { word: "TRENCHANT", meaning: "तीखा / प्रभावी", synonyms: ["Forceful", "Keen", "Astute"], antonyms: ["Blunt", "Dull", "Mild"] },
+    { word: "TRIVIAL", meaning: "तुच्छ", synonyms: ["Insignificant", "Minor", "Petty"], antonyms: ["Important", "Significant", "Major"] },
+    { word: "TUMULTUOUS", meaning: "कोलाहलपूर्ण", synonyms: ["Turbulent", "Stormy", "Unruly"], antonyms: ["Calm", "Peaceful", "Orderly"] },
+    { word: "UBIQUITOUS", meaning: "सर्वव्यापी", synonyms: ["Omnipresent", "Universal", "Common"], antonyms: ["Rare", "Limited", "Scarce"] },
+    { word: "UNASSAILABLE", meaning: "अखंडनीय", synonyms: ["Invincible", "Impregnable", "Ironclad"], antonyms: ["Vulnerable", "Weak", "Assailable"] },
+    { word: "UNEQUIVOCAL", meaning: "सुस्पष्ट", synonyms: ["Clear", "Unambiguous", "Definite"], antonyms: ["Ambiguous", "Vague", "Indecisive"] },
+    { word: "UNPRECEDENTED", meaning: "अभूतपूर्व", synonyms: ["Unheard-of", "Novel", "Groundbreaking"], antonyms: ["Common", "Ordinary", "Familiar"] },
+    { word: "UNSCRUPULOUS", meaning: "बेईमान", synonyms: ["Unprincipled", "Dishonest", "Corrupt"], antonyms: ["Scrupulous", "Honest", "Principled"] },
+    { word: "URBANE", meaning: "शिष्ट / सभ्य", synonyms: ["Sophisticated", "Polished", "Suave"], antonyms: ["Rude", "Uncouth", "Provincial"] },
+    { word: "USURP", meaning: "हड़प लेना", synonyms: ["Seize", "Appropriate", "Arrogate"], antonyms: ["Restore", "Return", "Relinquish"] },
+    { word: "UTILITARIAN", meaning: "उपयोगितावादी", synonyms: ["Pragmatic", "Functional", "Practical"], antonyms: ["Impractical", "Ornamental", "Decorative"] },
+    { word: "VACUOUS", meaning: "खोखला / रिक्त", synonyms: ["Empty", "Void", "Inane"], antonyms: ["Filled", "Meaningful", "Profound"] },
+    { word: "VAUNT", meaning: "डींग मारना", synonyms: ["Boast", "Brag", "Show off"], antonyms: ["Humble", "Modest", "Understate"] },
+    { word: "VEHEMENT", meaning: "प्रबल", synonyms: ["Ardent", "Fervent", "Passionate"], antonyms: ["Indifferent", "Apathetic", "Mild"] },
+    { word: "VENERABLE", meaning: "पूज्य", synonyms: ["Respected", "Revered", "Worshipful"], antonyms: ["Disrespected", "Ignoble", "Contemptible"] },
+    { word: "VERACITY", meaning: "सत्यता", synonyms: ["Truthfulness", "Authenticity", "Accuracy"], antonyms: ["Falsehood", "Lying", "Deceit"] },
+    { word: "VERBOSE", meaning: "बहुशब्दी", synonyms: ["Wordy", "Long-winded", "Prolix"], antonyms: ["Concise", "Succinct", "Brief"] },
+    { word: "VESTIGE", meaning: "अवशेष", synonyms: ["Remnant", "Trace", "Relic"], antonyms: ["Current", "Modern", "Present"] },
+    { word: "VETO", meaning: "निषेध", synonyms: ["Ban", "Prohibition", "Vetoing"], antonyms: ["Approval", "Consent", "Sanction"] },
+    { word: "VEX", meaning: "खिजाना", synonyms: ["Annoy", "Irritate", "Provoke"], antonyms: ["Sooth", "Please", "Satisfy"] },
+    { word: "VIGILANT", meaning: "सतर्क", synonyms: ["Watchful", "Alert", "Observant"], antonyms: ["Careless", "Negligent", "Inattentive"] },
+    { word: "VIGOROUS", meaning: "जोशीला", synonyms: ["Energetic", "Dynamic", "Active"], antonyms: ["Lethargic", "Sluggish", "Inactive"] },
+    { word: "VINDICATE", meaning: "दोषमुक्त करना", synonyms: ["Acquit", "Clear", "Exonerate"], antonyms: ["Convince", "Blame", "Condemn"] },
+    { word: "VIRTUOUS", meaning: "गुणी", synonyms: ["Righteous", "Good", "Moral"], antonyms: ["Vicious", "Immoral", "Depraved"] },
+    { word: "VOCIFEROUS", meaning: "कोलाहलपूर्ण", synonyms: ["Loud", "Clamorous", "Shouting"], antonyms: ["Quiet", "Silent", "Subdued"] },
+    { word: "VOLATILE", meaning: "अस्थिर", synonyms: ["Unstable", "Temperamental", "Explosive"], antonyms: ["Stable", "Constant", "Calm"] },
+    { word: "WANE", meaning: "घटना / क्षीण होना", synonyms: ["Decline", "Fade", "Diminish"], antonyms: ["Grow", "Increase", "Wax"] },
+    { word: "WHIM", meaning: "सनक", synonyms: ["Fancy", "Impulse", "Caprice"], antonyms: ["Reason", "Logic", "Sense"] },
+    { word: "WILFUL", meaning: "जानबूझकर", synonyms: ["Deliberate", "Intentional", "Contumacious"], antonyms: ["Unintentional", "Accidental", "Involuntary"] },
+    { word: "WITHDRAW", meaning: "वापस लेना", synonyms: ["Retreat", "Remove", "Retract"], antonyms: ["Advance", "Proceed", "Offer"] },
+    { word: "WREAK", meaning: "उतारना (गुस्सा)", synonyms: ["Inflict", "Exact", "Vent"], antonyms: ["Absorb", "Withhold", "Suppress"] },
+    { word: "WRETCHED", meaning: "दयनीय", synonyms: ["Miserable", "Desolate", "Pathetic"], antonyms: ["Happy", "Comfortable", "Fortunate"] },
+    { word: "ZEAL", meaning: "उत्साह", synonyms: ["Enthusiasm", "Passion", "Fervor"], antonyms: ["Apathy", "Indifference", "Lethargy"] }
+];
+
+// ================================================================
+// 🔧 BUILD QUESTIONS – 20 SETS × 25 = 500 QUESTIONS
+// ================================================================
+const TOTAL_SETS = 20;
+const PER_SET = 25;
+
+function buildAllQuestions() {
+    const qs = [];
+    const shuffled = [...vocabData];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    const used = shuffled.slice(0, TOTAL_SETS * PER_SET);
+    used.forEach((item, idx) => {
+        // Randomly choose synonym or antonym question (50/50)
+        const isSynonym = Math.random() < 0.5;
+        const word = item.word;
+        const wordMeaning = item.meaning;
+        let correctAnswer, options, wrongPool, qType;
+        if (isSynonym) {
+            correctAnswer = item.synonyms[0];
+            wrongPool = [...item.antonyms, ...vocabData.filter(v => v.word !== item.word).flatMap(v => v.synonyms)];
+            qType = "Synonym";
+        } else {
+            correctAnswer = item.antonyms[0];
+            wrongPool = [...item.synonyms, ...vocabData.filter(v => v.word !== item.word).flatMap(v => v.antonyms)];
+            qType = "Antonym";
+        }
+        // Shuffle wrong pool and pick 3 distinct
+        const shuffledWrong = wrongPool.filter(w => w !== correctAnswer);
+        for (let i = shuffledWrong.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledWrong[i], shuffledWrong[j]] = [shuffledWrong[j], shuffledWrong[i]];
+        }
+        const wrongs = shuffledWrong.slice(0, 3);
+        const opts = [correctAnswer, ...wrongs];
+        // Shuffle options
+        for (let i = opts.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opts[i], opts[j]] = [opts[j], opts[i]];
+        }
+        const correctIdx = opts.indexOf(correctAnswer);
+        const explanation = isSynonym
+            ? `"${word}" का अर्थ: ${wordMeaning}. इसका सही पर्यायवाची (Synonym) "${correctAnswer}" है।`
+            : `"${word}" का अर्थ: ${wordMeaning}. इसका सही विलोम (Antonym) "${correctAnswer}" है।`;
+        qs.push({
+            id: idx + 1,
+            word: word,
+            meaning: wordMeaning,
+            question: `Choose the correct ${qType} of "${word}"`,
+            options: opts,
+            correctIndex: correctIdx,
+            correctAnswer: correctAnswer,
+            type: qType,
+            explanation: explanation,
+            set: Math.floor(idx / PER_SET) + 1
+        });
+    });
+    return qs;
+}
+
+// ================================================================
+// 🎮 STATE
+// ================================================================
+let allQuestions = [];
+let currentSet = 1;
+let setProgress = {};
+let selectedOptions = {};
+let answeredQuestions = {};
+
+function init() {
+    allQuestions = buildAllQuestions();
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        setProgress[s] = { attempted: 0, correct: 0, wrong: 0 };
+    }
+    renderDashboard();
+    renderSet(1);
+}
+
+// ================================================================
+// 📊 DASHBOARD
+// ================================================================
+function renderDashboard() {
+    const grid = document.getElementById('setsGrid');
+    let html = '';
+    let totalAttempted = 0, totalCorrect = 0;
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        const p = setProgress[s] || { attempted: 0, correct: 0, wrong: 0 };
+        totalAttempted += p.attempted;
+        totalCorrect += p.correct;
+        const status = p.attempted === 0 ? 'notstarted' : (p.attempted === PER_SET ? 'completed' : 'inprogress');
+        const label = status === 'notstarted' ? 'Not Started' : (status === 'completed' ? '✅ Done' : '⏳ In Progress');
+        const pct = p.attempted === 0 ? 0 : Math.round((p.correct / p.attempted) * 100);
+        html += `
+            <div class="set-card" onclick="openSet(${s})">
+                <div class="set-status ${status}">${label}</div>
+                <div class="set-num">${s}</div>
+                <div class="set-label">Set ${s}</div>
+                <div class="set-progress">${p.attempted}/${PER_SET} · ${pct}%</div>
+            </div>
+        `;
+    }
+    grid.innerHTML = html;
+    const totalQ = TOTAL_SETS * PER_SET;
+    document.getElementById('overallProgressText').textContent = `${totalAttempted} / ${totalQ}`;
+    document.getElementById('overallProgressBar').style.width = `${(totalAttempted / totalQ) * 100}%`;
+    document.getElementById('overallScoreText').textContent = totalAttempted === 0 ? '0%' : `${Math.round((totalCorrect / totalAttempted) * 100)}%`;
+}
+
+// ================================================================
+// 📝 RENDER SET
+// ================================================================
+function renderSet(setNum) {
+    currentSet = setNum;
+    const questions = allQuestions.filter(q => q.set === setNum);
+    const container = document.getElementById('questionsContainer');
+    const p = setProgress[setNum] || { attempted: 0, correct: 0, wrong: 0 };
+
+    document.getElementById('setTitle').textContent = `Set ${setNum}`;
+    document.getElementById('setTag').innerHTML = `<i class="fas fa-layer-group"></i> Set ${setNum} / ${TOTAL_SETS}`;
+    document.getElementById('setIndicator').textContent = `Set ${setNum} of ${TOTAL_SETS}`;
+
+    document.getElementById('correctCount').textContent = p.correct || 0;
+    document.getElementById('wrongCount').textContent = p.wrong || 0;
+    document.getElementById('attemptedCount').textContent = p.attempted || 0;
+    const pct = p.attempted === 0 ? 0 : Math.round((p.correct / p.attempted) * 100);
+    document.getElementById('scorePercent').textContent = pct;
+
+    document.getElementById('prevSetBtn').disabled = (setNum === 1);
+    document.getElementById('nextSetBtn').disabled = (setNum === TOTAL_SETS);
+
+    let html = '';
+    questions.forEach((q, idx) => {
+        const qNum = idx + 1;
+        const isAnswered = answeredQuestions[q.id] || false;
+        const selected = selectedOptions[q.id];
+        html += `
+            <div class="question-card" id="qcard-${q.id}">
+                <div class="q-top">
+                    <span class="q-number">Q${qNum}</span>
+                    <span class="q-text">
+                        ${q.question}
+                        <span class="q-type">${q.type}</span>
+                    </span>
+                </div>
+                <div class="options" id="options-${q.id}">
+                    ${q.options.map((opt, oi) => `
+                        <label>
+                            <input type="radio" name="q${q.id}" value="${oi}" 
+                                ${isAnswered ? 'disabled' : ''}
+                                onchange="selectOption(${q.id}, ${oi})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="btn-answer" id="btn-${q.id}" 
+                    onclick="showAnswer(${q.id})" 
+                    ${isAnswered ? 'disabled' : ''}>
+                    <i class="fas fa-eye"></i> Show Answer
+                </button>
+                <div class="answer-box" id="answer-${q.id}">
+                    <div><span class="correct-word">✔ ${q.correctAnswer}</span> <span id="result-${q.id}"></span></div>
+                    <div class="explanation"><strong>💡 Explanation:</strong> ${q.explanation}</div>
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+
+    // Restore answered state
+    questions.forEach(q => {
+        if (answeredQuestions[q.id]) {
+            const ansBox = document.getElementById(`answer-${q.id}`);
+            if (ansBox) ansBox.style.display = 'block';
+            const selected = selectedOptions[q.id];
+            const isCorrect = (selected === q.correctIndex);
+            const resultSpan = document.getElementById(`result-${q.id}`);
+            if (resultSpan) {
+                if (isCorrect) { resultSpan.innerHTML = ' ✅ Correct!'; resultSpan.style.color = '#27ae60'; }
+                else { const chosen = q.options[selected] || 'None'; resultSpan.innerHTML = ` ❌ Your answer: ${chosen}`; resultSpan.style.color = '#e74c3c'; }
+            }
+            const optContainer = document.getElementById(`options-${q.id}`);
+            if (optContainer) {
+                const labels = optContainer.querySelectorAll('label');
+                labels.forEach((label, idx) => {
+                    if (idx === q.correctIndex) label.classList.add('correct-ans');
+                    else if (idx === selected && !isCorrect) label.classList.add('wrong-ans');
+                    const radio = label.querySelector('input');
+                    if (radio) radio.disabled = true;
+                });
+            }
+            const btn = document.getElementById(`btn-${q.id}`);
+            if (btn) btn.disabled = true;
+        }
+    });
+    renderDashboard();
+}
+
+// ================================================================
+// 🎯 INTERACTIONS
+// ================================================================
+function selectOption(qId, idx) {
+    if (answeredQuestions[qId]) return;
+    selectedOptions[qId] = idx;
+}
+
+function showAnswer(qId) {
+    if (answeredQuestions[qId]) return;
+    const q = allQuestions.find(item => item.id === qId);
+    if (!q) return;
+    const selected = selectedOptions[qId];
+    const isCorrect = (selected === q.correctIndex);
+
+    answeredQuestions[qId] = true;
+    const p = setProgress[q.set] || { attempted: 0, correct: 0, wrong: 0 };
+    p.attempted++;
+    if (isCorrect) p.correct++;
+    else p.wrong++;
+    setProgress[q.set] = p;
+
+    const ansBox = document.getElementById(`answer-${q.id}`);
+    if (ansBox) ansBox.style.display = 'block';
+
+    const resultSpan = document.getElementById(`result-${q.id}`);
+    if (resultSpan) {
+        if (isCorrect) { resultSpan.innerHTML = ' ✅ Correct!'; resultSpan.style.color = '#27ae60'; }
+        else { const chosen = q.options[selected] || 'None'; resultSpan.innerHTML = ` ❌ Your answer: ${chosen}`; resultSpan.style.color = '#e74c3c'; }
+    }
+
+    const optContainer = document.getElementById(`options-${q.id}`);
+    if (optContainer) {
+        const labels = optContainer.querySelectorAll('label');
+        labels.forEach((label, idx) => {
+            if (idx === q.correctIndex) label.classList.add('correct-ans');
+            else if (idx === selected && !isCorrect) label.classList.add('wrong-ans');
+            const radio = label.querySelector('input');
+            if (radio) radio.disabled = true;
+        });
+    }
+    const btn = document.getElementById(`btn-${q.id}`);
+    if (btn) btn.disabled = true;
+
+    renderSet(q.set);
+}
+
+// ================================================================
+// 🧭 NAVIGATION
+// ================================================================
+function openSet(setNum) {
+    if (setNum < 1 || setNum > TOTAL_SETS) return;
+    document.getElementById('page-dashboard').classList.remove('active');
+    document.getElementById('page-practice').classList.add('active');
+    renderSet(setNum);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToDashboard() {
+    document.getElementById('page-practice').classList.remove('active');
+    document.getElementById('page-dashboard').classList.add('active');
+    renderDashboard();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function changeSet(delta) {
+    const newSet = currentSet + delta;
+    if (newSet < 1 || newSet > TOTAL_SETS) return;
+    openSet(newSet);
+}
+
+function resetAllProgress() {
+    if (!confirm('Reset all progress for all sets? This cannot be undone.')) return;
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        setProgress[s] = { attempted: 0, correct: 0, wrong: 0 };
+    }
+    selectedOptions = {};
+    answeredQuestions = {};
+    allQuestions = buildAllQuestions();
+    renderDashboard();
+    if (document.getElementById('page-practice').classList.contains('active')) {
+        renderSet(currentSet);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ================================================================
+// 🚀 BOOT
+// ================================================================
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Railway Maths Master – द्विभाषी संस्करण</title>
+    <style>
+        /* ===== ROOT & RESET ===== */
+        :root {
+            --primary: #1a56db;
+            --primary2: #1e40af;
+            --accent: #d97706;
+            --accent2: #b45309;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --soft: #e8f0fe;
+            --text: #0b1a33;
+            --muted: #4b6a8b;
+            --border: #d0dce8;
+            --shadow: 0 8px 30px rgba(10, 30, 60, .10);
+            --radius: 16px;
+            --hindi-color: #7c3aed;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            transition: background .3s, color .3s;
+        }
+
+        .hi {
+            color: var(--hindi-color);
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+        .hi-block {
+            display: block;
+            color: var(--hindi-color);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .hi-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--border);
+        }
+        .nav {
+            max-width: 1400px;
+            margin: auto;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 22px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            font-size: 22px;
+            box-shadow: 0 8px 20px rgba(26, 86, 219, .25);
+        }
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text);
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .btn.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        .btn.primary:hover {
+            background: var(--primary2);
+        }
+        .btn.accent {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        .btn.accent:hover {
+            background: var(--accent2);
+        }
+
+        .layout {
+            max-width: 1400px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: calc(100vh - 70px);
+        }
+        .sidebar {
+            border-right: 1px solid var(--border);
+            background: #fff;
+            padding: 18px 12px;
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            transition: background .3s, left .3s, box-shadow .3s;
+        }
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 99px;
+        }
+        .side-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--muted);
+            font-weight: 800;
+            margin: 14px 10px 6px;
+        }
+        .side-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin: 2px 0;
+            cursor: pointer;
+            color: #334155;
+            font-weight: 600;
+            border: 0;
+            background: transparent;
+            text-align: left;
+            font-size: 13px;
+            transition: .15s;
+        }
+        .side-item:hover,
+        .side-item.active {
+            background: var(--soft);
+            color: var(--primary);
+        }
+        .side-item .badge-new {
+            background: var(--accent);
+            color: #fff;
+            font-size: 9px;
+            padding: 1px 8px;
+            border-radius: 99px;
+            margin-left: auto;
+        }
+
+        .content {
+            padding: 32px 36px;
+            max-width: 1100px;
+            width: 100%;
+        }
+        .hero {
+            background: radial-gradient(circle at 90% 10%, rgba(217, 119, 6, .15), transparent 30%),
+                linear-gradient(135deg, #eff6ff, #ffffff);
+            border: 2px solid #dbeafe;
+            border-radius: var(--radius);
+            padding: 36px 38px;
+            box-shadow: var(--shadow);
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "🚆";
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 60px;
+            opacity: .15;
+        }
+        .badge {
+            display: inline-flex;
+            padding: 4px 14px;
+            border-radius: 999px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .badge.railway {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .hero h1 {
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+        .hero h1 .highlight {
+            color: var(--accent);
+        }
+        .hero p {
+            color: var(--muted);
+            max-width: 720px;
+            font-size: 16px;
+        }
+        .hero-grid {
+            margin-top: 22px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .stat {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            text-align: center;
+        }
+        .stat strong {
+            display: block;
+            font-size: 26px;
+            color: var(--primary);
+        }
+        .stat span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 18px rgba(10, 30, 60, .04);
+            transition: background .3s, border-color .3s;
+        }
+        .card h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h3 {
+            margin: 18px 0 6px;
+            font-size: 18px;
+        }
+        .card h3 .tag {
+            font-size: 12px;
+            background: var(--accent);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 99px;
+            margin-left: 8px;
+        }
+        .card p {
+            margin: 6px 0;
+        }
+        .info {
+            border-left: 4px solid var(--primary);
+            background: var(--soft);
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 12px 0;
+        }
+        .success {
+            border-left: 4px solid var(--success);
+            background: #ecfdf5;
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+        .warning {
+            border-left: 4px solid var(--warning);
+            background: #fffbeb;
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+        .railway-box {
+            border-left: 4px solid var(--accent);
+            background: #fef3c7;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 12px 0;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        .formula {
+            background: linear-gradient(135deg, #f8fbff, #eef4ff);
+            border: 1px solid #dbeafe;
+            border-radius: 14px;
+            padding: 16px 18px;
+        }
+        .formula .label {
+            font-size: 11px;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+        .formula code {
+            display: block;
+            margin-top: 6px;
+            font-size: 17px;
+            font-weight: 800;
+            color: #172554;
+            font-family: 'Courier New', monospace;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th,
+        td {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        th {
+            background: #eff6ff;
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        .question {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin: 14px 0;
+            background: #fff;
+            transition: .2s;
+        }
+        .question:hover {
+            border-color: #bfdbfe;
+            box-shadow: var(--shadow);
+        }
+        .q-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .q-number {
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 15px;
+        }
+        .level {
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+        .basic {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .standard {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .cgl {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .challenge {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .trap {
+            background: #fce4ec;
+            color: #c62828;
+        }
+        .railway-tag {
+            background: #fef3c7;
+            color: #b45309;
+            padding: 2px 10px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .option {
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 9px 14px;
+            cursor: pointer;
+            transition: .2s;
+            font-size: 14px;
+        }
+        .option:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+        .option.selected {
+            border-color: var(--primary);
+            background: #dbeafe;
+            font-weight: 600;
+        }
+
+        .answer {
+            display: none;
+            margin-top: 14px;
+            padding: 16px 20px;
+            background: #f0fdf4;
+            border-left: 4px solid var(--success);
+            border-radius: 9px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .answer.show {
+            display: block;
+        }
+        .answer strong {
+            color: var(--success);
+        }
+        .answer .explanation {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 14px;
+            padding-top: 8px;
+            border-top: 1px dashed #d1d5db;
+        }
+        .answer .explanation .hi {
+            color: var(--hindi-color);
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            outline: none;
+            font-size: 15px;
+            background: #fff;
+            transition: .2s;
+        }
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, .10);
+        }
+
+        .chapter-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .chapter {
+            border: 1px solid var(--border);
+            background: #fff;
+            padding: 14px 16px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .chapter:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            border-color: #bfdbfe;
+        }
+        .chapter small {
+            color: var(--muted);
+            font-size: 13px;
+        }
+        .chapter .ch-icon {
+            font-size: 20px;
+            margin-right: 6px;
+        }
+
+        .progress {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 99px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: .5s;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            padding: 36px 20px 20px;
+            font-size: 14px;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        /* Theme selector */
+        .theme-selector {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .theme-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .theme-dot:hover {
+            transform: scale(1.1);
+        }
+        .theme-dot.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(26, 86, 219, .2);
+        }
+        .theme-dot.light {
+            background: #f0f4f8;
+            border-color: #d0dce8;
+        }
+        .theme-dot.dark {
+            background: #0b1a33;
+            border-color: #1a3a5a;
+        }
+        .theme-dot.railway {
+            background: linear-gradient(135deg, #0b1a33, #d97706);
+            border-color: #d97706;
+        }
+
+        /* Responsive */
+        @media (max-width: 950px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: fixed;
+                z-index: 900;
+                top: 70px;
+                left: -320px;
+                width: 280px;
+                height: calc(100vh - 70px);
+                transition: left .3s, box-shadow .3s;
+                box-shadow: 10px 0 30px rgba(0, 0, 0, .10);
+                border-right: 1px solid var(--border);
+            }
+            .sidebar.open {
+                left: 0;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .content {
+                padding: 16px 18px;
+            }
+            .hero-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .options {
+                grid-template-columns: 1fr;
+            }
+            .formula-grid,
+            .chapter-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 650px) {
+            .nav {
+                padding: 8px 12px;
+            }
+            .logo span {
+                display: none;
+            }
+            .nav-actions .hide-mobile {
+                display: none;
+            }
+            .hero {
+                padding: 20px;
+            }
+            .card {
+                padding: 16px;
+            }
+            .content {
+                padding: 10px 12px;
+            }
+            .btn {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            .hero-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stat strong {
+                font-size: 20px;
+            }
+        }
+
+        /* Dark theme */
+        body.dark {
+            --bg: #0b1a33;
+            --card: #112240;
+            --soft: #1a2a4a;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+            --border: #1a3a5a;
+            --hindi-color: #a78bfa;
+            --shadow: 0 8px 30px rgba(0, 0, 0, .4);
+        }
+        body.dark header,
+        body.dark .sidebar,
+        body.dark .card,
+        body.dark .chapter,
+        body.dark .question,
+        body.dark .stat,
+        body.dark .option,
+        body.dark .search-box input {
+            background: #112240;
+            color: var(--text);
+        }
+        body.dark .hero {
+            background: linear-gradient(135deg, #0b1a33, #112240);
+            border-color: #1a3a5a;
+        }
+        body.dark th {
+            background: #1a2a4a;
+            color: #93bbfc;
+        }
+        body.dark .formula {
+            background: #1a2a4a;
+            border-color: #1a3a5a;
+        }
+        body.dark .formula code {
+            color: #dbeafe;
+        }
+        body.dark .badge {
+            background: #1a3a5a;
+            color: #93bbfc;
+        }
+        body.dark .info {
+            background: #1a2a4a;
+        }
+        body.dark .success {
+            background: #0a2e1a;
+        }
+        body.dark .warning {
+            background: #2d2a0a;
+        }
+        body.dark .railway-box {
+            background: #2d2a0a;
+            border-color: var(--accent);
+        }
+        body.dark .btn {
+            background: #1a2a4a;
+            border-color: #1a3a5a;
+            color: #e5e7eb;
+        }
+        body.dark .btn.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        body.dark .btn.accent {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        body.dark .side-item {
+            color: #b0c4de;
+        }
+        body.dark .side-item:hover,
+        body.dark .side-item.active {
+            background: #1a2a4a;
+            color: #93bbfc;
+        }
+        body.dark .option {
+            background: #162033;
+        }
+        body.dark .option:hover {
+            background: #1a2a4a;
+            border-color: var(--primary);
+        }
+        body.dark .option.selected {
+            background: #1a2a4a;
+            border-color: var(--primary);
+        }
+        body.dark .answer {
+            background: #0a2e1a;
+        }
+        body.dark .answer .explanation {
+            border-top-color: #1a3a5a;
+        }
+
+        /* Railway theme */
+        body.railway {
+            --primary: #d97706;
+            --primary2: #b45309;
+            --accent: #1a56db;
+            --accent2: #1e40af;
+            --bg: #fef8ed;
+            --card: #ffffff;
+            --soft: #fef3c7;
+            --text: #1a1a2e;
+            --muted: #5a4a2a;
+            --border: #f0d8a8;
+            --shadow: 0 8px 30px rgba(180, 120, 30, .12);
+            --hindi-color: #7c3aed;
+        }
+        body.railway header {
+            background: linear-gradient(135deg, #0b1a33, #1a3a5a);
+            border-bottom: 3px solid var(--accent);
+        }
+        body.railway header .logo span {
+            color: #fbbf24;
+        }
+        body.railway header .btn {
+            background: rgba(255, 255, 255, .08);
+            border-color: rgba(255, 255, 255, .15);
+            color: #fbbf24;
+        }
+        body.railway header .btn.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        body.railway header .btn.primary:hover {
+            background: var(--primary2);
+        }
+        body.railway .hero {
+            background: linear-gradient(135deg, #fef3c7, #fff8ed);
+            border-color: #f0d8a8;
+        }
+        body.railway .hero .badge {
+            background: #0b1a33;
+            color: #fbbf24;
+        }
+        body.railway .stat strong {
+            color: var(--primary);
+        }
+        body.railway .side-item:hover,
+        body.railway .side-item.active {
+            background: #fef3c7;
+            color: var(--primary);
+        }
+        body.railway .formula {
+            background: linear-gradient(135deg, #fef8ed, #fef3c7);
+            border-color: #f0d8a8;
+        }
+        body.railway .formula code {
+            color: #0b1a33;
+        }
+        body.railway .question:hover {
+            border-color: #f0d8a8;
+        }
+        body.railway .badge.railway {
+            background: #0b1a33;
+            color: #fbbf24;
+        }
+        body.railway .info {
+            border-left-color: var(--primary);
+            background: #fef3c7;
+        }
+        body.railway .btn.accent {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        body.railway .btn.accent:hover {
+            background: var(--accent2);
+        }
+
+        body.railway.dark {
+            --bg: #0b1a33;
+            --card: #112240;
+            --soft: #1a2a4a;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+            --border: #1a3a5a;
+            --hindi-color: #a78bfa;
+        }
+        body.railway.dark header {
+            background: linear-gradient(135deg, #050d1a, #0b1a33);
+        }
+        body.railway.dark .hero {
+            background: linear-gradient(135deg, #0b1a33, #112240);
+            border-color: #1a3a5a;
+        }
+        body.railway.dark .hero .badge {
+            background: #fef3c7;
+            color: #0b1a33;
+        }
+        body.railway.dark .stat strong {
+            color: #fbbf24;
+        }
+        body.railway.dark .formula {
+            background: #1a2a4a;
+            border-color: #1a3a5a;
+        }
+        body.railway.dark .formula code {
+            color: #fbbf24;
+        }
+        body.railway.dark .side-item:hover,
+        body.railway.dark .side-item.active {
+            background: #1a2a4a;
+            color: #fbbf24;
+        }
+        body.railway.dark .info {
+            background: #1a2a4a;
+            border-left-color: #fbbf24;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: .3s;
+            z-index: 999;
+            display: none;
+        }
+        .scroll-top:hover {
+            transform: scale(1.1);
+            background: var(--primary2);
+        }
+        .scroll-top.show {
+            display: block;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .stats-bar .stat-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            text-align: center;
+        }
+        .stats-bar .stat-item .num {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+        .stats-bar .stat-item .label {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* Chapter MCQs container */
+        .chapter-mcqs {
+            margin-top: 30px;
+            border-top: 2px dashed var(--border);
+            padding-top: 20px;
+        }
+        .chapter-mcqs h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        .chapter-mcqs .question-count {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <button class="btn mobile-menu" onclick="toggleSidebar()">☰</button>
+                <div class="logo-icon">🚆</div>
+                <span>Railway Maths Master <span class="hi" style="font-weight:500;font-size:0.8em;">(द्विभाषी)</span></span>
+            </div>
+            <div class="nav-actions">
+                <button class="btn hide-mobile" onclick="window.scrollTo({top:0,behavior:'smooth'})">🏠 Home <span class="hi" style="font-size:0.8em;">मुख्यपृष्ठ</span></button>
+                <div class="theme-selector">
+                    <span style="font-size:12px;color:var(--muted);">🌓</span>
+                    <span class="theme-dot light active" onclick="setTheme('light')" title="Light / लाइट"></span>
+                    <span class="theme-dot dark" onclick="setTheme('dark')" title="Dark / डार्क"></span>
+                    <span class="theme-dot railway" onclick="setTheme('railway')" title="Railway Theme / रेलवे थीम"></span>
+                </div>
+                <button class="btn primary" onclick="showProgress()">📊 Progress <span class="hi" style="font-size:0.8em;">प्रगति</span></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="side-title">📖 Chapters <span class="hi">अध्याय</span></div>
+            <button class="side-item active" onclick="go('home')">🏠 Home <span class="hi">मुख्यपृष्ठ</span></button>
+            <button class="side-item" onclick="go('number-system')">🔢 Number System <span class="hi">संख्या पद्धति</span></button>
+            <button class="side-item" onclick="go('simplification')">🧮 Simplification <span class="hi">सरलीकरण</span></button>
+            <button class="side-item" onclick="go('hcf-lcm')">📐 HCF & LCM <span class="hi">म.स.प. & ल.स.प.</span></button>
+            <button class="side-item" onclick="go('percentage')">% Percentage <span class="hi">प्रतिशत</span></button>
+            <button class="side-item" onclick="go('ratio')">📊 Ratio & Proportion <span class="hi">अनुपात & समानुपात</span></button>
+            <button class="side-item" onclick="go('average')">📈 Average <span class="hi">औसत</span></button>
+            <button class="side-item" onclick="go('profit-loss')">💰 Profit & Loss <span class="hi">लाभ & हानि</span></button>
+            <button class="side-item" onclick="go('si-ci')">🏦 SI & CI <span class="hi">साधारण & चक्रवृद्धि ब्याज</span></button>
+            <button class="side-item" onclick="go('time-work')">⏳ Time & Work <span class="hi">समय & कार्य</span></button>
+            <button class="side-item" onclick="go('time-speed')">🚀 Time Speed Distance <span class="hi">समय चाल दूरी</span></button>
+            <button class="side-item" onclick="go('geometry')">📐 Geometry <span class="hi">ज्यामिति</span></button>
+            <button class="side-item" onclick="go('algebra')">🧑‍🏫 Algebra <span class="hi">बीजगणित</span> <span class="badge-new">NEW</span></button>
+            <button class="side-item" onclick="go('trigonometry')">📐 Trigonometry <span class="hi">त्रिकोणमिति</span> <span class="badge-new">NEW</span></button>
+            <button class="side-item" onclick="go('di')">📊 Data Interpretation <span class="hi">डाटा इंटरप्रिटेशन</span> <span class="badge-new">NEW</span></button>
+            <div class="side-title">📝 Practice <span class="hi">अभ्यास</span></div>
+            <button class="side-item" onclick="go('pyq')">📜 PYQ Zone <span class="hi">PYQ क्षेत्र</span></button>
+            <button class="side-item" onclick="go('revision')">🔄 Quick Revision <span class="hi">त्वरित पुनरावृत्ति</span></button>
+        </aside>
+
+        <main class="content">
+            <div class="search-box">
+                <input type="text" placeholder="🔎 Search chapter, formula, concept or question... / अध्याय, सूत्र, अवधारणा या प्रश्न खोजें..." id="searchInput">
+            </div>
+
+            <!-- ===== HOME ===== -->
+            <section id="home">
+                <div class="hero">
+                    <span class="badge railway">🚆 RRB NTPC • GROUP D • ALP • JE <span class="hi">रेलवे परीक्षा</span></span>
+                    <h1>Railway Maths Master<br>Interactive E-Book <span class="highlight">Complete Edition</span> <span class="hi" style="font-size:0.6em;display:block;">इंटरैक्टिव ई-बुक</span></h1>
+                    <p>Complete preparation with theory, formulas, practice questions, PYQs, and revision. <span class="hi">सिद्धांत, सूत्र, अभ्यास प्रश्न, PYQ और पुनरावृत्ति के साथ पूरी तैयारी।</span></p>
+                    <div class="hero-grid">
+                        <div class="stat"><strong>14</strong><span>Chapters <span class="hi">अध्याय</span></span></div>
+                        <div class="stat"><strong>400+</strong><span>Practice Questions <span class="hi">अभ्यास प्रश्न</span></span></div>
+                        <div class="stat"><strong>200+</strong><span>PYQs <span class="hi">पिछले वर्ष के प्रश्न</span></span></div>
+                        <div class="stat"><strong>RRB</strong><span>Exam Focused <span class="hi">परीक्षा केंद्रित</span></span></div>
+                    </div>
+                </div>
+
+                <div class="stats-bar">
+                    <div class="stat-item"><div class="num">14</div><div class="label">Chapters / अध्याय</div></div>
+                    <div class="stat-item"><div class="num">400+</div><div class="label">Questions / प्रश्न</div></div>
+                    <div class="stat-item"><div class="num">200+</div><div class="label">PYQs / पिछले वर्ष</div></div>
+                    <div class="stat-item"><div class="num">🚆</div><div class="label">Railway Focused</div></div>
+                </div>
+
+                <div class="card">
+                    <h2>🎯 How To Use <span class="hi">उपयोग कैसे करें</span></h2>
+                    <div class="info"><strong>Recommended sequence: <span class="hi">अनुशंसित क्रम:</span></strong> Theory → Formula → Example → Practice MCQs → PYQ → Revision. <span class="hi">सिद्धांत → सूत्र → उदाहरण → अभ्यास MCQs → PYQ → पुनरावृत्ति।</span></div>
+                    <p>Each chapter includes theory, important formulas, and a set of <strong>25+ practice questions</strong> with detailed solutions. <span class="hi">प्रत्येक अध्याय में सिद्धांत, महत्वपूर्ण सूत्र और <strong>25+ अभ्यास प्रश्न</strong> विस्तृत हल के साथ शामिल हैं।</span></p>
+                    <div class="railway-box">🚆 <strong>Railway Special <span class="hi">रेलवे विशेष</span>:</strong> This edition is optimized for RRB NTPC, Group D, ALP, JE and all Railway exams. <span class="hi">यह संस्करण RRB NTPC, Group D, ALP, JE और सभी रेलवे परीक्षाओं के लिए अनुकूलित है।</span></div>
+                </div>
+
+                <div class="card">
+                    <h2>📚 Chapters <span class="hi">अध्याय</span></h2>
+                    <div class="chapter-list">
+                        <div class="chapter" onclick="go('number-system')"><span class="ch-icon">🔢</span><b>01. Number System <span class="hi">संख्या पद्धति</span></b><br><small>Divisibility, remainder, factors <span class="hi">विभाज्यता, शेषफल, गुणनखंड</span></small></div>
+                        <div class="chapter" onclick="go('simplification')"><span class="ch-icon">🧮</span><b>02. Simplification <span class="hi">सरलीकरण</span></b><br><small>BODMAS, fractions, decimals <span class="hi">BODMAS, भिन्न, दशमलव</span></small></div>
+                        <div class="chapter" onclick="go('hcf-lcm')"><span class="ch-icon">📐</span><b>03. HCF & LCM <span class="hi">म.स.प. & ल.स.प.</span></b><br><small>Factors, multiples <span class="hi">गुणनखंड, गुणज</span></small></div>
+                        <div class="chapter" onclick="go('percentage')"><span class="ch-icon">%</span><b>04. Percentage <span class="hi">प्रतिशत</span></b><br><small>Increase, decrease, successive <span class="hi">वृद्धि, कमी, क्रमिक</span></small></div>
+                        <div class="chapter" onclick="go('ratio')"><span class="ch-icon">📊</span><b>05. Ratio & Proportion <span class="hi">अनुपात & समानुपात</span></b><br><small>Ratio, proportion, distribution <span class="hi">अनुपात, समानुपात, वितरण</span></small></div>
+                        <div class="chapter" onclick="go('average')"><span class="ch-icon">📈</span><b>06. Average <span class="hi">औसत</span></b><br><small>Weighted, combined <span class="hi">भारित, संयुक्त</span></small></div>
+                        <div class="chapter" onclick="go('profit-loss')"><span class="ch-icon">💰</span><b>07. Profit & Loss <span class="hi">लाभ & हानि</span></b><br><small>CP, SP, discount <span class="hi">क्रय मूल्य, विक्रय मूल्य, छूट</span></small></div>
+                        <div class="chapter" onclick="go('si-ci')"><span class="ch-icon">🏦</span><b>08. SI & CI <span class="hi">साधारण & चक्रवृद्धि ब्याज</span></b><br><small>Simple & Compound Interest <span class="hi">साधारण & चक्रवृद्धि ब्याज</span></small></div>
+                        <div class="chapter" onclick="go('time-work')"><span class="ch-icon">⏳</span><b>09. Time & Work <span class="hi">समय & कार्य</span></b><br><small>Efficiency, wages <span class="hi">क्षमता, मजदूरी</span></small></div>
+                        <div class="chapter" onclick="go('time-speed')"><span class="ch-icon">🚀</span><b>10. Time Speed Distance <span class="hi">समय चाल दूरी</span></b><br><small>Speed, trains, relative <span class="hi">चाल, रेलगाड़ी, सापेक्ष</span></small></div>
+                        <div class="chapter" onclick="go('geometry')"><span class="ch-icon">📐</span><b>11. Geometry <span class="hi">ज्यामिति</span></b><br><small>Triangle, circle, area <span class="hi">त्रिभुज, वृत्त, क्षेत्रफल</span></small></div>
+                        <div class="chapter" onclick="go('algebra')"><span class="ch-icon">🧑‍🏫</span><b>12. Algebra <span class="hi">बीजगणित</span></b> <span style="background:#d97706;color:#fff;padding:0 8px;border-radius:99px;font-size:10px;">NEW</span><br><small>Identities, equations, polynomials <span class="hi">सर्वसमिकाएँ, समीकरण, बहुपद</span></small></div>
+                        <div class="chapter" onclick="go('trigonometry')"><span class="ch-icon">📐</span><b>13. Trigonometry <span class="hi">त्रिकोणमिति</span></b> <span style="background:#d97706;color:#fff;padding:0 8px;border-radius:99px;font-size:10px;">NEW</span><br><small>Ratios, identities, heights <span class="hi">अनुपात, सर्वसमिकाएँ, ऊँचाई</span></small></div>
+                        <div class="chapter" onclick="go('di')"><span class="ch-icon">📊</span><b>14. Data Interpretation <span class="hi">डाटा इंटरप्रिटेशन</span></b> <span style="background:#d97706;color:#fff;padding:0 8px;border-radius:99px;font-size:10px;">NEW</span><br><small>Charts, tables, graphs <span class="hi">चार्ट, तालिका, ग्राफ</span></small></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 01: NUMBER SYSTEM                                      -->
+            <!-- ============================================================ -->
+            <section id="number-system" class="card">
+                <span class="badge railway">CHAPTER 01 <span class="hi">अध्याय 01</span></span>
+                <h2>🔢 Number System – Complete Guide <span class="hi">संख्या पद्धति – संपूर्ण गाइड</span></h2>
+                <p>Number System is the foundation of quantitative aptitude. This chapter covers types of numbers, divisibility rules, factors, remainders, unit digits, and more. <span class="hi">संख्या पद्धति मात्रात्मक योग्यता की नींव है। यह अध्याय संख्याओं के प्रकार, विभाज्यता नियम, गुणनखंड, शेषफल, इकाई अंक आदि को कवर करता है।</span></p>
+
+                <h3>📌 Types of Numbers – Quick Reference</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Type</th><th>Set</th><th>Smallest</th><th>Railway Trap</th></tr></thead>
+                        <tbody>
+                            <tr><td>Natural (N)</td><td>{1,2,3,...}</td><td>1</td><td>0 is not Natural</td></tr>
+                            <tr><td>Whole (W)</td><td>{0,1,2,3,...}</td><td>0</td><td>Smallest Whole = 0</td></tr>
+                            <tr><td>Integers (Z)</td><td>{...,-2,-1,0,1,2,...}</td><td>−∞ to +∞</td><td>Smallest positive integer = 1</td></tr>
+                            <tr><td>Rational (Q)</td><td>p/q, q≠0</td><td>—</td><td>Terminating/recurring decimals</td></tr>
+                            <tr><td>Irrational (Q')</td><td>√2, π, e</td><td>—</td><td>Non-terminating non-recurring</td></tr>
+                            <tr><td>Prime</td><td>2,3,5,7,11,...</td><td>2</td><td>2 is the only even prime</td></tr>
+                            <tr><td>Composite</td><td>4,6,8,9,10,...</td><td>4</td><td>1 is neither prime nor composite</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>📌 Divisibility Rules (Must-Know)</h3>
+                <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:10px 0;">
+                    <div style="background:var(--soft);padding:8px;border-radius:8px;text-align:center;"><strong>2</strong><br>Last digit even</div>
+                    <div style="background:var(--soft);padding:8px;border-radius:8px;text-align:center;"><strong>3</strong><br>Sum of digits ÷ 3</div>
+                    <div style="background:var(--soft);padding:8px;border-radius:8px;text-align:center;"><strong>4</strong><br>Last 2 digits ÷ 4</div>
+                    <div style="background:var(--soft);padding:8px;border-radius:8px;text-align:center;"><strong>5</strong><br>Last digit 0 or 5</div>
+                    <div style="background:var(--soft);padding:8px;border-radius:8px;text-align:center;"><strong>6</strong><br>Div by 2 & 3</div>
+                    <div style="background:var(--soft);padding:8px;border-radius:8px;text-align:center;"><strong>8</strong><br>Last 3 digits ÷ 8</div>
+                    <div style="background:var(--soft);padding:8px;border-radius:8px;text-align:center;"><strong>9</strong><br>Sum of digits ÷ 9</div>
+                    <div style="background:var(--soft);padding:8px;border-radius:8px;text-align:center;"><strong>11</strong><br>Alt sum diff = 0 or 11</div>
+                </div>
+
+                <h3>📌 Key Formulas</h3>
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">Sum of first n natural</div><code>n(n+1)/2</code></div>
+                    <div class="formula"><div class="label">Sum of first n odd</div><code>n²</code></div>
+                    <div class="formula"><div class="label">Sum of first n even</div><code>n(n+1)</code></div>
+                    <div class="formula"><div class="label">Number of factors</div><code>(p+1)(q+1)(r+1)</code></div>
+                    <div class="formula"><div class="label">Sum of factors</div><code>(a<sup>p+1</sup>−1)/(a−1) × ...</code></div>
+                    <div class="formula"><div class="label">Unit digit cyclicity</div><code>2,3,7,8 → 4-cycle</code></div>
+                </div>
+
+                <!-- MCQs for Number System -->
+                <div class="chapter-mcqs" id="mcq-number-system">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-number-system"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 02: SIMPLIFICATION                                     -->
+            <!-- ============================================================ -->
+            <section id="simplification" class="card">
+                <span class="badge railway">CHAPTER 02 <span class="hi">अध्याय 02</span></span>
+                <h2>🧮 Simplification – BODMAS & Beyond <span class="hi">सरलीकरण – BODMAS और उससे आगे</span></h2>
+                <p>Simplification tests your ability to apply arithmetic operations in the correct order. Master BODMAS and algebraic identities. <span class="hi">सरलीकरण अंकगणितीय संक्रियाओं को सही क्रम में लागू करने की आपकी क्षमता का परीक्षण करता है। BODMAS और बीजगणितीय सर्वसमिकाओं में महारत हासिल करें।</span></p>
+
+                <h3>📌 BODMAS Rule</h3>
+                <div class="info"><strong>Order:</strong> Bracket → Of (×) → Division → Multiplication → Addition → Subtraction. <br> <span style="color:red;">⚠️ Multiplication and Division are equal priority → solve left to right.</span></div>
+
+                <h3>📌 Important Identities</h3>
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">(a+b)²</div><code>a²+2ab+b²</code></div>
+                    <div class="formula"><div class="label">(a−b)²</div><code>a²−2ab+b²</code></div>
+                    <div class="formula"><div class="label">(a+b)(a−b)</div><code>a²−b²</code></div>
+                    <div class="formula"><div class="label">(a+b)³</div><code>a³+b³+3ab(a+b)</code></div>
+                    <div class="formula"><div class="label">a³+b³</div><code>(a+b)(a²−ab+b²)</code></div>
+                    <div class="formula"><div class="label">a³−b³</div><code>(a−b)(a²+ab+b²)</code></div>
+                    <div class="formula"><div class="label">a+b+c=0</div><code>a³+b³+c³ = 3abc</code></div>
+                    <div class="formula"><div class="label">Surd rationalization</div><code>1/(√a+√b) = (√a−√b)/(a−b)</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-simplification">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-simplification"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 03: HCF & LCM                                         -->
+            <!-- ============================================================ -->
+            <section id="hcf-lcm" class="card">
+                <span class="badge railway">CHAPTER 03 <span class="hi">अध्याय 03</span></span>
+                <h2>📐 HCF & LCM – Concept & Applications <span class="hi">म.स.प. & ल.स.प. – अवधारणा और अनुप्रयोग</span></h2>
+                <p>HCF (Highest Common Factor) and LCM (Least Common Multiple) are crucial for solving problems on divisibility, fractions, and real-life applications. <span class="hi">म.स.प. (महत्तम समापवर्तक) और ल.स.प. (लघुत्तम समापवर्त्य) विभाज्यता, भिन्नों और वास्तविक जीवन के अनुप्रयोगों पर समस्याओं को हल करने के लिए महत्वपूर्ण हैं।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">HCF</div><code>Common primes (smallest power)</code></div>
+                    <div class="formula"><div class="label">LCM</div><code>All primes (highest power)</code></div>
+                    <div class="formula"><div class="label">HCF × LCM</div><code>a × b</code></div>
+                    <div class="formula"><div class="label">LCM of fractions</div><code>LCM(num) / HCF(den)</code></div>
+                    <div class="formula"><div class="label">HCF of fractions</div><code>HCF(num) / LCM(den)</code></div>
+                    <div class="formula"><div class="label">Same remainder</div><code>LCM + remainder</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-hcf-lcm">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-hcf-lcm"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 04: PERCENTAGE                                        -->
+            <!-- ============================================================ -->
+            <section id="percentage" class="card">
+                <span class="badge railway">CHAPTER 04 <span class="hi">अध्याय 04</span></span>
+                <h2>% Percentage – Basics to Advanced <span class="hi">प्रतिशत – बुनियादी से उन्नत</span></h2>
+                <p>Percentage is one of the most scoring topics. Master increase/decrease, successive percentage, and expenditure problems. <span class="hi">प्रतिशत सबसे अधिक स्कोरिंग विषयों में से एक है। वृद्धि/कमी, क्रमिक प्रतिशत और व्यय संबंधी समस्याओं में महारत हासिल करें।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">% Increase</div><code>(New−Old)/Old × 100</code></div>
+                    <div class="formula"><div class="label">% Decrease</div><code>(Old−New)/Old × 100</code></div>
+                    <div class="formula"><div class="label">Successive %</div><code>a + b + ab/100</code></div>
+                    <div class="formula"><div class="label">New Value (increase)</div><code>Old × (1+r/100)</code></div>
+                    <div class="formula"><div class="label">Original (increase)</div><code>New / (1+r/100)</code></div>
+                    <div class="formula"><div class="label">Price×Consumption</div><code>r/(100+r)×100 (decrease)</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-percentage">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-percentage"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 05: RATIO & PROPORTION                                -->
+            <!-- ============================================================ -->
+            <section id="ratio" class="card">
+                <span class="badge railway">CHAPTER 05 <span class="hi">अध्याय 05</span></span>
+                <h2>📊 Ratio & Proportion – Comparative Analysis <span class="hi">अनुपात & समानुपात – तुलनात्मक विश्लेषण</span></h2>
+                <p>Ratio compares two quantities; proportion is equality of two ratios. Compound ratio, componendo-dividendo, and proportional parts are frequently tested. <span class="hi">अनुपात दो मात्राओं की तुलना करता है; समानुपात दो अनुपातों की समानता है। मिश्र अनुपात, योगान्तर-अन्तरान्तर और समानुपाती भाग अक्सर परीक्षण किए जाते हैं।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">Ratio</div><code>a:b = a/b</code></div>
+                    <div class="formula"><div class="label">Proportion</div><code>a:b::c:d → ad=bc</code></div>
+                    <div class="formula"><div class="label">Componendo</div><code>(a+b)/b = (c+d)/d</code></div>
+                    <div class="formula"><div class="label">Dividendo</div><code>(a−b)/b = (c−d)/d</code></div>
+                    <div class="formula"><div class="label">Componendo-Dividendo</div><code>(a+b)/(a−b) = (c+d)/(c−d)</code></div>
+                    <div class="formula"><div class="label">Fourth proportional</div><code>d = b×c/a</code></div>
+                    <div class="formula"><div class="label">Third proportional</div><code>c = b²/a</code></div>
+                    <div class="formula"><div class="label">Mean proportional</div><code>√(a×b)</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-ratio">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-ratio"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 06: AVERAGE                                           -->
+            <!-- ============================================================ -->
+            <section id="average" class="card">
+                <span class="badge railway">CHAPTER 06 <span class="hi">अध्याय 06</span></span>
+                <h2>📈 Average – Central Tendency <span class="hi">औसत – केंद्रीय प्रवृत्ति</span></h2>
+                <p>Average is the sum divided by the number of items. Problems on replacement, age, speed, and weighted average are common. <span class="hi">औसत योग को वस्तुओं की संख्या से विभाजित किया जाता है। प्रतिस्थापन, आयु, चाल और भारित औसत पर समस्याएँ आम हैं।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">Average</div><code>Sum/n</code></div>
+                    <div class="formula"><div class="label">Weighted Avg</div><code>Σ(w×x)/Σw</code></div>
+                    <div class="formula"><div class="label">New Avg (adding)</div><code>Old + (x−Old)/(n+1)</code></div>
+                    <div class="formula"><div class="label">New Avg (removing)</div><code>Old + (Old−x)/(n−1)</code></div>
+                    <div class="formula"><div class="label">Avg Speed (equal D)</div><code>2xy/(x+y)</code></div>
+                    <div class="formula"><div class="label">Avg of 1st n natural</div><code>(n+1)/2</code></div>
+                    <div class="formula"><div class="label">Avg of 1st n even</div><code>n+1</code></div>
+                    <div class="formula"><div class="label">Avg of 1st n odd</div><code>n</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-average">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-average"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 07: PROFIT & LOSS                                    -->
+            <!-- ============================================================ -->
+            <section id="profit-loss" class="card">
+                <span class="badge railway">CHAPTER 07 <span class="hi">अध्याय 07</span></span>
+                <h2>💰 Profit & Loss – Business Mathematics <span class="hi">लाभ & हानि – व्यावसायिक गणित</span></h2>
+                <p>Profit and loss calculations involve CP, SP, MP, discount, and dishonest dealings. Master the formulas and shortcut methods. <span class="hi">लाभ और हानि की गणना में CP, SP, MP, छूट और बेईमान व्यवहार शामिल हैं। सूत्रों और शॉर्टकट विधियों में महारत हासिल करें।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">Profit</div><code>SP−CP</code></div>
+                    <div class="formula"><div class="label">Loss</div><code>CP−SP</code></div>
+                    <div class="formula"><div class="label">Profit%</div><code>(Profit/CP)×100</code></div>
+                    <div class="formula"><div class="label">Loss%</div><code>(Loss/CP)×100</code></div>
+                    <div class="formula"><div class="label">SP (Profit)</div><code>CP×(100+P%)/100</code></div>
+                    <div class="formula"><div class="label">SP (Loss)</div><code>CP×(100−L%)/100</code></div>
+                    <div class="formula"><div class="label">Discount%</div><code>(Discount/MP)×100</code></div>
+                    <div class="formula"><div class="label">Successive discount</div><code>a+b−ab/100</code></div>
+                    <div class="formula"><div class="label">Same SP, P% & L%</div><code>Net Loss = (P×L)/100</code></div>
+                    <div class="formula"><div class="label">Fake weight</div><code>Gain% = [Error/(True−Error)]×100</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-profit-loss">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-profit-loss"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 08: SI & CI                                          -->
+            <!-- ============================================================ -->
+            <section id="si-ci" class="card">
+                <span class="badge railway">CHAPTER 08 <span class="hi">अध्याय 08</span></span>
+                <h2>🏦 Simple & Compound Interest <span class="hi">साधारण & चक्रवृद्धि ब्याज</span></h2>
+                <p>Interest is a key topic. Understand SI (linear) and CI (exponential) and the difference between them. <span class="hi">ब्याज एक महत्वपूर्ण विषय है। SI (रैखिक) और CI (घातांकीय) और उनके बीच अंतर को समझें।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">SI</div><code>P×R×T/100</code></div>
+                    <div class="formula"><div class="label">Amount (SI)</div><code>P(1+RT/100)</code></div>
+                    <div class="formula"><div class="label">CI</div><code>P[(1+R/100)ᵀ−1]</code></div>
+                    <div class="formula"><div class="label">Amount (CI)</div><code>P(1+R/100)ᵀ</code></div>
+                    <div class="formula"><div class="label">Half-yearly CI</div><code>P(1+R/200)²ᵀ</code></div>
+                    <div class="formula"><div class="label">CI−SI (2 years)</div><code>P(R/100)²</code></div>
+                    <div class="formula"><div class="label">CI−SI (3 years)</div><code>P(R/100)²(R/100+3)</code></div>
+                    <div class="formula"><div class="label">Installment (CI)</div><code>P = x/(1+r) + x/(1+r)² + ...</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-si-ci">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-si-ci"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 09: TIME & WORK                                      -->
+            <!-- ============================================================ -->
+            <section id="time-work" class="card">
+                <span class="badge railway">CHAPTER 09 <span class="hi">अध्याय 09</span></span>
+                <h2>⏳ Time & Work – Efficiency Matters <span class="hi">समय & कार्य – क्षमता मायने रखती है</span></h2>
+                <p>Work = Rate × Time. Use LCM method for quick solutions. Pipes and cisterns are similar. <span class="hi">कार्य = दर × समय। त्वरित समाधान के लिए LCM विधि का उपयोग करें। पाइप और टंकी समान हैं।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">1-day work</div><code>1/T</code></div>
+                    <div class="formula"><div class="label">Combined 1-day</div><code>1/A+1/B</code></div>
+                    <div class="formula"><div class="label">Time together</div><code>1/(1/A+1/B)</code></div>
+                    <div class="formula"><div class="label">LCM Method</div><code>Total Work = LCM</code></div>
+                    <div class="formula"><div class="label">Efficiency</div><code>Work/Time</code></div>
+                    <div class="formula"><div class="label">Pipes (net fill)</div><code>1/A − 1/B</code></div>
+                    <div class="formula"><div class="label">Alternate days</div><code>2 days work = 1/A+1/B</code></div>
+                    <div class="formula"><div class="label">Man-Days</div><code>M₁D₁ = M₂D₂</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-time-work">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-time-work"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 10: TIME SPEED DISTANCE                               -->
+            <!-- ============================================================ -->
+            <section id="time-speed" class="card">
+                <span class="badge railway">CHAPTER 10 <span class="hi">अध्याय 10</span></span>
+                <h2>🚀 Time Speed Distance – Motion Problems <span class="hi">समय चाल दूरी – गति संबंधी समस्याएँ</span></h2>
+                <p>Distance = Speed × Time. Key concepts: average speed, relative speed, trains, and boats/streams. <span class="hi">दूरी = चाल × समय। मुख्य अवधारणाएँ: औसत चाल, सापेक्ष चाल, रेलगाड़ियाँ और नाव/धारा।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">Speed</div><code>D/T</code></div>
+                    <div class="formula"><div class="label">km/h → m/s</div><code>×5/18</code></div>
+                    <div class="formula"><div class="label">m/s → km/h</div><code>×18/5</code></div>
+                    <div class="formula"><div class="label">Avg Speed (equal D)</div><code>2xy/(x+y)</code></div>
+                    <div class="formula"><div class="label">Relative (opposite)</div><code>S₁+S₂</code></div>
+                    <div class="formula"><div class="label">Relative (same)</div><code>S₁−S₂</code></div>
+                    <div class="formula"><div class="label">Train crossing pole</div><code>L/S</code></div>
+                    <div class="formula"><div class="label">Train crossing platform</div><code>(L+P)/S</code></div>
+                    <div class="formula"><div class="label">Boats: Downstream</div><code>x+y</code></div>
+                    <div class="formula"><div class="label">Boats: Upstream</div><code>x−y</code></div>
+                    <div class="formula"><div class="label">Boat speed</div><code>(Down+Up)/2</code></div>
+                    <div class="formula"><div class="label">Stream speed</div><code>(Down−Up)/2</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-time-speed">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-time-speed"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 11: GEOMETRY                                         -->
+            <!-- ============================================================ -->
+            <section id="geometry" class="card">
+                <span class="badge railway">CHAPTER 11 <span class="hi">अध्याय 11</span></span>
+                <h2>📐 Geometry – Shapes & Properties <span class="hi">ज्यामिति – आकृतियाँ और गुण</span></h2>
+                <p>Geometry covers triangles, circles, quadrilaterals, and 3D mensuration. Formulas for area, perimeter, volume are essential. <span class="hi">ज्यामिति त्रिभुज, वृत्त, चतुर्भुज और 3D मेन्सुरेशन को कवर करती है। क्षेत्रफल, परिमाप, आयतन के सूत्र आवश्यक हैं।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">Triangle Area</div><code>½×b×h</code></div>
+                    <div class="formula"><div class="label">Heron's Formula</div><code>√[s(s−a)(s−b)(s−c)]</code></div>
+                    <div class="formula"><div class="label">Pythagoras</div><code>a²+b²=c²</code></div>
+                    <div class="formula"><div class="label">Equilateral Area</div><code>(√3/4)a²</code></div>
+                    <div class="formula"><div class="label">Circle Area</div><code>πr²</code></div>
+                    <div class="formula"><div class="label">Circle Circumference</div><code>2πr</code></div>
+                    <div class="formula"><div class="label">Rectangle Area</div><code>l×b</code></div>
+                    <div class="formula"><div class="label">Square Area</div><code>side²</code></div>
+                    <div class="formula"><div class="label">Parallelogram Area</div><code>base×height</code></div>
+                    <div class="formula"><div class="label">Rhombus Area</div><code>½×d₁×d₂</code></div>
+                    <div class="formula"><div class="label">Trapezium Area</div><code>½×(a+b)×h</code></div>
+                    <div class="formula"><div class="label">Cube Volume</div><code>a³</code></div>
+                    <div class="formula"><div class="label">Cuboid Volume</div><code>l×b×h</code></div>
+                    <div class="formula"><div class="label">Cylinder Volume</div><code>πr²h</code></div>
+                    <div class="formula"><div class="label">Cone Volume</div><code>(1/3)πr²h</code></div>
+                    <div class="formula"><div class="label">Sphere Volume</div><code>(4/3)πr³</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-geometry">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-geometry"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 12: ALGEBRA                                           -->
+            <!-- ============================================================ -->
+            <section id="algebra" class="card">
+                <span class="badge railway">CHAPTER 12 <span class="hi">अध्याय 12</span></span>
+                <h2>🧑‍🏫 Algebra – Identities & Equations <span class="hi">बीजगणित – सर्वसमिकाएँ और समीकरण</span></h2>
+                <p>Algebra deals with symbols and the rules for manipulating them. Key topics: identities, linear equations, polynomials. <span class="hi">बीजगणित प्रतीकों और उन्हें संचालित करने के नियमों से संबंधित है। मुख्य विषय: सर्वसमिकाएँ, रैखिक समीकरण, बहुपद।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">(a+b)²</div><code>a²+2ab+b²</code></div>
+                    <div class="formula"><div class="label">(a−b)²</div><code>a²−2ab+b²</code></div>
+                    <div class="formula"><div class="label">a²−b²</div><code>(a+b)(a−b)</code></div>
+                    <div class="formula"><div class="label">(a+b)³</div><code>a³+b³+3ab(a+b)</code></div>
+                    <div class="formula"><div class="label">(a−b)³</div><code>a³−b³−3ab(a−b)</code></div>
+                    <div class="formula"><div class="label">a³+b³</div><code>(a+b)(a²−ab+b²)</code></div>
+                    <div class="formula"><div class="label">a³−b³</div><code>(a−b)(a²+ab+b²)</code></div>
+                    <div class="formula"><div class="label">If a+b+c=0</div><code>a³+b³+c³=3abc</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-algebra">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-algebra"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 13: TRIGONOMETRY                                      -->
+            <!-- ============================================================ -->
+            <section id="trigonometry" class="card">
+                <span class="badge railway">CHAPTER 13 <span class="hi">अध्याय 13</span></span>
+                <h2>📐 Trigonometry – Ratios & Identities <span class="hi">त्रिकोणमिति – अनुपात और सर्वसमिकाएँ</span></h2>
+                <p>Trigonometry deals with angles and their relationships. Important for height & distance problems. <span class="hi">त्रिकोणमिति कोणों और उनके संबंधों से संबंधित है। ऊँचाई और दूरी की समस्याओं के लिए महत्वपूर्ण।</span></p>
+
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">sin θ</div><code>Perp/Hyp</code></div>
+                    <div class="formula"><div class="label">cos θ</div><code>Base/Hyp</code></div>
+                    <div class="formula"><div class="label">tan θ</div><code>sin/cos</code></div>
+                    <div class="formula"><div class="label">sin²θ+cos²θ</div><code>1</code></div>
+                    <div class="formula"><div class="label">1+tan²θ</div><code>sec²θ</code></div>
+                    <div class="formula"><div class="label">1+cot²θ</div><code>cosec²θ</code></div>
+                    <div class="formula"><div class="label">sin(90−θ)</div><code>cos θ</code></div>
+                    <div class="formula"><div class="label">tan(90−θ)</div><code>cot θ</code></div>
+                </div>
+
+                <div class="chapter-mcqs" id="mcq-trigonometry">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-trigonometry"></div>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CHAPTER 14: DATA INTERPRETATION                              -->
+            <!-- ============================================================ -->
+            <section id="di" class="card">
+                <span class="badge railway">CHAPTER 14 <span class="hi">अध्याय 14</span></span>
+                <h2>📊 Data Interpretation – Charts & Tables <span class="hi">डाटा इंटरप्रिटेशन – चार्ट और तालिकाएँ</span></h2>
+                <p>Data Interpretation involves analyzing data presented in various formats like pie charts, bar graphs, tables, etc. <span class="hi">डाटा इंटरप्रिटेशन में पाई चार्ट, बार ग्राफ, तालिका आदि जैसे विभिन्न प्रारूपों में प्रस्तुत डेटा का विश्लेषण करना शामिल है।</span></p>
+
+                <div class="info">Practice questions are available in the MCQ section below. <span class="hi">अभ्यास प्रश्न नीचे MCQ अनुभाग में उपलब्ध हैं।</span></div>
+
+                <div class="chapter-mcqs" id="mcq-di">
+                    <h3>📝 Practice Questions (25+) <span class="hi">अभ्यास प्रश्न</span></h3>
+                    <div id="mcq-container-di"></div>
+                </div>
+            </section>
+
+            <!-- ===== PYQ ZONE ===== -->
+            <section id="pyq" class="card">
+                <span class="badge railway">PYQ ZONE <span class="hi">PYQ क्षेत्र</span></span>
+                <h2>📜 Railway PYQs <span class="hi">रेलवे पिछले वर्ष के प्रश्न</span></h2>
+                <div class="warning">Real exam questions with solutions. <span class="hi">वास्तविक परीक्षा प्रश्न हल के साथ।</span></div>
+
+                <div class="question">
+                    <div class="q-head"><span class="q-number">PYQ 2024</span><span class="level railway-tag">RRB NTPC</span></div>
+                    <p>LCM=240, HCF=12, one number=48. Find other. <span class="hi">ल.स.प.=240, म.स.प.=12, एक संख्या=48। दूसरी संख्या ज्ञात करें।</span></p>
+                    <button class="btn primary" onclick="toggleAnswer('pyq1')">Show Solution / हल दिखाएँ</button>
+                    <div class="answer" id="pyq1"><strong>Solution / हल:</strong> 12×240 = 48×b → b=60 <span class="hi">12×240 = 48×b → b=60</span></div>
+                </div>
+                <div class="question">
+                    <div class="q-head"><span class="q-number">PYQ 2023</span><span class="level railway-tag">RRB Group D</span></div>
+                    <p>Sold at loss 10%. If sold for ₹30 more, gain 5%. CP? <span class="hi">10% हानि पर बेचा। यदि ₹30 अधिक पर बेचा जाए, तो 5% लाभ। क्रय मूल्य?</span></p>
+                    <button class="btn primary" onclick="toggleAnswer('pyq2')">Show Solution / हल दिखाएँ</button>
+                    <div class="answer" id="pyq2"><strong>Solution / हल:</strong> 1.05x − 0.9x = 30 → x=200 <span class="hi">1.05x − 0.9x = 30 → x=200</span></div>
+                </div>
+                <div class="question">
+                    <div class="q-head"><span class="q-number">PYQ 2023</span><span class="level railway-tag">RRB ALP</span></div>
+                    <p>Unit digit of 7²⁰²³ + 3²⁰²³. <span class="hi">7²⁰²³ + 3²⁰²³ का इकाई अंक।</span></p>
+                    <button class="btn primary" onclick="toggleAnswer('pyq3')">Show Solution / हल दिखाएँ</button>
+                    <div class="answer" id="pyq3"><strong>Solution / हल:</strong> Cyclicity: 7^3 unit 3, 3^3 unit 7 → 3+7=10 → 0 <span class="hi">चक्रीयता: 7^3 इकाई 3, 3^3 इकाई 7 → 3+7=10 → 0</span></div>
+                </div>
+                <div class="question">
+                    <div class="q-head"><span class="q-number">PYQ 2022</span><span class="level railway-tag">RRB JE</span></div>
+                    <p>A train 200m long passes a pole in 10s. Find speed in km/h. <span class="hi">200m लंबी रेलगाड़ी एक खंभे को 10s में पार करती है। km/h में चाल ज्ञात करें।</span></p>
+                    <button class="btn primary" onclick="toggleAnswer('pyq4')">Show Solution / हल दिखाएँ</button>
+                    <div class="answer" id="pyq4"><strong>Solution / हल:</strong> Speed = 200/10 = 20 m/s = 20×18/5 = 72 km/h <span class="hi">चाल = 200/10 = 20 m/s = 20×18/5 = 72 km/h</span></div>
+                </div>
+                <div class="question">
+                    <div class="q-head"><span class="q-number">PYQ 2022</span><span class="level railway-tag">RRB NTPC</span></div>
+                    <p>If a+b=5 and ab=6, find a²+b². <span class="hi">यदि a+b=5 और ab=6, तो a²+b² ज्ञात करें।</span></p>
+                    <button class="btn primary" onclick="toggleAnswer('pyq5')">Show Solution / हल दिखाएँ</button>
+                    <div class="answer" id="pyq5"><strong>Solution / हल:</strong> a²+b² = (a+b)² − 2ab = 25 − 12 = 13 <span class="hi">a²+b² = (a+b)² − 2ab = 25 − 12 = 13</span></div>
+                </div>
+            </section>
+
+            <!-- ===== REVISION ===== -->
+            <section id="revision" class="card">
+                <span class="badge railway">QUICK REVISION <span class="hi">त्वरित पुनरावृत्ति</span></span>
+                <h2>🔄 Formula Sheet – One Page <span class="hi">सूत्र पत्र – एक पृष्ठ</span></h2>
+                <div class="formula-grid">
+                    <div class="formula"><div class="label">Natural Sum</div><code>n(n+1)/2</code></div>
+                    <div class="formula"><div class="label">Odd Sum</div><code>n²</code></div>
+                    <div class="formula"><div class="label">Even Sum</div><code>n(n+1)</code></div>
+                    <div class="formula"><div class="label">Terms</div><code>L−F+1</code></div>
+                    <div class="formula"><div class="label">Div by 3</div><code>Digit sum ÷ 3</code></div>
+                    <div class="formula"><div class="label">Div by 9</div><code>Digit sum ÷ 9</code></div>
+                    <div class="formula"><div class="label">HCF×LCM</div><code>a×b</code></div>
+                    <div class="formula"><div class="label">Profit%</div><code>(Profit/CP)×100</code></div>
+                    <div class="formula"><div class="label">SI</div><code>P×R×T/100</code></div>
+                    <div class="formula"><div class="label">CI Amount</div><code>P(1+R/100)ᵀ</code></div>
+                    <div class="formula"><div class="label">Speed</div><code>D/T</code></div>
+                    <div class="formula"><div class="label">Average</div><code>Sum/n</code></div>
+                    <div class="formula"><div class="label">Pythagoras</div><code>a²+b²=c²</code></div>
+                    <div class="formula"><div class="label">Circle Area</div><code>πr²</code></div>
+                    <div class="formula"><div class="label">Circle Circum.</div><code>2πr</code></div>
+                    <div class="formula"><div class="label">Avg Speed (Equal D)</div><code>2xy/(x+y)</code></div>
+                    <div class="formula"><div class="label">Relative (Opposite)</div><code>S₁+S₂</code></div>
+                    <div class="formula"><div class="label">Relative (Same)</div><code>S₁−S₂</code></div>
+                    <div class="formula"><div class="label">Successive %</div><code>a+b+ab/100</code></div>
+                    <div class="formula"><div class="label">CI−SI (2Y)</div><code>P(R/100)²</code></div>
+                    <div class="formula"><div class="label">sin²θ+cos²θ</div><code>1</code></div>
+                    <div class="formula"><div class="label">tanθ</div><code>sinθ/cosθ</code></div>
+                    <div class="formula"><div class="label">Cube Volume</div><code>a³</code></div>
+                    <div class="formula"><div class="label">Cylinder Volume</div><code>πr²h</code></div>
+                </div>
+            </section>
+
+            <footer>
+                <strong>🚆 Railway Maths Master E-Book <span class="hi">रेलवे गणित मास्टर ई-बुक</span></strong><br>
+                Theory • 400+ Practice Questions • PYQs • Revision <span class="hi">सिद्धांत • 400+ अभ्यास प्रश्न • PYQ • पुनरावृत्ति</span><br>
+                Complete for RRB NTPC, Group D, ALP, JE & all Railway Exams 2026 <span class="hi">RRB NTPC, Group D, ALP, JE और सभी रेलवे परीक्षाओं 2026 के लिए संपूर्ण</span><br>
+                © 2026 Study Edition
+            </footer>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // ===== UTILITY FUNCTIONS =====
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function go(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.side-item').forEach(x => x.classList.remove('active'));
+            if (window.innerWidth <= 950) document.getElementById('sidebar').classList.remove('open');
+        }
+
+        function setTheme(theme) {
+            document.body.className = '';
+            if (theme === 'dark') document.body.classList.add('dark');
+            else if (theme === 'railway') document.body.classList.add('railway');
+            localStorage.setItem('railwayTheme', theme);
+            updateThemeDots();
+        }
+
+        function updateThemeDots() {
+            const current = localStorage.getItem('railwayTheme') || 'light';
+            document.querySelectorAll('.theme-dot').forEach(d => {
+                d.classList.toggle('active', d.classList.contains(current));
+            });
+        }
+
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            if (ans) ans.classList.toggle('show');
+        }
+
+        function selectOption(el) {
+            const parent = el.parentElement;
+            parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function showProgress() {
+            const total = document.querySelectorAll('.question').length;
+            const selected = document.querySelectorAll('.option.selected').length;
+            alert('Progress / प्रगति: ' + selected + ' answers selected / उत्तर चुने गए out of / में से ' + total);
+        }
+
+        // ===== SEARCH =====
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const term = this.value.toLowerCase().trim();
+            document.querySelectorAll('.content .card, .content .question, .content .formula, .content .chapter')
+                .forEach(el => {
+                    if (!term) { el.style.display = ''; return; }
+                    el.style.display = el.innerText.toLowerCase().includes(term) ? '' : 'none';
+                });
+        });
+
+        // ===== KEYBOARD SHORTCUT =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+        });
+
+        // ===== SCROLL TO TOP =====
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('scrollTopBtn');
+            if (window.scrollY > 400) btn.classList.add('show');
+            else btn.classList.remove('show');
+        });
+
+        // ===== THEME INIT =====
+        const savedTheme = localStorage.getItem('railwayTheme') || 'light';
+        setTheme(savedTheme);
+
+        // ================================================================
+        // MCQs GENERATOR – 25 QUESTIONS PER CHAPTER
+        // ================================================================
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function generateMCQs(chapterId, count = 25) {
+            const qs = [];
+            const topics = {
+                'number-system': {
+                    type: 'num',
+                    generate: function(i) {
+                        let n = Math.floor(Math.random() * 50) + 10;
+                        if (i % 5 === 0) {
+                            let sum = n * (n + 1) / 2;
+                            let opts = shuffle([sum, sum + 5, sum - 3, sum + 10]);
+                            return {
+                                q: `Sum of first ${n} natural numbers? / पहली ${n} प्राकृत संख्याओं का योग?`,
+                                opts: opts.map(v => String(v)),
+                                ans: String(sum),
+                                expl: `Sum = n(n+1)/2 = ${n}×${n+1}/2 = ${sum}`
+                            };
+                        } else if (i % 5 === 1) {
+                            let oddSum = n * n;
+                            let opts = shuffle([oddSum, oddSum + 2 * n, oddSum - 2 * n, oddSum + n]);
+                            return {
+                                q: `Sum of first ${n} odd numbers? / पहली ${n} विषम संख्याओं का योग?`,
+                                opts: opts.map(v => String(v)),
+                                ans: String(oddSum),
+                                expl: `Sum = n² = ${n}² = ${oddSum}`
+                            };
+                        } else if (i % 5 === 2) {
+                            let num = Math.floor(Math.random() * 9000) + 1000;
+                            let sumDig = String(num).split('').reduce((s, d) => s + parseInt(d), 0);
+                            let div = (sumDig % 3 === 0);
+                            let opts = shuffle([num, num + 1, num + 2, num + 3]);
+                            let correct = div ? 0 : 1;
+                            return {
+                                q: `Which is divisible by 3? / कौन 3 से विभाज्य है? (options may differ)`,
+                                opts: opts.map(v => String(v)),
+                                ans: String(opts[correct]),
+                                expl: `Digit sum of ${opts[correct]} = ${String(opts[correct]).split('').reduce((s,d)=>s+parseInt(d),0)} → ${sumDig%3===0?'divisible':'not divisible'}`
+                            };
+                        } else if (i % 5 === 3) {
+                            let base = [2, 3, 7, 8][Math.floor(Math.random() * 4)];
+                            let exp = Math.floor(Math.random() * 10) + 5;
+                            let cycles = { 2: [2, 4, 8, 6], 3: [3, 9, 7, 1], 7: [7, 9, 3, 1], 8: [8, 4, 2, 6] };
+                            let cycle = cycles[base];
+                            let unit = cycle[(exp - 1) % 4];
+                            let opts = shuffle([unit, (unit + 1) % 10, (unit + 2) % 10, (unit + 3) % 10]);
+                            return {
+                                q: `Unit digit of ${base}^${exp}? / ${base}^${exp} का इकाई अंक?`,
+                                opts: opts.map(v => String(v)),
+                                ans: String(unit),
+                                expl: `Cyclicity of ${base} is 4. ${exp} mod 4 = ${exp%4} → unit digit ${unit}`
+                            };
+                        } else {
+                            let start = Math.floor(Math.random() * 50) + 10;
+                            let end = start + Math.floor(Math.random() * 30) + 20;
+                            let count = end - start + 1;
+                            let opts = shuffle([count, count + 1, count - 1, count + 2]);
+                            return {
+                                q: `How many numbers from ${start} to ${end}? / ${start} से ${end} तक कितनी संख्याएँ?`,
+                                opts: opts.map(v => String(v)),
+                                ans: String(count),
+                                expl: `Count = Last - First + 1 = ${end} - ${start} + 1 = ${count}`
+                            };
+                        }
+                    }
+                },
+                'simplification': {
+                    type: 'simp',
+                    generate: function(i) {
+                        let a = Math.floor(Math.random() * 20) + 5;
+                        let b = Math.floor(Math.random() * 10) + 2;
+                        let c = Math.floor(Math.random() * 8) + 2;
+                        let d = Math.floor(Math.random() * 6) + 2;
+                        let expr = `${a} + ${b} × ${c} − ${d} ÷ 2`;
+                        let res = a + b * c - d / 2;
+                        let opts = shuffle([res, res + 2, res - 3, res + 5]);
+                        return {
+                            q: `Simplify: ${expr} / सरल करें: ${expr}`,
+                            opts: opts.map(v => String(Math.round(v))),
+                            ans: String(Math.round(res)),
+                            expl: `BODMAS: ${b}×${c}=${b*c}, ${d}÷2=${d/2}, then ${a}+${b*c}-${d/2} = ${Math.round(res)}`
+                        };
+                    }
+                },
+                'hcf-lcm': {
+                    type: 'hcf',
+                    generate: function(i) {
+                        let a = Math.floor(Math.random() * 30) + 12;
+                        let b = Math.floor(Math.random() * 20) + 8;
+                        let x = a,
+                            y = b;
+                        while (y) { let t = y;
+                            y = x % y;
+                            x = t; }
+                        let hcf = x,
+                            lcm = (a * b) / hcf;
+                        if (i % 3 === 0) {
+                            let opts = shuffle([hcf, hcf + 2, hcf - 1, hcf + 4]);
+                            return {
+                                q: `HCF of ${a} and ${b}? / ${a} और ${b} का म.स.प.?`,
+                                opts: opts.map(v => String(v)),
+                                ans: String(hcf),
+                                expl: `Prime factors: ${a}=${factorize(a)}, ${b}=${factorize(b)} → HCF = ${hcf}`
+                            };
+                        } else if (i % 3 === 1) {
+                            let opts = shuffle([lcm, lcm + 5, lcm - 4, lcm + 10]);
+                            return {
+                                q: `LCM of ${a} and ${b}? / ${a} और ${b} का ल.स.प.?`,
+                                opts: opts.map(v => String(v)),
+                                ans: String(lcm),
+                                expl: `LCM = (a×b)/HCF = (${a}×${b})/${hcf} = ${lcm}`
+                            };
+                        } else {
+                            let p = Math.floor(Math.random() * 20) + 10,
+                                q = Math.floor(Math.random() * 20) + 10;
+                            let prod = p * q;
+                            let opts = shuffle([prod, prod + 10, prod - 5, prod + 20]);
+                            return {
+                                q: `Product = ${prod}, HCF = ${hcf}, LCM? / गुणनफल = ${prod}, म.स.प. = ${hcf}, ल.स.प.?`,
+                                opts: opts.map(v => String(v)),
+                                ans: String(prod / hcf),
+                                expl: `LCM = Product / HCF = ${prod} / ${hcf} = ${prod/hcf}`
+                            };
+                        }
+                    }
+                },
+                'percentage': {
+                    type: 'pct',
+                    generate: function(i) {
+                        let base = Math.floor(Math.random() * 200) + 50;
+                        let pct = Math.floor(Math.random() * 30) + 10;
+                        let part = (base * pct) / 100;
+                        let opts = shuffle([part, part + 2, part - 3, part + 5]);
+                        return {
+                            q: `${pct}% of ${base}? / ${base} का ${pct}%?`,
+                            opts: opts.map(v => String(Math.round(v))),
+                            ans: String(Math.round(part)),
+                            expl: `(${pct}/100)×${base} = ${Math.round(part)}`
+                        };
+                    }
+                },
+                'ratio': {
+                    type: 'ratio',
+                    generate: function(i) {
+                        let a = Math.floor(Math.random() * 10) + 2,
+                            b = Math.floor(Math.random() * 10) + 2,
+                            c = Math.floor(Math.random() * 10) + 2;
+                        let res = a / c;
+                        let opts = shuffle([res, res + 0.5, res - 0.3, res + 0.8]);
+                        return {
+                            q: `a:b = ${a}:${b}, b:c = ${b}:${c}. Find a:c. / a:c ज्ञात करें।`,
+                            opts: opts.map(v => String(Math.round(v * 100) / 100)),
+                            ans: String(Math.round(res * 100) / 100),
+                            expl: `a/c = (a/b)×(b/c) = (${a}/${b})×(${b}/${c}) = ${Math.round(res*100)/100}`
+                        };
+                    }
+                },
+                'average': {
+                    type: 'avg',
+                    generate: function(i) {
+                        let n = Math.floor(Math.random() * 15) + 5;
+                        let avg = Math.floor(Math.random() * 30) + 20;
+                        let total = n * avg;
+                        let remove = Math.floor(Math.random() * (avg + 10)) + 10;
+                        let newTotal = total - remove;
+                        let newAvg = newTotal / (n - 1);
+                        let opts = shuffle([newAvg, newAvg + 2, newAvg - 2, newAvg + 5]);
+                        return {
+                            q: `Avg of ${n} numbers is ${avg}. Remove ${remove}. New avg? / ${n} संख्याओं का औसत ${avg}, ${remove} हटाया। नया औसत?`,
+                            opts: opts.map(v => String(Math.round(v))),
+                            ans: String(Math.round(newAvg)),
+                            expl: `Total = ${n}×${avg}=${total}, new total = ${total}-${remove}=${newTotal}, new avg = ${newTotal}/${n-1} = ${Math.round(newAvg)}`
+                        };
+                    }
+                },
+                'profit-loss': {
+                    type: 'pl',
+                    generate: function(i) {
+                        let cp = Math.floor(Math.random() * 200) + 100;
+                        let profitPct = Math.floor(Math.random() * 30) + 10;
+                        let sp = cp * (100 + profitPct) / 100;
+                        let opts = shuffle([sp, sp + 10, sp - 8, sp + 15]);
+                        return {
+                            q: `CP = ₹${cp}, Profit ${profitPct}%. Find SP. / क्र.मू. ₹${cp}, लाभ ${profitPct}%. वि.मू. ज्ञात करें।`,
+                            opts: opts.map(v => String(Math.round(v))),
+                            ans: String(Math.round(sp)),
+                            expl: `SP = ${cp} × (100+${profitPct})/100 = ${Math.round(sp)}`
+                        };
+                    }
+                },
+                'si-ci': {
+                    type: 'sici',
+                    generate: function(i) {
+                        let P = Math.floor(Math.random() * 5000) + 1000;
+                        let R = Math.floor(Math.random() * 8) + 5;
+                        let T = Math.floor(Math.random() * 4) + 2;
+                        let si = (P * R * T) / 100;
+                        let opts = shuffle([si, si + 50, si - 30, si + 100]);
+                        return {
+                            q: `SI on ₹${P} at ${R}% p.a. for ${T} years. / ₹${P} पर ${R}% दर से ${T} वर्षों का सा.ब्या.।`,
+                            opts: opts.map(v => String(Math.round(v))),
+                            ans: String(Math.round(si)),
+                            expl: `SI = ${P}×${R}×${T}/100 = ${Math.round(si)}`
+                        };
+                    }
+                },
+                'time-work': {
+                    type: 'tw',
+                    generate: function(i) {
+                        let A = Math.floor(Math.random() * 10) + 5;
+                        let B = Math.floor(Math.random() * 12) + 6;
+                        let combined = 1 / (1 / A + 1 / B);
+                        let opts = shuffle([combined, combined + 1, combined - 0.5, combined + 2]);
+                        return {
+                            q: `A=${A} days, B=${B} days. Together? / A=${A} दिन, B=${B} दिन। एक साथ?`,
+                            opts: opts.map(v => String(Math.round(v * 10) / 10)),
+                            ans: String(Math.round(combined * 10) / 10),
+                            expl: `1/A+1/B = 1/${A}+1/${B} = ${1/A+1/B}, time = ${Math.round(combined*10)/10} days`
+                        };
+                    }
+                },
+                'time-speed': {
+                    type: 'ts',
+                    generate: function(i) {
+                        let dist = Math.floor(Math.random() * 300) + 100;
+                        let time = Math.floor(Math.random() * 15) + 5;
+                        let speed = dist / time;
+                        let opts = shuffle([speed, speed + 2, speed - 3, speed + 5]);
+                        return {
+                            q: `Train covers ${dist}m in ${time}s. Speed in m/s? / रेलगाड़ी ${dist}m ${time}s में तय करती है। चाल m/s में?`,
+                            opts: opts.map(v => String(Math.round(v * 10) / 10)),
+                            ans: String(Math.round(speed * 10) / 10),
+                            expl: `Speed = ${dist}/${time} = ${Math.round(speed*10)/10} m/s`
+                        };
+                    }
+                },
+                'geometry': {
+                    type: 'geo',
+                    generate: function(i) {
+                        let base = Math.floor(Math.random() * 20) + 5;
+                        let height = Math.floor(Math.random() * 15) + 5;
+                        let area = 0.5 * base * height;
+                        let opts = shuffle([area, area + 3, area - 2, area + 6]);
+                        return {
+                            q: `Triangle area: base=${base}cm, height=${height}cm. / त्रिभुज क्षेत्रफल: आधार=${base}cm, ऊँचाई=${height}cm.`,
+                            opts: opts.map(v => String(Math.round(v))),
+                            ans: String(Math.round(area)),
+                            expl: `Area = ½×${base}×${height} = ${Math.round(area)} cm²`
+                        };
+                    }
+                },
+                'algebra': {
+                    type: 'alg',
+                    generate: function(i) {
+                        let a = Math.floor(Math.random() * 10) + 2;
+                        let b = Math.floor(Math.random() * 10) + 2;
+                        let res = a * a + b * b;
+                        let opts = shuffle([res, res + 5, res - 3, res + 8]);
+                        return {
+                            q: `a=${a}, b=${b}. Find a²+b². / a=${a}, b=${b}. a²+b² ज्ञात करें।`,
+                            opts: opts.map(v => String(v)),
+                            ans: String(res),
+                            expl: `a²+b² = ${a}²+${b}² = ${a*a}+${b*b} = ${res}`
+                        };
+                    }
+                },
+                'trigonometry': {
+                    type: 'trig',
+                    generate: function(i) {
+                        let angle = [30, 45, 60][Math.floor(Math.random() * 3)];
+                        let val;
+                        if (angle === 30) val = 1 / 2;
+                        else if (angle === 45) val = 1 / Math.sqrt(2);
+                        else val = Math.sqrt(3) / 2;
+                        let opts = shuffle([val, val + 0.1, val - 0.1, val + 0.2]);
+                        return {
+                            q: `sin(${angle}°) = ? / sin(${angle}°) = ?`,
+                            opts: opts.map(v => String(Math.round(v * 100) / 100)),
+                            ans: String(Math.round(val * 100) / 100),
+                            expl: `sin(${angle}°) = ${Math.round(val*100)/100}`
+                        };
+                    }
+                },
+                'di': {
+                    type: 'di',
+                    generate: function(i) {
+                        let a = Math.floor(Math.random() * 50) + 10;
+                        let b = Math.floor(Math.random() * 40) + 10;
+                        let sum = a + b;
+                        let opts = shuffle([sum, sum + 5, sum - 4, sum + 8]);
+                        return {
+                            q: `Sector A=${a}%, B=${b}%. Sum of sectors? / सेक्टर A=${a}%, B=${b}%. सेक्टरों का योग?`,
+                            opts: opts.map(v => String(v)),
+                            ans: String(sum),
+                            expl: `Sum = ${a}+${b} = ${sum}%`
+                        };
+                    }
+                }
+            };
+
+            function factorize(n) {
+                let f = [];
+                for (let i = 2; i <= n; i++) {
+                    while (n % i === 0) { f.push(i);
+                        n /= i; }
+                }
+                return f.join('×');
+            }
+
+            const topic = topics[chapterId];
+            if (!topic) return [];
+            for (let i = 0; i < count; i++) {
+                let q = topic.generate(i);
+                if (q) qs.push(q);
+            }
+            return qs;
+        }
+
+        // ================================================================
+        // RENDER MCQs INTO EACH CHAPTER'S CONTAINER
+        // ================================================================
+        function renderAllMCQs() {
+            const chapterIds = ['number-system', 'simplification', 'hcf-lcm', 'percentage', 'ratio', 'average', 'profit-loss',
+                'si-ci', 'time-work', 'time-speed', 'geometry', 'algebra', 'trigonometry', 'di'
+            ];
+            chapterIds.forEach(id => {
+                const container = document.getElementById('mcq-container-' + id);
+                if (!container) return;
+                const qs = generateMCQs(id, 25);
+                const countSpan = document.createElement('div');
+                countSpan.className = 'question-count';
+                countSpan.textContent = `Total ${qs.length} questions. / कुल ${qs.length} प्रश्न।`;
+                container.appendChild(countSpan);
+
+                qs.forEach((q, idx) => {
+                    const qBlock = document.createElement('div');
+                    qBlock.className = 'question';
+                    const head = document.createElement('div');
+                    head.className = 'q-head';
+                    const numSpan = document.createElement('span');
+                    numSpan.className = 'q-number';
+                    numSpan.textContent = `Q${idx+1}. `;
+                    const levelSpan = document.createElement('span');
+                    levelSpan.className = 'level standard';
+                    levelSpan.textContent = 'PRACTICE / अभ्यास';
+                    head.appendChild(numSpan);
+                    head.appendChild(levelSpan);
+                    qBlock.appendChild(head);
+
+                    const qText = document.createElement('p');
+                    qText.textContent = q.q;
+                    qBlock.appendChild(qText);
+
+                    const optsDiv = document.createElement('div');
+                    optsDiv.className = 'options';
+                    q.opts.forEach(opt => {
+                        const optDiv = document.createElement('div');
+                        optDiv.className = 'option';
+                        optDiv.textContent = opt;
+                        optDiv.onclick = function() {
+                            this.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove(
+                            'selected'));
+                            this.classList.add('selected');
+                        };
+                        optsDiv.appendChild(optDiv);
+                    });
+                    qBlock.appendChild(optsDiv);
+
+                    const btn = document.createElement('button');
+                    btn.className = 'btn primary';
+                    btn.textContent = 'Show Solution / हल दिखाएँ';
+                    const ansId = 'ans-' + id + '-' + idx;
+                    btn.onclick = function() {
+                        const ansDiv = document.getElementById(ansId);
+                        if (ansDiv) ansDiv.classList.toggle('show');
+                    };
+                    qBlock.appendChild(btn);
+
+                    const ansDiv = document.createElement('div');
+                    ansDiv.className = 'answer';
+                    ansDiv.id = ansId;
+                    ansDiv.innerHTML = `<strong>Answer / उत्तर:</strong> ${q.ans}<br><div class="explanation">${q.expl}</div>`;
+                    qBlock.appendChild(ansDiv);
+
+                    container.appendChild(qBlock);
+                });
+            });
+        }
+
+        renderAllMCQs();
+
+        // ===== SIDEBAR ACTIVE STATE =====
+        document.querySelectorAll('.side-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.side-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        console.log('🚆 Railway Maths Master E-Book loaded!');
+        console.log('📚 14 chapters with integrated MCQs, theme switcher enabled.');
+    </script>
+</body>
+</html>

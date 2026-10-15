@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC MOCK – Idioms & Phrases Practice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+        body { background: #e9edf2; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 30px 15px; }
+        .app-container { max-width: 1100px; width: 100%; background: #ffffff; border-radius: 40px; box-shadow: 0 25px 60px rgba(0,0,0,0.15); overflow: hidden; }
+
+        .header { background: #0b1a33; padding: 16px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #f59e0b; flex-wrap: wrap; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { background: #f59e0b; color: #0b1a33; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1.6rem; font-weight: 800; }
+        .logo-text { color: white; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo-text span { color: #f59e0b; font-weight: 400; }
+        .header-badge { background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 6px 18px; border-radius: 40px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(245,158,11,0.3); }
+
+        .page { display: none; padding: 30px 35px; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        .cover-top { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 25px; margin-bottom: 25px; }
+        .cover-badge { display: inline-block; background: #f59e0b; color: #0b1a33; font-weight: 800; font-size: 0.9rem; padding: 6px 24px; border-radius: 40px; letter-spacing: 1px; margin-bottom: 15px; }
+        .cover-title { font-size: 2.8rem; font-weight: 800; color: #0b1a33; line-height: 1.1; }
+        .cover-title .highlight { color: #f59e0b; background: #fffbeb; padding: 0 12px; border-radius: 12px; }
+        .cover-subtitle { font-size: 1.3rem; color: #334155; font-weight: 600; margin-top: 12px; background: #f1f5f9; display: inline-block; padding: 6px 30px; border-radius: 60px; }
+        .cover-desc { font-size: 1.05rem; color: #475569; margin-top: 18px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .overall-progress { background: #f8fafc; border-radius: 16px; padding: 14px 22px; margin-bottom: 22px; border: 1px solid #e9eef3; display: flex; flex-wrap: wrap; gap: 18px 30px; align-items: center; }
+        .overall-progress .bar-wrap { flex: 1; min-width: 120px; height: 8px; background: #e9eef3; border-radius: 20px; overflow: hidden; }
+        .overall-progress .bar-wrap .bar { height: 100%; width: 0%; background: linear-gradient(90deg, #f59e0b, #fcd34d); border-radius: 20px; transition: width 0.5s; }
+
+        .sets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin: 25px 0; }
+        .set-card { background: #f8fafc; border-radius: 20px; padding: 18px 14px; text-align: center; border: 2px solid #e9eef3; cursor: pointer; transition: 0.25s ease; position: relative; }
+        .set-card:hover { border-color: #f59e0b; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(245,158,11,0.12); }
+        .set-card .set-num { font-size: 1.8rem; font-weight: 800; color: #0b1a33; }
+        .set-card .set-label { font-size: 0.75rem; color: #64748b; font-weight: 600; margin-top: 2px; }
+        .set-card .set-progress { font-size: 0.7rem; color: #f59e0b; font-weight: 600; margin-top: 6px; background: #fffbeb; padding: 2px 12px; border-radius: 20px; display: inline-block; }
+        .set-card .set-status { position: absolute; top: 8px; right: 10px; font-size: 0.6rem; padding: 2px 10px; border-radius: 20px; font-weight: 600; }
+        .set-card .set-status.completed { background: #eafaf1; color: #27ae60; }
+        .set-card .set-status.inprogress { background: #fef9e7; color: #f39c12; }
+        .set-card .set-status.notstarted { background: #f1f5f9; color: #94a3b8; }
+
+        .text-center { text-align: center; margin-top: 10px; }
+
+        .practice-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-bottom: 3px solid #f59e0b; padding-bottom: 15px; margin-bottom: 20px; gap: 12px; }
+        .practice-header .left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .practice-header .left h2 { font-size: 1.5rem; font-weight: 800; color: #0b1a33; }
+        .practice-header .left h2 i { color: #f59e0b; margin-right: 8px; }
+        .practice-header .set-tag { background: #0b1a33; color: white; padding: 5px 18px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; }
+
+        .score-bar { display: flex; flex-wrap: wrap; gap: 18px 30px; background: #f8fafc; border-radius: 16px; padding: 12px 22px; margin-bottom: 22px; border: 1px solid #e9eef3; }
+        .score-item { display: flex; align-items: center; gap: 8px; font-weight: 500; color: #334155; font-size: 0.9rem; }
+        .score-item i { font-size: 1rem; }
+        .score-item .num { font-weight: 700; font-size: 1.1rem; color: #0b1a33; }
+        .score-item.correct i { color: #27ae60; }
+        .score-item.wrong i { color: #e74c3c; }
+        .score-item.attempted i { color: #2980b9; }
+        .score-item.percent i { color: #f59e0b; }
+        .score-item.percent .num { color: #f59e0b; }
+
+        .question-card { background: #ffffff; border-radius: 20px; padding: 22px 26px; margin-bottom: 20px; border: 1px solid #e9eef3; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: 0.2s; border-left: 6px solid #f59e0b; }
+        .question-card:hover { border-color: #fcd34d; box-shadow: 0 6px 20px rgba(0,0,0,0.04); }
+        .q-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+        .q-number { font-weight: 800; font-size: 0.95rem; color: #f59e0b; background: #fffbeb; padding: 2px 14px; border-radius: 40px; flex-shrink: 0; }
+        .q-text { font-size: 1.05rem; font-weight: 500; color: #0b1a33; line-height: 1.6; }
+        .q-text .idiom-highlight { color: #f59e0b; font-weight: 700; border-bottom: 2px solid #f59e0b; padding-bottom: 2px; }
+        .q-text .q-type { font-size: 0.8rem; background: #e2e8f0; color: #475569; padding: 2px 14px; border-radius: 40px; font-weight: 700; margin-left: 8px; }
+
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 14px; }
+        .options label { display: flex; align-items: center; gap: 10px; font-weight: 500; color: #1e293b; cursor: pointer; font-size: 0.95rem; padding: 10px 16px; border-radius: 12px; transition: 0.2s; background: #f8fafc; border: 1px solid #e9eef3; }
+        .options label:hover { background: #fffbeb; border-color: #fcd34d; }
+        .options input[type="radio"] { width: 17px; height: 17px; accent-color: #f59e0b; cursor: pointer; flex-shrink: 0; }
+        .options label.correct-ans { background: #eafaf1; border-color: #27ae60; color: #1e8449; }
+        .options label.wrong-ans { background: #fdedec; border-color: #e74c3c; color: #922b21; }
+        .options input[type="radio"]:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        .btn-answer { background: #0b1a33; color: white; border: none; padding: 8px 28px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-answer:hover:not(:disabled) { background: #f59e0b; color: #0b1a33; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(245,158,11,0.3); }
+        .btn-answer:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+        .answer-box { margin-top: 14px; padding: 14px 20px; border-radius: 14px; background: #fffbeb; border-left: 6px solid #f59e0b; display: none; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { 0% { opacity: 0; transform: translateY(-8px); } 100% { opacity: 1; transform: translateY(0); } }
+        .answer-box .correct-word { font-weight: 700; font-size: 1.05rem; color: #27ae60; }
+        .answer-box .explanation { margin-top: 6px; color: #2c3e50; font-size: 0.92rem; line-height: 1.6; }
+        .answer-box .explanation strong { color: #0b1a33; }
+        .answer-box .original-sentence { margin-top: 6px; font-size: 0.85rem; color: #64748b; border-top: 1px solid #fcd34d; padding-top: 8px; }
+
+        .nav-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 18px; border-top: 1px solid #e9eef3; flex-wrap: wrap; gap: 12px; }
+        .btn-nav { background: transparent; color: #0b1a33; border: 2px solid #cbd5e1; padding: 8px 22px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-nav:hover { border-color: #f59e0b; background: #fffbeb; }
+        .btn-nav.primary { background: #0b1a33; color: white; border-color: #0b1a33; }
+        .btn-nav.primary:hover { background: #f59e0b; color: #0b1a33; border-color: #f59e0b; }
+        .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+        .page-indicator { font-weight: 600; color: #64748b; background: #f1f5f9; padding: 4px 18px; border-radius: 40px; font-size: 0.85rem; }
+
+        @media (max-width: 700px) {
+            .page { padding: 20px 16px; }
+            .cover-title { font-size: 2rem; }
+            .sets-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+            .set-card { padding: 14px 10px; }
+            .set-card .set-num { font-size: 1.4rem; }
+            .practice-header .left h2 { font-size: 1.2rem; }
+            .question-card { padding: 16px 16px; }
+            .q-text { font-size: 0.95rem; }
+            .options { grid-template-columns: 1fr; gap: 8px; }
+            .options label { font-size: 0.9rem; padding: 8px 12px; }
+            .score-bar { gap: 10px 16px; padding: 10px 14px; }
+            .score-item { font-size: 0.8rem; }
+            .score-item .num { font-size: 0.95rem; }
+            .nav-footer { flex-direction: column; align-items: stretch; }
+            .btn-nav { justify-content: center; }
+            .header { padding: 12px 16px; }
+            .logo-text { font-size: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .sets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .set-card .set-num { font-size: 1.2rem; }
+            .cover-title { font-size: 1.6rem; }
+            .options { grid-template-columns: 1fr; }
+            .btn-answer { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+
+    <div class="header">
+        <a href="#" class="logo" onclick="goToDashboard(); return false;">
+            <div class="logo-icon"><i class="fas fa-exchange-alt"></i></div>
+            <div class="logo-text">SSC <span>MOCK</span></div>
+        </a>
+        <div class="header-badge"><i class="fas fa-pencil-alt"></i> Idioms & Phrases</div>
+    </div>
+
+    <div class="page active" id="page-dashboard">
+        <div class="cover-top">
+            <div class="cover-badge"><i class="fas fa-star"></i> SSC CGL / CHSL / CPO / MTS</div>
+            <h1 class="cover-title"><span class="highlight">500+</span> Idioms<br>& Phrases Practice</h1>
+            <div class="cover-subtitle">Master Idioms</div>
+            <p class="cover-desc">Based on SSC Previous Year Questions – 20 Sets × 25 MCQs = 500+ Questions</p>
+        </div>
+
+        <div class="overall-progress">
+            <div><strong>Overall Progress:</strong> <span id="overallProgressText">0 / 500</span></div>
+            <div class="bar-wrap"><div class="bar" id="overallProgressBar"></div></div>
+            <div><strong>Score:</strong> <span id="overallScoreText">0%</span></div>
+        </div>
+
+        <div class="sets-grid" id="setsGrid"></div>
+
+        <div class="text-center">
+            <button class="btn-nav primary" onclick="resetAllProgress()"><i class="fas fa-redo-alt"></i> Reset All Progress</button>
+        </div>
+    </div>
+
+    <div class="page" id="page-practice">
+        <div class="practice-header">
+            <div class="left">
+                <button class="btn-nav" onclick="goToDashboard()" style="padding:6px 14px;font-size:0.8rem;"><i class="fas fa-arrow-left"></i> Sets</button>
+                <h2><i class="fas fa-pen-fancy"></i> <span id="setTitle">Set 1</span></h2>
+            </div>
+            <span class="set-tag" id="setTag"><i class="fas fa-layer-group"></i> Set 1 / 20</span>
+        </div>
+
+        <div class="score-bar">
+            <div class="score-item correct"><i class="fas fa-check-circle"></i> Correct: <span class="num" id="correctCount">0</span></div>
+            <div class="score-item wrong"><i class="fas fa-times-circle"></i> Wrong: <span class="num" id="wrongCount">0</span></div>
+            <div class="score-item attempted"><i class="fas fa-flag"></i> Attempted: <span class="num" id="attemptedCount">0</span></div>
+            <div class="score-item percent"><i class="fas fa-star"></i> Score: <span class="num" id="scorePercent">0</span>%</div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="nav-footer">
+            <button class="btn-nav" id="prevSetBtn" onclick="changeSet(-1)"><i class="fas fa-chevron-left"></i> Previous</button>
+            <span class="page-indicator" id="setIndicator">Set 1 of 20</span>
+            <button class="btn-nav primary" id="nextSetBtn" onclick="changeSet(1)">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ================================================================
+// 📦 IDIOMS & PHRASES DATA – 455+ IDIOMS
+// ================================================================
+const idiomsData = [
+    { id: 1, idiom: "A blessing in disguise", meaning: "दुख में भी खुशी छिपी होना", example_en: "Losing that job was a blessing in disguise; I got a better one later.", example_hi: "उस नौकरी का खो जाना एक छिपा हुआ आशीर्वाद था; बाद में मुझे बेहतर मिली।" },
+    { id: 2, idiom: "A piece of cake", meaning: "बहुत आसान काम", example_en: "The exam was a piece of cake for him.", example_hi: "उसके लिए परीक्षा बहुत आसान थी।" },
+    { id: 3, idiom: "A bird in the hand is worth two in the bush", meaning: "हाथ का एक मुर्गा झाड़ी के दो से अच्छा", example_en: "I'll take the guaranteed job rather than risk it for a better one. A bird in the hand is worth two in the bush.", example_hi: "मैं बेहतर के लिए जोखिम लेने के बजाय गारंटी वाली नौकरी लूँगा। हाथ का एक मुर्गा झाड़ी के दो से अच्छा है।" },
+    { id: 4, idiom: "A penny for your thoughts", meaning: "क्या सोच रहे हो?", example_en: "You seem lost in thought – a penny for your thoughts?", example_hi: "तुम गुमसुम हो – क्या सोच रहे हो?" },
+    { id: 5, idiom: "Beat around the bush", meaning: "मुख्य विषय से बचना", example_en: "Stop beating around the bush and tell me what happened.", example_hi: "घुमा-फिरा कर बात मत करो, बताओ क्या हुआ।" },
+    { id: 6, idiom: "Bite the bullet", meaning: "कठिन परिस्थिति का सामना करना", example_en: "I had to bite the bullet and apologize.", example_hi: "मुझे कठिनाई उठाकर माफ़ी माँगनी पड़ी।" },
+    { id: 7, idiom: "Break the ice", meaning: "बातचीत शुरू करना", example_en: "He told a joke to break the ice.", example_hi: "उसने बातचीत शुरू करने के लिए एक मज़ाक किया।" },
+    { id: 8, idiom: "Cost an arm and a leg", meaning: "बहुत महंगा", example_en: "The car repairs cost an arm and a leg.", example_hi: "कार की मरम्मत ने बहुत पैसे उड़ा दिए।" },
+    { id: 9, idiom: "Cry over spilt milk", meaning: "पस्ताने से कोई फायदा नहीं", example_en: "There's no use crying over spilt milk; let's fix the problem.", example_hi: "गिरा दूध पर पछताने से कोई फायदा नहीं; समस्या ठीक करते हैं।" },
+    { id: 10, idiom: "Cut corners", meaning: "काम में लापरवाही करना", example_en: "He cut corners to save time, but the quality suffered.", example_hi: "उसने समय बचाने के लिए लापरवाही की, लेकिन गुणवत्ता ख़राब हुई।" },
+    { id: 11, idiom: "Cut someone some slack", meaning: "किसी को ढील देना", example_en: "He's new – cut him some slack.", example_hi: "वह नया है – उसे थोड़ा समय दो।" },
+    { id: 12, idiom: "Don't judge a book by its cover", meaning: "बाहरी दिखावे पर मत जाओ", example_en: "He looks strict, but he's kind. Don't judge a book by its cover.", example_hi: "वह सख्त दिखता है, लेकिन दयालु है। बाहरी दिखावे पर मत जाओ।" },
+    { id: 13, idiom: "Every cloud has a silver lining", meaning: "हर कठिनाई में कुछ अच्छा होता है", example_en: "I lost my phone but found an old friend – every cloud has a silver lining.", example_hi: "मेरा फोन खो गया लेकिन एक पुराना दोस्त मिला – हर बुराई में कुछ भलाई होती है।" },
+    { id: 14, idiom: "Get cold feet", meaning: "हिम्मत हारना", example_en: "I got cold feet before the interview.", example_hi: "इंटरव्यू से पहले मेरी हिम्मत टूट गई।" },
+    { id: 15, idiom: "Get out of hand", meaning: "नियंत्रण से बाहर होना", example_en: "The party got out of hand.", example_hi: "पार्टी नियंत्रण से बाहर हो गई।" },
+    { id: 16, idiom: "Give the benefit of the doubt", meaning: "संदेह होने पर भी विश्वास करना", example_en: "I gave him the benefit of the doubt and didn't ask for proof.", example_hi: "मैंने उस पर भरोसा किया और सबूत नहीं माँगा।" },
+    { id: 17, idiom: "Go the extra mile", meaning: "अतिरिक्त मेहनत करना", example_en: "She always goes the extra mile for her clients.", example_hi: "वह अपने ग्राहकों के लिए हमेशा अतिरिक्त मेहनत करती है।" },
+    { id: 18, idiom: "Hang in there", meaning: "धैर्य रखो, हार मत मानो", example_en: "Hang in there; things will get better.", example_hi: "धैर्य रखो, सब ठीक हो जाएगा।" },
+    { id: 19, idiom: "Hit the nail on the head", meaning: "एकदम सही बात कहना", example_en: "You hit the nail on the head with that comment.", example_hi: "तुमने बिल्कुल सही कहा।" },
+    { id: 20, idiom: "Kill two birds with one stone", meaning: "एक काम से दो फायदे", example_en: "I went to the market and met my friend – killed two birds with one stone.", example_hi: "मैं बाजार गया और दोस्त से मिला – एक पत्थर से दो निशाने।" },
+    { id: 21, idiom: "Let the cat out of the bag", meaning: "राज़ खोल देना", example_en: "She let the cat out of the bag about the surprise party.", example_hi: "उसने सरप्राइज़ पार्टी का राज़ खोल दिया।" },
+    { id: 22, idiom: "Make a long story short", meaning: "संक्षेप में कहना", example_en: "To make a long story short, we missed the train.", example_hi: "संक्षेप में, हम ट्रेन से चूक गए।" },
+    { id: 23, idiom: "Miss the boat", meaning: "अवसर गँवाना", example_en: "I missed the boat on that investment opportunity.", example_hi: "मैंने उस निवेश के अवसर को गँवा दिया।" },
+    { id: 24, idiom: "Once in a blue moon", meaning: "बहुत कभी-कभी", example_en: "He visits us once in a blue moon.", example_hi: "वह बहुत कभी-कभी हमसे मिलने आता है।" },
+    { id: 25, idiom: "Pull someone's leg", meaning: "किसी को मज़ाक में चिढ़ाना", example_en: "I'm just pulling your leg; don't take it seriously.", example_hi: "मैं तो मज़ाक कर रहा हूँ, गंभीर मत लो।" },
+    { id: 26, idiom: "Put yourself in someone's shoes", meaning: "किसी की स्थिति में खुद को रखकर सोचना", example_en: "Put yourself in her shoes before judging.", example_hi: "न्याय करने से पहले खुद को उसकी जगह रखो।" },
+    { id: 27, idiom: "Raining cats and dogs", meaning: "मूसलाधार बारिश", example_en: "It's raining cats and dogs outside.", example_hi: "बाहर मूसलाधार बारिश हो रही है।" },
+    { id: 28, idiom: "Rock the boat", meaning: "अशांति फैलाना", example_en: "He didn't want to rock the boat, so he stayed quiet.", example_hi: "वह अशांति नहीं फैलाना चाहता था, इसलिए चुप रहा।" },
+    { id: 29, idiom: "Sit on the fence", meaning: "तटस्थ रहना", example_en: "Don't sit on the fence; take a stand.", example_hi: "तटस्थ मत रहो; कोई स्थिति लो।" },
+    { id: 30, idiom: "Steal someone's thunder", meaning: "किसी के काम की प्रशंसा चुराना", example_en: "She stole my thunder by announcing her idea before mine.", example_hi: "उसने मेरे आइडिया से पहले अपना बताकर मेरा मौका चुरा लिया।" },
+    { id: 31, idiom: "Take it with a grain of salt", meaning: "सत्य को संदेह की दृष्टि से देखना", example_en: "Take his advice with a grain of salt; he tends to exaggerate.", example_hi: "उसकी सलाह को संदेह से देखो; वह बढ़ा-चढ़ाकर बोलता है।" },
+    { id: 32, idiom: "The best of both worlds", meaning: "दोनों दुनियों के फायदे", example_en: "Working part-time gives me the best of both worlds – money and time.", example_hi: "पार्ट-टाइम काम मुझे दोनों दुनियाओं के फायदे देता है – पैसा और समय।" },
+    { id: 33, idiom: "The elephant in the room", meaning: "बड़ी लेकिन अनदेखी की गई समस्या", example_en: "Their financial crisis was the elephant in the room.", example_hi: "उनकी वित्तीय संकट एक बड़ी अनदेखी समस्या थी।" },
+    { id: 34, idiom: "Under the weather", meaning: "बीमार या उदास", example_en: "I'm feeling under the weather today.", example_hi: "आज मुझे अच्छा नहीं लग रहा।" },
+    { id: 35, idiom: "Up to date", meaning: "नवीनतम जानकारी", example_en: "Keep me up to date on the project.", example_hi: "मुझे परियोजना की नवीनतम जानकारी देते रहो।" },
+    { id: 36, idiom: "You can't have your cake and eat it too", meaning: "दो विरोधी चीजों को एक साथ नहीं पाया जा सकता", example_en: "You can't have more salary and less work – you can't have your cake and eat it too.", example_hi: "तुम ज़्यादा तनख्वाह और कम काम एक साथ नहीं पा सकते – दोनों एक साथ नहीं हो सकते।" },
+    { id: 37, idiom: "Add insult to injury", meaning: "बुरी परिस्थिति में और बुरा करना", example_en: "He lost his job and then his car broke down – adding insult to injury.", example_hi: "उसकी नौकरी गई और फिर कार खराब हो गई – जली पर नमक छिड़कना।" },
+    { id: 38, idiom: "Actions speak louder than words", meaning: "करना बताने से बड़ा है", example_en: "He promises a lot, but actions speak louder than words.", example_hi: "वह बहुत वादे करता है, लेकिन करना बताने से बड़ा है।" },
+    { id: 39, idiom: "All ears", meaning: "पूरी तरह सुनने को तैयार", example_en: "Tell me your idea – I'm all ears.", example_hi: "मुझे अपना आइडिया बताओ – मैं पूरी तरह सुनने को तैयार हूँ।" },
+    { id: 40, idiom: "All thumbs", meaning: "अनाड़ी", example_en: "I'm all thumbs when it comes to fixing things.", example_hi: "चीज़ें ठीक करने में मैं बहुत अनाड़ी हूँ।" },
+    { id: 41, idiom: "Around the clock", meaning: "24x7, लगातार", example_en: "They worked around the clock to meet the deadline.", example_hi: "उन्होंने डेडलाइन पूरी करने के लिए चौबीसों घंटे काम किया।" },
+    { id: 42, idiom: "At the drop of a hat", meaning: "तुरंत, बिना देरी", example_en: "He would help you at the drop of a hat.", example_hi: "वह तुरंत तुम्हारी मदद करेगा।" },
+    { id: 43, idiom: "Back to the drawing board", meaning: "पुनः योजना बनाना", example_en: "The plan failed; it's back to the drawing board.", example_hi: "योजना विफल रही; अब नई योजना बनानी होगी।" },
+    { id: 44, idiom: "Barking up the wrong tree", meaning: "गलत व्यक्ति/स्थान की तलाश करना", example_en: "If you think I took your pen, you're barking up the wrong tree.", example_hi: "अगर तुम्हें लगता है कि मैंने तुम्हारा पेन लिया, तो तुम गलत जगह खोज रहे हो।" },
+    { id: 45, idiom: "Beating a dead horse", meaning: "बेकार की कोशिश", example_en: "Stop beating a dead horse; we already decided.", example_hi: "बेकार की बहस मत करो; हम पहले ही निर्णय ले चुके हैं।" },
+    { id: 46, idiom: "Bite off more than you can chew", meaning: "ज़्यादा ज़िम्मेदारी लेना", example_en: "I bit off more than I could chew by taking on two projects.", example_hi: "मैंने दो प्रोजेक्ट लेकर ज़्यादा ज़िम्मेदारी ले ली।" },
+    { id: 47, idiom: "Burning the midnight oil", meaning: "देर रात तक मेहनत करना", example_en: "She burnt the midnight oil to prepare for the exam.", example_hi: "उसने परीक्षा की तैयारी के लिए रात भर मेहनत की।" },
+    { id: 48, idiom: "By the skin of your teeth", meaning: "बड़ी मुश्किल से", example_en: "He passed the exam by the skin of his teeth.", example_hi: "वह बड़ी मुश्किल से परीक्षा में पास हुआ।" },
+    { id: 49, idiom: "Call it a day", meaning: "आज का काम खत्म करना", example_en: "We've done enough – let's call it a day.", example_hi: "हमने बहुत काम कर लिया – चलो आज का काम खत्म करते हैं।" },
+    { id: 50, idiom: "Caught between a rock and a hard place", meaning: "दो मुश्किल विकल्पों के बीच फँसना", example_en: "I'm caught between a rock and a hard place – either lose the deal or work on a holiday.", example_hi: "मैं दो मुश्किल विकल्पों के बीच फँसा हूँ – या तो डील खो दूँ या छुट्टी पर काम करूँ।" },
+    { id: 51, idiom: "Curiosity killed the cat", meaning: "अत्यधिक जिज्ञासा खतरनाक हो सकती है", example_en: "Don't ask too many questions – curiosity killed the cat.", example_hi: "बहुत सवाल मत पूछो – जिज्ञासा खतरनाक हो सकती है।" },
+    { id: 52, idiom: "Cut to the chase", meaning: "सीधे बात पर आना", example_en: "Let's cut to the chase – what's the real problem?", example_hi: "चलो सीधे बात पर आते हैं – असली समस्या क्या है?" },
+    { id: 53, idiom: "Don't count your chickens before they hatch", meaning: "जो आया न हो उसकी गिनती मत करो", example_en: "I haven't got the job yet – don't count your chickens before they hatch.", example_hi: "मुझे नौकरी मिली नहीं है – जो आया न हो उसकी गिनती मत करो।" },
+    { id: 54, idiom: "Easier said than done", meaning: "कहना आसान है, करना मुश्किल", example_en: "Quitting smoking is easier said than done.", example_hi: "धूम्रपान छोड़ना कहना आसान है, करना मुश्किल।" },
+    { id: 55, idiom: "Elbow grease", meaning: "कठोर मेहनत", example_en: "This car needs a lot of elbow grease to clean.", example_hi: "इस कार को साफ करने में बहुत मेहनत लगती है。" },
+    { id: 56, idiom: "Feel like a fish out of water", meaning: "अपने नए वातावरण में असहज", example_en: "On my first day, I felt like a fish out of water.", example_hi: "पहले दिन मैं अपने नए वातावरण में असहज महसूस कर रहा था।" },
+    { id: 57, idiom: "Get your act together", meaning: "संगठित हो जाओ", example_en: "You need to get your act together to succeed.", example_hi: "सफल होने के लिए तुम्हें संगठित होना होगा।" },
+    { id: 58, idiom: "Give someone a piece of your mind", meaning: "गुस्से से सुनाना", example_en: "I gave him a piece of my mind for his rude behavior.", example_hi: "मैंने उसे उसके रूखे व्यवहार के लिए खूब सुनाया।" },
+    { id: 59, idiom: "Go with the flow", meaning: "प्रवाह के साथ चलना", example_en: "Don't resist change – just go with the flow.", example_hi: "बदलाव का विरोध मत करो – बस प्रवाह के साथ चलो।" },
+    { id: 60, idiom: "Hit the sack", meaning: "सोने जाना", example_en: "I'm tired; I'll hit the sack early tonight.", example_hi: "मैं थक गया हूँ; आज जल्दी सो जाऊँगा।" },
+    { id: 61, idiom: "In a nutshell", meaning: "संक्षेप में", example_en: "In a nutshell, the project was a success.", example_hi: "संक्षेप में, परियोजना सफल रही।" },
+    { id: 62, idiom: "It takes two to tango", meaning: "गलती के लिए दोनों पक्ष जिम्मेदार", example_en: "They both argued – it takes two to tango.", example_hi: "दोनों ने बहस की – दोष दोनों का है।" },
+    { id: 63, idiom: "Jump on the bandwagon", meaning: "लोकप्रिय प्रवृत्ति में शामिल होना", example_en: "Many companies jumped on the AI bandwagon.", example_hi: "कई कंपनियाँ AI की लोकप्रिय प्रवृत्ति में शामिल हो गईं।" },
+    { id: 64, idiom: "Keep your chin up", meaning: "हिम्मत मत हारो", example_en: "Keep your chin up; better days are coming.", example_hi: "हिम्मत मत हारो; अच्छे दिन आएँगे।" },
+    { id: 65, idiom: "Know the ropes", meaning: "किसी चीज़ के बारे में पूरी जानकारी होना", example_en: "He knows the ropes of the software industry.", example_hi: "वह सॉफ़्टवेयर इंडस्ट्री की पूरी जानकारी रखता है।" },
+    { id: 66, idiom: "Let sleeping dogs lie", meaning: "पुराने विवादों को न उठाएँ", example_en: "Don't bring up that old issue – let sleeping dogs lie.", example_hi: "उस पुराने मुद्दे को न उठाएँ – पुरानी बातों को न छेड़ें।" },
+    { id: 67, idiom: "Living hand to mouth", meaning: "गुजर-बसर करना", example_en: "He's been living hand to mouth since losing his job.", example_hi: "नौकरी छूटने के बाद वह मुश्किल से गुजर-बसर कर रहा है।" },
+    { id: 68, idiom: "Look before you leap", meaning: "सोच-समझ कर कदम उठाओ", example_en: "Look before you leap – research the investment thoroughly.", example_hi: "सोच-समझ कर कदम उठाओ – निवेश पर पूरी रिसर्च करो।" },
+    { id: 69, idiom: "Make hay while the sun shines", meaning: "अवसर का फायदा उठाओ", example_en: "We should make hay while the sun shines and sell now.", example_hi: "हमें अवसर का फायदा उठाना चाहिए और अभी बेचना चाहिए।" },
+    { id: 70, idiom: "Money doesn't grow on trees", meaning: "पैसा आसानी से नहीं मिलता", example_en: "Don't waste money – it doesn't grow on trees.", example_hi: "पैसा बर्बाद मत करो – यह पेड़ों पर नहीं उगता।" },
+    { id: 71, idiom: "No pain, no gain", meaning: "मेहनत के बिना फल नहीं", example_en: "You have to work hard – no pain, no gain.", example_hi: "तुम्हें मेहनत करनी होगी – बिना मेहनत के फल नहीं।" },
+    { id: 72, idiom: "On the same page", meaning: "सहमत होना", example_en: "Are we all on the same page regarding the plan?", example_hi: "क्या हम सभी योजना पर सहमत हैं?" },
+    { id: 73, idiom: "Out of the blue", meaning: "अचानक", example_en: "He appeared out of the blue and surprised us.", example_hi: "वह अचानक आया और हमें चौंका दिया।" },
+    { id: 74, idiom: "Play by ear", meaning: "परिस्थिति के अनुसार निर्णय लेना", example_en: "We don't have a fixed plan; we'll play it by ear.", example_hi: "हमारे पास कोई निश्चित योजना नहीं है; हम परिस्थिति के अनुसार चलेंगे।" },
+    { id: 75, idiom: "Pull the plug", meaning: "खत्म करना / रोक देना", example_en: "They pulled the plug on the project due to budget cuts.", example_hi: "बजट कटौती के कारण उन्होंने परियोजना को रोक दिया।" },
+    { id: 76, idiom: "Rule of thumb", meaning: "सामान्य सिद्धांत", example_en: "A good rule of thumb is to save 20% of your income.", example_hi: "अच्छा अनुभव-आधारित नियम है – अपनी आय का 20% बचाएँ।" },
+    { id: 77, idiom: "See eye to eye", meaning: "सहमत होना", example_en: "We don't see eye to eye on many issues.", example_hi: "हम कई मुद्दों पर सहमत नहीं हैं।" },
+    { id: 78, idiom: "Speak of the devil", meaning: "जिसकी बात हो, वह आ जाए", example_en: "Speak of the devil – here comes Ravi.", example_hi: "रवि की बात कर रहे थे और वह आ गया।" },
+    { id: 79, idiom: "Take with a pinch of salt", meaning: "संदेह के साथ स्वीकार करना", example_en: "You should take his stories with a pinch of salt.", example_hi: "तुम्हें उसकी कहानियों को संदेह से लेना चाहिए।" },
+    { id: 80, idiom: "The whole nine yards", meaning: "पूरी चीज़", example_en: "He gave me the whole nine yards about his trip.", example_hi: "उसने अपनी यात्रा के बारे में मुझे पूरी कहानी बताई।" },
+    { id: 81, idiom: "Tie the knot", meaning: "शादी करना", example_en: "They are going to tie the knot in December.", example_hi: "वे दिसम्बर में शादी करेंगे।" },
+    { id: 82, idiom: "Time flies", meaning: "समय बहुत तेज़ी से बीतता है", example_en: "Time flies when you're having fun.", example_hi: "मज़े में समय बहुत तेज़ी से बीतता है।" },
+    { id: 83, idiom: "Turn a blind eye", meaning: "अनदेखा करना", example_en: "He turned a blind eye to his son's misbehavior.", example_hi: "उसने अपने बेटे की बुरी आदत को अनदेखा कर दिया。" },
+    { id: 84, idiom: "Up in the air", meaning: "अनिश्चित", example_en: "Our vacation plans are still up in the air.", example_hi: "हमारी छुट्टी की योजनाएँ अभी तय नहीं हैं。" },
+    { id: 85, idiom: "When pigs fly", meaning: "कभी नहीं", example_en: "He'll help us? When pigs fly!", example_hi: "वह हमारी मदद करेगा? कभी नहीं!" },
+    { id: 86, idiom: "Wild goose chase", meaning: "बेकार की खोज", example_en: "His search for the rare book turned out to be a wild goose chase.", example_hi: "दुर्लभ पुस्तक की उसकी खोज बेकार निकली।" },
+    { id: 87, idiom: "You can't judge a book by its cover", meaning: "दिखावे से मत जाओ", example_en: "He looks unfriendly but he's kind – you can't judge a book by its cover.", example_hi: "वह उदास दिखता है लेकिन दयालु है – दिखावे से मत जाओ।" },
+    { id: 88, idiom: "A dime a dozen", meaning: "बहुत आम", example_en: "Such books are a dime a dozen these days.", example_hi: "इन दिनों ऐसी किताबें बहुत आम हैं。" },
+    { id: 89, idiom: "A picture is worth a thousand words", meaning: "तस्वीर हजारों शब्दों से बेहतर बताती है", example_en: "The graphic explained it better – a picture is worth a thousand words.", example_hi: "ग्राफिक ने इसे बेहतर समझाया – तस्वीर हजारों शब्दों से बेहतर बताती है।" },
+    { id: 90, idiom: "All that glitters is not gold", meaning: "हर चमकती चीज़ सोना नहीं होती", example_en: "Don't be fooled by the flashy offer – all that glitters is not gold.", example_hi: "भड़कीले ऑफर से मत बहो – हर चमकती चीज़ सोना नहीं होती।" },
+    { id: 91, idiom: "An apple a day keeps the doctor away", meaning: "स्वस्थ रहो, डॉक्टर से दूर रहो", example_en: "Eat well – an apple a day keeps the doctor away.", example_hi: "अच्छा खाओ – स्वस्थ रहो, डॉक्टर से दूर रहो।" },
+    { id: 92, idiom: "Better late than never", meaning: "देर आए दुरुस्त आए", example_en: "She finally apologized – better late than never.", example_hi: "उसने आखिरकार माफ़ी माँगी – देर आए दुरुस्त आए।" },
+    { id: 93, idiom: "Birds of a feather flock together", meaning: "एक जैसे लोग साथ रहते हैं", example_en: "They both love music – birds of a feather flock together.", example_hi: "दोनों को संगीत पसंद है – एक जैसे लोग साथ रहते हैं。" },
+    { id: 94, idiom: "Don't bite the hand that feeds you", meaning: "जो तुम्हें रोटी देता है, उसका बुरा मत करो", example_en: "He criticized his boss – you shouldn't bite the hand that feeds you.", example_hi: "उसने अपने बॉस की आलोचना की – जो तुम्हें रोटी देता है, उसका बुरा मत करो。" },
+    { id: 95, idiom: "Every dog has its day", meaning: "हर किसी को एक दिन मौका मिलता है", example_en: "Don't lose hope – every dog has its day.", example_hi: "हिम्मत मत हारो – हर किसी को एक दिन मौका मिलता है。" },
+    { id: 96, idiom: "Great minds think alike", meaning: "बड़े लोग एक जैसे सोचते हैं", example_en: "We both had the same idea – great minds think alike.", example_hi: "हम दोनों के एक ही विचार आए – बड़े लोग एक जैसे सोचते हैं。" },
+    { id: 97, idiom: "Ignorance is bliss", meaning: "कुछ न जानना ही सुखद होता है", example_en: "He didn't know the bad news – ignorance is bliss.", example_hi: "उसे बुरी खबर नहीं पता थी – कुछ न जानना ही सुखद है。" },
+    { id: 98, idiom: "It's no use crying over spilt milk", meaning: "पस्ताने से कोई फायदा नहीं", example_en: "We lost the match – it's no use crying over spilt milk.", example_hi: "हम मैच हार गए – पस्ताने से कोई फायदा नहीं।" },
+    { id: 99, idiom: "Keep your fingers crossed", meaning: "शुभकामना देना", example_en: "I have an interview tomorrow – keep your fingers crossed for me.", example_hi: "कल मेरा इंटरव्यू है – मेरे लिए शुभकामना करो。" },
+    { id: 100, idiom: "Practice makes perfect", meaning: "अभ्यास से ही माहिर बनते हैं", example_en: "Keep practicing – practice makes perfect.", example_hi: "अभ्यास करते रहो – अभ्यास से ही माहिर बनते हैं。" },
+    { id: 101, idiom: "To play hard to get", meaning: "उपलब्ध न होने का नाटक करना", example_en: "She is playing hard to get, but she actually likes him.", example_hi: "वह उपलब्ध न होने का नाटक कर रही है, लेकिन वास्तव में वह उसे पसंद करती है。" },
+    { id: 102, idiom: "To take the cake", meaning: "सबसे बुरा / सबसे अच्छा होना", example_en: "His rude behavior takes the cake.", example_hi: "उसका रूखा व्यवहार सबसे बुरा है。" },
+    { id: 103, idiom: "To hit the ground running", meaning: "शुरू से ही पूरी गति से काम करना", example_en: "The new manager hit the ground running and solved many problems.", example_hi: "नए मैनेजर ने शुरू से ही पूरी गति से काम किया और कई समस्याएँ हल कीं。" },
+    { id: 104, idiom: "To be on the same wavelength", meaning: "एक जैसा सोचना", example_en: "We are on the same wavelength regarding this project.", example_hi: "हम इस परियोजना को लेकर एक जैसा सोचते हैं。" },
+    { id: 105, idiom: "To call it quits", meaning: "समाप्त करना / छोड़ देना", example_en: "After years of fighting, they decided to call it quits.", example_hi: "सालों की लड़ाई के बाद, उन्होंने इसे समाप्त करने का फैसला किया。" },
+    { id: 106, idiom: "To cut one's losses", meaning: "घाटा होने पर भी समाप्त करना", example_en: "He decided to cut his losses and sell the stock.", example_hi: "उसने नुकसान कम करने के लिए शेयर बेचने का फैसला किया。" },
+    { id: 107, idiom: "To draw the line", meaning: "सीमा तय करना", example_en: "I help him, but I draw the line at lying.", example_hi: "मैं उसकी मदद करता हूँ, लेकिन झूठ बोलना मेरी हद से बाहर है。" },
+    { id: 108, idiom: "To fly by the seat of one's pants", meaning: "बिना तैयारी के तुरंत निर्णय लेना", example_en: "He had no plan; he just flew by the seat of his pants.", example_hi: "उसके पास कोई योजना नहीं थी; उसने बिना तैयारी के निर्णय लिया。" },
+    { id: 109, idiom: "To get a second wind", meaning: "नई ऊर्जा मिलना", example_en: "After a short break, I got a second wind.", example_hi: "थोड़े ब्रेक के बाद, मुझे नई ऊर्जा मिली。" },
+    { id: 110, idiom: "To go out on a limb", meaning: "जोखिम उठाना", example_en: "He went out on a limb to help his friend.", example_hi: "उसने अपने दोस्त की मदद करने के लिए जोखिम उठाया。" },
+    { id: 111, idiom: "To have a gut feeling", meaning: "अंतर्ज्ञान होना", example_en: "I have a gut feeling that something is wrong.", example_hi: "मुझे अंतर्ज्ञान हो रहा है कि कुछ गड़बड़ है。" },
+    { id: 112, idiom: "To have a lot on one's plate", meaning: "बहुत सारे काम होना", example_en: "I can't take on more work; I already have a lot on my plate.", example_hi: "मैं और काम नहीं ले सकता; मेरे पास पहले से ही बहुत काम है。" },
+    { id: 113, idiom: "To hit the books", meaning: "पढ़ाई करना", example_en: "I have an exam tomorrow, so I need to hit the books.", example_hi: "कल मेरा एग्जाम है, इसलिए मुझे पढ़ाई करनी है。" },
+    { id: 114, idiom: "To keep one's options open", meaning: "विकल्प खुले रखना", example_en: "I haven't decided yet; I'm keeping my options open.", example_hi: "मैंने अभी तय नहीं किया है; मैं अपने विकल्प खुले रख रहा हूँ。" },
+    { id: 115, idiom: "To let one's hair down", meaning: "खुलकर व्यवहार करना", example_en: "After the exams, she let her hair down and partied.", example_hi: "परीक्षा के बाद, उसने खुलकर मस्ती की और पार्टी की。" },
+    { id: 116, idiom: "To make a scene", meaning: "तमाशा करना", example_en: "She made a scene at the restaurant when her order was wrong.", example_hi: "जब उसका ऑर्डर गलत आया तो उसने रेस्तरां में तमाशा कर दिया。" },
+    { id: 117, idiom: "To make waves", meaning: "हलचल मचाना", example_en: "The new policy made waves in the industry.", example_hi: "नई नीति ने उद्योग में हलचल मचा दी。" },
+    { id: 118, idiom: "To pay one's dues", meaning: "अपनी ज़िम्मेदारी निभाना", example_en: "He paid his dues and finally got promoted.", example_hi: "उसने अपनी ज़िम्मेदारी निभाई और आखिरकार उसे प्रमोशन मिला。" },
+    { id: 119, idiom: "To play it safe", meaning: "सुरक्षित रहना", example_en: "He played it safe and invested in fixed deposits.", example_hi: "उसने सुरक्षित रहने के लिए फिक्स्ड डिपॉजिट में निवेश किया。" },
+    { id: 120, idiom: "To pull one's weight", meaning: "अपनी पूरी ज़िम्मेदारी निभाना", example_en: "Everyone must pull their weight in this team.", example_hi: "इस टीम में सभी को अपनी पूरी ज़िम्मेदारी निभानी चाहिए。" },
+    { id: 121, idiom: "To push one's luck", meaning: "किस्मत का ज़्यादा दोहन करना", example_en: "You've been lucky so far; don't push your luck.", example_hi: "तुम अब तक भाग्यशाली रहे हो; किस्मत का ज़्यादा दोहन मत करो。" },
+    { id: 122, idiom: "To raise the bar", meaning: "मानक बढ़ाना", example_en: "The new product raised the bar for the industry.", example_hi: "नए उत्पाद ने उद्योग के लिए मानक बढ़ा दिए。" },
+    { id: 123, idiom: "To run a tight ship", meaning: "सख्त नियंत्रण में रखना", example_en: "The new captain runs a tight ship on the ship.", example_hi: "नया कप्तान जहाज पर सख्त नियंत्रण रखता है。" },
+    { id: 124, idiom: "To see the big picture", meaning: "पूरी तस्वीर देखना", example_en: "Don't focus on small details; see the big picture.", example_hi: "छोटे विवरणों पर ध्यान मत दो; पूरी तस्वीर देखो。" },
+    { id: 125, idiom: "To set the stage for", meaning: "आधार तैयार करना", example_en: "The agreement set the stage for a long-term partnership.", example_hi: "समझौते ने दीर्घकालिक साझेदारी के लिए आधार तैयार किया。" },
+    { id: 126, idiom: "To take a stand", meaning: "अपनी राय रखना", example_en: "It's time to take a stand against injustice.", example_hi: "अन्याय के खिलाफ अपनी राय रखने का समय आ गया है。" },
+    { id: 127, idiom: "To take center stage", meaning: "मुख्य भूमिका में होना", example_en: "The new actor took center stage in the play.", example_hi: "नए अभिनेता ने नाटक में मुख्य भूमिका निभाई。" },
+    { id: 128, idiom: "To take root", meaning: "जड़ें जमाना", example_en: "The new tradition has taken root in the community.", example_hi: "नई परंपरा ने समुदाय में जड़ें जमा ली हैं。" },
+    { id: 129, idiom: "To think outside the box", meaning: "पारंपरिक सोच से हटकर सोचना", example_en: "To solve this problem, we need to think outside the box.", example_hi: "इस समस्या को हल करने के लिए, हमें पारंपरिक सोच से हटकर सोचना होगा。" },
+    { id: 130, idiom: "To throw a curveball", meaning: "अचानक मुश्किल पेश करना", example_en: "The interviewer threw a curveball with a tough question.", example_hi: "साक्षात्कारकर्ता ने एक मुश्किल सवाल पूछकर अचानक मुश्किल पेश कर दी。" },
+    { id: 131, idiom: "To turn the tide", meaning: "स्थिति पलट देना", example_en: "The new strategy turned the tide in our favor.", example_hi: "नई रणनीति ने स्थिति हमारे पक्ष में पलट दी。" },
+    { id: 132, idiom: "To under the radar", meaning: "किसी की नज़र में न आना", example_en: "He managed to stay under the radar during the investigation.", example_hi: "जाँच के दौरान वह किसी की नज़र में नहीं आया。" },
+    { id: 133, idiom: "To up the ante", meaning: "दाँव बढ़ाना", example_en: "The competitor upped the ante by offering a discount.", example_hi: "प्रतिद्वंद्वी ने छूट देकर दाँव बढ़ा दिया。" },
+    { id: 134, idiom: "To walk a tightrope", meaning: "नाजुक संतुलन बनाए रखना", example_en: "He walks a tightrope between two opposing groups.", example_hi: "वह दो विरोधी समूहों के बीच नाजुक संतुलन बनाए रखता है。" },
+    { id: 135, idiom: "To wear many hats", meaning: "कई भूमिकाएँ निभाना", example_en: "In a startup, you have to wear many hats.", example_hi: "एक स्टार्टअप में, आपको कई भूमिकाएँ निभानी पड़ती हैं。" },
+    { id: 136, idiom: "To work one's fingers to the bone", meaning: "बहुत कड़ी मेहनत करना", example_en: "She worked her fingers to the bone to finish the project.", example_hi: "उसने परियोजना को खत्म करने के लिए बहुत कड़ी मेहनत की。" },
+    { id: 137, idiom: "To blow a fuse", meaning: "बहुत गुस्सा होना", example_en: "He blew a fuse when he saw the damage.", example_hi: "जब उसने नुकसान देखा तो वह बहुत गुस्सा हो गया。" },
+    { id: 138, idiom: "To break even", meaning: "ना लाभ ना हानि", example_en: "After three years, the company finally broke even.", example_hi: "तीन साल बाद, कंपनी आखिरकार ना लाभ ना हानि में आई。" },
+    { id: 139, idiom: "To call the shots", meaning: "निर्णय लेना", example_en: "The team leader calls the shots on this project.", example_hi: "टीम लीडर इस परियोजना पर निर्णय लेता है。" },
+    { id: 140, idiom: "To come of age", meaning: "वयस्क होना / परिपक्व होना", example_en: "The company has come of age and now operates internationally.", example_hi: "कंपनी परिपक्व हो गई है और अब अंतरराष्ट्रीय स्तर पर काम करती है。" },
+    { id: 141, idiom: "To cross that bridge when you come to it", meaning: "समय आने पर सामना करना", example_en: "Don't worry now; we'll cross that bridge when we come to it.", example_hi: "अभी चिंता मत करो; जब समय आएगा, हम उसका सामना करेंगे。" },
+    { id: 142, idiom: "To cut both ways", meaning: "दोधारी तलवार होना", example_en: "This strategy cuts both ways; it could help us or hurt us.", example_hi: "यह रणनीति दोधारी है; यह हमें मदद कर सकती है या नुकसान पहुँचा सकती है。" },
+    { id: 143, idiom: "To drop like flies", meaning: "बड़ी संख्या में मरना / गिरना", example_en: "During the heatwave, people were dropping like flies.", example_hi: "लू के दौरान, लोग बड़ी संख्या में बीमार पड़ रहे थे。" },
+    { id: 144, idiom: "To fall into place", meaning: "सब कुछ व्यवस्थित होना", example_en: "After a few days, everything fell into place.", example_hi: "कुछ दिनों बाद, सब कुछ व्यवस्थित हो गया。" },
+    { id: 145, idiom: "To get a kick out of", meaning: "बहुत आनंद लेना", example_en: "I get a kick out of watching old movies.", example_hi: "मुझे पुरानी फिल्में देखने में बहुत आनंद आता है。" },
+    { id: 146, idiom: "To get one's act together", meaning: "संगठित होना", example_en: "You need to get your act together if you want to succeed.", example_hi: "अगर तुम सफल होना चाहते हो तो तुम्हें संगठित होना होगा。" },
+    { id: 147, idiom: "To give a run for one's money", meaning: "कड़ी टक्कर देना", example_en: "The underdog gave the champion a run for his money.", example_hi: "अंडरडॉग ने चैंपियन को कड़ी टक्कर दी。" },
+    { id: 148, idiom: "To go along with", meaning: "सहमत होना / साथ चलना", example_en: "I went along with their plan to avoid conflict.", example_hi: "संघर्ष से बचने के लिए मैं उनकी योजना के साथ चल गया。" },
+    { id: 149, idiom: "To go the extra mile", meaning: "अतिरिक्त प्रयास करना", example_en: "She always goes the extra mile for her clients.", example_hi: "वह अपने ग्राहकों के लिए हमेशा अतिरिक्त प्रयास करती है。" },
+    { id: 150, idiom: "To have a finger in every pie", meaning: "हर काम में दखल देना", example_en: "He has a finger in every pie in this organization.", example_hi: "इस संगठन में उसका हर काम में दखल है。" },
+    { id: 151, idiom: "To have a way with", meaning: "निपुणता होना", example_en: "She has a way with children; they all love her.", example_hi: "उसे बच्चों के साथ निपुणता है; वे सभी उससे प्यार करते हैं。" },
+    { id: 152, idiom: "To hit a snag", meaning: "समस्या का सामना करना", example_en: "The project hit a snag due to lack of funds.", example_hi: "धन की कमी के कारण परियोजना में अड़चन आ गई。" },
+    { id: 153, idiom: "To keep a low profile", meaning: "कम प्रोफ़ाइल रखना", example_en: "He kept a low profile after the scandal.", example_hi: "घोटाले के बाद उसने कम प्रोफ़ाइल रखी。" },
+    { id: 154, idiom: "To lose face", meaning: "इज़्ज़त खोना", example_en: "He lost face when his mistake was exposed.", example_hi: "जब उसकी गलती उजागर हुई तो उसने इज़्ज़त खो दी。" },
+    { id: 155, idiom: "To make a difference", meaning: "फर्क डालना", example_en: "Your contribution will make a difference.", example_hi: "तुम्हारा योगदान फर्क डालेगा。" },
+    { id: 156, idiom: "To hit the bull's eye", meaning: "लक्ष्य पर निशाना लगाना", example_en: "His proposal hit the bull's eye.", example_hi: "उसका प्रस्ताव बिल्कुल सटीक बैठा。" },
+    { id: 157, idiom: "To be at loggerheads", meaning: "आपस में झगड़ना", example_en: "The two partners are at loggerheads.", example_hi: "दोनों साझेदार आपस में झगड़ रहे हैं。" },
+    { id: 158, idiom: "To be in the limelight", meaning: "चर्चा में होना", example_en: "The singer is in the limelight these days.", example_hi: "इन दिनों गायक चर्चा में है。" },
+    { id: 159, idiom: "To have a chip on one's shoulder", meaning: "गुस्से में रहना", example_en: "He has a chip on his shoulder about his promotion.", example_hi: "वह अपनी प्रमोशन को लेकर चिड़चिड़ा है。" },
+    { id: 160, idiom: "To have one's heart in the right place", meaning: "नेक दिल होना", example_en: "He may be rude, but his heart is in the right place.", example_hi: "वह रूखा हो सकता है, लेकिन नेक दिल है。" },
+    { id: 161, idiom: "To have the last laugh", meaning: "आखिर में जीतना", example_en: "She was laughed at, but she had the last laugh.", example_hi: "उसका मजाक उड़ाया गया, लेकिन आखिर में वही जीती。" },
+    { id: 162, idiom: "To keep one's nose to the grindstone", meaning: "कड़ी मेहनत करना", example_en: "He keeps his nose to the grindstone to achieve his goals.", example_hi: "वह अपने लक्ष्य को पाने के लिए कड़ी मेहनत करता है。" },
+    { id: 163, idiom: "To kick the bucket", meaning: "मर जाना", example_en: "He kicked the bucket at the age of 90.", example_hi: "वह 90 साल की उम्र में चल बसा。" },
+    { id: 164, idiom: "To make a mountain out of a molehill", meaning: "बात का बतंगड़ बनाना", example_en: "She made a mountain out of a molehill about the delay.", example_hi: "उसने देरी को लेकर बात का बतंगड़ बना दिया。" },
+    { id: 165, idiom: "To ride on the back of someone", meaning: "किसी की सहायता से आगे बढ़ना", example_en: "He rode on the back of his father's fame.", example_hi: "वह अपने पिता की प्रसिद्धि के सहारे आगे बढ़ा。" },
+    { id: 166, idiom: "To see the writing on the wall", meaning: "खतरे की आहट पा लेना", example_en: "He saw the writing on the wall and resigned.", example_hi: "उसने खतरे की आहट पा ली और इस्तीफा दे दिया。" },
+    { id: 167, idiom: "To shed crocodile tears", meaning: "नकली रोना", example_en: "He shed crocodile tears for the victim.", example_hi: "उसने पीड़ित के लिए नकली आँसू बहाए。" },
+    { id: 168, idiom: "To stand one's ground", meaning: "अपनी बात पर अड़े रहना", example_en: "She stood her ground and refused to back down.", example_hi: "वह अपनी बात पर अड़ी रही और पीछे नहीं हटी。" },
+    { id: 169, idiom: "To take a back seat", meaning: "पीछे हट जाना", example_en: "He took a back seat in the project.", example_hi: "उसने परियोजना में पीछे की भूमिका निभाई。" },
+    { id: 170, idiom: "To take the bull by the horns", meaning: "मुश्किल का सामना करना", example_en: "She took the bull by the horns and solved the problem.", example_hi: "उसने मुश्किल का सामना किया और समस्या हल की。" },
+    { id: 171, idiom: "To throw in the towel", meaning: "हार मान लेना", example_en: "After many failures, he threw in the towel.", example_hi: "कई असफलताओं के बाद उसने हार मान ली。" },
+    { id: 172, idiom: "To twist someone's arm", meaning: "दबाव डालकर मनाना", example_en: "I had to twist his arm to get him to join us.", example_hi: "मुझे उसे हमारे साथ शामिल होने के लिए दबाव डालना पड़ा。" },
+    { id: 173, idiom: "To wash one's hands off", meaning: "ज़िम्मेदारी छोड़ना", example_en: "He washed his hands off the responsibility.", example_hi: "उसने ज़िम्मेदारी से हाथ खींच लिया。" },
+    { id: 174, idiom: "To wear one's heart on one's sleeve", meaning: "भावनाओं को खुलकर दिखाना", example_en: "She wears her heart on her sleeve; you can always see her feelings.", example_hi: "वह अपनी भावनाओं को खुलकर दिखाती है; आप उसकी भावनाएँ हमेशा देख सकते हैं。" },
+    { id: 175, idiom: "To keep one's fingers crossed", meaning: "शुभकामनाएँ देना", example_en: "I'll keep my fingers crossed for your exam.", example_hi: "मैं तुम्हारी परीक्षा के लिए शुभकामनाएँ दूँगा。" },
+    { id: 176, idiom: "To cross one's bridges when one comes to them", meaning: "समय आने पर सोचना", example_en: "Don't worry now; we'll cross that bridge when we come to it.", example_hi: "अभी चिंता मत करो; जब समय आएगा तो देखेंगे。" },
+    { id: 177, idiom: "To be in the driver's seat", meaning: "सत्ता में होना", example_en: "The new CEO is now in the driver's seat.", example_hi: "नया CEO अब सत्ता में है。" },
+    { id: 178, idiom: "To be in hot water", meaning: "मुश्किल में होना", example_en: "He is in hot water with his boss.", example_hi: "वह अपने बॉस के साथ मुश्किल में है。" },
+    { id: 179, idiom: "To be in the red", meaning: "घाटे में होना", example_en: "The company has been in the red for three years.", example_hi: "कंपनी तीन साल से घाटे में है。" },
+    { id: 180, idiom: "To be in the black", meaning: "लाभ में होना", example_en: "After many years, we are finally in the black.", example_hi: "कई सालों के बाद, हम आखिरकार लाभ में हैं。" },
+    { id: 181, idiom: "To play devil's advocate", meaning: "विपक्षी पक्ष लेना", example_en: "He played devil's advocate to test the plan's strength.", example_hi: "उसने योजना की मजबूती जाँचने के लिए विपक्षी पक्ष लिया。" },
+    { id: 182, idiom: "To put a spanner in the works", meaning: "योजना में बाधा डालना", example_en: "The strike put a spanner in the works.", example_hi: "हड़ताल ने योजना में बाधा डाली。" },
+    { id: 183, idiom: "To see eye to eye", meaning: "सहमत होना", example_en: "We don't see eye to eye on this issue.", example_hi: "हम इस मुद्दे पर सहमत नहीं हैं。" },
+    { id: 184, idiom: "To steal a march on someone", meaning: "किसी से आगे निकल जाना", example_en: "They stole a march on their competitors by launching early.", example_hi: "उन्होंने जल्दी लॉन्च करके अपने प्रतिस्पर्धियों से आगे निकल गए。" },
+    { id: 185, idiom: "To take with a pinch of salt", meaning: "संदेह से लेना", example_en: "Take his boasts with a pinch of salt.", example_hi: "उसके डींगों को संदेह से लो。" },
+    { id: 186, idiom: "To throw one's hat in the ring", meaning: "मैदान में उतरना", example_en: "He threw his hat in the ring for the election.", example_hi: "वह चुनाव के लिए मैदान में उतरा。" },
+    { id: 187, idiom: "To turn over a new leaf", meaning: "नई जीवनशैली अपनाना", example_en: "He decided to turn over a new leaf and quit smoking.", example_hi: "उसने नई जीवनशैली अपनाने और धूम्रपान छोड़ने का फैसला किया。" },
+    { id: 188, idiom: "To walk on eggshells", meaning: "नाजुक स्थिति में सावधानी से बात करना", example_en: "He is walking on eggshells around his boss.", example_hi: "वह अपने बॉस के आस-पास सावधानी से बात कर रहा है。" },
+    { id: 189, idiom: "To be a wet blanket", meaning: "मज़ा किरकिरा करना", example_en: "Don't be a wet blanket; join the party.", example_hi: "मज़ा किरकिरा मत करो; पार्टी में शामिल हो जाओ。" },
+    { id: 190, idiom: "To be a dark horse", meaning: "छिपी हुई प्रतिभा वाला व्यक्ति", example_en: "She is a dark horse; nobody knew she could sing so well.", example_hi: "वह एक छिपी हुई प्रतिभा है; किसी को नहीं पता था वह इतना अच्छा गा सकती है。" },
+    { id: 191, idiom: "To be a bone of contention", meaning: "विवाद का विषय", example_en: "The property is a bone of contention between the brothers.", example_hi: "संपत्ति भाइयों के बीच विवाद का विषय है。" },
+    { id: 192, idiom: "To be a feather in one's cap", meaning: "गर्व की बात", example_en: "Winning the award is a feather in his cap.", example_hi: "पुरस्कार जीतना उसके लिए गर्व की बात है。" },
+    { id: 193, idiom: "To be a fly in the ointment", meaning: "अड़चन पैदा करना", example_en: "The only fly in the ointment is the lack of funds.", example_hi: "एकमात्र अड़चन धन की कमी है。" },
+    { id: 194, idiom: "To be a blessing in disguise", meaning: "छिपा हुआ आशीर्वाद", example_en: "The delay was a blessing in disguise; we got a better deal.", example_hi: "देरी एक छिपा हुआ आशीर्वाद थी; हमें बेहतर सौदा मिला。" },
+    { id: 195, idiom: "To be a piece of cake", meaning: "बहुत आसान", example_en: "The exam was a piece of cake for him.", example_hi: "उसके लिए परीक्षा बहुत आसान थी。" },
+    { id: 196, idiom: "To be a stitch in time saves nine", meaning: "समय पर की गई मेहनत बड़ी मुश्किल से बचाती है", example_en: "Fixing the leak early saved us from a big flood – a stitch in time saves nine.", example_hi: "जल्दी रिसाव ठीक करने ने हमें बड़ी बाढ़ से बचाया – समय पर एक सिलाई नौ बचाती है。" },
+    { id: 197, idiom: "To be a rolling stone", meaning: "इधर-उधर घूमने वाला", example_en: "He is a rolling stone; he never stays in one job long.", example_hi: "वह एक चंचल व्यक्ति है; वह कभी एक नौकरी पर ज़्यादा नहीं रहता。" },
+    { id: 198, idiom: "To be a chip off the old block", meaning: "अपने माता-पिता के जैसा होना", example_en: "He is a chip off the old block – just like his father.", example_hi: "वह अपने पिता के जैसा है – बिल्कुल उन्हीं की तरह。" },
+    { id: 199, idiom: "To be a dime a dozen", meaning: "बहुत आम", example_en: "Such books are a dime a dozen these days.", example_hi: "इन दिनों ऐसी किताबें बहुत आम हैं。" },
+    { id: 200, idiom: "To be a drop in the ocean", meaning: "बहुत छोटा योगदान", example_en: "Our donation is just a drop in the ocean compared to the need.", example_hi: "ज़रूरत के मुकाबले हमारा दान बहुत छोटा है。" },
+    { id: 201, idiom: "To be a hard nut to crack", meaning: "मुश्किल काम / व्यक्ति", example_en: "This problem is a hard nut to crack.", example_hi: "यह समस्या बहुत मुश्किल है。" },
+    { id: 202, idiom: "To be a heart of gold", meaning: "बहुत अच्छा दिल होना", example_en: "She has a heart of gold; she always helps others.", example_hi: "उसका दिल बहुत अच्छा है; वह हमेशा दूसरों की मदद करती है。" },
+    { id: 203, idiom: "To be a man of words", meaning: "अपनी बात का पक्का", example_en: "He is a man of words; he always keeps his promises.", example_hi: "वह अपनी बात का पक्का है; वह हमेशा अपने वादे निभाता है。" },
+    { id: 204, idiom: "To be at sea", meaning: "असमंजस में होना", example_en: "I'm at sea with this new software.", example_hi: "मैं इस नए सॉफ्टवेयर को लेकर असमंजस में हूँ。" },
+    { id: 205, idiom: "To be in the doldrums", meaning: "उदास / बेहाल होना", example_en: "He's been in the doldrums since his business failed.", example_hi: "अपने व्यवसाय के असफल होने के बाद से वह उदास है。" },
+    { id: 206, idiom: "To be on the ball", meaning: "सतर्क / तेज", example_en: "She is really on the ball at work.", example_hi: "वह काम में वाकई बहुत सतर्क है。" },
+    { id: 207, idiom: "To be on the fence", meaning: "तटस्थ रहना", example_en: "He is sitting on the fence regarding the new policy.", example_hi: "वह नई नीति को लेकर तटस्थ बैठा है。" },
+    { id: 208, idiom: "To be over the moon", meaning: "बहुत खुश होना", example_en: "She was over the moon after her promotion.", example_hi: "प्रमोशन के बाद वह बहुत खुश थी。" },
+    { id: 209, idiom: "To be second to none", meaning: "सबसे श्रेष्ठ", example_en: "His performance is second to none.", example_hi: "उसका प्रदर्शन सबसे श्रेष्ठ है。" },
+    { id: 210, idiom: "To be under someone's thumb", meaning: "किसी के नियंत्रण में होना", example_en: "He is completely under his wife's thumb.", example_hi: "वह पूरी तरह से अपनी पत्नी के नियंत्रण में है。" },
+    { id: 211, idiom: "To bring the house down", meaning: "तालियाँ बटोरना", example_en: "Her performance brought the house down.", example_hi: "उसके प्रदर्शन ने तालियाँ बटोर लीं。" },
+    { id: 212, idiom: "To carry the day", meaning: "जीतना / सफल होना", example_en: "Our team carried the day in the debate.", example_hi: "हमारी टीम बहस में जीत गई。" },
+    { id: 213, idiom: "To come full circle", meaning: "वापस वहीं आ जाना", example_en: "After many years, his career came full circle.", example_hi: "कई सालों बाद, उसका करियर वापस वहीं आ गया。" },
+    { id: 214, idiom: "To cut a sorry figure", meaning: "बुरी स्थिति में दिखना", example_en: "He cut a sorry figure in the meeting.", example_hi: "बैठक में उसने बुरी स्थिति में दिखाई दिया。" },
+    { id: 215, idiom: "To drop a hint", meaning: "संकेत देना", example_en: "She dropped a hint about her birthday.", example_hi: "उसने अपने जन्मदिन के बारे में संकेत दिया。" },
+    { id: 216, idiom: "To eat humble pie", meaning: "गलती मानना / अपमान सहना", example_en: "He had to eat humble pie for his mistake.", example_hi: "उसे अपनी गलती के लिए अपमान सहना पड़ा。" },
+    { id: 217, idiom: "To find one's feet", meaning: "नए माहौल में ढल जाना", example_en: "It took him a while to find his feet in the new city.", example_hi: "उसे नए शहर में ढलने में थोड़ा समय लगा。" },
+    { id: 218, idiom: "To fly off the handle", meaning: "बहुत गुस्सा हो जाना", example_en: "He flew off the handle when he heard the news.", example_hi: "खबर सुनकर वह बहुत गुस्सा हो गया。" },
+    { id: 219, idiom: "To give a cold shoulder", meaning: "अनदेखा करना", example_en: "She gave him the cold shoulder at the party.", example_hi: "उसने पार्टी में उसे अनदेखा किया。" },
+    { id: 220, idiom: "To go down in flames", meaning: "बुरी तरह विफल होना", example_en: "His plan went down in flames.", example_hi: "उसकी योजना बुरी तरह विफल हो गई。" },
+    { id: 221, idiom: "To have a bee in one's bonnet", meaning: "किसी बात को लेकर पागल होना", example_en: "He has a bee in his bonnet about climate change.", example_hi: "वह जलवायु परिवर्तन को लेकर पागल है。" },
+    { id: 222, idiom: "To have a green thumb", meaning: "बागवानी में होशियार होना", example_en: "Her garden is beautiful because she has a green thumb.", example_hi: "उसका बगीचा सुंदर है क्योंकि वह बागवानी में होशियार है。" },
+    { id: 223, idiom: "To have the upper hand", meaning: "बढ़त होना", example_en: "Our team has the upper hand in the match.", example_hi: "हमारी टीम का मैच में बढ़त है。" },
+    { id: 224, idiom: "To hit the jackpot", meaning: "अचानक बड़ी सफलता/धन प्राप्त करना", example_en: "He hit the jackpot with his new business.", example_hi: "अपने नए व्यवसाय से उसे बड़ी सफलता मिली。" },
+    { id: 225, idiom: "To hold one's tongue", meaning: "चुप रहना", example_en: "He held his tongue despite the provocation.", example_hi: "उकसावे के बावजूद वह चुप रहा。" },
+    { id: 226, idiom: "To keep at arm's length", meaning: "दूरी बनाकर रखना", example_en: "He keeps his colleagues at arm's length.", example_hi: "वह अपने सहकर्मियों से दूरी बनाकर रखता है。" },
+    { id: 227, idiom: "To keep in touch", meaning: "संपर्क में रहना", example_en: "We should keep in touch after college.", example_hi: "हमें कॉलेज के बाद संपर्क में रहना चाहिए。" },
+    { id: 228, idiom: "To let one's hair down", meaning: "अपनी खुली भावनाएँ दिखाना", example_en: "At the party, she let her hair down and danced.", example_hi: "पार्टी में, उसने खुलकर डांस किया。" },
+    { id: 229, idiom: "To make a clean sweep", meaning: "पूर्ण जीत / सफाई करना", example_en: "The team made a clean sweep of all the awards.", example_hi: "टीम ने सभी पुरस्कारों पर पूर्ण कब्जा कर लिया。" },
+    { id: 230, idiom: "To make amends", meaning: "क्षतिपूर्ति करना", example_en: "He made amends for his mistake by apologizing.", example_hi: "उसने माफ़ी माँगकर अपनी गलती की क्षतिपूर्ति की。" },
+    { id: 231, idiom: "To make ends meet", meaning: "गुजर-बसर करना", example_en: "He works two jobs to make ends meet.", example_hi: "वह गुजर-बसर करने के लिए दो नौकरियाँ करता है。" },
+    { id: 232, idiom: "To move heaven and earth", meaning: "हर संभव प्रयास करना", example_en: "She moved heaven and earth to get her dream job.", example_hi: "उसने अपनी सपनों की नौकरी पाने के लिए हर संभव प्रयास किया。" },
+    { id: 233, idiom: "To play for time", meaning: "समय खरीदना", example_en: "He is playing for time by asking more questions.", example_hi: "वह और सवाल पूछकर समय खरीद रहा है。" },
+    { id: 234, idiom: "To play it cool", meaning: "शांत रहना", example_en: "Despite the pressure, he played it cool.", example_hi: "दबाव के बावजूद, वह शांत रहा。" },
+    { id: 235, idiom: "To pull someone's leg", meaning: "मज़ाक उड़ाना", example_en: "Don't take it seriously; he's just pulling your leg.", example_hi: "इसे गंभीर मत लो; वह तो बस मज़ाक कर रहा है。" },
+    { id: 236, idiom: "To put one's foot in one's mouth", meaning: "अनजाने में गलत बात कहना", example_en: "I put my foot in my mouth by mentioning her ex-husband.", example_hi: "मैंने उसके पूर्व-पति का ज़िक्र करके अनजाने में गलत बात कह दी。" },
+    { id: 237, idiom: "To put two and two together", meaning: "तथ्यों को जोड़कर निष्कर्ष निकालना", example_en: "I put two and two together and realized she was lying.", example_hi: "मैंने तथ्यों को जोड़कर महसूस किया कि वह झूठ बोल रही थी。" },
+    { id: 238, idiom: "To raise the roof", meaning: "बहुत शोर मचाना", example_en: "The crowd raised the roof with their cheers.", example_hi: "भीड़ ने अपनी तालियों से बहुत शोर मचाया。" },
+    { id: 239, idiom: "To read between the lines", meaning: "छिपे हुए मतलब को समझना", example_en: "Read between the lines; he is not happy.", example_hi: "पंक्तियों के बीच पढ़ो; वह खुश नहीं है。" },
+    { id: 240, idiom: "To ring a bell", meaning: "कुछ याद आना", example_en: "Does his name ring a bell?", example_hi: "क्या उसका नाम कुछ याद दिलाता है?" },
+    { id: 241, idiom: "To run out of steam", meaning: "थक जाना", example_en: "I'm running out of steam; let's take a break.", example_hi: "मैं थक गया हूँ; चलो ब्रेक लेते हैं。" },
+    { id: 242, idiom: "To send a message", meaning: "संदेश देना", example_en: "His resignation sent a strong message to the management.", example_hi: "उसके इस्तीफे ने प्रबंधन को एक मज़बूत संदेश दिया。" },
+    { id: 243, idiom: "To show one's true colors", meaning: "असली रूप दिखाना", example_en: "He showed his true colors during the crisis.", example_hi: "संकट के दौरान उसने अपना असली रूप दिखाया。" },
+    { id: 244, idiom: "To spell disaster", meaning: "विनाश का संकेत देना", example_en: "The lack of preparation spells disaster.", example_hi: "तैयारी की कमी विनाश का संकेत है。" },
+    { id: 245, idiom: "To steal someone's thunder", meaning: "किसी की प्रशंसा चुराना", example_en: "She stole my thunder by announcing her idea first.", example_hi: "उसने पहले अपना आइडिया बताकर मेरा मौका चुरा लिया。" },
+    { id: 246, idiom: "To stick one's neck out", meaning: "जोखिम लेना", example_en: "He stuck his neck out to help me.", example_hi: "उसने मेरी मदद करने के लिए जोखिम लिया。" },
+    { id: 247, idiom: "To take a leap of faith", meaning: "आस्था पर कूदना", example_en: "He took a leap of faith and invested in the startup.", example_hi: "उसने आस्था दिखाई और स्टार्टअप में निवेश किया。" },
+    { id: 248, idiom: "To take someone for a ride", meaning: "किसी को धोखा देना", example_en: "He took me for a ride by selling me a fake watch.", example_hi: "उसने मुझे नकली घड़ी बेचकर धोखा दिया。" },
+    { id: 249, idiom: "To throw a party", meaning: "पार्टी देना", example_en: "We are throwing a party for her birthday.", example_hi: "हम उसके जन्मदिन के लिए पार्टी दे रहे हैं。" },
+    { id: 250, idiom: "To twist someone's arm", meaning: "मजबूर करना", example_en: "I had to twist his arm to make him agree.", example_hi: "मुझे उसे सहमत करने के लिए मजबूर करना पड़ा。" },
+    { id: 251, idiom: "To win by a nose", meaning: "बहुत थोड़े अंतर से जीतना", example_en: "He won the election by a nose.", example_hi: "वह बहुत थोड़े अंतर से चुनाव जीता。" },
+    { id: 252, idiom: "To be the apple of someone's eye", meaning: "बहुत प्यारा होना", example_en: "Her youngest son is the apple of her eye.", example_hi: "उसका सबसे छोटा बेटा उसकी आँखों का तारा है。" },
+    { id: 253, idiom: "To beat around the bush", meaning: "मुद्दे पर न आना", example_en: "Stop beating around the bush and tell me the truth.", example_hi: "मुद्दे पर आओ और सच बताओ。" },
+    { id: 254, idiom: "To bite the dust", meaning: "मर जाना / विफल हो जाना", example_en: "Many startups bite the dust in their first year.", example_hi: "कई स्टार्टअप अपने पहले साल में विफल हो जाते हैं。" },
+    { id: 255, idiom: "To break the news", meaning: "खबर सुनाना", example_en: "He had to break the news of the accident to her family.", example_hi: "उसे दुर्घटना की खबर उसके परिवार को सुनानी पड़ी。" },
+    { id: 256, idiom: "To bring home the bacon", meaning: "परिवार का गुजर-बसर करना", example_en: "He works hard to bring home the bacon.", example_hi: "वह परिवार का गुजर-बसर करने के लिए कड़ी मेहनत करता है。" },
+    { id: 257, idiom: "To come clean", meaning: "सच कबूलना", example_en: "He finally came clean about his mistake.", example_hi: "उसने आखिरकार अपनी गलती कबूल कर ली。" },
+    { id: 258, idiom: "To cross someone's mind", meaning: "किसी के दिमाग में आना", example_en: "It never crossed my mind that he would lie.", example_hi: "मुझे कभी नहीं लगा था कि वह झूठ बोलेगा。" },
+    { id: 259, idiom: "To cut someone down to size", meaning: "किसी का घमंड तोड़ना", example_en: "His strict boss cut him down to size.", example_hi: "उसके सख्त बॉस ने उसका घमंड तोड़ दिया。" },
+    { id: 260, idiom: "To draw a blank", meaning: "कुछ न मिलना / याद न आना", example_en: "I drew a blank when I tried to remember her name.", example_hi: "जब मैंने उसका नाम याद करने की कोशिश की तो मुझे कुछ नहीं आया。" },
+    { id: 261, idiom: "To drop a bombshell", meaning: "चौंकाने वाली खबर देना", example_en: "She dropped a bombshell by announcing her resignation.", example_hi: "उसने अपने इस्तीफे की घोषणा करके चौंकाने वाली खबर दी。" },
+    { id: 262, idiom: "To eat one's words", meaning: "अपनी कही हुई बात वापस लेना", example_en: "He had to eat his words when he was proved wrong.", example_hi: "जब उसे गलत साबित किया गया तो उसे अपनी बात वापस लेनी पड़ी。" },
+    { id: 263, idiom: "To fall flat", meaning: "असफल होना", example_en: "His joke fell flat and no one laughed.", example_hi: "उसका मज़ाक फ्लॉप हो गया और कोई नहीं हँसा。" },
+    { id: 264, idiom: "To get a taste of one's own medicine", meaning: "जैसी करनी वैसी भरनी", example_en: "He was rude to everyone, and now he's getting a taste of his own medicine.", example_hi: "वह सबसे रूखा था, और अब उसे जैसी करनी वैसी भरनी मिल रही है。" },
+    { id: 265, idiom: "To get down to business", meaning: "काम पर लग जाना", example_en: "After the introductions, we got down to business.", example_hi: "परिचय के बाद, हम काम पर लग गए。" },
+    { id: 266, idiom: "To give one the benefit of the doubt", meaning: "संदेह होने पर भी विश्वास करना", example_en: "I gave him the benefit of the doubt and trusted him.", example_hi: "मैंने संदेह होने पर भी उस पर विश्वास किया。" },
+    { id: 267, idiom: "To go the whole hog", meaning: "पूरा करना", example_en: "They went the whole hog and decorated the entire venue.", example_hi: "उन्होंने पूरा स्थान सजा दिया。" },
+    { id: 268, idiom: "To have a heart of stone", meaning: "बहुत कठोर दिल होना", example_en: "He has a heart of stone; he never helps anyone.", example_hi: "उसका दिल बहुत कठोर है; वह कभी किसी की मदद नहीं करता。" },
+    { id: 269, idiom: "To have a sweet tooth", meaning: "मीठा खाने का शौक होना", example_en: "I have a sweet tooth; I love desserts.", example_hi: "मुझे मीठा खाने का शौक है; मुझे मिठाइयाँ पसंद हैं。" },
+    { id: 270, idiom: "To keep one's chin up", meaning: "हिम्मत बनाए रखना", example_en: "Even in tough times, he kept his chin up.", example_hi: "मुश्किल समय में भी, उसने हिम्मत बनाए रखी。" },
+    { id: 271, idiom: "To keep someone at bay", meaning: "किसी को दूर रखना", example_en: "The guards kept the protesters at bay.", example_hi: "गार्डों ने प्रदर्शनकारियों को दूर रखा。" },
+    { id: 272, idiom: "To lead someone on", meaning: "बहाने से बरगलाना", example_en: "He led her on with false promises.", example_hi: "उसने झूठे वादों से उसे बरगलाया。" },
+    { id: 273, idiom: "To lose one's temper", meaning: "गुस्सा हो जाना", example_en: "He lost his temper and shouted at the staff.", example_hi: "वह गुस्सा हो गया और स्टाफ पर चिल्लाया。" },
+    { id: 274, idiom: "To make a difference", meaning: "फर्क डालना", example_en: "Your contribution made a difference.", example_hi: "तुम्हारे योगदान ने फर्क डाला。" },
+    { id: 275, idiom: "To make a fool of oneself", meaning: "खुद को मूर्ख बनाना", example_en: "He made a fool of himself by telling a silly joke.", example_hi: "उसने बेवकूफी भरा मज़ाक करके खुद को मूर्ख बना लिया。" },
+    { id: 276, idiom: "To make a good impression", meaning: "अच्छी छाप छोड़ना", example_en: "She made a good impression on her first day.", example_hi: "उसने पहले दिन अच्छी छाप छोड़ी。" },
+    { id: 277, idiom: "To make up one's mind", meaning: "निर्णय लेना", example_en: "I can't make up my mind about which car to buy.", example_hi: "मैं तय नहीं कर पा रहा कि कौन सी कार खरीदूँ。" },
+    { id: 278, idiom: "To nip in the bud", meaning: "शुरू में ही खत्म करना", example_en: "We need to nip this problem in the bud.", example_hi: "हमें इस समस्या को शुरू में ही खत्म करना होगा。" },
+    { id: 279, idiom: "To pass the buck", meaning: "ज़िम्मेदारी को टालना", example_en: "He always passes the buck when something goes wrong.", example_hi: "जब कुछ गलत होता है तो वह हमेशा ज़िम्मेदारी टालता है。" },
+    { id: 280, idiom: "To play a part", meaning: "भूमिका निभाना", example_en: "His advice played a part in my decision.", example_hi: "उसकी सलाह ने मेरे निर्णय में भूमिका निभाई。" },
+    { id: 281, idiom: "To point a finger at", meaning: "उंगली उठाना", example_en: "Don't point fingers without evidence.", example_hi: "बिना सबूत के किसी पर उंगली मत उठाओ。" },
+    { id: 282, idiom: "To pull the strings", meaning: "पर्दे के पीछे से नियंत्रण करना", example_en: "The manager is pulling the strings behind the scenes.", example_hi: "प्रबंधक पर्दे के पीछे से नियंत्रण कर रहा है。" },
+    { id: 283, idiom: "To put a stop to", meaning: "समाप्त करना", example_en: "We must put a stop to this nonsense.", example_hi: "हमें इस बकवास को समाप्त करना होगा。" },
+    { id: 284, idiom: "To put one's best foot forward", meaning: "अपना सर्वश्रेष्ठ प्रयास करना", example_en: "In the interview, she put her best foot forward.", example_hi: "इंटरव्यू में, उसने अपना सर्वश्रेष्ठ प्रदर्शन किया。" },
+    { id: 285, idiom: "To raise eyebrows", meaning: "आश्चर्य / विरोध पैदा करना", example_en: "His decision raised eyebrows among his colleagues.", example_hi: "उसके फैसले ने उसके सहकर्मियों को हैरान कर दिया。" },
+    { id: 286, idiom: "To see the light of day", meaning: "प्रकाश में आना", example_en: "His project will never see the light of day.", example_hi: "उसकी परियोजना कभी पूरी नहीं होगी。" },
+    { id: 287, idiom: "To set the record straight", meaning: "तथ्यों को सही करना", example_en: "He set the record straight about his past.", example_hi: "उसने अपने अतीत के बारे में गलतफहमी दूर की。" },
+    { id: 288, idiom: "To sit tight", meaning: "प्रतीक्षा करना", example_en: "Sit tight; we'll get back to you soon.", example_hi: "प्रतीक्षा करो; हम जल्द ही आपसे संपर्क करेंगे。" },
+    { id: 289, idiom: "To stand out from the crowd", meaning: "भीड़ से अलग होना", example_en: "Her unique style makes her stand out from the crowd.", example_hi: "उसकी अनोखी शैली उसे भीड़ से अलग करती है。" },
+    { id: 290, idiom: "To take the plunge", meaning: "बड़ा कदम उठाना", example_en: "He finally took the plunge and started his own business.", example_hi: "उसने आखिरकार बड़ा कदम उठाया और अपना खुद का व्यवसाय शुरू किया。" },
+    { id: 291, idiom: "To take things easy", meaning: "आराम से करना", example_en: "After the exams, I plan to take things easy.", example_hi: "परीक्षा के बाद, मैं आराम करने की योजना बना रहा हूँ。" },
+    { id: 292, idiom: "To throw a tantrum", meaning: "नखरे करना", example_en: "The child threw a tantrum in the store.", example_hi: "बच्चे ने दुकान में नखरे किए。" },
+    { id: 293, idiom: "To turn the tables", meaning: "पलटी मारना", example_en: "They turned the tables and won the match.", example_hi: "उन्होंने पलटी मारी और मैच जीत लिया。" },
+    { id: 294, idiom: "To walk a tightrope", meaning: "कठिन परिस्थिति में संतुलन बनाए रखना", example_en: "He is walking a tightrope between the two groups.", example_hi: "वह दोनों समूहों के बीच संतुलन बनाए हुए है。" },
+    { id: 295, idiom: "To weigh one's options", meaning: "विकल्पों पर विचार करना", example_en: "I need time to weigh my options before deciding.", example_hi: "निर्णय लेने से पहले मुझे विकल्पों पर विचार करने के लिए समय चाहिए。" },
+    { id: 296, idiom: "To work like a charm", meaning: "बहुत अच्छा काम करना", example_en: "The new software works like a charm.", example_hi: "नया सॉफ्टवेयर बहुत अच्छा काम कर रहा है。" },
+    { id: 297, idiom: "To be in the same boat", meaning: "एक जैसी स्थिति में होना", example_en: "We're all in the same boat; we need to cooperate.", example_hi: "हम सभी एक जैसी स्थिति में हैं; हमें सहयोग करना होगा。" },
+    { id: 298, idiom: "To butter someone up", meaning: "चापलूसी करना", example_en: "He tried to butter up the boss to get a promotion.", example_hi: "उसने प्रमोशन पाने के लिए बॉस की चापलूसी करने की कोशिश की。" },
+    { id: 299, idiom: "To cry wolf", meaning: "झूठा खतरा बताना", example_en: "If you keep crying wolf, nobody will believe you when you really need help.", example_hi: "अगर तुम झूठा अलार्म बजाते रहे, तो जब सच में ज़रूरत होगी तो कोई विश्वास नहीं करेगा。" },
+    { id: 300, idiom: "To get wind of", meaning: "भनक लगना", example_en: "The media got wind of the scandal.", example_hi: "मीडिया को घोटाले की भनक लग गई。" },
+    { id: 301, idiom: "To kick up a fuss", meaning: "शोर-शराबा मचाना", example_en: "She kicked up a fuss when she was denied entry.", example_hi: "जब उसे प्रवेश नहीं दिया गया तो उसने शोर-शराबा मचाया。" },
+    { id: 302, idiom: "To lay off", meaning: "नौकरी से निकालना", example_en: "The company had to lay off many workers due to losses.", example_hi: "कंपनी को घाटे के कारण कई कर्मचारियों को नौकरी से निकालना पड़ा。" },
+    { id: 303, idiom: "To make a beeline for", meaning: "सीधा किसी ओर जाना", example_en: "He made a beeline for the food counter.", example_hi: "वह सीधा भोजन काउंटर की ओर गया。" },
+    { id: 304, idiom: "To pay through the nose", meaning: "बहुत ज़्यादा कीमत चुकाना", example_en: "He paid through the nose for that expensive car.", example_hi: "उसने उस महंगी कार के लिए बहुत ज़्यादा पैसे चुकाए。" },
+    { id: 305, idiom: "To pull a fast one", meaning: "धोखा देना", example_en: "He pulled a fast one on me and took my money.", example_hi: "उसने मुझे धोखा दिया और मेरे पैसे ले लिए。" },
+    { id: 306, idiom: "To put on airs", meaning: "घमंड दिखाना", example_en: "She puts on airs because she comes from a rich family.", example_hi: "वह एक अमीर परिवार से होने का घमंड दिखाती है。" },
+    { id: 307, idiom: "To run the risk", meaning: "जोखिम उठाना", example_en: "He ran the risk of losing everything.", example_hi: "उसने सब कुछ खोने का जोखिम उठाया。" },
+    { id: 308, idiom: "To save face", meaning: "अपनी इज़्ज़त बचाना", example_en: "He lied to save face in front of his friends.", example_hi: "उसने अपने दोस्तों के सामने इज़्ज़त बचाने के लिए झूठ बोला。" },
+    { id: 309, idiom: "To skip town", meaning: "शहर छोड़कर भाग जाना", example_en: "The thief skipped town before the police arrived.", example_hi: "चोर पुलिस के आने से पहले शहर छोड़कर भाग गया。" },
+    { id: 310, idiom: "To spill the beans", meaning: "राज़ खोल देना", example_en: "She spilled the beans about the surprise party.", example_hi: "उसने सरप्राइज़ पार्टी का राज़ खोल दिया。" },
+    { id: 311, idiom: "To stand the test of time", meaning: "समय की कसौटी पर खरा उतरना", example_en: "Their friendship stood the test of time.", example_hi: "उनकी दोस्ती समय की कसौटी पर खरी उतरी。" },
+    { id: 312, idiom: "To stick to one's guns", meaning: "अपनी बात पर अड़े रहना", example_en: "He stuck to his guns despite criticism.", example_hi: "आलोचना के बावजूद वह अपनी बात पर अड़ा रहा。" },
+    { id: 313, idiom: "To take it easy", meaning: "आराम से करना", example_en: "Take it easy; we have plenty of time.", example_hi: "घबराओ मत; हमारे पास काफी समय है。" },
+    { id: 314, idiom: "To take one's time", meaning: "अपनी गति से काम करना", example_en: "He took his time to finish the project.", example_hi: "उसने परियोजना को पूरा करने में अपना समय लिया。" },
+    { id: 315, idiom: "To talk shop", meaning: "काम की बातें करना", example_en: "They kept talking shop even during dinner.", example_hi: "वे रात के खाने के दौरान भी काम की बातें करते रहे。" },
+    { id: 316, idiom: "To throw money down the drain", meaning: "पैसा बर्बाद करना", example_en: "Don't throw your money down the drain on useless things.", example_hi: "बेकार चीज़ों पर अपना पैसा बर्बाद मत करो。" },
+    { id: 317, idiom: "To tighten one's belt", meaning: "कम खर्च करना", example_en: "We need to tighten our belts due to the financial crisis.", example_hi: "वित्तीय संकट के कारण हमें कम खर्च करना होगा。" },
+    { id: 318, idiom: "To turn a deaf ear", meaning: "अनसुना करना", example_en: "He turned a deaf ear to my advice.", example_hi: "उसने मेरी सलाह को अनसुना कर दिया。" },
+    { id: 319, idiom: "To turn the corner", meaning: "मुश्किल स्थिति से निकलना", example_en: "The company has turned the corner and is making profit again.", example_hi: "कंपनी मुश्किल स्थिति से निकल गई है और फिर से लाभ कमा रही है。" },
+    { id: 320, idiom: "To wait with bated breath", meaning: "साँस थाम कर इंतज़ार करना", example_en: "We waited with bated breath for the exam results.", example_hi: "हम परीक्षा के परिणामों का साँस थाम कर इंतज़ार कर रहे थे。" },
+    { id: 321, idiom: "To wash dirty linen in public", meaning: "सार्वजनिक रूप से कलह दिखाना", example_en: "The family shouldn't wash their dirty linen in public.", example_hi: "परिवार को अपनी कलह सार्वजनिक नहीं करनी चाहिए。" },
+    { id: 322, idiom: "To weigh anchor", meaning: "रवाना होना", example_en: "The ship weighed anchor and set sail for the new land.", example_hi: "जहाज ने लंगर उठाया और नई भूमि के लिए रवाना हुआ。" },
+    { id: 323, idiom: "To cut to the quick", meaning: "मन को ठेस पहुँचाना", example_en: "His words cut her to the quick.", example_hi: "उसकी बातों ने उसे गहरी चोट पहुँचाई。" },
+    { id: 324, idiom: "To be at one's wit's end", meaning: "समझ न आना", example_en: "I'm at my wit's end trying to solve this problem.", example_hi: "इस समस्या को हल करने में मुझे कुछ समझ नहीं आ रहा है。" },
+    { id: 325, idiom: "To be a man of straw", meaning: "कमज़ोर व्यक्ति", example_en: "He is a man of straw; you can't rely on him.", example_hi: "वह एक कमज़ोर व्यक्ति है; तुम उस पर भरोसा नहीं कर सकते。" },
+    { id: 326, idiom: "To beat the air", meaning: "बेकार की कोशिश करना", example_en: "Arguing with him is like beating the air.", example_hi: "उससे बहस करना बेकार की कोशिश है。" },
+    { id: 327, idiom: "To cut no ice", meaning: "कोई असर न होना", example_en: "His excuses cut no ice with the manager.", example_hi: "उसके बहाने का मैनेजर पर कोई असर नहीं हुआ。" },
+    { id: 328, idiom: "To die in harness", meaning: "काम करते हुए मरना", example_en: "He died in harness while serving his nation.", example_hi: "उसने राष्ट्र की सेवा करते हुए कार्य के दौरान प्राण त्याग दिए。" },
+    { id: 329, idiom: "To fish in troubled waters", meaning: "गंदे पानी में मछली पकड़ना", example_en: "Politicians often fish in troubled waters during riots.", example_hi: "राजनेता अक्सर दंगों के दौरान गंदे पानी में मछली पकड़ते हैं。" },
+    { id: 330, idiom: "To hold water", meaning: "तर्कसंगत होना", example_en: "His explanation doesn't hold water.", example_hi: "उसकी व्याख्या तर्कसंगत नहीं है。" },
+    { id: 331, idiom: "To keep the wolf from the door", meaning: "गुजर-बसर करना", example_en: "He works two jobs to keep the wolf from the door.", example_hi: "वह गुजर-बसर करने के लिए दो नौकरियाँ करता है。" },
+    { id: 332, idiom: "To laugh in one's sleeve", meaning: "दिल में हँसना", example_en: "He laughed in his sleeve when his rival failed.", example_hi: "जब उसका प्रतिद्वंद्वी विफल हुआ तो वह दिल में हँसा。" },
+    { id: 333, idiom: "To look down upon", meaning: "नीची नज़र से देखना", example_en: "He looks down upon people who are not rich.", example_hi: "वह गरीब लोगों को नीची नज़र से देखता है。" },
+    { id: 334, idiom: "To make one's mark", meaning: "अपनी पहचान बनाना", example_en: "He has made his mark in the field of science.", example_hi: "उसने विज्ञान के क्षेत्र में अपनी पहचान बनाई है。" },
+    { id: 335, idiom: "To play into someone's hands", meaning: "किसी के काम आना", example_en: "By arguing with him, you're playing into his hands.", example_hi: "उससे बहस करके, तुम उसके काम आ रहे हो。" },
+    { id: 336, idiom: "To put one's shoulder to the wheel", meaning: "कड़ी मेहनत करना", example_en: "We need to put our shoulders to the wheel to finish this project.", example_hi: "हमें इस परियोजना को खत्म करने के लिए कड़ी मेहनत करनी होगी。" },
+    { id: 337, idiom: "To redouble one's efforts", meaning: "प्रयास दोगुने करना", example_en: "We must redouble our efforts to achieve our target.", example_hi: "हमें अपना लक्ष्य प्राप्त करने के लिए अपने प्रयास दोगुने करने होंगे。" },
+    { id: 338, idiom: "To rest on one's laurels", meaning: "पिछली उपलब्धियों पर आराम करना", example_en: "Don't rest on your laurels; keep working hard.", example_hi: "अपनी पिछली उपलब्धियों पर आराम मत करो; मेहनत करते रहो。" },
+    { id: 339, idiom: "To see red", meaning: "बहुत गुस्सा हो जाना", example_en: "He saw red when someone insulted his family.", example_hi: "जब किसी ने उसके परिवार का अपमान किया तो वह बहुत गुस्सा हो गया。" },
+    { id: 340, idiom: "To shoot the breeze", meaning: "बेकार की बातें करना", example_en: "They were just shooting the breeze instead of working.", example_hi: "वे काम करने के बजाय बेकार की बातें कर रहे थे。" },
+    { id: 341, idiom: "To steal the show", meaning: "सबका ध्यान अपनी ओर खींचना", example_en: "The actress stole the show with her performance.", example_hi: "अभिनेत्री ने अपने प्रदर्शन से सबका ध्यान अपनी ओर खींच लिया。" },
+    { id: 342, idiom: "To turn tail", meaning: "पीठ दिखाना", example_en: "The soldiers turned tail when they saw the enemy.", example_hi: "सैनिकों ने दुश्मन को देखकर पीठ दिखा दी。" },
+    { id: 343, idiom: "To take someone to task", meaning: "किसी को फटकारना", example_en: "The manager took him to task for being late.", example_hi: "मैनेजर ने उसे देर से आने के लिए फटकारा。" },
+    { id: 344, idiom: "To toe the line", meaning: "नियमों का पालन करना", example_en: "He always toes the line and never breaks the rules.", example_hi: "वह हमेशा नियमों का पालन करता है और कभी नियम नहीं तोड़ता。" },
+    { id: 345, idiom: "To smell a rat", meaning: "कुछ गड़बड़ महसूस होना", example_en: "I smell a rat in this deal; it seems too good to be true.", example_hi: "मुझे इस सौदे में कुछ गड़बड़ महसूस हो रही है; यह सच होने के लिए बहुत अच्छा लगता है。" },
+    { id: 346, idiom: "To hit the roof", meaning: "बहुत गुस्सा हो जाना", example_en: "He hit the roof when he saw the damage to his car.", example_hi: "जब उसने अपनी कार को हुए नुकसान को देखा तो वह बहुत गुस्सा हो गया。" },
+    { id: 347, idiom: "To bury one's head in the sand", meaning: "मुसीबत से आँखें मूंद लेना", example_en: "You can't bury your head in the sand; you need to face the problem.", example_hi: "तुम मुसीबत से आँखें नहीं मूंद सकते; तुम्हें समस्या का सामना करना होगा。" },
+    { id: 348, idiom: "To burn the candle at both ends", meaning: "अति परिश्रम करना", example_en: "He's burning the candle at both ends by working two jobs.", example_hi: "वह दो नौकरियाँ करके रात-दिन एक कर रहा है。" },
+    { id: 349, idiom: "To call a spade a spade", meaning: "सीधी बात करना", example_en: "I appreciate him because he calls a spade a spade.", example_hi: "मैं उसकी सराहना करता हूँ क्योंकि वह सीधी बात करता है。" },
+    { id: 350, idiom: "To carry coals to Newcastle", meaning: "बेकार का काम", example_en: "Selling ice to the Eskimos is like carrying coals to Newcastle.", example_hi: "एस्किमो को बर्फ बेचना बेकार के काम जैसा है。" },
+    { id: 351, idiom: "To cast pearls before swine", meaning: "अज्ञानी को कीमती चीज़ देना", example_en: "Explaining philosophy to him is like casting pearls before swine.", example_hi: "उसे दर्शनशास्त्र समझाना बेकार है。" },
+    { id: 352, idiom: "To catch a Tartar", meaning: "मुश्किल में पड़ना", example_en: "He caught a Tartar when he argued with his senior.", example_hi: "जब उसने अपने वरिष्ठ से बहस की तो वह मुश्किल में पड़ गया。" },
+    { id: 353, idiom: "To clip someone's wings", meaning: "किसी की स्वतंत्रता रोकना", example_en: "His promotion was clipped by his jealous colleagues.", example_hi: "उसकी प्रमोशन उसके ईर्ष्यालु सहकर्मियों ने रोक दी。" },
+    { id: 354, idiom: "To come down with", meaning: "बीमार पड़ना", example_en: "She came down with a severe cold.", example_hi: "वह गंभीर सर्दी से बीमार पड़ गई。" },
+    { id: 355, idiom: "To cook someone's goose", meaning: "किसी की योजना बिगाड़ना", example_en: "His mistake cooked his goose in the interview.", example_hi: "उसकी गलती ने इंटरव्यू में उसकी बंद बजा दी。" },
+    { id: 356, idiom: "To cry for the moon", meaning: "नामुमकिन चीज़ चाहना", example_en: "Asking for a salary hike in this recession is like crying for the moon.", example_hi: "इस मंदी में वेतन वृद्धि माँगना नामुमकिन है。" },
+    { id: 357, idiom: "To cut a long story short", meaning: "संक्षेप में कहना", example_en: "To cut a long story short, we won the match.", example_hi: "संक्षेप में, हम मैच जीत गए。" },
+    { id: 358, idiom: "To die for", meaning: "बहुत अच्छा", example_en: "This chocolate cake is to die for.", example_hi: "यह चॉकलेट केक बहुत अच्छा है。" },
+    { id: 359, idiom: "To dig one's own grave", meaning: "अपनी कब्र खोदना", example_en: "By lying, he dug his own grave.", example_hi: "झूठ बोलकर उसने खुद अपनी कब्र खोदी。" },
+    { id: 360, idiom: "To draw the line", meaning: "सीमा तय करना", example_en: "I don't mind helping, but I draw the line at lying.", example_hi: "मुझे मदद करने में कोई आपत्ति नहीं, लेकिन झूठ बोलना मेरी हद से बाहर है。" },
+    { id: 361, idiom: "To drop in the bucket", meaning: "बहुत थोड़ा", example_en: "Our donation is just a drop in the bucket.", example_hi: "हमारा दान बहुत थोड़ा है。" },
+    { id: 362, idiom: "To eat crow", meaning: "अपमान सहना", example_en: "He had to eat crow when his prediction proved wrong.", example_hi: "जब उसकी भविष्यवाणी गलत निकली तो उसे अपमान सहना पड़ा。" },
+    { id: 363, idiom: "To feel blue", meaning: "उदास होना", example_en: "She's feeling blue after her breakup.", example_hi: "अपने ब्रेकअप के बाद वह उदास है。" },
+    { id: 364, idiom: "To get cold feet", meaning: "हिम्मत हारना", example_en: "I got cold feet before the presentation.", example_hi: "प्रेजेंटेशन से पहले मेरी हिम्मत टूट गई。" },
+    { id: 365, idiom: "To give the green light", meaning: "अनुमति देना", example_en: "The board gave the green light to the project.", example_hi: "बोर्ड ने परियोजना को अनुमति दे दी。" },
+    { id: 366, idiom: "To go against the grain", meaning: "स्वभाव के विरुद्ध होना", example_en: "It goes against the grain to be dishonest.", example_hi: "बेईमान होना मेरे स्वभाव के विरुद्ध है。" },
+    { id: 367, idiom: "To have a change of heart", meaning: "मन बदलना", example_en: "He had a change of heart and decided to help.", example_hi: "उसने मन बदला और मदद करने का फैसला किया。" },
+    { id: 368, idiom: "To have a field day", meaning: "बहुत आनंद लेना", example_en: "The media had a field day with the scandal.", example_hi: "मीडिया ने घोटाले का खूब मज़ा लिया。" },
+    { id: 369, idiom: "To have a knack for", meaning: "निपुणता होना", example_en: "She has a knack for solving puzzles.", example_hi: "उसे पहेलियाँ सुलझाने में निपुणता है。" },
+    { id: 370, idiom: "To have a soft spot for", meaning: "विशेष लगाव होना", example_en: "I have a soft spot for stray animals.", example_hi: "मुझे आवारा जानवरों के प्रति विशेष लगाव है。" },
+    { id: 371, idiom: "To have butterflies in one's stomach", meaning: "घबराना", example_en: "I had butterflies in my stomach before the exam.", example_hi: "परीक्षा से पहले मुझे घबराहट हो रही थी。" },
+    { id: 372, idiom: "To have egg on one's face", meaning: "शर्मिंदा होना", example_en: "He had egg on his face when his lie was exposed.", example_hi: "जब उसका झूठ उजागर हुआ तो वह शर्मिंदा हुआ。" },
+    { id: 373, idiom: "To have the last laugh", meaning: "अंत में जीतना", example_en: "Everyone laughed at him, but he had the last laugh.", example_hi: "सबने उसका मजाक उड़ाया, लेकिन आखिर में वही जीता。" },
+    { id: 374, idiom: "To hit below the belt", meaning: "अनुचित चाल चलना", example_en: "In the debate, he hit below the belt by attacking his opponent's family.", example_hi: "बहस में, उसने प्रतिद्वंद्वी के परिवार पर हमला करके अनुचित चाल चली。" },
+    { id: 375, idiom: "To hold all the cards", meaning: "सारे अधिकार होना", example_en: "In this negotiation, they hold all the cards.", example_hi: "इस मोलभाव में, उनके पास सारे अधिकार हैं。" },
+    { id: 376, idiom: "To keep an eye on", meaning: "नज़र रखना", example_en: "Keep an eye on the children while I'm away.", example_hi: "जब मैं दूर हूँ तो बच्चों पर नज़र रखना。" },
+    { id: 377, idiom: "To keep someone in the dark", meaning: "किसी को अंधेरे में रखना", example_en: "They kept me in the dark about the surprise party.", example_hi: "उन्होंने मुझे सरप्राइज़ पार्टी के बारे में नहीं बताया。" },
+    { id: 378, idiom: "To kill time", meaning: "समय बिताना", example_en: "I read a book to kill time at the airport.", example_hi: "हवाई अड्डे पर समय बिताने के लिए मैंने किताब पढ़ी。" },
+    { id: 379, idiom: "To leave no stone unturned", meaning: "हर संभव प्रयास करना", example_en: "She left no stone unturned to find the missing child.", example_hi: "उसने गायब बच्चे को खोजने के लिए कोई कसर नहीं छोड़ी。" },
+    { id: 380, idiom: "To live from hand to mouth", meaning: "गुजर-बसर करना", example_en: "He's been living from hand to mouth since he lost his job.", example_hi: "नौकरी छूटने के बाद वह मुश्किल से गुजर-बसर कर रहा है。" },
+    { id: 381, idiom: "To look forward to", meaning: "उत्सुक होना", example_en: "I look forward to meeting you.", example_hi: "मैं आपसे मिलने के लिए उत्सुक हूँ。" },
+    { id: 382, idiom: "To make no bones about", meaning: "साफ़-साफ़ कहना", example_en: "He made no bones about his dislike for the plan.", example_hi: "उसने योजना के प्रति अपनी नापसंदगी स्पष्ट रूप से बताई。" },
+    { id: 383, idiom: "To meet someone halfway", meaning: "समझौता करना", example_en: "We couldn't agree, but we met halfway to solve the issue.", example_hi: "हम सहमत नहीं हो सके, लेकिन हमने समस्या हल करने के लिए समझौता किया。" },
+    { id: 384, idiom: "To pay lip service", meaning: "ऊपरी तौर पर सहमति देना", example_en: "The politicians pay lip service to the poor but do little.", example_hi: "राजनेता गरीबों के प्रति ऊपरी तौर पर सहमति देते हैं लेकिन कुछ नहीं करते。" },
+    { id: 385, idiom: "To play with fire", meaning: "खतरा मोल लेना", example_en: "You're playing with fire by investing all your money in one stock.", example_hi: "तुम अपना सारा पैसा एक शेयर में निवेश करके खतरा मोल ले रहे हो。" },
+    { id: 386, idiom: "To pull up one's socks", meaning: "सुधार करना", example_en: "You need to pull up your socks if you want to pass the exam.", example_hi: "अगर तुम परीक्षा पास करना चाहते हो तो तुम्हें सुधार करना होगा。" },
+    { id: 387, idiom: "To push the envelope", meaning: "हद से आगे जाना", example_en: "The designer pushed the envelope with her new collection.", example_hi: "डिजाइनर ने अपने नए संग्रह के साथ हद से आगे जाकर दिखाया。" },
+    { id: 388, idiom: "To read someone like a book", meaning: "किसी को अच्छी तरह समझना", example_en: "She can read him like a book; she knows his every move.", example_hi: "वह उसे अच्छी तरह समझती है; उसे उसकी हर चाल पता है。" },
+    { id: 389, idiom: "To rub someone the wrong way", meaning: "किसी को खिजाना", example_en: "His arrogance rubbed me the wrong way.", example_hi: "उसके अहंकार ने मुझे खिजाया。" },
+    { id: 390, idiom: "To run out of time", meaning: "समय समाप्त होना", example_en: "We ran out of time before we could finish.", example_hi: "हमारे खत्म करने से पहले ही समय समाप्त हो गया。" },
+    { id: 391, idiom: "To set one's sights on", meaning: "लक्ष्य बनाना", example_en: "She has set her sights on becoming a doctor.", example_hi: "उसने डॉक्टर बनने का लक्ष्य बना लिया है。" },
+    { id: 392, idiom: "To shrug off", meaning: "अनदेखा करना", example_en: "He shrugged off the criticism and continued his work.", example_hi: "उसने आलोचना को अनदेखा कर दिया और अपना काम जारी रखा。" },
+    { id: 393, idiom: "To sleep like a log", meaning: "गहरी नींद सोना", example_en: "He was so tired that he slept like a log.", example_hi: "वह इतना थका हुआ था कि वह गहरी नींद सोया。" },
+    { id: 394, idiom: "To stand on one's own feet", meaning: "स्वावलंबी होना", example_en: "After college, he stood on his own feet and never asked for help.", example_hi: "कॉलेज के बाद, वह अपने पैरों पर खड़ा हो गया और कभी मदद नहीं माँगी。" },
+    { id: 395, idiom: "To take a leaf out of someone's book", meaning: "किसी से सीखना", example_en: "You should take a leaf out of your brother's book and be punctual.", example_hi: "तुम्हें अपने भाई से सीखना चाहिए और समय के पाबंद रहना चाहिए。" },
+    { id: 396, idiom: "To throw caution to the wind", meaning: "सावधानी त्यागना", example_en: "He threw caution to the wind and started his own business.", example_hi: "उसने सावधानी त्याग दी और अपना खुद का व्यवसाय शुरू किया。" },
+    { id: 397, idiom: "To be on tenterhooks", meaning: "अत्यधिक चिंता में होना", example_en: "She was on tenterhooks waiting for the exam results.", example_hi: "परीक्षा परिणाम की प्रतीक्षा में वह अत्यधिक चिंता में थी。" },
+    { id: 398, idiom: "To be the talk of the town", meaning: "सुर्खियों में होना", example_en: "The new film is the talk of the town.", example_hi: "नई फिल्म शहर की चर्चा का विषय है。" },
+    { id: 399, idiom: "To be up in arms", meaning: "गुस्से में होना", example_en: "The workers were up in arms against the management.", example_hi: "कर्मचारी प्रबंधन के खिलाफ गुस्से में थे。" },
+    { id: 400, idiom: "To blow one's own trumpet", meaning: "अपनी तारीफ़ खुद करना", example_en: "He keeps blowing his own trumpet about his achievements.", example_hi: "वह अपनी उपलब्धियों के बारे में खुद ही तारीफ़ करता है。" },
+    { id: 401, idiom: "To break the news gently", meaning: "धीरे-धीरे बुरी खबर देना", example_en: "He broke the news gently to his mother.", example_hi: "उसने अपनी माँ को धीरे-धीरे बुरी खबर दी。" },
+    { id: 402, idiom: "To bring to book", meaning: "सज़ा देना", example_en: "The culprit will be brought to book soon.", example_hi: "अपराधी को जल्द ही सज़ा दी जाएगी。" },
+    { id: 403, idiom: "To call a truce", meaning: "युद्ध विराम करना", example_en: "The two rivals decided to call a truce.", example_hi: "दोनों प्रतिद्वंद्वियों ने युद्ध विराम का फैसला किया。" },
+    { id: 404, idiom: "To come full circle", meaning: "वापस आ जाना", example_en: "His career has come full circle to where it started.", example_hi: "उसका करियर वापस वहीं आ गया जहाँ से शुरू हुआ था。" },
+    { id: 405, idiom: "To cross the Rubicon", meaning: "अटल निर्णय लेना", example_en: "He crossed the Rubicon by resigning from his job.", example_hi: "उसने अपनी नौकरी से इस्तीफा देकर अटल निर्णय लिया。" },
+    { id: 406, idiom: "To cut the Gordian knot", meaning: "जटिल समस्या का साहसी समाधान करना", example_en: "The manager cut the Gordian knot by firing the troublemakers.", example_hi: "प्रबंधक ने उपद्रवियों को निकालकर जटिल समस्या का साहसी समाधान किया。" },
+    { id: 407, idiom: "To dig in one's heels", meaning: "अपनी जिद पर अड़े रहना", example_en: "He dug in his heels and refused to change his decision.", example_hi: "उसने अपनी जिद पकड़ी और अपना फैसला बदलने से मना कर दिया。" },
+    { id: 408, idiom: "To drink like a fish", meaning: "बहुत ज़्यादा शराब पीना", example_en: "He drinks like a fish at every party.", example_hi: "वह हर पार्टी में बहुत ज़्यादा शराब पीता है。" },
+    { id: 409, idiom: "To eat like a horse", meaning: "बहुत ज़्यादा खाना", example_en: "He eats like a horse but never gains weight.", example_hi: "वह बहुत ज़्यादा खाता है लेकिन कभी मोटा नहीं होता。" },
+    { id: 410, idiom: "To fall on deaf ears", meaning: "किसी की बात का कोई असर न होना", example_en: "His warnings fell on deaf ears.", example_hi: "उसकी चेतावनियों का कोई असर नहीं हुआ。" },
+    { id: 411, idiom: "To feather one's nest", meaning: "अपना निजी लाभ करना", example_en: "The politician feathered his nest by taking bribes.", example_hi: "नेता ने रिश्वत लेकर अपना निजी लाभ किया。" },
+    { id: 412, idiom: "To fight tooth and nail", meaning: "पूरी ताकत से लड़ना", example_en: "They fought tooth and nail for their rights.", example_hi: "उन्होंने अपने अधिकारों के लिए पूरी ताकत से संघर्ष किया。" },
+    { id: 413, idiom: "To find fault with", meaning: "तोड़-मरोड़ कर नुकसान ढूँढना", example_en: "She finds fault with everything he does.", example_hi: "वह उसके हर काम में कोई न कोई कमी निकालती है。" },
+    { id: 414, idiom: "To get a raw deal", meaning: "अन्यायपूर्ण व्यवहार पाना", example_en: "He felt he got a raw deal in the promotion.", example_hi: "उसे लगा कि प्रमोशन में उसके साथ अन्याय हुआ。" },
+    { id: 415, idiom: "To get in the way", meaning: "रुकावट डालना", example_en: "Don't let your fears get in the way of your success.", example_hi: "अपनी सफलता के रास्ते में अपने डर को रुकावट न बनने दें。" },
+    { id: 416, idiom: "To give a dog a bad name", meaning: "निराधार बदनाम करना", example_en: "He was given a bad name by his rivals.", example_hi: "उसके विरोधियों ने उसे निराधार बदनाम किया。" },
+    { id: 417, idiom: "To give a wide berth", meaning: "दूर रहना", example_en: "She gives a wide berth to people who gossip.", example_hi: "वह गपशप करने वाले लोगों से दूर रहती है。" },
+    { id: 418, idiom: "To go to the dogs", meaning: "बर्बाद होना", example_en: "The company has gone to the dogs since the new management took over.", example_hi: "नए प्रबंधन के आने के बाद कंपनी बर्बाद हो गई है。" },
+    { id: 419, idiom: "To have a bone to pick with", meaning: "किसी से शिकायत होना", example_en: "I have a bone to pick with you about your behavior.", example_hi: "मुझे आपके व्यवहार को लेकर आपसे एक शिकायत है。" },
+    { id: 420, idiom: "To have an axe to grind", meaning: "छिपा हुआ स्वार्थ होना", example_en: "He has no axe to grind in this matter; he's just trying to help.", example_hi: "इस मामले में उसका कोई छिपा हुआ स्वार्थ नहीं है; वह सिर्फ मदद करने की कोशिश कर रहा है。" },
+    { id: 421, idiom: "To hit the nail on the head", meaning: "एकदम सही बात कहना", example_en: "You hit the nail on the head with your analysis.", example_hi: "आपके विश्लेषण ने एकदम सही निशाना लगाया。" },
+    { id: 422, idiom: "To keep pace with", meaning: "कदम से कदम मिलाना", example_en: "We need to keep pace with the changing times.", example_hi: "हमें बदलते समय के साथ कदम मिलाना होगा。" },
+    { id: 423, idiom: "To kill a stone", meaning: "बहुत कड़ी मेहनत करना", example_en: "He killed a stone to finish the project on time.", example_hi: "उसने परियोजना को समय पर पूरा करने के लिए कड़ी मेहनत की。" },
+    { id: 424, idiom: "To lay at one's door", meaning: "किसी पर दोष लगाना", example_en: "The blame was laid at his door.", example_hi: "दोष उस पर लगाया गया。" },
+    { id: 425, idiom: "To let sleeping dogs lie", meaning: "पुरानी बातें न छेड़ना", example_en: "Let sleeping dogs lie; don't bring up the past.", example_hi: "पुरानी बातों को मत छेड़ो。" },
+    { id: 426, idiom: "To live in a fool's paradise", meaning: "आत्म-भ्रम में जीना", example_en: "He lives in a fool's paradise if he thinks he'll get that job without effort.", example_hi: "अगर वह बिना मेहनत के नौकरी मिलने की सोचता है तो वह आत्म-भ्रम में जी रहा है。" },
+    { id: 427, idiom: "To make a song and dance about", meaning: "बात का बतंगड़ बनाना", example_en: "She made a song and dance about a minor issue.", example_hi: "उसने एक छोटी सी बात का बतंगड़ बना दिया。" },
+    { id: 428, idiom: "To mend one's ways", meaning: "सुधरना", example_en: "He promised to mend his ways after the accident.", example_hi: "दुर्घटना के बाद उसने सुधरने का वादा किया。" },
+    { id: 429, idiom: "To miss the bus", meaning: "अवसर गँवाना", example_en: "He missed the bus by not applying for the job on time.", example_hi: "उसने समय पर आवेदन न करके मौका गँवा दिया。" },
+    { id: 430, idiom: "To move with the times", meaning: "समय के साथ बदलना", example_en: "We must move with the times and adopt new technology.", example_hi: "हमें समय के साथ बदलना चाहिए और नई तकनीक अपनानी चाहिए。" },
+    { id: 431, idiom: "To pull the wool over someone's eyes", meaning: "किसी को धोखा देना", example_en: "He pulled the wool over her eyes by pretending to be a doctor.", example_hi: "उसने डॉक्टर होने का दिखावा करके उसे धोखा दिया。" },
+    { id: 432, idiom: "To put all one's eggs in one basket", meaning: "सब कुछ एक ही जगह दाँव पर लगा देना", example_en: "Don't put all your eggs in one basket; diversify your investments.", example_hi: "सब कुछ एक ही जगह दाँव पर मत लगाओ; अपने निवेशों को विविध बनाओ。" },
+    { id: 433, idiom: "To read between the lines", meaning: "छिपे हुए भाव को समझना", example_en: "Read between the lines; she wasn't really happy.", example_hi: "छिपे हुए भाव को समझो; वह वास्तव में खुश नहीं थी。" },
+    { id: 434, idiom: "To rise to the occasion", meaning: "अवसर पर खरा उतरना", example_en: "She rose to the occasion and led the team to victory.", example_hi: "उसने अवसर पर खरा उतरा और टीम को जीत तक पहुँचाया。" },
+    { id: 435, idiom: "To rub salt into the wound", meaning: "घाव पर नमक छिड़कना", example_en: "Losing the match was bad, but his mocking rubbed salt into the wound.", example_hi: "मैच हारना बुरा था, लेकिन उसका उपहास ने घाव पर नमक छिड़का。" },
+    { id: 436, idiom: "To run around in circles", meaning: "बहुत कोशिश करना लेकिन कोई नतीजा न निकलना", example_en: "We ran around in circles trying to find the solution.", example_hi: "हमने समाधान खोजने के लिए बहुत कोशिश की लेकिन कोई नतीजा नहीं निकला。" },
+    { id: 437, idiom: "To show the red card", meaning: "बर्खास्त करना", example_en: "The manager showed him the red card for his misconduct.", example_hi: "प्रबंधक ने उसे उसके कदाचार के लिए बर्खास्त कर दिया。" },
+    { id: 438, idiom: "To steal one's thunder", meaning: "किसी का मौका / प्रशंसा चुराना", example_en: "She stole his thunder by announcing her success first.", example_hi: "उसने पहले अपनी सफलता घोषित करके उसका मौका चुरा लिया。" },
+    { id: 439, idiom: "To stop at nothing", meaning: "कुछ भी करना", example_en: "He'll stop at nothing to achieve his goal.", example_hi: "वह अपने लक्ष्य को पाने के लिए कुछ भी करेगा。" },
+    { id: 440, idiom: "To take a back seat", meaning: "पीछे रहना", example_en: "He took a back seat in the project after his promotion.", example_hi: "प्रमोशन के बाद उसने परियोजना में कम भूमिका निभाई。" },
+    { id: 441, idiom: "To take someone to task", meaning: "किसी को फटकारना", example_en: "He was taken to task by his boss for being late.", example_hi: "देर से आने पर उसके बॉस ने उसे फटकारा。" },
+    { id: 442, idiom: "To throw cold water on", meaning: "उत्साह को ठंडा करना", example_en: "The manager threw cold water on our plans.", example_hi: "प्रबंधक ने हमारी योजनाओं पर पानी फेर दिया。" },
+    { id: 443, idiom: "To turn a blind eye", meaning: "अनदेखा करना", example_en: "He turned a blind eye to the problem.", example_hi: "उसने समस्या को अनदेखा कर दिया。" },
+    { id: 444, idiom: "To turn over a new leaf", meaning: "नई जीवनशैली अपनाना", example_en: "After jail, he turned over a new leaf and started working honestly.", example_hi: "जेल के बाद, उसने नई जीवनशैली अपनाई और ईमानदारी से काम करना शुरू किया。" },
+    { id: 445, idiom: "To wash one's hands of", meaning: "ज़िम्मेदारी छोड़ना", example_en: "He washed his hands of the whole matter.", example_hi: "उसने पूरे मामले से हाथ खींच लिए。" },
+    { id: 446, idiom: "To wear a crown", meaning: "राजा / शासक होना", example_en: "The king wore a crown during the ceremony.", example_hi: "राजा ने समारोह के दौरान मुकुट पहना。" },
+    { id: 447, idiom: "A blessing in disguise", meaning: "छिपा हुआ आशीर्वाद", example_en: "The delay was a blessing in disguise; we got a better deal.", example_hi: "देरी एक छिपा हुआ आशीर्वाद थी; हमें बेहतर सौदा मिला。" },
+    { id: 448, idiom: "A penny saved is a penny earned", meaning: "बचत भी कमाई है", example_en: "I always look for discounts – a penny saved is a penny earned.", example_hi: "मैं हमेशा छूट की तलाश करता हूँ – बचत भी कमाई है।" },
+    { id: 449, idiom: "Absence makes the heart grow fonder", meaning: "दूरी से प्यार बढ़ता है", example_en: "She missed him while he was away – absence makes the heart grow fonder.", example_hi: "जब वह दूर था तो वह उसे याद करती थी – दूरी से प्यार बढ़ता है।" },
+    { id: 450, idiom: "All that glitters is not gold", meaning: "हर चमकती चीज़ सोना नहीं होती", example_en: "The offer seemed great but turned out to be a scam – all that glitters is not gold.", example_hi: "ऑफर बहुत अच्छा लगा लेकिन धोखा निकला – हर चमकती चीज़ सोना नहीं होती।" },
+    { id: 451, idiom: "Beggars can't be choosers", meaning: "भिखारी चुनाव नहीं कर सकते", example_en: "I didn't like the job, but beggars can't be choosers.", example_hi: "मुझे नौकरी पसंद नहीं थी, लेकिन भिखारी चुनाव नहीं कर सकते।" },
+    { id: 452, idiom: "Blood is thicker than water", meaning: "खून पानी से गाढ़ा होता है (रिश्तेदारी महत्वपूर्ण)", example_en: "She helped her brother even though they fought – blood is thicker than water.", example_hi: "उसने अपने भाई की मदद की भले ही वे लड़े हों – खून पानी से गाढ़ा होता है।" },
+    { id: 453, idiom: "Burning bridges", meaning: "पुराने संबंधों को खत्म करना", example_en: "He quit his job without notice, burning bridges with his employer.", example_hi: "उसने बिना सूचना के नौकरी छोड़ी, अपने नियोक्ता के साथ संबंध खत्म कर लिए।" },
+    { id: 454, idiom: "Cross that bridge when you come to it", meaning: "जब आए तब देखेंगे", example_en: "I'm not worried yet; I'll cross that bridge when I come to it.", example_hi: "मैं अभी चिंतित नहीं हूँ; जब आएगा तब देखेंगे।" },
+    { id: 455, idiom: "Cut to the chase", meaning: "सीधे मुद्दे पर आना", example_en: "Let's cut to the chase and discuss the real issue.", example_hi: "चलो सीधे मुद्दे पर आते हैं और असली मुद्दे पर चर्चा करते हैं।" }
+];
+
+// ================================================================
+// 🔧 BUILD QUESTIONS – 20 SETS × 25 = 500 QUESTIONS
+// ================================================================
+const TOTAL_SETS = 20;
+const PER_SET = 25;
+
+function buildAllQuestions() {
+    const qs = [];
+    const shuffled = [...idiomsData];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    const used = shuffled.slice(0, TOTAL_SETS * PER_SET);
+    used.forEach((item, idx) => {
+        const askMeaning = Math.random() < 0.5;
+        const idiom = item.idiom;
+        const meaning = item.meaning;
+        const example = item.example_en;
+        let correctAnswer, options, wrongPool, qType, questionText;
+        if (askMeaning) {
+            correctAnswer = meaning;
+            wrongPool = idiomsData.filter(i => i.idiom !== item.idiom).map(i => i.meaning);
+            qType = "Meaning";
+            questionText = `What is the meaning of the idiom: "<span class="idiom-highlight">${idiom}</span>"?`;
+        } else {
+            correctAnswer = idiom;
+            wrongPool = idiomsData.filter(i => i.idiom !== item.idiom).map(i => i.idiom);
+            qType = "Idiom";
+            questionText = `Which idiom fits this sentence: "${example}"?`;
+        }
+        const shuffledWrong = wrongPool.filter(w => w !== correctAnswer);
+        for (let i = shuffledWrong.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledWrong[i], shuffledWrong[j]] = [shuffledWrong[j], shuffledWrong[i]];
+        }
+        const wrongs = shuffledWrong.slice(0, 3);
+        const opts = [correctAnswer, ...wrongs];
+        for (let i = opts.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opts[i], opts[j]] = [opts[j], opts[i]];
+        }
+        const correctIdx = opts.indexOf(correctAnswer);
+        const explanation = askMeaning
+            ? `"${idiom}" का अर्थ है: "${meaning}"। उदाहरण: "${example}"`
+            : `दिए गए वाक्य के लिए सही मुहावरा है: "${idiom}" जिसका अर्थ है: "${meaning}"।`;
+        qs.push({
+            id: idx + 1,
+            question: questionText,
+            options: opts,
+            correctIndex: correctIdx,
+            correctAnswer: correctAnswer,
+            type: qType,
+            explanation: explanation,
+            idiom: idiom,
+            meaning: meaning,
+            example: example,
+            set: Math.floor(idx / PER_SET) + 1
+        });
+    });
+    return qs;
+}
+
+// ================================================================
+// 🎮 STATE
+// ================================================================
+let allQuestions = [];
+let currentSet = 1;
+let setProgress = {};
+let selectedOptions = {};
+let answeredQuestions = {};
+
+function init() {
+    allQuestions = buildAllQuestions();
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        setProgress[s] = { attempted: 0, correct: 0, wrong: 0 };
+    }
+    renderDashboard();
+    renderSet(1);
+}
+
+function renderDashboard() {
+    const grid = document.getElementById('setsGrid');
+    let html = '';
+    let totalAttempted = 0, totalCorrect = 0;
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        const p = setProgress[s] || { attempted: 0, correct: 0, wrong: 0 };
+        totalAttempted += p.attempted;
+        totalCorrect += p.correct;
+        const status = p.attempted === 0 ? 'notstarted' : (p.attempted === PER_SET ? 'completed' : 'inprogress');
+        const label = status === 'notstarted' ? 'Not Started' : (status === 'completed' ? '✅ Done' : '⏳ In Progress');
+        const pct = p.attempted === 0 ? 0 : Math.round((p.correct / p.attempted) * 100);
+        html += `
+            <div class="set-card" onclick="openSet(${s})">
+                <div class="set-status ${status}">${label}</div>
+                <div class="set-num">${s}</div>
+                <div class="set-label">Set ${s}</div>
+                <div class="set-progress">${p.attempted}/${PER_SET} · ${pct}%</div>
+            </div>
+        `;
+    }
+    grid.innerHTML = html;
+    const totalQ = TOTAL_SETS * PER_SET;
+    document.getElementById('overallProgressText').textContent = `${totalAttempted} / ${totalQ}`;
+    document.getElementById('overallProgressBar').style.width = `${(totalAttempted / totalQ) * 100}%`;
+    document.getElementById('overallScoreText').textContent = totalAttempted === 0 ? '0%' : `${Math.round((totalCorrect / totalAttempted) * 100)}%`;
+}
+
+function renderSet(setNum) {
+    currentSet = setNum;
+    const questions = allQuestions.filter(q => q.set === setNum);
+    const container = document.getElementById('questionsContainer');
+    const p = setProgress[setNum] || { attempted: 0, correct: 0, wrong: 0 };
+
+    document.getElementById('setTitle').textContent = `Set ${setNum}`;
+    document.getElementById('setTag').innerHTML = `<i class="fas fa-layer-group"></i> Set ${setNum} / ${TOTAL_SETS}`;
+    document.getElementById('setIndicator').textContent = `Set ${setNum} of ${TOTAL_SETS}`;
+
+    document.getElementById('correctCount').textContent = p.correct || 0;
+    document.getElementById('wrongCount').textContent = p.wrong || 0;
+    document.getElementById('attemptedCount').textContent = p.attempted || 0;
+    const pct = p.attempted === 0 ? 0 : Math.round((p.correct / p.attempted) * 100);
+    document.getElementById('scorePercent').textContent = pct;
+
+    document.getElementById('prevSetBtn').disabled = (setNum === 1);
+    document.getElementById('nextSetBtn').disabled = (setNum === TOTAL_SETS);
+
+    let html = '';
+    questions.forEach((q, idx) => {
+        const qNum = idx + 1;
+        const isAnswered = answeredQuestions[q.id] || false;
+        const selected = selectedOptions[q.id];
+        html += `
+            <div class="question-card" id="qcard-${q.id}">
+                <div class="q-top">
+                    <span class="q-number">Q${qNum}</span>
+                    <span class="q-text">
+                        ${q.question}
+                        <span class="q-type">${q.type}</span>
+                    </span>
+                </div>
+                <div class="options" id="options-${q.id}">
+                    ${q.options.map((opt, oi) => `
+                        <label>
+                            <input type="radio" name="q${q.id}" value="${oi}" 
+                                ${isAnswered ? 'disabled' : ''}
+                                onchange="selectOption(${q.id}, ${oi})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="btn-answer" id="btn-${q.id}" 
+                    onclick="showAnswer(${q.id})" 
+                    ${isAnswered ? 'disabled' : ''}>
+                    <i class="fas fa-eye"></i> Show Answer
+                </button>
+                <div class="answer-box" id="answer-${q.id}">
+                    <div><span class="correct-word">✔ ${q.correctAnswer}</span> <span id="result-${q.id}"></span></div>
+                    <div class="explanation"><strong>💡 Explanation:</strong> ${q.explanation}</div>
+                    ${q.type === 'Meaning' ? `<div class="original-sentence"><i class="fas fa-quote-left"></i> Example: ${q.example}</div>` : ''}
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+
+    questions.forEach(q => {
+        if (answeredQuestions[q.id]) {
+            const ansBox = document.getElementById(`answer-${q.id}`);
+            if (ansBox) ansBox.style.display = 'block';
+            const selected = selectedOptions[q.id];
+            const isCorrect = (selected === q.correctIndex);
+            const resultSpan = document.getElementById(`result-${q.id}`);
+            if (resultSpan) {
+                if (isCorrect) { resultSpan.innerHTML = ' ✅ Correct!'; resultSpan.style.color = '#27ae60'; }
+                else { const chosen = q.options[selected] || 'None'; resultSpan.innerHTML = ` ❌ Your answer: ${chosen}`; resultSpan.style.color = '#e74c3c'; }
+            }
+            const optContainer = document.getElementById(`options-${q.id}`);
+            if (optContainer) {
+                const labels = optContainer.querySelectorAll('label');
+                labels.forEach((label, idx) => {
+                    if (idx === q.correctIndex) label.classList.add('correct-ans');
+                    else if (idx === selected && !isCorrect) label.classList.add('wrong-ans');
+                    const radio = label.querySelector('input');
+                    if (radio) radio.disabled = true;
+                });
+            }
+            const btn = document.getElementById(`btn-${q.id}`);
+            if (btn) btn.disabled = true;
+        }
+    });
+    renderDashboard();
+}
+
+function selectOption(qId, idx) {
+    if (answeredQuestions[qId]) return;
+    selectedOptions[qId] = idx;
+}
+
+function showAnswer(qId) {
+    if (answeredQuestions[qId]) return;
+    const q = allQuestions.find(item => item.id === qId);
+    if (!q) return;
+    const selected = selectedOptions[qId];
+    const isCorrect = (selected === q.correctIndex);
+
+    answeredQuestions[qId] = true;
+    const p = setProgress[q.set] || { attempted: 0, correct: 0, wrong: 0 };
+    p.attempted++;
+    if (isCorrect) p.correct++;
+    else p.wrong++;
+    setProgress[q.set] = p;
+
+    const ansBox = document.getElementById(`answer-${q.id}`);
+    if (ansBox) ansBox.style.display = 'block';
+
+    const resultSpan = document.getElementById(`result-${q.id}`);
+    if (resultSpan) {
+        if (isCorrect) { resultSpan.innerHTML = ' ✅ Correct!'; resultSpan.style.color = '#27ae60'; }
+        else { const chosen = q.options[selected] || 'None'; resultSpan.innerHTML = ` ❌ Your answer: ${chosen}`; resultSpan.style.color = '#e74c3c'; }
+    }
+
+    const optContainer = document.getElementById(`options-${q.id}`);
+    if (optContainer) {
+        const labels = optContainer.querySelectorAll('label');
+        labels.forEach((label, idx) => {
+            if (idx === q.correctIndex) label.classList.add('correct-ans');
+            else if (idx === selected && !isCorrect) label.classList.add('wrong-ans');
+            const radio = label.querySelector('input');
+            if (radio) radio.disabled = true;
+        });
+    }
+    const btn = document.getElementById(`btn-${q.id}`);
+    if (btn) btn.disabled = true;
+
+    renderSet(q.set);
+}
+
+function openSet(setNum) {
+    if (setNum < 1 || setNum > TOTAL_SETS) return;
+    document.getElementById('page-dashboard').classList.remove('active');
+    document.getElementById('page-practice').classList.add('active');
+    renderSet(setNum);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToDashboard() {
+    document.getElementById('page-practice').classList.remove('active');
+    document.getElementById('page-dashboard').classList.add('active');
+    renderDashboard();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function changeSet(delta) {
+    const newSet = currentSet + delta;
+    if (newSet < 1 || newSet > TOTAL_SETS) return;
+    openSet(newSet);
+}
+
+function resetAllProgress() {
+    if (!confirm('Reset all progress for all sets? This cannot be undone.')) return;
+    for (let s = 1; s <= TOTAL_SETS; s++) {
+        setProgress[s] = { attempted: 0, correct: 0, wrong: 0 };
+    }
+    selectedOptions = {};
+    answeredQuestions = {};
+    allQuestions = buildAllQuestions();
+    renderDashboard();
+    if (document.getElementById('page-practice').classList.contains('active')) {
+        renderSet(currentSet);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

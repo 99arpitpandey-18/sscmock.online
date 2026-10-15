@@ -1,0 +1,3254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M3-R5 Chapter 6 | Functions | Python Programming | NIELIT O Level</title>
+
+<meta name="description"
+content="M3-R5 Functions complete bilingual notes with Python examples, output, parameters, arguments, return statement, default arguments, keyword arguments, scope and exam questions.">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 5% 5%,rgba(0,212,255,.12),transparent 28%),
+        radial-gradient(circle at 95% 10%,rgba(168,85,247,.13),transparent 30%),
+        radial-gradient(circle at 50% 100%,rgba(34,197,94,.08),transparent 30%),
+        linear-gradient(135deg,#07111f,#0b1425 50%,#07101c);
+
+    color:#eaf4ff;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        radial-gradient(circle,#36d9ff 1px,transparent 1px),
+        radial-gradient(circle,#a78bfa 1px,transparent 1px);
+    background-size:120px 120px,180px 180px;
+    background-position:20px 40px,90px 100px;
+    opacity:.12;
+    z-index:-1;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+    --accent:#35ddff;
+    --accent2:#8b5cf6;
+    --success:#35e58a;
+    --warning:#ffd166;
+    --danger:#ff6b81;
+    --text:#eaf4ff;
+    --muted:#8fa1b9;
+    --card:rgba(17,32,53,.82);
+    --border:rgba(255,255,255,.09);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:999;
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    background:rgba(5,13,25,.80);
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    padding:13px 4%;
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:900;
+    color:#fff;
+
+    background:
+        linear-gradient(135deg,
+        rgba(53,221,255,.25),
+        rgba(139,92,246,.25));
+
+    border:1px solid rgba(53,221,255,.35);
+
+    box-shadow:
+        0 0 25px rgba(53,221,255,.15);
+}
+
+.brand-title{
+    font-size:17px;
+    font-weight:800;
+}
+
+.brand-sub{
+    font-size:11px;
+    color:#8192aa;
+    margin-top:3px;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.back-btn,
+.control-btn{
+    border:1px solid rgba(255,255,255,.10);
+
+    background:rgba(255,255,255,.045);
+
+    color:#dcecff;
+
+    padding:9px 12px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.back-btn:hover,
+.control-btn:hover{
+    border-color:var(--accent);
+    color:var(--accent);
+    transform:translateY(-2px);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:38px 4% 80px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:42px;
+
+    border-radius:26px;
+
+    background:
+        linear-gradient(135deg,
+        rgba(20,39,65,.90),
+        rgba(9,21,38,.82));
+
+    border:1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.04);
+
+    overflow:hidden;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    width:170px;
+    height:3px;
+
+    top:0;
+    left:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent2),
+            var(--success)
+        );
+
+    box-shadow:0 0 22px var(--accent);
+}
+
+.hero::after{
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    right:-120px;
+    top:-130px;
+
+    background:rgba(53,221,255,.08);
+
+    filter:blur(55px);
+
+    border-radius:50%;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:8px 13px;
+
+    border-radius:30px;
+
+    color:var(--accent);
+
+    background:rgba(53,221,255,.08);
+
+    border:1px solid rgba(53,221,255,.18);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    margin-bottom:17px;
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,52px);
+
+    line-height:1.1;
+
+    margin-bottom:13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            var(--accent),
+            #bda8ff
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:850px;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    line-height:1.8;
+}
+
+.stats{
+    margin-top:27px;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:13px;
+}
+
+.stat{
+    padding:17px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat strong{
+    display:block;
+
+    font-size:21px;
+
+    color:var(--accent);
+
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:#8192a9;
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   THEME PANEL
+========================================================= */
+
+.theme-panel{
+    margin-top:20px;
+
+    padding:17px;
+
+    border-radius:17px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+.theme-title{
+    font-size:12px;
+    color:#aebed1;
+    font-weight:700;
+}
+
+.theme-buttons{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.theme-btn{
+    width:28px;
+    height:28px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,255,255,.18);
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.theme-btn:hover{
+    transform:scale(1.12);
+}
+
+.t-cyan{
+    background:#35ddff;
+}
+
+.t-purple{
+    background:#a78bfa;
+}
+
+.t-green{
+    background:#35e58a;
+}
+
+.t-orange{
+    background:#ff9f43;
+}
+
+.t-pink{
+    background:#ff6bb5;
+}
+
+.t-gold{
+    background:#ffd166;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin:40px 0 18px;
+}
+
+.section-icon{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:rgba(53,221,255,.08);
+
+    border:1px solid rgba(53,221,255,.16);
+
+    font-size:19px;
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:#7487a1;
+
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+
+/* =========================================================
+   CONTENT CARD
+========================================================= */
+
+.content-card{
+    padding:28px;
+
+    border-radius:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,36,59,.88),
+            rgba(9,21,37,.80)
+        );
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.16);
+
+    margin-bottom:18px;
+}
+
+
+/* =========================================================
+   BILINGUAL
+========================================================= */
+
+.en{
+    color:#eef7ff;
+}
+
+.hi{
+    color:#93a7bd;
+}
+
+.definition{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+}
+
+.lang-box{
+    padding:20px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.lang-label{
+    display:inline-block;
+
+    padding:5px 9px;
+
+    border-radius:7px;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    margin-bottom:12px;
+
+    background:rgba(53,221,255,.09);
+
+    color:var(--accent);
+}
+
+.lang-box p{
+    line-height:1.75;
+    font-size:13px;
+}
+
+
+/* =========================================================
+   CONCEPT GRID
+========================================================= */
+
+.grid-2{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:17px;
+}
+
+.concept-card{
+    padding:22px;
+
+    border-radius:17px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+
+    transition:.3s;
+}
+
+.concept-card:hover{
+    transform:translateY(-4px);
+
+    border-color:rgba(53,221,255,.28);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.20);
+}
+
+.concept-card h3{
+    font-size:16px;
+    margin-bottom:9px;
+}
+
+.concept-card p{
+    color:#91a3ba;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+.number{
+    width:35px;
+    height:35px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    margin-bottom:13px;
+
+    color:var(--accent);
+
+    background:rgba(53,221,255,.08);
+
+    border:1px solid rgba(53,221,255,.14);
+
+    font-weight:900;
+}
+
+
+/* =========================================================
+   CODE BLOCK
+========================================================= */
+
+.code-card{
+    margin-top:17px;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    background:#050b14;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.28);
+}
+
+.code-head{
+    padding:10px 14px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#0c1624;
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.code-head span{
+    font-size:10px;
+    color:#8093ad;
+}
+
+.dot-group{
+    display:flex;
+    gap:5px;
+}
+
+.dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+}
+
+.dot:nth-child(1){
+    background:#ff6b81;
+}
+
+.dot:nth-child(2){
+    background:#ffd166;
+}
+
+.dot:nth-child(3){
+    background:#35e58a;
+}
+
+pre{
+    padding:20px;
+
+    overflow-x:auto;
+
+    color:#dcecff;
+
+    font-family:
+        Consolas,
+        Monaco,
+        monospace;
+
+    font-size:12px;
+
+    line-height:1.75;
+}
+
+.keyword{
+    color:#c084fc;
+}
+
+.function{
+    color:#38dfff;
+}
+
+.string{
+    color:#86efac;
+}
+
+.comment{
+    color:#64748b;
+}
+
+.number-code{
+    color:#fbbf24;
+}
+
+
+/* =========================================================
+   OUTPUT
+========================================================= */
+
+.output{
+    margin-top:12px;
+
+    padding:17px;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(53,229,138,.07),
+            rgba(53,221,255,.04)
+        );
+
+    border:1px solid rgba(53,229,138,.16);
+}
+
+.output-title{
+    color:var(--success);
+
+    font-size:10px;
+
+    font-weight:800;
+
+    margin-bottom:8px;
+}
+
+.output pre{
+    padding:0;
+
+    color:#d9ffe9;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   TIP BOXES
+========================================================= */
+
+.tip,
+.warning,
+.exam{
+    margin-top:16px;
+
+    padding:17px;
+
+    border-radius:14px;
+
+    line-height:1.7;
+
+    font-size:12px;
+}
+
+.tip{
+    background:rgba(53,221,255,.06);
+
+    border-left:3px solid var(--accent);
+}
+
+.warning{
+    background:rgba(255,107,129,.06);
+
+    border-left:3px solid var(--danger);
+}
+
+.exam{
+    background:rgba(255,209,102,.06);
+
+    border-left:3px solid var(--warning);
+}
+
+.tip strong{
+    color:var(--accent);
+}
+
+.warning strong{
+    color:var(--danger);
+}
+
+.exam strong{
+    color:var(--warning);
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:650px;
+}
+
+th{
+    text-align:left;
+
+    padding:13px;
+
+    font-size:11px;
+
+    color:#dff8ff;
+
+    background:rgba(53,221,255,.07);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+td{
+    padding:13px;
+
+    color:#91a3b9;
+
+    font-size:11px;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+tr:hover td{
+    background:rgba(255,255,255,.025);
+}
+
+
+/* =========================================================
+   SYNTAX
+========================================================= */
+
+.syntax{
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:rgba(167,139,250,.06);
+
+    border:1px solid rgba(167,139,250,.14);
+
+    color:#d9ccff;
+
+    font-family:Consolas,monospace;
+
+    font-size:12px;
+
+    overflow-x:auto;
+}
+
+
+/* =========================================================
+   QUESTION CARDS
+========================================================= */
+
+.question{
+    padding:19px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+
+    margin-bottom:12px;
+}
+
+.question strong{
+    color:#eef7ff;
+
+    font-size:12px;
+}
+
+.answer{
+    margin-top:10px;
+
+    color:var(--success);
+
+    font-size:11px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   CHECKLIST
+========================================================= */
+
+.checklist{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:11px;
+}
+
+.check-item{
+    padding:13px;
+
+    border-radius:11px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    color:#9dafc3;
+
+    font-size:11px;
+}
+
+.check-item::before{
+    content:"✓";
+
+    color:var(--success);
+
+    font-weight:bold;
+
+    margin-right:8px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    text-align:center;
+
+    margin-top:50px;
+
+    padding:25px;
+
+    border-top:1px solid rgba(255,255,255,.07);
+
+    color:#687b95;
+
+    font-size:10px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .definition,
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+
+    .checklist{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .header-actions{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .container{
+        padding:25px 4% 60px;
+    }
+
+    .hero{
+        padding:27px 20px;
+    }
+
+    .hero h1{
+        font-size:31px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .content-card{
+        padding:20px 16px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            M3
+        </div>
+
+        <div>
+            <div class="brand-title">
+                M3-R5 Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Programming & Problem Solving Through Python
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <a href="m3-study-zone.html" class="back-btn">
+            ← M3 Home
+        </a>
+
+        <button class="control-btn"
+        onclick="toggleLanguage()">
+            EN / HI
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+    <div class="badge">
+        ✦ NIELIT O LEVEL • M3-R5 • CHAPTER 06
+    </div>
+
+    <h1>
+        Functions
+    </h1>
+
+    <p>
+        Master Python Functions from zero to exam level.
+        Learn function definition, calling functions,
+        parameters, arguments, return statement,
+        default arguments, keyword arguments,
+        variable scope, recursion and practical examples
+        in simple bilingual English + Hindi.
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>06</strong>
+            <span>Core Concepts</span>
+        </div>
+
+        <div class="stat">
+            <strong>20+</strong>
+            <span>Examples</span>
+        </div>
+
+        <div class="stat">
+            <strong>15+</strong>
+            <span>Exam Points</span>
+        </div>
+
+        <div class="stat">
+            <strong>2×</strong>
+            <span>Practice Focus</span>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     THEME SELECTOR
+========================================================= -->
+
+<div class="theme-panel">
+
+    <div class="theme-title">
+        🎨 Choose Your Study Theme / अपनी Study Theme चुनें
+    </div>
+
+    <div class="theme-buttons">
+
+        <button class="theme-btn t-cyan"
+        onclick="changeTheme('#35ddff','#8b5cf6')"></button>
+
+        <button class="theme-btn t-purple"
+        onclick="changeTheme('#a78bfa','#ec4899')"></button>
+
+        <button class="theme-btn t-green"
+        onclick="changeTheme('#35e58a','#22d3ee')"></button>
+
+        <button class="theme-btn t-orange"
+        onclick="changeTheme('#ff9f43','#ffd166')"></button>
+
+        <button class="theme-btn t-pink"
+        onclick="changeTheme('#ff6bb5','#a78bfa')"></button>
+
+        <button class="theme-btn t-gold"
+        onclick="changeTheme('#ffd166','#ff9f43')"></button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     SECTION 1
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📖
+    </div>
+
+    <div>
+        <h2>1. What is a Function?</h2>
+        <p>Function ka basic concept</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="definition">
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            ENGLISH
+        </span>
+
+        <p class="en">
+            A function is a reusable block of code designed
+            to perform a specific task. Instead of writing
+            the same code again and again, we create a
+            function once and call it whenever required.
+        </p>
+
+    </div>
+
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            हिंदी
+        </span>
+
+        <p class="hi">
+            Function code का एक reusable block होता है जो
+            किसी particular task को perform करता है।
+            एक ही code को बार-बार लिखने के बजाय हम उसे
+            function में लिखकर जरूरत के अनुसार call करते हैं।
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="tip">
+
+<strong>💡 Easy Trick:</strong>
+
+Function को एक machine की तरह समझो।
+आप उसे input देते हो → machine काम करती है → output देती है।
+
+<br><br>
+
+Function = <b>Input → Processing → Output</b>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SECTION 2
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🧠
+    </div>
+
+    <div>
+        <h2>2. Why Do We Use Functions?</h2>
+        <p>Functions ke advantages</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="grid-2">
+
+    <div class="concept-card">
+
+        <div class="number">01</div>
+
+        <h3>Code Reusability</h3>
+
+        <p>
+            <span class="en">
+            Write code once and use it multiple times.
+            </span>
+            <br><br>
+            <span class="hi">
+            Code को एक बार लिखकर कई बार use किया जा सकता है।
+            </span>
+        </p>
+
+    </div>
+
+
+    <div class="concept-card">
+
+        <div class="number">02</div>
+
+        <h3>Easy Debugging</h3>
+
+        <p>
+            <span class="en">
+            Functions divide a large program into smaller
+            manageable blocks.
+            </span>
+            <br><br>
+            <span class="hi">
+            बड़े program को छोटे blocks में divide करने से
+            error find करना आसान होता है।
+            </span>
+        </p>
+
+    </div>
+
+
+    <div class="concept-card">
+
+        <div class="number">03</div>
+
+        <h3>Less Repetition</h3>
+
+        <p>
+            <span class="en">
+            Repeated statements do not need to be written again.
+            </span>
+            <br><br>
+            <span class="hi">
+            बार-बार same statements लिखने की जरूरत नहीं होती।
+            </span>
+        </p>
+
+    </div>
+
+
+    <div class="concept-card">
+
+        <div class="number">04</div>
+
+        <h3>Better Organization</h3>
+
+        <p>
+            <span class="en">
+            A complex program becomes easier to understand.
+            </span>
+            <br><br>
+            <span class="hi">
+            Complex program ज्यादा organized और easy to understand
+            हो जाता है।
+            </span>
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SECTION 3
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🏗️
+    </div>
+
+    <div>
+        <h2>3. Defining a Function</h2>
+        <p>Function kaise create karte hain?</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="definition">
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            ENGLISH
+        </span>
+
+        <p class="en">
+            In Python, a function is created using the
+            <b>def</b> keyword followed by the function name
+            and parentheses.
+        </p>
+
+    </div>
+
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            हिंदी
+        </span>
+
+        <p class="hi">
+            Python में function बनाने के लिए
+            <b>def</b> keyword का use किया जाता है।
+            इसके बाद function का name और parentheses
+            लिखे जाते हैं।
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="syntax">
+
+def function_name():
+    statements
+
+
+Example:
+
+def greet():
+    print("Hello")
+</div>
+
+
+<div class="code-card">
+
+<div class="code-head">
+
+    <span>🐍 Python Example 01</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">greet</span>():
+    print(<span class="string">"Hello Student!"</span>)
+
+greet()
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+Hello Student!
+</pre>
+
+</div>
+
+
+<div class="tip">
+
+<strong>📌 Remember:</strong>
+
+Function define करने से function automatically execute नहीं होता।
+उसे execute करने के लिए function को <b>call</b> करना पड़ता है।
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SECTION 4
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📞
+    </div>
+
+    <div>
+        <h2>4. Calling a Function</h2>
+        <p>Function ko execute kaise karein?</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="definition">
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            ENGLISH
+        </span>
+
+        <p class="en">
+            Calling a function means executing the statements
+            written inside that function.
+        </p>
+
+    </div>
+
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            हिंदी
+        </span>
+
+        <p class="hi">
+            Function calling का मतलब है function के अंदर लिखे
+            statements को execute करना।
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 02</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">welcome</span>():
+    print(<span class="string">"Welcome to M3-R5"</span>)
+
+<span class="function">welcome</span>()
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+Welcome to M3-R5
+</pre>
+
+</div>
+
+
+<div class="exam">
+
+<strong>🎯 EXAM POINT:</strong>
+
+Definition और Calling अलग concepts हैं।
+
+<b>def welcome():</b> → Function definition
+
+<b>welcome()</b> → Function call
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SECTION 5 PARAMETERS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📥
+    </div>
+
+    <div>
+        <h2>5. Parameters & Arguments</h2>
+        <p>Input function ke andar kaise bhejte hain?</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="definition">
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            PARAMETER
+        </span>
+
+        <p class="en">
+            A parameter is a variable written inside the
+            function definition.
+        </p>
+
+        <br>
+
+        <p class="hi">
+            Function definition में लिखे variable को parameter कहते हैं।
+        </p>
+
+    </div>
+
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            ARGUMENT
+        </span>
+
+        <p class="en">
+            An argument is the actual value passed to a function
+            when it is called.
+        </p>
+
+        <br>
+
+        <p class="hi">
+            Function call करते समय दी गई actual value को argument कहते हैं।
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 03</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">square</span>(n):
+    print(n * n)
+
+square(<span class="number-code">5</span>)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+25
+</pre>
+
+</div>
+
+
+<div class="tip">
+
+<strong>💡 याद रखने की Trick:</strong>
+
+<b>Parameter = Placeholder</b>
+
+<b>Argument = Actual Value</b>
+
+Example:
+
+<code>def square(n):</code>
+
+यहाँ <b>n = Parameter</b>
+
+और
+
+<code>square(5)</code>
+
+यहाँ <b>5 = Argument</b>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MULTIPLE PARAMETERS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        ➕
+    </div>
+
+    <div>
+        <h2>6. Multiple Parameters</h2>
+        <p>Ek function mein multiple inputs</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 04 — Addition</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">add</span>(a, b):
+    print(a + b)
+
+add(<span class="number-code">10</span>, <span class="number-code">20</span>)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+30
+</pre>
+
+</div>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 05 — Student Details</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">student</span>(name, age):
+    print(<span class="string">"Name:"</span>, name)
+    print(<span class="string">"Age:"</span>, age)
+
+student(<span class="string">"Rahul"</span>, <span class="number-code">20</span>)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+Name: Rahul
+Age: 20
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     RETURN
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🔙
+    </div>
+
+    <div>
+        <h2>7. return Statement</h2>
+        <p>Function se value wapas lena</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="definition">
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            ENGLISH
+        </span>
+
+        <p class="en">
+            The return statement sends a value back from
+            a function to the place where the function was called.
+        </p>
+
+    </div>
+
+
+    <div class="lang-box">
+
+        <span class="lang-label">
+            हिंदी
+        </span>
+
+        <p class="hi">
+            return statement function से value को वापस उस जगह
+            भेजता है जहाँ function को call किया गया था।
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 06 — Return Value</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">add</span>(a, b):
+    <span class="keyword">return</span> a + b
+
+result = add(<span class="number-code">15</span>, <span class="number-code">25</span>)
+
+print(result)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+40
+</pre>
+
+</div>
+
+
+<div class="exam">
+
+<strong>🎯 IMPORTANT:</strong>
+
+<b>print()</b> value ko screen par display karta hai.
+
+<br>
+
+<b>return</b> value ko function se caller ke paas wapas bhejta hai.
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PRINT VS RETURN
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        ⚖️
+    </div>
+
+    <div>
+        <h2>8. print() vs return</h2>
+        <p>Very important exam comparison</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+    <th>print()</th>
+    <th>return</th>
+</tr>
+
+<tr>
+    <td>Displays output on screen.</td>
+    <td>Sends value back from function.</td>
+</tr>
+
+<tr>
+    <td>Generally used for displaying.</td>
+    <td>Used when result is needed elsewhere.</td>
+</tr>
+
+<tr>
+    <td>Does not return the calculated value to caller in the same way.</td>
+    <td>Returns a value to caller.</td>
+</tr>
+
+<tr>
+    <td>Example: print(a+b)</td>
+    <td>Example: return a+b</td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     DEFAULT ARGUMENT
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        ⚙️
+    </div>
+
+    <div>
+        <h2>9. Default Arguments</h2>
+        <p>Default value wale parameters</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p class="en"
+style="font-size:13px;line-height:1.8;">
+
+A default argument is a parameter that already has a
+default value. If the caller does not provide a value,
+Python uses the default value.
+
+</p>
+
+<br>
+
+<p class="hi"
+style="font-size:13px;line-height:1.8;">
+
+Default argument में parameter को पहले से एक value दी जाती है।
+अगर function call के समय value नहीं दी जाती, तो default value use होती है।
+
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 07</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">greet</span>(name=<span class="string">"Student"</span>):
+    print(<span class="string">"Hello"</span>, name)
+
+greet()
+greet(<span class="string">"Amit"</span>)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+Hello Student
+Hello Amit
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     KEYWORD ARGUMENT
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🔑
+    </div>
+
+    <div>
+        <h2>10. Keyword Arguments</h2>
+        <p>Parameter name ke through value dena</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p class="en"
+style="font-size:13px;line-height:1.8;">
+
+In keyword arguments, values are passed using parameter names.
+Therefore, the order of arguments is not important.
+
+</p>
+
+<br>
+
+<p class="hi"
+style="font-size:13px;line-height:1.8;">
+
+Keyword argument में value parameter के नाम के साथ pass की जाती है।
+इसलिए arguments का order important नहीं रहता।
+
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 08</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">student</span>(name, age):
+    print(name, age)
+
+student(age=<span class="number-code">20</span>, name=<span class="string">"Ravi"</span>)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+Ravi 20
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     POSITIONAL
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📍
+    </div>
+
+    <div>
+        <h2>11. Positional Arguments</h2>
+        <p>Position ke according values</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<p class="en"
+style="font-size:13px;line-height:1.8;">
+
+In positional arguments, values are assigned according to
+their position in the function call.
+
+</p>
+
+<br>
+
+<p class="hi"
+style="font-size:13px;line-height:1.8;">
+
+Positional arguments में values उनकी position के according
+parameters को assign होती हैं।
+
+</p>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 09</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">info</span>(name, city):
+    print(<span class="string">"Name:"</span>, name)
+    print(<span class="string">"City:"</span>, city)
+
+info(<span class="string">"Arjun"</span>, <span class="string">"Agra"</span>)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+Name: Arjun
+City: Agra
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SCOPE
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🌐
+    </div>
+
+    <div>
+        <h2>12. Local & Global Variables</h2>
+        <p>Variable scope ko easy way mein samjho</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="grid-2">
+
+<div class="concept-card">
+
+<div class="number">
+    L
+</div>
+
+<h3>
+    Local Variable
+</h3>
+
+<p>
+
+<span class="en">
+A variable created inside a function is generally
+local to that function.
+</span>
+
+<br><br>
+
+<span class="hi">
+Function के अंदर बनाया गया variable generally
+उस function के scope तक limited होता है।
+</span>
+
+</p>
+
+</div>
+
+
+<div class="concept-card">
+
+<div class="number">
+    G
+</div>
+
+<h3>
+    Global Variable
+</h3>
+
+<p>
+
+<span class="en">
+A variable created outside functions is a global variable
+and can generally be accessed from functions.
+</span>
+
+<br><br>
+
+<span class="hi">
+Function के बाहर बनाया गया variable global variable
+कहलाता है।
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 10</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+x = <span class="number-code">10</span>
+
+<span class="keyword">def</span> <span class="function">show</span>():
+    y = <span class="number-code">20</span>
+
+    print(x)
+    print(y)
+
+show()
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+10
+20
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     RECURSION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🔄
+    </div>
+
+    <div>
+        <h2>13. Recursive Function</h2>
+        <p>Function ka khud ko call karna</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="definition">
+
+<div class="lang-box">
+
+<span class="lang-label">
+ENGLISH
+</span>
+
+<p class="en">
+A recursive function is a function that calls itself.
+A proper stopping condition, called a base case,
+is necessary to stop recursion.
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<span class="lang-label">
+हिंदी
+</span>
+
+<p class="hi">
+Recursive function वह function है जो खुद को call करता है।
+Recursion को रोकने के लिए base condition जरूरी होती है।
+</p>
+
+</div>
+
+</div>
+
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>🐍 Example 11 — Factorial</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">factorial</span>(n):
+
+    <span class="keyword">if</span> n == <span class="number-code">0</span>:
+        <span class="keyword">return</span> <span class="number-code">1</span>
+
+    <span class="keyword">return</span> n * factorial(n - <span class="number-code">1</span>)
+
+print(factorial(<span class="number-code">5</span>))
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+120
+</pre>
+
+</div>
+
+
+<div class="warning">
+
+<strong>⚠️ IMPORTANT:</strong>
+
+Recursive function में base condition नहीं होगी तो
+function repeatedly call हो सकता है और program में
+recursion-related error आ सकता है।
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     BUILT IN VS USER DEFINED
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🧰
+    </div>
+
+    <div>
+        <h2>14. Types of Functions</h2>
+        <p>Built-in और User-defined functions</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+    <th>Type</th>
+    <th>Meaning / अर्थ</th>
+    <th>Examples</th>
+</tr>
+
+<tr>
+    <td>Built-in Function</td>
+    <td>
+        Python में पहले से available functions
+    </td>
+    <td>
+        print(), len(), type(), max(), min()
+    </td>
+</tr>
+
+<tr>
+    <td>User-defined Function</td>
+    <td>
+        Programmer द्वारा बनाया गया function
+    </td>
+    <td>
+        add(), greet(), square()
+    </td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MORE EXAMPLES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🚀
+    </div>
+
+    <div>
+        <h2>15. More Practical Examples</h2>
+        <p>Concept ko strong karne ke liye extra examples</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<h3 style="margin-bottom:10px;">
+Example 12 — Even or Odd
+</h3>
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>Python</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">check_even_odd</span>(n):
+
+    <span class="keyword">if</span> n % <span class="number-code">2</span> == <span class="number-code">0</span>:
+        <span class="keyword">return</span> <span class="string">"Even"</span>
+
+    <span class="keyword">return</span> <span class="string">"Odd"</span>
+
+
+print(check_even_odd(<span class="number-code">15</span>))
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+Odd
+</pre>
+
+</div>
+
+
+
+<h3 style="margin:25px 0 10px;">
+Example 13 — Maximum of Two Numbers
+</h3>
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>Python</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">maximum</span>(a, b):
+
+    <span class="keyword">if</span> a &gt; b:
+        <span class="keyword">return</span> a
+
+    <span class="keyword">return</span> b
+
+
+print(maximum(<span class="number-code">45</span>, <span class="number-code">72</span>))
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+72
+</pre>
+
+</div>
+
+
+
+<h3 style="margin:25px 0 10px;">
+Example 14 — Calculate Area
+</h3>
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>Python</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">area_rectangle</span>(length, width):
+
+    <span class="keyword">return</span> length * width
+
+
+area = area_rectangle(<span class="number-code">10</span>, <span class="number-code">5</span>)
+
+print(<span class="string">"Area ="</span>, area)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+Area = 50
+</pre>
+
+</div>
+
+
+
+<h3 style="margin:25px 0 10px;">
+Example 15 — Multiple Return Values
+</h3>
+
+<div class="code-card">
+
+<div class="code-head">
+    <span>Python</span>
+
+    <div class="dot-group">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<pre>
+<span class="keyword">def</span> <span class="function">calculate</span>(a, b):
+
+    <span class="keyword">return</span> a+b, a-b, a*b
+
+
+x, y, z = calculate(<span class="number-code">10</span>, <span class="number-code">5</span>)
+
+print(x)
+print(y)
+print(z)
+</pre>
+
+</div>
+
+
+<div class="output">
+
+<div class="output-title">
+    ▶ OUTPUT
+</div>
+
+<pre>
+15
+5
+50
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FUNCTION FLOW
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🔁
+    </div>
+
+    <div>
+        <h2>16. Function Execution Flow</h2>
+        <p>Function internally kaise work karta hai?</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="checklist">
+
+    <div class="check-item">
+        Function is defined using def
+    </div>
+
+    <div class="check-item">
+        Function receives arguments
+    </div>
+
+    <div class="check-item">
+        Parameters receive values
+    </div>
+
+    <div class="check-item">
+        Function body executes
+    </div>
+
+    <div class="check-item">
+        return sends result back
+    </div>
+
+    <div class="check-item">
+        Function call completes
+    </div>
+
+</div>
+
+
+<div class="tip">
+
+<strong>🧠 Super Easy Flow:</strong>
+
+<br><br>
+
+<b>Define → Call → Input → Process → Return → Result</b>
+
+<br><br>
+
+यही flow exam में function समझने के लिए सबसे useful है।
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     COMMON MISTAKES
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        ⚠️
+    </div>
+
+    <div>
+        <h2>17. Common Mistakes</h2>
+        <p>Students commonly make these errors</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="warning">
+
+<strong>1. Function call भूल जाना</strong>
+
+<br>
+
+Function define कर दिया लेकिन call नहीं किया।
+
+</div>
+
+
+<div class="warning">
+
+<strong>2. Indentation गलत करना</strong>
+
+<br>
+
+Python में function body correctly indented होना जरूरी है।
+
+</div>
+
+
+<div class="warning">
+
+<strong>3. Parameter और Argument को confuse करना</strong>
+
+<br>
+
+Parameter → definition में variable
+
+<br>
+
+Argument → call के समय actual value
+
+</div>
+
+
+<div class="warning">
+
+<strong>4. print और return को same समझना</strong>
+
+<br>
+
+print display करता है जबकि return value को caller के पास भेजता है।
+
+</div>
+
+
+<div class="warning">
+
+<strong>5. Recursive function में base condition भूलना</strong>
+
+<br>
+
+Recursion को stop करने के लिए base condition जरूरी है।
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     EXAM CAPSULE
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🎯
+    </div>
+
+    <div>
+        <h2>18. Exam Power Capsule</h2>
+        <p>Last-minute revision points</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="checklist">
+
+    <div class="check-item">
+        Function is a reusable block of code.
+    </div>
+
+    <div class="check-item">
+        def keyword is used to define a function.
+    </div>
+
+    <div class="check-item">
+        Function call executes the function.
+    </div>
+
+    <div class="check-item">
+        Parameter is a variable in function definition.
+    </div>
+
+    <div class="check-item">
+        Argument is actual value passed to function.
+    </div>
+
+    <div class="check-item">
+        return sends a value back to caller.
+    </div>
+
+    <div class="check-item">
+        Default argument has a predefined value.
+    </div>
+
+    <div class="check-item">
+        Keyword arguments use parameter names.
+    </div>
+
+    <div class="check-item">
+        Positional arguments depend on position.
+    </div>
+
+    <div class="check-item">
+        Recursive function calls itself.
+    </div>
+
+    <div class="check-item">
+        Recursion needs a base condition.
+    </div>
+
+    <div class="check-item">
+        Functions improve code reusability.
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MCQ
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📝
+    </div>
+
+    <div>
+        <h2>19. Quick Practice Questions</h2>
+        <p>Chapter 6 self-test</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+
+<div class="question">
+
+<strong>
+Q1. Which keyword is used to define a function in Python?
+</strong>
+
+<div class="answer">
+Answer: <b>def</b>
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+Q2. What is an actual value passed to a function called?
+</strong>
+
+<div class="answer">
+Answer: <b>Argument</b>
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+Q3. Which statement sends a value back from a function?
+</strong>
+
+<div class="answer">
+Answer: <b>return</b>
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+Q4. What is a function that calls itself called?
+</strong>
+
+<div class="answer">
+Answer: <b>Recursive Function</b>
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+Q5. Which type of argument depends on the order of values?
+</strong>
+
+<div class="answer">
+Answer: <b>Positional Argument</b>
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+Q6. Which arguments use parameter names during function call?
+</strong>
+
+<div class="answer">
+Answer: <b>Keyword Arguments</b>
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+Q7. What is the main advantage of functions?
+</strong>
+
+<div class="answer">
+Answer: <b>Code Reusability</b>
+</div>
+
+</div>
+
+
+<div class="question">
+
+<strong>
+Q8. What is required to stop recursion?
+</strong>
+
+<div class="answer">
+Answer: <b>Base Condition / Base Case</b>
+</div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FINAL REVISION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🏆
+    </div>
+
+    <div>
+        <h2>20. One-Minute Revision</h2>
+        <p>Chapter ko ek baar mein revise karo</p>
+    </div>
+
+</div>
+
+
+<section class="content-card">
+
+<div class="tip">
+
+<strong>FUNCTION = Reusable Code Block</strong>
+
+<br><br>
+
+<b>def</b> → function create
+
+<br>
+
+<b>call()</b> → function execute
+
+<br>
+
+<b>parameter</b> → definition में variable
+
+<br>
+
+<b>argument</b> → call में actual value
+
+<br>
+
+<b>return</b> → value वापस भेजना
+
+<br>
+
+<b>default argument</b> → predefined value
+
+<br>
+
+<b>keyword argument</b> → parameter name के साथ value
+
+<br>
+
+<b>positional argument</b> → position के अनुसार value
+
+<br>
+
+<b>recursive function</b> → खुद को call करने वाला function
+
+<br>
+
+<b>base case</b> → recursion रोकने की condition
+
+</div>
+
+
+<div class="exam">
+
+<strong>🔥 FINAL EXAM TRICK</strong>
+
+<br><br>
+
+अगर question में लिखा हो:
+
+<br><br>
+
+<b>
+"function is defined using which keyword?"
+</b>
+
+→ <b>def</b>
+
+<br><br>
+
+<b>
+"actual value passed to function?"
+</b>
+
+→ <b>Argument</b>
+
+<br><br>
+
+<b>
+"value returned from function?"
+</b>
+
+→ <b>return</b>
+
+<br><br>
+
+<b>
+"function calling itself?"
+</b>
+
+→ <b>Recursion</b>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <p>
+        M3-R5 • Chapter 6 • Functions
+    </p>
+
+    <p>
+        Bilingual Python Notes • Theory + Examples + Output + Exam Revision
+    </p>
+
+</footer>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   THEME CHANGER
+========================================================= */
+
+function changeTheme(primary, secondary){
+
+    document.documentElement.style.setProperty(
+        "--accent",
+        primary
+    );
+
+    document.documentElement.style.setProperty(
+        "--accent2",
+        secondary
+    );
+
+}
+
+
+/* =========================================================
+   LANGUAGE TOGGLE
+========================================================= */
+
+let hindiMode = false;
+
+function toggleLanguage(){
+
+    const hiElements =
+        document.querySelectorAll(".hi");
+
+    const enElements =
+        document.querySelectorAll(".en");
+
+    hindiMode = !hindiMode;
+
+    if(hindiMode){
+
+        hiElements.forEach(el=>{
+            el.style.opacity = "1";
+        });
+
+        enElements.forEach(el=>{
+            el.style.opacity = ".35";
+        });
+
+    }else{
+
+        hiElements.forEach(el=>{
+            el.style.opacity = "1";
+        });
+
+        enElements.forEach(el=>{
+            el.style.opacity = "1";
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE THEME
+========================================================= */
+
+document.querySelectorAll(".theme-btn")
+.forEach(btn=>{
+
+    btn.addEventListener("click",()=>{
+
+        localStorage.setItem(
+            "m3FunctionTheme",
+            getComputedStyle(
+                document.documentElement
+            ).getPropertyValue("--accent")
+        );
+
+    });
+
+});
+
+</script>
+
+
+</body>
+</html>

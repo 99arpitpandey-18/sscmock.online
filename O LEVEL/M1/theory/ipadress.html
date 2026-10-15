@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Private and Public IP Addresses | Complete Notes | Computer Networking</title>
+
+<meta name="description" content="Complete bilingual notes on Private and Public IP Addresses, Static IP, Dynamic IP, Shared IP, Private IP ranges, NAT, DNS and IP address classes with visual diagrams and MCQs.">
+<meta name="keywords" content="Private IP Address, Public IP Address, Static IP, Dynamic IP, Shared IP, NAT, DNS, IP Classes, Computer Networking, NIELIT O Level, SSC Computer">
+<meta name="author" content="Computer Networking Notes">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(59,130,246,.12), transparent 28%),
+        radial-gradient(circle at 90% 20%, rgba(139,92,246,.12), transparent 30%),
+        linear-gradient(135deg,#f7faff,#eef4ff 50%,#f8f5ff);
+    color:#172033;
+    line-height:1.7;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:999;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #dbe4f0;
+    box-shadow:0 5px 25px rgba(30,60,100,.08);
+}
+
+.header-inner{
+    max-width:1200px;
+    margin:auto;
+    padding:14px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+    color:#2563eb;
+}
+
+.logo span{
+    color:#7c3aed;
+}
+
+.lang-box{
+    display:flex;
+    gap:6px;
+}
+
+.lang-btn{
+    border:1px solid #cbd5e1;
+    background:white;
+    padding:8px 13px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:700;
+    transition:.25s;
+}
+
+.lang-btn:hover,
+.lang-btn.active{
+    background:#2563eb;
+    color:white;
+    border-color:#2563eb;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    max-width:1200px;
+    margin:35px auto;
+    padding:55px 25px;
+    border-radius:30px;
+    color:white;
+    text-align:center;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(255,255,255,.18),transparent 25%),
+        radial-gradient(circle at 80% 80%,rgba(255,255,255,.15),transparent 25%),
+        linear-gradient(135deg,#1d4ed8,#6d28d9);
+    box-shadow:0 25px 60px rgba(37,99,235,.25);
+}
+
+.hero .badge{
+    display:inline-block;
+    background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.25);
+    padding:7px 15px;
+    border-radius:50px;
+    margin-bottom:15px;
+    font-size:13px;
+    font-weight:800;
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,55px);
+    line-height:1.15;
+    margin-bottom:15px;
+}
+
+.hero p{
+    max-width:850px;
+    margin:auto;
+    font-size:17px;
+    opacity:.95;
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:0 20px 60px;
+}
+
+.section{
+    margin:35px 0;
+}
+
+.section-title{
+    font-size:30px;
+    margin-bottom:20px;
+    color:#172554;
+}
+
+.section-title span{
+    color:#2563eb;
+}
+
+/* ================= CARDS ================= */
+
+.card{
+    background:rgba(255,255,255,.9);
+    border:1px solid #dbe4f0;
+    border-radius:22px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 12px 35px rgba(30,60,100,.07);
+}
+
+.card h3{
+    margin-bottom:12px;
+    color:#1d4ed8;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.info-card{
+    border-radius:20px;
+    padding:25px;
+    background:white;
+    border:2px solid #e2e8f0;
+    transition:.25s;
+}
+
+.info-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(30,60,100,.12);
+}
+
+.public{
+    border-top:6px solid #2563eb;
+}
+
+.private{
+    border-top:6px solid #16a34a;
+}
+
+.icon{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+/* ================= VISUAL DIAGRAM ================= */
+
+.visual-box{
+    background:#fff;
+    border:2px solid #dbe4f0;
+    border-radius:25px;
+    padding:25px;
+    overflow:hidden;
+}
+
+.network{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin:25px 0;
+}
+
+.device{
+    min-width:145px;
+    padding:20px 12px;
+    text-align:center;
+    border-radius:18px;
+    background:#eff6ff;
+    border:2px solid #93c5fd;
+    font-weight:800;
+}
+
+.router{
+    min-width:180px;
+    padding:25px 15px;
+    text-align:center;
+    border-radius:20px;
+    background:#f5f3ff;
+    border:3px solid #8b5cf6;
+    font-weight:900;
+}
+
+.internet{
+    min-width:180px;
+    padding:25px 15px;
+    text-align:center;
+    border-radius:20px;
+    background:#ecfdf5;
+    border:3px solid #22c55e;
+    font-weight:900;
+}
+
+.arrow{
+    font-size:35px;
+    font-weight:900;
+    color:#64748b;
+}
+
+.ip-label{
+    display:block;
+    margin-top:8px;
+    padding:6px 8px;
+    border-radius:8px;
+    background:white;
+    color:#334155;
+    font-size:13px;
+}
+
+/* ================= ROUTER INTERFACE ================= */
+
+.interface-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.interface{
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    background:white;
+    border:2px dashed #94a3b8;
+}
+
+.interface h3{
+    color:#7c3aed;
+}
+
+/* ================= FLOW ================= */
+
+.flow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.flow-item{
+    padding:15px 20px;
+    border-radius:14px;
+    background:#f8fafc;
+    border:2px solid #cbd5e1;
+    text-align:center;
+    font-weight:800;
+}
+
+.flow-arrow{
+    font-size:28px;
+    color:#2563eb;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow-x:auto;
+    border-radius:18px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+    background:white;
+}
+
+th{
+    background:#1e40af;
+    color:white;
+    padding:15px;
+    text-align:left;
+}
+
+td{
+    padding:14px;
+    border-bottom:1px solid #e2e8f0;
+}
+
+tr:nth-child(even){
+    background:#f8fafc;
+}
+
+.highlight{
+    font-weight:900;
+    color:#2563eb;
+}
+
+.green{
+    color:#15803d;
+    font-weight:800;
+}
+
+.red{
+    color:#dc2626;
+    font-weight:800;
+}
+
+/* ================= CALLOUT ================= */
+
+.callout{
+    padding:20px;
+    border-radius:18px;
+    margin:18px 0;
+    border-left:6px solid;
+}
+
+.blue-callout{
+    background:#eff6ff;
+    border-color:#2563eb;
+}
+
+.green-callout{
+    background:#f0fdf4;
+    border-color:#16a34a;
+}
+
+.yellow-callout{
+    background:#fffbeb;
+    border-color:#f59e0b;
+}
+
+.red-callout{
+    background:#fef2f2;
+    border-color:#ef4444;
+}
+
+/* ================= RANGE CARDS ================= */
+
+.range-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.range-card{
+    background:white;
+    border-radius:20px;
+    padding:22px;
+    border:2px solid #dbe4f0;
+    text-align:center;
+}
+
+.range-card .range{
+    font-size:17px;
+    font-weight:900;
+    color:#2563eb;
+    margin:12px 0;
+}
+
+.range-card .number{
+    font-size:14px;
+    color:#64748b;
+}
+
+/* ================= TERMINOLOGY ================= */
+
+.term-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.term{
+    padding:20px;
+    background:white;
+    border:1px solid #dbe4f0;
+    border-radius:18px;
+}
+
+.term strong{
+    color:#7c3aed;
+    font-size:18px;
+}
+
+/* ================= MEMORY ================= */
+
+.memory{
+    background:
+        linear-gradient(135deg,#fff7ed,#fefce8);
+    border:2px solid #fed7aa;
+    border-radius:24px;
+    padding:25px;
+}
+
+.memory-title{
+    font-size:24px;
+    font-weight:900;
+    color:#c2410c;
+    margin-bottom:12px;
+}
+
+/* ================= MCQ ================= */
+
+.mcq{
+    background:white;
+    border:1px solid #dbe4f0;
+    border-radius:20px;
+    padding:22px;
+    margin-bottom:18px;
+}
+
+.question{
+    font-size:17px;
+    font-weight:800;
+    margin-bottom:15px;
+}
+
+.option{
+    padding:11px 15px;
+    margin:7px 0;
+    border-radius:11px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+}
+
+.answer{
+    margin-top:12px;
+    padding:12px;
+    background:#f0fdf4;
+    color:#166534;
+    border-radius:10px;
+    font-weight:700;
+}
+
+/* ================= SUMMARY ================= */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.summary-card{
+    padding:24px;
+    border-radius:20px;
+    background:white;
+    border:2px solid #dbe4f0;
+}
+
+.summary-card ul{
+    padding-left:20px;
+}
+
+/* ================= NAV ================= */
+
+.toc{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.toc a{
+    text-decoration:none;
+    padding:9px 13px;
+    border-radius:10px;
+    background:#eff6ff;
+    color:#1d4ed8;
+    font-weight:700;
+    border:1px solid #bfdbfe;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    text-align:center;
+    padding:30px 20px;
+    background:#172554;
+    color:white;
+    margin-top:30px;
+}
+
+/* ================= LANGUAGE ================= */
+
+.hindi{
+    display:none;
+}
+
+body.hindi-mode .english{
+    display:none;
+}
+
+body.hindi-mode .hindi{
+    display:inline;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:850px){
+
+    .info-grid,
+    .interface-grid,
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .range-grid,
+    .term-grid{
+        grid-template-columns:1fr;
+    }
+
+    .network{
+        flex-direction:column;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+
+    .hero{
+        margin:20px 10px;
+        padding:40px 20px;
+    }
+
+    .container{
+        padding:0 12px 40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+    <div class="header-inner">
+
+        <div class="logo">
+            NET<span>WORK</span> NOTES
+        </div>
+
+        <div class="lang-box">
+            <button class="lang-btn active" onclick="setLanguage('en',this)">English</button>
+            <button class="lang-btn" onclick="setLanguage('hi',this)">हिन्दी</button>
+            <button class="lang-btn" onclick="setLanguage('both',this)">H / E</button>
+        </div>
+
+    </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="badge">
+        COMPUTER NETWORKING • IP ADDRESS
+    </div>
+
+    <h1>
+        Private & Public IP Addresses
+    </h1>
+
+    <p>
+        Complete Visual Notes • Static • Dynamic • Shared • Private IP • NAT • DNS • IP Classes
+    </p>
+
+</section>
+
+
+<main class="container">
+
+
+<!-- ================= TOC ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">📚 <span>Topic Navigation</span></h2>
+
+    <div class="toc">
+        <a href="#basic">Basic Concept</a>
+        <a href="#router">Router Interfaces</a>
+        <a href="#public">Public IP</a>
+        <a href="#static">Static IP</a>
+        <a href="#dynamic">Dynamic IP</a>
+        <a href="#shared">Shared IP</a>
+        <a href="#private">Private IP</a>
+        <a href="#ranges">Private Ranges</a>
+        <a href="#terms">Terminology</a>
+        <a href="#classes">IP Classes</a>
+        <a href="#mcqs">MCQs</a>
+    </div>
+
+</section>
+
+
+<!-- ================= BASIC ================= -->
+
+<section class="section" id="basic">
+
+    <h2 class="section-title">
+        🌐 <span>1. Basic Concept of IP Address</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="english">
+            There are two major types of IP addresses used in networking:
+            <strong>Public IP Address</strong> and
+            <strong>Private IP Address</strong>.
+        </p>
+
+        <p class="hindi">
+            Networking में मुख्य रूप से IP Address के दो प्रकार समझे जाते हैं:
+            <strong>Public IP Address</strong> और
+            <strong>Private IP Address</strong>।
+        </p>
+
+    </div>
+
+
+    <div class="info-grid">
+
+        <div class="info-card public">
+
+            <div class="icon">🌍</div>
+
+            <h3>Public IP Address</h3>
+
+            <p class="english">
+                Used for communication over the Internet. It is globally reachable,
+                subject to network/firewall rules.
+            </p>
+
+            <p class="hindi">
+                Internet पर communication के लिए उपयोग होता है। यह globally reachable
+                हो सकता है, हालांकि firewall और network rules लागू हो सकते हैं।
+            </p>
+
+            <br>
+
+            <strong>Example:</strong>
+            <code>203.0.113.10</code>
+
+        </div>
+
+
+        <div class="info-card private">
+
+            <div class="icon">🏠</div>
+
+            <h3>Private IP Address</h3>
+
+            <p class="english">
+                Used inside a local/private network such as a home or office LAN.
+                It is not directly routable on the public Internet.
+            </p>
+
+            <p class="hindi">
+                Home या office जैसे local/private network के अंदर उपयोग होता है।
+                यह public Internet पर directly routable नहीं होता।
+            </p>
+
+            <br>
+
+            <strong>Example:</strong>
+            <code>192.168.1.20</code>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PICTURE METHOD ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        🖼️ <span>Picture Method — Public vs Private IP</span>
+    </h2>
+
+    <div class="visual-box">
+
+        <div class="network">
+
+            <div class="device">
+                💻 Laptop
+                <span class="ip-label">
+                    Private IP<br>
+                    192.168.1.10
+                </span>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="router">
+                📡 ROUTER
+
+                <span class="ip-label">
+                    LAN: 192.168.1.1<br>
+                    WAN/Public side: ISP address
+                </span>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="internet">
+                🌍 INTERNET
+
+                <span class="ip-label">
+                    Public Network
+                </span>
+            </div>
+
+        </div>
+
+        <div class="callout blue-callout">
+
+            <strong>🧠 Picture Trick:</strong>
+
+            <span class="english">
+                Think of your house as a private network.
+                Your house has a private room number, while the complete house
+                can have a public address used to reach it from outside.
+            </span>
+
+            <span class="hindi">
+                अपने घर को एक private network मानो।
+                घर के अंदर अलग-अलग rooms के numbers private IP जैसे हैं,
+                जबकि बाहर से घर तक पहुँचने के लिए public address की जरूरत होती है।
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ROUTER ================= -->
+
+<section class="section" id="router">
+
+    <h2 class="section-title">
+        📡 <span>2. Router और उसके Network Interfaces</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="english">
+            A router commonly has two network interfaces:
+            an <strong>Internal Interface</strong> and an
+            <strong>External Interface</strong>.
+        </p>
+
+        <p class="hindi">
+            एक router में सामान्यतः दो network interfaces होते हैं:
+            <strong>Internal Interface</strong> और
+            <strong>External Interface</strong>।
+        </p>
+
+    </div>
+
+
+    <div class="interface-grid">
+
+        <div class="interface">
+
+            <div class="icon">🏠</div>
+
+            <h3>Internal Interface</h3>
+
+            <p>
+                LAN side
+            </p>
+
+            <strong>Example</strong>
+            <br>
+            192.168.1.1
+
+        </div>
+
+
+        <div class="interface">
+
+            <div class="icon">🌐</div>
+
+            <h3>External Interface</h3>
+
+            <p>
+                WAN / Internet side
+            </p>
+
+            <strong>Example</strong>
+            <br>
+            ISP-assigned address
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PUBLIC IP ================= -->
+
+<section class="section" id="public">
+
+    <h2 class="section-title">
+        🌍 <span>3. Public IP Address</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="english">
+            A public IP address is an address used for communication across
+            the public Internet. Public addresses must be globally unique
+            at a given time within the Internet's routing system.
+        </p>
+
+        <p class="hindi">
+            Public IP address का उपयोग public Internet पर communication के लिए किया जाता है।
+            Internet routing system में एक समय पर public addresses globally unique होने चाहिए।
+        </p>
+
+    </div>
+
+
+    <div class="flow">
+
+        <div class="flow-item">
+            💻 Device
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-item">
+            📡 Router
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-item">
+            🔄 NAT
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <div class="flow-item">
+            🌍 Internet
+        </div>
+
+    </div>
+
+
+    <div class="callout green-callout">
+
+        <strong>Important:</strong>
+
+        <span class="english">
+            Your ISP generally provides Internet connectivity and may assign
+            your network a public IPv4 address or place you behind shared addressing.
+        </span>
+
+        <span class="hindi">
+            ISP Internet connectivity प्रदान करता है और network को public IPv4 address दे सकता है
+            या shared addressing के पीछे रख सकता है।
+        </span>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>Public IP के मुख्य प्रकार</h3>
+
+        <ul>
+            <li>Static Public IP</li>
+            <li>Dynamic Public IP</li>
+            <li>Shared Public IP</li>
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATIC ================= -->
+
+<section class="section" id="static">
+
+    <h2 class="section-title">
+        📌 <span>4. Static IP Address</span>
+    </h2>
+
+    <div class="card">
+
+        <h3>Static = Same / Fixed</h3>
+
+        <p class="english">
+            A static IP address generally remains unchanged.
+            It can be useful when a server, website or remote service
+            needs a stable address.
+        </p>
+
+        <p class="hindi">
+            Static IP address सामान्यतः change नहीं होता।
+            जब किसी server, website या remote service को stable address चाहिए,
+            तब static IP useful होता है।
+        </p>
+
+    </div>
+
+
+    <div class="visual-box">
+
+        <div class="flow">
+
+            <div class="flow-item">
+                📡 Router
+                <br>
+                <b>203.0.113.50</b>
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                🔒 Fixed
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                🌍 Remote User
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="memory">
+
+        <div class="memory-title">
+            🧠 Memory Trick
+        </div>
+
+        <p>
+            <strong>STATIC = STABLE</strong>
+        </p>
+
+        <p class="english">
+            Static IP = Address stays stable.
+        </p>
+
+        <p class="hindi">
+            Static IP = Address एक जगह stable रहता है।
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DYNAMIC ================= -->
+
+<section class="section" id="dynamic">
+
+    <h2 class="section-title">
+        🔄 <span>5. Dynamic IP Address</span>
+    </h2>
+
+    <div class="card">
+
+        <h3>Dynamic = Can Change</h3>
+
+        <p class="english">
+            A dynamic IP address may change over time.
+            For example, the address may be different after reconnecting
+            or after an ISP changes its allocation.
+        </p>
+
+        <p class="hindi">
+            Dynamic IP address समय के साथ change हो सकता है।
+            उदाहरण के लिए reconnect करने पर या ISP की allocation बदलने पर
+            address अलग हो सकता है।
+        </p>
+
+    </div>
+
+
+    <div class="visual-box">
+
+        <div class="flow">
+
+            <div class="flow-item">
+                📡 Connection
+                <br>
+                <b>IP: A</b>
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                🔌 Disconnect
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                🔌 Reconnect
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                📡 New IP
+                <br>
+                <b>IP: B</b>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="callout yellow-callout">
+
+        <strong>⭐ Dynamic DNS (DDNS)</strong>
+
+        <p class="english">
+            Dynamic DNS can associate a changing IP address with a hostname,
+            making it easier to reach a service using a name instead of
+            remembering its changing IP address.
+        </p>
+
+        <p class="hindi">
+            Dynamic DNS बदलते हुए IP address को hostname से associate कर सकता है।
+            इससे changing IP याद रखने की जगह hostname का उपयोग किया जा सकता है।
+        </p>
+
+    </div>
+
+
+    <div class="memory">
+
+        <div class="memory-title">
+            🧠 Memory Trick
+        </div>
+
+        <p>
+            <strong>DYNAMIC = DIFFERENT</strong>
+        </p>
+
+        <p>
+            Dynamic IP → समय के साथ बदल सकता है।
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SHARED ================= -->
+
+<section class="section" id="shared">
+
+    <h2 class="section-title">
+        👥 <span>6. Shared IP Address</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="english">
+            In shared addressing, multiple customers or devices may appear
+            on the Internet through the same public IP address.
+            NAT or carrier-grade NAT can be used to separate their traffic.
+        </p>
+
+        <p class="hindi">
+            Shared addressing में कई customers या devices Internet पर
+            एक ही public IP address के माध्यम से दिखाई दे सकते हैं।
+            उनके traffic को अलग रखने के लिए NAT या carrier-grade NAT का उपयोग हो सकता है।
+        </p>
+
+    </div>
+
+
+    <div class="visual-box">
+
+        <div class="network">
+
+            <div>
+
+                <div class="device">
+                    👤 User A
+                    <span class="ip-label">
+                        Private IP
+                    </span>
+                </div>
+
+                <br>
+
+                <div class="device">
+                    👤 User B
+                    <span class="ip-label">
+                        Private IP
+                    </span>
+                </div>
+
+                <br>
+
+                <div class="device">
+                    👤 User C
+                    <span class="ip-label">
+                        Private IP
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="arrow">→</div>
+
+
+            <div class="router">
+                🔄 NAT
+                <span class="ip-label">
+                    Translation
+                </span>
+            </div>
+
+
+            <div class="arrow">→</div>
+
+
+            <div class="internet">
+                🌍 Same Public IP
+                <span class="ip-label">
+                    Example: 203.0.113.100
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="callout red-callout">
+
+        <strong>⚠️ Important Concept:</strong>
+
+        <span class="english">
+            If many users share one public IP, actions associated with that
+            public IP may affect the reputation or accessibility of the shared address.
+        </span>
+
+        <span class="hindi">
+            यदि कई users एक public IP share करते हैं, तो उस IP की reputation या
+            accessibility से जुड़े effects कई users को प्रभावित कर सकते हैं।
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- ================= NAT ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        🔄 <span>7. NAT — Network Address Translation</span>
+    </h2>
+
+    <div class="card">
+
+        <h3>NAT क्या करता है?</h3>
+
+        <p class="english">
+            NAT translates addresses between a private/internal network
+            and another network, commonly between private IPv4 addresses
+            and public Internet-facing addresses.
+        </p>
+
+        <p class="hindi">
+            NAT private/internal network के addresses को दूसरे network के लिए
+            translate करता है। आम तौर पर private IPv4 addresses और
+            Internet-facing public addresses के बीच translation किया जाता है।
+        </p>
+
+    </div>
+
+
+    <div class="visual-box">
+
+        <div class="flow">
+
+            <div class="flow-item">
+                🏠 Private Network
+                <br>
+                192.168.1.10
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                🔄 NAT
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                🌍 Public Network
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="memory">
+
+        <div class="memory-title">
+            🧠 NAT Trick
+        </div>
+
+        <p>
+            <strong>NAT = Network Address Translation</strong>
+        </p>
+
+        <p>
+            N → Network<br>
+            A → Address<br>
+            T → Translation
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PRIVATE IP ================= -->
+
+<section class="section" id="private">
+
+    <h2 class="section-title">
+        🏠 <span>8. Private IP Address</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="english">
+            A private IP address is used inside a private/local network,
+            such as a home, school or office LAN. Private IPv4 addresses
+            are not directly routable on the public Internet.
+        </p>
+
+        <p class="hindi">
+            Private IP address home, school या office जैसे private/local network
+            में उपयोग होता है। Private IPv4 addresses public Internet पर
+            directly routable नहीं होते।
+        </p>
+
+    </div>
+
+
+    <div class="visual-box">
+
+        <div class="network">
+
+            <div class="device">
+                💻 PC
+                <span class="ip-label">
+                    192.168.1.10
+                </span>
+            </div>
+
+            <div class="device">
+                📱 Mobile
+                <span class="ip-label">
+                    192.168.1.11
+                </span>
+            </div>
+
+            <div class="device">
+                🖨️ Printer
+                <span class="ip-label">
+                    192.168.1.12
+                </span>
+            </div>
+
+        </div>
+
+        <div style="text-align:center;font-size:35px;">
+            ↓
+        </div>
+
+        <div class="router" style="margin:auto;max-width:250px;">
+            📡 Local Router
+            <span class="ip-label">
+                192.168.1.1
+            </span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PRIVATE RANGES ================= -->
+
+<section class="section" id="ranges">
+
+    <h2 class="section-title">
+        🔢 <span>9. Private IPv4 Address Ranges</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="english">
+            The following three IPv4 blocks are reserved for private networks
+            according to RFC 1918.
+        </p>
+
+        <p class="hindi">
+            Private networks के लिए IPv4 के तीन मुख्य address blocks reserved हैं।
+            इन्हें RFC 1918 में define किया गया है।
+        </p>
+
+    </div>
+
+
+    <div class="range-grid">
+
+        <div class="range-card">
+
+            <div class="icon">🅰️</div>
+
+            <h3>Private Class A Block</h3>
+
+            <div class="range">
+                10.0.0.0 – 10.255.255.255
+            </div>
+
+            <div class="number">
+                Total: 16,777,216 addresses
+            </div>
+
+        </div>
+
+
+        <div class="range-card">
+
+            <div class="icon">🅱️</div>
+
+            <h3>Private Class B Block</h3>
+
+            <div class="range">
+                172.16.0.0 – 172.31.255.255
+            </div>
+
+            <div class="number">
+                Total: 1,048,576 addresses
+            </div>
+
+        </div>
+
+
+        <div class="range-card">
+
+            <div class="icon">©️</div>
+
+            <h3>Private Class C Block</h3>
+
+            <div class="range">
+                192.168.0.0 – 192.168.255.255
+            </div>
+
+            <div class="number">
+                Total: 65,536 addresses
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="memory">
+
+        <div class="memory-title">
+            🧠 Super Easy Memory Trick
+        </div>
+
+        <p style="font-size:22px;font-weight:900;">
+            10 → 172 → 192
+        </p>
+
+        <p>
+            Private IP याद करने का shortcut:
+        </p>
+
+        <p>
+            <strong>10.x.x.x</strong>
+            &nbsp; | &nbsp;
+            <strong>172.16–31.x.x</strong>
+            &nbsp; | &nbsp;
+            <strong>192.168.x.x</strong>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TERMINOLOGY ================= -->
+
+<section class="section" id="terms">
+
+    <h2 class="section-title">
+        📖 <span>10. IP Address Terminology</span>
+    </h2>
+
+    <div class="term-grid">
+
+        <div class="term">
+            <strong>Static</strong>
+            <p>
+                IP generally remains unchanged.
+            </p>
+        </div>
+
+        <div class="term">
+            <strong>Dynamic</strong>
+            <p>
+                IP may change over time.
+            </p>
+        </div>
+
+        <div class="term">
+            <strong>Public</strong>
+            <p>
+                Internet-facing address.
+            </p>
+        </div>
+
+        <div class="term">
+            <strong>Private</strong>
+            <p>
+                Used within private/local networks.
+            </p>
+        </div>
+
+        <div class="term">
+            <strong>Shared</strong>
+            <p>
+                Multiple users may use the same public IP.
+            </p>
+        </div>
+
+        <div class="term">
+            <strong>Dedicated</strong>
+            <p>
+                An address assigned for exclusive use by one customer/service.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= COMPARISON ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        ⚔️ <span>11. Public vs Private IP — Quick Comparison</span>
+    </h2>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Public IP</th>
+                <th>Private IP</th>
+            </tr>
+
+            <tr>
+                <td>Use</td>
+                <td>Internet communication</td>
+                <td>Local/private network</td>
+            </tr>
+
+            <tr>
+                <td>Internet Routing</td>
+                <td class="green">Internet-facing</td>
+                <td class="red">Not directly routable</td>
+            </tr>
+
+            <tr>
+                <td>Example</td>
+                <td>203.0.113.50</td>
+                <td>192.168.1.10</td>
+            </tr>
+
+            <tr>
+                <td>Typical Assignment</td>
+                <td>ISP / network provider</td>
+                <td>Router / local DHCP / administrator</td>
+            </tr>
+
+            <tr>
+                <td>Uniqueness</td>
+                <td>Globally routable addresses need uniqueness</td>
+                <td>Can be reused in different private networks</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATIC DYNAMIC SHARED ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        📊 <span>12. Static vs Dynamic vs Shared</span>
+    </h2>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Meaning</th>
+                <th>Changes?</th>
+                <th>Typical Use</th>
+            </tr>
+
+            <tr>
+                <td class="highlight">Static</td>
+                <td>Fixed/stable address</td>
+                <td>No, normally</td>
+                <td>Servers / remote services</td>
+            </tr>
+
+            <tr>
+                <td class="highlight">Dynamic</td>
+                <td>Address can change</td>
+                <td>Yes</td>
+                <td>General Internet access</td>
+            </tr>
+
+            <tr>
+                <td class="highlight">Shared</td>
+                <td>Same public IP used by multiple users</td>
+                <td>Depends on setup</td>
+                <td>ISP shared addressing / CGNAT</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ================= IP CLASSES ================= -->
+
+<section class="section" id="classes">
+
+    <h2 class="section-title">
+        🧮 <span>13. IPv4 Address Classes</span>
+    </h2>
+
+    <div class="card">
+
+        <p class="english">
+            In traditional classful IPv4 addressing, the first octet determines
+            the class. Modern networks generally use CIDR rather than relying
+            on classful addressing.
+        </p>
+
+        <p class="hindi">
+            Traditional classful IPv4 addressing में first octet के आधार पर
+            class निर्धारित की जाती थी। Modern networks में सामान्यतः
+            CIDR का उपयोग किया जाता है।
+        </p>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <tr>
+                <th>Class</th>
+                <th>First Octet Range</th>
+                <th>Default Subnet Mask</th>
+                <th>Traditional Use</th>
+            </tr>
+
+            <tr>
+                <td><strong>A</strong></td>
+                <td>0 – 127</td>
+                <td>255.0.0.0</td>
+                <td>Large networks</td>
+            </tr>
+
+            <tr>
+                <td><strong>B</strong></td>
+                <td>128 – 191</td>
+                <td>255.255.0.0</td>
+                <td>Medium networks</td>
+            </tr>
+
+            <tr>
+                <td><strong>C</strong></td>
+                <td>192 – 223</td>
+                <td>255.255.255.0</td>
+                <td>Smaller networks</td>
+            </tr>
+
+            <tr>
+                <td><strong>D</strong></td>
+                <td>224 – 239</td>
+                <td>Not applicable</td>
+                <td>Multicast</td>
+            </tr>
+
+            <tr>
+                <td><strong>E</strong></td>
+                <td>240 – 255</td>
+                <td>Not applicable</td>
+                <td>Experimental / reserved</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <div class="callout yellow-callout">
+
+        <strong>⚠️ Exam Correction:</strong>
+
+        <p>
+            Class D = <strong>224–239</strong>
+            <br>
+            Class E = <strong>240–255</strong>
+        </p>
+
+        <p>
+            इसलिए यदि किसी पुराने note में D = 224–247 और E = 248–255 लिखा है,
+            तो उसे correct करके पढ़ें।
+        </p>
+
+    </div>
+
+
+    <div class="memory">
+
+        <div class="memory-title">
+            🧠 IP Classes Memory Trick
+        </div>
+
+        <p style="font-size:21px;font-weight:900;">
+            A → 0–127
+            <br>
+            B → 128–191
+            <br>
+            C → 192–223
+            <br>
+            D → 224–239
+            <br>
+            E → 240–255
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DNS ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        🔎 <span>14. DNS और Dynamic IP</span>
+    </h2>
+
+    <div class="card">
+
+        <h3>DNS = Domain Name System</h3>
+
+        <p class="english">
+            DNS translates human-friendly domain names into IP addresses.
+            For example, users normally type a domain name rather than
+            remembering a numerical IP address.
+        </p>
+
+        <p class="hindi">
+            DNS human-friendly domain names को IP addresses से map/resolve करने में मदद करता है।
+            इसलिए users को numerical IP याद रखने की जरूरत नहीं होती।
+        </p>
+
+    </div>
+
+
+    <div class="visual-box">
+
+        <div class="flow">
+
+            <div class="flow-item">
+                🌐 Website Name
+                <br>
+                example.com
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                🔎 DNS
+            </div>
+
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-item">
+                📍 IP Address
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="memory">
+
+        <div class="memory-title">
+            🧠 DNS Trick
+        </div>
+
+        <p>
+            <strong>DNS = Name → IP</strong>
+        </p>
+
+        <p>
+            इंसान के लिए Name आसान है,
+            computer networking के लिए IP जरूरी है।
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= COMPLETE FLOW ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        🚀 <span>15. Complete Picture — Home Network to Internet</span>
+    </h2>
+
+    <div class="visual-box">
+
+        <div class="network">
+
+            <div>
+
+                <div class="device">
+                    💻 Laptop
+                    <span class="ip-label">
+                        192.168.1.10
+                    </span>
+                </div>
+
+                <br>
+
+                <div class="device">
+                    📱 Phone
+                    <span class="ip-label">
+                        192.168.1.11
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="arrow">→</div>
+
+
+            <div class="router">
+
+                📡 HOME ROUTER
+
+                <span class="ip-label">
+                    Private/LAN side
+                    <br>
+                    NAT
+                </span>
+
+            </div>
+
+
+            <div class="arrow">→</div>
+
+
+            <div class="internet">
+
+                🌍 INTERNET
+
+                <span class="ip-label">
+                    Public Internet
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="callout blue-callout">
+
+            <strong>🧠 Entire Concept in One Line:</strong>
+
+            <p>
+                <strong>
+                    Private IP → Local Network → NAT/Router → Public Internet
+                </strong>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= EXAM NOTES ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        🎯 <span>16. Exam-Oriented Important Points</span>
+    </h2>
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <h3>⭐ Must Remember</h3>
+
+            <ul>
+                <li>Public IP = Internet-facing address</li>
+                <li>Private IP = Local/private network</li>
+                <li>Static IP = Normally does not change</li>
+                <li>Dynamic IP = Can change</li>
+                <li>Shared IP = Multiple users may share one public IP</li>
+                <li>NAT = Network Address Translation</li>
+            </ul>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>🔢 Private Ranges</h3>
+
+            <ul>
+                <li>10.0.0.0 – 10.255.255.255</li>
+                <li>172.16.0.0 – 172.31.255.255</li>
+                <li>192.168.0.0 – 192.168.255.255</li>
+            </ul>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>🧮 IPv4 Classes</h3>
+
+            <ul>
+                <li>A = 0–127</li>
+                <li>B = 128–191</li>
+                <li>C = 192–223</li>
+                <li>D = 224–239</li>
+                <li>E = 240–255</li>
+            </ul>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>🧠 Quick Tricks</h3>
+
+            <ul>
+                <li>STATIC = STABLE</li>
+                <li>DYNAMIC = DIFFERENT</li>
+                <li>NAT = Address Translation</li>
+                <li>DNS = Name → IP</li>
+                <li>Private = Inside LAN</li>
+                <li>Public = Internet-facing</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MCQs ================= -->
+
+<section class="section" id="mcqs">
+
+    <h2 class="section-title">
+        ❓ <span>17. Important MCQs</span>
+    </h2>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q1. Which type of IP address is generally used inside a local network?
+        </div>
+
+        <div class="option">A. Public IP</div>
+        <div class="option">B. Private IP</div>
+        <div class="option">C. Broadcast-only IP</div>
+        <div class="option">D. Multicast-only IP</div>
+
+        <div class="answer">
+            ✅ Answer: B. Private IP
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q2. Which of the following is a private IPv4 address?
+        </div>
+
+        <div class="option">A. 8.8.8.8</div>
+        <div class="option">B. 192.168.1.25</div>
+        <div class="option">C. 1.1.1.1</div>
+        <div class="option">D. 203.0.113.10</div>
+
+        <div class="answer">
+            ✅ Answer: B. 192.168.1.25
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q3. Which range is reserved for private IPv4 networks?
+        </div>
+
+        <div class="option">A. 10.0.0.0 – 10.255.255.255</div>
+        <div class="option">B. 11.0.0.0 – 11.255.255.255</div>
+        <div class="option">C. 100.0.0.0 – 100.255.255.255</div>
+        <div class="option">D. 200.0.0.0 – 200.255.255.255</div>
+
+        <div class="answer">
+            ✅ Answer: A. 10.0.0.0 – 10.255.255.255
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q4. What does NAT stand for?
+        </div>
+
+        <div class="option">A. Network Access Transfer</div>
+        <div class="option">B. Network Address Translation</div>
+        <div class="option">C. Network Application Technology</div>
+        <div class="option">D. Network Address Transmission</div>
+
+        <div class="answer">
+            ✅ Answer: B. Network Address Translation
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q5. Which IP type normally remains unchanged?
+        </div>
+
+        <div class="option">A. Dynamic</div>
+        <div class="option">B. Static</div>
+        <div class="option">C. Temporary</div>
+        <div class="option">D. Random</div>
+
+        <div class="answer">
+            ✅ Answer: B. Static
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q6. Which IP type can change over time?
+        </div>
+
+        <div class="option">A. Static</div>
+        <div class="option">B. Dynamic</div>
+        <div class="option">C. Dedicated</div>
+        <div class="option">D. Fixed</div>
+
+        <div class="answer">
+            ✅ Answer: B. Dynamic
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q7. Which private IPv4 range begins with 172.16?
+        </div>
+
+        <div class="option">A. 172.0.0.0 – 172.15.255.255</div>
+        <div class="option">B. 172.16.0.0 – 172.31.255.255</div>
+        <div class="option">C. 172.32.0.0 – 172.63.255.255</div>
+        <div class="option">D. 172.64.0.0 – 172.127.255.255</div>
+
+        <div class="answer">
+            ✅ Answer: B. 172.16.0.0 – 172.31.255.255
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q8. Which of the following belongs to the private IPv4 range?
+        </div>
+
+        <div class="option">A. 192.168.100.5</div>
+        <div class="option">B. 192.167.100.5</div>
+        <div class="option">C. 192.0.100.5</div>
+        <div class="option">D. 193.168.100.5</div>
+
+        <div class="answer">
+            ✅ Answer: A. 192.168.100.5
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q9. What does DNS primarily help with?
+        </div>
+
+        <div class="option">A. Converting names to IP addresses</div>
+        <div class="option">B. Encrypting every IP address</div>
+        <div class="option">C. Creating RAM</div>
+        <div class="option">D. Formatting hard disks</div>
+
+        <div class="answer">
+            ✅ Answer: A. Converting names to IP addresses
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q10. Which IPv4 class has the traditional first-octet range 192–223?
+        </div>
+
+        <div class="option">A. Class A</div>
+        <div class="option">B. Class B</div>
+        <div class="option">C. Class C</div>
+        <div class="option">D. Class D</div>
+
+        <div class="answer">
+            ✅ Answer: C. Class C
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q11. What is the traditional range of Class D?
+        </div>
+
+        <div class="option">A. 192–223</div>
+        <div class="option">B. 224–239</div>
+        <div class="option">C. 240–255</div>
+        <div class="option">D. 128–191</div>
+
+        <div class="answer">
+            ✅ Answer: B. 224–239
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q12. Which class is traditionally associated with multicast?
+        </div>
+
+        <div class="option">A. Class A</div>
+        <div class="option">B. Class B</div>
+        <div class="option">C. Class C</div>
+        <div class="option">D. Class D</div>
+
+        <div class="answer">
+            ✅ Answer: D. Class D
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q13. Which of the following is NOT one of the three RFC 1918 private IPv4 blocks?
+        </div>
+
+        <div class="option">A. 10.0.0.0/8</div>
+        <div class="option">B. 172.16.0.0/12</div>
+        <div class="option">C. 192.168.0.0/16</div>
+        <div class="option">D. 11.0.0.0/8</div>
+
+        <div class="answer">
+            ✅ Answer: D. 11.0.0.0/8
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q14. Multiple users appearing on the Internet through one public IPv4 address is an example of:
+        </div>
+
+        <div class="option">A. Shared addressing</div>
+        <div class="option">B. Static addressing only</div>
+        <div class="option">C. Loopback addressing</div>
+        <div class="option">D. Class D addressing</div>
+
+        <div class="answer">
+            ✅ Answer: A. Shared addressing
+        </div>
+
+    </div>
+
+
+    <div class="mcq">
+
+        <div class="question">
+            Q15. Which address is commonly used as a private LAN address?
+        </div>
+
+        <div class="option">A. 192.168.1.1</div>
+        <div class="option">B. 8.8.8.8</div>
+        <div class="option">C. 1.1.1.1</div>
+        <div class="option">D. 9.9.9.9</div>
+
+        <div class="answer">
+            ✅ Answer: A. 192.168.1.1
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= ONE PAGE REVISION ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        ⚡ <span>18. One Page Revision</span>
+    </h2>
+
+    <div class="memory">
+
+        <h3>PUBLIC IP 🌍</h3>
+        <p>
+            Internet-facing → Globally routable → ISP/network provider →
+            Can be Static/Dynamic/Shared
+        </p>
+
+        <hr style="margin:20px 0;border:0;border-top:1px solid #fed7aa;">
+
+        <h3>PRIVATE IP 🏠</h3>
+        <p>
+            Local network → Not directly routable on public Internet →
+            Common ranges:
+            <strong>10/8, 172.16/12, 192.168/16</strong>
+        </p>
+
+        <hr style="margin:20px 0;border:0;border-top:1px solid #fed7aa;">
+
+        <h3>STATIC 📌</h3>
+        <p>
+            Stable / normally does not change
+        </p>
+
+        <hr style="margin:20px 0;border:0;border-top:1px solid #fed7aa;">
+
+        <h3>DYNAMIC 🔄</h3>
+        <p>
+            Can change over time
+        </p>
+
+        <hr style="margin:20px 0;border:0;border-top:1px solid #fed7aa;">
+
+        <h3>SHARED 👥</h3>
+        <p>
+            Multiple users may appear through the same public IP
+        </p>
+
+        <hr style="margin:20px 0;border:0;border-top:1px solid #fed7aa;">
+
+        <h3>NAT 🔁</h3>
+        <p>
+            Network Address Translation
+        </p>
+
+        <hr style="margin:20px 0;border:0;border-top:1px solid #fed7aa;">
+
+        <h3>DNS 🔎</h3>
+        <p>
+            Domain Name → IP Address resolution
+        </p>
+
+        <hr style="margin:20px 0;border:0;border-top:1px solid #fed7aa;">
+
+        <h3>PRIVATE IP TRICK 🧠</h3>
+        <p style="font-size:22px;font-weight:900;">
+            10 → 172.16–31 → 192.168
+        </p>
+
+        <h3>CLASS TRICK 🧠</h3>
+        <p style="font-size:20px;font-weight:900;">
+            A: 0–127 |
+            B: 128–191 |
+            C: 192–223 |
+            D: 224–239 |
+            E: 240–255
+        </p>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+    <h3>🌐 Private & Public IP Addresses</h3>
+
+    <p>
+        Visual Learning Notes • Computer Networking • Exam Preparation
+    </p>
+
+</footer>
+
+
+<script>
+
+function setLanguage(lang,button){
+
+    document.querySelectorAll(".lang-btn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    if(lang === "hi"){
+        document.body.classList.add("hindi-mode");
+    }
+    else{
+        document.body.classList.remove("hindi-mode");
+    }
+
+    if(lang === "both"){
+        document.body.classList.remove("hindi-mode");
+
+        document.querySelectorAll(".hindi").forEach(el=>{
+            el.style.display="inline";
+        });
+    }
+    else{
+
+        document.querySelectorAll(".hindi").forEach(el=>{
+            el.style.display="";
+        });
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

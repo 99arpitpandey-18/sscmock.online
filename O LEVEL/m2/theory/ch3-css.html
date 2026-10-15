@@ -1,0 +1,3248 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M2-R5 Chapter 3 CSS Notes | Cascading Style Sheets | NIELIT O Level</title>
+
+<meta name="description"
+content="NIELIT O Level M2-R5 Chapter 3 CSS complete bilingual notes. Learn CSS selectors, properties, colors, fonts, box model, display, positioning, Flexbox and practical examples.">
+
+<meta name="keywords"
+content="NIELIT M2 CSS Notes, M2-R5 Chapter 3, CSS Notes Hindi English, Cascading Style Sheets NIELIT, O Level CSS">
+
+<style>
+
+/* =========================================================
+   ROOT THEME
+========================================================= */
+
+:root{
+    --primary:#38dcff;
+    --secondary:#7c5cff;
+    --accent:#00e5a8;
+
+    --bg1:#07111f;
+    --bg2:#0b1424;
+    --card:rgba(18,35,58,.78);
+
+    --text:#eef7ff;
+    --muted:#91a1b7;
+    --border:rgba(255,255,255,.09);
+
+    --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+
+    color:var(--text);
+
+    background:
+        radial-gradient(circle at 10% 10%,rgba(0,212,255,.12),transparent 28%),
+        radial-gradient(circle at 90% 15%,rgba(124,92,255,.13),transparent 30%),
+        radial-gradient(circle at 50% 90%,rgba(0,229,168,.07),transparent 30%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before{
+    content:"";
+
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    background-image:
+        radial-gradient(circle,var(--primary) 1px,transparent 1px),
+        radial-gradient(circle,var(--secondary) 1px,transparent 1px);
+
+    background-size:120px 120px,180px 180px;
+
+    background-position:20px 40px,90px 100px;
+
+    opacity:.12;
+
+    z-index:-1;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    background:rgba(5,13,25,.82);
+
+    border-bottom:1px solid var(--border);
+
+    padding:13px 5%;
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:15px;
+    font-weight:900;
+
+    color:var(--primary);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56,220,255,.15),
+            rgba(124,92,255,.14)
+        );
+
+    border:1px solid rgba(56,220,255,.25);
+
+    box-shadow:0 0 25px rgba(56,220,255,.10);
+}
+
+.brand-title{
+    font-size:16px;
+    font-weight:800;
+}
+
+.brand-sub{
+    margin-top:3px;
+
+    font-size:10px;
+
+    color:#8191a8;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.back-btn,
+.action-btn{
+    text-decoration:none;
+
+    color:#dcecff;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--border);
+
+    padding:9px 13px;
+
+    border-radius:9px;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.back-btn:hover,
+.action-btn:hover{
+    border-color:var(--primary);
+
+    color:var(--primary);
+
+    transform:translateY(-2px);
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+    max-width:1250px;
+
+    margin:auto;
+
+    padding:40px 5% 80px;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    overflow:hidden;
+
+    padding:45px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(19,37,61,.90),
+            rgba(8,21,37,.78)
+        );
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:35px;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:170px;
+    height:3px;
+
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    box-shadow:0 0 20px var(--primary);
+}
+
+.hero::after{
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    right:-100px;
+    top:-120px;
+
+    border-radius:50%;
+
+    background:rgba(56,220,255,.08);
+
+    filter:blur(45px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    padding:7px 12px;
+
+    border-radius:30px;
+
+    background:rgba(56,220,255,.08);
+
+    border:1px solid rgba(56,220,255,.20);
+
+    color:var(--primary);
+
+    font-size:11px;
+    font-weight:800;
+
+    margin-bottom:17px;
+}
+
+.hero h1{
+    font-size:clamp(30px,4vw,48px);
+
+    margin-bottom:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            var(--primary),
+            #b9a8ff
+        );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:850px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:13px;
+}
+
+.hero-buttons{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:22px;
+}
+
+.hero-btn{
+    padding:11px 16px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-size:11px;
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56,220,255,.15),
+            rgba(124,92,255,.15)
+        );
+
+    border:1px solid rgba(56,220,255,.22);
+
+    transition:.3s;
+}
+
+.hero-btn:hover{
+    transform:translateY(-3px);
+
+    border-color:var(--primary);
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-wrap{
+    margin-top:28px;
+}
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+
+    color:#8496ad;
+
+    font-size:10px;
+
+    margin-bottom:7px;
+}
+
+.progress{
+    height:7px;
+
+    background:rgba(255,255,255,.06);
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    transition:width .5s;
+}
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin:40px 0 18px;
+}
+
+.section-icon{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:rgba(56,220,255,.08);
+
+    border:1px solid rgba(56,220,255,.16);
+
+    font-size:18px;
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:#73859d;
+
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+/* =========================================================
+   INFO GRID
+========================================================= */
+
+.info-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+}
+
+.info-card{
+    padding:22px;
+
+    border-radius:17px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+}
+
+.info-card:hover{
+    transform:translateY(-5px);
+
+    border-color:rgba(56,220,255,.30);
+}
+
+.info-icon{
+    font-size:25px;
+
+    margin-bottom:12px;
+}
+
+.info-card h3{
+    font-size:15px;
+
+    margin-bottom:7px;
+}
+
+.info-card p{
+    color:#8495aa;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+/* =========================================================
+   NOTE CARD
+========================================================= */
+
+.note-card{
+    padding:25px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(19,38,62,.84),
+            rgba(9,22,38,.76)
+        );
+
+    border:1px solid var(--border);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.18);
+
+    margin-bottom:18px;
+}
+
+.note-card h3{
+    font-size:17px;
+
+    margin-bottom:12px;
+
+    color:#f1f7ff;
+}
+
+.note-card h4{
+    margin:17px 0 8px;
+
+    color:var(--primary);
+
+    font-size:13px;
+}
+
+.note-card p{
+    color:#a1afc1;
+
+    font-size:12px;
+
+    line-height:1.85;
+}
+
+.note-card ul{
+    padding-left:20px;
+
+    color:#9aaabd;
+
+    font-size:12px;
+
+    line-height:1.9;
+}
+
+.note-card li::marker{
+    color:var(--primary);
+}
+
+/* =========================================================
+   BILINGUAL
+========================================================= */
+
+.bilingual{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-top:15px;
+}
+
+.language-box{
+    padding:18px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.025);
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.language-label{
+    display:inline-block;
+
+    padding:4px 8px;
+
+    border-radius:5px;
+
+    font-size:9px;
+    font-weight:800;
+
+    background:rgba(56,220,255,.08);
+
+    color:var(--primary);
+
+    margin-bottom:9px;
+}
+
+.language-box p{
+    font-size:11px;
+
+    line-height:1.8;
+
+    color:#a7b5c7;
+}
+
+/* =========================================================
+   CODE BOX
+========================================================= */
+
+.code-title{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:8px;
+
+    color:#9aabc0;
+
+    font-size:10px;
+}
+
+.copy-btn{
+    border:1px solid rgba(255,255,255,.08);
+
+    background:rgba(255,255,255,.04);
+
+    color:#b9c7d8;
+
+    padding:5px 9px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-size:9px;
+}
+
+.code-box{
+    background:#050b13;
+
+    border:1px solid rgba(255,255,255,.07);
+
+    border-radius:12px;
+
+    padding:17px;
+
+    overflow:auto;
+
+    box-shadow:
+        inset 0 0 30px rgba(0,0,0,.3);
+}
+
+.code-box pre{
+    margin:0;
+
+    font-family:
+        Consolas,
+        Monaco,
+        monospace;
+
+    font-size:11px;
+
+    line-height:1.75;
+
+    color:#b8e9ff;
+}
+
+/* =========================================================
+   OUTPUT
+========================================================= */
+
+.output-box{
+    margin-top:13px;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    background:#f5f8fc;
+
+    color:#182231;
+
+    border:1px solid rgba(255,255,255,.15);
+}
+
+.output-label{
+    color:#607087;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    margin-bottom:12px;
+
+    text-transform:uppercase;
+}
+
+/* Demo Output */
+
+.demo-title{
+    color:#286cff;
+
+    font-size:25px;
+
+    font-weight:900;
+
+    margin-bottom:5px;
+}
+
+.demo-text{
+    color:#46566a;
+
+    font-size:13px;
+}
+
+.demo-button{
+    display:inline-block;
+
+    margin-top:12px;
+
+    padding:9px 15px;
+
+    border-radius:7px;
+
+    color:white;
+
+    background:#286cff;
+
+    font-size:11px;
+
+    font-weight:bold;
+}
+
+/* =========================================================
+   SELECTOR GRID
+========================================================= */
+
+.selector-grid{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+}
+
+.selector-card{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.selector-symbol{
+    display:inline-block;
+
+    padding:7px 10px;
+
+    border-radius:7px;
+
+    background:rgba(56,220,255,.08);
+
+    color:var(--primary);
+
+    font-family:monospace;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+}
+
+.selector-card h3{
+    font-size:14px;
+
+    margin-bottom:6px;
+}
+
+.selector-card p{
+    color:#8294aa;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+/* =========================================================
+   BOX MODEL
+========================================================= */
+
+.box-model{
+    max-width:600px;
+
+    margin:20px auto;
+
+    padding:25px;
+
+    text-align:center;
+
+    background:#ffe4a8;
+
+    color:#222;
+
+    border:12px solid #f28b30;
+
+    outline:4px dashed #38dcff;
+
+}
+
+.box-content{
+    padding:25px;
+
+    background:#b8f0ff;
+
+    border:4px solid #286cff;
+
+    font-weight:bold;
+}
+
+/* =========================================================
+   FLEX DEMO
+========================================================= */
+
+.flex-demo{
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:#edf3fa;
+
+}
+
+.flex-item{
+    flex:1;
+
+    min-width:100px;
+
+    padding:18px;
+
+    text-align:center;
+
+    border-radius:9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #286cff,
+            #7658e8
+        );
+
+    color:white;
+
+    font-weight:bold;
+
+    font-size:12px;
+}
+
+/* =========================================================
+   CHEAT SHEET
+========================================================= */
+
+.cheat-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+}
+
+.cheat{
+    padding:15px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.cheat code{
+    display:block;
+
+    color:var(--primary);
+
+    font-family:monospace;
+
+    font-size:11px;
+
+    margin-bottom:6px;
+}
+
+.cheat span{
+    color:#8294aa;
+
+    font-size:10px;
+}
+
+/* =========================================================
+   EXAM BOX
+========================================================= */
+
+.exam-box{
+    padding:25px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,229,168,.07),
+            rgba(56,220,255,.05)
+        );
+
+    border:1px solid rgba(0,229,168,.15);
+}
+
+.exam-list{
+    list-style:none;
+}
+
+.exam-list li{
+    padding:9px 0;
+
+    color:#a5b3c4;
+
+    font-size:12px;
+
+    border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.exam-list li::before{
+    content:"★";
+
+    color:var(--accent);
+
+    margin-right:9px;
+}
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+.quiz{
+    display:grid;
+
+    gap:12px;
+}
+
+.question{
+    padding:18px;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.question h4{
+    font-size:12px;
+
+    line-height:1.6;
+
+    margin-bottom:10px;
+}
+
+.options{
+    display:grid;
+
+    gap:7px;
+}
+
+.option{
+    padding:9px;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.03);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    color:#9bacbf;
+
+    font-size:11px;
+
+    cursor:pointer;
+}
+
+.option:hover{
+    border-color:var(--primary);
+
+    color:var(--primary);
+}
+
+.answer{
+    display:none;
+
+    margin-top:10px;
+
+    color:var(--accent);
+
+    font-size:11px;
+
+    font-weight:bold;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:50px;
+
+    padding:28px;
+
+    text-align:center;
+
+    color:#687a91;
+
+    font-size:10px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .info-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .cheat-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .hero{
+        padding:28px 20px;
+    }
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .brand-title{
+        font-size:14px;
+    }
+
+    .header-actions{
+        flex-direction:column;
+        align-items:flex-end;
+    }
+
+    .container{
+        padding:30px 4% 60px;
+    }
+
+    .info-grid,
+    .bilingual,
+    .selector-grid,
+    .cheat-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print{
+
+    .header,
+    .hero-buttons,
+    .copy-btn{
+        display:none;
+    }
+
+    body{
+        background:white;
+
+        color:black;
+    }
+
+    .note-card,
+    .info-card,
+    .selector-card{
+        break-inside:avoid;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            CSS
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                M2 Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Chapter 03 • CSS
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <a href="m2.html" class="back-btn">
+            ← M2 Home
+        </a>
+
+        <button class="action-btn" onclick="window.print()">
+            🖨 Print
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+    <div class="badge">
+        ✦ NIELIT O LEVEL • M2-R5 • CHAPTER 03
+    </div>
+
+    <h1>
+        CSS — Cascading Style Sheets
+    </h1>
+
+    <p>
+        Complete bilingual chapter notes for CSS.
+        Learn how CSS controls the appearance, layout,
+        spacing, colors, typography and responsive behaviour
+        of HTML web pages with simple explanations and practical examples.
+    </p>
+
+    <div class="hero-buttons">
+
+        <a href="#basics" class="hero-btn">
+            📖 Start Learning
+        </a>
+
+        <a href="#examples" class="hero-btn">
+            💻 Examples
+        </a>
+
+        <a href="#exam" class="hero-btn">
+            🎯 Exam Points
+        </a>
+
+    </div>
+
+    <div class="progress-wrap">
+
+        <div class="progress-top">
+
+            <span>
+                Chapter Progress
+            </span>
+
+            <span id="progressText">
+                0%
+            </span>
+
+        </div>
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="progressBar">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     WHAT IS CSS
+========================================================= -->
+
+<div class="section-title" id="basics">
+
+    <div class="section-icon">
+        🎨
+    </div>
+
+    <div>
+
+        <h2>
+            1. What is CSS?
+        </h2>
+
+        <p>
+            CSS का basic concept
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+    CSS — Cascading Style Sheets
+</h3>
+
+<div class="bilingual">
+
+    <div class="language-box">
+
+        <span class="language-label">
+            ENGLISH
+        </span>
+
+        <p>
+            CSS stands for <b>Cascading Style Sheets</b>.
+            It is a stylesheet language used to describe
+            how HTML elements should look on a web page.
+        </p>
+
+    </div>
+
+    <div class="language-box">
+
+        <span class="language-label">
+            हिंदी
+        </span>
+
+        <p>
+            CSS का पूरा नाम <b>Cascading Style Sheets</b> है।
+            इसका उपयोग HTML elements को सुंदर बनाने और
+            उनका layout, color, font, spacing आदि निर्धारित करने
+            के लिए किया जाता है।
+        </p>
+
+    </div>
+
+</div>
+
+<h4>
+    CSS क्यों जरूरी है?
+</h4>
+
+<ul>
+
+<li>
+    HTML → Structure बनाता है
+</li>
+
+<li>
+    CSS → Design और presentation करता है
+</li>
+
+<li>
+    JavaScript → Behaviour और interaction देता है
+</li>
+
+<li>
+    CSS से website attractive और readable बनती है।
+</li>
+
+</ul>
+
+</section>
+
+
+<!-- =========================================================
+     HTML CSS JS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🧩
+    </div>
+
+    <div>
+
+        <h2>
+            HTML + CSS + JavaScript
+        </h2>
+
+        <p>
+            तीनों technologies का role
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="info-grid">
+
+<div class="info-card">
+
+    <div class="info-icon">
+        🧱
+    </div>
+
+    <h3>
+        HTML
+    </h3>
+
+    <p>
+        Creates the structure and content of
+        a web page.
+        <br><br>
+        Web page का basic ढांचा HTML बनाता है।
+    </p>
+
+</div>
+
+
+<div class="info-card">
+
+    <div class="info-icon">
+        🎨
+    </div>
+
+    <h3>
+        CSS
+    </h3>
+
+    <p>
+        Controls design, colors, fonts, spacing
+        and layout.
+        <br><br>
+        Page को style और design CSS करता है।
+    </p>
+
+</div>
+
+
+<div class="info-card">
+
+    <div class="info-icon">
+        ⚡
+    </div>
+
+    <h3>
+        JavaScript
+    </h3>
+
+    <p>
+        Adds logic, interaction and dynamic
+        behaviour.
+        <br><br>
+        Website को interactive बनाता है।
+    </p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CSS SYNTAX
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🧠
+    </div>
+
+    <div>
+
+        <h2>
+            2. CSS Syntax
+        </h2>
+
+        <p>
+            CSS rule का structure
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="code-title">
+
+    <span>
+        CSS Example
+    </span>
+
+    <button class="copy-btn"
+        onclick="copyCode('code1')">
+        Copy
+    </button>
+
+</div>
+
+<div class="code-box">
+
+<pre id="code1">p {
+    color: blue;
+    font-size: 18px;
+}</pre>
+
+</div>
+
+<div class="bilingual">
+
+<div class="language-box">
+
+<span class="language-label">
+ENGLISH
+</span>
+
+<p>
+The selector selects an HTML element.
+Properties define what should change,
+and values specify how it should look.
+</p>
+
+</div>
+
+<div class="language-box">
+
+<span class="language-label">
+हिंदी
+</span>
+
+<p>
+Selector HTML element को select करता है।
+Property बताती है कि क्या change करना है
+और value बताती है कि वह change कैसे होगा।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CSS METHODS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🔗
+    </div>
+
+    <div>
+
+        <h2>
+            3. Ways to Apply CSS
+        </h2>
+
+        <p>
+            Inline, Internal और External CSS
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="info-grid">
+
+<div class="info-card">
+
+<h3>
+    ① Inline CSS
+</h3>
+
+<p>
+CSS directly HTML element के अंदर
+style attribute में लिखा जाता है।
+<br><br>
+
+Example:
+<br>
+
+<code>
+&lt;p style="color:red;"&gt;Hello&lt;/p&gt;
+</code>
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    ② Internal CSS
+</h3>
+
+<p>
+CSS को same HTML document के
+&lt;style&gt; element में लिखा जाता है।
+<br><br>
+
+Useful when one page has its own styles.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    ③ External CSS
+</h3>
+
+<p>
+CSS को अलग .css file में लिखा जाता है
+और HTML में link किया जाता है।
+<br><br>
+
+Example:
+<br>
+
+<code>
+&lt;link rel="stylesheet" href="style.css"&gt;
+</code>
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SELECTORS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🎯
+    </div>
+
+    <div>
+
+        <h2>
+            4. CSS Selectors
+        </h2>
+
+        <p>
+            Most important exam topic
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="selector-grid">
+
+
+<div class="selector-card">
+
+<div class="selector-symbol">
+    p
+</div>
+
+<h3>
+    Element Selector
+</h3>
+
+<p>
+Selects all elements of a particular HTML
+tag.
+<br><br>
+
+Example:
+<br>
+
+<code>
+p { color:red; }
+</code>
+</p>
+
+</div>
+
+
+<div class="selector-card">
+
+<div class="selector-symbol">
+    .box
+</div>
+
+<h3>
+    Class Selector
+</h3>
+
+<p>
+Selects elements having a particular class.
+Class selector starts with <b>.</b>
+<br><br>
+
+Example:
+<br>
+
+<code>
+.box { padding:10px; }
+</code>
+</p>
+
+</div>
+
+
+<div class="selector-card">
+
+<div class="selector-symbol">
+    #title
+</div>
+
+<h3>
+    ID Selector
+</h3>
+
+<p>
+Selects an element using its id.
+ID selector starts with <b>#</b>.
+<br><br>
+
+Example:
+<br>
+
+<code>
+#title { color:blue; }
+</code>
+</p>
+
+</div>
+
+
+<div class="selector-card">
+
+<div class="selector-symbol">
+    *
+</div>
+
+<h3>
+    Universal Selector
+</h3>
+
+<p>
+Selects all HTML elements.
+<br><br>
+
+Example:
+<br>
+
+<code>
+* { margin:0; }
+</code>
+</p>
+
+</div>
+
+
+<div class="selector-card">
+
+<div class="selector-symbol">
+    h1,p
+</div>
+
+<h3>
+    Group Selector
+</h3>
+
+<p>
+Same style can be applied to multiple
+selectors.
+<br><br>
+
+Example:
+<br>
+
+<code>
+h1,p { color:green; }
+</code>
+</p>
+
+</div>
+
+
+<div class="selector-card">
+
+<div class="selector-symbol">
+    div p
+</div>
+
+<h3>
+    Descendant Selector
+</h3>
+
+<p>
+Selects elements inside another element.
+<br><br>
+
+Example:
+<br>
+
+<code>
+div p { color:red; }
+</code>
+</p>
+
+</div>
+
+
+</section>
+
+
+<!-- =========================================================
+     COLORS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🌈
+    </div>
+
+    <div>
+
+        <h2>
+            5. CSS Colors
+        </h2>
+
+        <p>
+            Color define करने के तरीके
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+    CSS में Colors
+</h3>
+
+<p>
+CSS में color को कई तरीकों से define किया जा सकता है।
+</p>
+
+<div class="cheat-grid" style="margin-top:15px;">
+
+<div class="cheat">
+
+<code>color:red;</code>
+
+<span>
+Named Color
+</span>
+
+</div>
+
+<div class="cheat">
+
+<code>color:#ff0000;</code>
+
+<span>
+HEX Color
+</span>
+
+</div>
+
+<div class="cheat">
+
+<code>color:rgb(255,0,0);</code>
+
+<span>
+RGB Color
+</span>
+
+</div>
+
+<div class="cheat">
+
+<code>color:rgba(255,0,0,.5);</code>
+
+<span>
+RGBA with transparency
+</span>
+
+</div>
+
+<div class="cheat">
+
+<code>color:hsl(0,100%,50%);</code>
+
+<span>
+HSL Color
+</span>
+
+</div>
+
+<div class="cheat">
+
+<code>background-color:blue;</code>
+
+<span>
+Background Color
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FONTS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🔤
+    </div>
+
+    <div>
+
+        <h2>
+            6. CSS Fonts & Text
+        </h2>
+
+        <p>
+            Text styling properties
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="cheat-grid">
+
+<div class="cheat">
+<code>font-family</code>
+<span>
+Font type define करता है।
+</span>
+</div>
+
+<div class="cheat">
+<code>font-size</code>
+<span>
+Text का size define करता है।
+</span>
+</div>
+
+<div class="cheat">
+<code>font-weight</code>
+<span>
+Text की thickness define करता है।
+</span>
+</div>
+
+<div class="cheat">
+<code>font-style</code>
+<span>
+Normal / italic आदि।
+</span>
+</div>
+
+<div class="cheat">
+<code>text-align</code>
+<span>
+left, center, right आदि।
+</span>
+</div>
+
+<div class="cheat">
+<code>text-decoration</code>
+<span>
+underline, line-through आदि।
+</span>
+</div>
+
+<div class="cheat">
+<code>line-height</code>
+<span>
+Lines के बीच distance।
+</span>
+</div>
+
+<div class="cheat">
+<code>letter-spacing</code>
+<span>
+Characters के बीच spacing।
+</span>
+</div>
+
+<div class="cheat">
+<code>text-transform</code>
+<span>
+uppercase/lowercase आदि।
+</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     BOX MODEL
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📦
+    </div>
+
+    <div>
+
+        <h2>
+            7. CSS Box Model
+        </h2>
+
+        <p>
+            Very important concept
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+    Box Model के चार मुख्य भाग
+</h3>
+
+<div class="box-model">
+
+    <div style="font-size:11px;margin-bottom:8px;">
+        MARGIN
+    </div>
+
+    <div style="
+        padding:20px;
+        background:#ffd27a;
+        border:7px solid #f28b30;
+    ">
+
+        BORDER
+
+        <div class="box-content">
+
+            CONTENT
+
+            <div style="
+                margin-top:8px;
+                font-size:10px;
+                font-weight:normal;
+            ">
+                Padding = content और border के बीच space
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="bilingual">
+
+<div class="language-box">
+
+<span class="language-label">
+ENGLISH
+</span>
+
+<p>
+The CSS box model consists of
+content, padding, border and margin.
+</p>
+
+</div>
+
+<div class="language-box">
+
+<span class="language-label">
+हिंदी
+</span>
+
+<p>
+CSS Box Model में चार parts होते हैं:
+Content, Padding, Border और Margin.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     DISPLAY
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🧱
+    </div>
+
+    <div>
+
+        <h2>
+            8. CSS Display Property
+        </h2>
+
+        <p>
+            Element का layout behaviour
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="info-grid">
+
+<div class="info-card">
+
+<h3>
+    block
+</h3>
+
+<p>
+Element normally पूरी available width लेता है
+और नई line से start होता है।
+<br><br>
+Examples: div, p, h1
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    inline
+</h3>
+
+<p>
+Element केवल required width लेता है
+और same line में रह सकता है।
+<br><br>
+Examples: span, a
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    inline-block
+</h3>
+
+<p>
+Inline की तरह line में रहता है लेकिन
+width और height apply की जा सकती है।
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    none
+</h3>
+
+<p>
+Element को display से remove कर देता है।
+<br><br>
+Example:
+<code>display:none;</code>
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     POSITION
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📍
+    </div>
+
+    <div>
+
+        <h2>
+            9. CSS Position
+        </h2>
+
+        <p>
+            Elements की positioning
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="cheat-grid">
+
+<div class="cheat">
+<code>static</code>
+<span>
+Default position.
+</span>
+</div>
+
+<div class="cheat">
+<code>relative</code>
+<span>
+Normal position के relative move।
+</span>
+</div>
+
+<div class="cheat">
+<code>absolute</code>
+<span>
+Nearest positioned ancestor के relative।
+</span>
+</div>
+
+<div class="cheat">
+<code>fixed</code>
+<span>
+Viewport के relative fixed रहता है।
+</span>
+</div>
+
+<div class="cheat">
+<code>sticky</code>
+<span>
+Scroll पर sticky behaviour देता है।
+</span>
+</div>
+
+<div class="cheat">
+<code>z-index</code>
+<span>
+Layering/order control करता है।
+</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FLEXBOX
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🧩
+    </div>
+
+    <div>
+
+        <h2>
+            10. CSS Flexbox
+        </h2>
+
+        <p>
+            Modern layout system
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+    Flexbox क्या है?
+</h3>
+
+<div class="bilingual">
+
+<div class="language-box">
+
+<span class="language-label">
+ENGLISH
+</span>
+
+<p>
+Flexbox is a CSS layout system used to
+arrange elements efficiently in rows or columns.
+</p>
+
+</div>
+
+<div class="language-box">
+
+<span class="language-label">
+हिंदी
+</span>
+
+<p>
+Flexbox एक CSS layout system है जिसका उपयोग
+elements को row या column में आसानी से arrange
+करने के लिए किया जाता है।
+</p>
+
+</div>
+
+</div>
+
+<h4>
+Important Flexbox Properties
+</h4>
+
+<div class="cheat-grid">
+
+<div class="cheat">
+<code>display:flex</code>
+<span>Flex container बनाता है।</span>
+</div>
+
+<div class="cheat">
+<code>flex-direction</code>
+<span>row या column direction।</span>
+</div>
+
+<div class="cheat">
+<code>justify-content</code>
+<span>Main axis alignment।</span>
+</div>
+
+<div class="cheat">
+<code>align-items</code>
+<span>Cross axis alignment।</span>
+</div>
+
+<div class="cheat">
+<code>flex-wrap</code>
+<span>Items को wrap करने देता है।</span>
+</div>
+
+<div class="cheat">
+<code>gap</code>
+<span>Items के बीच space।</span>
+</div>
+
+</div>
+
+<div class="output-box">
+
+<div class="output-label">
+LIVE OUTPUT
+</div>
+
+<div class="flex-demo">
+
+<div class="flex-item">
+ITEM 1
+</div>
+
+<div class="flex-item">
+ITEM 2
+</div>
+
+<div class="flex-item">
+ITEM 3
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     EXAMPLE
+========================================================= -->
+
+<div class="section-title" id="examples">
+
+    <div class="section-icon">
+        💻
+    </div>
+
+    <div>
+
+        <h2>
+            11. Complete CSS Example
+        </h2>
+
+        <p>
+            HTML + CSS का practical example
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="code-title">
+
+<span>
+HTML + CSS
+</span>
+
+<button class="copy-btn"
+onclick="copyCode('code2')">
+Copy
+</button>
+
+</div>
+
+<div class="code-box">
+
+<pre id="code2">&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;style&gt;
+
+body {
+    font-family: Arial;
+    background: #eef4ff;
+}
+
+h1 {
+    color: #286cff;
+    text-align: center;
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px #ccc;
+}
+
+button {
+    background: #286cff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 7px;
+}
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h1&gt;My Website&lt;/h1&gt;
+
+&lt;div class="card"&gt;
+
+    &lt;h2&gt;Welcome&lt;/h2&gt;
+
+    &lt;p&gt;
+        This is my CSS website.
+    &lt;/p&gt;
+
+    &lt;button&gt;
+        Click Me
+    &lt;/button&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;</pre>
+
+</div>
+
+
+<div class="output-box">
+
+<div class="output-label">
+EXPECTED OUTPUT
+</div>
+
+<div style="
+    background:#eef4ff;
+    padding:20px;
+    border-radius:10px;
+">
+
+<h2 style="
+    color:#286cff;
+    text-align:center;
+    margin-bottom:15px;
+">
+My Website
+</h2>
+
+<div style="
+    max-width:300px;
+    margin:auto;
+    padding:20px;
+    background:white;
+    border-radius:15px;
+    box-shadow:0 10px 30px #ccc;
+">
+
+<h3 style="margin-bottom:8px;">
+Welcome
+</h3>
+
+<p style="
+    color:#5c6878;
+    font-size:12px;
+">
+This is my CSS website.
+</p>
+
+<span class="demo-button">
+Click Me
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     RESPONSIVE INTRO
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📱
+    </div>
+
+    <div>
+
+        <h2>
+            12. Responsive CSS
+        </h2>
+
+        <p>
+            Mobile और desktop friendly design
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>
+    Media Query
+</h3>
+
+<p>
+Media queries का उपयोग अलग-अलग screen sizes
+के लिए अलग CSS rules apply करने में किया जाता है।
+</p>
+
+<div class="code-box" style="margin-top:14px;">
+
+<pre>@media (max-width: 600px) {
+
+    .container {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+}</pre>
+
+</div>
+
+<div class="bilingual">
+
+<div class="language-box">
+
+<span class="language-label">
+ENGLISH
+</span>
+
+<p>
+Responsive design allows a website to adapt
+to mobile, tablet and desktop screens.
+</p>
+
+</div>
+
+<div class="language-box">
+
+<span class="language-label">
+हिंदी
+</span>
+
+<p>
+Responsive design website को mobile, tablet
+और desktop अलग-अलग screen sizes के अनुसार
+adjust करने में मदद करता है।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CSS CHEAT SHEET
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        ⚡
+    </div>
+
+    <div>
+
+        <h2>
+            CSS Quick Revision Cheat Sheet
+        </h2>
+
+        <p>
+            Exam से पहले fast revision
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<div class="cheat-grid">
+
+<div class="cheat">
+<code>color</code>
+<span>Text color</span>
+</div>
+
+<div class="cheat">
+<code>background</code>
+<span>Background styling</span>
+</div>
+
+<div class="cheat">
+<code>margin</code>
+<span>Outside spacing</span>
+</div>
+
+<div class="cheat">
+<code>padding</code>
+<span>Inside spacing</span>
+</div>
+
+<div class="cheat">
+<code>border</code>
+<span>Boundary around element</span>
+</div>
+
+<div class="cheat">
+<code>width</code>
+<span>Element width</span>
+</div>
+
+<div class="cheat">
+<code>height</code>
+<span>Element height</span>
+</div>
+
+<div class="cheat">
+<code>display</code>
+<span>Layout behaviour</span>
+</div>
+
+<div class="cheat">
+<code>position</code>
+<span>Element positioning</span>
+</div>
+
+<div class="cheat">
+<code>font-size</code>
+<span>Text size</span>
+</div>
+
+<div class="cheat">
+<code>text-align</code>
+<span>Text alignment</span>
+</div>
+
+<div class="cheat">
+<code>box-shadow</code>
+<span>Shadow effect</span>
+</div>
+
+<div class="cheat">
+<code>border-radius</code>
+<span>Rounded corners</span>
+</div>
+
+<div class="cheat">
+<code>flex</code>
+<span>Flexible layout</span>
+</div>
+
+<div class="cheat">
+<code>gap</code>
+<span>Space between items</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     EXAM IMPORTANT
+========================================================= -->
+
+<div class="section-title" id="exam">
+
+    <div class="section-icon">
+        🎯
+    </div>
+
+    <div>
+
+        <h2>
+            Most Important Exam Points
+        </h2>
+
+        <p>
+            NIELIT O Level focused revision
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="exam-box">
+
+<ul class="exam-list">
+
+<li>
+CSS का full form — Cascading Style Sheets
+</li>
+
+<li>
+CSS का primary purpose — HTML document की presentation/style control करना
+</li>
+
+<li>
+CSS selectors — Element, Class, ID, Universal, Group आदि
+</li>
+
+<li>
+Class selector में dot (.) और ID selector में hash (#) प्रयोग होता है।
+</li>
+
+<li>
+CSS लागू करने के तीन तरीके — Inline, Internal और External
+</li>
+
+<li>
+Box Model — Content, Padding, Border, Margin
+</li>
+
+<li>
+display property के important values — block, inline, inline-block, none
+</li>
+
+<li>
+position के important values — static, relative, absolute, fixed, sticky
+</li>
+
+<li>
+Flexbox में justify-content और align-items बहुत important properties हैं।
+</li>
+
+<li>
+Media Query responsive web design के लिए उपयोग होती है।
+</li>
+
+<li>
+External CSS को HTML से link करने के लिए &lt;link&gt; element उपयोग होता है।
+</li>
+
+<li>
+CSS comments लिखने का syntax — /* comment */
+</li>
+
+</ul>
+
+</section>
+
+
+<!-- =========================================================
+     MINI QUIZ
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🧠
+    </div>
+
+    <div>
+
+        <h2>
+            Chapter 3 Mini Quiz
+        </h2>
+
+        <p>
+            Quick self-test
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="quiz">
+
+
+<div class="question">
+
+<h4>
+1. CSS का full form क्या है?
+</h4>
+
+<div class="options">
+
+<div class="option"
+onclick="showAnswer(1)">
+A. Computer Style Sheet
+</div>
+
+<div class="option"
+onclick="showAnswer(1)">
+B. Cascading Style Sheets
+</div>
+
+<div class="option"
+onclick="showAnswer(1)">
+C. Creative Style System
+</div>
+
+<div class="option"
+onclick="showAnswer(1)">
+D. Colorful Style Sheet
+</div>
+
+</div>
+
+<div class="answer" id="answer1">
+✓ Correct Answer: B — Cascading Style Sheets
+</div>
+
+</div>
+
+
+<div class="question">
+
+<h4>
+2. Class selector किस symbol से शुरू होता है?
+</h4>
+
+<div class="options">
+
+<div class="option"
+onclick="showAnswer(2)">
+A. #
+</div>
+
+<div class="option"
+onclick="showAnswer(2)">
+B. *
+</div>
+
+<div class="option"
+onclick="showAnswer(2)">
+C. .
+</div>
+
+<div class="option"
+onclick="showAnswer(2)">
+D. @
+</div>
+
+</div>
+
+<div class="answer" id="answer2">
+✓ Correct Answer: C — Dot (.)
+</div>
+
+</div>
+
+
+<div class="question">
+
+<h4>
+3. CSS Box Model में कौन-कौन से components होते हैं?
+</h4>
+
+<div class="options">
+
+<div class="option"
+onclick="showAnswer(3)">
+A. Content, Padding, Border, Margin
+</div>
+
+<div class="option"
+onclick="showAnswer(3)">
+B. Header, Footer, Body
+</div>
+
+<div class="option"
+onclick="showAnswer(3)">
+C. HTML, CSS, JS
+</div>
+
+<div class="option"
+onclick="showAnswer(3)">
+D. Row, Column, Grid
+</div>
+
+</div>
+
+<div class="answer" id="answer3">
+✓ Correct Answer: A — Content, Padding, Border, Margin
+</div>
+
+</div>
+
+
+<div class="question">
+
+<h4>
+4. Flexbox activate करने के लिए कौन-सी property/value use होती है?
+</h4>
+
+<div class="options">
+
+<div class="option"
+onclick="showAnswer(4)">
+A. position:flex
+</div>
+
+<div class="option"
+onclick="showAnswer(4)">
+B. display:flex
+</div>
+
+<div class="option"
+onclick="showAnswer(4)">
+C. flex:display
+</div>
+
+<div class="option"
+onclick="showAnswer(4)">
+D. layout:flex
+</div>
+
+</div>
+
+<div class="answer" id="answer4">
+✓ Correct Answer: B — display:flex
+</div>
+
+</div>
+
+
+</section>
+
+
+<!-- =========================================================
+     PRACTICAL TASKS
+========================================================= -->
+
+<div class="section-title">
+
+    <div class="section-icon">
+        💻
+    </div>
+
+    <div>
+
+        <h2>
+            Chapter 3 Practical Tasks
+        </h2>
+
+        <p>
+            Practice करके concept मजबूत करें
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="info-grid">
+
+<div class="info-card">
+
+<h3>
+    Task 01
+</h3>
+
+<p>
+एक HTML page बनाइए और CSS से
+heading का color, font-size और
+text-align change कीजिए।
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    Task 02
+</h3>
+
+<p>
+एक card design बनाइए जिसमें
+margin, padding, border,
+border-radius और box-shadow हो।
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    Task 03
+</h3>
+
+<p>
+Flexbox का उपयोग करके तीन cards को
+एक row में arrange कीजिए।
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    Task 04
+</h3>
+
+<p>
+Media query का उपयोग करके desktop
+layout को mobile friendly बनाइए।
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    Task 05
+</h3>
+
+<p>
+External CSS file बनाकर उसे
+HTML document से connect कीजिए।
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+    Task 06
+</h3>
+
+<p>
+एक attractive login form बनाकर
+CSS से style कीजिए।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CHAPTER COMPLETE
+========================================================= -->
+
+<section class="hero" style="margin-top:40px;">
+
+<div class="hero-content">
+
+<div class="badge">
+    ✓ CHAPTER 03 COMPLETED
+</div>
+
+<h1 style="font-size:32px;">
+    CSS Mastery Complete
+</h1>
+
+<p>
+You have covered CSS fundamentals, syntax,
+selectors, colors, fonts, box model, display,
+positioning, Flexbox, responsive design and
+practical examples.
+</p>
+
+<div class="hero-buttons">
+
+<a href="m2-chapter-2.html"
+class="hero-btn">
+← Chapter 2
+</a>
+
+<a href="m2-chapter-4.html"
+class="hero-btn">
+Chapter 4 →
+</a>
+
+<a href="m2.html"
+class="hero-btn">
+M2 Home
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+<p>
+M2-R5 • Chapter 03 • CSS — Cascading Style Sheets
+</p>
+
+<p style="margin-top:6px;">
+Bilingual Notes • Practical Examples • Exam Revision
+</p>
+
+</footer>
+
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   COPY CODE
+========================================================= */
+
+function copyCode(id){
+
+    const text =
+        document.getElementById(id).innerText;
+
+    navigator.clipboard.writeText(text);
+
+    alert("Code copied successfully!");
+
+}
+
+
+/* =========================================================
+   QUIZ ANSWER
+========================================================= */
+
+function showAnswer(num){
+
+    const answer =
+        document.getElementById("answer"+num);
+
+    answer.style.display="block";
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+window.addEventListener("scroll",function(){
+
+    const scrollTop =
+        document.documentElement.scrollTop;
+
+    const scrollHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+    const percent =
+        Math.round(
+            (scrollTop / scrollHeight) * 100
+        );
+
+    document.getElementById("progressBar")
+        .style.width = percent + "%";
+
+    document.getElementById("progressText")
+        .innerText = percent + "%";
+
+});
+
+
+/* =========================================================
+   KEYBOARD SHORTCUT
+========================================================= */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Home"){
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+    }
+
+});
+
+</script>
+
+
+</body>
+</html>
+```

@@ -1,0 +1,5782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC MOCK • Smart Study Planner</title>
+
+<style>
+:root{
+    --primary:#2563eb;
+    --primary2:#4f46e5;
+    --accent:#06b6d4;
+    --success:#10b981;
+    --warning:#f59e0b;
+    --danger:#ef4444;
+
+    --bg:#f4f7fb;
+    --bg2:#ffffff;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e4e9f2;
+    --shadow:0 10px 30px rgba(30,55,90,.10);
+
+    --radius:18px;
+    --font:Arial,sans-serif;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:var(--font);
+    background:
+        radial-gradient(circle at 10% 10%,rgba(37,99,235,.08),transparent 25%),
+        radial-gradient(circle at 90% 20%,rgba(6,182,212,.08),transparent 25%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg-orb{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(2px);
+    opacity:.18;
+    pointer-events:none;
+    z-index:-1;
+    animation:floatOrb 10s ease-in-out infinite;
+}
+
+.orb1{
+    width:180px;
+    height:180px;
+    background:#2563eb;
+    top:100px;
+    left:-70px;
+}
+
+.orb2{
+    width:220px;
+    height:220px;
+    background:#06b6d4;
+    right:-90px;
+    top:300px;
+    animation-delay:2s;
+}
+
+.orb3{
+    width:150px;
+    height:150px;
+    background:#8b5cf6;
+    bottom:40px;
+    left:30%;
+    animation-delay:4s;
+}
+
+@keyframes floatOrb{
+    0%,100%{
+        transform:translateY(0) scale(1);
+    }
+    50%{
+        transform:translateY(-25px) scale(1.08);
+    }
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter:blur(16px);
+    background:rgba(255,255,255,.90);
+    border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+    width:min(1180px,94%);
+    margin:auto;
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.brand-logo{
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#f4f7fb,#ffffff);
+    box-shadow:0 5px 16px rgba(0,0,0,.08);
+    font-size:27px;
+    position:relative;
+}
+
+.brand-logo::after{
+    content:"";
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:#f59e0b;
+    border-radius:50%;
+    bottom:7px;
+    right:7px;
+}
+
+.brand-title{
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:.2px;
+    color:#2563eb;
+}
+
+.brand-title span{
+    color:#172033;
+}
+
+.brand-sub{
+    font-size:10px;
+    color:#667085;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.icon-btn{
+    border:1px solid var(--border);
+    background:white;
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:18px;
+    transition:.25s;
+}
+
+.icon-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 7px 18px rgba(0,0,0,.10);
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    width:min(1180px,94%);
+    margin:24px auto 50px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    background:
+        linear-gradient(135deg,rgba(37,99,235,.96),rgba(79,70,229,.94));
+    color:white;
+    border-radius:22px;
+    padding:27px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:25px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(37,99,235,.20);
+    animation:heroIn .7s ease;
+}
+
+@keyframes heroIn{
+    from{
+        opacity:0;
+        transform:translateY(-15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    border:30px solid rgba(255,255,255,.08);
+    right:80px;
+    top:-110px;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    right:-30px;
+    bottom:-60px;
+}
+
+.hero h1{
+    font-size:28px;
+    margin-bottom:7px;
+}
+
+.hero p{
+    opacity:.88;
+    font-size:14px;
+}
+
+.hero-date{
+    text-align:right;
+    position:relative;
+    z-index:2;
+}
+
+.hero-date strong{
+    display:block;
+    font-size:20px;
+}
+
+.hero-date span{
+    font-size:12px;
+    opacity:.8;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin:18px 0;
+}
+
+.stat{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:17px;
+    box-shadow:var(--shadow);
+    transition:.25s;
+}
+
+.stat:hover{
+    transform:translateY(-4px);
+}
+
+.stat-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.stat-icon{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+    display:grid;
+    place-items:center;
+    font-size:18px;
+    background:#eef4ff;
+}
+
+.stat-number{
+    font-size:23px;
+    font-weight:800;
+    margin-top:10px;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* ================= TABS ================= */
+
+.tabs{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    padding:4px 2px 10px;
+    scrollbar-width:none;
+}
+
+.tabs::-webkit-scrollbar{
+    display:none;
+}
+
+.tab{
+    border:1px solid var(--border);
+    background:white;
+    padding:10px 15px;
+    border-radius:12px;
+    cursor:pointer;
+    white-space:nowrap;
+    font-size:13px;
+    font-weight:700;
+    transition:.25s;
+}
+
+.tab:hover{
+    transform:translateY(-2px);
+}
+
+.tab.active{
+    color:white;
+    border-color:var(--primary);
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+
+/* ================= SECTIONS ================= */
+
+.section{
+    display:none;
+    animation:sectionIn .4s ease;
+}
+
+.section.active{
+    display:block;
+}
+
+@keyframes sectionIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    gap:17px;
+}
+
+.grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:20px;
+    margin-bottom:17px;
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.card-title h2{
+    font-size:17px;
+}
+
+.card-title p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:3px;
+}
+
+.small-btn{
+    border:0;
+    border-radius:10px;
+    padding:8px 11px;
+    background:#eef4ff;
+    color:var(--primary);
+    font-weight:700;
+    cursor:pointer;
+    font-size:11px;
+    transition:.2s;
+}
+
+.small-btn:hover{
+    transform:translateY(-2px);
+}
+
+/* ================= ADVANCED ROUGH PAD ================= */
+
+.rough-toolbar{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px;
+    padding:10px;
+    margin-bottom:10px;
+    background:#f7f9fd;
+    border:1px solid var(--border);
+    border-radius:13px;
+}
+
+.rough-tool{
+    min-width:38px;
+    height:36px;
+    border:1px solid var(--border);
+    background:white;
+    color:var(--text);
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+    font-size:15px;
+    transition:.2s;
+}
+
+.rough-tool:hover{
+    transform:translateY(-2px);
+    box-shadow:0 5px 12px rgba(0,0,0,.08);
+}
+
+.rough-tool.active{
+    color:white;
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    border-color:var(--primary);
+}
+
+.tool-divider{
+    width:1px;
+    height:28px;
+    background:var(--border);
+    margin:0 3px;
+}
+
+.rough-color{
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    border:3px solid white;
+    box-shadow:0 0 0 1px #ccd3df;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.rough-color:hover{
+    transform:scale(1.12);
+}
+
+.rough-color.active{
+    box-shadow:
+        0 0 0 2px var(--primary),
+        0 0 0 4px white;
+}
+
+.brush-size-wrap{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:11px;
+    color:var(--muted);
+}
+
+.brush-size{
+    width:95px;
+    accent-color:var(--primary);
+    cursor:pointer;
+}
+
+.size-value{
+    min-width:32px;
+    font-weight:700;
+    color:var(--primary);
+}
+
+.canvas-box{
+    position:relative;
+    width:100%;
+    height:430px;
+    overflow:hidden;
+    border:2px dashed #dce4ef;
+    border-radius:14px;
+    background-color:#fff;
+
+    background-image:
+        linear-gradient(#e9eef6 1px,transparent 1px),
+        linear-gradient(90deg,#e9eef6 1px,transparent 1px);
+
+    background-size:25px 25px;
+}
+
+#roughCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    cursor:crosshair;
+    touch-action:none;
+}
+
+.canvas-placeholder{
+    position:absolute;
+    top:14px;
+    left:18px;
+    color:#9aa7b9;
+    font-size:12px;
+    pointer-events:none;
+    user-select:none;
+    transition:.2s;
+}
+
+.canvas-placeholder.hide{
+    opacity:0;
+}
+
+.text-notes-box{
+    margin-top:14px;
+}
+
+.text-notes-label{
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.notes-area{
+    width:100%;
+    min-height:160px;
+    border:2px dashed #dce4ef;
+    border-radius:14px;
+    padding:17px;
+    outline:none;
+    font-size:15px;
+    line-height:1.7;
+    background:
+        linear-gradient(#fff 31px,transparent 31px) repeat-y;
+    background-size:100% 32px;
+    transition:.25s;
+}
+
+.notes-area:focus{
+    border-color:#93c5fd;
+    box-shadow:0 0 0 4px rgba(37,99,235,.07);
+}
+
+.rough-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:8px;
+    color:var(--muted);
+    font-size:10px;
+}
+
+.rough-status{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--success);
+    box-shadow:0 0 8px rgba(16,185,129,.5);
+}
+
+/* ================= TODO ================= */
+
+.add-task{
+    display:flex;
+    gap:8px;
+}
+
+.input{
+    flex:1;
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:11px 12px;
+    outline:none;
+    font-size:13px;
+    background:var(--bg2);
+    color:var(--text);
+}
+
+.input:focus{
+    border-color:var(--primary);
+}
+
+.primary-btn{
+    border:0;
+    color:white;
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    border-radius:11px;
+    padding:0 15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(37,99,235,.20);
+}
+
+.task-list{
+    margin-top:13px;
+}
+
+.task{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:11px 0;
+    border-bottom:1px solid var(--border);
+    font-size:13px;
+}
+
+.task:last-child{
+    border-bottom:0;
+}
+
+.task input{
+    accent-color:var(--primary);
+}
+
+.task.done span{
+    text-decoration:line-through;
+    color:#98a2b3;
+}
+
+.delete-task{
+    margin-left:auto;
+    border:0;
+    background:transparent;
+    color:#98a2b3;
+    cursor:pointer;
+}
+
+/* ================= TIMER ================= */
+
+.timer-card{
+    text-align:center;
+}
+
+.timer-ring{
+    width:225px;
+    height:225px;
+    margin:12px auto 18px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    position:relative;
+    background:conic-gradient(var(--primary) 0deg,#e8eef8 0deg);
+    box-shadow:0 12px 35px rgba(37,99,235,.15);
+}
+
+.timer-ring::before{
+    content:"";
+    position:absolute;
+    inset:11px;
+    border-radius:50%;
+    background:var(--card);
+}
+
+.timer-content{
+    position:relative;
+    z-index:2;
+}
+
+.timer-display{
+    font-size:38px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.timer-status{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:5px;
+}
+
+.timer-controls{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.timer-inputs{
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    margin-bottom:12px;
+}
+
+.time-input{
+    width:65px;
+    text-align:center;
+    padding:9px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:var(--bg2);
+    color:var(--text);
+}
+
+/* ================= SUBJECT ================= */
+
+.subject{
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    margin-bottom:9px;
+}
+
+.subject-head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.progress{
+    height:7px;
+    border-radius:20px;
+    background:#edf1f7;
+    overflow:hidden;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    width:0%;
+    border-radius:20px;
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    transition:1s;
+}
+
+/* ================= SCHEDULE ================= */
+
+.schedule{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.schedule-row{
+    display:grid;
+    grid-template-columns:80px 1fr 90px;
+    align-items:center;
+    gap:10px;
+    padding:11px;
+    border-radius:11px;
+    background:#f8faff;
+    border:1px solid #edf1f7;
+}
+
+.schedule-time{
+    font-size:11px;
+    color:var(--primary);
+    font-weight:800;
+}
+
+.schedule-name{
+    font-size:13px;
+    font-weight:700;
+}
+
+.schedule-type{
+    font-size:10px;
+    color:var(--muted);
+    text-align:right;
+}
+
+/* ================= QUICK TOOLS ================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+}
+
+.quick-btn{
+    padding:13px;
+    border:1px solid var(--border);
+    background:white;
+    color:var(--text);
+    border-radius:12px;
+    cursor:pointer;
+    text-align:left;
+    transition:.25s;
+}
+
+.quick-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,.07);
+}
+
+.quick-btn strong{
+    display:block;
+    font-size:12px;
+}
+
+.quick-btn span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* ================= STUDY LOG ================= */
+
+.log-form{
+    display:grid;
+    grid-template-columns:1fr 120px 120px auto;
+    gap:8px;
+}
+
+.log-list{
+    margin-top:14px;
+}
+
+.log-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:11px 0;
+    border-bottom:1px solid var(--border);
+    font-size:12px;
+}
+
+.log-left strong{
+    display:block;
+}
+
+.log-left span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* ================= CALCULATOR ================= */
+
+.calculator{
+    max-width:330px;
+    margin:auto;
+}
+
+.calc-display{
+    width:100%;
+    height:58px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    margin-bottom:9px;
+    text-align:right;
+    padding:10px 13px;
+    font-size:24px;
+    font-weight:700;
+    background:#f8faff;
+    color:var(--text);
+}
+
+.calc-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:7px;
+}
+
+.calc-btn{
+    height:45px;
+    border:0;
+    border-radius:10px;
+    background:#eef3fa;
+    color:var(--text);
+    cursor:pointer;
+    font-weight:700;
+    font-size:14px;
+    transition:.2s;
+}
+
+.calc-btn:hover{
+    transform:scale(1.04);
+    background:#e3ebf7;
+}
+
+.calc-btn.operator{
+    color:var(--primary);
+}
+
+/* ================= SETTINGS ================= */
+
+.setting-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:13px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.setting-row:last-child{
+    border-bottom:0;
+}
+
+.setting-info strong{
+    display:block;
+    font-size:13px;
+}
+
+.setting-info span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+select{
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:8px;
+    background:white;
+    color:var(--text);
+}
+
+.theme-options{
+    display:flex;
+    gap:7px;
+}
+
+.theme{
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    border:2px solid white;
+    box-shadow:0 0 0 1px #ddd;
+    cursor:pointer;
+}
+
+.theme.blue{background:#2563eb}
+.theme.purple{background:#7c3aed}
+.theme.green{background:#059669}
+.theme.orange{background:#ea580c}
+.theme.pink{background:#db2777}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.45);
+    backdrop-filter:blur(5px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:300;
+    padding:15px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(520px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    color:var(--text);
+    border-radius:20px;
+    padding:23px;
+    box-shadow:0 25px 70px rgba(0,0,0,.20);
+    animation:modalIn .3s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:scale(.94) translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+.modal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:17px;
+}
+
+.close{
+    border:0;
+    background:#f2f4f7;
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    cursor:pointer;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#172033;
+    color:white;
+    padding:12px 17px;
+    border-radius:11px;
+    font-size:12px;
+    opacity:0;
+    transform:translateY(20px);
+    pointer-events:none;
+    transition:.3s;
+    z-index:500;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ================= DARK ================= */
+
+body.dark{
+    --bg:#111827;
+    --bg2:#182233;
+    --card:#182233;
+    --text:#f3f6fb;
+    --muted:#9aa7b9;
+    --border:#2b384b;
+    --shadow:0 10px 30px rgba(0,0,0,.20);
+}
+
+body.dark .header{
+    background:rgba(24,34,51,.92);
+}
+
+body.dark .tab,
+body.dark .icon-btn,
+body.dark .tool-btn,
+body.dark .quick-btn,
+body.dark .calc-btn,
+body.dark .rough-tool{
+    background:#202c3d;
+    color:var(--text);
+}
+
+body.dark .rough-toolbar{
+    background:#202c3d;
+}
+
+body.dark .canvas-box{
+    background-color:#182233;
+    background-image:
+        linear-gradient(#2a3749 1px,transparent 1px),
+        linear-gradient(90deg,#2a3749 1px,transparent 1px);
+}
+
+body.dark .notes-area{
+    background:
+        linear-gradient(#182233 31px,transparent 31px) repeat-y;
+    background-size:100% 32px;
+    color:white;
+}
+
+body.dark .schedule-row{
+    background:#202c3d;
+    border-color:#2b384b;
+}
+
+body.dark .modal-box{
+    background:#182233;
+}
+
+body.dark .close{
+    background:#273449;
+    color:white;
+}
+
+body.dark select,
+body.dark .time-input,
+body.dark .input{
+    background:#202c3d;
+    color:white;
+}
+
+body.dark .calc-display{
+    background:#202c3d;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid-3{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .log-form{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .container{
+        width:94%;
+        margin-top:15px;
+    }
+
+    .header-inner{
+        min-height:62px;
+    }
+
+    .brand-title{
+        font-size:18px;
+    }
+
+    .brand-logo{
+        width:40px;
+        height:40px;
+        font-size:22px;
+    }
+
+    .hero{
+        padding:20px;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .hero h1{
+        font-size:23px;
+    }
+
+    .hero-date{
+        text-align:left;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
+    .stat{
+        padding:13px;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    .grid-3{
+        grid-template-columns:1fr;
+    }
+
+    .schedule-row{
+        grid-template-columns:65px 1fr 70px;
+    }
+
+    .timer-ring{
+        width:200px;
+        height:200px;
+    }
+
+    .log-form{
+        grid-template-columns:1fr;
+    }
+
+    .canvas-box{
+        height:350px;
+    }
+
+    .rough-toolbar{
+        gap:5px;
+        padding:8px;
+    }
+
+    .rough-tool{
+        min-width:34px;
+        height:34px;
+    }
+
+    .brush-size{
+        width:70px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="bg-orb orb3"></div>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <div class="brand-logo">🎓</div>
+
+            <div>
+                <div class="brand-title">
+                    SSC <span>MOCK</span>
+                </div>
+
+                <div class="brand-sub">
+                    Practice • Analyze • Succeed
+                </div>
+            </div>
+
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                class="icon-btn"
+                onclick="toggleDark()"
+                title="Dark Mode">
+                🌙
+            </button>
+
+            <button
+                class="icon-btn"
+                onclick="openSettings()"
+                title="Settings">
+                ⚙️
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div>
+
+        <h1>
+            My Smart Study Space 🚀
+        </h1>
+
+        <p>
+            Plan your day • Focus better •
+            Write notes • Track progress
+        </p>
+
+    </div>
+
+    <div class="hero-date">
+
+        <strong id="todayDate">
+            Loading...
+        </strong>
+
+        <span id="liveClock">
+            00:00:00
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                ⏱️
+            </div>
+
+        </div>
+
+        <div class="stat-number" id="todayStudy">
+            0m
+        </div>
+
+        <div class="stat-label">
+            Today's Study Time
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+        </div>
+
+        <div class="stat-number" id="taskCount">
+            0
+        </div>
+
+        <div class="stat-label">
+            Completed Tasks
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                🔥
+            </div>
+
+        </div>
+
+        <div class="stat-number" id="focusSessions">
+            0
+        </div>
+
+        <div class="stat-label">
+            Focus Sessions
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                📚
+            </div>
+
+        </div>
+
+        <div class="stat-number">
+            SSC
+        </div>
+
+        <div class="stat-label">
+            Preparation Mode
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TABS ================= -->
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        onclick="showSection('dashboard',this)">
+        🏠 Dashboard
+    </button>
+
+    <button
+        class="tab"
+        onclick="showSection('notes',this)">
+        ✏️ Rough Work
+    </button>
+
+    <button
+        class="tab"
+        onclick="showSection('planner',this)">
+        📅 Planner
+    </button>
+
+    <button
+        class="tab"
+        onclick="showSection('focus',this)">
+        🎯 Focus Timer
+    </button>
+
+    <button
+        class="tab"
+        onclick="showSection('tasks',this)">
+        ✅ Tasks
+    </button>
+
+    <button
+        class="tab"
+        onclick="showSection('tools',this)">
+        🧮 Study Tools
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dashboard" class="section active">
+
+    <div class="grid-2">
+
+        <div>
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>
+                            📌 Today's Plan
+                        </h2>
+
+                        <p>
+                            Your study schedule for today
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="small-btn"
+                        onclick="showSectionByName('planner')">
+                        Manage
+                    </button>
+
+                </div>
+
+
+                <div class="schedule">
+
+                    <div class="schedule-row">
+                        <div class="schedule-time">
+                            06:30 AM
+                        </div>
+                        <div class="schedule-name">
+                            English Grammar
+                        </div>
+                        <div class="schedule-type">
+                            Study
+                        </div>
+                    </div>
+
+                    <div class="schedule-row">
+                        <div class="schedule-time">
+                            10:00 AM
+                        </div>
+                        <div class="schedule-name">
+                            Quantitative Aptitude
+                        </div>
+                        <div class="schedule-type">
+                            Practice
+                        </div>
+                    </div>
+
+                    <div class="schedule-row">
+                        <div class="schedule-time">
+                            02:00 PM
+                        </div>
+                        <div class="schedule-name">
+                            Reasoning
+                        </div>
+                        <div class="schedule-type">
+                            Practice
+                        </div>
+                    </div>
+
+                    <div class="schedule-row">
+                        <div class="schedule-time">
+                            07:00 PM
+                        </div>
+                        <div class="schedule-name">
+                            GK / GS Revision
+                        </div>
+                        <div class="schedule-type">
+                            Revision
+                        </div>
+                    </div>
+
+                    <div class="schedule-row">
+                        <div class="schedule-time">
+                            10:00 PM
+                        </div>
+                        <div class="schedule-name">
+                            Mock Test
+                        </div>
+                        <div class="schedule-type">
+                            Test
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>
+                            📊 Subject Progress
+                        </h2>
+
+                        <p>
+                            Keep improving every day
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="subject">
+
+                    <div class="subject-head">
+                        <span>Mathematics</span>
+                        <span>72%</span>
+                    </div>
+
+                    <div class="progress">
+                        <span style="width:72%"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="subject">
+
+                    <div class="subject-head">
+                        <span>Reasoning</span>
+                        <span>64%</span>
+                    </div>
+
+                    <div class="progress">
+                        <span style="width:64%"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="subject">
+
+                    <div class="subject-head">
+                        <span>English</span>
+                        <span>58%</span>
+                    </div>
+
+                    <div class="progress">
+                        <span style="width:58%"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="subject">
+
+                    <div class="subject-head">
+                        <span>GK / GS</span>
+                        <span>45%</span>
+                    </div>
+
+                    <div class="progress">
+                        <span style="width:45%"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>
+                            ⚡ Quick Actions
+                        </h2>
+
+                        <p>
+                            Start studying instantly
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+                    <button
+                        class="quick-btn"
+                        onclick="showSectionByName('notes')">
+
+                        <strong>
+                            ✏️ Rough Work
+                        </strong>
+
+                        <span>
+                            Pen, pencil & calculations
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="showSectionByName('focus')">
+
+                        <strong>
+                            🎯 Focus Mode
+                        </strong>
+
+                        <span>
+                            Start study timer
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="showSectionByName('tasks')">
+
+                        <strong>
+                            ✅ Add Task
+                        </strong>
+
+                        <span>
+                            Manage today's work
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="showSectionByName('tools')">
+
+                        <strong>
+                            🧮 Calculator
+                        </strong>
+
+                        <span>
+                            Quick calculations
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>
+                            💡 Study Motivation
+                        </h2>
+
+                        <p>
+                            One step every day
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div style="
+                    background:linear-gradient(135deg,#eef5ff,#f4f1ff);
+                    padding:18px;
+                    border-radius:14px;
+                    line-height:1.7;
+                    font-size:13px;
+                ">
+
+                    <strong id="quote">
+                        Small progress is still progress 🚀
+                    </strong>
+
+                    <br><br>
+
+                    <span style="color:#667085">
+                        Focus on today's work instead of worrying
+                        about the entire syllabus.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ROUGH WORK
+===================================================== -->
+
+<section id="notes" class="section">
+
+    <div class="card">
+
+        <div class="card-title">
+
+            <div>
+
+                <h2>
+                    ✏️ Smart Rough Work Pad
+                </h2>
+
+                <p>
+                    Pen • Pencil • Highlighter • Eraser •
+                    Maths • Reasoning • Formulas
+                </p>
+
+            </div>
+
+            <button
+                class="small-btn"
+                onclick="clearEverythingRough()">
+                🗑️ Clear All
+            </button>
+
+        </div>
+
+
+        <!-- TOOLBAR -->
+
+        <div class="rough-toolbar">
+
+            <button
+                class="rough-tool active"
+                id="penTool"
+                onclick="selectTool('pen')"
+                title="Pen">
+                🖊️
+            </button>
+
+
+            <button
+                class="rough-tool"
+                id="pencilTool"
+                onclick="selectTool('pencil')"
+                title="Pencil">
+                ✏️
+            </button>
+
+
+            <button
+                class="rough-tool"
+                id="highlighterTool"
+                onclick="selectTool('highlighter')"
+                title="Highlighter">
+                🖍️
+            </button>
+
+
+            <button
+                class="rough-tool"
+                id="eraserTool"
+                onclick="selectTool('eraser')"
+                title="Eraser">
+                🧽
+            </button>
+
+
+            <div class="tool-divider"></div>
+
+
+            <button
+                class="rough-tool"
+                onclick="undoCanvas()"
+                title="Undo">
+                ↩️
+            </button>
+
+
+            <button
+                class="rough-tool"
+                onclick="redoCanvas()"
+                title="Redo">
+                ↪️
+            </button>
+
+
+            <div class="tool-divider"></div>
+
+
+            <span
+                class="rough-color active"
+                style="background:#172033"
+                onclick="setRoughColor('#172033',this)"
+                title="Black">
+            </span>
+
+
+            <span
+                class="rough-color"
+                style="background:#ef4444"
+                onclick="setRoughColor('#ef4444',this)"
+                title="Red">
+            </span>
+
+
+            <span
+                class="rough-color"
+                style="background:#2563eb"
+                onclick="setRoughColor('#2563eb',this)"
+                title="Blue">
+            </span>
+
+
+            <span
+                class="rough-color"
+                style="background:#059669"
+                onclick="setRoughColor('#059669',this)"
+                title="Green">
+            </span>
+
+
+            <span
+                class="rough-color"
+                style="background:#7c3aed"
+                onclick="setRoughColor('#7c3aed',this)"
+                title="Purple">
+            </span>
+
+
+            <span
+                class="rough-color"
+                style="background:#f59e0b"
+                onclick="setRoughColor('#f59e0b',this)"
+                title="Orange">
+            </span>
+
+
+            <div class="tool-divider"></div>
+
+
+            <div class="brush-size-wrap">
+
+                <span>
+                    Size
+                </span>
+
+                <input
+                    type="range"
+                    class="brush-size"
+                    id="brushSize"
+                    min="1"
+                    max="30"
+                    value="4"
+                    oninput="changeBrushSize(this.value)"
+                >
+
+                <span
+                    class="size-value"
+                    id="sizeValue">
+                    4px
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- DRAWING CANVAS -->
+
+        <div class="canvas-box">
+
+            <canvas id="roughCanvas"></canvas>
+
+            <div
+                class="canvas-placeholder"
+                id="canvasPlaceholder">
+                ✏️ Start writing or solving here...
+            </div>
+
+        </div>
+
+
+        <div class="rough-info">
+
+            <div class="rough-status">
+
+                <span class="status-dot"></span>
+
+                <span id="toolStatus">
+                    🖊️ Pen selected
+                </span>
+
+            </div>
+
+            <span>
+                🖱️ Mouse + Touch supported
+            </span>
+
+        </div>
+
+
+        <!-- TYPED NOTES -->
+
+        <div class="text-notes-box">
+
+            <div class="text-notes-label">
+                📝 Typed Notes / Formulas
+            </div>
+
+            <div
+                id="notesArea"
+                class="notes-area"
+                contenteditable="true"
+                spellcheck="true"
+                oninput="saveNotes();updateWordCount()">
+
+                Start writing your notes here...
+
+            </div>
+
+            <div class="rough-info">
+
+                <span id="wordCount">
+                    0 words • 0 characters
+                </span>
+
+                <span>
+                    💾 Auto Saved
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PLANNER
+===================================================== -->
+
+<section id="planner" class="section">
+
+    <div class="grid-2">
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h2>
+                        📅 Daily Study Planner
+                    </h2>
+
+                    <p>
+                        Create your own timetable
+                    </p>
+
+                </div>
+
+                <button
+                    class="small-btn"
+                    onclick="addSchedule()">
+                    + Add
+                </button>
+
+            </div>
+
+            <div
+                id="customSchedule"
+                class="schedule">
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h2>
+                        🎯 Today's Targets
+                    </h2>
+
+                    <p>
+                        What do you want to complete?
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="subject">
+
+                <div class="subject-head">
+
+                    <span>
+                        Math Questions
+                    </span>
+
+                    <span>
+
+                        <input
+                            type="number"
+                            id="mathTarget"
+                            value="50"
+                            style="
+                            width:55px;
+                            border:1px solid #ddd;
+                            border-radius:6px;
+                            padding:4px;
+                            ">
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="subject">
+
+                <div class="subject-head">
+
+                    <span>
+                        Reasoning Questions
+                    </span>
+
+                    <span>
+
+                        <input
+                            type="number"
+                            id="reasoningTarget"
+                            value="50"
+                            style="
+                            width:55px;
+                            border:1px solid #ddd;
+                            border-radius:6px;
+                            padding:4px;
+                            ">
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="subject">
+
+                <div class="subject-head">
+
+                    <span>
+                        English Revision
+                    </span>
+
+                    <span>
+
+                        <input
+                            type="number"
+                            id="englishTarget"
+                            value="2"
+                            style="
+                            width:55px;
+                            border:1px solid #ddd;
+                            border-radius:6px;
+                            padding:4px;
+                            ">
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary-btn"
+                style="
+                width:100%;
+                height:43px;
+                margin-top:8px;"
+                onclick="savePlan()">
+                💾 Save Today's Plan
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+
+            <div>
+
+                <h2>
+                    📚 Weekly Study Strategy
+                </h2>
+
+                <p>
+                    Plan your complete week
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid-3">
+
+            <div class="subject">
+                <strong>Monday</strong>
+                <p style="font-size:11px;color:#667085;margin-top:5px;">
+                    Maths + English
+                </p>
+            </div>
+
+            <div class="subject">
+                <strong>Tuesday</strong>
+                <p style="font-size:11px;color:#667085;margin-top:5px;">
+                    Reasoning + GK
+                </p>
+            </div>
+
+            <div class="subject">
+                <strong>Wednesday</strong>
+                <p style="font-size:11px;color:#667085;margin-top:5px;">
+                    Maths + Mock
+                </p>
+            </div>
+
+            <div class="subject">
+                <strong>Thursday</strong>
+                <p style="font-size:11px;color:#667085;margin-top:5px;">
+                    English + Reasoning
+                </p>
+            </div>
+
+            <div class="subject">
+                <strong>Friday</strong>
+                <p style="font-size:11px;color:#667085;margin-top:5px;">
+                    GK + Maths
+                </p>
+            </div>
+
+            <div class="subject">
+                <strong>Saturday</strong>
+                <p style="font-size:11px;color:#667085;margin-top:5px;">
+                    Full Mock Test
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOCUS
+===================================================== -->
+
+<section id="focus" class="section">
+
+    <div class="grid-2">
+
+        <div class="card timer-card">
+
+            <div class="card-title">
+
+                <div style="text-align:left">
+
+                    <h2>
+                        🎯 Deep Focus Timer
+                    </h2>
+
+                    <p>
+                        Study without distractions
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timer-inputs">
+
+                <input
+                    class="time-input"
+                    id="hours"
+                    type="number"
+                    min="0"
+                    max="24"
+                    value="1"
+                    placeholder="HH">
+
+                <input
+                    class="time-input"
+                    id="minutes"
+                    type="number"
+                    min="0"
+                    max="59"
+                    value="0"
+                    placeholder="MM">
+
+                <input
+                    class="time-input"
+                    id="seconds"
+                    type="number"
+                    min="0"
+                    max="59"
+                    value="0"
+                    placeholder="SS">
+
+            </div>
+
+
+            <div
+                class="timer-ring"
+                id="timerRing">
+
+                <div class="timer-content">
+
+                    <div
+                        class="timer-display"
+                        id="timerDisplay">
+                        01:00:00
+                    </div>
+
+                    <div
+                        class="timer-status"
+                        id="timerStatus">
+                        Ready to focus
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="timer-controls">
+
+                <button
+                    class="primary-btn"
+                    onclick="startTimer()">
+                    ▶ Start
+                </button>
+
+                <button
+                    class="small-btn"
+                    onclick="pauseTimer()">
+                    ⏸ Pause
+                </button>
+
+                <button
+                    class="small-btn"
+                    onclick="resetTimer()">
+                    ↻ Reset
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>
+                            ⚡ Quick Focus
+                        </h2>
+
+                        <p>
+                            Choose your session
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickTimer(25)">
+
+                        <strong>
+                            🍅 25 Minutes
+                        </strong>
+
+                        <span>
+                            Pomodoro
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickTimer(50)">
+
+                        <strong>
+                            🔥 50 Minutes
+                        </strong>
+
+                        <span>
+                            Deep Focus
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickTimer(90)">
+
+                        <strong>
+                            📚 90 Minutes
+                        </strong>
+
+                        <span>
+                            Long Session
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickTimer(120)">
+
+                        <strong>
+                            🚀 2 Hours
+                        </strong>
+
+                        <span>
+                            Extended Study
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickTimer(300)">
+
+                        <strong>
+                            ⚡ 5 Hours
+                        </strong>
+
+                        <span>
+                            Long Study
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickTimer(600)">
+
+                        <strong>
+                            🏆 10 Hours
+                        </strong>
+
+                        <span>
+                            Marathon Mode
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="quickTimer(1200)">
+
+                        <strong>
+                            🔥 20 Hours
+                        </strong>
+
+                        <span>
+                            Custom Marathon
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>
+                            📈 Focus Stats
+                        </h2>
+
+                        <p>
+                            Your productivity
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="grid-3">
+
+                    <div class="subject">
+
+                        <strong id="sessionStat">
+                            0
+                        </strong>
+
+                        <p style="
+                            font-size:10px;
+                            color:#667085;">
+                            Sessions
+                        </p>
+
+                    </div>
+
+
+                    <div class="subject">
+
+                        <strong id="focusMinutes">
+                            0
+                        </strong>
+
+                        <p style="
+                            font-size:10px;
+                            color:#667085;">
+                            Minutes
+                        </p>
+
+                    </div>
+
+
+                    <div class="subject">
+
+                        <strong>
+                            🔥
+                        </strong>
+
+                        <p style="
+                            font-size:10px;
+                            color:#667085;">
+                            Keep Going
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TASKS
+===================================================== -->
+
+<section id="tasks" class="section">
+
+    <div class="grid-2">
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h2>
+                        ✅ Today's Tasks
+                    </h2>
+
+                    <p>
+                        Complete one task at a time
+                    </p>
+
+                </div>
+
+                <button
+                    class="small-btn"
+                    onclick="clearCompleted()">
+                    Clear Done
+                </button>
+
+            </div>
+
+
+            <div class="add-task">
+
+                <input
+                    class="input"
+                    id="taskInput"
+                    placeholder="e.g. Complete 30 percentage questions..."
+                    onkeydown="if(event.key==='Enter') addTask()">
+
+                <button
+                    class="primary-btn"
+                    onclick="addTask()">
+                    Add
+                </button>
+
+            </div>
+
+
+            <div
+                id="taskList"
+                class="task-list">
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h2>
+                        📊 Task Progress
+                    </h2>
+
+                    <p>
+                        Today's completion
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div style="
+                text-align:center;
+                padding:15px;">
+
+                <div
+                    style="
+                    font-size:45px;
+                    font-weight:800;
+                    color:var(--primary);"
+                    id="taskPercent">
+                    0%
+                </div>
+
+                <div
+                    class="progress"
+                    style="margin-top:12px;">
+
+                    <span
+                        id="taskProgress"
+                        style="width:0%">
+                    </span>
+
+                </div>
+
+                <p style="
+                    font-size:11px;
+                    color:#667085;
+                    margin-top:10px;">
+
+                    Complete your tasks and build consistency.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+
+            <div>
+
+                <h2>
+                    📖 Study Log
+                </h2>
+
+                <p>
+                    Record what you studied
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="log-form">
+
+            <input
+                class="input"
+                id="logSubject"
+                placeholder="Subject / Chapter">
+
+            <input
+                class="input"
+                id="logMinutes"
+                type="number"
+                placeholder="Minutes">
+
+            <input
+                class="input"
+                id="logQuestions"
+                type="number"
+                placeholder="Questions">
+
+            <button
+                class="primary-btn"
+                onclick="addLog()">
+                Add
+            </button>
+
+        </div>
+
+
+        <div
+            id="logList"
+            class="log-list">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TOOLS
+===================================================== -->
+
+<section id="tools" class="section">
+
+    <div class="grid-2">
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h2>
+                        🧮 SSC Calculator
+                    </h2>
+
+                    <p>
+                        Useful for quick calculations
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="calculator">
+
+                <input
+                    class="calc-display"
+                    id="calcDisplay"
+                    value="0"
+                    readonly>
+
+                <div class="calc-grid">
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcClear()">
+                        AC
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcBack()">
+                        ⌫
+                    </button>
+
+                    <button
+                        class="calc-btn operator"
+                        onclick="calcInput('%')">
+                        %
+                    </button>
+
+                    <button
+                        class="calc-btn operator"
+                        onclick="calcInput('/')">
+                        ÷
+                    </button>
+
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('7')">
+                        7
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('8')">
+                        8
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('9')">
+                        9
+                    </button>
+
+                    <button
+                        class="calc-btn operator"
+                        onclick="calcInput('*')">
+                        ×
+                    </button>
+
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('4')">
+                        4
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('5')">
+                        5
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('6')">
+                        6
+                    </button>
+
+                    <button
+                        class="calc-btn operator"
+                        onclick="calcInput('-')">
+                        −
+                    </button>
+
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('1')">
+                        1
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('2')">
+                        2
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('3')">
+                        3
+                    </button>
+
+                    <button
+                        class="calc-btn operator"
+                        onclick="calcInput('+')">
+                        +
+                    </button>
+
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('0')">
+                        0
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        onclick="calcInput('.')">
+                        .
+                    </button>
+
+                    <button
+                        class="calc-btn"
+                        style="
+                        grid-column:span 2;
+                        background:#2563eb;
+                        color:white;"
+                        onclick="calcResult()">
+                        =
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>
+                            📌 Useful Formula Notes
+                        </h2>
+
+                        <p>
+                            Quick revision area
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="subject">
+
+                    <strong>
+                        Percentage
+                    </strong>
+
+                    <p style="
+                        font-size:11px;
+                        color:#667085;
+                        margin-top:5px;">
+                        Percentage = (Part / Whole) × 100
+                    </p>
+
+                </div>
+
+
+                <div class="subject">
+
+                    <strong>
+                        Profit
+                    </strong>
+
+                    <p style="
+                        font-size:11px;
+                        color:#667085;
+                        margin-top:5px;">
+                        Profit = SP − CP
+                    </p>
+
+                </div>
+
+
+                <div class="subject">
+
+                    <strong>
+                        Average
+                    </strong>
+
+                    <p style="
+                        font-size:11px;
+                        color:#667085;
+                        margin-top:5px;">
+                        Average = Sum of values / Number of values
+                    </p>
+
+                </div>
+
+
+                <div class="subject">
+
+                    <strong>
+                        Speed
+                    </strong>
+
+                    <p style="
+                        font-size:11px;
+                        color:#667085;
+                        margin-top:5px;">
+                        Speed = Distance / Time
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>
+                            💾 Your Data
+                        </h2>
+
+                        <p>
+                            Everything is stored in this browser
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="small-btn"
+                    onclick="exportData()">
+                    📥 Export Backup
+                </button>
+
+                <button
+                    class="small-btn"
+                    onclick="resetEverything()">
+                    ♻️ Reset App
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     SETTINGS MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="settingsModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <div>
+
+                <h2>
+                    ⚙️ Custom Settings
+                </h2>
+
+                <p style="
+                    font-size:11px;
+                    color:#667085;
+                    margin-top:4px;">
+                    Customize your study space
+                </p>
+
+            </div>
+
+            <button
+                class="close"
+                onclick="closeSettings()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    🎨 Theme Color
+                </strong>
+
+                <span>
+                    Choose your favourite accent
+                </span>
+
+            </div>
+
+
+            <div class="theme-options">
+
+                <span
+                    class="theme blue"
+                    onclick="setTheme('#2563eb','#4f46e5')">
+                </span>
+
+                <span
+                    class="theme purple"
+                    onclick="setTheme('#7c3aed','#9333ea')">
+                </span>
+
+                <span
+                    class="theme green"
+                    onclick="setTheme('#059669','#0d9488')">
+                </span>
+
+                <span
+                    class="theme orange"
+                    onclick="setTheme('#ea580c','#f97316')">
+                </span>
+
+                <span
+                    class="theme pink"
+                    onclick="setTheme('#db2777','#ec4899')">
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    🌙 Appearance
+                </strong>
+
+                <span>
+                    Light or dark study environment
+                </span>
+
+            </div>
+
+            <select
+                id="appearanceSelect"
+                onchange="appearanceChange(this.value)">
+
+                <option value="light">
+                    Light
+                </option>
+
+                <option value="dark">
+                    Dark
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    🔤 Font Size
+                </strong>
+
+                <span>
+                    Adjust your reading size
+                </span>
+
+            </div>
+
+            <select
+                onchange="fontSizeChange(this.value)">
+
+                <option value="14px">
+                    Small
+                </option>
+
+                <option value="15px" selected>
+                    Medium
+                </option>
+
+                <option value="17px">
+                    Large
+                </option>
+
+                <option value="19px">
+                    Extra Large
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    🔔 Notifications
+                </strong>
+
+                <span>
+                    Study session completion alerts
+                </span>
+
+            </div>
+
+            <input
+                type="checkbox"
+                id="notifyToggle"
+                checked>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <strong>
+                    💾 Auto Save
+                </strong>
+
+                <span>
+                    Automatically save notes and tasks
+                </span>
+
+            </div>
+
+            <input
+                type="checkbox"
+                id="autosaveToggle"
+                checked>
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            style="
+            width:100%;
+            height:43px;
+            margin-top:18px;"
+            onclick="saveSettings()">
+            ✓ Save Settings
+        </button>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast">
+    Saved successfully ✓
+</div>
+
+
+<script>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+let timerSeconds = 3600;
+let timerTotal = 3600;
+let timerInterval = null;
+let timerRunning = false;
+
+let focusSessionCount =
+    Number(localStorage.getItem("focusSessions") || 0);
+
+let focusMinutes =
+    Number(localStorage.getItem("focusMinutes") || 0);
+
+
+/* =========================================================
+   DATE + CLOCK
+========================================================= */
+
+function updateClock(){
+
+    const now = new Date();
+
+    document.getElementById("todayDate").textContent =
+        now.toLocaleDateString("en-IN",{
+            weekday:"short",
+            day:"numeric",
+            month:"short",
+            year:"numeric"
+        });
+
+    document.getElementById("liveClock").textContent =
+        now.toLocaleTimeString("en-IN");
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showSection(id,button){
+
+    document.querySelectorAll(".section")
+        .forEach(s=>s.classList.remove("active"));
+
+    document.querySelectorAll(".tab")
+        .forEach(t=>t.classList.remove("active"));
+
+    const section =
+        document.getElementById(id);
+
+    if(section){
+        section.classList.add("active");
+    }
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+function showSectionByName(id){
+
+    const mapping = {
+        dashboard:"dashboard",
+        notes:"rough",
+        planner:"planner",
+        focus:"focus",
+        tasks:"tasks",
+        tools:"tools"
+    };
+
+    const keyword =
+        mapping[id] || id;
+
+    const tab =
+        [...document.querySelectorAll(".tab")]
+        .find(t =>
+            t.textContent
+            .toLowerCase()
+            .includes(keyword)
+        );
+
+    showSection(id,tab);
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDark(){
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        "darkMode",
+        dark
+    );
+
+    document.getElementById("appearanceSelect").value =
+        dark ? "dark" : "light";
+
+    showToast(
+        dark
+        ? "Dark mode enabled 🌙"
+        : "Light mode enabled ☀️"
+    );
+
+}
+
+if(localStorage.getItem("darkMode")==="true"){
+
+    document.body.classList.add("dark");
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function openSettings(){
+
+    document
+        .getElementById("settingsModal")
+        .classList.add("show");
+
+}
+
+function closeSettings(){
+
+    document
+        .getElementById("settingsModal")
+        .classList.remove("show");
+
+}
+
+
+function setTheme(primary,secondary){
+
+    document.documentElement.style
+        .setProperty("--primary",primary);
+
+    document.documentElement.style
+        .setProperty("--primary2",secondary);
+
+    localStorage.setItem(
+        "theme",
+        JSON.stringify({
+            primary,
+            secondary
+        })
+    );
+
+    showToast("Theme changed 🎨");
+
+}
+
+
+const savedTheme =
+    JSON.parse(
+        localStorage.getItem("theme") || "null"
+    );
+
+if(savedTheme){
+
+    document.documentElement.style
+        .setProperty(
+            "--primary",
+            savedTheme.primary
+        );
+
+    document.documentElement.style
+        .setProperty(
+            "--primary2",
+            savedTheme.secondary
+        );
+
+}
+
+
+function appearanceChange(value){
+
+    if(value==="dark"){
+
+        document.body.classList.add("dark");
+
+        localStorage.setItem(
+            "darkMode",
+            true
+        );
+
+    }else{
+
+        document.body.classList.remove("dark");
+
+        localStorage.setItem(
+            "darkMode",
+            false
+        );
+
+    }
+
+}
+
+
+function fontSizeChange(value){
+
+    document.body.style.fontSize =
+        value;
+
+    localStorage.setItem(
+        "fontSize",
+        value
+    );
+
+}
+
+
+function saveSettings(){
+
+    localStorage.setItem(
+        "notifications",
+        document.getElementById("notifyToggle").checked
+    );
+
+    localStorage.setItem(
+        "autosave",
+        document.getElementById("autosaveToggle").checked
+    );
+
+    closeSettings();
+
+    showToast("Settings saved ✓");
+
+}
+
+
+/* =========================================================
+   ADVANCED ROUGH WORK PAD
+========================================================= */
+
+const notesArea =
+    document.getElementById("notesArea");
+
+const roughCanvas =
+    document.getElementById("roughCanvas");
+
+const canvasBox =
+    document.querySelector(".canvas-box");
+
+const ctx =
+    roughCanvas.getContext("2d");
+
+let currentTool = "pen";
+let currentColor = "#172033";
+let brushSize = 4;
+
+let drawing = false;
+
+let history = [];
+let historyIndex = -1;
+
+
+/* =========================================================
+   CANVAS RESIZE
+========================================================= */
+
+function resizeRoughCanvas(){
+
+    const oldWidth =
+        roughCanvas.clientWidth;
+
+    const oldHeight =
+        roughCanvas.clientHeight;
+
+    let oldData = null;
+
+    if(
+        roughCanvas.width > 0 &&
+        roughCanvas.height > 0
+    ){
+
+        try{
+            oldData =
+                roughCanvas.toDataURL();
+        }catch(e){}
+
+    }
+
+
+    const rect =
+        canvasBox.getBoundingClientRect();
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+    roughCanvas.width =
+        Math.floor(rect.width * dpr);
+
+    roughCanvas.height =
+        Math.floor(rect.height * dpr);
+
+    roughCanvas.style.width =
+        rect.width + "px";
+
+    roughCanvas.style.height =
+        rect.height + "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+
+    if(oldData){
+
+        const img =
+            new Image();
+
+        img.onload = function(){
+
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                rect.width,
+                rect.height
+            );
+
+        };
+
+        img.src = oldData;
+
+    }
+
+}
+
+window.addEventListener(
+    "resize",
+    resizeRoughCanvas
+);
+
+
+/* =========================================================
+   POSITION
+========================================================= */
+
+function getCanvasPosition(event){
+
+    const rect =
+        roughCanvas.getBoundingClientRect();
+
+    let clientX;
+    let clientY;
+
+    if(
+        event.touches &&
+        event.touches.length
+    ){
+
+        clientX =
+            event.touches[0].clientX;
+
+        clientY =
+            event.touches[0].clientY;
+
+    }else{
+
+        clientX =
+            event.clientX;
+
+        clientY =
+            event.clientY;
+
+    }
+
+    return {
+        x:clientX - rect.left,
+        y:clientY - rect.top
+    };
+
+}
+
+
+/* =========================================================
+   START DRAWING
+========================================================= */
+
+function startDrawing(event){
+
+    event.preventDefault();
+
+    drawing = true;
+
+    const pos =
+        getCanvasPosition(event);
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        pos.x,
+        pos.y
+    );
+
+    drawPoint(
+        pos.x,
+        pos.y
+    );
+
+}
+
+
+/* =========================================================
+   DRAW
+========================================================= */
+
+function draw(event){
+
+    if(!drawing) return;
+
+    event.preventDefault();
+
+    const pos =
+        getCanvasPosition(event);
+
+    drawLine(
+        pos.x,
+        pos.y
+    );
+
+}
+
+
+/* =========================================================
+   DRAW LINE
+========================================================= */
+
+function drawLine(x,y){
+
+    let width =
+        brushSize;
+
+
+    if(currentTool==="pencil"){
+
+        width =
+            Math.max(
+                1,
+                brushSize*.65
+            );
+
+    }
+
+
+    if(currentTool==="highlighter"){
+
+        width =
+            brushSize*3;
+
+    }
+
+
+    ctx.lineWidth =
+        width;
+
+
+    if(currentTool==="eraser"){
+
+        ctx.globalCompositeOperation =
+            "destination-out";
+
+        ctx.globalAlpha = 1;
+
+    }
+
+    else if(currentTool==="highlighter"){
+
+        ctx.globalCompositeOperation =
+            "source-over";
+
+        ctx.globalAlpha = .25;
+
+        ctx.strokeStyle =
+            currentColor;
+
+    }
+
+    else if(currentTool==="pencil"){
+
+        ctx.globalCompositeOperation =
+            "source-over";
+
+        ctx.globalAlpha = .65;
+
+        ctx.strokeStyle =
+            currentColor;
+
+    }
+
+    else{
+
+        ctx.globalCompositeOperation =
+            "source-over";
+
+        ctx.globalAlpha = 1;
+
+        ctx.strokeStyle =
+            currentColor;
+
+    }
+
+
+    ctx.lineTo(
+        x,
+        y
+    );
+
+    ctx.stroke();
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        y
+    );
+
+}
+
+
+/* =========================================================
+   DRAW POINT
+========================================================= */
+
+function drawPoint(x,y){
+
+    ctx.save();
+
+    if(currentTool==="eraser"){
+
+        ctx.globalCompositeOperation =
+            "destination-out";
+
+        ctx.globalAlpha = 1;
+
+    }else{
+
+        ctx.globalCompositeOperation =
+            "source-over";
+
+        ctx.globalAlpha =
+            currentTool==="highlighter"
+            ? .25
+            : currentTool==="pencil"
+            ? .65
+            : 1;
+
+        ctx.fillStyle =
+            currentColor;
+
+    }
+
+
+    const size =
+        currentTool==="highlighter"
+        ? brushSize*3
+        : brushSize;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y,
+        size/2,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   STOP DRAWING
+========================================================= */
+
+function stopDrawing(){
+
+    if(!drawing) return;
+
+    drawing = false;
+
+    ctx.closePath();
+
+    ctx.globalAlpha = 1;
+
+    ctx.globalCompositeOperation =
+        "source-over";
+
+    saveCanvasState();
+
+}
+
+
+/* =========================================================
+   POINTER EVENTS
+========================================================= */
+
+roughCanvas.addEventListener(
+    "mousedown",
+    startDrawing
+);
+
+roughCanvas.addEventListener(
+    "mousemove",
+    draw
+);
+
+roughCanvas.addEventListener(
+    "mouseup",
+    stopDrawing
+);
+
+roughCanvas.addEventListener(
+    "mouseleave",
+    stopDrawing
+);
+
+roughCanvas.addEventListener(
+    "touchstart",
+    startDrawing,
+    {passive:false}
+);
+
+roughCanvas.addEventListener(
+    "touchmove",
+    draw,
+    {passive:false}
+);
+
+roughCanvas.addEventListener(
+    "touchend",
+    stopDrawing,
+    {passive:false}
+);
+
+
+/* =========================================================
+   TOOL SELECT
+========================================================= */
+
+function selectTool(tool){
+
+    currentTool =
+        tool;
+
+    document
+        .querySelectorAll(".rough-tool")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+
+    if(tool==="pen"){
+
+        document
+            .getElementById("penTool")
+            .classList.add("active");
+
+        document
+            .getElementById("toolStatus")
+            .textContent =
+            "🖊️ Pen selected";
+
+        roughCanvas.style.cursor =
+            "crosshair";
+
+    }
+
+
+    if(tool==="pencil"){
+
+        document
+            .getElementById("pencilTool")
+            .classList.add("active");
+
+        document
+            .getElementById("toolStatus")
+            .textContent =
+            "✏️ Pencil selected";
+
+        roughCanvas.style.cursor =
+            "crosshair";
+
+    }
+
+
+    if(tool==="highlighter"){
+
+        document
+            .getElementById("highlighterTool")
+            .classList.add("active");
+
+        document
+            .getElementById("toolStatus")
+            .textContent =
+            "🖍️ Highlighter selected";
+
+        roughCanvas.style.cursor =
+            "crosshair";
+
+    }
+
+
+    if(tool==="eraser"){
+
+        document
+            .getElementById("eraserTool")
+            .classList.add("active");
+
+        document
+            .getElementById("toolStatus")
+            .textContent =
+            "🧽 Eraser selected";
+
+        roughCanvas.style.cursor =
+            "cell";
+
+    }
+
+}
+
+
+/* =========================================================
+   COLOR
+========================================================= */
+
+function setRoughColor(color,element){
+
+    currentColor =
+        color;
+
+    document
+        .querySelectorAll(".rough-color")
+        .forEach(dot=>{
+            dot.classList.remove("active");
+        });
+
+    element.classList.add("active");
+
+    if(currentTool==="eraser"){
+        selectTool("pen");
+    }
+
+    document
+        .getElementById("toolStatus")
+        .textContent =
+        "🎨 Color selected";
+
+}
+
+
+/* =========================================================
+   BRUSH SIZE
+========================================================= */
+
+function changeBrushSize(value){
+
+    brushSize =
+        Number(value);
+
+    document
+        .getElementById("sizeValue")
+        .textContent =
+        value+"px";
+
+}
+
+
+/* =========================================================
+   SAVE CANVAS
+========================================================= */
+
+function saveCanvasState(){
+
+    try{
+
+        const data =
+            roughCanvas.toDataURL("image/png");
+
+        history =
+            history.slice(
+                0,
+                historyIndex+1
+            );
+
+        history.push(data);
+
+        historyIndex =
+            history.length-1;
+
+
+        if(history.length>30){
+
+            history.shift();
+
+            historyIndex--;
+
+        }
+
+
+        if(
+            localStorage.getItem("autosave")
+            !== "false"
+        ){
+
+            localStorage.setItem(
+                "roughCanvas",
+                data
+            );
+
+        }
+
+
+        document
+            .getElementById("canvasPlaceholder")
+            .classList.add("hide");
+
+    }catch(error){
+
+        console.log(
+            "Canvas save error",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD CANVAS
+========================================================= */
+
+function loadCanvasState(){
+
+    const saved =
+        localStorage.getItem(
+            "roughCanvas"
+        );
+
+    if(!saved) return;
+
+
+    const img =
+        new Image();
+
+    img.onload = function(){
+
+        const rect =
+            canvasBox.getBoundingClientRect();
+
+        ctx.clearRect(
+            0,
+            0,
+            rect.width,
+            rect.height
+        );
+
+        ctx.drawImage(
+            img,
+            0,
+            0,
+            rect.width,
+            rect.height
+        );
+
+
+        history = [saved];
+
+        historyIndex = 0;
+
+
+        document
+            .getElementById("canvasPlaceholder")
+            .classList.add("hide");
+
+    };
+
+    img.src =
+        saved;
+
+}
+
+
+/* =========================================================
+   UNDO
+========================================================= */
+
+function undoCanvas(){
+
+    if(historyIndex<=0){
+
+        showToast(
+            "Nothing to undo"
+        );
+
+        return;
+
+    }
+
+    historyIndex--;
+
+    restoreHistory(
+        history[historyIndex]
+    );
+
+}
+
+
+/* =========================================================
+   REDO
+========================================================= */
+
+function redoCanvas(){
+
+    if(
+        historyIndex>=
+        history.length-1
+    ){
+
+        showToast(
+            "Nothing to redo"
+        );
+
+        return;
+
+    }
+
+    historyIndex++;
+
+    restoreHistory(
+        history[historyIndex]
+    );
+
+}
+
+
+/* =========================================================
+   RESTORE
+========================================================= */
+
+function restoreHistory(data){
+
+    const img =
+        new Image();
+
+    img.onload = function(){
+
+        const rect =
+            canvasBox.getBoundingClientRect();
+
+        ctx.clearRect(
+            0,
+            0,
+            rect.width,
+            rect.height
+        );
+
+        ctx.drawImage(
+            img,
+            0,
+            0,
+            rect.width,
+            rect.height
+        );
+
+        localStorage.setItem(
+            "roughCanvas",
+            data
+        );
+
+        document
+            .getElementById("canvasPlaceholder")
+            .classList.add("hide");
+
+    };
+
+    img.src =
+        data;
+
+}
+
+
+/* =========================================================
+   CLEAR ROUGH CANVAS
+========================================================= */
+
+function clearCanvas(){
+
+    if(
+        !confirm(
+            "Clear all drawings?"
+        )
+    ) return;
+
+
+    const rect =
+        canvasBox.getBoundingClientRect();
+
+    ctx.clearRect(
+        0,
+        0,
+        rect.width,
+        rect.height
+    );
+
+    history = [];
+
+    historyIndex = -1;
+
+    localStorage.removeItem(
+        "roughCanvas"
+    );
+
+    document
+        .getElementById("canvasPlaceholder")
+        .classList.remove("hide");
+
+    showToast(
+        "Drawings cleared 🗑️"
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR EVERYTHING
+========================================================= */
+
+function clearEverythingRough(){
+
+    if(
+        !confirm(
+            "Clear drawings AND typed notes?"
+        )
+    ) return;
+
+
+    const rect =
+        canvasBox.getBoundingClientRect();
+
+    ctx.clearRect(
+        0,
+        0,
+        rect.width,
+        rect.height
+    );
+
+    notesArea.innerHTML = "";
+
+
+    history = [];
+
+    historyIndex = -1;
+
+
+    localStorage.removeItem(
+        "roughCanvas"
+    );
+
+    localStorage.removeItem(
+        "sscNotes"
+    );
+
+
+    document
+        .getElementById("canvasPlaceholder")
+        .classList.remove("hide");
+
+
+    updateWordCount();
+
+    showToast(
+        "Complete rough pad cleared 🗑️"
+    );
+
+}
+
+
+/* =========================================================
+   TEXT NOTES
+========================================================= */
+
+const savedNotes =
+    localStorage.getItem(
+        "sscNotes"
+    );
+
+if(savedNotes){
+
+    notesArea.innerHTML =
+        savedNotes;
+
+}
+
+
+function saveNotes(){
+
+    if(
+        localStorage.getItem(
+            "autosave"
+        ) !== "false"
+    ){
+
+        localStorage.setItem(
+            "sscNotes",
+            notesArea.innerHTML
+        );
+
+    }
+
+}
+
+
+function updateWordCount(){
+
+    const text =
+        notesArea.innerText.trim();
+
+    const words =
+        text
+        ? text.split(/\s+/).length
+        : 0;
+
+    const chars =
+        text.length;
+
+    document
+        .getElementById("wordCount")
+        .textContent =
+        `${words} words • ${chars} characters`;
+
+}
+
+
+/* =========================================================
+   TASKS
+========================================================= */
+
+let tasks =
+    JSON.parse(
+        localStorage.getItem(
+            "sscTasks"
+        ) || "[]"
+    );
+
+
+function saveTasks(){
+
+    localStorage.setItem(
+        "sscTasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+function renderTasks(){
+
+    const list =
+        document.getElementById(
+            "taskList"
+        );
+
+    list.innerHTML = "";
+
+
+    tasks.forEach(
+        (task,index)=>{
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.className =
+                "task "+
+                (task.done ? "done" : "");
+
+
+            div.innerHTML = `
+
+                <input
+                    type="checkbox"
+                    ${task.done ? "checked" : ""}
+                    onchange="toggleTask(${index})">
+
+                <span>
+                    ${escapeHTML(task.text)}
+                </span>
+
+                <button
+                    class="delete-task"
+                    onclick="deleteTask(${index})">
+                    ✕
+                </button>
+            `;
+
+
+            list.appendChild(div);
+
+        }
+    );
+
+
+    updateTaskStats();
+
+}
+
+
+function addTask(){
+
+    const input =
+        document.getElementById(
+            "taskInput"
+        );
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+
+        showToast(
+            "Write a task first"
+        );
+
+        return;
+
+    }
+
+
+    tasks.push({
+        text:text,
+        done:false
+    });
+
+
+    input.value = "";
+
+    saveTasks();
+
+    renderTasks();
+
+    showToast(
+        "Task added ✓"
+    );
+
+}
+
+
+function toggleTask(index){
+
+    tasks[index].done =
+        !tasks[index].done;
+
+    saveTasks();
+
+    renderTasks();
+
+}
+
+
+function deleteTask(index){
+
+    tasks.splice(
+        index,
+        1
+    );
+
+    saveTasks();
+
+    renderTasks();
+
+}
+
+
+function clearCompleted(){
+
+    tasks =
+        tasks.filter(
+            t=>!t.done
+        );
+
+    saveTasks();
+
+    renderTasks();
+
+}
+
+
+function updateTaskStats(){
+
+    const completed =
+        tasks.filter(
+            t=>t.done
+        ).length;
+
+    document
+        .getElementById("taskCount")
+        .textContent =
+        completed;
+
+
+    const total =
+        tasks.length;
+
+    const percent =
+        total
+        ? Math.round(
+            completed/total*100
+          )
+        : 0;
+
+
+    document
+        .getElementById("taskPercent")
+        .textContent =
+        percent+"%";
+
+
+    document
+        .getElementById("taskProgress")
+        .style.width =
+        percent+"%";
+
+}
+
+
+function escapeHTML(str){
+
+    return String(str)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+renderTasks();
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function formatTime(seconds){
+
+    const h =
+        Math.floor(
+            seconds/3600
+        )
+        .toString()
+        .padStart(2,"0");
+
+
+    const m =
+        Math.floor(
+            (seconds%3600)/60
+        )
+        .toString()
+        .padStart(2,"0");
+
+
+    const s =
+        (seconds%60)
+        .toString()
+        .padStart(2,"0");
+
+
+    return `${h}:${m}:${s}`;
+
+}
+
+
+function updateTimerDisplay(){
+
+    document
+        .getElementById("timerDisplay")
+        .textContent =
+        formatTime(
+            timerSeconds
+        );
+
+
+    let percent =
+        timerTotal>0
+        ? (
+            (timerTotal-timerSeconds)
+            /timerTotal
+          )*360
+        : 0;
+
+
+    document
+        .getElementById("timerRing")
+        .style.background =
+        `conic-gradient(
+            var(--primary)
+            ${percent}deg,
+            #e8eef8
+            ${percent}deg
+        )`;
+
+}
+
+
+function setTimerFromInputs(){
+
+    const h =
+        Number(
+            document.getElementById(
+                "hours"
+            ).value || 0
+        );
+
+    const m =
+        Number(
+            document.getElementById(
+                "minutes"
+            ).value || 0
+        );
+
+    const s =
+        Number(
+            document.getElementById(
+                "seconds"
+            ).value || 0
+        );
+
+
+    timerSeconds =
+        h*3600+m*60+s;
+
+    timerTotal =
+        timerSeconds;
+
+    updateTimerDisplay();
+
+}
+
+
+function startTimer(){
+
+    if(timerRunning) return;
+
+
+    if(timerSeconds<=0){
+
+        setTimerFromInputs();
+
+    }
+
+
+    if(timerSeconds<=0){
+
+        showToast(
+            "Set a timer first"
+        );
+
+        return;
+
+    }
+
+
+    timerRunning = true;
+
+
+    document
+        .getElementById("timerStatus")
+        .textContent =
+        "🔥 Focusing...";
+
+
+    timerInterval =
+        setInterval(
+            ()=>{
+
+                if(timerSeconds>0){
+
+                    timerSeconds--;
+
+                    updateTimerDisplay();
+
+                }else{
+
+                    finishTimer();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+function pauseTimer(){
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning = false;
+
+
+    document
+        .getElementById("timerStatus")
+        .textContent =
+        "⏸ Paused";
+
+}
+
+
+function resetTimer(){
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning = false;
+
+    setTimerFromInputs();
+
+
+    document
+        .getElementById("timerStatus")
+        .textContent =
+        "Ready to focus";
+
+}
+
+
+function finishTimer(){
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning = false;
+
+
+    focusSessionCount++;
+
+    focusMinutes +=
+        Math.round(
+            timerTotal/60
+        );
+
+
+    localStorage.setItem(
+        "focusSessions",
+        focusSessionCount
+    );
+
+    localStorage.setItem(
+        "focusMinutes",
+        focusMinutes
+    );
+
+
+    document
+        .getElementById("timerStatus")
+        .textContent =
+        "🎉 Session Complete!";
+
+
+    document
+        .getElementById("focusSessions")
+        .textContent =
+        focusSessionCount;
+
+
+    document
+        .getElementById("sessionStat")
+        .textContent =
+        focusSessionCount;
+
+
+    document
+        .getElementById("focusMinutes")
+        .textContent =
+        focusMinutes;
+
+
+    updateStudyTime();
+
+
+    if(
+        localStorage.getItem(
+            "notifications"
+        ) !== "false"
+    ){
+
+        showToast(
+            "Focus session completed 🎉"
+        );
+
+    }
+
+}
+
+
+function quickTimer(minutes){
+
+    document
+        .getElementById("hours")
+        .value =
+        Math.floor(
+            minutes/60
+        );
+
+
+    document
+        .getElementById("minutes")
+        .value =
+        minutes%60;
+
+
+    document
+        .getElementById("seconds")
+        .value =
+        0;
+
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning = false;
+
+
+    setTimerFromInputs();
+
+    startTimer();
+
+}
+
+
+document
+    .getElementById("focusSessions")
+    .textContent =
+    focusSessionCount;
+
+
+document
+    .getElementById("sessionStat")
+    .textContent =
+    focusSessionCount;
+
+
+document
+    .getElementById("focusMinutes")
+    .textContent =
+    focusMinutes;
+
+
+setTimerFromInputs();
+
+
+/* =========================================================
+   STUDY LOG
+========================================================= */
+
+let logs =
+    JSON.parse(
+        localStorage.getItem(
+            "studyLogs"
+        ) || "[]"
+    );
+
+
+function saveLogs(){
+
+    localStorage.setItem(
+        "studyLogs",
+        JSON.stringify(logs)
+    );
+
+}
+
+
+function addLog(){
+
+    const subject =
+        document
+            .getElementById(
+                "logSubject"
+            )
+            .value
+            .trim();
+
+
+    const minutes =
+        Number(
+            document
+                .getElementById(
+                    "logMinutes"
+                )
+                .value
+        );
+
+
+    const questions =
+        Number(
+            document
+                .getElementById(
+                    "logQuestions"
+                )
+                .value
+        );
+
+
+    if(!subject){
+
+        showToast(
+            "Enter subject/chapter"
+        );
+
+        return;
+
+    }
+
+
+    logs.unshift({
+
+        subject,
+        minutes,
+        questions,
+
+        date:
+            new Date()
+            .toLocaleDateString(
+                "en-IN"
+            )
+
+    });
+
+
+    saveLogs();
+
+    renderLogs();
+
+
+    document
+        .getElementById(
+            "logSubject"
+        ).value = "";
+
+    document
+        .getElementById(
+            "logMinutes"
+        ).value = "";
+
+    document
+        .getElementById(
+            "logQuestions"
+        ).value = "";
+
+
+    updateStudyTime();
+
+}
+
+
+function renderLogs(){
+
+    const list =
+        document.getElementById(
+            "logList"
+        );
+
+    list.innerHTML = "";
+
+
+    logs
+        .slice(0,10)
+        .forEach(log=>{
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.className =
+                "log-item";
+
+
+            div.innerHTML = `
+
+                <div class="log-left">
+
+                    <strong>
+                        ${escapeHTML(log.subject)}
+                    </strong>
+
+                    <span>
+                        ${escapeHTML(log.date)}
+                    </span>
+
+                </div>
+
+                <div>
+                    ⏱ ${log.minutes || 0}m
+                    &nbsp; • &nbsp;
+                    📝 ${log.questions || 0} Q
+                </div>
+            `;
+
+
+            list.appendChild(div);
+
+        });
+
+}
+
+
+function updateStudyTime(){
+
+    let total =
+        logs.reduce(
+            (sum,l)=>
+                sum+
+                Number(
+                    l.minutes||0
+                ),
+            0
+        );
+
+
+    total +=
+        focusMinutes;
+
+
+    document
+        .getElementById(
+            "todayStudy"
+        )
+        .textContent =
+        total>=60
+        ? Math.floor(total/60)+"h "+
+          (total%60)+"m"
+        : total+"m";
+
+}
+
+
+renderLogs();
+
+updateStudyTime();
+
+
+/* =========================================================
+   SCHEDULE
+========================================================= */
+
+let schedules =
+    JSON.parse(
+        localStorage.getItem(
+            "schedules"
+        ) || "[]"
+    );
+
+
+function addSchedule(){
+
+    const time =
+        prompt(
+            "Enter time, e.g. 6:30 PM"
+        );
+
+    if(!time) return;
+
+
+    const subject =
+        prompt(
+            "Enter study subject"
+        );
+
+    if(!subject) return;
+
+
+    const type =
+        prompt(
+            "Enter type: Study / Practice / Revision / Test"
+        ) || "Study";
+
+
+    schedules.push({
+        time,
+        subject,
+        type
+    });
+
+
+    localStorage.setItem(
+        "schedules",
+        JSON.stringify(
+            schedules
+        )
+    );
+
+
+    renderSchedule();
+
+    showToast(
+        "Schedule added 📅"
+    );
+
+}
+
+
+function renderSchedule(){
+
+    const container =
+        document.getElementById(
+            "customSchedule"
+        );
+
+    container.innerHTML = "";
+
+
+    schedules.forEach(
+        (item,index)=>{
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "schedule-row";
+
+
+            row.innerHTML = `
+
+                <div class="schedule-time">
+                    ${escapeHTML(item.time)}
+                </div>
+
+                <div class="schedule-name">
+                    ${escapeHTML(item.subject)}
+                </div>
+
+                <div class="schedule-type">
+
+                    ${escapeHTML(item.type)}
+
+                    <br>
+
+                    <button
+                        onclick="deleteSchedule(${index})"
+                        style="
+                        border:0;
+                        background:none;
+                        color:#ef4444;
+                        cursor:pointer;
+                        font-size:10px;">
+                        Delete
+                    </button>
+
+                </div>
+            `;
+
+
+            container.appendChild(row);
+
+        }
+    );
+
+}
+
+
+function deleteSchedule(index){
+
+    schedules.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "schedules",
+        JSON.stringify(
+            schedules
+        )
+    );
+
+
+    renderSchedule();
+
+}
+
+
+renderSchedule();
+
+
+/* =========================================================
+   PLAN
+========================================================= */
+
+function savePlan(){
+
+    const plan = {
+
+        math:
+            document.getElementById(
+                "mathTarget"
+            ).value,
+
+        reasoning:
+            document.getElementById(
+                "reasoningTarget"
+            ).value,
+
+        english:
+            document.getElementById(
+                "englishTarget"
+            ).value
+
+    };
+
+
+    localStorage.setItem(
+        "todayPlan",
+        JSON.stringify(plan)
+    );
+
+
+    showToast(
+        "Today's plan saved ✓"
+    );
+
+}
+
+
+/* =========================================================
+   CALCULATOR
+========================================================= */
+
+let calcValue = "";
+
+
+function calcInput(value){
+
+    calcValue +=
+        value;
+
+
+    document
+        .getElementById(
+            "calcDisplay"
+        )
+        .value =
+        calcValue || "0";
+
+}
+
+
+function calcClear(){
+
+    calcValue = "";
+
+    document
+        .getElementById(
+            "calcDisplay"
+        )
+        .value =
+        "0";
+
+}
+
+
+function calcBack(){
+
+    calcValue =
+        calcValue.slice(
+            0,
+            -1
+        );
+
+
+    document
+        .getElementById(
+            "calcDisplay"
+        )
+        .value =
+        calcValue || "0";
+
+}
+
+
+function calcResult(){
+
+    try{
+
+        let expression =
+            calcValue.replace(
+                /(\d+(?:\.\d+)?)%/g,
+                "($1/100)"
+            );
+
+
+        let result =
+            Function(
+                `"use strict";return (${expression})`
+            )();
+
+
+        if(
+            typeof result !== "number" ||
+            !isFinite(result)
+        ){
+
+            throw new Error();
+
+        }
+
+
+        calcValue =
+            String(
+                Math.round(
+                    result*100000000
+                )/100000000
+            );
+
+
+        document
+            .getElementById(
+                "calcDisplay"
+            )
+            .value =
+            calcValue;
+
+    }
+    catch{
+
+        document
+            .getElementById(
+                "calcDisplay"
+            )
+            .value =
+            "Error";
+
+        calcValue = "";
+
+    }
+
+}
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
+
+function exportData(){
+
+    const data = {
+
+        notes:
+            localStorage.getItem(
+                "sscNotes"
+            ),
+
+        roughCanvas:
+            localStorage.getItem(
+                "roughCanvas"
+            ),
+
+        tasks:
+            tasks,
+
+        logs:
+            logs,
+
+        schedules:
+            schedules,
+
+        focusSessions:
+            focusSessionCount,
+
+        focusMinutes:
+            focusMinutes,
+
+        todayPlan:
+            localStorage.getItem(
+                "todayPlan"
+            )
+
+    };
+
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:"application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const a =
+        document.createElement(
+            "a"
+        );
+
+
+    a.href = url;
+
+    a.download =
+        "SSC-MOCK-Study-Backup.json";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    URL.revokeObjectURL(url);
+
+
+    showToast(
+        "Backup exported 📥"
+    );
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetEverything(){
+
+    if(
+        !confirm(
+            "This will remove saved notes, drawings, tasks, logs and settings. Continue?"
+        )
+    ) return;
+
+
+    localStorage.clear();
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        ()=>{
+            toast.classList.remove(
+                "show"
+            );
+        },
+        2200
+    );
+
+}
+
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.ctrlKey &&
+            e.key.toLowerCase()==="s"
+        ){
+
+            e.preventDefault();
+
+            saveNotes();
+
+            try{
+                saveCanvasState();
+            }catch(error){}
+
+            showToast(
+                "Rough work saved 💾"
+            );
+
+        }
+
+        if(
+            e.ctrlKey &&
+            e.key.toLowerCase()==="z"
+        ){
+
+            if(
+                document.activeElement !==
+                notesArea
+            ){
+
+                e.preventDefault();
+
+                undoCanvas();
+
+            }
+
+        }
+
+        if(
+            e.ctrlKey &&
+            e.key.toLowerCase()==="y"
+        ){
+
+            if(
+                document.activeElement !==
+                notesArea
+            ){
+
+                e.preventDefault();
+
+                redoCanvas();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MOTIVATION
+========================================================= */
+
+const quotes = [
+
+    "Small progress is still progress 🚀",
+
+    "One chapter today is better than zero chapters tomorrow 📚",
+
+    "Focus on accuracy first, speed will follow ⚡",
+
+    "Your consistency will decide your result 🏆",
+
+    "Don't study for hours. Study with purpose 🎯",
+
+    "Practice → Analyze → Improve → Repeat 🔥",
+
+    "Every question you solve makes you stronger 💪"
+
+];
+
+
+document
+    .getElementById("quote")
+    .textContent =
+    quotes[
+        Math.floor(
+            Math.random()*
+            quotes.length
+        )
+    ];
+
+
+/* =========================================================
+   LOAD SETTINGS
+========================================================= */
+
+const savedFont =
+    localStorage.getItem(
+        "fontSize"
+    );
+
+if(savedFont){
+
+    document.body.style.fontSize =
+        savedFont;
+
+}
+
+
+const savedNotifications =
+    localStorage.getItem(
+        "notifications"
+    );
+
+if(
+    savedNotifications !== null
+){
+
+    document
+        .getElementById(
+            "notifyToggle"
+        )
+        .checked =
+        savedNotifications !== "false";
+
+}
+
+
+const savedAutosave =
+    localStorage.getItem(
+        "autosave"
+    );
+
+if(
+    savedAutosave !== null
+){
+
+    document
+        .getElementById(
+            "autosaveToggle"
+        )
+        .checked =
+        savedAutosave !== "false";
+
+}
+
+
+document
+    .getElementById(
+        "appearanceSelect"
+    )
+    .value =
+    document.body.classList.contains("dark")
+    ? "dark"
+    : "light";
+
+
+/* =========================================================
+   INITIALIZE CANVAS
+========================================================= */
+
+setTimeout(
+    ()=>{
+        resizeRoughCanvas();
+        loadCanvasState();
+        updateWordCount();
+    },
+    150
+);
+
+</script>
+
+</body>
+</html>

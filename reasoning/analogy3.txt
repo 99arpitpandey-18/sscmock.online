@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analogy – Deep Explanation (सादृश्य गहन अभ्यास)</title>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{ --blue:#2563eb; --dark:#0b1f4b; --navy:#102a68; --bg:#f5f7fb; --white:#ffffff; --text:#172033; --muted:#667085; --border:#e1e6ef; --green:#16a34a; --red:#dc2626; --lightblue:#eef5ff; }
+body{ font-family:'Segoe UI', Roboto, system-ui, sans-serif; background:var(--bg); color:var(--text); }
+/* ===== HEADER ===== */
+.header{ background:linear-gradient(135deg,#07183d,#2445a0); color:white; padding:28px 6%; }
+.header-inner{ max-width:1250px; margin:auto; }
+.back-btn{ color:white; text-decoration:none; font-size:15px; font-weight:bold; display:inline-block; margin-bottom:20px; background:rgba(255,255,255,0.1); padding:6px 18px; border-radius:30px; }
+.back-btn:hover{ background:rgba(255,255,255,0.25); }
+.header-content{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.header-icon{ width:76px; height:76px; border-radius:18px; background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:40px; flex-shrink:0; }
+.header h1{ font-size:34px; margin-bottom:7px; }
+.header p{ font-size:15px; opacity:.85; }
+.lang-toggle{ display:flex; gap:8px; background:rgba(255,255,255,0.15); padding:4px; border-radius:30px; margin-left:auto; }
+.lang-btn{ background:transparent; border:2px solid transparent; color:white; padding:6px 16px; border-radius:30px; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.lang-btn.active{ background:white; color:#0b1f4b; border-color:white; }
+.lang-btn:hover{ background:rgba(255,255,255,0.3); }
+/* ===== CONTAINER ===== */
+.container{ width:92%; max-width:1200px; margin:30px auto; }
+/* ===== HERO ===== */
+.hero{ background:white; border:1px solid var(--border); border-radius:18px; padding:25px; box-shadow:0 8px 25px rgba(15,35,80,.06); }
+.hero h2{ color:var(--dark); margin-bottom:9px; }
+.hero p{ color:var(--muted); line-height:1.6; }
+.hero .description-box{ background:#f4f7ff; border-left:5px solid var(--blue); padding:16px 20px; border-radius:10px; margin-top:12px; color:#1f3a5f; line-height:1.8; }
+.stats{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.stat{ background:var(--lightblue); color:#21438f; border:1px solid #d9e5ff; padding:10px 15px; border-radius:10px; font-weight:bold; font-size:14px; }
+/* ===== CONTROLS ===== */
+.controls{ margin:22px 0; display:flex; gap:10px; flex-wrap:wrap; }
+.search-box{ flex:1; min-width:200px; padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; font-size:14px; outline:none; }
+.search-box:focus{ border-color:var(--blue); }
+select{ padding:12px 14px; border:1px solid #ccd3df; border-radius:10px; background:white; font-size:14px; cursor:pointer; }
+.btn{ padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:bold; font-size:14px; transition:0.2s; }
+.btn-blue{ background:var(--blue); color:white; }
+.btn-blue:hover{ background:#1d4ed8; }
+.btn-white{ background:white; border:1px solid #ccd3df; color:#26344d; }
+.btn-white:hover{ background:#f0f2f5; }
+.btn-green{ background:var(--green); color:white; }
+.btn-green:hover{ background:#15803d; }
+/* ===== PROGRESS ===== */
+.progress-info{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px; color:var(--muted); font-weight:bold; }
+.progress{ width:100%; height:9px; background:#e5e9f0; border-radius:20px; overflow:hidden; margin-bottom:25px; }
+.progress-bar{ width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#4f46e5); transition:.3s; }
+/* ===== QUESTION CARD ===== */
+.question-card{ background:white; border:1px solid var(--border); border-radius:17px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 18px rgba(15,35,80,.05); }
+.question-top{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px 8px; }
+.question-number{ color:var(--blue); font-weight:800; }
+.question-type{ background:#eef2f7; color:#526071; padding:6px 10px; border-radius:20px; font-size:12px; font-weight:bold; }
+.question-body{ padding:8px 20px 20px; }
+.question-text{ font-size:17px; line-height:1.65; font-weight:650; margin-bottom:16px; }
+.options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.option{ background:#f8fafc; border:1px solid #dce2eb; border-radius:10px; padding:13px; text-align:left; cursor:pointer; font-size:15px; transition:.2s; }
+.option:hover{ background:#eff6ff; border-color:#2563eb; }
+.option.correct{ background:#ecfdf3; border-color:#22c55e; color:#166534; }
+.option.wrong{ background:#fef2f2; border-color:#ef4444; color:#991b1b; }
+.answer-result{ margin-top:12px; font-weight:bold; }
+.explanation{ display:none; margin-top:15px; padding:18px 20px; background:#f4f7ff; border-left:5px solid #2563eb; border-radius:8px; line-height:1.8; }
+.explanation.show{ display:block; }
+.explanation-title{ color:#17449c; font-weight:bold; margin-bottom:8px; font-size:16px; }
+.explanation .step{ margin-top:5px; padding-left:10px; border-left:2px solid #b0c8e8; }
+.footer{ text-align:center; padding:35px 10px; color:#667085; }
+@media(max-width:700px){ .header h1{ font-size:25px; } .header-content{ align-items:flex-start; } .header-icon{ width:60px; height:60px; font-size:30px; } .options{ grid-template-columns:1fr; } .question-text{ font-size:16px; } .container{ width:94%; } .controls{ flex-direction:column; } .controls .btn{ width:100%; text-align:center; } .lang-toggle{ margin-left:0; width:100%; justify-content:center; } }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <div class="header-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <a href="#" class="back-btn">← Topics पर वापस जाएँ</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="langEn" onclick="setLang('en')">🇬🇧 English</button>
+                <button class="lang-btn" id="langHi" onclick="setLang('hi')">🇮🇳 हिंदी</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-icon">🧠</div>
+            <div>
+                <h1 id="mainTitle">Analogy Practice (Deep Explanation)</h1>
+                <p id="mainSub">SSC CGL • CHSL • CPO • MTS | 500+ Bilingual Questions</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main class="container">
+    <section class="hero">
+        <h2 id="heroTitle">Analogy – Complete SSC Practice</h2>
+        <div id="descriptionBox" class="description-box">
+            <!-- Dynamically filled by JS -->
+        </div>
+        <div class="stats" id="statsRow">
+            <div class="stat" data-lang-en="510 Questions" data-lang-hi="510 प्रश्न">510 Questions</div>
+            <div class="stat" data-lang-en="Number Analogy" data-lang-hi="संख्या सादृश्य">Number Analogy</div>
+            <div class="stat" data-lang-en="Alphabet Analogy" data-lang-hi="वर्णमाला सादृश्य">Alphabet Analogy</div>
+            <div class="stat" data-lang-en="Word Analogy" data-lang-hi="शब्द सादृश्य">Word Analogy</div>
+            <div class="stat" data-lang-en="Mixed Analogy" data-lang-hi="मिश्रित सादृश्य">Mixed Analogy</div>
+            <div class="stat" data-lang-en="Detailed Explanation" data-lang-hi="विस्तृत व्याख्या">Detailed Explanation</div>
+        </div>
+    </section>
+
+    <!-- ===== CONTROLS ===== -->
+    <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="Search question...">
+        <select id="filter">
+            <option value="all" data-lang-en="All Questions" data-lang-hi="सभी प्रश्न">All Questions</option>
+            <option value="Number Analogy" data-lang-en="Number Analogy" data-lang-hi="संख्या सादृश्य">Number Analogy</option>
+            <option value="Alphabet Analogy" data-lang-en="Alphabet Analogy" data-lang-hi="वर्णमाला सादृश्य">Alphabet Analogy</option>
+            <option value="Word Analogy" data-lang-en="Word Analogy" data-lang-hi="शब्द सादृश्य">Word Analogy</option>
+            <option value="Mixed Analogy" data-lang-en="Mixed Analogy" data-lang-hi="मिश्रित सादृश्य">Mixed Analogy</option>
+        </select>
+        <button class="btn btn-blue" onclick="showAllExplanations()" data-lang-en="Show Explanations" data-lang-hi="सभी व्याख्याएँ दिखाएँ">Show Explanations</button>
+        <button class="btn btn-green" onclick="resetQuiz()" data-lang-en="Reset" data-lang-hi="रीसेट करें">Reset</button>
+    </div>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-info">
+        <span id="attemptText">Attempted: 0 / 0</span>
+        <span id="scoreText">Score: 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <!-- ===== QUESTIONS ===== -->
+    <div id="questionsContainer"></div>
+</main>
+<footer class="footer" data-lang-en="Analogy Practice · SSC Reasoning" data-lang-hi="सादृश्य अभ्यास · SSC रीजनिंग">Analogy Practice · SSC Reasoning</footer>
+
+<script>
+// ================================================================
+//  LANGUAGE TOGGLE & UI TEXTS
+// ================================================================
+let currentLang = 'en';
+
+const descriptions = {
+    en: `<b>What is Analogy?</b><br> Analogy questions test your ability to identify relationships between pairs of items (numbers, letters, words, or objects). You must find the logical connection in the first pair and apply the exact same relationship to complete the second pair. This is a core topic in SSC and other competitive exams. <br><br> <b>📌 Tip:</b> Always check the relationship type – it could be multiplication, addition, square, cube, alphabetical shift, synonym, antonym, or part-to-whole.`,
+    hi: `<b>सादृश्य (Analogy) क्या है?</b><br> सादृश्य प्रश्न आपकी वस्तुओं (संख्याएँ, अक्षर, शब्द, या वस्तुएँ) के बीच संबंध को पहचानने की क्षमता का परीक्षण करते हैं। आपको पहले युग्म में तार्किक संबंध ढूँढ़ना होता है और उसी संबंध को दूसरे युग्म में लागू करना होता है। यह SSC और अन्य प्रतियोगी परीक्षाओं के लिए एक प्रमुख विषय है। <br><br> <b>📌 सुझाव:</b> हमेशा संबंध के प्रकार को पहचानें – यह गुणा, जोड़, वर्ग, घन, वर्णमाला क्रम, पर्यायवाची, विलोम, या भाग-से-पूर्ण हो सकता है।`
+};
+
+function updateUI() {
+    document.querySelectorAll('[data-lang-en]').forEach(el => {
+        const key = el.dataset.langEn;
+        const hi = el.dataset.langHi;
+        if (currentLang === 'en') {
+            if (el.tagName === 'OPTION') el.textContent = key;
+            else el.textContent = key;
+        } else {
+            if (el.tagName === 'OPTION') el.textContent = hi;
+            else el.textContent = hi;
+        }
+    });
+    document.getElementById('mainTitle').textContent = currentLang === 'en' ? 'Analogy Practice (Deep Explanation)' : 'सादृश्य अभ्यास (गहन व्याख्या)';
+    document.getElementById('mainSub').textContent = currentLang === 'en' ? 'SSC CGL • CHSL • CPO • MTS | 500+ Bilingual Questions' : 'SSC CGL • CHSL • CPO • MTS | 500+ द्विभाषी प्रश्न';
+    document.getElementById('heroTitle').textContent = currentLang === 'en' ? 'Analogy – Complete SSC Practice' : 'सादृश्य – पूर्ण SSC अभ्यास';
+    document.getElementById('descriptionBox').innerHTML = descriptions[currentLang];
+    document.getElementById('search').placeholder = currentLang === 'en' ? 'Search question...' : 'प्रश्न खोजें...';
+    document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
+    document.getElementById('langHi').classList.toggle('active', currentLang === 'hi');
+    renderQuestions();
+    updateProgress();
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    updateUI();
+}
+
+// ================================================================
+//  QUESTION GENERATOR (Bilingual with DEEP Explanations)
+// ================================================================
+const questions = [];
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// ---- Word Pools (Bilingual) ----
+const wordPairs = [
+    { en: ["Book", "Read", "Food", "Eat"], hi: ["पुस्तक", "पढ़ना", "भोजन", "खाना"] },
+    { en: ["Bird", "Nest", "Lion", "Den"], hi: ["पक्षी", "घोंसला", "शेर", "गुफा"] },
+    { en: ["Doctor", "Hospital", "Teacher", "School"], hi: ["डॉक्टर", "अस्पताल", "शिक्षक", "स्कूल"] },
+    { en: ["Eye", "See", "Ear", "Hear"], hi: ["आँख", "देखना", "कान", "सुनना"] },
+    { en: ["Knife", "Cut", "Pen", "Write"], hi: ["चाकू", "काटना", "कलम", "लिखना"] },
+    { en: ["Puppy", "Dog", "Kitten", "Cat"], hi: ["पिल्ला", "कुत्ता", "बिल्ली का बच्चा", "बिल्ली"] },
+    { en: ["Gold", "Metal", "Rose", "Flower"], hi: ["सोना", "धातु", "गुलाब", "फूल"] },
+    { en: ["Author", "Book", "Composer", "Music"], hi: ["लेखक", "पुस्तक", "संगीतकार", "संगीत"] },
+    { en: ["Finger", "Hand", "Toe", "Foot"], hi: ["उंगली", "हाथ", "पैर की अंगुली", "पैर"] },
+    { en: ["Car", "Garage", "Aircraft", "Hangar"], hi: ["कार", "गैरेज", "विमान", "हैंगर"] },
+    { en: ["Cow", "Milk", "Hen", "Egg"], hi: ["गाय", "दूध", "मुर्गी", "अंडा"] },
+    { en: ["Student", "School", "Patient", "Hospital"], hi: ["छात्र", "स्कूल", "मरीज", "अस्पताल"] },
+    { en: ["Chef", "Kitchen", "Farmer", "Field"], hi: ["रसोइया", "रसोई", "किसान", "खेत"] },
+    { en: ["Driver", "Car", "Pilot", "Aircraft"], hi: ["चालक", "कार", "पायलट", "विमान"] },
+    { en: ["Singer", "Song", "Actor", "Film"], hi: ["गायक", "गीत", "अभिनेता", "फिल्म"] },
+    { en: ["Bee", "Hive", "Ant", "Anthill"], hi: ["मधुमक्खी", "छत्ता", "चींटी", "बाँबी"] },
+    { en: ["Horse", "Stable", "Lion", "Den"], hi: ["घोड़ा", "अस्तबल", "शेर", "गुफा"] },
+    { en: ["Dog", "Kennel", "Bird", "Nest"], hi: ["कुत्ता", "केनेल", "पक्षी", "घोंसला"] },
+    { en: ["Plant", "Seed", "Bird", "Egg"], hi: ["पौधा", "बीज", "पक्षी", "अंडा"] },
+    { en: ["Wheel", "Car", "Wing", "Aircraft"], hi: ["पहिया", "कार", "पंख", "विमान"] },
+    { en: ["Key", "Lock", "Password", "Account"], hi: ["ताली", "ताला", "पासवर्ड", "खाता"] },
+    { en: ["Question", "Answer", "Problem", "Solution"], hi: ["प्रश्न", "उत्तर", "समस्या", "समाधान"] },
+    { en: ["Fire", "Heat", "Ice", "Cold"], hi: ["आग", "गर्मी", "बर्फ", "ठंड"] },
+    { en: ["Ship", "Harbour", "Aircraft", "Airport"], hi: ["जहाज", "बंदरगाह", "विमान", "हवाई अड्डा"] },
+    { en: ["Train", "Railway", "Car", "Road"], hi: ["ट्रेन", "रेलवे", "कार", "सड़क"] },
+    { en: ["Pencil", "Write", "Eraser", "Erase"], hi: ["पेंसिल", "लिखना", "रबड़", "मिटाना"] },
+    { en: ["Scissors", "Cut", "Needle", "Stitch"], hi: ["कैंची", "काटना", "सुई", "सिलाई"] },
+    { en: ["India", "Rupee", "USA", "Dollar"], hi: ["भारत", "रुपया", "USA", "डॉलर"] },
+    { en: ["Heart", "Blood", "Lung", "Air"], hi: ["हृदय", "रक्त", "फेफड़ा", "हवा"] },
+    { en: ["Brain", "Thinking", "Eye", "Seeing"], hi: ["मस्तिष्क", "सोच", "आँख", "देखना"] },
+];
+
+const mixedPairs = [
+    { en: ["Pound", "England", "Yen", "Japan"], hi: ["पाउंड", "इंग्लैंड", "येन", "जापान"] },
+    { en: ["Haemoglobin", "Iron", "Chlorophyll", "Magnesium"], hi: ["हीमोग्लोबिन", "आयरन", "क्लोरोफिल", "मैग्नीशियम"] },
+    { en: ["Influenza", "Virus", "Typhoid", "Bacteria"], hi: ["इन्फ्लुएंजा", "वायरस", "टाइफाइड", "बैक्टीरिया"] },
+    { en: ["Architect", "Building", "Sculptor", "Statue"], hi: ["वास्तुकार", "इमारत", "मूर्तिकार", "मूर्ति"] },
+    { en: ["Lock", "Key", "Question", "Answer"], hi: ["ताला", "ताली", "प्रश्न", "उत्तर"] },
+    { en: ["Radio", "Listener", "Film", "Viewer"], hi: ["रेडियो", "श्रोता", "फिल्म", "दर्शक"] },
+    { en: ["Paddy", "Field", "Steel", "Factory"], hi: ["धान", "खेत", "इस्पात", "कारखाना"] },
+    { en: ["Aeroplane", "Cockpit", "Train", "Coach"], hi: ["हवाई जहाज", "कॉकपिट", "ट्रेन", "डिब्बा"] },
+    { en: ["Meningitis", "Brain", "Cirrhosis", "Liver"], hi: ["मेनिन्जाइटिस", "मस्तिष्क", "सिरोसिस", "यकृत"] },
+    { en: ["Forecast", "Future", "Regret", "Past"], hi: ["पूर्वानुमान", "भविष्य", "पछतावा", "अतीत"] },
+    { en: ["Carpenter", "Wood", "Sculptor", "Stone"], hi: ["बढ़ई", "लकड़ी", "मूर्तिकार", "पत्थर"] },
+    { en: ["Oven", "Bake", "Refrigerator", "Cool"], hi: ["ओवन", "बेक करना", "रेफ्रिजरेटर", "ठंडा करना"] },
+    { en: ["Pen", "Ink", "Pencil", "Lead"], hi: ["कलम", "स्याही", "पेंसिल", "सीसा"] },
+    { en: ["Sun", "Day", "Moon", "Night"], hi: ["सूर्य", "दिन", "चंद्रमा", "रात"] },
+];
+
+// ---- Generate Functions with DEEP Explanations ----
+function generateNumberAnalogy() {
+    const a = Math.floor(Math.random() * 20) + 3;
+    const b = a * (a + 1);
+    let c = a + Math.floor(Math.random() * 10) + 2;
+    if (c === a) c = a + 3;
+    const d = c * (c + 1);
+    const opts = shuffle([String(d), String(d + Math.floor(Math.random()*20)+5), String(d - Math.floor(Math.random()*20)-5), String(d + Math.floor(Math.random()*30)+10)]);
+    const ansIdx = opts.indexOf(String(d));
+    
+    // Deep Explanation
+    const exp_en = `🔍 Step-by-step reasoning:<br>
+    <b>Step 1:</b> Identify the relationship in the first pair (${a} : ${b}).<br>
+    <b>Step 2:</b> Here, the second number is obtained by multiplying the first number by its successor: ${a} × (${a}+1) = ${a} × ${a+1} = ${b}.<br>
+    <b>Step 3:</b> Now apply the exact same logic to the second pair (${c} : ?).<br>
+    <b>Step 4:</b> ${c} × (${c}+1) = ${c} × ${c+1} = ${d}.<br>
+    ✅ <b>Therefore, the correct answer is ${d}.</b>`;
+    
+    const exp_hi = `🔍 चरणबद्ध हल (Step-by-step):<br>
+    <b>चरण 1:</b> पहले युग्म (${a} : ${b}) में संबंध पहचानें।<br>
+    <b>चरण 2:</b> यहाँ दूसरी संख्या, पहली संख्या को उसके अगले क्रम (successor) से गुणा करके प्राप्त होती है: ${a} × (${a}+1) = ${a} × ${a+1} = ${b}.<br>
+    <b>चरण 3:</b> अब यही नियम दूसरे युग्म (${c} : ?) पर लागू करें।<br>
+    <b>चरण 4:</b> ${c} × (${c}+1) = ${c} × ${c+1} = ${d}.<br>
+    ✅ <b>अतः सही उत्तर ${d} है।</b>`;
+    
+    return { q_en: `${a} : ${b} :: ${c} : ?`, q_hi: `${a} : ${b} :: ${c} : ?`, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Number Analogy", exp_en, exp_hi };
+}
+
+function generateAlphabetAnalogy() {
+    const alph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const shift = Math.floor(Math.random() * 4) + 1;
+    const start = Math.floor(Math.random() * 15) + 1;
+    if (start + 3 >= 26) return generateAlphabetAnalogy();
+    const p1 = alph[start] + alph[start+shift] + alph[start+2*shift];
+    const p2 = alph[start+shift] + alph[start+2*shift] + alph[start+3*shift];
+    const start2 = Math.floor(Math.random() * 12) + 8;
+    if (start2 + 3 >= 26) return generateAlphabetAnalogy();
+    const p3 = alph[start2] + alph[start2+shift] + alph[start2+2*shift];
+    const p4 = alph[start2+shift] + alph[start2+2*shift] + alph[start2+3*shift];
+    const opts = shuffle([p4, p3, p1, p2+'X']);
+    const ansIdx = opts.indexOf(p4);
+    
+    const exp_en = `🔍 Step-by-step reasoning:<br>
+    <b>Step 1:</b> Check the shift between corresponding letters of ${p1} and ${p2}.<br>
+    <b>Step 2:</b> ${p1[0]} → ${p2[0]} (+${shift}), ${p1[1]} → ${p2[1]} (+${shift}), ${p1[2]} → ${p2[2]} (+${shift}).<br>
+    <b>Step 3:</b> Apply the same +${shift} shift to ${p3}:<br>
+    ${p3[0]} → ${String.fromCharCode(p3.charCodeAt(0)+shift)}, ${p3[1]} → ${String.fromCharCode(p3.charCodeAt(1)+shift)}, ${p3[2]} → ${String.fromCharCode(p3.charCodeAt(2)+shift)}.<br>
+    ✅ <b>Therefore, the correct answer is ${p4}.</b>`;
+    
+    const exp_hi = `🔍 चरणबद्ध हल:<br>
+    <b>चरण 1:</b> ${p1} और ${p2} के संगत अक्षरों के बीच अंतर (shift) देखें।<br>
+    <b>चरण 2:</b> ${p1[0]} → ${p2[0]} (+${shift}), ${p1[1]} → ${p2[1]} (+${shift}), ${p1[2]} → ${p2[2]} (+${shift}).<br>
+    <b>चरण 3:</b> यही +${shift} शिफ्ट ${p3} पर लागू करें:<br>
+    ${p3[0]} → ${String.fromCharCode(p3.charCodeAt(0)+shift)}, ${p3[1]} → ${String.fromCharCode(p3.charCodeAt(1)+shift)}, ${p3[2]} → ${String.fromCharCode(p3.charCodeAt(2)+shift)}.<br>
+    ✅ <b>अतः सही उत्तर ${p4} है।</b>`;
+    
+    return { q_en: `${p1} : ${p2} :: ${p3} : ?`, q_hi: `${p1} : ${p2} :: ${p3} : ?`, opts_en: opts, opts_hi: opts, answer: ansIdx, type: "Alphabet Analogy", exp_en, exp_hi };
+}
+
+function generateWordAnalogy() {
+    const pair = wordPairs[Math.floor(Math.random() * wordPairs.length)];
+    const opts_en = shuffle([pair.en[3], pair.en[0], pair.en[1], "None of these"]);
+    const opts_hi = shuffle([pair.hi[3], pair.hi[0], pair.hi[1], "इनमें से कोई नहीं"]);
+    const ansIdx = opts_en.indexOf(pair.en[3]);
+    
+    const exp_en = `🔍 Step-by-step reasoning:<br>
+    <b>Step 1:</b> Identify the logical relationship between "${pair.en[0]}" and "${pair.en[1]}".<br>
+    <b>Step 2:</b> "${pair.en[0]}" is associated with the action/place/thing "${pair.en[1]}". (Example: You read a book).<br>
+    <b>Step 3:</b> Apply the exact same association to "${pair.en[2]}".<br>
+    <b>Step 4:</b> The logical pair becomes "${pair.en[2]}" : "${pair.en[3]}".<br>
+    ✅ <b>Therefore, the correct answer is "${pair.en[3]}".</b>`;
+    
+    const exp_hi = `🔍 चरणबद्ध हल:<br>
+    <b>चरण 1:</b> "${pair.hi[0]}" और "${pair.hi[1]}" के बीच तार्किक संबंध पहचानें।<br>
+    <b>चरण 2:</b> "${pair.hi[0]}" का संबंध क्रिया/स्थान/वस्तु "${pair.hi[1]}" से है। (जैसे: पुस्तक पढ़ी जाती है)।<br>
+    <b>चरण 3:</b> यही संबंध "${pair.hi[2]}" पर लागू करें।<br>
+    <b>चरण 4:</b> तार्किक युग्म बनेगा "${pair.hi[2]}" : "${pair.hi[3]}".<br>
+    ✅ <b>अतः सही उत्तर "${pair.hi[3]}" है।</b>`;
+    
+    return { q_en: `${pair.en[0]} : ${pair.en[1]} :: ${pair.en[2]} : ?`, q_hi: `${pair.hi[0]} : ${pair.hi[1]} :: ${pair.hi[2]} : ?`, opts_en, opts_hi, answer: ansIdx, type: "Word Analogy", exp_en, exp_hi };
+}
+
+function generateMixedAnalogy() {
+    const pair = mixedPairs[Math.floor(Math.random() * mixedPairs.length)];
+    const opts_en = shuffle([pair.en[3], pair.en[0], pair.en[1], "None of these"]);
+    const opts_hi = shuffle([pair.hi[3], pair.hi[0], pair.hi[1], "इनमें से कोई नहीं"]);
+    const ansIdx = opts_en.indexOf(pair.en[3]);
+    
+    const exp_en = `🔍 Step-by-step reasoning:<br>
+    <b>Step 1:</b> Analyze the relationship between "${pair.en[0]}" and "${pair.en[1]}".<br>
+    <b>Step 2:</b> This is a general knowledge or functional relationship. (e.g., Pound is the currency of England).<br>
+    <b>Step 3:</b> Apply the same functional relationship to "${pair.en[2]}".<br>
+    <b>Step 4:</b> The correct counterpart for "${pair.en[2]}" is "${pair.en[3]}".<br>
+    ✅ <b>Therefore, the correct answer is "${pair.en[3]}".</b>`;
+    
+    const exp_hi = `🔍 चरणबद्ध हल:<br>
+    <b>चरण 1:</b> "${pair.hi[0]}" और "${pair.hi[1]}" के बीच संबंध का विश्लेषण करें।<br>
+    <b>चरण 2:</b> यह सामान्य ज्ञान या कार्यात्मक संबंध है। (जैसे: पाउंड इंग्लैंड की मुद्रा है)।<br>
+    <b>चरण 3:</b> यही कार्यात्मक संबंध "${pair.hi[2]}" पर लागू करें।<br>
+    <b>चरण 4:</b> "${pair.hi[2]}" का सही विकल्प "${pair.hi[3]}" है।<br>
+    ✅ <b>अतः सही उत्तर "${pair.hi[3]}" है।</b>`;
+    
+    return { q_en: `${pair.en[0]} : ${pair.en[1]} :: ${pair.en[2]} : ?`, q_hi: `${pair.hi[0]} : ${pair.hi[1]} :: ${pair.hi[2]} : ?`, opts_en, opts_hi, answer: ansIdx, type: "Mixed Analogy", exp_en, exp_hi };
+}
+
+// Generate 510
+while (questions.length < 510) {
+    const type = Math.floor(Math.random() * 4);
+    let q;
+    if (type === 0) q = generateNumberAnalogy();
+    else if (type === 1) q = generateAlphabetAnalogy();
+    else if (type === 2) q = generateWordAnalogy();
+    else q = generateMixedAnalogy();
+    const exists = questions.some(ex => ex.q_en === q.q_en && ex.type === q.type);
+    if (!exists) questions.push(q);
+}
+shuffle(questions);
+
+// ================================================================
+//  RENDER ENGINE
+// ================================================================
+const container = document.getElementById('questionsContainer');
+const search = document.getElementById('search');
+const filter = document.getElementById('filter');
+const attemptText = document.getElementById('attemptText');
+const scoreText = document.getElementById('scoreText');
+const progressBar = document.getElementById('progressBar');
+let attempted = new Set();
+let score = 0;
+
+function renderQuestions() {
+    container.innerHTML = '';
+    const keyword = search.value.toLowerCase().trim();
+    const selectedType = filter.value;
+    questions.forEach((q, idx) => {
+        if (selectedType !== 'all' && q.type !== selectedType) return;
+        const qText = currentLang === 'en' ? q.q_en : q.q_hi;
+        const opts = currentLang === 'en' ? q.opts_en : q.opts_hi;
+        const exp = currentLang === 'en' ? q.exp_en : q.exp_hi;
+        let full = (qText + opts.join(' ') + exp).toLowerCase();
+        if (keyword && !full.includes(keyword)) return;
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = 'question-' + idx;
+        let optHTML = '';
+        opts.forEach((opt, oi) => {
+            optHTML += `<button class="option" onclick="checkAnswer(${idx},${oi},this)">(${String.fromCharCode(65+oi)}) ${opt}</button>`;
+        });
+        card.innerHTML = `
+            <div class="question-top">
+                <span class="question-number">Q${idx+1}</span>
+                <span class="question-type">${q.type}</span>
+            </div>
+            <div class="question-body">
+                <div class="question-text">${qText}</div>
+                <div class="options">${optHTML}</div>
+                <div class="answer-result" id="result-${idx}"></div>
+                <div class="explanation" id="explanation-${idx}">
+                    <div class="explanation-title">${currentLang === 'en' ? '💡 Detailed Explanation (Step-by-Step)' : '💡 विस्तृत व्याख्या (चरण-दर-चरण)'}</div>
+                    ${exp}
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function checkAnswer(qIdx, selIdx, btn) {
+    if (attempted.has(qIdx)) return;
+    attempted.add(qIdx);
+    const q = questions[qIdx];
+    const card = document.getElementById('question-' + qIdx);
+    const btns = card.querySelectorAll('.option');
+    btns.forEach((b, i) => { if (i === q.answer) b.classList.add('correct'); });
+    const res = document.getElementById('result-' + qIdx);
+    if (selIdx === q.answer) { score++; res.innerHTML = currentLang === 'en' ? '✅ Correct Answer!' : '✅ सही उत्तर!'; res.style.color = '#16a34a'; }
+    else { btn.classList.add('wrong'); res.innerHTML = currentLang === 'en' ? '❌ Incorrect. See explanation below.' : '❌ गलत। नीचे व्याख्या देखें।'; res.style.color = '#dc2626'; }
+    document.getElementById('explanation-' + qIdx).classList.add('show');
+    updateProgress();
+}
+
+function updateProgress() {
+    attemptText.textContent = `${currentLang === 'en' ? 'Attempted' : 'हल किए'}: ${attempted.size} / ${questions.length}`;
+    scoreText.textContent = `${currentLang === 'en' ? 'Score' : 'स्कोर'}: ${score}`;
+    progressBar.style.width = (attempted.size / questions.length * 100) + '%';
+}
+
+function showAllExplanations() {
+    document.querySelectorAll('.explanation').forEach(e => e.classList.add('show'));
+}
+function resetQuiz() { attempted.clear(); score = 0; renderQuestions(); updateProgress(); window.scrollTo({top:0, behavior:'smooth'}); }
+search.addEventListener('input', renderQuestions);
+filter.addEventListener('change', renderQuestions);
+
+// Init
+updateUI();
+</script>
+</body>
+</html>

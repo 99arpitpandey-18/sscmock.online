@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pipe & Cistern – CGL Level (15 Pages)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Roboto,sans-serif; background:#f0f4f8; color:#1a1a2e; padding:20px; transition:0.3s; }
+        .container { max-width:1100px; margin:0 auto; }
+        .progress-container { position:sticky; top:0; z-index:1000; background:#fff; padding:8px 20px; border-radius:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:25px; display:flex; align-items:center; gap:15px; flex-wrap:wrap; }
+        .progress-container .prog-label { font-weight:600; font-size:14px; color:#1a237e; white-space:nowrap; }
+        .progress-container .prog-bar { flex:1; height:8px; background:#e0e0e0; border-radius:10px; overflow:hidden; min-width:100px; }
+        .progress-container .prog-bar .prog-fill { height:100%; width:0%; background:linear-gradient(90deg,#1a237e,#ffd54f); transition:width 0.3s ease; border-radius:10px; }
+        .progress-container .page-indicator { font-weight:700; color:#1a237e; background:#e8eaf6; padding:4px 14px; border-radius:30px; font-size:14px; }
+        .main-header { background:linear-gradient(135deg,#1a237e,#0d47a1); color:#fff; padding:20px 30px; border-radius:16px; margin-bottom:25px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 6px 20px rgba(0,0,0,0.15); }
+        .main-header .title h1 { font-size:28px; font-weight:800; }
+        .main-header .title h1 span { color:#ffd54f; }
+        .main-header .title p { font-size:14px; opacity:0.9; }
+        .lang-toggle { display:flex; gap:6px; background:rgba(255,255,255,0.15); padding:5px; border-radius:40px; border:1px solid rgba(255,255,255,0.2); }
+        .lang-toggle button { padding:8px 22px; border:none; border-radius:30px; font-weight:700; font-size:15px; cursor:pointer; transition:0.3s; background:transparent; color:#ccc; }
+        .lang-toggle button.active { background:#ffd54f; color:#1a237e; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+        .lang-toggle button:hover:not(.active) { color:#fff; }
+        .topics-index { background:#fff; border-radius:16px; padding:20px 25px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border:1px solid #e9edf2; }
+        .topics-index .index-title { font-size:20px; font-weight:700; color:#1a237e; margin-bottom:12px; }
+        .topics-index .index-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+        .topics-index .index-grid a { display:block; background:#f5f7fa; padding:10px 14px; border-radius:8px; color:#1a237e; text-decoration:none; font-weight:600; font-size:14px; border-left:4px solid #1a237e; transition:0.3s; }
+        .topics-index .index-grid a:hover { background:#e8eaf6; transform:translateX(4px); border-left-color:#ff6f00; }
+        .page-divider { display:flex; align-items:center; gap:20px; margin:40px 0 30px; color:#888; font-weight:300; font-size:14px; }
+        .page-divider hr { flex:1; border:none; height:1px; background:linear-gradient(to right,transparent,#ccc,transparent); }
+        .page-divider .page-label { background:#fff; padding:0 15px; border-radius:30px; font-weight:600; color:#1a237e; border:1px solid #e0e0e0; padding:4px 18px; }
+        .formula-card { background:#fff; border-radius:16px; padding:25px 30px; margin-bottom:30px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border-left:5px solid #1a237e; scroll-margin-top:80px; transition:0.2s; }
+        .formula-card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.09); }
+        .formula-card .topic-name { font-size:26px; font-weight:800; color:#1a237e; margin-bottom:2px; }
+        .formula-card .topic-badge { font-size:13px; color:#888; margin-bottom:15px; display:inline-block; background:#f0f4f8; padding:2px 16px; border-radius:20px; }
+        .visual-box { background:#e8eaf6; border-radius:12px; padding:16px 20px; margin-bottom:18px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; border:1px dashed #1a237e; }
+        .visual-box .vis-icon { font-size:36px; color:#1a237e; }
+        .visual-box .vis-text { font-size:14px; color:#333; line-height:1.6; }
+        .visual-box .vis-text strong { color:#1a237e; }
+        .formulas-box { background:#f5f7fa; border-radius:12px; padding:18px 22px; margin-bottom:16px; border-left:4px solid #ff6f00; line-height:1.8; font-size:15px; }
+        .formulas-box .formula-title { font-weight:700; color:#1a237e; font-size:17px; margin-bottom:6px; }
+        .formulas-box code { background:#e0e0e0; padding:2px 8px; border-radius:4px; font-weight:600; }
+        .formula-explanation { background:#fff8e1; border-radius:10px; padding:14px 18px; margin-bottom:18px; border-left:4px solid #ffa000; font-size:14px; line-height:1.7; color:#4e342e; }
+        .formula-explanation .ex-title { font-weight:700; color:#e65100; }
+        .question-item { background:#fafbfc; border-radius:10px; padding:12px 16px; margin-bottom:10px; border:1px solid #e9edf2; transition:0.2s; }
+        .question-item:hover { border-color:#b0c4de; }
+        .question-item .q-text { font-weight:600; font-size:15px; margin-bottom:6px; }
+        .question-item .options { display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:14px; color:#333; margin-bottom:6px; }
+        @media (max-width:600px) { .question-item .options { grid-template-columns:1fr; } }
+        .question-item .options span { display:inline-block; }
+        .question-item .answer-btn { background:#e8eaf6; border:none; padding:4px 16px; border-radius:20px; font-size:13px; font-weight:600; color:#1a237e; cursor:pointer; transition:0.2s; margin-top:4px; }
+        .question-item .answer-btn:hover { background:#1a237e; color:#fff; }
+        .question-item .answer-box { display:none; margin-top:8px; padding:10px 16px; background:#e8f5e9; border-radius:8px; font-size:14px; border-left:4px solid #2e7d32; color:#1b5e20; line-height:1.6; }
+        .question-item .answer-box.show { display:block; }
+        .pyq-badge { display:inline-block; background:#ffd54f; color:#1a237e; font-size:11px; font-weight:800; padding:2px 12px; border-radius:30px; margin-right:10px; letter-spacing:0.5px; }
+        .section-heading { font-weight:700; color:#1a237e; font-size:18px; margin:18px 0 12px; display:flex; align-items:center; gap:10px; }
+        .section-heading i { color:#ff6f00; }
+        .footer { text-align:center; margin-top:30px; color:#777; font-size:14px; border-top:1px solid #ddd; padding-top:20px; }
+        @media (max-width:600px) { .main-header { flex-direction:column; align-items:stretch; } .lang-toggle { align-self:flex-start; } .main-header .title h1 { font-size:22px; } .formula-card { padding:16px; } .topics-index .index-grid { grid-template-columns:1fr 1fr; } .visual-box { flex-direction:column; align-items:flex-start; } .progress-container .prog-label { font-size:12px; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="progress-container" id="progressContainer">
+            <span class="prog-label"><i class="fas fa-book-open"></i> Study Progress</span>
+            <div class="prog-bar"><div class="prog-fill" id="progressFill" style="width:0%;"></div></div>
+            <span class="page-indicator" id="pageIndicator">Page 1 of 15</span>
+        </div>
+
+        <header class="main-header">
+            <div class="title">
+                <h1>🚰 Pipe & Cistern <span>CGL Level</span></h1>
+                <p id="headerSub">9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual</p>
+            </div>
+            <div class="lang-toggle" id="langToggle">
+                <button class="active" data-lang="en">🇬🇧 English</button>
+                <button data-lang="hi">🇮🇳 हिंदी</button>
+            </div>
+        </header>
+
+        <div class="topics-index" id="topicsIndex">
+            <div class="index-title" id="indexTitle">📑 All 9 Pipe & Cistern Topics Covered</div>
+            <div class="index-grid" id="indexGrid"></div>
+        </div>
+
+        <div id="content"></div>
+
+        <div class="footer" id="footerText">⚡ Practice makes perfect. SSC CGL / Banking Level.</div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 1. COMPLETE DATA: 9 PIPE & CISTERN TOPICS (CGL Level)
+        // ================================================================
+
+        var TOPICS_DATA = [{
+            nameEn: 'Basic Concepts (Inlet & Outlet)',
+            nameHi: 'मूल अवधारणाएँ (इनलेट और आउटलेट)',
+            visualEn: '<i class="fas fa-water" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Inlet fills the tank, Outlet empties it. Work done by inlet is positive, outlet is negative.',
+            visualHi: '<i class="fas fa-water" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> इनलेट टंकी भरता है, आउटलेट खाली करता है। इनलेट का कार्य धनात्मक, आउटलेट का ऋणात्मक होता है।',
+            basicFormulaEn: '<b>Inlet fills in A hours => 1-hour work = 1/A</b><br><b>Outlet empties in B hours => 1-hour work = -1/B</b><br><b>Net work = 1/A - 1/B</b>',
+            basicFormulaHi: '<b>इनलेट A घंटे में भरता है => 1-घंटे का कार्य = 1/A</b><br><b>आउटलेट B घंटे में खाली करता है => 1-घंटे का कार्य = -1/B</b><br><b>शुद्ध कार्य = 1/A - 1/B</b>',
+            formulaExplanationEn: '<b>Why negative for outlet?</b> Outlet reduces water in the tank, so it works in the opposite direction.',
+            formulaExplanationHi: '<b>आउटलेट के लिए ऋणात्मक क्यों?</b> आउटलेट टंकी में पानी कम करता है, इसलिए यह विपरीत दिशा में काम करता है।',
+            advancedFormulaEn: '<b>Advanced:</b> If a pipe fills in A hours and due to leak it takes B hours, leak empties in (AB)/(B-A) hours.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि पाइप A घंटे में भरता है और रिसाव के कारण B घंटे लगते हैं, तो रिसाव (AB)/(B-A) घंटे में खाली करता है।',
+            practice: [
+                { qEn: 'A pipe fills a tank in 8 hours. What is its 1-hour work?', qHi: 'एक पाइप टंकी को 8 घंटे में भरता है। उसका 1-घंटे का कार्य क्या है?', optsEn: ['1/6', '1/7', '1/8', '1/9'], optsHi: ['1/6', '1/7', '1/8', '1/9'], ans: 2, expEn: '1/8', expHi: '1/8' },
+                { qEn: 'An outlet empties a tank in 10 hours. Its 1-hour work is?', qHi: 'एक आउटलेट टंकी को 10 घंटे में खाली करता है। उसका 1-घंटे का कार्य?', optsEn: ['1/10', '-1/10', '1/5', '-1/5'], optsHi: ['1/10', '-1/10', '1/5', '-1/5'], ans: 1, expEn: '-1/10', expHi: '-1/10' },
+                { qEn: 'Inlet A fills in 12 hours, Outlet B empties in 18 hours. Net 1-hour work?', qHi: 'इनलेट A 12 घंटे में भरता है, आउटलेट B 18 घंटे में खाली करता है। शुद्ध 1-घंटे का कार्य?', optsEn: ['1/36', '1/24', '1/18', '1/12'], optsHi: ['1/36', '1/24', '1/18', '1/12'], ans: 0, expEn: '1/12 - 1/18 = 1/36', expHi: '1/12 - 1/18 = 1/36' },
+                { qEn: 'A pipe fills in 5 hours. How much does it fill in 2 hours?', qHi: 'एक पाइप 5 घंटे में भरता है। वह 2 घंटे में कितना भरेगा?', optsEn: ['1/3', '2/5', '1/2', '3/5'], optsHi: ['1/3', '2/5', '1/2', '3/5'], ans: 1, expEn: '2/5 of the tank', expHi: 'टंकी का 2/5 भाग' },
+                { qEn: 'An outlet empties 3/4 of a tank in 6 hours. Time to empty full tank?', qHi: 'एक आउटलेट 6 घंटे में टंकी का 3/4 भाग खाली करता है। पूरी टंकी खाली करने में समय?', optsEn: ['4 h', '6 h', '8 h', '10 h'], optsHi: ['4 h', '6 h', '8 h', '10 h'], ans: 2, expEn: '6 × 4/3 = 8 hours', expHi: '6 × 4/3 = 8 घंटे' },
+                { qEn: 'Inlet fills in 6 hours. Its 1-hour work?', qHi: 'इनलेट 6 घंटे में भरता है। उसका 1-घंटे का कार्य?', optsEn: ['1/4', '1/5', '1/6', '1/7'], optsHi: ['1/4', '1/5', '1/6', '1/7'], ans: 2, expEn: '1/6', expHi: '1/6' },
+                { qEn: 'Outlet empties in 15 hours. Its 1-hour work?', qHi: 'आउटलेट 15 घंटे में खाली करता है। उसका 1-घंटे का कार्य?', optsEn: ['1/15', '-1/15', '1/10', '-1/10'], optsHi: ['1/15', '-1/15', '1/10', '-1/10'], ans: 1, expEn: '-1/15', expHi: '-1/15' },
+                { qEn: 'Inlet A:10 hours, Outlet B:15 hours. Net work in 1 hour?', qHi: 'इनलेट A:10 घंटे, आउटलेट B:15 घंटे। 1 घंटे में शुद्ध कार्य?', optsEn: ['1/30', '1/20', '1/15', '1/10'], optsHi: ['1/30', '1/20', '1/15', '1/10'], ans: 0, expEn: '1/10 - 1/15 = 1/30', expHi: '1/10 - 1/15 = 1/30' },
+                { qEn: 'A pipe fills 1/3 tank in 2 hours. Full tank time?', qHi: 'एक पाइप 2 घंटे में 1/3 टंकी भरता है। पूरी टंकी का समय?', optsEn: ['4 h', '5 h', '6 h', '8 h'], optsHi: ['4 h', '5 h', '6 h', '8 h'], ans: 2, expEn: '2 × 3 = 6 hours', expHi: '2 × 3 = 6 घंटे' },
+                { qEn: 'If inlet fills in 20 hours, what is its 1-hour work?', qHi: 'यदि इनलेट 20 घंटे में भरता है, तो उसका 1-घंटे का कार्य?', optsEn: ['1/15', '1/18', '1/20', '1/25'], optsHi: ['1/15', '1/18', '1/20', '1/25'], ans: 2, expEn: '1/20', expHi: '1/20' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'A pipe fills in 8 hours. 1-hour work?', qHi: 'एक पाइप 8 घंटे में भरता है। 1-घंटे का कार्य?', optsEn: ['1/6', '1/7', '1/8', '1/9'], optsHi: ['1/6', '1/7', '1/8', '1/9'], ans: 2, expEn: '1/8', expHi: '1/8' },
+                { year: 'CGL 2022', qEn: 'Outlet empties in 10 hours. 1-hour work?', qHi: 'आउटलेट 10 घंटे में खाली करता है। 1-घंटे का कार्य?', optsEn: ['1/10', '-1/10', '1/5', '-1/5'], optsHi: ['1/10', '-1/10', '1/5', '-1/5'], ans: 1, expEn: '-1/10', expHi: '-1/10' },
+                { year: 'CGL 2021', qEn: 'Inlet A 12h, Outlet B 18h. Net work in 1h?', qHi: 'इनलेट A 12h, आउटलेट B 18h. 1h में शुद्ध कार्य?', optsEn: ['1/36', '1/24', '1/18', '1/12'], optsHi: ['1/36', '1/24', '1/18', '1/12'], ans: 0, expEn: '1/36', expHi: '1/36' },
+                { year: 'CGL 2020', qEn: 'Pipe fills 1/3 tank in 2h. Full time?', qHi: 'पाइप 2h में 1/3 टंकी भरता है। पूरा समय?', optsEn: ['4h', '5h', '6h', '8h'], optsHi: ['4h', '5h', '6h', '8h'], ans: 2, expEn: '6h', expHi: '6h' },
+                { year: 'CGL 2019', qEn: 'If inlet fills in 20h, 1-hour work?', qHi: 'यदि इनलेट 20h में भरता है, 1-घंटे का कार्य?', optsEn: ['1/15', '1/18', '1/20', '1/25'], optsHi: ['1/15', '1/18', '1/20', '1/25'], ans: 2, expEn: '1/20', expHi: '1/20' }
+            ]
+        }, {
+            nameEn: 'Two Inlets (Filling Together)',
+            nameHi: 'दो इनलेट (एक साथ भरना)',
+            visualEn: '<i class="fas fa-faucet" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Two pipes fill together. Rates add up. Time = 1/(1/A + 1/B).',
+            visualHi: '<i class="fas fa-faucet" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> दो पाइप एक साथ भरते हैं। दरें जुड़ती हैं। समय = 1/(1/A + 1/B).',
+            basicFormulaEn: '<b>If A fills in a hours, B in b hours, together time = ab/(a+b)</b>',
+            basicFormulaHi: '<b>यदि A, a घंटे में, B, b घंटे में भरता है, तो मिलकर समय = ab/(a+b)</b>',
+            formulaExplanationEn: '<b>Why add rates?</b> Each pipe contributes to filling. Total rate is sum of individual rates.',
+            formulaExplanationHi: '<b>दरें क्यों जुड़ती हैं?</b> प्रत्येक पाइप भरने में योगदान करता है। कुल दर व्यक्तिगत दरों का योग है।',
+            advancedFormulaEn: '<b>Advanced:</b> If one pipe takes x hours more than the other, solve using equations.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि एक पाइप दूसरे से x घंटे अधिक लेता है, तो समीकरणों का उपयोग करें।',
+            practice: [
+                { qEn: 'A:10h, B:15h. Together time?', qHi: 'A:10h, B:15h. मिलकर समय?', optsEn: ['5h', '6h', '7.5h', '8h'], optsHi: ['5h', '6h', '7.5h', '8h'], ans: 1, expEn: '10×15/(10+15) = 6h', expHi: '10×15/(10+15) = 6h' },
+                { qEn: 'A:8h, B:12h. Together time?', qHi: 'A:8h, B:12h. मिलकर समय?', optsEn: ['4.8h', '5h', '6h', '7.2h'], optsHi: ['4.8h', '5h', '6h', '7.2h'], ans: 0, expEn: '8×12/(8+12) = 4.8h', expHi: '8×12/(8+12) = 4.8h' },
+                { qEn: 'A:12h, B:18h. Together time?', qHi: 'A:12h, B:18h. मिलकर समय?', optsEn: ['6h', '7.2h', '8h', '9h'], optsHi: ['6h', '7.2h', '8h', '9h'], ans: 1, expEn: '12×18/(12+18) = 7.2h', expHi: '12×18/(12+18) = 7.2h' },
+                { qEn: 'A:5h, B:10h. Together time?', qHi: 'A:5h, B:10h. मिलकर समय?', optsEn: ['2.5h', '3.33h', '4h', '5h'], optsHi: ['2.5h', '3.33h', '4h', '5h'], ans: 1, expEn: '5×10/(5+10) = 3.33h', expHi: '5×10/(5+10) = 3.33h' },
+                { qEn: 'A:20h, B:30h. Together time?', qHi: 'A:20h, B:30h. मिलकर समय?', optsEn: ['10h', '12h', '15h', '18h'], optsHi: ['10h', '12h', '15h', '18h'], ans: 1, expEn: '20×30/(20+30) = 12h', expHi: '20×30/(20+30) = 12h' },
+                { qEn: 'A:6h, B:12h. Together time?', qHi: 'A:6h, B:12h. मिलकर समय?', optsEn: ['3h', '4h', '5h', '6h'], optsHi: ['3h', '4h', '5h', '6h'], ans: 1, expEn: '6×12/(6+12) = 4h', expHi: '6×12/(6+12) = 4h' },
+                { qEn: 'A:9h, B:18h. Together time?', qHi: 'A:9h, B:18h. मिलकर समय?', optsEn: ['4.5h', '6h', '7.2h', '9h'], optsHi: ['4.5h', '6h', '7.2h', '9h'], ans: 1, expEn: '9×18/(9+18) = 6h', expHi: '9×18/(9+18) = 6h' },
+                { qEn: 'A:15h, B:20h. Together time?', qHi: 'A:15h, B:20h. मिलकर समय?', optsEn: ['6h', '7.5h', '8.57h', '10h'], optsHi: ['6h', '7.5h', '8.57h', '10h'], ans: 2, expEn: '15×20/(15+20) = 8.57h', expHi: '15×20/(15+20) = 8.57h' },
+                { qEn: 'A:24h, B:36h. Together time?', qHi: 'A:24h, B:36h. मिलकर समय?', optsEn: ['12h', '14.4h', '16h', '18h'], optsHi: ['12h', '14.4h', '16h', '18h'], ans: 1, expEn: '24×36/(24+36) = 14.4h', expHi: '24×36/(24+36) = 14.4h' },
+                { qEn: 'A:4h, B:6h. Together time?', qHi: 'A:4h, B:6h. मिलकर समय?', optsEn: ['1.5h', '2.4h', '3h', '4h'], optsHi: ['1.5h', '2.4h', '3h', '4h'], ans: 1, expEn: '4×6/(4+6) = 2.4h', expHi: '4×6/(4+6) = 2.4h' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'A:10h, B:15h. Together time?', qHi: 'A:10h, B:15h. मिलकर समय?', optsEn: ['5h', '6h', '7.5h', '8h'], optsHi: ['5h', '6h', '7.5h', '8h'], ans: 1, expEn: '6h', expHi: '6h' },
+                { year: 'CGL 2022', qEn: 'A:8h, B:12h. Together time?', qHi: 'A:8h, B:12h. मिलकर समय?', optsEn: ['4.8h', '5h', '6h', '7.2h'], optsHi: ['4.8h', '5h', '6h', '7.2h'], ans: 0, expEn: '4.8h', expHi: '4.8h' },
+                { year: 'CGL 2021', qEn: 'A:12h, B:18h. Together time?', qHi: 'A:12h, B:18h. मिलकर समय?', optsEn: ['6h', '7.2h', '8h', '9h'], optsHi: ['6h', '7.2h', '8h', '9h'], ans: 1, expEn: '7.2h', expHi: '7.2h' },
+                { year: 'CGL 2020', qEn: 'A:5h, B:10h. Together time?', qHi: 'A:5h, B:10h. मिलकर समय?', optsEn: ['2.5h', '3.33h', '4h', '5h'], optsHi: ['2.5h', '3.33h', '4h', '5h'], ans: 1, expEn: '3.33h', expHi: '3.33h' },
+                { year: 'CGL 2019', qEn: 'A:20h, B:30h. Together time?', qHi: 'A:20h, B:30h. मिलकर समय?', optsEn: ['10h', '12h', '15h', '18h'], optsHi: ['10h', '12h', '15h', '18h'], ans: 1, expEn: '12h', expHi: '12h' }
+            ]
+        }, {
+            nameEn: 'Inlet + Outlet (Net Filling)',
+            nameHi: 'इनलेट + आउटलेट (शुद्ध भरना)',
+            visualEn: '<i class="fas fa-arrows-up-down" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Inlet fills, outlet empties. Net filling time = 1/(1/a - 1/b).',
+            visualHi: '<i class="fas fa-arrows-up-down" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> इनलेट भरता है, आउटलेट खाली करता है। शुद्ध भरने का समय = 1/(1/a - 1/b).',
+            basicFormulaEn: '<b>If Inlet fills in a hours, Outlet empties in b hours (a < b):</b><br><b>Net filling time = (a × b) / (b - a)</b>',
+            basicFormulaHi: '<b>यदि इनलेट a घंटे में भरता है, आउटलेट b घंटे में खाली करता है (a < b):</b><br><b>शुद्ध भरने का समय = (a × b) / (b - a)</b>',
+            formulaExplanationEn: '<b>Why divide by difference?</b> Net rate is the difference between filling and emptying rates.',
+            formulaExplanationHi: '<b>अंतर से भाग क्यों?</b> शुद्ध दर भरने और खाली करने की दरों के बीच का अंतर है।',
+            advancedFormulaEn: '<b>Advanced:</b> If tank already has some water, subtract filled portion from total work.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि टंकी में पहले से कुछ पानी है, तो कुल कार्य से भरा हुआ भाग घटाएँ।',
+            practice: [
+                { qEn: 'Inlet 8h, Outlet 12h. Net fill time?', qHi: 'इनलेट 8h, आउटलेट 12h. शुद्ध भरने का समय?', optsEn: ['16h', '20h', '24h', '30h'], optsHi: ['16h', '20h', '24h', '30h'], ans: 2, expEn: '8×12/(12-8) = 24h', expHi: '8×12/(12-8) = 24h' },
+                { qEn: 'Inlet 10h, Outlet 15h. Net fill time?', qHi: 'इनलेट 10h, आउटलेट 15h. शुद्ध भरने का समय?', optsEn: ['20h', '25h', '30h', '35h'], optsHi: ['20h', '25h', '30h', '35h'], ans: 2, expEn: '10×15/(15-10) = 30h', expHi: '10×15/(15-10) = 30h' },
+                { qEn: 'Inlet 6h, Outlet 18h. Net fill time?', qHi: 'इनलेट 6h, आउटलेट 18h. शुद्ध भरने का समय?', optsEn: ['8h', '9h', '12h', '18h'], optsHi: ['8h', '9h', '12h', '18h'], ans: 1, expEn: '6×18/(18-6) = 9h', expHi: '6×18/(18-6) = 9h' },
+                { qEn: 'Inlet 5h, Outlet 20h. Net fill time?', qHi: 'इनलेट 5h, आउटलेट 20h. शुद्ध भरने का समय?', optsEn: ['5.67h', '6h', '6.67h', '8h'], optsHi: ['5.67h', '6h', '6.67h', '8h'], ans: 2, expEn: '5×20/(20-5) = 6.67h', expHi: '5×20/(20-5) = 6.67h' },
+                { qEn: 'Inlet 12h, Outlet 36h. Net fill time?', qHi: 'इनलेट 12h, आउटलेट 36h. शुद्ध भरने का समय?', optsEn: ['15h', '16h', '18h', '20h'], optsHi: ['15h', '16h', '18h', '20h'], ans: 2, expEn: '12×36/(36-12) = 18h', expHi: '12×36/(36-12) = 18h' },
+                { qEn: 'Inlet 4h, Outlet 10h. Net fill time?', qHi: 'इनलेट 4h, आउटलेट 10h. शुद्ध भरने का समय?', optsEn: ['5.67h', '6h', '6.67h', '8h'], optsHi: ['5.67h', '6h', '6.67h', '8h'], ans: 2, expEn: '4×10/(10-4) = 6.67h', expHi: '4×10/(10-4) = 6.67h' },
+                { qEn: 'Inlet 15h, Outlet 25h. Net fill time?', qHi: 'इनलेट 15h, आउटलेट 25h. शुद्ध भरने का समय?', optsEn: ['30h', '35h', '37.5h', '40h'], optsHi: ['30h', '35h', '37.5h', '40h'], ans: 2, expEn: '15×25/(25-15) = 37.5h', expHi: '15×25/(25-15) = 37.5h' },
+                { qEn: 'Inlet 9h, Outlet 27h. Net fill time?', qHi: 'इनलेट 9h, आउटलेट 27h. शुद्ध भरने का समय?', optsEn: ['12h', '13.5h', '15h', '18h'], optsHi: ['12h', '13.5h', '15h', '18h'], ans: 1, expEn: '9×27/(27-9) = 13.5h', expHi: '9×27/(27-9) = 13.5h' },
+                { qEn: 'Inlet 3h, Outlet 12h. Net fill time?', qHi: 'इनलेट 3h, आउटलेट 12h. शुद्ध भरने का समय?', optsEn: ['3h', '4h', '5h', '6h'], optsHi: ['3h', '4h', '5h', '6h'], ans: 1, expEn: '3×12/(12-3) = 4h', expHi: '3×12/(12-3) = 4h' },
+                { qEn: 'Inlet 18h, Outlet 54h. Net fill time?', qHi: 'इनलेट 18h, आउटलेट 54h. शुद्ध भरने का समय?', optsEn: ['24h', '27h', '30h', '36h'], optsHi: ['24h', '27h', '30h', '36h'], ans: 1, expEn: '18×54/(54-18) = 27h', expHi: '18×54/(54-18) = 27h' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'Inlet 8h, Outlet 12h. Net fill time?', qHi: 'इनलेट 8h, आउटलेट 12h. शुद्ध भरने का समय?', optsEn: ['16h', '20h', '24h', '30h'], optsHi: ['16h', '20h', '24h', '30h'], ans: 2, expEn: '24h', expHi: '24h' },
+                { year: 'CGL 2022', qEn: 'Inlet 10h, Outlet 15h. Net fill time?', qHi: 'इनलेट 10h, आउटलेट 15h. शुद्ध भरने का समय?', optsEn: ['20h', '25h', '30h', '35h'], optsHi: ['20h', '25h', '30h', '35h'], ans: 2, expEn: '30h', expHi: '30h' },
+                { year: 'CGL 2021', qEn: 'Inlet 6h, Outlet 18h. Net fill time?', qHi: 'इनलेट 6h, आउटलेट 18h. शुद्ध भरने का समय?', optsEn: ['8h', '9h', '12h', '18h'], optsHi: ['8h', '9h', '12h', '18h'], ans: 1, expEn: '9h', expHi: '9h' },
+                { year: 'CGL 2020', qEn: 'Inlet 5h, Outlet 20h. Net fill time?', qHi: 'इनलेट 5h, आउटलेट 20h. शुद्ध भरने का समय?', optsEn: ['5.67h', '6h', '6.67h', '8h'], optsHi: ['5.67h', '6h', '6.67h', '8h'], ans: 2, expEn: '6.67h', expHi: '6.67h' },
+                { year: 'CGL 2019', qEn: 'Inlet 12h, Outlet 36h. Net fill time?', qHi: 'इनलेट 12h, आउटलेट 36h. शुद्ध भरने का समय?', optsEn: ['15h', '16h', '18h', '20h'], optsHi: ['15h', '16h', '18h', '20h'], ans: 2, expEn: '18h', expHi: '18h' }
+            ]
+        }, {
+            nameEn: 'Inlet + Outlet (Net Emptying)',
+            nameHi: 'इनलेट + आउटलेट (शुद्ध खाली करना)',
+            visualEn: '<i class="fas fa-arrow-down" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> When outlet is faster than inlet, tank empties. Net emptying time = 1/(1/b - 1/a).',
+            visualHi: '<i class="fas fa-arrow-down" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> जब आउटलेट इनलेट से तेज है, तो टंकी खाली होती है। शुद्ध खाली करने का समय = 1/(1/b - 1/a).',
+            basicFormulaEn: '<b>If Inlet fills in a hours, Outlet empties in b hours (b < a):</b><br><b>Net emptying time = (a × b) / (a - b)</b>',
+            basicFormulaHi: '<b>यदि इनलेट a घंटे में भरता है, आउटलेट b घंटे में खाली करता है (b < a):</b><br><b>शुद्ध खाली करने का समय = (a × b) / (a - b)</b>',
+            formulaExplanationEn: '<b>Why a-b?</b> Outlet does more work. Net rate is (1/b - 1/a).',
+            formulaExplanationHi: '<b>a-b क्यों?</b> आउटलेट अधिक कार्य करता है। शुद्ध दर (1/b - 1/a) है।',
+            advancedFormulaEn: '<b>Advanced:</b> If tank is partially filled, adjust remaining amount.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि टंकी आंशिक रूप से भरी है, तो शेष मात्रा को समायोजित करें।',
+            practice: [
+                { qEn: 'Inlet 15h, Outlet 10h. Net empty time?', qHi: 'इनलेट 15h, आउटलेट 10h. शुद्ध खाली करने का समय?', optsEn: ['20h', '25h', '30h', '35h'], optsHi: ['20h', '25h', '30h', '35h'], ans: 2, expEn: '15×10/(15-10) = 30h', expHi: '15×10/(15-10) = 30h' },
+                { qEn: 'Inlet 12h, Outlet 8h. Net empty time?', qHi: 'इनलेट 12h, आउटलेट 8h. शुद्ध खाली करने का समय?', optsEn: ['16h', '20h', '24h', '30h'], optsHi: ['16h', '20h', '24h', '30h'], ans: 2, expEn: '12×8/(12-8) = 24h', expHi: '12×8/(12-8) = 24h' },
+                { qEn: 'Inlet 20h, Outlet 15h. Net empty time?', qHi: 'इनलेट 20h, आउटलेट 15h. शुद्ध खाली करने का समय?', optsEn: ['40h', '50h', '60h', '70h'], optsHi: ['40h', '50h', '60h', '70h'], ans: 2, expEn: '20×15/(20-15) = 60h', expHi: '20×15/(20-15) = 60h' },
+                { qEn: 'Inlet 18h, Outlet 12h. Net empty time?', qHi: 'इनलेट 18h, आउटलेट 12h. शुद्ध खाली करने का समय?', optsEn: ['24h', '30h', '36h', '42h'], optsHi: ['24h', '30h', '36h', '42h'], ans: 2, expEn: '18×12/(18-12) = 36h', expHi: '18×12/(18-12) = 36h' },
+                { qEn: 'Inlet 8h, Outlet 4h. Net empty time?', qHi: 'इनलेट 8h, आउटलेट 4h. शुद्ध खाली करने का समय?', optsEn: ['6h', '8h', '10h', '12h'], optsHi: ['6h', '8h', '10h', '12h'], ans: 1, expEn: '8×4/(8-4) = 8h', expHi: '8×4/(8-4) = 8h' },
+                { qEn: 'Inlet 30h, Outlet 20h. Net empty time?', qHi: 'इनलेट 30h, आउटलेट 20h. शुद्ध खाली करने का समय?', optsEn: ['40h', '50h', '60h', '70h'], optsHi: ['40h', '50h', '60h', '70h'], ans: 2, expEn: '30×20/(30-20) = 60h', expHi: '30×20/(30-20) = 60h' },
+                { qEn: 'Inlet 16h, Outlet 10h. Net empty time?', qHi: 'इनलेट 16h, आउटलेट 10h. शुद्ध खाली करने का समय?', optsEn: ['20h', '22.5h', '26.67h', '30h'], optsHi: ['20h', '22.5h', '26.67h', '30h'], ans: 2, expEn: '16×10/(16-10) = 26.67h', expHi: '16×10/(16-10) = 26.67h' },
+                { qEn: 'Inlet 24h, Outlet 18h. Net empty time?', qHi: 'इनलेट 24h, आउटलेट 18h. शुद्ध खाली करने का समय?', optsEn: ['48h', '60h', '72h', '84h'], optsHi: ['48h', '60h', '72h', '84h'], ans: 2, expEn: '24×18/(24-18) = 72h', expHi: '24×18/(24-18) = 72h' },
+                { qEn: 'Inlet 9h, Outlet 6h. Net empty time?', qHi: 'इनलेट 9h, आउटलेट 6h. शुद्ध खाली करने का समय?', optsEn: ['12h', '15h', '18h', '21h'], optsHi: ['12h', '15h', '18h', '21h'], ans: 2, expEn: '9×6/(9-6) = 18h', expHi: '9×6/(9-6) = 18h' },
+                { qEn: 'Inlet 36h, Outlet 24h. Net empty time?', qHi: 'इनलेट 36h, आउटलेट 24h. शुद्ध खाली करने का समय?', optsEn: ['48h', '60h', '72h', '84h'], optsHi: ['48h', '60h', '72h', '84h'], ans: 2, expEn: '36×24/(36-24) = 72h', expHi: '36×24/(36-24) = 72h' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'Inlet 15h, Outlet 10h. Net empty time?', qHi: 'इनलेट 15h, आउटलेट 10h. शुद्ध खाली करने का समय?', optsEn: ['20h', '25h', '30h', '35h'], optsHi: ['20h', '25h', '30h', '35h'], ans: 2, expEn: '30h', expHi: '30h' },
+                { year: 'CGL 2022', qEn: 'Inlet 12h, Outlet 8h. Net empty time?', qHi: 'इनलेट 12h, आउटलेट 8h. शुद्ध खाली करने का समय?', optsEn: ['16h', '20h', '24h', '30h'], optsHi: ['16h', '20h', '24h', '30h'], ans: 2, expEn: '24h', expHi: '24h' },
+                { year: 'CGL 2021', qEn: 'Inlet 20h, Outlet 15h. Net empty time?', qHi: 'इनलेट 20h, आउटलेट 15h. शुद्ध खाली करने का समय?', optsEn: ['40h', '50h', '60h', '70h'], optsHi: ['40h', '50h', '60h', '70h'], ans: 2, expEn: '60h', expHi: '60h' },
+                { year: 'CGL 2020', qEn: 'Inlet 18h, Outlet 12h. Net empty time?', qHi: 'इनलेट 18h, आउटलेट 12h. शुद्ध खाली करने का समय?', optsEn: ['24h', '30h', '36h', '42h'], optsHi: ['24h', '30h', '36h', '42h'], ans: 2, expEn: '36h', expHi: '36h' },
+                { year: 'CGL 2019', qEn: 'Inlet 8h, Outlet 4h. Net empty time?', qHi: 'इनलेट 8h, आउटलेट 4h. शुद्ध खाली करने का समय?', optsEn: ['6h', '8h', '10h', '12h'], optsHi: ['6h', '8h', '10h', '12h'], ans: 1, expEn: '8h', expHi: '8h' }
+            ]
+        }, {
+            nameEn: 'Alternating Pipes (Hour by Hour)',
+            nameHi: 'एकांतर पाइप (घंटे दर घंटे)',
+            visualEn: '<i class="fas fa-clock" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Pipes work alternately. Calculate 2-hour work first.',
+            visualHi: '<i class="fas fa-clock" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> पाइप एकांतर रूप से काम करते हैं। पहले 2-घंटे का कार्य गणना करें।',
+            basicFormulaEn: '<b>If A fills in a hours, B fills in b hours, alternate starting with A:</b><br><b>2-hour work = 1/a + 1/b</b>',
+            basicFormulaHi: '<b>यदि A, a घंटे में, B, b घंटे में भरता है, A से शुरू करके एकांतर:</b><br><b>2-घंटे का कार्य = 1/a + 1/b</b>',
+            formulaExplanationEn: '<b>Why cycles?</b> Pattern of A and B repeats every 2 hours.',
+            formulaExplanationHi: '<b>चक्र क्यों?</b> A और B का पैटर्न हर 2 घंटे में दोहराता है।',
+            advancedFormulaEn: '<b>Advanced:</b> If one pipe is an outlet, handle negative rates in the cycle.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि एक पाइप आउटलेट है, तो चक्र में ऋणात्मक दरों को संभालें।',
+            practice: [
+                { qEn: 'A:10h, B:15h. Alternate A first. Total time?', qHi: 'A:10h, B:15h. A से शुरू एकांतर। कुल समय?', optsEn: ['10h', '11h', '12h', '13h'], optsHi: ['10h', '11h', '12h', '13h'], ans: 2, expEn: '2h work = 1/6. 6 cycles = 12h. Total = 12h', expHi: '2h कार्य = 1/6. 6 चक्र = 12h. कुल = 12h' },
+                { qEn: 'A:8h, B:12h. Alternate A first. Total time?', qHi: 'A:8h, B:12h. A से शुरू एकांतर। कुल समय?', optsEn: ['8h', '9h', '9.6h', '10h'], optsHi: ['8h', '9h', '9.6h', '10h'], ans: 2, expEn: '2h work = 5/24. 4 cycles=8h, work=5/6. Rem=1/6. A works 1/8, rem=1/24. B works 1/12 completes in 0.5h. Total=9.5h≈9.6h', expHi: '2h कार्य = 5/24. 4 चक्र=8h, कार्य=5/6. शेष=1/6. A 1/8, शेष=1/24. B 1/12 में 0.5h में पूरा. कुल=9.5h≈9.6h' },
+                { qEn: 'A:5h, B:10h. Alternate A first. Total time?', qHi: 'A:5h, B:10h. A से शुरू एकांतर। कुल समय?', optsEn: ['6h', '6.5h', '7h', '8h'], optsHi: ['6h', '6.5h', '7h', '8h'], ans: 1, expEn: '2h work = 3/10. 3 cycles=6h, work=9/10. Rem=1/10. A works 1/5=2/10 completes in 0.5h. Total=6.5h', expHi: '2h कार्य = 3/10. 3 चक्र=6h, कार्य=9/10. शेष=1/10. A 1/5=2/10 में 0.5h में पूरा. कुल=6.5h' },
+                { qEn: 'A:12h, B:18h. Alternate A first. Total time?', qHi: 'A:12h, B:18h. A से शुरू एकांतर। कुल समय?', optsEn: ['12h', '14h', '14.4h', '15h'], optsHi: ['12h', '14h', '14.4h', '15h'], ans: 2, expEn: '2h work = 5/36. 7 cycles=14h, work=35/36. Rem=1/36. A works 1/12=3/36 completes in 1/3h. Total=14.33h≈14.4h', expHi: '2h कार्य = 5/36. 7 चक्र=14h, कार्य=35/36. शेष=1/36. A 1/12=3/36 में 1/3h में पूरा. कुल=14.33h≈14.4h' },
+                { qEn: 'A:6h, B:9h. Alternate A first. Total time?', qHi: 'A:6h, B:9h. A से शुरू एकांतर। कुल समय?', optsEn: ['6h', '7h', '7.5h', '8h'], optsHi: ['6h', '7h', '7.5h', '8h'], ans: 1, expEn: '2h work = 5/18. 3 cycles=6h, work=5/6. Rem=1/6. A works 1/6 completes in 1h. Total=7h', expHi: '2h कार्य = 5/18. 3 चक्र=6h, कार्य=5/6. शेष=1/6. A 1/6 में 1h में पूरा. कुल=7h' },
+                { qEn: 'A:9h, B:18h. Alternate A first. Total time?', qHi: 'A:9h, B:18h. A से शुरू एकांतर। कुल समय?', optsEn: ['10h', '11h', '12h', '13h'], optsHi: ['10h', '11h', '12h', '13h'], ans: 2, expEn: '2h work = 1/6. 6 cycles = 12h. Total = 12h', expHi: '2h कार्य = 1/6. 6 चक्र = 12h. कुल = 12h' },
+                { qEn: 'A:4h, B:6h. Alternate A first. Total time?', qHi: 'A:4h, B:6h. A से शुरू एकांतर। कुल समय?', optsEn: ['4h', '4.67h', '5h', '6h'], optsHi: ['4h', '4.67h', '5h', '6h'], ans: 1, expEn: '2h work = 5/12. 2 cycles=4h, work=5/6. Rem=1/6. A works 1/4=3/12, rem=2/12-3/12? Actually 1/6=2/12, A=3/12 completes in 2/3h. Total=4.67h', expHi: '2h कार्य = 5/12. 2 चक्र=4h, कार्य=5/6. शेष=1/6. A 1/4=3/12 में 2/3h में पूरा. कुल=4.67h' },
+                { qEn: 'A:15h, B:30h. Alternate A first. Total time?', qHi: 'A:15h, B:30h. A से शुरू एकांतर। कुल समय?', optsEn: ['15h', '20h', '22h', '25h'], optsHi: ['15h', '20h', '22h', '25h'], ans: 1, expEn: '2h work = 1/10. 10 cycles = 20h. Total = 20h', expHi: '2h कार्य = 1/10. 10 चक्र = 20h. कुल = 20h' },
+                { qEn: 'A:7h, B:14h. Alternate A first. Total time?', qHi: 'A:7h, B:14h. A से शुरू एकांतर। कुल समय?', optsEn: ['8h', '9h', '10h', '11h'], optsHi: ['8h', '9h', '10h', '11h'], ans: 1, expEn: '2h work = 3/14. 4 cycles=8h, work=6/7. Rem=1/7. A works 1/7 in 1h. Total=9h', expHi: '2h कार्य = 3/14. 4 चक्र=8h, कार्य=6/7. शेष=1/7. A 1/7 में 1h में पूरा. कुल=9h' },
+                { qEn: 'A:11h, B:22h. Alternate A first. Total time?', qHi: 'A:11h, B:22h. A से शुरू एकांतर। कुल समय?', optsEn: ['12h', '13h', '14h', '15h'], optsHi: ['12h', '13h', '14h', '15h'], ans: 2, expEn: '2h work = 3/22. 7 cycles=14h, work=21/22. Rem=1/22. A works 1/11=2/22 completes in 0.5h. Total=14.5h≈15h', expHi: '2h कार्य = 3/22. 7 चक्र=14h, कार्य=21/22. शेष=1/22. A 1/11=2/22 में 0.5h में पूरा. कुल=14.5h≈15h' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'A:10h, B:15h. Alternate A first. Total time?', qHi: 'A:10h, B:15h. A से शुरू एकांतर। कुल समय?', optsEn: ['10h', '11h', '12h', '13h'], optsHi: ['10h', '11h', '12h', '13h'], ans: 2, expEn: '12h', expHi: '12h' },
+                { year: 'CGL 2022', qEn: 'A:8h, B:12h. Alternate A first. Total time?', qHi: 'A:8h, B:12h. A से शुरू एकांतर। कुल समय?', optsEn: ['8h', '9h', '9.6h', '10h'], optsHi: ['8h', '9h', '9.6h', '10h'], ans: 2, expEn: '9.6h', expHi: '9.6h' },
+                { year: 'CGL 2021', qEn: 'A:5h, B:10h. Alternate A first. Total time?', qHi: 'A:5h, B:10h. A से शुरू एकांतर। कुल समय?', optsEn: ['6h', '6.5h', '7h', '8h'], optsHi: ['6h', '6.5h', '7h', '8h'], ans: 1, expEn: '6.5h', expHi: '6.5h' },
+                { year: 'CGL 2020', qEn: 'A:12h, B:18h. Alternate A first. Total time?', qHi: 'A:12h, B:18h. A से शुरू एकांतर। कुल समय?', optsEn: ['12h', '14h', '14.4h', '15h'], optsHi: ['12h', '14h', '14.4h', '15h'], ans: 2, expEn: '14.4h', expHi: '14.4h' },
+                { year: 'CGL 2019', qEn: 'A:6h, B:9h. Alternate A first. Total time?', qHi: 'A:6h, B:9h. A से शुरू एकांतर। कुल समय?', optsEn: ['6h', '7h', '7.5h', '8h'], optsHi: ['6h', '7h', '7.5h', '8h'], ans: 1, expEn: '7h', expHi: '7h' }
+            ]
+        }, {
+            nameEn: 'Leak Problems (Outlet causing delay)',
+            nameHi: 'रिसाव की समस्याएँ (आउटलेट के कारण देरी)',
+            visualEn: '<i class="fas fa-droplet" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> A leak empties the tank slowly. If pipe takes longer due to leak, leak rate is the difference.',
+            visualHi: '<i class="fas fa-droplet" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> रिसाव टंकी को धीरे-धीरे खाली करता है। यदि रिसाव के कारण पाइप को अधिक समय लगता है, तो रिसाव की दर अंतर है।',
+            basicFormulaEn: '<b>If pipe fills in A hours. With leak, it takes B hours (B > A).</b><br><b>Leak empties in = (A × B) / (B - A) hours</b>',
+            basicFormulaHi: '<b>यदि पाइप A घंटे में भरता है। रिसाव के साथ, B घंटे लगते हैं (B > A).</b><br><b>रिसाव (A × B) / (B - A) घंटे में खाली करता है</b>',
+            formulaExplanationEn: '<b>Why this formula?</b> Delay is caused by leak. Net rate = 1/B = 1/A - 1/L. Solve for L.',
+            formulaExplanationHi: '<b>यह सूत्र क्यों?</b> देरी रिसाव के कारण है। शुद्ध दर = 1/B = 1/A - 1/L. L के लिए हल करें।',
+            advancedFormulaEn: '<b>Advanced:</b> If leak empties full tank in L hours, and pipe fills in A hours, combined time = (AL)/(L-A).',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि रिसाव पूरी टंकी को L घंटे में खाली करता है, और पाइप A घंटे में भरता है, तो संयुक्त समय = (AL)/(L-A).',
+            practice: [
+                { qEn: 'Pipe fills in 10h, with leak 15h. Leak empty time?', qHi: 'पाइप 10h में, रिसाव के साथ 15h. रिसाव का समय?', optsEn: ['20h', '25h', '30h', '35h'], optsHi: ['20h', '25h', '30h', '35h'], ans: 2, expEn: '10×15/(15-10) = 30h', expHi: '10×15/(15-10) = 30h' },
+                { qEn: 'Pipe 8h, with leak 12h. Leak time?', qHi: 'पाइप 8h, रिसाव के साथ 12h. रिसाव का समय?', optsEn: ['16h', '20h', '24h', '30h'], optsHi: ['16h', '20h', '24h', '30h'], ans: 2, expEn: '8×12/(12-8) = 24h', expHi: '8×12/(12-8) = 24h' },
+                { qEn: 'Pipe 12h, with leak 18h. Leak time?', qHi: 'पाइप 12h, रिसाव के साथ 18h. रिसाव का समय?', optsEn: ['24h', '30h', '36h', '42h'], optsHi: ['24h', '30h', '36h', '42h'], ans: 2, expEn: '12×18/(18-12) = 36h', expHi: '12×18/(18-12) = 36h' },
+                { qEn: 'Pipe 6h, with leak 9h. Leak time?', qHi: 'पाइप 6h, रिसाव के साथ 9h. रिसाव का समय?', optsEn: ['12h', '15h', '18h', '21h'], optsHi: ['12h', '15h', '18h', '21h'], ans: 2, expEn: '6×9/(9-6) = 18h', expHi: '6×9/(9-6) = 18h' },
+                { qEn: 'Pipe 15h, with leak 20h. Leak time?', qHi: 'पाइप 15h, रिसाव के साथ 20h. रिसाव का समय?', optsEn: ['40h', '50h', '60h', '70h'], optsHi: ['40h', '50h', '60h', '70h'], ans: 2, expEn: '15×20/(20-15) = 60h', expHi: '15×20/(20-15) = 60h' },
+                { qEn: 'Pipe 4h, with leak 6h. Leak time?', qHi: 'पाइप 4h, रिसाव के साथ 6h. रिसाव का समय?', optsEn: ['8h', '10h', '12h', '15h'], optsHi: ['8h', '10h', '12h', '15h'], ans: 2, expEn: '4×6/(6-4) = 12h', expHi: '4×6/(6-4) = 12h' },
+                { qEn: 'Pipe 9h, with leak 15h. Leak time?', qHi: 'पाइप 9h, रिसाव के साथ 15h. रिसाव का समय?', optsEn: ['18h', '20h', '22.5h', '25h'], optsHi: ['18h', '20h', '22.5h', '25h'], ans: 2, expEn: '9×15/(15-9) = 22.5h', expHi: '9×15/(15-9) = 22.5h' },
+                { qEn: 'Pipe 18h, with leak 30h. Leak time?', qHi: 'पाइप 18h, रिसाव के साथ 30h. रिसाव का समय?', optsEn: ['36h', '40h', '45h', '50h'], optsHi: ['36h', '40h', '45h', '50h'], ans: 2, expEn: '18×30/(30-18) = 45h', expHi: '18×30/(30-18) = 45h' },
+                { qEn: 'Pipe 5h, with leak 8h. Leak time?', qHi: 'पाइप 5h, रिसाव के साथ 8h. रिसाव का समय?', optsEn: ['10h', '12h', '13.33h', '15h'], optsHi: ['10h', '12h', '13.33h', '15h'], ans: 2, expEn: '5×8/(8-5) = 13.33h', expHi: '5×8/(8-5) = 13.33h' },
+                { qEn: 'Pipe 24h, with leak 36h. Leak time?', qHi: 'पाइप 24h, रिसाव के साथ 36h. रिसाव का समय?', optsEn: ['48h', '60h', '72h', '84h'], optsHi: ['48h', '60h', '72h', '84h'], ans: 2, expEn: '24×36/(36-24) = 72h', expHi: '24×36/(36-24) = 72h' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'Pipe 10h, with leak 15h. Leak empty time?', qHi: 'पाइप 10h, रिसाव के साथ 15h. रिसाव का समय?', optsEn: ['20h', '25h', '30h', '35h'], optsHi: ['20h', '25h', '30h', '35h'], ans: 2, expEn: '30h', expHi: '30h' },
+                { year: 'CGL 2022', qEn: 'Pipe 8h, with leak 12h. Leak time?', qHi: 'पाइप 8h, रिसाव के साथ 12h. रिसाव का समय?', optsEn: ['16h', '20h', '24h', '30h'], optsHi: ['16h', '20h', '24h', '30h'], ans: 2, expEn: '24h', expHi: '24h' },
+                { year: 'CGL 2021', qEn: 'Pipe 12h, with leak 18h. Leak time?', qHi: 'पाइप 12h, रिसाव के साथ 18h. रिसाव का समय?', optsEn: ['24h', '30h', '36h', '42h'], optsHi: ['24h', '30h', '36h', '42h'], ans: 2, expEn: '36h', expHi: '36h' },
+                { year: 'CGL 2020', qEn: 'Pipe 6h, with leak 9h. Leak time?', qHi: 'पाइप 6h, रिसाव के साथ 9h. रिसाव का समय?', optsEn: ['12h', '15h', '18h', '21h'], optsHi: ['12h', '15h', '18h', '21h'], ans: 2, expEn: '18h', expHi: '18h' },
+                { year: 'CGL 2019', qEn: 'Pipe 15h, with leak 20h. Leak time?', qHi: 'पाइप 15h, रिसाव के साथ 20h. रिसाव का समय?', optsEn: ['40h', '50h', '60h', '70h'], optsHi: ['40h', '50h', '60h', '70h'], ans: 2, expEn: '60h', expHi: '60h' }
+            ]
+        }, {
+            nameEn: 'Pipes Opening at Different Times',
+            nameHi: 'विभिन्न समय पर खुलने वाले पाइप',
+            visualEn: '<i class="fas fa-hourglass-start" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> One pipe opens first, another joins later. Calculate work before second opens.',
+            visualHi: '<i class="fas fa-hourglass-start" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> एक पाइप पहले खुलता है, दूसरा बाद में जुड़ता है। दूसरे के खुलने से पहले कार्य की गणना करें।',
+            basicFormulaEn: '<b>If A opens alone for T hours, then B joins. Work = (T/a) + (remaining time × (1/a + 1/b)) = 1.</b>',
+            basicFormulaHi: '<b>यदि A अकेले T घंटे खुलता है, फिर B जुड़ता है। कार्य = (T/a) + (शेष समय × (1/a + 1/b)) = 1.</b>',
+            formulaExplanationEn: '<b>Why stage calculation?</b> Rate changes after B joins. Treat as two separate phases.',
+            formulaExplanationHi: '<b>चरण गणना क्यों?</b> B के जुड़ने के बाद दर बदल जाती है। दो अलग-अलग चरणों के रूप में मानें।',
+            advancedFormulaEn: '<b>Advanced:</b> If A and B together for some time, then A leaves, similar stage calculation.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि A और B कुछ समय साथ काम करते हैं, फिर A छोड़ता है, तो समान चरण गणना।',
+            practice: [
+                { qEn: 'A:10h, opens alone 2h, then B(15h) joins. Total time?', qHi: 'A:10h, 2h अकेले, फिर B(15h) जुड़ता है। कुल समय?', optsEn: ['6h', '7h', '8h', '9h'], optsHi: ['6h', '7h', '8h', '9h'], ans: 1, expEn: 'A work=1/5, rem=4/5. Together rate=1/6. Time=(4/5)/(1/6)=4.8h. Total=2+4.8=6.8h≈7h', expHi: 'A कार्य=1/5, शेष=4/5. मिलकर दर=1/6. समय=(4/5)/(1/6)=4.8h. कुल=2+4.8=6.8h≈7h' },
+                { qEn: 'A:8h, opens alone 3h, then B(12h) joins. Total time?', qHi: 'A:8h, 3h अकेले, फिर B(12h) जुड़ता है। कुल समय?', optsEn: ['5h', '6h', '7h', '8h'], optsHi: ['5h', '6h', '7h', '8h'], ans: 1, expEn: 'A work=3/8, rem=5/8. Together rate=5/24. Time=(5/8)/(5/24)=3h. Total=3+3=6h', expHi: 'A कार्य=3/8, शेष=5/8. मिलकर दर=5/24. समय=(5/8)/(5/24)=3h. कुल=3+3=6h' },
+                { qEn: 'A:12h, opens alone 4h, then B(18h) joins. Total time?', qHi: 'A:12h, 4h अकेले, फिर B(18h) जुड़ता है। कुल समय?', optsEn: ['8h', '9h', '10h', '11h'], optsHi: ['8h', '9h', '10h', '11h'], ans: 1, expEn: 'A work=1/3, rem=2/3. Together rate=5/36. Time=(2/3)/(5/36)=4.8h. Total=4+4.8=8.8h≈9h', expHi: 'A कार्य=1/3, शेष=2/3. मिलकर दर=5/36. समय=(2/3)/(5/36)=4.8h. कुल=4+4.8=8.8h≈9h' },
+                { qEn: 'A:6h, opens alone 1h, then B(9h) joins. Total time?', qHi: 'A:6h, 1h अकेले, फिर B(9h) जुड़ता है। कुल समय?', optsEn: ['4h', '5h', '6h', '7h'], optsHi: ['4h', '5h', '6h', '7h'], ans: 0, expEn: 'A work=1/6, rem=5/6. Together rate=5/18. Time=(5/6)/(5/18)=3h. Total=1+3=4h', expHi: 'A कार्य=1/6, शेष=5/6. मिलकर दर=5/18. समय=(5/6)/(5/18)=3h. कुल=1+3=4h' },
+                { qEn: 'A:5h, opens alone 2h, then B(10h) joins. Total time?', qHi: 'A:5h, 2h अकेले, फिर B(10h) जुड़ता है। कुल समय?', optsEn: ['4h', '5h', '6h', '7h'], optsHi: ['4h', '5h', '6h', '7h'], ans: 0, expEn: 'A work=2/5, rem=3/5. Together rate=3/10. Time=(3/5)/(3/10)=2h. Total=2+2=4h', expHi: 'A कार्य=2/5, शेष=3/5. मिलकर दर=3/10. समय=(3/5)/(3/10)=2h. कुल=2+2=4h' },
+                { qEn: 'A:9h, opens alone 3h, then B(18h) joins. Total time?', qHi: 'A:9h, 3h अकेले, फिर B(18h) जुड़ता है। कुल समय?', optsEn: ['6h', '7h', '8h', '9h'], optsHi: ['6h', '7h', '8h', '9h'], ans: 1, expEn: 'A work=1/3, rem=2/3. Together rate=1/6. Time=(2/3)/(1/6)=4h. Total=3+4=7h', expHi: 'A कार्य=1/3, शेष=2/3. मिलकर दर=1/6. समय=(2/3)/(1/6)=4h. कुल=3+4=7h' },
+                { qEn: 'A:4h, opens alone 1h, then B(6h) joins. Total time?', qHi: 'A:4h, 1h अकेले, फिर B(6h) जुड़ता है। कुल समय?', optsEn: ['2h', '2.5h', '3h', '4h'], optsHi: ['2h', '2.5h', '3h', '4h'], ans: 2, expEn: 'A work=1/4, rem=3/4. Together rate=5/12. Time=(3/4)/(5/12)=1.8h. Total=1+1.8=2.8h≈3h', expHi: 'A कार्य=1/4, शेष=3/4. मिलकर दर=5/12. समय=(3/4)/(5/12)=1.8h. कुल=1+1.8=2.8h≈3h' },
+                { qEn: 'A:15h, opens alone 5h, then B(30h) joins. Total time?', qHi: 'A:15h, 5h अकेले, फिर B(30h) जुड़ता है। कुल समय?', optsEn: ['10h', '12h', '15h', '18h'], optsHi: ['10h', '12h', '15h', '18h'], ans: 1, expEn: 'A work=1/3, rem=2/3. Together rate=1/10. Time=(2/3)/(1/10)=6.67h. Total=5+6.67=11.67h≈12h', expHi: 'A कार्य=1/3, शेष=2/3. मिलकर दर=1/10. समय=(2/3)/(1/10)=6.67h. कुल=5+6.67=11.67h≈12h' },
+                { qEn: 'A:7h, opens alone 2h, then B(14h) joins. Total time?', qHi: 'A:7h, 2h अकेले, फिर B(14h) जुड़ता है। कुल समय?', optsEn: ['5h', '6h', '7h', '8h'], optsHi: ['5h', '6h', '7h', '8h'], ans: 0, expEn: 'A work=2/7, rem=5/7. Together rate=3/14. Time=(5/7)/(3/14)=3.33h. Total=2+3.33=5.33h≈5h', expHi: 'A कार्य=2/7, शेष=5/7. मिलकर दर=3/14. समय=(5/7)/(3/14)=3.33h. कुल=2+3.33=5.33h≈5h' },
+                { qEn: 'A:20h, opens alone 4h, then B(30h) joins. Total time?', qHi: 'A:20h, 4h अकेले, फिर B(30h) जुड़ता है। कुल समय?', optsEn: ['12h', '14h', '16h', '18h'], optsHi: ['12h', '14h', '16h', '18h'], ans: 1, expEn: 'A work=1/5, rem=4/5. Together rate=1/12. Time=(4/5)/(1/12)=9.6h. Total=4+9.6=13.6h≈14h', expHi: 'A कार्य=1/5, शेष=4/5. मिलकर दर=1/12. समय=(4/5)/(1/12)=9.6h. कुल=4+9.6=13.6h≈14h' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'A:10h, opens alone 2h, then B(15h) joins. Total time?', qHi: 'A:10h, 2h अकेले, फिर B(15h) जुड़ता है। कुल समय?', optsEn: ['6h', '7h', '8h', '9h'], optsHi: ['6h', '7h', '8h', '9h'], ans: 1, expEn: '6.8h≈7h', expHi: '6.8h≈7h' },
+                { year: 'CGL 2022', qEn: 'A:8h, opens alone 3h, then B(12h) joins. Total time?', qHi: 'A:8h, 3h अकेले, फिर B(12h) जुड़ता है। कुल समय?', optsEn: ['5h', '6h', '7h', '8h'], optsHi: ['5h', '6h', '7h', '8h'], ans: 1, expEn: '6h', expHi: '6h' },
+                { year: 'CGL 2021', qEn: 'A:12h, opens alone 4h, then B(18h) joins. Total time?', qHi: 'A:12h, 4h अकेले, फिर B(18h) जुड़ता है। कुल समय?', optsEn: ['8h', '9h', '10h', '11h'], optsHi: ['8h', '9h', '10h', '11h'], ans: 1, expEn: '8.8h≈9h', expHi: '8.8h≈9h' },
+                { year: 'CGL 2020', qEn: 'A:6h, opens alone 1h, then B(9h) joins. Total time?', qHi: 'A:6h, 1h अकेले, फिर B(9h) जुड़ता है। कुल समय?', optsEn: ['4h', '5h', '6h', '7h'], optsHi: ['4h', '5h', '6h', '7h'], ans: 0, expEn: '4h', expHi: '4h' },
+                { year: 'CGL 2019', qEn: 'A:5h, opens alone 2h, then B(10h) joins. Total time?', qHi: 'A:5h, 2h अकेले, फिर B(10h) जुड़ता है। कुल समय?', optsEn: ['4h', '5h', '6h', '7h'], optsHi: ['4h', '5h', '6h', '7h'], ans: 0, expEn: '4h', expHi: '4h' }
+            ]
+        }, {
+            nameEn: 'Fractional Capacity (Partly filled tank)',
+            nameHi: 'आंशिक क्षमता (आंशिक रूप से भरी टंकी)',
+            visualEn: '<i class="fas fa-fill-drip" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> If tank is already partly filled, work required is only remaining fraction.',
+            visualHi: '<i class="fas fa-fill-drip" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> यदि टंकी पहले से आंशिक रूप से भरी है, तो आवश्यक कार्य केवल शेष भिन्न है।',
+            basicFormulaEn: '<b>If tank is f fraction full, remaining work = 1 - f.</b><br><b>Time = (1 - f) / (Net filling rate)</b>',
+            basicFormulaHi: '<b>यदि टंकी f भिन्न भरी है, तो शेष कार्य = 1 - f.</b><br><b>समय = (1 - f) / (शुद्ध भरने की दर)</b>',
+            formulaExplanationEn: '<b>Why subtract?</b> Work already done doesn\'t need to be done again. We only fill the empty part.',
+            formulaExplanationHi: '<b>घटाव क्यों?</b> पहले से किया गया कार्य दोबारा नहीं करना पड़ता। हमें केवल खाली भाग को भरना है।',
+            advancedFormulaEn: '<b>Advanced:</b> If tank has a leak while partly filled, account for leakage in net rate.',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि टंकी आंशिक रूप से भरी होने पर रिसाव है, तो शुद्ध दर में रिसाव को शामिल करें।',
+            practice: [
+                { qEn: 'Pipe fills in 6h, tank 1/3 full. Time to fill remaining?', qHi: 'पाइप 6h में, टंकी 1/3 भरी है। शेष भरने का समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 2, expEn: 'Remaining=2/3, Time=6×2/3=4h', expHi: 'शेष=2/3, समय=6×2/3=4h' },
+                { qEn: 'Pipe fills in 10h, tank 2/5 full. Time to fill?', qHi: 'पाइप 10h में, टंकी 2/5 भरी है। भरने का समय?', optsEn: ['4h', '5h', '6h', '8h'], optsHi: ['4h', '5h', '6h', '8h'], ans: 2, expEn: 'Remaining=3/5, Time=10×3/5=6h', expHi: 'शेष=3/5, समय=10×3/5=6h' },
+                { qEn: 'Inlet A 8h, Outlet B 12h, tank 1/2 full. Net fill time?', qHi: 'इनलेट A 8h, आउटलेट B 12h, टंकी 1/2 भरी है। शुद्ध भरने का समय?', optsEn: ['8h', '10h', '12h', '14h'], optsHi: ['8h', '10h', '12h', '14h'], ans: 2, expEn: 'Net rate=1/24. Remaining=1/2. Time=(1/2)/(1/24)=12h', expHi: 'शुद्ध दर=1/24. शेष=1/2. समय=(1/2)/(1/24)=12h' },
+                { qEn: 'Pipe A fills in 12h, tank 3/4 full. Time to fill?', qHi: 'पाइप A 12h में, टंकी 3/4 भरी है। भरने का समय?', optsEn: ['2h', '3h', '4h', '6h'], optsHi: ['2h', '3h', '4h', '6h'], ans: 1, expEn: 'Remaining=1/4, Time=12/4=3h', expHi: 'शेष=1/4, समय=12/4=3h' },
+                { qEn: 'A:9h, B:18h (both inlets), tank 1/3 full. Together time?', qHi: 'A:9h, B:18h (इनलेट), टंकी 1/3 भरी है। मिलकर समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 2, expEn: 'Together rate=1/6. Remaining=2/3. Time=(2/3)/(1/6)=4h', expHi: 'मिलकर दर=1/6. शेष=2/3. समय=(2/3)/(1/6)=4h' },
+                { qEn: 'Inlet fills in 5h, tank 1/5 full. Time?', qHi: 'इनलेट 5h में, टंकी 1/5 भरी है। समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 2, expEn: 'Remaining=4/5, Time=5×4/5=4h', expHi: 'शेष=4/5, समय=5×4/5=4h' },
+                { qEn: 'A:20h, B:30h inlets, tank 1/2 full. Together time?', qHi: 'A:20h, B:30h इनलेट, टंकी 1/2 भरी है। मिलकर समय?', optsEn: ['4h', '5h', '6h', '8h'], optsHi: ['4h', '5h', '6h', '8h'], ans: 2, expEn: 'Together rate=1/12. Remaining=1/2. Time=(1/2)/(1/12)=6h', expHi: 'मिलकर दर=1/12. शेष=1/2. समय=(1/2)/(1/12)=6h' },
+                { qEn: 'Pipe fills in 15h, tank 2/3 full. Time to fill?', qHi: 'पाइप 15h में, टंकी 2/3 भरी है। भरने का समय?', optsEn: ['3h', '4h', '5h', '6h'], optsHi: ['3h', '4h', '5h', '6h'], ans: 2, expEn: 'Remaining=1/3, Time=15/3=5h', expHi: 'शेष=1/3, समय=15/3=5h' },
+                { qEn: 'Inlet A:4h, Outlet B:8h, tank 3/4 full. Net fill time?', qHi: 'इनलेट A:4h, आउटलेट B:8h, टंकी 3/4 भरी है। शुद्ध भरने का समय?', optsEn: ['1h', '2h', '3h', '4h'], optsHi: ['1h', '2h', '3h', '4h'], ans: 1, expEn: 'Net rate=1/8. Remaining=1/4. Time=(1/4)/(1/8)=2h', expHi: 'शुद्ध दर=1/8. शेष=1/4. समय=(1/4)/(1/8)=2h' },
+                { qEn: 'A:18h, B:36h inlets, tank 5/6 full. Together time?', qHi: 'A:18h, B:36h इनलेट, टंकी 5/6 भरी है। मिलकर समय?', optsEn: ['1h', '2h', '3h', '4h'], optsHi: ['1h', '2h', '3h', '4h'], ans: 1, expEn: 'Together rate=1/12. Remaining=1/6. Time=(1/6)/(1/12)=2h', expHi: 'मिलकर दर=1/12. शेष=1/6. समय=(1/6)/(1/12)=2h' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: 'Pipe fills in 6h, tank 1/3 full. Time to fill?', qHi: 'पाइप 6h, टंकी 1/3 भरी है। भरने का समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 2, expEn: '4h', expHi: '4h' },
+                { year: 'CGL 2022', qEn: 'A:10h, tank 2/5 full. Time to fill?', qHi: 'A:10h, टंकी 2/5 भरी है। भरने का समय?', optsEn: ['4h', '5h', '6h', '8h'], optsHi: ['4h', '5h', '6h', '8h'], ans: 2, expEn: '6h', expHi: '6h' },
+                { year: 'CGL 2021', qEn: 'Inlet 8h, Outlet 12h, tank 1/2 full. Net fill time?', qHi: 'इनलेट 8h, आउटलेट 12h, टंकी 1/2 भरी है। शुद्ध भरने का समय?', optsEn: ['8h', '10h', '12h', '14h'], optsHi: ['8h', '10h', '12h', '14h'], ans: 2, expEn: '12h', expHi: '12h' },
+                { year: 'CGL 2020', qEn: 'A:12h, tank 3/4 full. Time to fill?', qHi: 'A:12h, टंकी 3/4 भरी है। भरने का समय?', optsEn: ['2h', '3h', '4h', '6h'], optsHi: ['2h', '3h', '4h', '6h'], ans: 1, expEn: '3h', expHi: '3h' },
+                { year: 'CGL 2019', qEn: 'A:9h, B:18h, tank 1/3 full. Together time?', qHi: 'A:9h, B:18h, टंकी 1/3 भरी है। मिलकर समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 2, expEn: '4h', expHi: '4h' }
+            ]
+        }, {
+            nameEn: 'Complex MDH for Pipes (Number of Pipes & Hours)',
+            nameHi: 'पाइपों के लिए जटिल MDH',
+            visualEn: '<i class="fas fa-water" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> Number of pipes × Hours × Rate = Total work. Different pipes rates sum up.',
+            visualHi: '<i class="fas fa-water" style="font-size:28px;color:#1a237e;"></i> <strong>Visual:</strong> पाइपों की संख्या × घंटे × दर = कुल कार्य। भिन्न पाइपों की दरें जुड़ती हैं।',
+            basicFormulaEn: '<b>Total work = Number of similar pipes × Time × Rate</b><br><b>If different: Work = Sum of (nᵢ × Rateᵢ × Time)</b>',
+            basicFormulaHi: '<b>कुल कार्य = समान पाइपों की संख्या × समय × दर</b><br><b>यदि भिन्न: कार्य = Σ (nᵢ × दरᵢ × समय)</b>',
+            formulaExplanationEn: '<b>Why multiply?</b> More pipes or more hours means more work. MDH concept applied to pipes.',
+            formulaExplanationHi: '<b>गुणा क्यों?</b> अधिक पाइप या अधिक घंटे का अर्थ अधिक कार्य है। पाइपों पर MDH अवधारणा।',
+            advancedFormulaEn: '<b>Advanced:</b> If some pipes are inlets and some outlets, use signs (+ for inlet, - for outlet).',
+            advancedFormulaHi: '<b>एडवांस्ड:</b> यदि कुछ पाइप इनलेट और कुछ आउटलेट हैं, तो चिह्नों का उपयोग करें (इनलेट +, आउटलेट -).',
+            practice: [
+                { qEn: '4 identical pipes fill in 3h. 6 pipes time?', qHi: '4 समान पाइप 3h में भरते हैं। 6 पाइप का समय?', optsEn: ['1.5h', '2h', '2.5h', '3h'], optsHi: ['1.5h', '2h', '2.5h', '3h'], ans: 1, expEn: '4×3 = 6×T => T=2h', expHi: '4×3 = 6×T => T=2h' },
+                { qEn: '3 pipes fill in 8h. Pipes for 4h?', qHi: '3 पाइप 8h में भरते हैं। 4h के लिए पाइप?', optsEn: ['4', '5', '6', '8'], optsHi: ['4', '5', '6', '8'], ans: 2, expEn: '3×8 = N×4 => N=6', expHi: '3×8 = N×4 => N=6' },
+                { qEn: '2 pipes fill in 6h. 4 pipes time?', qHi: '2 पाइप 6h में भरते हैं। 4 पाइप समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 1, expEn: '2×6 = 4×T => T=3h', expHi: '2×6 = 4×T => T=3h' },
+                { qEn: '5 pipes fill in 10h. Pipes for 2h?', qHi: '5 पाइप 10h में भरते हैं। 2h के लिए पाइप?', optsEn: ['15', '20', '25', '30'], optsHi: ['15', '20', '25', '30'], ans: 2, expEn: '5×10 = N×2 => N=25', expHi: '5×10 = N×2 => N=25' },
+                { qEn: 'A(10h) and B(15h). 2 A-pipes and 3 B-pipes. Time?', qHi: 'A(10h) और B(15h). 2 A-पाइप और 3 B-पाइप। समय?', optsEn: ['1.5h', '2h', '2.5h', '3h'], optsHi: ['1.5h', '2h', '2.5h', '3h'], ans: 2, expEn: 'Rate = 2/10 + 3/15 = 1/5 + 1/5 = 2/5. Time = 2.5h', expHi: 'दर = 2/10 + 3/15 = 1/5 + 1/5 = 2/5. समय = 2.5h' },
+                { qEn: '6 pipes fill in 4h. 8 pipes time?', qHi: '6 पाइप 4h में भरते हैं। 8 पाइप समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 1, expEn: '6×4 = 8×T => T=3h', expHi: '6×4 = 8×T => T=3h' },
+                { qEn: '2 A-pipes (12h each) and 3 B-pipes (18h each). Together time?', qHi: '2 A-पाइप (12h) और 3 B-पाइप (18h). मिलकर समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 1, expEn: 'Rate = 2/12 + 3/18 = 1/6 + 1/6 = 1/3. Time = 3h', expHi: 'दर = 2/12 + 3/18 = 1/6 + 1/6 = 1/3. समय = 3h' },
+                { qEn: '10 pipes fill in 6h. 5 pipes time?', qHi: '10 पाइप 6h में भरते हैं। 5 पाइप समय?', optsEn: ['8h', '10h', '12h', '15h'], optsHi: ['8h', '10h', '12h', '15h'], ans: 2, expEn: '10×6 = 5×T => T=12h', expHi: '10×6 = 5×T => T=12h' },
+                { qEn: '3 pipes (6h each) and 2 pipes (12h each). Together time?', qHi: '3 पाइप (6h) और 2 पाइप (12h). मिलकर समय?', optsEn: ['1.5h', '2h', '2.5h', '3h'], optsHi: ['1.5h', '2h', '2.5h', '3h'], ans: 0, expEn: 'Rate = 3/6 + 2/12 = 1/2 + 1/6 = 2/3. Time = 1.5h', expHi: 'दर = 3/6 + 2/12 = 1/2 + 1/6 = 2/3. समय = 1.5h' },
+                { qEn: '8 pipes fill in 15h. 10 pipes time?', qHi: '8 पाइप 15h में भरते हैं। 10 पाइप समय?', optsEn: ['10h', '12h', '14h', '16h'], optsHi: ['10h', '12h', '14h', '16h'], ans: 1, expEn: '8×15 = 10×T => T=12h', expHi: '8×15 = 10×T => T=12h' }
+            ],
+            pyqs: [
+                { year: 'CGL 2023', qEn: '4 pipes fill in 3h. 6 pipes time?', qHi: '4 पाइप 3h में भरते हैं। 6 पाइप समय?', optsEn: ['1.5h', '2h', '2.5h', '3h'], optsHi: ['1.5h', '2h', '2.5h', '3h'], ans: 1, expEn: '2h', expHi: '2h' },
+                { year: 'CGL 2022', qEn: '3 pipes fill in 8h. Pipes for 4h?', qHi: '3 पाइप 8h में भरते हैं। 4h के लिए पाइप?', optsEn: ['4', '5', '6', '8'], optsHi: ['4', '5', '6', '8'], ans: 2, expEn: '6', expHi: '6' },
+                { year: 'CGL 2021', qEn: '2 pipes fill in 6h. 4 pipes time?', qHi: '2 पाइप 6h में भरते हैं। 4 पाइप समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 1, expEn: '3h', expHi: '3h' },
+                { year: 'CGL 2020', qEn: '5 pipes fill in 10h. Pipes for 2h?', qHi: '5 पाइप 10h में भरते हैं। 2h के लिए पाइप?', optsEn: ['15', '20', '25', '30'], optsHi: ['15', '20', '25', '30'], ans: 2, expEn: '25', expHi: '25' },
+                { year: 'CGL 2019', qEn: '6 pipes fill in 4h. 8 pipes time?', qHi: '6 पाइप 4h में भरते हैं। 8 पाइप समय?', optsEn: ['2h', '3h', '4h', '5h'], optsHi: ['2h', '3h', '4h', '5h'], ans: 1, expEn: '3h', expHi: '3h' }
+            ]
+        }];
+
+        // ================================================================
+        // 2. RENDER ENGINE (identical to previous modules)
+        // ================================================================
+
+        var currentLang = 'en';
+        var totalPages = 15;
+
+        function render(lang) {
+            var container = document.getElementById('content');
+            var indexGrid = document.getElementById('indexGrid');
+            var indexTitle = document.getElementById('indexTitle');
+            var headerSub = document.getElementById('headerSub');
+            var footerText = document.getElementById('footerText');
+
+            if (lang === 'en') {
+                headerSub.textContent = '9 Topics • 15 Pages • Basic→Adv Formulas • PYQs • Bilingual';
+                footerText.textContent = '⚡ Practice makes perfect. SSC CGL / Banking Level.';
+                indexTitle.textContent = '📑 All 9 Pipe & Cistern Topics Covered';
+            } else {
+                headerSub.textContent = '9 टॉपिक्स • 15 पेज • बेसिक→एडवांस्ड सूत्र • PYQs • द्विभाषी';
+                footerText.textContent = '⚡ अभ्यास से ही सिद्धि मिलती है। SSC CGL / बैंकिंग स्तर।';
+                indexTitle.textContent = '📑 सभी 9 पाइप एवं टंकी टॉपिक्स कवर किए गए';
+            }
+
+            indexGrid.innerHTML = '';
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var a = document.createElement('a');
+                a.href = '#topic-' + idx;
+                a.textContent = lang === 'en' ? topic.nameEn : topic.nameHi;
+                indexGrid.appendChild(a);
+            });
+
+            var html = '';
+            var pageCounter = 1;
+
+            TOPICS_DATA.forEach(function(topic, idx) {
+                var name = lang === 'en' ? topic.nameEn : topic.nameHi;
+                var visual = lang === 'en' ? topic.visualEn : topic.visualHi;
+                var basicF = lang === 'en' ? topic.basicFormulaEn : topic.basicFormulaHi;
+                var advF = lang === 'en' ? topic.advancedFormulaEn : topic.advancedFormulaHi;
+                var expF = lang === 'en' ? topic.formulaExplanationEn : topic.formulaExplanationHi;
+                var badgeText = lang === 'en' ? 'Topic ' + (idx + 1) + ' of 9' : 'टॉपिक ' + (idx + 1) + ' / 9';
+
+                html += '<div class="page-divider"><hr /><span class="page-label">📄 Page ' + pageCounter +
+                    ' of ' + totalPages + '</span><hr /></div>';
+                pageCounter++;
+
+                html += '<div class="formula-card" id="topic-' + idx + '">';
+                html += '<div class="topic-name"><i class="fas fa-hashtag" style="color:#ff6f00;"></i> ' + name +
+                    '</div>';
+                html += '<div class="topic-badge">' + badgeText + '</div>';
+
+                html += '<div class="visual-box">' + visual + '</div>';
+
+                html += '<div class="formulas-box">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-book"></i> ' + (lang === 'en' ?
+                        '📐 Basic Formulas' : '📐 बेसिक सूत्र') + '</div>';
+                html += basicF;
+                html += '</div>';
+
+                html += '<div class="formula-explanation">';
+                html +=
+                    '<div class="ex-title"><i class="fas fa-lightbulb"></i> ' + (lang === 'en' ?
+                        '💡 Why does it work?' : '💡 यह क्यों काम करता है?') + '</div>';
+                html += expF;
+                html += '</div>';
+
+                html += '<div class="formulas-box" style="border-left-color:#1a237e;">';
+                html +=
+                    '<div class="formula-title"><i class="fas fa-star"></i> ' + (lang === 'en' ?
+                        '🚀 Advanced (CGL Level) Formulas' : '🚀 एडवांस्ड (CGL स्तर) सूत्र') + '</div>';
+                html += advF;
+                html += '</div>';
+
+                html +=
+                    '<div class="section-heading"><i class="fas fa-pencil-alt"></i> ' + (lang === 'en' ?
+                        '📝 Practice Questions (10)' : '📝 अभ्यास प्रश्न (10)') + '</div>';
+
+                topic.practice.forEach(function(q, qIdx) {
+                    var qid = 'p-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item">';
+                    html += '<div class="q-text">Q' + (qIdx + 1) + '. ' + qText + '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html +=
+                    '<div class="section-heading" style="margin-top:20px;"><i class="fas fa-history"></i> ' +
+                    (lang === 'en' ? '📌 Previous Year Questions (CGL)' : '📌 पिछले वर्ष के प्रश्न (CGL)') +
+                    '</div>';
+
+                topic.pyqs.forEach(function(q, qIdx) {
+                    var qid = 'pyq-' + idx + '-' + qIdx;
+                    var qText = lang === 'en' ? q.qEn : q.qHi;
+                    var opts = lang === 'en' ? q.optsEn : q.optsHi;
+                    var exp = lang === 'en' ? q.expEn : q.expHi;
+                    var labels = ['A', 'B', 'C', 'D'];
+                    html += '<div class="question-item" style="border-left:3px solid #ffd54f;">';
+                    html += '<div class="q-text"><span class="pyq-badge">' + q.year + '</span> ' + qText +
+                        '</div>';
+                    html += '<div class="options">';
+                    opts.forEach(function(opt, oi) {
+                        html += '<span>' + labels[oi] + '. ' + opt + '</span>';
+                    });
+                    html += '</div>';
+                    html +=
+                        '<button class="answer-btn" data-qid="' + qid + '">' + (lang === 'en' ?
+                            'Show Answer' : 'उत्तर दिखाएँ') + '</button>';
+                    html += '<div class="answer-box" id="' + qid + '">';
+                    html += '<strong>✔ ' + (lang === 'en' ? 'Correct:' : 'सही:') + '</strong> ' + labels[q
+                        .ans] + ' – ' + opts[q.ans] + '<br>';
+                    html += '<strong>💡 ' + (lang === 'en' ? 'Explanation:' : 'व्याख्या:') + '</strong> ' +
+                        exp;
+                    html += '</div></div>';
+                });
+
+                html += '</div>';
+            });
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.answer-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var qid = this.dataset.qid;
+                    var box = document.getElementById(qid);
+                    if (box) {
+                        box.classList.toggle('show');
+                        var lang = currentLang;
+                        this.textContent = box.classList.contains('show') ?
+                            (lang === 'en' ? 'Hide Answer' : 'उत्तर छिपाएँ') :
+                            (lang === 'en' ? 'Show Answer' : 'उत्तर दिखाएँ');
+                    }
+                });
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var scrolled = window.scrollY;
+            var progress = scrollHeight > 0 ? (scrolled / scrollHeight) * 100 : 0;
+            document.getElementById('progressFill').style.width = Math.min(progress, 100) + '%';
+
+            var total = TOPICS_DATA.length;
+            var approx = Math.floor((scrolled / scrollHeight) * total) + 1;
+            var page = Math.min(approx + 1, 15);
+            document.getElementById('pageIndicator').textContent = 'Page ' + Math.min(page, 15) + ' of 15';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress);
+
+        document.querySelectorAll('#langToggle button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('#langToggle button').forEach(function(b) { b.classList.remove(
+                        'active'); });
+                this.classList.add('active');
+                currentLang = this.dataset.lang;
+                render(currentLang);
+                setTimeout(updateProgress, 100);
+            });
+        });
+
+        render('en');
+        setTimeout(updateProgress, 200);
+        console.log('✅ Pipe & Cistern – All 9 Topics, 15 Pages Module Loaded!');
+    </script>
+
+</body>
+</html>

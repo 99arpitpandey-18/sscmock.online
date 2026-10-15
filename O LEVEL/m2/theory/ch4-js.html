@@ -1,0 +1,2585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>M2-R5 Chapter 4 | JavaScript Complete Notes | NIELIT O Level</title>
+
+<meta name="description"
+content="NIELIT O Level M2-R5 Chapter 4 JavaScript complete bilingual notes in Hindi and English. Learn JavaScript basics, variables, data types, operators, conditions, loops, functions, events and DOM with examples.">
+
+<meta name="keywords"
+content="NIELIT M2 Chapter 4, M2-R5 JavaScript Notes, JavaScript O Level Notes, NIELIT JavaScript Hindi English, JavaScript Variables Functions DOM Events">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(circle at 10% 10%,rgba(0,212,255,.10),transparent 28%),
+        radial-gradient(circle at 90% 20%,rgba(108,92,231,.12),transparent 30%),
+        radial-gradient(circle at 50% 90%,rgba(255,90,170,.08),transparent 30%),
+        linear-gradient(135deg,#07111f,#0b1424 50%,#07101c);
+
+    color:#e8f1ff;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background-image:
+        radial-gradient(circle,#2fdcff 1px,transparent 1px),
+        radial-gradient(circle,#9d7cff 1px,transparent 1px);
+
+    background-size:120px 120px,180px 180px;
+    background-position:20px 40px,90px 100px;
+
+    opacity:.15;
+    z-index:-1;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    background:rgba(7,15,28,.82);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    padding:14px 5%;
+}
+
+.header-inner{
+    max-width:1250px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(135deg,
+        rgba(255,193,7,.20),
+        rgba(255,92,92,.12));
+
+    border:1px solid rgba(255,193,7,.30);
+
+    color:#ffd35a;
+
+    font-size:16px;
+    font-weight:900;
+
+    box-shadow:0 0 25px rgba(255,193,7,.10);
+}
+
+.brand-title{
+    font-size:17px;
+    font-weight:800;
+}
+
+.brand-sub{
+    font-size:11px;
+    color:#8393aa;
+    margin-top:3px;
+}
+
+.back-btn{
+    text-decoration:none;
+
+    color:#dcecff;
+
+    border:1px solid rgba(255,255,255,.10);
+
+    background:rgba(255,255,255,.04);
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    font-size:13px;
+
+    transition:.3s;
+}
+
+.back-btn:hover{
+    border-color:#ffd35a;
+    color:#ffd35a;
+    transform:translateY(-2px);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:40px 5% 80px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:42px;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(135deg,
+        rgba(42,36,20,.92),
+        rgba(15,27,42,.80));
+
+    border:1px solid rgba(255,255,255,.10);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.04);
+
+    overflow:hidden;
+
+    margin-bottom:35px;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:180px;
+    height:3px;
+
+    background:#ffd35a;
+
+    box-shadow:0 0 20px #ffd35a;
+}
+
+.hero::after{
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    right:-100px;
+    top:-120px;
+
+    background:rgba(255,193,7,.08);
+
+    filter:blur(55px);
+
+    border-radius:50%;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-flex;
+
+    align-items:center;
+    gap:8px;
+
+    padding:7px 12px;
+
+    background:rgba(255,193,7,.08);
+
+    border:1px solid rgba(255,193,7,.20);
+
+    border-radius:30px;
+
+    color:#ffd35a;
+
+    font-size:12px;
+    font-weight:700;
+
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,46px);
+
+    margin-bottom:12px;
+
+    background:
+        linear-gradient(90deg,#ffffff,#ffd35a,#ff9f43);
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:850px;
+
+    color:#9aa9bc;
+
+    line-height:1.8;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:14px;
+
+    margin-top:28px;
+}
+
+.stat{
+    padding:18px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stat strong{
+    display:block;
+
+    font-size:22px;
+
+    color:#ffd35a;
+
+    margin-bottom:5px;
+}
+
+.stat span{
+    color:#7f91aa;
+    font-size:11px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.contents{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+
+    padding:18px;
+
+    margin-bottom:35px;
+
+    border-radius:17px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.contents a{
+    text-decoration:none;
+
+    color:#aab9cc;
+
+    font-size:11px;
+
+    padding:8px 11px;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    transition:.3s;
+}
+
+.contents a:hover{
+    color:#ffd35a;
+    border-color:rgba(255,211,90,.30);
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin:42px 0 20px;
+}
+
+.section-icon{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:rgba(255,193,7,.08);
+
+    border:1px solid rgba(255,193,7,.18);
+
+    font-size:18px;
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title p{
+    color:#72849e;
+    font-size:12px;
+    margin-top:4px;
+}
+
+
+/* =========================================================
+   NOTE CARD
+========================================================= */
+
+.note-card{
+    padding:28px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(135deg,
+        rgba(18,35,57,.88),
+        rgba(10,22,38,.78));
+
+    border:1px solid rgba(255,255,255,.08);
+
+    margin-bottom:20px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.15);
+}
+
+.note-card h3{
+    font-size:18px;
+    margin-bottom:12px;
+
+    color:#ffffff;
+}
+
+.note-card h4{
+    font-size:14px;
+
+    color:#ffd35a;
+
+    margin:20px 0 8px;
+}
+
+.note-card p{
+    color:#9baabd;
+
+    font-size:13px;
+
+    line-height:1.8;
+
+    margin-bottom:10px;
+}
+
+.note-card ul{
+    padding-left:20px;
+}
+
+.note-card li{
+    color:#9baabd;
+
+    font-size:13px;
+
+    line-height:1.8;
+
+    margin:5px 0;
+}
+
+.note-card li::marker{
+    color:#ffd35a;
+}
+
+
+/* =========================================================
+   BILINGUAL BOX
+========================================================= */
+
+.bilingual{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:14px;
+
+    margin-top:15px;
+}
+
+.lang-box{
+    padding:17px;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.lang-label{
+    display:inline-block;
+
+    padding:4px 8px;
+
+    border-radius:6px;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+    background:rgba(255,193,7,.10);
+
+    color:#ffd35a;
+}
+
+.lang-box p{
+    margin:0;
+    font-size:12px;
+}
+
+
+/* =========================================================
+   CODE BOX
+========================================================= */
+
+.code-title{
+    color:#ffd35a;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+}
+
+.code-box{
+    background:#050b13;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:13px;
+
+    padding:18px;
+
+    overflow-x:auto;
+
+    margin:14px 0;
+}
+
+.code-box pre{
+    color:#d8e8ff;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    line-height:1.7;
+
+    white-space:pre;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+
+    margin-top:14px;
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:650px;
+}
+
+th{
+    text-align:left;
+
+    padding:12px;
+
+    background:rgba(255,193,7,.08);
+
+    color:#ffd35a;
+
+    font-size:12px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+td{
+    padding:12px;
+
+    color:#9eafc2;
+
+    font-size:12px;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+
+/* =========================================================
+   CONCEPT GRID
+========================================================= */
+
+.concept-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+}
+
+.concept{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+
+    transition:.3s;
+}
+
+.concept:hover{
+    transform:translateY(-5px);
+
+    border-color:rgba(255,193,7,.30);
+}
+
+.concept-icon{
+    font-size:25px;
+    margin-bottom:12px;
+}
+
+.concept h3{
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.concept p{
+    color:#7f91a8;
+    font-size:11px;
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   HIGHLIGHT BOX
+========================================================= */
+
+.highlight{
+    padding:18px 20px;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,193,7,.08),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid rgba(255,193,7,.18);
+
+    margin:15px 0;
+}
+
+.highlight strong{
+    color:#ffd35a;
+}
+
+.highlight p{
+    margin-top:7px;
+}
+
+
+/* =========================================================
+   EXAM BOX
+========================================================= */
+
+.exam-box{
+    padding:25px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,92,92,.07),
+            rgba(255,193,7,.05)
+        );
+
+    border:1px solid rgba(255,193,7,.16);
+}
+
+.exam-box h3{
+    color:#ffd35a;
+    margin-bottom:14px;
+}
+
+.exam-box ul{
+    padding-left:20px;
+}
+
+.exam-box li{
+    color:#a5b3c5;
+
+    font-size:12px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   QUICK REVISION
+========================================================= */
+
+.revision-grid{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+}
+
+.revision-card{
+    padding:20px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.revision-card h3{
+    color:#ffd35a;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+}
+
+.revision-card p{
+    color:#98a8bc;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:55px;
+
+    padding:25px;
+
+    text-align:center;
+
+    color:#667991;
+
+    font-size:11px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .concept-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .brand-title{
+        font-size:14px;
+    }
+
+    .back-btn{
+        padding:8px 10px;
+        font-size:11px;
+    }
+
+    .container{
+        padding:30px 4% 60px;
+    }
+
+    .hero{
+        padding:27px 20px;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .stats,
+    .bilingual,
+    .concept-grid,
+    .revision-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+<div class="header-inner">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            JS
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                M2 Study Zone
+            </div>
+
+            <div class="brand-sub">
+                Chapter 04 • JavaScript
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <a href="m2.html" class="back-btn">
+        ← Back to M2
+    </a>
+
+</div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+    <div class="badge">
+        ⚡ NIELIT O LEVEL • M2-R5 • CHAPTER 04
+    </div>
+
+    <h1>
+        JavaScript — Complete Notes
+    </h1>
+
+    <p>
+        Learn JavaScript from basic concepts to interactive
+        web development. This chapter covers JavaScript
+        introduction, syntax, variables, data types, operators,
+        conditions, loops, functions, arrays, events and DOM.
+        Notes are provided in both English and Hindi for
+        NIELIT O Level examination preparation.
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>12+</strong>
+            <span>Core Topics</span>
+        </div>
+
+        <div class="stat">
+            <strong>30+</strong>
+            <span>Examples</span>
+        </div>
+
+        <div class="stat">
+            <strong>100%</strong>
+            <span>Bilingual</span>
+        </div>
+
+        <div class="stat">
+            <strong>Exam</strong>
+            <span>Focused Notes</span>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CONTENT NAVIGATION
+========================================================= -->
+
+<div class="contents">
+
+    <a href="#intro">Introduction</a>
+    <a href="#syntax">Syntax</a>
+    <a href="#variables">Variables</a>
+    <a href="#datatypes">Data Types</a>
+    <a href="#operators">Operators</a>
+    <a href="#conditions">Conditions</a>
+    <a href="#loops">Loops</a>
+    <a href="#functions">Functions</a>
+    <a href="#arrays">Arrays</a>
+    <a href="#events">Events</a>
+    <a href="#dom">DOM</a>
+    <a href="#revision">Revision</a>
+
+</div>
+
+
+
+<!-- =========================================================
+     1 INTRODUCTION
+========================================================= -->
+
+<div class="section-title" id="intro">
+
+    <div class="section-icon">
+        ⚡
+    </div>
+
+    <div>
+
+        <h2>1. Introduction to JavaScript</h2>
+
+        <p>
+            JavaScript क्या है?
+        </p>
+
+    </div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>What is JavaScript?</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-label">
+ENGLISH
+</div>
+
+<p>
+JavaScript is a high-level programming/scripting language
+mainly used to make web pages interactive and dynamic.
+</p>
+
+</div>
+
+
+<div class="lang-box">
+
+<div class="lang-label">
+हिन्दी
+</div>
+
+<p>
+JavaScript एक high-level programming/scripting language है
+जिसका उपयोग web pages को interactive और dynamic बनाने के
+लिए किया जाता है।
+</p>
+
+</div>
+
+</div>
+
+
+<h4>JavaScript can be used for:</h4>
+
+<ul>
+
+<li>Changing HTML content</li>
+<li>Changing CSS styles</li>
+<li>Validating forms</li>
+<li>Creating interactive buttons</li>
+<li>Handling user events</li>
+<li>Creating dynamic web pages</li>
+<li>Manipulating HTML elements</li>
+<li>Working with browser APIs</li>
+
+</ul>
+
+
+<div class="highlight">
+
+<strong>Exam Point:</strong>
+
+<p>
+HTML provides structure, CSS provides presentation/style,
+and JavaScript provides behavior and interactivity.
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     2 HTML CSS JS
+========================================================= -->
+
+<section class="note-card">
+
+<h3>HTML vs CSS vs JavaScript</h3>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Technology</th>
+<th>Main Purpose</th>
+<th>Simple Meaning</th>
+</tr>
+
+<tr>
+<td>HTML</td>
+<td>Structure</td>
+<td>Web page का ढांचा</td>
+</tr>
+
+<tr>
+<td>CSS</td>
+<td>Presentation</td>
+<td>Web page की design/style</td>
+</tr>
+
+<tr>
+<td>JavaScript</td>
+<td>Behavior</td>
+<td>Web page में interaction</td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     3 SYNTAX
+========================================================= -->
+
+<div class="section-title" id="syntax">
+
+<div class="section-icon">
+🧩
+</div>
+
+<div>
+
+<h2>2. JavaScript Syntax</h2>
+
+<p>
+Basic rules of JavaScript
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>Basic JavaScript Structure</h3>
+
+<p>
+JavaScript code can be written inside the
+<code>&lt;script&gt;</code> element in an HTML document.
+</p>
+
+
+<div class="code-box">
+
+<div class="code-title">
+Example
+</div>
+
+<pre>
+&lt;script&gt;
+
+    alert("Hello World");
+
+&lt;/script&gt;
+</pre>
+
+</div>
+
+
+<h4>Comments</h4>
+
+<p>
+Comments are used to explain code and are ignored by the
+JavaScript engine.
+</p>
+
+<div class="code-box">
+
+<pre>
+// This is a single-line comment
+
+/*
+   This is a
+   multi-line comment
+*/
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     4 VARIABLES
+========================================================= -->
+
+<div class="section-title" id="variables">
+
+<div class="section-icon">
+📦
+</div>
+
+<div>
+
+<h2>3. Variables</h2>
+
+<p>
+Data को store करने के लिए variables
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>What is a Variable?</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-label">
+ENGLISH
+</div>
+
+<p>
+A variable is a named container used to store data.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<div class="lang-label">
+हिन्दी
+</div>
+
+<p>
+Variable एक named container है जिसका उपयोग data को store
+करने के लिए किया जाता है।
+</p>
+
+</div>
+
+</div>
+
+
+<h4>let</h4>
+
+<div class="code-box">
+
+<pre>
+let age = 20;
+
+age = 21;
+</pre>
+
+</div>
+
+
+<h4>const</h4>
+
+<p>
+const is used when a variable should not be reassigned.
+</p>
+
+<div class="code-box">
+
+<pre>
+const pi = 3.14159;
+</pre>
+
+</div>
+
+
+<h4>var</h4>
+
+<p>
+var is the older JavaScript keyword for declaring variables.
+Modern JavaScript generally prefers let and const.
+</p>
+
+<div class="code-box">
+
+<pre>
+var name = "Arjun";
+</pre>
+
+</div>
+
+
+<div class="highlight">
+
+<strong>Remember:</strong>
+
+<p>
+let → value can be reassigned<br>
+const → variable cannot be reassigned<br>
+var → older variable declaration method
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     5 DATA TYPES
+========================================================= -->
+
+<div class="section-title" id="datatypes">
+
+<div class="section-icon">
+🔢
+</div>
+
+<div>
+
+<h2>4. Data Types</h2>
+
+<p>
+JavaScript में data के प्रकार
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>Important JavaScript Data Types</h3>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Data Type</th>
+<th>Example</th>
+<th>Meaning</th>
+</tr>
+
+<tr>
+<td>String</td>
+<td>"Hello"</td>
+<td>Text</td>
+</tr>
+
+<tr>
+<td>Number</td>
+<td>100</td>
+<td>Numeric value</td>
+</tr>
+
+<tr>
+<td>Boolean</td>
+<td>true</td>
+<td>True/False</td>
+</tr>
+
+<tr>
+<td>Undefined</td>
+<td>undefined</td>
+<td>Value not assigned</td>
+</tr>
+
+<tr>
+<td>Null</td>
+<td>null</td>
+<td>Intentional empty value</td>
+</tr>
+
+<tr>
+<td>Object</td>
+<td>{name:"Ram"}</td>
+<td>Collection of properties</td>
+</tr>
+
+<tr>
+<td>Array</td>
+<td>[10,20,30]</td>
+<td>Ordered collection</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="code-box">
+
+<div class="code-title">
+Examples
+</div>
+
+<pre>
+let name = "Rahul";
+
+let age = 20;
+
+let passed = true;
+
+let result;
+
+let data = null;
+
+let marks = [80, 75, 90];
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     6 OPERATORS
+========================================================= -->
+
+<div class="section-title" id="operators">
+
+<div class="section-icon">
+➗
+</div>
+
+<div>
+
+<h2>5. Operators</h2>
+
+<p>
+JavaScript operators
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>Arithmetic Operators</h3>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>+</td>
+<td>Addition</td>
+<td>10 + 5</td>
+</tr>
+
+<tr>
+<td>-</td>
+<td>Subtraction</td>
+<td>10 - 5</td>
+</tr>
+
+<tr>
+<td>*</td>
+<td>Multiplication</td>
+<td>10 * 5</td>
+</tr>
+
+<tr>
+<td>/</td>
+<td>Division</td>
+<td>10 / 5</td>
+</tr>
+
+<tr>
+<td>%</td>
+<td>Remainder</td>
+<td>10 % 3</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<h4>Comparison Operators</h4>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+</tr>
+
+<tr>
+<td>==</td>
+<td>Loose equality</td>
+</tr>
+
+<tr>
+<td>===</td>
+<td>Strict equality</td>
+</tr>
+
+<tr>
+<td>!=</td>
+<td>Not equal</td>
+</tr>
+
+<tr>
+<td>&gt;</td>
+<td>Greater than</td>
+</tr>
+
+<tr>
+<td>&lt;</td>
+<td>Less than</td>
+</tr>
+
+<tr>
+<td>&gt;=</td>
+<td>Greater than or equal</td>
+</tr>
+
+<tr>
+<td>&lt;=</td>
+<td>Less than or equal</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<h4>Logical Operators</h4>
+
+<ul>
+
+<li>&amp;&amp; → AND</li>
+<li>|| → OR</li>
+<li>! → NOT</li>
+
+</ul>
+
+
+<div class="code-box">
+
+<pre>
+let age = 20;
+
+console.log(age >= 18 && age <= 60);
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     7 CONDITIONS
+========================================================= -->
+
+<div class="section-title" id="conditions">
+
+<div class="section-icon">
+🔀
+</div>
+
+<div>
+
+<h2>6. Conditional Statements</h2>
+
+<p>
+Decision making in JavaScript
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>if Statement</h3>
+
+<div class="code-box">
+
+<pre>
+let age = 20;
+
+if(age >= 18){
+
+    console.log("Eligible");
+
+}
+</pre>
+
+</div>
+
+
+<h4>if...else</h4>
+
+<div class="code-box">
+
+<pre>
+let marks = 65;
+
+if(marks >= 40){
+
+    console.log("Pass");
+
+}else{
+
+    console.log("Fail");
+
+}
+</pre>
+
+</div>
+
+
+<h4>else if</h4>
+
+<div class="code-box">
+
+<pre>
+let marks = 85;
+
+if(marks >= 90){
+
+    console.log("A+");
+
+}else if(marks >= 75){
+
+    console.log("A");
+
+}else if(marks >= 60){
+
+    console.log("B");
+
+}else{
+
+    console.log("C");
+
+}
+</pre>
+
+</div>
+
+
+<h4>switch Statement</h4>
+
+<div class="code-box">
+
+<pre>
+let day = 2;
+
+switch(day){
+
+    case 1:
+        console.log("Monday");
+        break;
+
+    case 2:
+        console.log("Tuesday");
+        break;
+
+    default:
+        console.log("Invalid day");
+
+}
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     8 LOOPS
+========================================================= -->
+
+<div class="section-title" id="loops">
+
+<div class="section-icon">
+🔁
+</div>
+
+<div>
+
+<h2>7. Loops</h2>
+
+<p>
+Repeated execution of code
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>for Loop</h3>
+
+<div class="code-box">
+
+<pre>
+for(let i = 1; i <= 5; i++){
+
+    console.log(i);
+
+}
+</pre>
+
+</div>
+
+
+<h3>while Loop</h3>
+
+<div class="code-box">
+
+<pre>
+let i = 1;
+
+while(i <= 5){
+
+    console.log(i);
+
+    i++;
+
+}
+</pre>
+
+</div>
+
+
+<h3>do...while Loop</h3>
+
+<div class="code-box">
+
+<pre>
+let i = 1;
+
+do{
+
+    console.log(i);
+
+    i++;
+
+}while(i <= 5);
+</pre>
+
+</div>
+
+
+<div class="highlight">
+
+<strong>Exam Trick:</strong>
+
+<p>
+for loop is generally used when the number of iterations
+is known. while loop is useful when the condition controls
+how long the loop runs.
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     9 FUNCTIONS
+========================================================= -->
+
+<div class="section-title" id="functions">
+
+<div class="section-icon">
+⚙️
+</div>
+
+<div>
+
+<h2>8. Functions</h2>
+
+<p>
+Reusable blocks of code
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>What is a Function?</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-label">
+ENGLISH
+</div>
+
+<p>
+A function is a reusable block of code designed to perform
+a particular task.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<div class="lang-label">
+हिन्दी
+</div>
+
+<p>
+Function code का एक reusable block है जो किसी particular
+task को perform करता है।
+</p>
+
+</div>
+
+</div>
+
+
+<div class="code-box">
+
+<pre>
+function greet(){
+
+    console.log("Hello Student");
+
+}
+
+greet();
+</pre>
+
+</div>
+
+
+<h4>Function with Parameters</h4>
+
+<div class="code-box">
+
+<pre>
+function add(a,b){
+
+    return a + b;
+
+}
+
+let result = add(10,20);
+
+console.log(result);
+</pre>
+
+</div>
+
+
+<h4>Arrow Function</h4>
+
+<div class="code-box">
+
+<pre>
+const add = (a,b) => {
+
+    return a + b;
+
+};
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     10 ARRAYS
+========================================================= -->
+
+<div class="section-title" id="arrays">
+
+<div class="section-icon">
+📚
+</div>
+
+<div>
+
+<h2>9. Arrays</h2>
+
+<p>
+Multiple values को store करना
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>What is an Array?</h3>
+
+<p>
+An array stores multiple values in a single variable.
+</p>
+
+<div class="code-box">
+
+<pre>
+let fruits = [
+    "Apple",
+    "Mango",
+    "Banana"
+];
+
+console.log(fruits[0]);
+</pre>
+
+</div>
+
+
+<h4>Common Array Methods</h4>
+
+<div class="table-wrap">
+
+<table>
+
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>push()</td>
+<td>Add item at end</td>
+</tr>
+
+<tr>
+<td>pop()</td>
+<td>Remove last item</td>
+</tr>
+
+<tr>
+<td>shift()</td>
+<td>Remove first item</td>
+</tr>
+
+<tr>
+<td>unshift()</td>
+<td>Add item at beginning</td>
+</tr>
+
+<tr>
+<td>length</td>
+<td>Returns number of elements</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="code-box">
+
+<pre>
+let numbers = [10,20,30];
+
+numbers.push(40);
+
+console.log(numbers);
+
+console.log(numbers.length);
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     11 EVENTS
+========================================================= -->
+
+<div class="section-title" id="events">
+
+<div class="section-icon">
+🖱️
+</div>
+
+<div>
+
+<h2>10. JavaScript Events</h2>
+
+<p>
+User actions को handle करना
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>What is an Event?</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-label">
+ENGLISH
+</div>
+
+<p>
+An event is an action that occurs in the browser, such as
+clicking a button, typing in a field or loading a page.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<div class="lang-label">
+हिन्दी
+</div>
+
+<p>
+Event browser में होने वाली कोई action है, जैसे button
+click करना, typing करना या page load होना।
+</p>
+
+</div>
+
+</div>
+
+
+<h4>Common Events</h4>
+
+<ul>
+
+<li>onclick</li>
+<li>onchange</li>
+<li>onmouseover</li>
+<li>onmouseout</li>
+<li>onkeydown</li>
+<li>onkeyup</li>
+<li>onsubmit</li>
+<li>onload</li>
+
+</ul>
+
+
+<div class="code-box">
+
+<pre>
+&lt;button onclick="showMessage()"&gt;
+    Click Me
+&lt;/button&gt;
+
+&lt;script&gt;
+
+function showMessage(){
+
+    alert("Button Clicked!");
+
+}
+
+&lt;/script&gt;
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     12 DOM
+========================================================= -->
+
+<div class="section-title" id="dom">
+
+<div class="section-icon">
+🌐
+</div>
+
+<div>
+
+<h2>11. DOM — Document Object Model</h2>
+
+<p>
+HTML elements को JavaScript से control करना
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>What is DOM?</h3>
+
+<div class="bilingual">
+
+<div class="lang-box">
+
+<div class="lang-label">
+ENGLISH
+</div>
+
+<p>
+DOM represents an HTML document as a tree of objects.
+JavaScript can use the DOM to read and modify HTML elements.
+</p>
+
+</div>
+
+<div class="lang-box">
+
+<div class="lang-label">
+हिन्दी
+</div>
+
+<p>
+DOM HTML document को objects की tree के रूप में represent
+करता है। JavaScript की मदद से HTML elements को read और
+modify किया जा सकता है।
+</p>
+
+</div>
+
+</div>
+
+
+<h4>getElementById()</h4>
+
+<div class="code-box">
+
+<pre>
+&lt;p id="demo"&gt;
+    Hello
+&lt;/p&gt;
+
+&lt;script&gt;
+
+document.getElementById("demo")
+.innerHTML = "Welcome Student";
+
+&lt;/script&gt;
+</pre>
+
+</div>
+
+
+<h4>Changing CSS Using JavaScript</h4>
+
+<div class="code-box">
+
+<pre>
+document.getElementById("demo")
+.style.fontSize = "25px";
+</pre>
+
+</div>
+
+
+<h4>querySelector()</h4>
+
+<div class="code-box">
+
+<pre>
+document.querySelector("#demo")
+.innerHTML = "New Text";
+</pre>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     13 CONCEPT GRID
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🧠
+</div>
+
+<div>
+
+<h2>Important Concepts at a Glance</h2>
+
+<p>
+Quick conceptual understanding
+</p>
+
+</div>
+
+</div>
+
+
+<section class="concept-grid">
+
+
+<div class="concept">
+
+<div class="concept-icon">📦</div>
+
+<h3>Variables</h3>
+
+<p>
+Used to store and manage data values.
+</p>
+
+</div>
+
+
+<div class="concept">
+
+<div class="concept-icon">🔢</div>
+
+<h3>Data Types</h3>
+
+<p>
+Define the kind of value stored by JavaScript.
+</p>
+
+</div>
+
+
+<div class="concept">
+
+<div class="concept-icon">🔀</div>
+
+<h3>Conditions</h3>
+
+<p>
+Used for decision-making in programs.
+</p>
+
+</div>
+
+
+<div class="concept">
+
+<div class="concept-icon">🔁</div>
+
+<h3>Loops</h3>
+
+<p>
+Repeat a block of code multiple times.
+</p>
+
+</div>
+
+
+<div class="concept">
+
+<div class="concept-icon">⚙️</div>
+
+<h3>Functions</h3>
+
+<p>
+Reusable blocks that perform specific tasks.
+</p>
+
+</div>
+
+
+<div class="concept">
+
+<div class="concept-icon">🌐</div>
+
+<h3>DOM</h3>
+
+<p>
+Allows JavaScript to interact with HTML documents.
+</p>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     PRACTICAL EXAMPLE
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+💻
+</div>
+
+<div>
+
+<h2>Complete Mini Practical</h2>
+
+<p>
+HTML + CSS + JavaScript together
+</p>
+
+</div>
+
+</div>
+
+
+<section class="note-card">
+
+<h3>Interactive Button Example</h3>
+
+<p>
+यह example HTML element को JavaScript के साथ connect करता है।
+</p>
+
+<div class="code-box">
+
+<pre>
+&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;title&gt;JavaScript Demo&lt;/title&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h2 id="heading"&gt;
+    Welcome Student
+&lt;/h2&gt;
+
+&lt;button onclick="changeText()"&gt;
+    Click Me
+&lt;/button&gt;
+
+
+&lt;script&gt;
+
+function changeText(){
+
+    document.getElementById("heading")
+    .innerHTML = "JavaScript is Working!";
+
+}
+
+&lt;/script&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</pre>
+
+</div>
+
+
+<div class="highlight">
+
+<strong>How it works:</strong>
+
+<p>
+Button click → function executes → DOM element selected →
+text changes.
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     EXAM PREPARATION
+========================================================= -->
+
+<div class="section-title">
+
+<div class="section-icon">
+🎯
+</div>
+
+<div>
+
+<h2>Exam Focus Zone</h2>
+
+<p>
+NIELIT O Level के लिए important points
+</p>
+
+</div>
+
+</div>
+
+
+<section class="exam-box">
+
+<h3>⭐ Must Remember</h3>
+
+<ul>
+
+<li>JavaScript makes web pages interactive and dynamic.</li>
+
+<li>HTML provides structure, CSS provides styling and JavaScript provides behavior.</li>
+
+<li>Variables can be declared using var, let and const.</li>
+
+<li>JavaScript supports different data types such as String, Number and Boolean.</li>
+
+<li>Arithmetic operators perform mathematical operations.</li>
+
+<li>Comparison operators compare values.</li>
+
+<li>Logical operators include AND, OR and NOT.</li>
+
+<li>if, else and switch are used for decision making.</li>
+
+<li>for, while and do...while are looping statements.</li>
+
+<li>Functions are reusable blocks of code.</li>
+
+<li>Arrays store multiple values.</li>
+
+<li>Events represent actions performed by the user or browser.</li>
+
+<li>DOM allows JavaScript to interact with HTML elements.</li>
+
+<li>getElementById() is commonly used to select an element by its ID.</li>
+
+<li>innerHTML can be used to change HTML content.</li>
+
+</ul>
+
+</section>
+
+
+
+<!-- =========================================================
+     QUICK REVISION
+========================================================= -->
+
+<div class="section-title" id="revision">
+
+<div class="section-icon">
+⚡
+</div>
+
+<div>
+
+<h2>One-Minute Quick Revision</h2>
+
+<p>
+Chapter 4 को जल्दी revise करें
+</p>
+
+</div>
+
+</div>
+
+
+<section class="revision-grid">
+
+
+<div class="revision-card">
+
+<h3>JavaScript</h3>
+
+<p>
+Interactive और dynamic web pages बनाने के लिए scripting
+language.
+</p>
+
+</div>
+
+
+<div class="revision-card">
+
+<h3>Variable</h3>
+
+<p>
+Data store करने के लिए named container.
+</p>
+
+</div>
+
+
+<div class="revision-card">
+
+<h3>Operator</h3>
+
+<p>
+Values पर operations perform करने के लिए.
+</p>
+
+</div>
+
+
+<div class="revision-card">
+
+<h3>Condition</h3>
+
+<p>
+Program में decision लेने के लिए.
+</p>
+
+</div>
+
+
+<div class="revision-card">
+
+<h3>Loop</h3>
+
+<p>
+Code को repeatedly execute करने के लिए.
+</p>
+
+</div>
+
+
+<div class="revision-card">
+
+<h3>Function</h3>
+
+<p>
+Reusable block of code.
+</p>
+
+</div>
+
+
+<div class="revision-card">
+
+<h3>Event</h3>
+
+<p>
+Browser/user action जैसे click, keypress या submit.
+</p>
+
+</div>
+
+
+<div class="revision-card">
+
+<h3>DOM</h3>
+
+<p>
+JavaScript से HTML document के elements को access और modify
+करने का model.
+</p>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+<p>
+    M2-R5 • Chapter 04 • JavaScript
+</p>
+
+<p style="margin-top:6px;">
+    Complete Bilingual Notes • NIELIT O Level Preparation
+</p>
+
+</footer>
+
+
+</main>
+
+</body>
+</html>

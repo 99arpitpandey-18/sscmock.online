@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SSC E-Book Library | Arpit Pandey</title>
+
+<link rel="stylesheet" href="E-book.css">
+
+<style>
+
+/* =====================================================
+   EXTRA SAFE STYLES
+===================================================== */
+
+.book-card-top{
+    position:relative;
+    min-height:220px;
+}
+
+.fallback-book{
+    width:100%;
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:25px;
+    background:linear-gradient(135deg,#eef4ff,#f8fbff);
+}
+
+.fallback-icon{
+    font-size:65px;
+    margin-bottom:15px;
+}
+
+.fallback-book strong{
+    font-size:18px;
+}
+
+.book-cover-image{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.book-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.read-btn{
+    text-decoration:none;
+}
+
+.no-result{
+    display:none;
+}
+
+/* =====================================================
+   READ BUTTON
+===================================================== */
+
+.read-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 18px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.read-btn:hover{
+    transform:translateY(-2px);
+}
+
+
+/* =====================================================
+   DARK MODE EXTRA
+===================================================== */
+
+.dark-mode .fallback-book{
+    background:linear-gradient(135deg,#1d2738,#111827);
+    color:#fff;
+}
+
+.dark-mode .fallback-book strong{
+    color:#fff;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="top-header">
+
+    <div class="header-inner">
+
+        <a href="mcqs.html" class="brand">
+
+            <div class="brand-logo">
+                📚
+            </div>
+
+            <div class="brand-text">
+
+                <h1>
+                    Arpit Pandey
+                </h1>
+
+                <span>
+                    SSC Study Hub
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="mcqs.html">
+                🏠 Home
+            </a>
+
+            <a href="ebook.html" class="active">
+                📖 E-Books
+            </a>
+
+            <a href="mock.html">
+                📝 Mock Tests
+            </a>
+
+            <a href="#">
+                ✎ Practice
+            </a>
+
+            <a href="#">
+                ⓘ About
+            </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button
+                class="icon-btn"
+                id="searchTopBtn">
+                🔍
+            </button>
+
+            <button
+                class="icon-btn"
+                id="darkModeBtn">
+                🌙
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-books">
+
+        <div class="book-stack">
+
+            <div class="stack-book blue">
+                📘
+            </div>
+
+            <div class="stack-book red">
+                📕
+            </div>
+
+            <div class="stack-book yellow">
+                📙
+            </div>
+
+            <div class="open-book">
+                📖
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            📚 COMPLETE STUDY MATERIAL
+        </div>
+
+
+        <h2>
+            <span>SSC</span> E-Book Library
+        </h2>
+
+
+        <p>
+            Your Complete Study Material in One Place
+        </p>
+
+
+        <div class="hero-features">
+
+            <span>
+                ✓ Best Notes
+            </span>
+
+            <span>
+                ✓ PYQs
+            </span>
+
+            <span>
+                ✓ One Liners
+            </span>
+
+            <span>
+                ✓ Theory
+            </span>
+
+            <span>
+                ✓ E-Books
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-decoration">
+        ✈
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
+<section class="stats-container">
+
+
+    <div class="stat-box">
+
+        <div class="stat-icon book-icon">
+            📚
+        </div>
+
+        <div>
+
+            <h3 id="totalBooks">
+                0+
+            </h3>
+
+            <p>
+                Total E-Books
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-box">
+
+        <div class="stat-icon folder-icon">
+            📁
+        </div>
+
+        <div>
+
+            <h3 id="totalSubjects">
+                0
+            </h3>
+
+            <p>
+                Subjects
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-box">
+
+        <div class="stat-icon page-icon">
+            📄
+        </div>
+
+        <div>
+
+            <h3 id="totalPages">
+                HTML
+            </h3>
+
+            <p>
+                Study Material
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-box">
+
+        <div class="stat-icon star-icon">
+            ⭐
+        </div>
+
+        <div>
+
+            <h3>
+                100%
+            </h3>
+
+            <p>
+                Free Access
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+
+<section class="search-section">
+
+    <div class="search-wrapper">
+
+
+        <div class="search-input-area">
+
+            <span>
+                🔍
+            </span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search E-Books..."
+            >
+
+        </div>
+
+
+        <button
+            class="search-button"
+            id="searchButton">
+
+            Search
+
+        </button>
+
+
+        <select id="subjectFilter">
+
+            <option value="all">
+                All Subjects
+            </option>
+
+        </select>
+
+
+        <select id="languageFilter">
+
+            <option value="all">
+                Language
+            </option>
+
+            <option value="Hindi">
+                Hindi
+            </option>
+
+            <option value="English">
+                English
+            </option>
+
+            <option value="Hindi + English">
+                Hindi + English
+            </option>
+
+        </select>
+
+
+        <select id="sortFilter">
+
+            <option value="default">
+                Sort By
+            </option>
+
+            <option value="az">
+                A → Z
+            </option>
+
+            <option value="za">
+                Z → A
+            </option>
+
+        </select>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CATEGORY BUTTONS
+===================================================== -->
+
+<section class="category-section">
+
+    <div
+        class="category-buttons"
+        id="categoryButtons">
+
+        <button
+            class="category active"
+            data-category="all">
+
+            All
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     BOOKS
+===================================================== -->
+
+<main class="books-container">
+
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>
+                🔥 All E-Books
+            </h2>
+
+            <p>
+                Choose your subject and start learning today!
+            </p>
+
+        </div>
+
+
+        <div class="view-buttons">
+
+            <button
+                class="view-btn active"
+                id="gridViewBtn">
+
+                ▦ Grid View
+
+            </button>
+
+
+            <button
+                class="view-btn"
+                id="listViewBtn">
+
+                ☷ List View
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="book-grid"
+        id="bookGrid">
+    </div>
+
+
+    <div
+        class="no-result"
+        id="noResult">
+
+        <div>
+            📭
+        </div>
+
+        <h3>
+            No E-Book Found
+        </h3>
+
+        <p>
+            Try another search or category.
+        </p>
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-inner">
+
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+                📚
+            </div>
+
+            <div>
+
+                <h3>
+                    Arpit Pandey
+                </h3>
+
+                <p>
+                    SSC Study Hub
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-center">
+
+            <strong>
+                Study Smart
+            </strong>
+
+            <span>
+                +
+            </span>
+
+            <strong>
+                Stay Consistent
+            </strong>
+
+            <span>
+                +
+            </span>
+
+            <strong>
+                Achieve Big
+            </strong>
+
+            <small>
+                © 2026 Arpit Pandey. All Rights Reserved.
+            </small>
+
+        </div>
+
+
+        <div class="social-links">
+
+            <a href="#">
+                ▶
+            </a>
+
+            <a href="#">
+                ✈
+            </a>
+
+            <a href="#">
+                ◎
+            </a>
+
+            <a href="#">
+                ◉
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   E-BOOK DATABASE
+
+   IMPORTANT:
+   ebook.html aur ye files SAME folder mein hain.
+
+   Isliye:
+   computerE-book.html
+
+   NOT:
+   E-Book/computerE-book.html
+===================================================== */
+
+const books = [
+
+    /* =================================================
+       1. COMPUTER
+    ================================================= */
+
+    {
+        title: "Computer E-Book",
+        category: "Computer",
+        language: "Hindi + English",
+        pages: 0,
+        description: "SSC Computer ke complete study material aur important topics ke liye complete E-Book.",
+        read: "computerE-book.html"
+    },
+
+    /* =================================================
+       2. ECONOMICS
+    ================================================= */
+
+    {
+        title: "Economics E-Book",
+        category: "Economics",
+        language: "Hindi",
+        pages: 0,
+        description: "Indian Economy aur SSC Economics preparation ke liye complete E-Book.",
+        read: "economicsE-book.html"
+    },
+
+    /* =================================================
+       3. GEOGRAPHY
+    ================================================= */
+
+    {
+        title: "Geography E-Book",
+        category: "Geography",
+        language: "Hindi",
+        pages: 0,
+        description: "Indian Geography aur SSC Geography preparation ke liye complete E-Book.",
+        read: "geographyE-book.html"
+    },
+
+    /* =================================================
+       4. HISTORY
+    ================================================= */
+
+    {
+        title: "History E-Book",
+        category: "History",
+        language: "Hindi",
+        pages: 0,
+        description: "Ancient, Medieval aur Modern Indian History ke complete study material ke liye E-Book.",
+        read: "historyE-book.html"
+    },
+
+    /* =================================================
+       5. HISTORY CORRECT
+    ================================================= */
+
+    {
+        title: "History E-Book Correct",
+        category: "History",
+        language: "Hindi",
+        pages: 0,
+        description: "Updated aur corrected History E-Book.",
+        read: "historyE-bookcorrect.html"
+    },
+
+    /* =================================================
+       6. POLITICAL SCIENCE
+    ================================================= */
+
+    {
+        title: "Political Science E-Book",
+        category: "Political Science",
+        language: "Hindi",
+        pages: 0,
+        description: "Indian Constitution, Articles, Fundamental Rights, Parliament aur Political Science ka complete study material.",
+        read: "politicalscience.html"
+    },
+
+    /* =================================================
+       7. REASONING E-BOOK
+    ================================================= */
+
+    {
+        title: "Reasoning E-Book",
+        category: "Reasoning",
+        language: "Hindi + English",
+        pages: 0,
+        description: "Analogy, Series, Coding-Decoding, Blood Relation, Direction aur SSC Reasoning ke important topics.",
+        read: "reasoningE-book.html"
+    },
+
+    /* =================================================
+       8. REASONING PRACTICE
+    ================================================= */
+
+    {
+        title: "Reasoning Practice",
+        category: "Reasoning",
+        language: "Hindi + English",
+        pages: 0,
+        description: "Reasoning practice aur questions ke liye complete study material.",
+        read: "reasoning.html"
+    },
+
+    /* =================================================
+       9. ANTONYMS & SYNONYMS
+    ================================================= */
+
+    {
+        title: "Antonyms & Synonyms E-Book",
+        category: "English",
+        language: "Hindi + English",
+        pages: 500,
+        description: "500+ Antonyms & Synonyms with meanings, SSC previous year words and practice sets.",
+        read: "E-book antosyno.html"
+    },
+
+    /* =================================================
+       10. IDIOMS & PHRASES
+    ================================================= */
+
+    {
+        title: "Idioms & Phrases E-Book",
+        category: "English",
+        language: "Hindi + English",
+        pages: 500,
+        description: "500+ Idioms & Phrases with Hindi meaning, examples and SSC previous year questions.",
+        read: "idiomphrase-e-book.html"
+    },
+
+    /* =================================================
+       11. ONE WORD SUBSTITUTION
+    ================================================= */
+
+    {
+        title: "One Word Substitution E-Book",
+        category: "English",
+        language: "Hindi + English",
+        pages: 500,
+        description: "500+ One Word Substitutions with meanings, tricks and SSC practice questions.",
+        read: "onewordssubstitution.html"
+    },
+
+    /* =================================================
+       12. SPELLING RULES
+    ================================================= */
+
+    {
+        title: "Spelling Rules E-Book",
+        category: "English",
+        language: "Hindi + English",
+        pages: 500,
+        description: "Common spelling rules, confusing words, silent letters and SSC spelling practice.",
+        read: "spelling-book.html"
+    }
+
+];
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const bookGrid =
+document.getElementById(
+    "bookGrid"
+);
+
+
+const searchInput =
+document.getElementById(
+    "searchInput"
+);
+
+
+const searchButton =
+document.getElementById(
+    "searchButton"
+);
+
+
+const subjectFilter =
+document.getElementById(
+    "subjectFilter"
+);
+
+
+const languageFilter =
+document.getElementById(
+    "languageFilter"
+);
+
+
+const sortFilter =
+document.getElementById(
+    "sortFilter"
+);
+
+
+const categoryButtons =
+document.getElementById(
+    "categoryButtons"
+);
+
+
+const noResult =
+document.getElementById(
+    "noResult"
+);
+
+
+const gridViewBtn =
+document.getElementById(
+    "gridViewBtn"
+);
+
+
+const listViewBtn =
+document.getElementById(
+    "listViewBtn"
+);
+
+
+let selectedCategory =
+"all";
+
+
+
+/* =====================================================
+   CREATE CATEGORIES
+===================================================== */
+
+function createCategories(){
+
+    const categories =
+    [
+        ...new Set(
+            books.map(
+                book =>
+                book.category
+            )
+        )
+    ];
+
+
+    categories.forEach(
+        category => {
+
+
+            /* SUBJECT DROPDOWN */
+
+            const option =
+            document.createElement(
+                "option"
+            );
+
+
+            option.value =
+            category;
+
+
+            option.textContent =
+            category;
+
+
+            subjectFilter.appendChild(
+                option
+            );
+
+
+
+            /* CATEGORY BUTTON */
+
+            const button =
+            document.createElement(
+                "button"
+            );
+
+
+            button.className =
+            "category";
+
+
+            button.dataset.category =
+            category;
+
+
+            button.textContent =
+            category;
+
+
+            categoryButtons.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+
+    /* CATEGORY CLICK */
+
+    document
+    .querySelectorAll(
+        ".category"
+    )
+    .forEach(
+        button => {
+
+
+            button.addEventListener(
+                "click",
+                function(){
+
+
+                    document
+                    .querySelectorAll(
+                        ".category"
+                    )
+                    .forEach(
+                        btn =>
+                        btn.classList
+                        .remove(
+                            "active"
+                        )
+                    );
+
+
+                    this.classList
+                    .add(
+                        "active"
+                    );
+
+
+                    selectedCategory =
+                    this.dataset.category;
+
+
+                    subjectFilter.value =
+                    selectedCategory;
+
+
+                    renderBooks();
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   BOOK CARD
+===================================================== */
+
+function createBookCard(book){
+
+    return `
+
+    <article class="book-card">
+
+
+        <div class="book-card-top">
+
+
+            <span class="book-category">
+                ${book.category}
+            </span>
+
+
+            <span class="pdf-label">
+                HTML
+            </span>
+
+
+            <div class="fallback-book">
+
+                <div class="fallback-icon">
+                    📚
+                </div>
+
+                <strong>
+                    ${book.title}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="book-card-content">
+
+
+            <h3>
+                ${book.title}
+            </h3>
+
+
+            <p>
+                ${book.description}
+            </p>
+
+
+
+            <div class="book-details">
+
+
+                <span>
+                    📄 HTML E-Book
+                </span>
+
+
+                <span>
+                    🌐 ${book.language}
+                </span>
+
+
+            </div>
+
+
+
+            <div class="book-actions">
+
+
+                <a
+                    href="${book.read}"
+                    class="read-btn">
+
+                    📖 Read E-Book
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </article>
+
+    `;
+
+}
+
+
+
+/* =====================================================
+   RENDER BOOKS
+===================================================== */
+
+function renderBooks(){
+
+
+    let result =
+    books.filter(
+        book => {
+
+
+            const search =
+            searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+            const matchesSearch =
+
+            book.title
+            .toLowerCase()
+            .includes(
+                search
+            )
+
+            ||
+
+            book.category
+            .toLowerCase()
+            .includes(
+                search
+            )
+
+            ||
+
+            book.description
+            .toLowerCase()
+            .includes(
+                search
+            );
+
+
+
+            const matchesCategory =
+
+            selectedCategory ===
+            "all"
+
+            ||
+
+            book.category ===
+            selectedCategory;
+
+
+
+            const selectedLanguage =
+            languageFilter.value;
+
+
+            const matchesLanguage =
+
+            selectedLanguage ===
+            "all"
+
+            ||
+
+            book.language ===
+            selectedLanguage;
+
+
+
+            return (
+
+                matchesSearch
+
+                &&
+
+                matchesCategory
+
+                &&
+
+                matchesLanguage
+
+            );
+
+        }
+    );
+
+
+
+    /* =================================================
+       SORT A-Z
+    ================================================= */
+
+    if(
+        sortFilter.value ===
+        "az"
+    ){
+
+        result.sort(
+            (a,b) =>
+            a.title.localeCompare(
+                b.title
+            )
+        );
+
+    }
+
+
+
+    /* =================================================
+       SORT Z-A
+    ================================================= */
+
+    if(
+        sortFilter.value ===
+        "za"
+    ){
+
+        result.sort(
+            (a,b) =>
+            b.title.localeCompare(
+                a.title
+            )
+        );
+
+    }
+
+
+
+    /* CLEAR */
+
+    bookGrid.innerHTML =
+    "";
+
+
+
+    /* NO RESULT */
+
+    if(
+        result.length ===
+        0
+    ){
+
+        noResult.style.display =
+        "block";
+
+        return;
+
+    }
+
+
+
+    noResult.style.display =
+    "none";
+
+
+
+    /* DISPLAY */
+
+    result.forEach(
+        book => {
+
+            bookGrid.innerHTML +=
+            createBookCard(
+                book
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   SEARCH INPUT
+===================================================== */
+
+searchInput.addEventListener(
+    "input",
+    renderBooks
+);
+
+
+
+/* =====================================================
+   SEARCH BUTTON
+===================================================== */
+
+searchButton.addEventListener(
+    "click",
+    renderBooks
+);
+
+
+
+/* =====================================================
+   SUBJECT FILTER
+===================================================== */
+
+subjectFilter.addEventListener(
+    "change",
+    function(){
+
+
+        selectedCategory =
+        this.value;
+
+
+        document
+        .querySelectorAll(
+            ".category"
+        )
+        .forEach(
+            btn => {
+
+
+                btn.classList
+                .remove(
+                    "active"
+                );
+
+
+                if(
+                    btn.dataset.category
+                    ===
+                    selectedCategory
+                ){
+
+                    btn.classList
+                    .add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        renderBooks();
+
+    }
+);
+
+
+
+/* =====================================================
+   LANGUAGE FILTER
+===================================================== */
+
+languageFilter.addEventListener(
+    "change",
+    renderBooks
+);
+
+
+
+/* =====================================================
+   SORT FILTER
+===================================================== */
+
+sortFilter.addEventListener(
+    "change",
+    renderBooks
+);
+
+
+
+/* =====================================================
+   GRID VIEW
+===================================================== */
+
+gridViewBtn.addEventListener(
+    "click",
+    function(){
+
+
+        gridViewBtn.classList
+        .add(
+            "active"
+        );
+
+
+        listViewBtn.classList
+        .remove(
+            "active"
+        );
+
+
+        bookGrid.classList
+        .remove(
+            "list-view"
+        );
+
+    }
+);
+
+
+
+/* =====================================================
+   LIST VIEW
+===================================================== */
+
+listViewBtn.addEventListener(
+    "click",
+    function(){
+
+
+        listViewBtn.classList
+        .add(
+            "active"
+        );
+
+
+        gridViewBtn.classList
+        .remove(
+            "active"
+        );
+
+
+        bookGrid.classList
+        .add(
+            "list-view"
+        );
+
+    }
+);
+
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+function updateStatistics(){
+
+
+    document
+    .getElementById(
+        "totalBooks"
+    )
+    .textContent =
+    books.length + "+";
+
+
+
+    const subjects =
+    new Set(
+        books.map(
+            book =>
+            book.category
+        )
+    );
+
+
+
+    document
+    .getElementById(
+        "totalSubjects"
+    )
+    .textContent =
+    subjects.size;
+
+
+
+    document
+    .getElementById(
+        "totalPages"
+    )
+    .textContent =
+    "HTML";
+
+}
+
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+const darkModeBtn =
+document.getElementById(
+    "darkModeBtn"
+);
+
+
+darkModeBtn.addEventListener(
+    "click",
+    function(){
+
+
+        document.body.classList
+        .toggle(
+            "dark-mode"
+        );
+
+
+        if(
+            document.body.classList
+            .contains(
+                "dark-mode"
+            )
+        ){
+
+            this.textContent =
+            "☀️";
+
+        }
+
+        else{
+
+            this.textContent =
+            "🌙";
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   TOP SEARCH BUTTON
+===================================================== */
+
+document
+.getElementById(
+    "searchTopBtn"
+)
+.addEventListener(
+    "click",
+    function(){
+
+
+        searchInput.focus();
+
+
+        window.scrollTo({
+
+            top:
+            document
+            .querySelector(
+                ".search-section"
+            )
+            .offsetTop - 80,
+
+            behavior:
+            "smooth"
+
+        });
+
+    }
+);
+
+
+
+/* =====================================================
+   START WEBSITE
+===================================================== */
+
+createCategories();
+
+updateStatistics();
+
+renderBooks();
+
+
+</script>
+
+
+</body>
+
+</html>
