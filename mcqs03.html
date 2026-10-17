@@ -1258,7 +1258,7 @@
             <div class="topic-dropdown">
                 <button class="topic-btn" type="button">Topic Tests <span>⌄</span></button>
                 <div class="topic-menu">
-                    <div class="subject-item"><a href="mathbackup3.html" class="subject-link"><div class="subject-main"><span class="subject-icon math-icon">%</span><div><strong>Mathematics</strong><small>Quantitative Aptitude</small></div><b>→</b></div></a></div>
+                    <div class="subject-item"><a href="math.html" class="subject-link"><div class="subject-main"><span class="subject-icon math-icon">%</span><div><strong>Mathematics</strong><small>Quantitative Aptitude</small></div><b>→</b></div></a></div>
                     <div class="subject-item"><a href="English/english.html" class="subject-link"><div class="subject-main"><span class="subject-icon english-icon">A</span><div><strong>English</strong><small>English Language</small></div><b>→</b></div></a></div>
                     <div class="subject-item"><a href="gk.html" class="subject-link"><div class="subject-main"><span class="subject-icon gk-icon">🌍</span><div><strong>GK &amp; GS</strong><small>General Knowledge &amp; Science</small></div><b>→</b></div></a></div>
                     <div class="subject-item"><a href="reasoning/reasoning.html" class="subject-link"><div class="subject-main"><span class="subject-icon reasoning-icon">🧠</span><div><strong>Reasoning</strong><small>General Intelligence</small></div><b>→</b></div></a></div>
@@ -1284,7 +1284,7 @@
     </div>
 </div>
 
-<a href="ai.html">Study Notes</a>
+<a href="Study Notes.html">Study Notes</a>
 <a href="E-Book/E-book.html">E-Book</a>
 
 <!-- ==================== SSC BOOK STORE (NEW) ==================== -->
@@ -1473,7 +1473,7 @@
                     <div class="mock-icon purple">👤</div>
                     <h3><a href="SSC CGL Tier 1 Mock Test.html" style="text-decoration:none;color:inherit;">SSC CGL Tier 1 Mock Test</a></h3>
                     <p>100 Questions &nbsp; • &nbsp; 60 Mins</p><p>All Subjects</p>
-                    <div class="mock-bottom"><span>Attempted by 25,000+</span><button type="button" onclick="window.location.href='SSC CGL Tier 1 Mock Test.html'">Start Test</button></div>
+                    <div class="mock-bottom"><span>Attempted by 25,000+</span><button type="button" onclick="window.location.href='mock.html'">Start Test</button></div>
                 </article>
                 <article class="mock-card">
                     <div class="mock-icon green">🧮</div>
@@ -1522,7 +1522,7 @@
         </section>
 
     </main>
-
+    
     <!-- ===== AUTH MODAL ===== -->
     <div id="authModal" class="ssc-auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true">
         <div class="ssc-auth-overlay" onclick="closeAuth()"></div>
@@ -1631,11 +1631,11 @@
             <div>
                 <h3 class="ssc-footer-heading">SSC MOCK</h3>
                 <ul class="ssc-footer-links">
-                    <li><a href="mathbackup3.html">Mathematics Tests</a></li>
+                    <li><a href="math.html">Mathematics Tests</a></li>
                     <li><a href="English/english.html">English Tests</a></li>
                     <li><a href="gk.html">GK &amp; GS Tests</a></li>
                     <li><a href="reasoning/reasoning.html">Reasoning Tests</a></li>
-                    <li><a href="ai.html">Study Notes</a></li>
+                    <li><a href="Study Notes.html">Study Notes</a></li>
                     <li><a href="E-Book/E-book.html">E-Books</a></li>
                 </ul>
                 <div style="margin-top:24px">
@@ -1710,7 +1710,7 @@
         </div>
     </div>
 
-    <!-- =========================================================
+<!-- =========================================================
          SCRIPTS
     ========================================================= -->
     <script src="hero-animation.js"></script>
@@ -1720,9 +1720,29 @@
     ========================================================= -->
     <script>
     (function () {
-        "use strict";
+    "use strict";
 
-        var DASHBOARD_URL = "SSC%20DASHBOARD.html";
+    /* ✅ SAFE STORAGE WRAPPER */
+    var memoryStorage = {};
+    window.sscSafeStorage = {
+        getItem: function (key) {
+            try { return window.localStorage.getItem(key); }
+            catch (e) { return Object.prototype.hasOwnProperty.call(memoryStorage, key) ? memoryStorage[key] : null; }
+        },
+        setItem: function (key, value) {
+            try { window.localStorage.setItem(key, value); }
+            catch (e) { console.warn("⚠️ localStorage blocked:", key); }
+            memoryStorage[key] = String(value);
+        },
+        removeItem: function (key) {
+            try { window.localStorage.removeItem(key); }
+            catch (e) {}
+            delete memoryStorage[key];
+        }
+    };
+    var safeStorage = window.sscSafeStorage;
+
+    var DASHBOARD_URL = "SSC%20DASHBOARD.html";
 
         /* =========================================
            EMAILJS SETUP — Welcome Email
@@ -1772,11 +1792,13 @@ var OWNER_EMAIL = "99arpit9758611466@gmail.com";
            SAVE USER SNAPSHOT (Firebase → localStorage + Firestore)
         ========================================= */
         function saveUserSnapshot(user) {
-            try {
-                if (!user) return;
-                var name = user.displayName || (user.email ? user.email.split("@")[0] : "SSC User");
+            if (!user) return;
 
-                localStorage.setItem("sscMockUser", JSON.stringify({
+            var name = user.displayName || (user.email ? user.email.split("@")[0] : "SSC User");
+
+            /* ✅ STEP 1: localStorage — safe wrapper se (kabhi crash nahi karega) */
+            try {
+                safeStorage.setItem("sscMockUser", JSON.stringify({
                     uid: user.uid || "",
                     name: name,
                     email: user.email || "",
@@ -1784,7 +1806,7 @@ var OWNER_EMAIL = "99arpit9758611466@gmail.com";
                     lastLogin: Date.now()
                 }));
 
-                var raw = localStorage.getItem("sscMockProfile");
+                var raw = safeStorage.getItem("sscMockProfile");
                 var profile = raw ? JSON.parse(raw) : {};
                 if (!profile.name)  profile.name  = name;
                 if (!profile.email) profile.email = user.email || "";
@@ -1793,8 +1815,13 @@ var OWNER_EMAIL = "99arpit9758611466@gmail.com";
                 if (!profile.exam)  profile.exam  = "SSC CGL";
                 if (!profile.post)  profile.post  = "Income Tax Inspector";
                 if (!profile.bio)   profile.bio   = "SSC Aspirant • Preparing with SSC MOCK";
-                localStorage.setItem("sscMockProfile", JSON.stringify(profile));
+                safeStorage.setItem("sscMockProfile", JSON.stringify(profile));
+            } catch (e) {
+                console.warn("localStorage save failed (safe mode):", e);
+            }
 
+            /* ✅ STEP 2: Firestore save — localStorage fail hone par BHI chalega */
+            try {
                 var fb = window.sscFirebase;
                 if (fb && fb.db && fb.doc && fb.setDoc) {
                     var provider = "email";
@@ -1824,7 +1851,9 @@ var OWNER_EMAIL = "99arpit9758611466@gmail.com";
                         console.warn("⚠️ Firestore save failed:", err);
                     });
                 }
-            } catch (e) { console.warn("saveUserSnapshot failed:", e); }
+            } catch (e) {
+                console.warn("Firestore save failed (safe mode):", e);
+            }
         }
 
         function redirectToDashboard() {
@@ -1958,8 +1987,15 @@ var OWNER_EMAIL = "99arpit9758611466@gmail.com";
 
                 const persistence = remember ? fb.browserLocalPersistence : fb.browserSessionPersistence;
 
+                /* ✅ FIX: setPersistence fail hone par bhi login continue karein
+                   (localStorage block hone par bhi login ho payega) */
                 fb.setPersistence(fb.auth, persistence)
-                    .then(function () { return fb.signInWithEmailAndPassword(fb.auth, email, password); })
+                    .catch(function (persistenceError) {
+                        console.warn("⚠️ Persistence set failed (localStorage blocked). Continuing with default.", persistenceError);
+                    })
+                    .then(function () {
+                        return fb.signInWithEmailAndPassword(fb.auth, email, password);
+                    })
                     .then(function (r) {
                         saveUserSnapshot(r.user);
                         showMessage("loginMessage",
@@ -2090,7 +2126,10 @@ var OWNER_EMAIL = "99arpit9758611466@gmail.com";
                 logoutButton.addEventListener("click", function () {
                     waitForFirebase(function (fb) {
                         fb.signOut(fb.auth)
-                            .then(function () { console.log("SSC MOCK: User logged out."); })
+                            .then(function () {
+                                safeStorage.removeItem('userLoggedIn');
+                                console.log("SSC MOCK: User logged out.");
+                            })
                             .catch(function (e) { console.error("Logout Error:", e); });
                     });
                 });
@@ -2121,10 +2160,10 @@ var OWNER_EMAIL = "99arpit9758611466@gmail.com";
                 if (user) {
                     saveUserSnapshot(user);
                     // ✅ Prompt ke liye flag set karo (safe)
-                    try { localStorage.setItem('userLoggedIn', 'true'); } catch(e) {}
+                    safeStorage.setItem('userLoggedIn', 'true');
                 } else {
                     // ✅ Logout hone par flag hatao (safe)
-                    try { localStorage.removeItem('userLoggedIn'); } catch(e) {}
+                    safeStorage.removeItem('userLoggedIn');
                 }
 
                 console.log(user
@@ -2729,10 +2768,18 @@ const REPEAT_DELAY = 5 * 60 * 1000;
             let dismissCount = 0;
             let isLoggedIn = false;
 
+            /* ✅ SAFE STORAGE (localStorage block hone par bhi kaam karega) */
+            var ss = window.sscSafeStorage || {
+                getItem: function(key){
+                    try { return window.localStorage.getItem(key); }
+                    catch(e) { return null; }
+                },
+                setItem: function(){},
+                removeItem: function(){}
+            };
+
             // Check if user is already logged in
-            try {
-                isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
-            } catch(e) { isLoggedIn = false; }
+            isLoggedIn = ss.getItem('userLoggedIn') === 'true';
 
             if (isLoggedIn) {
                 console.log('✅ User already logged in — prompt disabled');
@@ -2741,9 +2788,7 @@ const REPEAT_DELAY = 5 * 60 * 1000;
 
             // Show the prompt
             function showPrompt() {
-                try {
-                    if (localStorage.getItem('userLoggedIn') === 'true') return;
-                } catch(e) {}
+                if (ss.getItem('userLoggedIn') === 'true') return;
 
                 const modal = document.getElementById('loginPromptModal');
                 if (!modal) return;
@@ -2785,9 +2830,7 @@ const REPEAT_DELAY = 5 * 60 * 1000;
             function scheduleNextPrompt(delay) {
                 clearTimeout(promptTimer);
                 promptTimer = setTimeout(function() {
-                    try {
-                        if (localStorage.getItem('userLoggedIn') === 'true') return;
-                    } catch(e) {}
+                    if (ss.getItem('userLoggedIn') === 'true') return;
                     showPrompt();
                 }, delay);
             }
@@ -2797,9 +2840,7 @@ const REPEAT_DELAY = 5 * 60 * 1000;
 
             // Global reschedule function (called after dismiss)
             window.rescheduleLoginPrompt = function() {
-                try {
-                    if (localStorage.getItem('userLoggedIn') === 'true') return;
-                } catch(e) {}
+                if (ss.getItem('userLoggedIn') === 'true') return;
                 scheduleNextPrompt(REPEAT_DELAY);
             };
 
@@ -2810,13 +2851,11 @@ const REPEAT_DELAY = 5 * 60 * 1000;
 
             // Auto-hide if user logs in
             setInterval(function() {
-                try {
-                    if (localStorage.getItem('userLoggedIn') === 'true') {
-                        clearTimeout(promptTimer);
-                        const modal = document.getElementById('loginPromptModal');
-                        if (modal) modal.classList.remove('show');
-                    }
-                } catch(e) {}
+                if (ss.getItem('userLoggedIn') === 'true') {
+                    clearTimeout(promptTimer);
+                    const modal = document.getElementById('loginPromptModal');
+                    if (modal) modal.classList.remove('show');
+                }
             }, 30000);
 
         })();
