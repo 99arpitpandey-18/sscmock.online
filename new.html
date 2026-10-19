@@ -2546,196 +2546,210 @@ var OWNER_EMAIL = "99arpit9758611466@gmail.com";
         })();
     </script>
 
-    <!-- ===== ULTRA ANIMATION JS ===== -->
+    <!-- ===== PERFORMANCE-OPTIMIZED ANIMATIONS (visual design preserved) ===== -->
     <script>
-        (() => {
-            "use strict";
-            const body = document.body;
-            body.classList.add("ssc-motion-ready");
+    (() => {
+        "use strict";
+        const body = document.body;
+        body.classList.add("ssc-motion-ready");
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const finePointer = window.matchMedia("(pointer:fine)").matches;
+        const hero = document.querySelector(".hero");
 
-            const hero = document.querySelector(".hero");
-            if (hero) {
-                ["r1", "r2", "r3"].forEach(cls => {
-                    const ring = document.createElement("div");
-                    ring.className = "ssc-hero-ring " + cls;
-                    ring.setAttribute("aria-hidden", "true");
-                    hero.prepend(ring);
+        if (hero && !reduceMotion) {
+            ["r1", "r2", "r3"].forEach(cls => {
+                const ring = document.createElement("div");
+                ring.className = "ssc-hero-ring " + cls;
+                ring.setAttribute("aria-hidden", "true");
+                hero.prepend(ring);
+            });
+        }
+
+        // One scroll listener for the effects managed by this script.
+        const progress = document.getElementById("sscMotionProgress");
+        const navbar = document.querySelector(".navbar");
+        const blobs = document.querySelectorAll(".ssc-page-aurora .blob");
+        let scrollPending = false;
+        function updateScrollEffects() {
+            const y = window.scrollY;
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            if (progress) progress.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
+            if (navbar) navbar.classList.toggle("ssc-nav-scrolled", y > 18);
+            if (blobs.length && !reduceMotion) {
+                blobs.forEach((blob, i) => {
+                    blob.style.transform = "translate3d(0," + (y * (i + 1) * .018) + "px,0)";
                 });
             }
-
-            const progress = document.getElementById("sscMotionProgress");
-            const navbar = document.querySelector(".navbar");
-            const updateScroll = () => {
-                const max = document.documentElement.scrollHeight - window.innerHeight;
-                const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-                if (progress) progress.style.width = pct + "%";
-                if (navbar) navbar.classList.toggle("ssc-nav-scrolled", window.scrollY > 18);
-            };
-            window.addEventListener("scroll", updateScroll, { passive: true });
-            updateScroll();
-
-            const revealSelectors = [
-                ".features > *", ".ai-experience", ".ai-feature",
-                ".mock-section .mock-card", ".stats > div", ".exam-series", ".series-line"
-            ];
-            document.querySelectorAll(revealSelectors.join(",")).forEach((el, i) => {
-                el.classList.add("ssc-reveal");
-                el.style.transitionDelay = Math.min((i % 6) * 70, 350) + "ms";
-            });
-            if ("IntersectionObserver" in window) {
-                const observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add("ssc-visible");
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: .12, rootMargin: "0px 0px -45px 0px" });
-                document.querySelectorAll(".ssc-reveal").forEach(el => observer.observe(el));
-            } else {
-                document.querySelectorAll(".ssc-reveal").forEach(el => el.classList.add("ssc-visible"));
+            scrollPending = false;
+        }
+        window.addEventListener("scroll", () => {
+            if (!scrollPending) {
+                scrollPending = true;
+                requestAnimationFrame(updateScrollEffects);
             }
+        }, { passive: true });
+        updateScrollEffects();
 
-            const canTilt = window.matchMedia("(pointer:fine)").matches;
-            if (canTilt) {
-                document.querySelectorAll(".mock-card").forEach(card => {
-                    card.addEventListener("pointermove", e => {
+        // Reveal content once as it enters view. Avoid hiding content when motion is reduced.
+        const revealSelectors = [
+            ".features > *", ".ai-experience", ".ai-feature",
+            ".mock-section .mock-card", ".stats > div", ".exam-series", ".series-line"
+        ];
+        const revealItems = document.querySelectorAll(revealSelectors.join(","));
+        if (reduceMotion || !("IntersectionObserver" in window)) {
+            revealItems.forEach(el => el.classList.add("ssc-visible"));
+        } else {
+            const revealObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("ssc-visible");
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: .08, rootMargin: "0px 0px 60px 0px" });
+            revealItems.forEach((el, i) => {
+                el.classList.add("ssc-reveal");
+                el.style.transitionDelay = Math.min((i % 4) * 45, 135) + "ms";
+                revealObserver.observe(el);
+            });
+        }
+
+        // Lightweight card tilt, throttled to one visual update per frame.
+        if (finePointer && !reduceMotion) {
+            document.querySelectorAll(".mock-card").forEach(card => {
+                let pending = false, latestEvent = null;
+                card.addEventListener("pointermove", e => {
+                    latestEvent = e;
+                    if (pending) return;
+                    pending = true;
+                    requestAnimationFrame(() => {
+                        pending = false;
+                        if (!latestEvent) return;
                         const r = card.getBoundingClientRect();
-                        const x = (e.clientX - r.left) / r.width;
-                        const y = (e.clientY - r.top) / r.height;
-                        const rotateY = (x - .5) * 10;
-                        const rotateX = (.5 - y) * 8;
+                        if (!r.width || !r.height) return;
+                        const x = (latestEvent.clientX - r.left) / r.width;
+                        const y = (latestEvent.clientY - r.top) / r.height;
                         card.style.setProperty("--mx", (x * 100) + "%");
                         card.style.setProperty("--my", (y * 100) + "%");
-                        card.style.transform =
-                            "perspective(900px) rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg) translateY(-8px)";
+                        card.style.transform = "perspective(900px) rotateX(" + ((.5-y)*5) + "deg) rotateY(" + ((x-.5)*6) + "deg) translateY(-5px)";
+                        latestEvent = null;
                     });
-                    card.addEventListener("pointerleave", () => { card.style.transform = ""; });
-                });
-            }
-
-            const glow = document.querySelector(".ssc-cursor-glow");
-            const dot = document.querySelector(".ssc-cursor-dot");
-            let mouseX = innerWidth / 2, mouseY = innerHeight / 2;
-            let glowX = mouseX, glowY = mouseY;
-
-            if (canTilt && glow && dot) {
-                window.addEventListener("pointermove", e => {
-                    mouseX = e.clientX; mouseY = e.clientY;
-                    dot.style.left = mouseX + "px";
-                    dot.style.top = mouseY + "px";
-                    glow.style.opacity = "1";
                 }, { passive: true });
-                window.addEventListener("pointerleave", () => glow.style.opacity = "0");
-                const cursorLoop = () => {
-                    glowX += (mouseX - glowX) * .09;
-                    glowY += (mouseY - glowY) * .09;
-                    glow.style.left = glowX + "px";
-                    glow.style.top = glowY + "px";
-                    requestAnimationFrame(cursorLoop);
-                };
-                cursorLoop();
+                card.addEventListener("pointerleave", () => { card.style.transform = ""; latestEvent = null; });
+            });
+        }
 
-                if (hero) {
-                    hero.addEventListener("pointermove", e => {
-                        const r = hero.getBoundingClientRect();
-                        const px = (e.clientX - r.left) / r.width - .5;
-                        const py = (e.clientY - r.top) / r.height - .5;
-                        const solar = document.getElementById("sscSolarSystem");
-                        if (solar) solar.style.transform =
-                            "translate3d(" + (px * 13) + "px," + (py * 9) + "px,0)";
-                    });
-                    hero.addEventListener("pointerleave", () => {
-                        const solar = document.getElementById("sscSolarSystem");
-                        if (solar) solar.style.transform = "";
-                    });
-                }
-            }
-
-            let ticking2 = false;
-            window.addEventListener("scroll", () => {
-                if (ticking2) return;
-                ticking2 = true;
-                requestAnimationFrame(() => {
-                    const y = window.scrollY;
-                    document.querySelectorAll(".ssc-page-aurora .blob").forEach((b, i) => {
-                        b.style.transform = "translate3d(0," + (y * (i + 1) * .018) + "px,0)";
-                    });
-                    ticking2 = false;
+        // Cursor glow runs only while the pointer is moving; no permanent animation loop.
+        const glow = document.querySelector(".ssc-cursor-glow");
+        const dot = document.querySelector(".ssc-cursor-dot");
+        let cursorFrame = 0, mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+        if (finePointer && !reduceMotion && glow && dot) {
+            window.addEventListener("pointermove", e => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                dot.style.transform = "translate3d(" + mouseX + "px," + mouseY + "px,0) translate(-50%,-50%)";
+                glow.style.opacity = "1";
+                if (!cursorFrame) cursorFrame = requestAnimationFrame(function moveGlow() {
+                    glowX += (mouseX - glowX) * .16;
+                    glowY += (mouseY - glowY) * .16;
+                    glow.style.transform = "translate3d(" + glowX + "px," + glowY + "px,0) translate(-50%,-50%)";
+                    if (Math.abs(mouseX-glowX) > .6 || Math.abs(mouseY-glowY) > .6) {
+                        cursorFrame = requestAnimationFrame(moveGlow);
+                    } else cursorFrame = 0;
                 });
             }, { passive: true });
+            window.addEventListener("pointerleave", () => { glow.style.opacity = "0"; });
+        }
 
-            document.querySelectorAll("button, .start-test, .explore, .try-ai, .explore-btn").forEach(el => {
-                el.addEventListener("click", e => {
-                    const r = el.getBoundingClientRect();
-                    const ripple = document.createElement("span");
-                    ripple.className = "ssc-ripple";
-                    const size = Math.max(r.width, r.height) * .35;
-                    ripple.style.width = size + "px";
-                    ripple.style.height = size + "px";
-                    ripple.style.left = (e.clientX - r.left - size / 2) + "px";
-                    ripple.style.top = (e.clientY - r.top - size / 2) + "px";
-                    el.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 700);
-                });
-            });
-
-            const canvas = document.getElementById("sscParticleCanvas");
-            if (canvas && !window.matchMedia("(prefers-reduced-motion:reduce)").matches) {
-                const ctx = canvas.getContext("2d");
-                let w = 0, h = 0, dpr = 1;
-                let particles = [];
-                const mouse = { x: -9999, y: -9999 };
-                const resize = () => {
-                    dpr = Math.min(window.devicePixelRatio || 1, 2);
-                    w = innerWidth; h = innerHeight;
-                    canvas.width = w * dpr;
-                    canvas.height = h * dpr;
-                    canvas.style.width = w + "px";
-                    canvas.style.height = h + "px";
-                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                    const count = w < 700 ? 34 : Math.min(90, Math.floor(w / 15));
-                    particles = Array.from({ length: count }, () => ({
-                        x: Math.random() * w, y: Math.random() * h,
-                        r: Math.random() * 1.6 + .35,
-                        vx: (Math.random() - .5) * .22,
-                        vy: (Math.random() - .5) * .18,
-                        a: Math.random() * .55 + .15,
-                        tw: Math.random() * Math.PI * 2
-                    }));
-                };
-                resize();
-                window.addEventListener("resize", resize, { passive: true });
-                window.addEventListener("pointermove", e => {
-                    mouse.x = e.clientX; mouse.y = e.clientY;
-                }, { passive: true });
-
-                const draw = () => {
-                    ctx.clearRect(0, 0, w, h);
-                    particles.forEach(p => {
-                        p.x += p.vx; p.y += p.vy; p.tw += .018;
-                        if (p.x < -10) p.x = w + 10;
-                        if (p.x > w + 10) p.x = -10;
-                        if (p.y < -10) p.y = h + 10;
-                        if (p.y > h + 10) p.y = -10;
-                        const dx = p.x - mouse.x, dy = p.y - mouse.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) { p.x += dx / dist * .25; p.y += dy / dist * .25; }
-                        const alpha = p.a + Math.sin(p.tw) * .12;
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                        ctx.fillStyle = "rgba(43,111,210," + Math.max(.05, alpha) + ")";
-                        ctx.fill();
+        if (hero && finePointer && !reduceMotion) {
+            const solar = document.getElementById("sscSolarSystem");
+            if (solar) {
+                let heroPending = false, px = 0, py = 0;
+                hero.addEventListener("pointermove", e => {
+                    const r = hero.getBoundingClientRect();
+                    px = (e.clientX-r.left)/r.width-.5;
+                    py = (e.clientY-r.top)/r.height-.5;
+                    if (heroPending) return;
+                    heroPending = true;
+                    requestAnimationFrame(() => {
+                        solar.style.transform = "translate3d("+(px*8)+"px,"+(py*6)+"px,0)";
+                        heroPending = false;
                     });
-                    requestAnimationFrame(draw);
-                };
-                draw();
+                }, { passive: true });
+                hero.addEventListener("pointerleave", () => { solar.style.transform = ""; });
             }
+        }
 
-            document.querySelectorAll(".mock-card").forEach((card, i) => {
-                card.style.transitionDelay = (i % 4) * 45 + "ms";
+        // Keep the particle look but reduce GPU/CPU use and pause when not visible.
+        const canvas = document.getElementById("sscParticleCanvas");
+        if (canvas && !reduceMotion) {
+            const ctx = canvas.getContext("2d", { alpha: true });
+            if (ctx) {
+                let w = 0, h = 0, dpr = 1, particles = [], raf = 0, lastDraw = 0;
+                const mouse = { x: -9999, y: -9999 };
+                const mobile = matchMedia("(max-width: 700px)").matches;
+                function resize() {
+                    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+                    w = window.innerWidth; h = window.innerHeight;
+                    canvas.width = Math.round(w*dpr); canvas.height = Math.round(h*dpr);
+                    canvas.style.width = w+"px"; canvas.style.height = h+"px";
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                    const count = mobile ? 20 : Math.min(55, Math.floor(w/22));
+                    particles = Array.from({length: count}, () => ({
+                        x: Math.random()*w, y: Math.random()*h,
+                        r: Math.random()*1.35+.35, vx:(Math.random()-.5)*.18,
+                        vy:(Math.random()-.5)*.15, a:Math.random()*.42+.12,
+                        tw:Math.random()*Math.PI*2
+                    }));
+                }
+                function draw(now) {
+                    raf = 0;
+                    if (document.hidden) return;
+                    // Cap decorative animation to ~30 FPS to leave time for page interaction.
+                    if (now-lastDraw < 32) { raf = requestAnimationFrame(draw); return; }
+                    lastDraw = now;
+                    ctx.clearRect(0,0,w,h);
+                    for (const p of particles) {
+                        p.x += p.vx; p.y += p.vy; p.tw += .018;
+                        if (p.x < -8) p.x=w+8; else if (p.x>w+8) p.x=-8;
+                        if (p.y < -8) p.y=h+8; else if (p.y>h+8) p.y=-8;
+                        const dx=p.x-mouse.x, dy=p.y-mouse.y, d2=dx*dx+dy*dy;
+                        if (d2 < 14400 && d2 > 1) { p.x += dx*.002; p.y += dy*.002; }
+                        ctx.globalAlpha = Math.max(.05, p.a + Math.sin(p.tw)*.09);
+                        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle="#2b6fd2"; ctx.fill();
+                    }
+                    ctx.globalAlpha = 1;
+                    raf = requestAnimationFrame(draw);
+                }
+                function start() { if (!document.hidden && !raf) raf=requestAnimationFrame(draw); }
+                function stop() { if (raf) cancelAnimationFrame(raf); raf=0; }
+                resize();
+                window.addEventListener("resize", () => { resize(); }, { passive: true });
+                if (finePointer) window.addEventListener("pointermove", e => { mouse.x=e.clientX; mouse.y=e.clientY; }, { passive: true });
+                document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); else start(); });
+                start();
+            }
+        }
+
+        // Keep click ripple effects but avoid binding duplicate listeners to the same element.
+        document.querySelectorAll("button, .start-test, .explore, .try-ai, .explore-btn").forEach(el => {
+            if (el.dataset.sscRippleBound) return;
+            el.dataset.sscRippleBound = "1";
+            el.addEventListener("click", e => {
+                const r = el.getBoundingClientRect();
+                const size = Math.max(r.width, r.height)*.35;
+                const ripple = document.createElement("span");
+                ripple.className = "ssc-ripple";
+                ripple.style.width = size+"px"; ripple.style.height = size+"px";
+                ripple.style.left = (e.clientX-r.left-size/2)+"px";
+                ripple.style.top = (e.clientY-r.top-size/2)+"px";
+                el.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 700);
             });
-        })();
+        });
+        document.querySelectorAll(".mock-card").forEach((card,i) => {
+            card.style.transitionDelay = (i%4)*35+"ms";
+        });
+    })();
     </script>
 
     <!-- ===== TYPING TEST JS ===== -->
