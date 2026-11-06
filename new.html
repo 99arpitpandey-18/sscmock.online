@@ -1199,6 +1199,136 @@
         }
 
         body:has(.ssc-auth-modal.active) { overflow: hidden !important; }
+
+        /* =========================================================
+           PREMIUM E-BOOK POPUP MODAL (NEW ADDED)
+        ========================================================= */
+        
+        /* Puri screen ko cover karne wala dark overlay (background) */
+        .ebook-popup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 8, 25, 0.85); /* Dark background */
+            backdrop-filter: blur(8px); /* Piche ka background blur hoga */
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 999999; /* Sabse upar dikhane ke liye */
+            display: none; /* Default me hidden rahega */
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Jab JS se 'show' class lagegi tab ye visible hoga */
+        .ebook-popup-overlay.show {
+            display: flex;
+            animation: fadeInPopup 0.4s ease-out forwards;
+        }
+
+        /* Popup ka main container */
+        .ebook-popup-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px; /* Image ki maximum width */
+            background: #0a1128; /* Dark blue background border ke liye */
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 180, 255, 0.3); /* Glowing effect */
+            border: 2px solid rgba(0, 180, 255, 0.5);
+            overflow: hidden;
+            transform: translateY(30px) scale(0.95); /* Entry animation ke liye */
+            animation: slideUpPopup 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* Image wrapper - taaki link ko image ke upar set kar sakein */
+        .ebook-image-wrapper {
+            position: relative;
+            width: 100%;
+            display: block;
+        }
+
+        /* Actual Image styling */
+        .ebook-banner-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* Close Button (X) */
+        .ebook-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 42px;
+            height: 42px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .ebook-popup-close:hover {
+            background: #ff4d4d;
+            border-color: #ff4d4d;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* =========================================================
+           INVISIBLE LINK AREA (Image ke upar)
+           Yahan position adjust karni pad sakti hai agar image thodi alag ho.
+        ========================================================= */
+        .open-notes-click-area {
+            position: absolute;
+            /* In values ko adjust karke aap link area ko button par perfectly fit kar sakte hain */
+            bottom: 9.5%;  /* Niche se distance */
+            right: 15%;    /* Right se distance */
+            width: 32%;    /* Button ki chaurai */
+            height: 14%;   /* Button ki height */
+            
+            /* background: rgba(255, 0, 0, 0.5);  <-- Testing ke liye isko uncomment karein, taaki dikhe link kahan hai */
+            cursor: pointer;
+            z-index: 5;
+            border-radius: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeInPopup {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUpPopup {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Mobile Responsive (Chhoti screen ke liye) */
+        @media (max-width: 768px) {
+            .ebook-popup-container {
+                max-width: 95%; /* Mobile me full width lega */
+                border-radius: 12px;
+            }
+            .ebook-popup-close {
+                top: 8px;
+                right: 8px;
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+            /* Mobile me button ki position thodi change ho sakti hai, agar zarurat ho toh yahan adjust karein */
+            .open-notes-click-area {
+                bottom: 9%; 
+                right: 14%;
+                width: 33%;
+                height: 13%;
+            }
+        }
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3474852545144995"
      crossorigin="anonymous"></script>
@@ -1709,6 +1839,36 @@
             </div>
         </div>
     </div>
+
+    <!-- ========================================================= -->
+    <!-- PREMIUM E-BOOK POPUP MODAL START (NEW ADDED)                -->
+    <!-- ========================================================= -->
+    <div id="premiumEbookPopup" class="ebook-popup-overlay">
+        <div class="ebook-popup-container">
+            
+            <!-- Close Button (X) -->
+            <button class="ebook-popup-close" onclick="closeEbookPopup()" aria-label="Close Popup">
+                ✕
+            </button>
+
+            <!-- Image Wrapper -->
+            <div class="ebook-image-wrapper">
+                <!-- YAHAN APNI IMAGE KA PATH DAALEIN. Agar image same folder me hai toh bas naam likh dein -->
+                <img src="SSC MOCK Premium Study Companion.png" alt="SSC MOCK Premium E-Books" class="ebook-banner-img">
+
+                <!-- 👇 YEH HAI INVISIBLE LINK 👇 -->
+                <!-- Is link ko humne image ke 'Open Notes' button ke upar set kiya hai. -->
+                <!-- Yahan apna link daalein jahan user ko bhejna hai -->
+                <a href="PDF BOOKS/INDIAN GEOGRAPHY-ShortNotes-SSC Exam 2026-27.pdf" target="_blank" class="open-notes-click-area" title="Open Notes">
+                    <!-- Ye tag invisible rahega, bas click catch karega -->
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <!-- ========================================================= -->
+    <!-- PREMIUM E-BOOK POPUP MODAL END                            -->
+    <!-- ========================================================= -->
 
 <!-- =========================================================
          SCRIPTS
@@ -2922,6 +3082,49 @@ const REPEAT_DELAY = 5 * 60 * 1000;
             }
         });
     </script>
+
+    <!-- ========================================================= -->
+    <!-- PREMIUM E-BOOK POPUP JAVASCRIPT (NEW ADDED)               -->
+    <!-- ========================================================= -->
+    <script>
+        /* =========================================================
+           POPUP SHOW / HIDE LOGIC
+        ========================================================= */
+
+        // 1. Website load hote hi popup dikhane ke liye
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // Popup element ko select kiya
+            const popup = document.getElementById("premiumEbookPopup");
+            
+            // Thoda sa delay (0.5 seconds) de rahe hain taki page thoda settle ho jaye
+            setTimeout(() => {
+                // Agar popup mil gaya toh usme 'show' class add kar do
+                if(popup) {
+                    popup.classList.add("show");
+                }
+            }, 500); 
+        });
+
+        // 2. Popup ko close karne ka function
+        function closeEbookPopup() {
+            const popup = document.getElementById("premiumEbookPopup");
+            if(popup) {
+                // 'show' class hata do, display: none ho jayega
+                popup.classList.remove("show");
+            }
+        }
+
+        // 3. (Optional) Agar user popup ke bahar (black background par) click kare toh band ho jaye
+        window.addEventListener("click", function(event) {
+            const popup = document.getElementById("premiumEbookPopup");
+            // Agar click overlay par hua hai (container ke bahar), toh close kardo
+            if (event.target === popup) {
+                closeEbookPopup();
+            }
+        });
+    </script>
+
     <!-- ============================================ -->
     <!-- 10-MINUTE LOGIN PROMPT MODAL                  -->
     <!-- Pehli baar: 10 min baad, Uske baad: 5-5 min   -->
